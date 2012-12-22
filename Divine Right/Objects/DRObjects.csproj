@@ -92,14 +92,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\MapType.cs" />
     <Compile Include="GraphicsEngineObjects\Abstract\PlayerFeedback.cs" />
     <Compile Include="GraphicsEngineObjects\CurrentLogFeedback.cs" />
+    <Compile Include="GraphicsEngineObjects\GraphicalBlock.cs" />
     <Compile Include="GraphicsEngineObjects\TextFeedback.cs" />
-    <Compile Include="LocalActor.cs" />
-    <Compile Include="Enums\ActionType.cs" />
-    <Compile Include="LocalMapBlock.cs" />
+    <Compile Include="Actor.cs" />
+    <Compile Include="Enums\ActionTypeEnum.cs" />
+    <Compile Include="Items\Tiles\Air.cs" />
+    <Compile Include="MapBlock.cs" />
     <Compile Include="MapCoordinates.cs" />
-    <Compile Include="LocalMapItem.cs" />
+    <Compile Include="MapItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
