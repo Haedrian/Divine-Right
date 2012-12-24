@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DRObjects;
+using DRObjects.Enums;
+using DRObjects.GraphicsEngineObjects.Abstract;
 
 namespace DivineRightGame
 {
@@ -29,5 +31,17 @@ namespace DivineRightGame
         /// The player character
         /// </summary>
         public static Actor PlayerCharacter { get; set; }
+
+        /// <summary>
+        /// Performs an internal action - TODO
+        /// </summary>
+        /// <param name="action"></param>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        public static PlayerFeedback[] PerformInternalAction(InternalActionEnum action, object[] args)
+        {
+            throw new NotImplementedException();
+
+        }
     }
 }

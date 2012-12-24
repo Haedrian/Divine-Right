@@ -34,6 +34,17 @@ namespace DivineRightGame.Managers
         }
 
         /// <summary>
+        /// Performs a particular internal action such as saving, loading or quitting
+        /// </summary>
+        /// <param name="actionType"></param>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        public static PlayerFeedback[] PerformInternalAction(InternalActionEnum actionType, object[] args)
+        {
+            return GameState.PerformInternalAction(actionType, args);
+        }
+
+        /// <summary>
         /// Gets possible actions for a particular block
         /// </summary>
         /// <param name="coordinate"></param>

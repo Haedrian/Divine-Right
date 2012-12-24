@@ -160,6 +160,16 @@ namespace DRObjects
                 if (this.MayContainItems)
                 {
                     //it is possible to move there
+
+                    //you can only move to a particular block if its only 1 square away
+
+                    int distance = this.Tile.Coordinate - actor.MapCharacter.Coordinate;
+
+                    if (distance > 1)
+                    {
+                        return new PlayerFeedback[] { new TextFeedback("Can't move there") };
+                    }
+
                     actor.MapCharacter.Coordinate = this.Tile.Coordinate;
                     this.mapItems.Add(actor.MapCharacter);
                     return new PlayerFeedback[0];

@@ -49,6 +49,31 @@ namespace DRObjects
 
             return false;
         }
+
+        /// <summary>
+        /// Performs minus on two map coordinates, and gives the cartesian distance between them. The coordinates must be on the same MapType to work
+        /// </summary>
+        /// <param name="c1"></param>
+        /// <param name="c2"></param>
+        /// <returns></returns>
+        public static int operator -(MapCoordinate c1, MapCoordinate c2)
+        {
+            //First check whether the types are the same
+            if (c1.MapType.Equals(c2.MapType))
+            {
+                int dx = c1.X - c2.Y;
+                int dy = c1.Y - c2.Y;
+                int dz = c1.Z - c2.Z;
+
+                int distance = (int)Math.Round(Math.Sqrt(Math.Pow(dx, 2) + Math.Pow(dy, 2) + Math.Pow(dx, 2)));
+
+                return distance;
+            }
+            else
+            {
+                throw new Exception("The maptypes for the two coordinates don't match");
+            }
+        }
         
         public override string ToString()
         {
