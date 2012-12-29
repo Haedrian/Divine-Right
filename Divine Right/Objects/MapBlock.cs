@@ -95,7 +95,7 @@ namespace DRObjects
                 else
                 {
                     //This is to do moving items lazily
-                    item = this.mapItems[mapItems.Count];
+                    item = this.mapItems[mapItems.Count-1];
                     
                     //Do the coordinates match?
                     if (!item.Coordinate.Equals(Tile.Coordinate))
@@ -203,6 +203,15 @@ namespace DRObjects
             block.MapCoordinate = this.Tile.Coordinate;
 
             return block;
+        }
+
+        #endregion
+
+        #region Overridden functions
+
+        public override string ToString()
+        {
+            return "Block at " + this.Tile.Coordinate + " " + this.GetTopItem().InternalName;
         }
 
         #endregion

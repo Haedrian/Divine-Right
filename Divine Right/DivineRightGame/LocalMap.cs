@@ -20,7 +20,7 @@ namespace DivineRightGame
 
         public LocalMap()
         {
-            this.localGameMap = new Dictionary<MapCoordinate, MapBlock>();
+            this.localGameMap = new Dictionary<MapCoordinate, MapBlock>(new DRObjects.Compare.MapCoordinateCompare());
             this.actors = new List<Actor>();
         }
         /// <summary>
@@ -70,9 +70,11 @@ namespace DivineRightGame
         /// <returns></returns>
         public MapBlock GetBlockAtCoordinate(MapCoordinate coordinate)
         {
-            if (this.localGameMap.ContainsKey(coordinate))
+            MapBlock ret;
+
+            if (this.localGameMap.TryGetValue(coordinate,out ret))
             {
-                return this.localGameMap[coordinate];
+                return ret;
             }
             else
             {

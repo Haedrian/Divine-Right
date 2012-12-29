@@ -92,6 +92,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Compare\MapCoordinateCompare.cs" />
     <Compile Include="Enums\InternalActionEnum.cs" />
     <Compile Include="Enums\MapType.cs" />
     <Compile Include="GraphicsEngineObjects\Abstract\PlayerFeedback.cs" />

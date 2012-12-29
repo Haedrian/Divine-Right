@@ -19,7 +19,7 @@ namespace DRHelperClasses.Maths
         /// <param name="c1"></param>
         /// <param name="c2"></param>
         /// <returns></returns>
-        public double GetCartisianDisplacementOnXYPlane(MapCoordinate c1, MapCoordinate c2)
+        public static double GetCartisianDisplacementOnXYPlane(MapCoordinate c1, MapCoordinate c2)
         {
             //using pythagoras
             //H = sqrt(Delta X ^2 + Delta Y ^ 2)
@@ -35,7 +35,7 @@ namespace DRHelperClasses.Maths
         /// <param name="c1"></param>
         /// <param name="c2"></param>
         /// <returns></returns>
-        public int GetManhattenDistanceOnXYPlane(MapCoordinate c1, MapCoordinate c2)
+        public static int GetManhattenDistanceOnXYPlane(MapCoordinate c1, MapCoordinate c2)
         {
             int deltaX = Math.Abs(c1.X - c2.X);
             int deltaY = Math.Abs(c1.Y - c2.Y);

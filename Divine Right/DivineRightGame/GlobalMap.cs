@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DRObjects;
+using DRObjects.Compare;
 
 namespace DivineRightGame
 {
@@ -20,7 +21,7 @@ namespace DivineRightGame
 
         public GlobalMap()
         {
-            this.globalGameMap = new Dictionary<MapCoordinate, MapBlock>();
+            this.globalGameMap = new Dictionary<MapCoordinate, MapBlock>(new MapCoordinateCompare());
             this.parties = new List<Actor>();
         }
         /// <summary>

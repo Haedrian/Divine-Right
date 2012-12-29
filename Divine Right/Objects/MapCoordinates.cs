@@ -9,7 +9,7 @@ namespace DRObjects
     /// <summary>
     /// Represents a coordinate on an xyz plane upon a map.
     /// </summary>
-    public class MapCoordinate
+    public class MapCoordinate : IEquatable<MapCoordinate>
     {
         /// <summary>
         /// The location of this coordinate on the X plane
@@ -44,6 +44,28 @@ namespace DRObjects
                 if (this.X.Equals(comp.X) && this.Y.Equals(comp.Y) && this.Z.Equals(comp.Z))
                 {
                     return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Compares two MapCoordinates with each other
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        public bool Equals(MapCoordinate other)
+        {
+            //this is used for the .contains
+            if (this.X.Equals(other.X))
+            {
+                if (this.Y.Equals(other.Y))
+                {
+                    if (this.Z.Equals(other.Z))
+                    {
+                        return true;
+                    }
                 }
             }
 
@@ -94,5 +116,6 @@ namespace DRObjects
             this.Z = z;
         }
         #endregion
+
     }
 }

@@ -107,15 +107,25 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GraphicalObjects\InterfaceBlock.cs" />
+    <Compile Include="HelperFunctions\TestFunctions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Game1.cs" />
+    <Compile Include="DRGame.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
     <Content Include="GameThumbnail.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\DivineRightGame\DivineRightGame.csproj">
+      <Project>{20908765-22FD-442A-ADC6-B373AD72ACF9}</Project>
+      <Name>DivineRightGame</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Objects\DRObjects.csproj">
+      <Project>{C7810531-AB6A-4399-814F-53D0AC75A170}</Project>
+      <Name>DRObjects</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Divine RightContent\Divine RightContent.contentproj">
       <Name>Divine RightContent %28Content%29</Name>
       <XnaReferenceType>Content</XnaReferenceType>

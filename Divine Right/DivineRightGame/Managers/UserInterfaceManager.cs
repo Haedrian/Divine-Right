@@ -90,12 +90,11 @@ namespace DivineRightGame.Managers
             //go through all of them
 
 
-            for (int zLoop = maxZ; zLoop > minZ; zLoop++)
+            for (int zLoop = maxZ; zLoop >= minZ; zLoop--)
             {
-                for (int xLoop = maxX; xLoop > minX; xLoop++)
+                for (int yLoop = maxY; yLoop >= minY; yLoop--)
                 {
-
-                    for (int yLoop = maxY; yLoop > minY; yLoop++)
+                    for (int xLoop = minX; xLoop <= maxX; xLoop++)
                     {
                         MapCoordinate coord = new MapCoordinate(xLoop, yLoop, zLoop, centrePoint.MapType);
                         returnList.Add(GetBlockAtPoint(coord));
@@ -105,6 +104,20 @@ namespace DivineRightGame.Managers
             }
 
             return returnList.ToArray();
+        }
+
+        /// <summary>
+        /// Gets a number of graphical blocks around the player.
+        /// The order will be as follows:
+        /// first max z, then max x, then max y.
+        /// </summary>
+        /// <param name="xRange">How many tiles away from the centre point on the x axis will be obtained</param>
+        /// <param name="yCount">How many tiles away from the centre point on the y axis will be obtained</param>
+        /// <param name="zCount">How many tiles away from the centre point on the y axis will be obtained</param>
+        /// <returns></returns>
+        public static GraphicalBlock[] GetBlocksAroundPlayer(int xRange, int yRange, int zRange)
+        {
+                return GetBlocksAroundPoint(GameState.PlayerCharacter.MapCharacter.Coordinate, xRange, yRange, zRange);   
         }
 
         /// <summary>

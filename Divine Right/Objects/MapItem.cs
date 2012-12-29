@@ -53,7 +53,7 @@ namespace DRObjects
         /// <summary>
         /// Defines what happens when an action is performed upon the tile or item. These are the default values. 
         /// </summary>
-        public PlayerFeedback[] PerformAction(ActionTypeEnum actionType, Actor actor, object[] args)
+        public virtual PlayerFeedback[] PerformAction(ActionTypeEnum actionType, Actor actor, object[] args)
         {
 
             if (GetPossibleActions(actor).Contains(actionType))
@@ -83,7 +83,7 @@ namespace DRObjects
         /// Other details to be added later.
         /// </summary>
         /// <returns></returns>
-        public ActionTypeEnum[] GetPossibleActions(Actor actor)
+        public virtual ActionTypeEnum[] GetPossibleActions(Actor actor)
         {
             if (actor.IsPlayerCharacter)
             {

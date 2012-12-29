@@ -17,6 +17,11 @@ namespace DRObjects
         public MapItem MapCharacter { get; set; }
 
         /// <summary>
+        /// The global coordinate of this current actor. Only useful if the user can leave the local map
+        /// </summary>
+        public MapCoordinate GlobalCoordinates { get; set; }
+
+        /// <summary>
         /// Represents whether this actor is the player character or not
         /// </summary>
         public bool IsPlayerCharacter { get; set; }

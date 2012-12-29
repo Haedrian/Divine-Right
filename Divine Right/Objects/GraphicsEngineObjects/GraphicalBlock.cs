@@ -23,6 +23,15 @@ namespace DRObjects.GraphicsEngineObjects
         /// <summary>
         /// The Graphic of the Item to show
         /// </summary>
-        public string ItemGraphic {get;set;}
+        public string ItemGraphic {get;set; }
+
+        #region Overridden functions
+
+        public override string ToString()
+        {
+            return "GB at:" + this.MapCoordinate + " " + "Item: " + ItemGraphic;
+        }
+
+        #endregion
     }
 }
