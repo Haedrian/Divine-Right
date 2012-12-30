@@ -61,7 +61,7 @@ namespace DRObjects
                 switch (actionType)
                 {
                     case ActionTypeEnum.EXAMINE :
-                        return new PlayerFeedback[] { new CurrentLogFeedback(this.Description) };
+                        return new PlayerFeedback[] { new TextFeedback("You see " + this.Description) };
                     case ActionTypeEnum.LOOK:
                         return new PlayerFeedback[] { new TextFeedback(this.Name) };
                     default:

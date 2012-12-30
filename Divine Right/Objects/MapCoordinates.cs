@@ -83,7 +83,7 @@ namespace DRObjects
             //First check whether the types are the same
             if (c1.MapType.Equals(c2.MapType))
             {
-                int dx = c1.X - c2.Y;
+                int dx = c1.X - c2.X;
                 int dy = c1.Y - c2.Y;
                 int dz = c1.Z - c2.Z;
 
@@ -95,6 +95,17 @@ namespace DRObjects
             {
                 throw new Exception("The maptypes for the two coordinates don't match");
             }
+        }
+
+        /// <summary>
+        /// Performs plus on two map coordinates, and gives the map coordinate with the total of the two
+        /// </summary>
+        /// <param name="c1"></param>
+        /// <param name="c2"></param>
+        /// <returns></returns>
+        public static MapCoordinate operator +(MapCoordinate c1, MapCoordinate c2)
+        {
+            return new MapCoordinate(c1.X + c2.X, c1.Y + c2.Y, c1.Z + c2.Z, c1.MapType);
         }
         
         public override string ToString()

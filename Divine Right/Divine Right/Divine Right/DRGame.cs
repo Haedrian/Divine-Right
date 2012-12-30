@@ -13,6 +13,10 @@ using Divine_Right.GraphicalObjects;
 using DRObjects;
 using DivineRightGame.Managers;
 using Divine_Right.HelperFunctions;
+using Divine_Right.InterfaceComponents.Objects;
+using DRObjects.GraphicsEngineObjects.Abstract;
+using Divine_Right.InterfaceComponents.Managers;
+using DRObjects.Enums;
 
 namespace Divine_Right
 {
@@ -35,6 +39,11 @@ namespace Divine_Right
         const int TOTALTILESWIDTH = (PLAYABLEWIDTH / TILEWIDTH)-1;
         const int TOTALTILESHEIGHT = (PLAYABLEHEIGHT / TILEHEIGHT)-1;
 
+        const int WINDOWWIDTH = 900;
+        const int WINDOWHEIGHT = 500;
+
+        public const int TEXTFEEDBACKDISPLAYTIMESECONDS = 2;
+
         #endregion
 
         #region Members
@@ -42,6 +51,19 @@ namespace Divine_Right
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         List<InterfaceBlock> blocks = new List<InterfaceBlock>();
+        Keys[] lastKeys = new Keys[0];
+        ContextMenu contextMenu = null;
+
+        /// <summary>
+        /// Stores how the left and right button were last update
+        /// </summary>
+        bool lastLeftButtonClicked = false;
+        bool lastRightButtonClicked = false;
+
+        /// <summary>
+        /// Holds the interface text feedback which needs to be displayed
+        /// </summary>
+        List<InterfaceTextFeedback> interfaceTextFeedback = new List<InterfaceTextFeedback>();
 
         #endregion
 
@@ -50,8 +72,8 @@ namespace Divine_Right
             this.Window.Title = "Divine Right M 0 V 0";
             graphics = new GraphicsDeviceManager(this);
 
-            graphics.PreferredBackBufferWidth = 900;
-            graphics.PreferredBackBufferHeight = 500;
+            graphics.PreferredBackBufferWidth = WINDOWWIDTH;
+            graphics.PreferredBackBufferHeight = WINDOWHEIGHT;
 
             Content.RootDirectory = "Content";
         }
@@ -107,7 +129,145 @@ namespace Divine_Right
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            // TODO: Add your update logic here
+            //Lets see if there are any keyboard keys being pressed
+
+            KeyboardState keyboardState = Keyboard.GetState();
+
+            //has the user pressed one of the directional keys?
+            //If yes, try to move
+
+            if (keyboardState.IsKeyDown(Keys.Up) && !lastKeys.Contains(Keys.Up))
+            {
+                //get the coordinates from the gamestate
+                MapCoordinate coord = UserInterfaceManager.GetPlayerActor().MapCharacter.Coordinate + new MapCoordinate(0, 1, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+                //move to that coordinate
+                this.PerformAction(coord, DRObjects.Enums.ActionTypeEnum.MOVE, null);
+            }
+            else if (keyboardState.IsKeyDown(Keys.Down) && !lastKeys.Contains(Keys.Down))
+            {
+                //get the coordinates from the gamestate
+                MapCoordinate coord = UserInterfaceManager.GetPlayerActor().MapCharacter.Coordinate + new MapCoordinate(0, -1, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+                //move to that coordinate
+                this.PerformAction(coord, DRObjects.Enums.ActionTypeEnum.MOVE, null);
+            }
+            else if (keyboardState.IsKeyDown(Keys.Left) && !lastKeys.Contains(Keys.Left))
+            {
+                //get the coordinates from the gamestate
+                MapCoordinate coord = UserInterfaceManager.GetPlayerActor().MapCharacter.Coordinate + new MapCoordinate(-1, 0, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+                //move to that coordinate
+                this.PerformAction(coord, DRObjects.Enums.ActionTypeEnum.MOVE, null);
+            }
+            else if (keyboardState.IsKeyDown(Keys.Right) && !lastKeys.Contains(Keys.Right))
+            {
+                //get the coordinates from the gamestate
+                MapCoordinate coord = UserInterfaceManager.GetPlayerActor().MapCharacter.Coordinate + new MapCoordinate(1, 0, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+                //move to that coordinate
+                this.PerformAction(coord, DRObjects.Enums.ActionTypeEnum.MOVE, null);
+            }
+            lastKeys = keyboardState.GetPressedKeys();
+
+            #region Mouse Handling
+
+            //See what the mouse is doing
+            MouseState mouse = Mouse.GetState();
+
+            
+            if (mouse.LeftButton == ButtonState.Released && this.lastLeftButtonClicked)
+            {
+                //left mouse button was clicked and released
+                
+                //if there is a context menu open, then we need to check whether the click was on it
+                if (contextMenu != null)
+                {
+                    ActionTypeEnum actionType = ActionTypeEnum.IDLE;
+                    MapCoordinate coord = null;
+                    object[] args = null;
+
+                    if (contextMenu.HandleClick(mouse.X, mouse.Y, out actionType, out args, out coord))
+                    {
+                        //The click was on the menu -perform the action
+
+                        PerformAction(coord, actionType, args);
+
+                        //note the mouse
+                        lastLeftButtonClicked = mouse.LeftButton == ButtonState.Pressed;
+                        lastRightButtonClicked = mouse.RightButton == ButtonState.Pressed;
+
+                        return;
+                    }
+                    //it wasn't - carry on
+                }
+                
+                
+                //determine where we clicked
+
+                if (mouse.X < PLAYABLEWIDTH)
+                {
+                    if (mouse.Y < PLAYABLEHEIGHT)
+                    {
+                        //within grid
+
+                        int xCord = (int) (mouse.X / TILEWIDTH);
+                        int yCord = (int)(mouse.Y / TILEHEIGHT);
+
+                        //get the game coordinate from the interface coordinate
+
+                        InterfaceBlock iBlock = blocks.FirstOrDefault(b => b.InterfaceX.Equals(xCord) && b.InterfaceY.Equals(yCord));
+
+                        if (iBlock != null)
+                        {
+                            PerformAction(iBlock.MapCoordinate, DRObjects.Enums.ActionTypeEnum.LOOK, null);
+                        }
+                    }
+                }
+
+            }
+
+            //what about the right mouse button?
+            if (mouse.RightButton == ButtonState.Released && this.lastRightButtonClicked)
+            {
+                //determine where we clicked
+                if (mouse.X < PLAYABLEWIDTH)
+                {
+                    if (mouse.Y < PLAYABLEHEIGHT)
+                    {
+                        //within grid
+                        int xCord = (int)(mouse.X / TILEWIDTH);
+                        int yCord = (int)(mouse.Y / TILEHEIGHT);
+
+                        //get the game coordinate from the interface
+                        InterfaceBlock iBlock = blocks.FirstOrDefault(b => b.InterfaceX.Equals(xCord) && b.InterfaceY.Equals(yCord));
+
+                        if (iBlock != null)
+                        {
+                            ActionTypeEnum[] actions = UserInterfaceManager.GetPossibleActions(iBlock.MapCoordinate);
+
+                            //do we have more than 1 item
+                            if (actions.Length == 0)
+                            {
+                                //clear the menu
+                                contextMenu = null;
+                            }
+                            else
+                            {
+                                //create a new one
+                                contextMenu = new ContextMenu(mouse.X+10, mouse.Y,iBlock.MapCoordinate);
+                                foreach (ActionTypeEnum act in actions)
+                                {
+                                    contextMenu.AddContextMenuItem(act, null, Content);
+                                }
+                            }
+                        }
+
+                    }
+                }
+
+
+            } //end mouse handling
+
+            this.lastLeftButtonClicked = (mouse.LeftButton == ButtonState.Pressed);
+            this.lastRightButtonClicked = (mouse.RightButton == ButtonState.Pressed);
+            #endregion
 
             base.Update(gameTime);
         }
@@ -128,11 +288,27 @@ namespace Divine_Right
 
             List<InterfaceBlock> iBlocks = this.PrepareGrid(blocks.ToList<GraphicalBlock>());
 
+            this.blocks = iBlocks; //copy them
+
             //draw them
             spriteBatch.Begin();
             this.DrawGrid(iBlocks);
-            spriteBatch.End();
 
+            //Draw the current log
+
+            //spriteBatch.DrawString(Content.Load<SpriteFont>(@"Fonts/TextFeedbackFont"), "Hello \n World", new Vector2(PLAYABLEWIDTH, PLAYABLEHEIGHT), Color.White);
+
+            //draw the text feedback
+            InterfaceTextManager.DrawTextFeedback(spriteBatch, Content, GraphicsDevice, this.interfaceTextFeedback);
+
+            //do we have a contextmenu to draw?
+
+            if (contextMenu != null)
+            {
+                contextMenu.DrawMenu(Content, spriteBatch);
+            }
+
+            spriteBatch.End();
             base.Draw(gameTime);
         }
 
@@ -246,6 +422,33 @@ namespace Divine_Right
                     //texture not found, lets draw the default
                     spriteBatch.Draw(defTex, rec, Color.Blue);
                 }
+            }
+
+        }
+
+        /// <summary>
+        /// Performs the action and handles feedback
+        /// </summary>
+        /// <param name="?"></param>
+        public void PerformAction(MapCoordinate coord, DRObjects.Enums.ActionTypeEnum actionType, object[] args)
+        {
+            //wipe the context menu
+            contextMenu = null;
+
+            PlayerFeedback[] fb = UserInterfaceManager.PerformAction(coord, actionType, args);
+
+            //go through all the feedback
+
+            foreach (PlayerFeedback feedback in fb)
+            {
+                if (feedback.GetType().Equals(typeof(TextFeedback)))
+                {
+                    MouseState mouse = Mouse.GetState();
+
+                    //add it to the list
+                    interfaceTextFeedback.Add(new InterfaceTextFeedback((TextFeedback) feedback,mouse.X + 25,mouse.Y));
+                }
+                //TODO: THE REST
             }
 
         }

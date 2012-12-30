@@ -26,6 +26,11 @@ namespace DRObjects.GraphicsEngineObjects
 
         }
 
+        public TextFeedback()
+        {
+
+        }
+
         public override string ToString()
         {
             return "TF: " + Text;

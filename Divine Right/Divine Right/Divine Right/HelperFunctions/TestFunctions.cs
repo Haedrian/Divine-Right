@@ -151,7 +151,7 @@ namespace Divine_Right.HelperFunctions
             item.Coordinate = new MapCoordinate(-2, 1, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
             item.Description = "The wall of a castle";
             item.Graphic = "CastleWall";
-            item.MayContainItems = true;
+            item.MayContainItems = false;
             item.InternalName = "Castle wall";
             item.Name = "Castle Wall";
 
@@ -169,6 +169,25 @@ namespace Divine_Right.HelperFunctions
             GameState.LocalMap.AddToLocalMap(block);
 
             block = new MapBlock();
+            block.Tile = new MapItem(new MapCoordinate(-3, 0, 0, DRObjects.Enums.MapTypeEnum.LOCAL));
+            block.Tile.InternalName = "Grass Tile";
+            block.Tile.Description = "A patch of Grass";
+            block.Tile.Graphic = "GrassTile";
+            block.Tile.MayContainItems = true;
+            block.Tile.Name = "Grass";
+
+            item = new MapItem();
+            item.Coordinate = new MapCoordinate(-3, 0, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+            item.Description = "A beautiful long necked creature";
+            item.Graphic = "Llama";
+            item.InternalName = "llama";
+            item.MayContainItems = false;
+            item.Name = "Llama";
+
+            block.PutItemOnBlock(item);
+            GameState.LocalMap.AddToLocalMap(block);
+
+            block = new MapBlock();
             block.Tile = new MapItem(new MapCoordinate(-2, -1, 0, DRObjects.Enums.MapTypeEnum.LOCAL));
             block.Tile.InternalName = "Grass Tile";
             block.Tile.Description = "A patch of Grass";
@@ -180,7 +199,7 @@ namespace Divine_Right.HelperFunctions
             item.Coordinate = new MapCoordinate(-2, -1, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
             item.Description = "The wall of a castle";
             item.Graphic = "CastleWall";
-            item.MayContainItems = true;
+            item.MayContainItems = false;
             item.InternalName = "Castle wall";
             item.Name = "Castle Wall";
 

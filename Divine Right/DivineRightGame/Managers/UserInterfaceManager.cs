@@ -48,10 +48,8 @@ namespace DivineRightGame.Managers
         /// Gets possible actions for a particular block
         /// </summary>
         /// <param name="coordinate"></param>
-        /// <param name="actionType"></param>
-        /// <param name="args"></param>
         /// <returns></returns>
-        public static ActionTypeEnum[] GetPossibleActions(MapCoordinate coordinate, ActionTypeEnum actionType, object[] args)
+        public static ActionTypeEnum[] GetPossibleActions(MapCoordinate coordinate)
         {
             switch (coordinate.MapType)
             {
@@ -138,6 +136,15 @@ namespace DivineRightGame.Managers
                 default:
                         throw new NotImplementedException("There is no map manager for that type");
             }
+        }
+
+        /// <summary>
+        /// Gets the Actor object which represents the player
+        /// </summary>
+        /// <returns></returns>
+        public static Actor GetPlayerActor()
+        {
+            return GameState.PlayerCharacter;
         }
 
     }
