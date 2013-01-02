@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using DivineRightGame;
 using DRObjects;
+using DivineRightGame.ItemFactory;
 
 namespace Divine_Right.HelperFunctions
 {
@@ -14,19 +15,50 @@ namespace Divine_Right.HelperFunctions
         /// </summary>
         public static void PrepareHardCodedTestMap()
         {
+            GameState.LocalMap = new LocalMap();
+
             //Player character
             DivineRightGame.GameState.PlayerCharacter = new DRObjects.Actor();
             GameState.PlayerCharacter.IsPlayerCharacter = true;
             
             //tile player is standing on
-            MapBlock playerBlock = new MapBlock();
-            playerBlock.Tile = new MapItem(new MapCoordinate(0,0,0,DRObjects.Enums.MapTypeEnum.LOCAL));
-            playerBlock.Tile.InternalName = "Wooden Tile";
-            playerBlock.Tile.Description = "Wooden Tile of Wooden Tiling";
-            playerBlock.Tile.Graphic = "WoodTile";
-            playerBlock.Tile.MayContainItems = true;
-            playerBlock.Tile.Name = "Parquet Floor";
-            
+            MapBlock block = new MapBlock();
+            ItemFactory factory = new ItemFactory();
+
+            for (int i = -15; i < 15; i++)
+            {
+                for (int j = -15; j < 15; j++)
+                {
+
+                    if (i % 2 == 0)
+                    {
+                        block = new MapBlock();
+                        block.Tile = factory.CreateItem("tile", "Wood");
+                        block.Tile.Coordinate = new MapCoordinate(i, j, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+
+                        GameState.LocalMap.AddToLocalMap(block);
+                    }
+                    else if (j % 2 == 0)
+                    {
+                        block = new MapBlock();
+                        block.Tile = factory.CreateItem("tile", "Pavement");
+                        block.Tile.Coordinate = new MapCoordinate(i, j, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+
+                        GameState.LocalMap.AddToLocalMap(block);
+                    }
+                    else
+                    {
+                        block = new MapBlock();
+                        block.Tile = factory.CreateItem("tile", "Grass");
+                        block.Tile.Coordinate = new MapCoordinate(i, j, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+
+                        GameState.LocalMap.AddToLocalMap(block);
+                    }
+                }
+            }
+
+            MapBlock playerBlock = GameState.LocalMap.GetBlockAtCoordinate(new MapCoordinate(0,0,0,DRObjects.Enums.MapTypeEnum.LOCAL));
+
             MapItem player = new MapItem();
             player.Coordinate = new MapCoordinate(0,0,0,DRObjects.Enums.MapTypeEnum.LOCAL);
             player.Description = "The player character";
@@ -39,10 +71,9 @@ namespace Divine_Right.HelperFunctions
             //player character item
 
             GameState.PlayerCharacter.MapCharacter = player;
-            GameState.LocalMap = new LocalMap();
 
-            GameState.LocalMap.AddToLocalMap(playerBlock);
-
+            //GameState.LocalMap.AddToLocalMap(playerBlock);
+            /*
             #region other blocks
 
             MapBlock block = new MapBlock();
@@ -205,9 +236,9 @@ namespace Divine_Right.HelperFunctions
 
             block.PutItemOnBlock(item);
             GameState.LocalMap.AddToLocalMap(block);
-
+            
             #endregion
-
+            */
         }
 
     }

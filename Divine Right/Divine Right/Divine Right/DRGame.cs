@@ -33,7 +33,7 @@ namespace Divine_Right
         const int TILEWIDTH = 50;
         const int TILEHEIGHT = 50;
 
-        const int PLAYABLEWIDTH = 750;
+        const int PLAYABLEWIDTH = 900;
         const int PLAYABLEHEIGHT = 450;
 
         const int TOTALTILESWIDTH = (PLAYABLEWIDTH / TILEWIDTH)-1;
@@ -281,8 +281,8 @@ namespace Divine_Right
             GraphicsDevice.Clear(Color.Black);
 
             //get the current state of the game
-            //7,4,0
-            GraphicalBlock[] blocks = UserInterfaceManager.GetBlocksAroundPlayer(7, 4, 0);
+            //11,4,0
+            GraphicalBlock[] blocks = UserInterfaceManager.GetBlocksAroundPlayer(11, 4, 0);
             
             //clean the blocks up
 
@@ -350,7 +350,7 @@ namespace Divine_Right
                     return returnList; //we're done
                 }
 
-                if (xCount < TOTALTILESWIDTH)
+                if (xCount <= TOTALTILESWIDTH)
                 {
                     //add it
                     InterfaceBlock iBlock = new InterfaceBlock(block);

@@ -1,0 +1,4 @@
+--Internal Name, Name, Description, Graphic, May Contain Items
+Wood,Parquet Floor,A Wooden Tile,WoodTile,true
+Grass,Grassy Floor,A Grassy Floor,GrassTile,true
+Pavement,Tiled Floor,A Tiled Floor,PavementTile,true
