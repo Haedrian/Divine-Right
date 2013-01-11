@@ -9,7 +9,7 @@ namespace DivineRightGame.ItemFactory.ItemFactoryManagers
 {
     public class MundaneItemsManager: IItemFactoryManager
     {
-        private const string FILENAME = "MundaneItem";
+        private const string FILENAME = "MundaneItems";
 
         public MapItem CreateItem(string internalName)
         {

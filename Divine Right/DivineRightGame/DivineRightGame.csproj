@@ -104,6 +104,8 @@
     <Compile Include="ItemFactory\Object\MultiDictionary.cs" />
     <Compile Include="LocalMap.cs" />
     <Compile Include="Managers\UserInterfaceManager.cs" />
+    <Compile Include="MapFactory\MapFactoryManager.cs" />
+    <Compile Include="MapFactory\MapFileReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -112,9 +114,7 @@
       <Name>DRObjects</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="MapFactory\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>

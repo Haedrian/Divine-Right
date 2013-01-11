@@ -10,6 +10,7 @@ namespace DRObjects.Enums
     /// </summary>
     public enum InternalActionEnum
     {
+        GENERATE,
         NEW,
         SAVE,
         LOAD,

@@ -27,13 +27,13 @@ namespace Divine_Right
     {
         #region Constants
 
-        const int WIDTH = 900;
+        const int WIDTH = 950;
         const int HEIGHT = 500;
 
         const int TILEWIDTH = 50;
         const int TILEHEIGHT = 50;
 
-        const int PLAYABLEWIDTH = 900;
+        const int PLAYABLEWIDTH = 950;
         const int PLAYABLEHEIGHT = 450;
 
         const int TOTALTILESWIDTH = (PLAYABLEWIDTH / TILEWIDTH)-1;
@@ -69,7 +69,7 @@ namespace Divine_Right
 
         public DRGame()
         {
-            this.Window.Title = "Divine Right M 0 V 0";
+            this.Window.Title = "Divine Right Milestone 0 Version 4";
             graphics = new GraphicsDeviceManager(this);
 
             graphics.PreferredBackBufferWidth = WINDOWWIDTH;
@@ -90,7 +90,9 @@ namespace Divine_Right
             //TODO: for now just create a hard coded map
             //TODO: REMOVE AFTER TESTING
 
-            TestFunctions.PrepareHardCodedTestMap();
+            //TestFunctions.PrepareHardCodedTestMap();
+
+            TestFunctions.PrepareFileTestMap();
 
             IsMouseVisible = true;
 
@@ -282,8 +284,7 @@ namespace Divine_Right
 
             //get the current state of the game
             //11,4,0
-            GraphicalBlock[] blocks = UserInterfaceManager.GetBlocksAroundPlayer(11, 4, 0);
-            
+            GraphicalBlock[] blocks = UserInterfaceManager.GetBlocksAroundPlayer((TOTALTILESWIDTH/2), (TOTALTILESHEIGHT/2), 0);
             //clean the blocks up
 
             List<InterfaceBlock> iBlocks = this.PrepareGrid(blocks.ToList<GraphicalBlock>());

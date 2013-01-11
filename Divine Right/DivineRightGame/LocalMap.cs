@@ -86,6 +86,17 @@ namespace DivineRightGame
             }
         }
 
+        /// <summary>
+        /// Loads a local map and clears actors
+        /// MAKE SURE THAT THE RIGHT COMPARER FOR THE DICTIONARY IS BEING USED OR UNINTENDED ERRORS MAY OCCUR
+        /// </summary>
+        /// <param name="map"></param>
+        public void LoadLocalMap(Dictionary<MapCoordinate, MapBlock> map)
+        {
+            this.localGameMap = map;
+            this.actors = new List<Actor>(); //clear actors
+        }
+
         #endregion
 
     }

@@ -21,7 +21,7 @@ namespace DivineRightGame.ItemFactory
         public MapItem CreateItem(string category, string internalName)
         {
             IItemFactoryManager mgr = null;
-            switch (category)
+            switch (category.ToLower())
             {
                 case "mundaneitem":
                     mgr = new MundaneItemsManager();

@@ -5,11 +5,40 @@ using System.Text;
 using DivineRightGame;
 using DRObjects;
 using DivineRightGame.ItemFactory;
+using DivineRightGame.MapFactory;
 
 namespace Divine_Right.HelperFunctions
 {
     public static class TestFunctions
     {
+        public static void PrepareFileTestMap()
+        {
+            MapFactoryManager mgr = new MapFactoryManager();
+
+            GameState.LocalMap = new LocalMap();
+
+            GameState.LocalMap.LoadLocalMap(mgr.GetMap("testmap"));
+
+            //Add player character
+            //Player character
+            DivineRightGame.GameState.PlayerCharacter = new DRObjects.Actor();
+            GameState.PlayerCharacter.IsPlayerCharacter = true;
+
+            MapBlock block = GameState.LocalMap.GetBlockAtCoordinate(new MapCoordinate(5, 5, 0, DRObjects.Enums.MapTypeEnum.LOCAL));
+            
+            MapItem player = new MapItem();
+            player.Coordinate = new MapCoordinate(5,5,0,DRObjects.Enums.MapTypeEnum.LOCAL);
+            player.Description = "The player character";
+            player.Graphic = "Player";
+            player.InternalName = "Player Char";
+            player.MayContainItems = false;
+            player.Name = "Player";
+
+            block.PutItemOnBlock(player);
+            GameState.PlayerCharacter.MapCharacter = player;
+        }
+
+        
         /// <summary>
         /// prepares a hard coded test map and puts the player in the middle
         /// </summary>
