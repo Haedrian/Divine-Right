@@ -86,12 +86,8 @@ namespace Divine_Right
         /// </summary>
         protected override void Initialize()
         {
-            
             //TODO: for now just create a hard coded map
             //TODO: REMOVE AFTER TESTING
-
-            //TestFunctions.PrepareHardCodedTestMap();
-
             TestFunctions.PrepareFileTestMap();
 
             IsMouseVisible = true;

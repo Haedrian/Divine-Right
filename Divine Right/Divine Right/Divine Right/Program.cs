@@ -10,7 +10,7 @@ namespace Divine_Right
         /// </summary>
         static void Main(string[] args)
         {
-            using (DRGame game = new DRGame())
+            using (BaseGame game = new BaseGame())
             {
                 game.Run();
             }

@@ -107,13 +107,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseGame.cs" />
+    <Compile Include="GameScreens\PlayableInterface.cs" />
     <Compile Include="GraphicalObjects\InterfaceBlock.cs" />
     <Compile Include="HelperFunctions\TestFunctions.cs" />
+    <Compile Include="InterfaceComponents\Components\ContextMenuComponent.cs" />
+    <Compile Include="InterfaceComponents\Components\ViewTileTextComponent.cs" />
+    <Compile Include="InterfaceComponents\IGameInterfaceComponent.cs" />
     <Compile Include="InterfaceComponents\Managers\InterfaceTextManager.cs" />
     <Compile Include="InterfaceComponents\Objects\ContextMenu.cs" />
     <Compile Include="InterfaceComponents\Objects\ContextMenuItem.cs" />
     <Compile Include="InterfaceComponents\Objects\CurrentLog.cs" />
     <Compile Include="InterfaceComponents\Objects\CurrentLogItem.cs" />
+    <Compile Include="InterfaceComponents\Objects\Enums\MouseActionEnum.cs" />
     <Compile Include="InterfaceComponents\Objects\InterfaceTextFeedback.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
