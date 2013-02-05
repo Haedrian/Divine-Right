@@ -12,7 +12,6 @@ using DRObjects;
 using DivineRightGame.Managers;
 using DRObjects.Enums;
 using DRObjects.GraphicsEngineObjects;
-using Divine_Right.InterfaceComponents.Managers;
 using DRObjects.GraphicsEngineObjects.Abstract;
 using Divine_Right.InterfaceComponents;
 using Divine_Right.InterfaceComponents.Objects.Enums;
@@ -434,7 +433,7 @@ namespace Divine_Right.GameScreens
                     MouseState mouse = Mouse.GetState();
 
                     //add it to the list
-                    this.interfaceComponent = new ViewTileTextComponent(mouse.X + 25, mouse.Y, (feedback as TextFeedback).Text);
+                    this.interfaceComponent = new ViewTileTextComponent(mouse.X + 15, mouse.Y, (feedback as TextFeedback).Text);
                 }
                 //TODO: THE REST
             }

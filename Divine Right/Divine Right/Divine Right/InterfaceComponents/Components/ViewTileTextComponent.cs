@@ -72,8 +72,10 @@ namespace Divine_Right.InterfaceComponents.Components
 
                 Rectangle box = new Rectangle((int)locationVector.X, (int)locationVector.Y, (int)fontVector.X + 20, (int)fontVector.Y);
 
+                Vector2 fontDrawVector = new Vector2(locationX + 10, locationY);
+
                 batch.Draw(content.Load<Texture2D>("Scroll"), box, Color.White);
-                batch.DrawString(content.Load<SpriteFont>(@"Fonts/TextFeedbackFont"), text, locationVector, Color.Black);
+                batch.DrawString(content.Load<SpriteFont>(@"Fonts/TextFeedbackFont"), text, fontDrawVector, Color.Black);
 
                 this.componentRectangle = box;
             }
