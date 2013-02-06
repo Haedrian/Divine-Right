@@ -77,8 +77,6 @@ namespace Divine_Right.GameScreens
         {
             base.Initialize();
             TestFunctions.PrepareFileTestMap();
-
-            base.Initialize();
         }
 
         protected override void LoadContent()

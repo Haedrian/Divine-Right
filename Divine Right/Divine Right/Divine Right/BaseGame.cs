@@ -35,8 +35,9 @@ namespace Divine_Right
 
             Content.RootDirectory = "Content";
 
-            PlayableInterface pI = new PlayableInterface(this,graphics);
-            this.Components.Add(pI);
+            //PlayableInterface pI = new PlayableInterface(this,graphics);
+            MainMenuScreen mI = new MainMenuScreen(this, graphics, "");
+            this.Components.Add(mI);
         }
 
         }
