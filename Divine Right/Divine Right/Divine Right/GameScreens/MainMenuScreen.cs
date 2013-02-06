@@ -6,6 +6,8 @@ using Microsoft.Xna.Framework;
 using Divine_Right.InterfaceComponents;
 using Divine_Right.InterfaceComponents.MainMenuComponents;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using DRObjects.Enums;
 
 namespace Divine_Right.GameScreens
 {
@@ -36,9 +38,11 @@ namespace Divine_Right.GameScreens
         public override void Initialize()
         {
             base.Initialize();
-            MainMenuButton button = new MainMenuButton("I love my Gabza", game.Content, DRObjects.Enums.InternalActionEnum.NEW, new object[0], 450, 250);
 
-            components.Add(button);
+            //add the buttons
+            components.Add(new AutoSizeButton("Generate World", game.Content, DRObjects.Enums.InternalActionEnum.GENERATE, new object[0], 450, 150));
+            components.Add(new AutoSizeButton("Continue Game", game.Content, DRObjects.Enums.InternalActionEnum.LOAD, new object[0], 450, 200));
+            components.Add(new AutoSizeButton("Credits", game.Content, DRObjects.Enums.InternalActionEnum.NEW, new object[0], 450, 250));
         }
 
         protected override void LoadContent()
@@ -53,7 +57,18 @@ namespace Divine_Right.GameScreens
             GraphicsDevice.Clear(Color.Black);
             sprites.Begin();
 
-            
+            //draw the title
+
+            SpriteFont titleFont = game.Content.Load<SpriteFont>(@"Fonts/TitleFont");
+
+            Vector2 titleSize = titleFont.MeasureString("Divine Right");
+
+            //We want it to be in the centre
+            Rectangle titleRect = new Rectangle((int)(450-titleSize.X),(int)(50-titleSize.Y),(int)titleSize.X*2,(int)titleSize.Y*2);
+
+            Vector2 stringDraw = new Vector2(titleRect.Center.X - (titleSize.X / 2), titleRect.Center.Y - (titleSize.Y / 2));
+
+            sprites.DrawString(titleFont, "Divine Right", stringDraw, Color.SlateGray);
 
             foreach (ISystemInterfaceComponent component in components)
             {
@@ -63,6 +78,44 @@ namespace Divine_Right.GameScreens
             sprites.End();
 
  	        base.Draw(gameTime);
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+
+            //this screen only supports left mouse clicks
+
+            MouseState mouse = Mouse.GetState();
+            InternalActionEnum? action = null;
+            object[] args = null;
+
+            if (mouse.LeftButton == ButtonState.Pressed)
+            {
+                Point mousePoint = new Point(mouse.X, mouse.Y);
+
+                foreach (ISystemInterfaceComponent component in components)
+                {
+                    if (component.ReturnLocation().Contains(mousePoint))
+                    {
+                        //handle it
+                        if (component.HandleClick(mouse.X, mouse.Y,out action,out args))
+                        {
+                            break;
+                            
+                        }
+                    }
+
+                }
+            }
+
+            if (action != null)
+            {
+                //give it to the base game
+                BaseGame.requestedInternalAction = action;
+                BaseGame.requestedArgs = args;
+
+            }
         }
 
         #endregion

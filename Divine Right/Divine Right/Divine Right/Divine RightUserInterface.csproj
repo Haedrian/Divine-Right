@@ -115,7 +115,8 @@
     <Compile Include="InterfaceComponents\Components\ContextMenuComponent.cs" />
     <Compile Include="InterfaceComponents\Components\ViewTileTextComponent.cs" />
     <Compile Include="InterfaceComponents\IGameInterfaceComponent.cs" />
-    <Compile Include="InterfaceComponents\MainMenuComponents\MainMenuButton.cs" />
+    <Compile Include="InterfaceComponents\MainMenuComponents\AutoSizeButton.cs" />
+    <Compile Include="InterfaceComponents\MainMenuComponents\SystemButton.cs" />
     <Compile Include="InterfaceComponents\Objects\ContextMenuItem.cs" />
     <Compile Include="InterfaceComponents\Objects\Enums\MouseActionEnum.cs" />
     <Compile Include="InterfaceComponents\ISystemInterfaceComponent.cs" />

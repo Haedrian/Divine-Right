@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using DRObjects.Enums;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using DRObjects.Enums;
 
 namespace Divine_Right.InterfaceComponents.MainMenuComponents
 {
-    public class MainMenuButton: 
-        ISystemInterfaceComponent
+    class SystemButton:
+          ISystemInterfaceComponent
     {
         #region members
 
@@ -30,20 +30,16 @@ namespace Divine_Right.InterfaceComponents.MainMenuComponents
         /// <param name="content">The content manager</param>
         /// <param name="action">The action to perform when clicked</param>
         /// <param name="args">Arguments to pass when clicked</param>
-        /// <param name="centerX">The CENTRE of the button</param>
-        /// <param name="centreY">The CENTRE of the button</param>
-        public MainMenuButton(string text, ContentManager content,InternalActionEnum action,Object[] args, int centerX, int centreY)
+        /// <param name="drawArea">The rectangle to draw in</param>
+        public SystemButton(string text, ContentManager content,InternalActionEnum action,Object[] args, Rectangle drawArea)
         {
             this.displayText = text;
             this.action = action;
             this.args = args;
             //determine where we're drawing
             SpriteFont font = content.Load<SpriteFont>(@"Fonts/ButtonTextFont");
-            Vector2 fontVector = font.MeasureString(text);
 
-            //since this is the centre, we need to build the rectangle around it
-
-            this.drawRect = new Rectangle((int)(centerX - fontVector.X/2),(int)(centreY - fontVector.Y/2),(int)fontVector.X,(int)fontVector.Y);
+            this.drawRect = drawArea;
         }
 
         #endregion

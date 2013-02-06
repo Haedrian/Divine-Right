@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Divine_Right.GameScreens;
+using DRObjects.Enums;
 
 namespace Divine_Right
 {
@@ -20,6 +21,9 @@ namespace Divine_Right
         #region members
 
         public GraphicsDeviceManager graphics;
+        public static InternalActionEnum? requestedInternalAction = null;
+        public static object[] requestedArgs;
+
 
         #endregion
 
@@ -38,6 +42,29 @@ namespace Divine_Right
             //PlayableInterface pI = new PlayableInterface(this,graphics);
             MainMenuScreen mI = new MainMenuScreen(this, graphics, "");
             this.Components.Add(mI);
+        }
+
+        protected override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+
+            //check whetehr the requestedInternalAction is null or not
+
+            if (requestedInternalAction !=null)
+            {
+                //not null, change the screen
+
+                if (requestedInternalAction.Value == InternalActionEnum.LOAD)
+                {
+                    //todo: cleaner implementation later
+
+                    //load the main game
+                    this.Components.Clear();
+                    this.Components.Add (new PlayableInterface(this,graphics));
+                }
+
+                requestedInternalAction = null; //set it back to null
+            }
         }
 
         }
