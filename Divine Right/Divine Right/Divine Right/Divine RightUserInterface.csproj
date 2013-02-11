@@ -110,6 +110,7 @@
     <Compile Include="BaseGame.cs" />
     <Compile Include="GameScreens\MainMenuScreen.cs" />
     <Compile Include="GameScreens\PlayableInterface.cs" />
+    <Compile Include="GameScreens\WorldGenerationScreen.cs" />
     <Compile Include="GraphicalObjects\InterfaceBlock.cs" />
     <Compile Include="HelperFunctions\TestFunctions.cs" />
     <Compile Include="InterfaceComponents\Components\ContextMenuComponent.cs" />

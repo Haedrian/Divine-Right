@@ -15,6 +15,10 @@ namespace DivineRightGame
         #region Members
         private Dictionary<MapCoordinate, MapBlock> globalGameMap;
         private List<Actor> parties;
+        /// <summary>
+        /// This lock is to be used during world generation to prevent race conditions
+        /// </summary>
+        public static readonly object lockMe;
         #endregion
 
         #region Constructors

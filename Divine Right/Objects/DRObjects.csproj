@@ -107,7 +107,12 @@
     <Compile Include="MapItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Items\Archetypes\Global\" />
+    <Folder Include="Items\Archetypes\Local\" />
+    <Folder Include="Items\Tiles\Global\" />
+    <Folder Include="Items\Tiles\Local\" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <!--
