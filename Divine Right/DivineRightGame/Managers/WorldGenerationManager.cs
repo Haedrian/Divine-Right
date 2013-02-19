@@ -10,11 +10,11 @@ namespace DivineRightGame.Managers
         /// <summary>
         /// How many tiles of Width
         /// </summary>
-        public static const int WIDTH = 100;
+        public const int WIDTH = 100;
         /// <summary>
         /// How many tiles of Height
         /// </summary>
-        public static const int HEIGHT = 100;
+        public const int HEIGHT = 100;
         
         protected static bool isGenerating = false;
         /// <summary>

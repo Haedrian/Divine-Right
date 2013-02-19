@@ -5,6 +5,8 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using DRObjects;
 using Microsoft.Xna.Framework.Graphics;
+using DivineRightGame.Managers;
+using System.Threading;
 
 namespace Divine_Right.GameScreens
 {
@@ -49,8 +51,12 @@ namespace Divine_Right.GameScreens
         {
             base.Initialize();
 
-            //TODO: ACTUAL WORLD GENERATION CODE
-            //Will run on its own thread
+            ThreadStart function = new ThreadStart(WorldGenerationManager.GenerateWorld);
+            Thread thread = new Thread(function);
+
+            //Start the thread
+            thread.Start();
+
         }
 
         protected override void LoadContent()
@@ -63,8 +69,7 @@ namespace Divine_Right.GameScreens
         {
             base.Draw(gameTime);
 
-            //first we determine how long we've been doing this
-
+            
 
         }
 

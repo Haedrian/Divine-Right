@@ -382,9 +382,12 @@ namespace Divine_Right.GameScreens
                 //Start with the tile
                 try
                 {
-                    if (block.TileGraphic != string.Empty)
+                    foreach (string tileGraphic in block.TileGraphics)
                     {
-                        spriteBatch.Draw(this.game.Content.Load<Texture2D>(block.TileGraphic), rec, Color.White);
+                        if (tileGraphic != string.Empty)
+                        {
+                            spriteBatch.Draw(this.game.Content.Load<Texture2D>(tileGraphic), rec, Color.White);
+                        }
                     }
                 }
                 catch
@@ -393,13 +396,17 @@ namespace Divine_Right.GameScreens
                     spriteBatch.Draw(defTex, rec, Color.Green);
                 }
 
-                //now draw the item
+                //now draw the items
 
                 try
                 {
-                    if (block.ItemGraphic != string.Empty)
+                    if (block.ItemGraphics.Length != 0)
                     {
-                        spriteBatch.Draw(this.game.Content.Load<Texture2D>(block.ItemGraphic), rec, Color.White);
+                        //we're using reverse here so items on the top get drawn last
+                        foreach (string itemGraphic in block.ItemGraphics.Reverse())
+                        {
+                            spriteBatch.Draw(this.game.Content.Load<Texture2D>(itemGraphic), rec, Color.White);
+                        }
                     }
                 }
                 catch

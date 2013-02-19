@@ -18,18 +18,18 @@ namespace DRObjects.GraphicsEngineObjects
         /// <summary>
         /// The Graphic of the Tile
         /// </summary>
-        public string TileGraphic { get; set; }
+        public string[] TileGraphics { get; set; }
 
         /// <summary>
-        /// The Graphic of the Item to show
+        /// The Graphics of the Item to show
         /// </summary>
-        public string ItemGraphic {get;set; }
+        public string[] ItemGraphics {get;set; }
 
         #region Overridden functions
 
         public override string ToString()
         {
-            return "GB at:" + this.MapCoordinate + " " + "Item: " + ItemGraphic;
+            return "GB at:" + this.MapCoordinate + " " + "Items: " + ItemGraphics.Length;
         }
 
         #endregion

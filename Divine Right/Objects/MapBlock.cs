@@ -192,14 +192,19 @@ namespace DRObjects
         public GraphicalBlock ConvertToGraphicalBlock()
         {
             GraphicalBlock block = new GraphicalBlock();
-            block.TileGraphic = this.Tile.Graphic;
-            block.ItemGraphic = string.Empty;
+            block.TileGraphics = this.Tile.Graphics.ToArray();
+            List<string> itemGraphics = new List<string>();
 
             if (this.GetTopMapItem() != null)
             {
-                block.ItemGraphic = this.GetTopMapItem().Graphic;
+                //go through all the items and add them to the list in order
+                foreach (MapItem item in this.mapItems)
+                {
+                    itemGraphics.Add(item.Graphic);
+                }
             }
 
+            block.ItemGraphics = itemGraphics.ToArray();
             block.MapCoordinate = this.Tile.Coordinate;
 
             return block;

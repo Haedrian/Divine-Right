@@ -32,9 +32,41 @@ namespace DRObjects
         public string Description { get; set; }
 
         /// <summary>
-        /// Represents the graphic that this tile or item will be represented as
+        /// Represents the graphics that this tile will use to represent itself. 
         /// </summary>
-        public string Graphic { get; set; }
+        public virtual List<string> Graphics { get; set; }
+
+        /// <summary>
+        /// Represents the top graphic that this tile uses to represent itself. Assigning this WILL OVERWRITE the top graphic
+        /// </summary>
+        public virtual string Graphic
+        {
+            get
+            {
+                if (Graphics.Count == 0)
+                {
+                    return "";
+                }
+                else
+                {
+                    return Graphics[0];
+                }
+
+            }
+
+            set
+            {
+                if (Graphics.Count == 0)
+                {
+                    Graphics.Add(value);
+                }
+                else
+                {
+                    Graphics[0] = value;
+                }
+
+            }
+        }
 
         /// <summary>
         /// Represents the current coordinate
@@ -104,7 +136,7 @@ namespace DRObjects
         /// </summary>
         public MapItem()
         {
-
+            this.Graphics = new List<string>();
         }
 
         /// <summary>
@@ -114,6 +146,7 @@ namespace DRObjects
         public MapItem(MapCoordinate coordinate)
         {
             this.Coordinate = coordinate;
+            this.Graphics = new List<string>();
         }
 
         #endregion

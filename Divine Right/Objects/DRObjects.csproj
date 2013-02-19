@@ -102,6 +102,7 @@
     <Compile Include="Actor.cs" />
     <Compile Include="Enums\ActionTypeEnum.cs" />
     <Compile Include="Items\Tiles\Air.cs" />
+    <Compile Include="Items\Tiles\Global\GlobalTile.cs" />
     <Compile Include="MapBlock.cs" />
     <Compile Include="MapCoordinates.cs" />
     <Compile Include="MapItem.cs" />
@@ -110,7 +111,6 @@
   <ItemGroup>
     <Folder Include="Items\Archetypes\Global\" />
     <Folder Include="Items\Archetypes\Local\" />
-    <Folder Include="Items\Tiles\Global\" />
     <Folder Include="Items\Tiles\Local\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

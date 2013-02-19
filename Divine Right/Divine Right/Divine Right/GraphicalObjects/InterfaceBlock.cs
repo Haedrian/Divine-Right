@@ -24,9 +24,9 @@ namespace Divine_Right.GraphicalObjects
 
         public InterfaceBlock(GraphicalBlock block)
         {
-            this.ItemGraphic = block.ItemGraphic;
+            this.ItemGraphics = block.ItemGraphics;
             this.MapCoordinate = block.MapCoordinate;
-            this.TileGraphic = block.TileGraphic;
+            this.TileGraphics = block.TileGraphics;
         }
     }
 }
