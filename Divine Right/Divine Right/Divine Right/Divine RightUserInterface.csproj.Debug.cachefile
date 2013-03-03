@@ -10,3 +10,7 @@ Content\PavementTile.xnb
 Content\MarbleTexture.xnb
 Content\Fonts\ButtonTextFont.xnb
 Content\Fonts\TitleFont.xnb
+Content\Graphics\World\Mountain.xnb
+Content\Graphics\World\Tiles\GrassTile.xnb
+Content\Graphics\World\Tiles\WaterTile.xnb
+Content\Graphics\World\Hill.xnb

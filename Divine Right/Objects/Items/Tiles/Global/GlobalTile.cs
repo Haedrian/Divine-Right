@@ -8,19 +8,19 @@ namespace DRObjects.Items.Tiles.Global
     /// <summary>
     /// This is a special kind of map item tile which can be used for all global tiles.
     /// </summary>
-    class GlobalTile:
+    public class GlobalTile:
         MapItem
     {
         #region Constants
         /// <summary>
         /// The graphic for the mountain
         /// </summary>
-        public string MOUNTAIN = "/Graphics/World/Mountain";
-        public string HILL = "/Graphics/World/Hill";
-        public string PLAIN = "";
+        public string MOUNTAIN = @"Graphics/World/Mountain";
+        public string HILL = @"Graphics/World/Hill";
+        public string PLAIN = @"";
         
-        public string WATERTILE = "/Graphics/World/Tiles/WaterTile";
-        public string GRASSTILE = "/Graphics/World/Tiles/GrassTile";
+        public string WATERTILE = @"Graphics/World/Tiles/WaterTile";
+        public string GRASSTILE = @"Graphics/World/Tiles/GrassTile";
         #endregion
         #region members
 
@@ -31,10 +31,20 @@ namespace DRObjects.Items.Tiles.Global
         /// 255 or less is hilly
         /// anything above 255 is mountainous
         /// </summary>
-        int elevation = 0;
+        public int Elevation { get; set; }
+        /// <summary>
+        /// This represents the region this tile belongs in. Currently this is used by the world generation code only.
+        /// </summary>
+        public int Region { get; set; }
         #endregion
 
         #region Properties
+
+        public GlobalTile()
+        {
+            Elevation = 0;
+            Region = -1;
+        }
 
         public override List<string> Graphics
         {
@@ -45,7 +55,7 @@ namespace DRObjects.Items.Tiles.Global
 
                 //check the elevation and determine which graphic we'll show
 
-                if (elevation < 0)
+                if (Elevation < 0)
                 {
                     graphics.Add(WATERTILE);
                 }
@@ -55,15 +65,15 @@ namespace DRObjects.Items.Tiles.Global
                 }
 
                 //now check whether its a mountain or a hill, and put it on top
-                if (elevation > 255)
+                if (Elevation > 255)
                 {
                     graphics.Insert(0,MOUNTAIN);
                 }
-                else if (elevation <= 255 && elevation > 80)
+                else if (Elevation <= 255 && Elevation > 80)
                 {
                     graphics.Insert(0, HILL);
                 }
-                else if (elevation >= 0)
+                else if (Elevation >= 0)
                 {
                     graphics.Insert(0,PLAIN);
                 }

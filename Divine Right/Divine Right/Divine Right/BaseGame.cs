@@ -29,7 +29,7 @@ namespace Divine_Right
 
         public BaseGame()
         {
-            this.Window.Title = "Divine Right Milestone 0 Version 7";
+            this.Window.Title = "Divine Right Milestone 0 Version 8";
             graphics = new GraphicsDeviceManager(this);
 
             graphics.PreferredBackBufferWidth = WINDOWWIDTH;
@@ -61,6 +61,12 @@ namespace Divine_Right
                     //load the main game
                     this.Components.Clear();
                     this.Components.Add (new PlayableInterface(this,graphics));
+                }
+                else if (requestedInternalAction.Value == InternalActionEnum.GENERATE)
+                {
+                    //load the world gen
+                    this.Components.Clear();
+                    this.Components.Add(new WorldGenerationScreen(this, graphics));
                 }
 
                 requestedInternalAction = null; //set it back to null

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using DRObjects;
 using DRObjects.Compare;
+using DRObjects.Items.Tiles.Global;
 
 namespace DivineRightGame
 {
@@ -13,19 +14,25 @@ namespace DivineRightGame
     public class GlobalMap
     {
         #region Members
-        private Dictionary<MapCoordinate, MapBlock> globalGameMap;
+        private MapBlock[,] globalGameMap;
         private List<Actor> parties;
+        private int worldSize;
         /// <summary>
         /// This lock is to be used during world generation to prevent race conditions
         /// </summary>
-        public static readonly object lockMe;
+        public static readonly object lockMe = new object();
         #endregion
 
         #region Constructors
 
-        public GlobalMap()
+        /// <summary>
+        /// Creates a new global map of a particular size
+        /// </summary>
+        /// <param name="size"></param>
+        public GlobalMap(int size)
         {
-            this.globalGameMap = new Dictionary<MapCoordinate, MapBlock>(new MapCoordinateCompare());
+            this.worldSize = size;
+            this.globalGameMap = new MapBlock[size,size];
             this.parties = new List<Actor>();
         }
         /// <summary>
@@ -34,7 +41,7 @@ namespace DivineRightGame
         /// <param name="block"></param>
         public void AddToGlobalMap(MapBlock block)
         {
-            //Does it belong on the local map?
+            //Does it belong on the global map?
             MapCoordinate coord = block.Tile.Coordinate;
 
             if (coord.MapType != DRObjects.Enums.MapTypeEnum.GLOBAL)
@@ -42,11 +49,18 @@ namespace DivineRightGame
                 //Error
                 throw new Exception("The map block is not for a global map");
             }
-            else 
+            else
+                if (coord.X >= worldSize || coord.Y >= worldSize)
+                {
+                    //error
+                    throw new Exception("The map block is outside the bounds of the world");
+
+                }
+                else 
             {
                 try 
                 {
-                    globalGameMap.Add(block.Tile.Coordinate,block);
+                    globalGameMap[coord.X,coord.Y] = block ;
                 }
                 catch (Exception ex)
                 {
@@ -76,15 +90,43 @@ namespace DivineRightGame
         /// <returns></returns>
         public MapBlock GetBlockAtCoordinate(MapCoordinate coordinate)
         {
-            if (this.globalGameMap.ContainsKey(coordinate))
+
+            if (coordinate.X < 0 || coordinate.Y < 0)
             {
-                return this.globalGameMap[coordinate];
+                //out of range, send an airtile
+                //doesn't exist, send an air block.
+                MapBlock airBlock = new MapBlock();
+                airBlock.Tile = new GlobalTile();
+                airBlock.Tile.Graphic = string.Empty;
+                airBlock.Tile.Coordinate = coordinate;
+
+                return airBlock;
+
+            }
+
+            if (this.globalGameMap == null || coordinate.X >= worldSize || coordinate.Y >= worldSize)
+            {
+                //out of range, send an airtile
+                //doesn't exist, send an air block.
+                MapBlock airBlock = new MapBlock();
+                airBlock.Tile = new GlobalTile();
+                airBlock.Tile.Coordinate = coordinate;
+
+                return airBlock;
+
+            }
+
+            if (this.globalGameMap[coordinate.X, coordinate.Y] != null)
+            {
+
+                return this.globalGameMap[coordinate.X, coordinate.Y];
             }
             else
             {
                 //doesn't exist, send an air block.
                 MapBlock airBlock = new MapBlock();
                 airBlock.Tile = new DRObjects.Items.Tiles.Air(coordinate);
+                airBlock.Tile.Coordinate = coordinate;
 
                 return airBlock;
             }
