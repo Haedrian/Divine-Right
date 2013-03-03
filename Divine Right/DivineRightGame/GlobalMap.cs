@@ -94,10 +94,8 @@ namespace DivineRightGame
             if (coordinate.X < 0 || coordinate.Y < 0)
             {
                 //out of range, send an airtile
-                //doesn't exist, send an air block.
                 MapBlock airBlock = new MapBlock();
-                airBlock.Tile = new GlobalTile();
-                airBlock.Tile.Graphic = string.Empty;
+                airBlock.Tile = new MapItem();
                 airBlock.Tile.Coordinate = coordinate;
 
                 return airBlock;
@@ -109,7 +107,7 @@ namespace DivineRightGame
                 //out of range, send an airtile
                 //doesn't exist, send an air block.
                 MapBlock airBlock = new MapBlock();
-                airBlock.Tile = new GlobalTile();
+                airBlock.Tile = new MapItem();
                 airBlock.Tile.Coordinate = coordinate;
 
                 return airBlock;

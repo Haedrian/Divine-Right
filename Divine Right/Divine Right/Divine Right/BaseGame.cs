@@ -36,6 +36,8 @@ namespace Divine_Right
             graphics.PreferredBackBufferHeight = WINDOWHEIGHT;
 
             this.IsMouseVisible = true;
+            this.Window.AllowUserResizing = true;
+
 
             Content.RootDirectory = "Content";
 

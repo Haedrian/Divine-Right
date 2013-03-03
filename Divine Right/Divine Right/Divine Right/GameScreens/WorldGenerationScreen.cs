@@ -20,13 +20,6 @@ namespace Divine_Right.GameScreens
         #region Constants
         const int TILEWIDTH = 5;
         const int TILEHEIGHT = 5;
-
-        const int PLAYABLEWIDTH = 950;
-        const int PLAYABLEHEIGHT = 450;
-
-        const int TOTALTILESWIDTH = (PLAYABLEWIDTH / TILEWIDTH) - 1;
-        const int TOTALTILESHEIGHT = (PLAYABLEHEIGHT / TILEHEIGHT) - 1;
-
         /// <summary>
         /// The time in miliseconds for a key press to be considered
         /// </summary>
@@ -46,6 +39,46 @@ namespace Divine_Right.GameScreens
         int locationX = WorldGenerationManager.WORLDSIZE/2;
         int locationY = WorldGenerationManager.WORLDSIZE/2;
         int previousGameTime = 0;
+
+
+        int PlayableWidth
+        {
+            get
+            {
+                return GraphicsDevice.Viewport.Width;
+            }
+
+        }
+
+        int PlayableHeight
+        {
+            get
+            {
+                return GraphicsDevice.Viewport.Height - 50;
+
+            }
+
+        }
+        int TotalTilesWidth
+        {
+            get
+            {
+                return (PlayableWidth / TILEWIDTH) - 1; ;
+            }
+
+
+        }
+
+        int TotalTilesHeight
+        {
+            get
+            {
+                return (PlayableHeight / TILEHEIGHT) - 1;
+            }
+
+        }
+
+
 
         #endregion
         #region Constructor
@@ -123,7 +156,7 @@ namespace Divine_Right.GameScreens
             //lock so we can access the map
             lock (GlobalMap.lockMe)
             {
-                blocks = UserInterfaceManager.GetBlocksAroundPoint(new MapCoordinate(locationX, locationY, 0, DRObjects.Enums.MapTypeEnum.GLOBAL), TOTALTILESWIDTH / 2, TOTALTILESHEIGHT / 2, 0);
+                blocks = UserInterfaceManager.GetBlocksAroundPoint(new MapCoordinate(locationX, locationY, 0, DRObjects.Enums.MapTypeEnum.GLOBAL), TotalTilesWidth / 2, TotalTilesHeight / 2, 0);
             }
 
             List<InterfaceBlock> iBlocks = this.PrepareGrid(blocks.ToList<GraphicalBlock>());
@@ -135,7 +168,7 @@ namespace Divine_Right.GameScreens
             //lets also draw the current step and the location of the cursor
             spriteBatch.DrawString(this.game.Content.Load<SpriteFont>("Fonts/TextFeedbackFont"), this.locationX + "," + this.locationY, new Vector2(0, 0), Color.WhiteSmoke);
 
-            spriteBatch.DrawString(this.game.Content.Load<SpriteFont>("Fonts/TextFeedbackFont"), WorldGenerationManager.CurrentStep, new Vector2(0, PLAYABLEHEIGHT), Color.White);
+            spriteBatch.DrawString(this.game.Content.Load<SpriteFont>("Fonts/TextFeedbackFont"), WorldGenerationManager.CurrentStep, new Vector2(0, PlayableHeight), Color.White);
 
 
             spriteBatch.End();
@@ -176,12 +209,12 @@ namespace Divine_Right.GameScreens
                     currentYCoord = block.MapCoordinate.Y;
                 }
 
-                if (yCount > TOTALTILESHEIGHT)
+                if (yCount > TotalTilesHeight)
                 {
                     return returnList; //we're done
                 }
 
-                if (xCount <= TOTALTILESWIDTH)
+                if (xCount <= TotalTilesWidth)
                 {
                     //add it
                     InterfaceBlock iBlock = new InterfaceBlock(block);

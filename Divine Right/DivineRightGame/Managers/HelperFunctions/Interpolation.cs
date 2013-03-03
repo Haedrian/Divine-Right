@@ -17,7 +17,7 @@ namespace DivineRightGame.Managers.HelperFunctions
         public static int InverseDistanceWeighting(MapBlock block, double p, int worldSize)
         {
             Random random = new Random();
-            int sample = 50;
+            int sample = 100;
             int radius = 2;
             int x = 0;
             int y = 0;
@@ -71,7 +71,7 @@ namespace DivineRightGame.Managers.HelperFunctions
                 }
                 else 
                 { 
-                    //sum1 = resultdata[i]; 
+                    sum1 = resultdata[i]; 
                 }
             }
 
@@ -79,6 +79,75 @@ namespace DivineRightGame.Managers.HelperFunctions
             return (int)sum1;
         }
 
+        public static int NearestNeighbour(int worldSize, MapBlock block)
+        {
+            List<MapBlock> neighbourhood = new List<MapBlock>();
+
+            int x = block.Tile.Coordinate.X;
+            int y = block.Tile.Coordinate.Y;
+
+            //Populate the neighbourhood
+            if (x - 1 >= 0)
+            {
+                neighbourhood.Add(GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x - 1, y, 0, MapTypeEnum.GLOBAL)));
+
+                if (y - 1 >= 0)
+                {
+                    neighbourhood.Add(GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x - 1, y-1, 0, MapTypeEnum.GLOBAL)));
+                }
+
+                if (y + 1 > worldSize)
+                {
+                    neighbourhood.Add(GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x - 1, y + 1, 0, MapTypeEnum.GLOBAL)));
+                }
+            }
+
+            if (x + 1 < worldSize)
+            {
+                neighbourhood.Add(GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x + 1, y, 0, MapTypeEnum.GLOBAL)));
+
+                if (y - 1 >= 0)
+                {
+                    neighbourhood.Add(GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x + 1, y - 1, 0, MapTypeEnum.GLOBAL)));
+                }
+
+                if (y + 1 > worldSize)
+                {
+                    neighbourhood.Add(GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x + 1, y + 1, 0, MapTypeEnum.GLOBAL)));
+                }
+            }
+
+            if (y - 1 >= 0)
+            {
+                neighbourhood.Add(GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y-1, 0, MapTypeEnum.GLOBAL)));
+            }
+
+            if (y + 1 < worldSize)
+            {
+                neighbourhood.Add(GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y+1, 0, MapTypeEnum.GLOBAL)));
+            }          
+
+            //now sum their elevations
+
+            foreach (MapBlock nBlock in neighbourhood)
+            {
+                if ((nBlock.Tile as GlobalTile).Elevation <= -300)
+                {
+                    //weird error
+                    (nBlock.Tile as GlobalTile).Elevation = -300;
+                }
+
+            }
+
+
+            int sum = neighbourhood.Sum(mb => (mb.Tile as GlobalTile).Elevation);
+
+            //work out their average
+
+            sum /= neighbourhood.Count;
+
+            return sum;
+        }
 
     }
 }

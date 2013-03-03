@@ -15,10 +15,10 @@ namespace DivineRightGame.Managers
         /// <summary>
         /// How many tiles each side of the world
         /// </summary>
-        public const int WORLDSIZE = 100;
-        public const int EXPONENTWEIGHT = 3;
+        public const int WORLDSIZE = 250;
+        public const int EXPONENTWEIGHT = 2;
 
-        public const int REGIONSIZE = WORLDSIZE/3;
+        public const int REGIONSIZE = WORLDSIZE;
 
         protected static Region[] regions;
 
@@ -89,7 +89,7 @@ namespace DivineRightGame.Managers
 
                 for (int x = 0; x < WORLDSIZE; x++)
                 {
-                    for (int y = 0; y < WORLDSIZE/30; y++)
+                    for (int y = 0; y < WORLDSIZE/100; y++)
                     {
                         regions[0].Blocks.Add(GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x,y,0,MapTypeEnum.GLOBAL)));
                         (GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x,y,0,MapTypeEnum.GLOBAL)).Tile as GlobalTile).Region = 0;
@@ -207,11 +207,11 @@ namespace DivineRightGame.Managers
                     if (cartDistance > WORLDSIZE * 0.4 - (GetRandomGaussian() * WORLDSIZE * 0.1 + WORLDSIZE * 0.1))
                     {
 
-                        elev = random.Next(90) - 80;
+                        elev = random.Next(90) - 100;
                     }
                     else
                     {
-                        elev = random.Next(180) - 20;
+                        elev = random.Next(180);
                     }
 
                     if (Math.Abs(elev) < 10)
@@ -251,6 +251,25 @@ namespace DivineRightGame.Managers
                     }
                 }                
             
+            //and now we erode the map
+                CurrentStep = "Eroding the World";
+
+                for (int x = 0; x < WORLDSIZE; x++)
+                {
+                    for (int y = 0; y < WORLDSIZE; y++)
+                    {
+                        //We need to smooth the nearest neighbour
+
+                        CurrentStep = "Eroding the tile " + x + "," + y;
+                        lock (GlobalMap.lockMe)
+                        {
+                            MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapTypeEnum.GLOBAL));
+
+                            (block.Tile as GlobalTile).Elevation = Interpolation.NearestNeighbour(WORLDSIZE, block);
+                        }
+
+                    }
+                }
 
             /*
             //get the coordinates
