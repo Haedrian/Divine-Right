@@ -18,7 +18,7 @@ namespace DivineRightGame.Managers
         public const int WORLDSIZE = 250;
         public const int EXPONENTWEIGHT = 2;
 
-        public const int REGIONSIZE = WORLDSIZE;
+        public const int REGIONSIZE = WORLDSIZE*2;
 
         protected static Region[] regions;
 
