@@ -17,6 +17,7 @@ namespace DivineRightGame.Managers
         /// </summary>
         public const int WORLDSIZE = 250;
         public const int EXPONENTWEIGHT = 2;
+        public const int RIVERCOUNT = 50;
 
         public const int REGIONSIZE = WORLDSIZE*2;
 
@@ -271,22 +272,72 @@ namespace DivineRightGame.Managers
                     }
                 }
 
-            /*
-            //get the coordinates
-                MapCoordinate[] coordinates = regions.Select(r => r.Center).ToArray();
-            //get the elevation
-                int[] elevation = regions.Select(r => (r.Blocks[0].Tile as GlobalTile).Elevation).ToArray();
+           //How about some rivers?
+                CurrentStep = "Running Rivers - Finding Peaks";
+
+            //We need the get the River-Count highest points on the map
             
-            //smooth out the edges of region 0
+                List<MapBlock> blocks = new List<MapBlock>();
 
-                foreach (MapBlock block in regions[0].Blocks)
+                //Lets take the highest point of each region
+                foreach (Region region in regions)
                 {
+                    blocks.AddRange(region.Blocks.OrderByDescending(b => (b.Tile as GlobalTile).Elevation).Take(1));
+                }
+                
+                //now take the top River-Count
 
+                foreach (MapBlock block in blocks.OrderByDescending(b => (b.Tile as GlobalTile).Elevation).Take(RIVERCOUNT))
+                {
+                    CurrentStep = "Running River";
 
+                    //Start at the highest point, go around it and find the smallest point
 
+                    GlobalTile currentTile = (block.Tile as GlobalTile);
+                    GlobalTile nextTile = null;
+                    bool run = true;
+
+                    while (run)
+                    {
+                        //find the next tile - the smallest point around it.
+                        nextTile = null;
+
+                        List<GlobalTile> surroundingTiles = new List<GlobalTile>();
+
+                        for (int x = -1; x <= 1; x++)
+                        {
+                            for (int y = -1; y <= 1; y++)
+                            {
+                                surroundingTiles.Add((GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(currentTile.Coordinate.X + x, currentTile.Coordinate.Y + y, 0, MapTypeEnum.GLOBAL)).Tile as GlobalTile));
+                            }
+                        }
+
+                        //now pick the smallest tile
+                        nextTile = surroundingTiles.OrderBy(st => st.Elevation).FirstOrDefault();
+
+                        //check whether this tile has a river, or is water
+
+                        if (nextTile.HasRiver || nextTile.Elevation <= 0)
+                        {
+                            //stop
+                            run = false;
+                        }
+                        else if (nextTile.Elevation > currentTile.Elevation)
+                        {
+                                //Can't go up a slope - stop
+                                run = false;
+                        }
+                        else 
+                        {
+                            //Valid. Give the next tile a river
+                            nextTile.HasRiver = true;
+
+                            //swap them
+                            currentTile = nextTile;
+                        }
+                    }
                 }
 
-             */
             CurrentStep = "Done :) ";
 
 
@@ -312,7 +363,6 @@ namespace DivineRightGame.Managers
             return randNormal;
 
         }
-
 
 #endregion
 

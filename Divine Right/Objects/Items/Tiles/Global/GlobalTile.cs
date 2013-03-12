@@ -21,6 +21,8 @@ namespace DRObjects.Items.Tiles.Global
         
         public string WATERTILE = @"Graphics/World/Tiles/WaterTile";
         public string GRASSTILE = @"Graphics/World/Tiles/GrassTile";
+
+        public string RIVER = @"Graphics/World/Tiles/WaterTile";
         #endregion
         #region members
 
@@ -36,6 +38,11 @@ namespace DRObjects.Items.Tiles.Global
         /// This represents the region this tile belongs in. Currently this is used by the world generation code only.
         /// </summary>
         public int Region { get; set; }
+
+        /// <summary>
+        /// Does it have a river?
+        /// </summary>
+        public bool HasRiver { get; set; }
         #endregion
 
         #region Properties
@@ -76,6 +83,13 @@ namespace DRObjects.Items.Tiles.Global
                 else if (Elevation >= 0)
                 {
                     graphics.Insert(0,PLAIN);
+                }
+
+                //Do we have a river?
+
+                if (HasRiver)
+                {
+                    graphics.Insert(0, RIVER);
                 }
 
                 return graphics;
