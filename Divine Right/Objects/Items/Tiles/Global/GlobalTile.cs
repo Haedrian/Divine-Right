@@ -15,14 +15,14 @@ namespace DRObjects.Items.Tiles.Global
         /// <summary>
         /// The graphic for the mountain
         /// </summary>
-        public string MOUNTAIN = @"Graphics/World/Mountain";
-        public string HILL = @"Graphics/World/Hill";
         public string PLAIN = @"";
         
         public string WATERTILE = @"Graphics/World/Tiles/WaterTile";
         public string GRASSTILE = @"Graphics/World/Tiles/GrassTile";
 
-        public string RIVER = @"Graphics/World/Tiles/WaterTile";
+        public string RIVER = @"Graphics/World/River";
+
+        public string CONTOUR = @"Graphics/World/Hill";
         #endregion
         #region members
 
@@ -43,6 +43,11 @@ namespace DRObjects.Items.Tiles.Global
         /// Does it have a river?
         /// </summary>
         public bool HasRiver { get; set; }
+
+        /// <summary>
+        /// Do we draw a contour on this tile?
+        /// </summary>
+        public bool HasContour { get; set; }
         #endregion
 
         #region Properties
@@ -71,18 +76,11 @@ namespace DRObjects.Items.Tiles.Global
                     graphics.Add(GRASSTILE);
                 }
 
-                //now check whether its a mountain or a hill, and put it on top
-                if (Elevation > 255)
+                //Do we draw a contour
+
+                if (HasContour)
                 {
-                    graphics.Insert(0,MOUNTAIN);
-                }
-                else if (Elevation <= 255 && Elevation > 80)
-                {
-                    graphics.Insert(0, HILL);
-                }
-                else if (Elevation >= 0)
-                {
-                    graphics.Insert(0,PLAIN);
+                    graphics.Insert(0, CONTOUR);
                 }
 
                 //Do we have a river?
@@ -91,6 +89,7 @@ namespace DRObjects.Items.Tiles.Global
                 {
                     graphics.Insert(0, RIVER);
                 }
+
 
                 return graphics;
             }

@@ -287,8 +287,12 @@ namespace DivineRightGame.Managers
                 
                 //now take the top River-Count
 
-                foreach (MapBlock block in blocks.OrderByDescending(b => (b.Tile as GlobalTile).Elevation).Take(RIVERCOUNT))
+                List<MapBlock> blocksToProcess = blocks.OrderByDescending(b => (b.Tile as GlobalTile).Elevation).Take(RIVERCOUNT).ToList();
+
+                for (int i=0; i < blocksToProcess.Count; i++)
                 {
+                    MapBlock block = blocksToProcess[i];
+
                     CurrentStep = "Running River";
 
                     //Start at the highest point, go around it and find the smallest point
@@ -312,12 +316,12 @@ namespace DivineRightGame.Managers
                             }
                         }
 
-                        //now pick the smallest tile
-                        nextTile = surroundingTiles.OrderBy(st => st.Elevation).FirstOrDefault();
+                        //now pick the smallest tile which has no river
+                        nextTile = surroundingTiles.Where(st => !st.HasRiver).OrderBy(st => st.Elevation).FirstOrDefault();
 
                         //check whether this tile has a river, or is water
 
-                        if (nextTile.HasRiver || nextTile.Elevation <= 0)
+                        if (nextTile == null || nextTile.Elevation <= 0)
                         {
                             //stop
                             run = false;
@@ -332,8 +336,52 @@ namespace DivineRightGame.Managers
                             //Valid. Give the next tile a river
                             nextTile.HasRiver = true;
 
+                            //if the difference in elevations is larger than 75 - the river forms a delta
+                            if (currentTile.Elevation - nextTile.Elevation >= 75)
+                            {
+                                //process seperatly
+                                blocksToProcess.Add(block);
+                            }
+
+
                             //swap them
                             currentTile = nextTile;
+                        }
+                    }
+                }
+
+                CurrentStep = "Drawing Contours";
+
+            //we need to go through them one at a time
+
+                for (int x = 0; x < WORLDSIZE; x++)
+                {
+                    for (int y = 0; y < WORLDSIZE; y++)
+                    {
+                        MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x,y,0,MapTypeEnum.GLOBAL));
+
+                        List<GlobalTile> surroundingTiles = new List<GlobalTile>();
+                        //is the block underwater?
+
+                        if ((block.Tile as GlobalTile).Elevation > 0)
+                        {
+                            //no, we can contour it
+                            //look around this block, are there any other blocks which have an elevation +ve difference of 50 or more?
+                            for (int x2 = -1; x2 <= 1; x2++)
+                            {
+                                for (int y2 = -1; y2 <= 1; y2++)
+                                {
+                                    surroundingTiles.Add((GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(block.Tile.Coordinate.X + x2, block.Tile.Coordinate.Y + y2, 0, MapTypeEnum.GLOBAL)).Tile as GlobalTile));
+                                }
+                            }
+
+                            //now we check the top one
+                            if (surroundingTiles.OrderByDescending(st => st.Elevation).FirstOrDefault().Elevation > (block.Tile as GlobalTile).Elevation +25)
+                            {
+                                //it is - mark this tile as a contour
+                                (block.Tile as GlobalTile).HasContour = true;
+                            }
+
                         }
                     }
                 }

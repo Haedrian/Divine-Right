@@ -15,4 +15,8 @@ Content\Graphics\World\Tiles\GrassTile.xnb
 Content\Graphics\World\Tiles\WaterTile.xnb
 Content\Graphics\World\Hill.xnb
 Content\Graphics\World\River.xnb
+Content\Graphics\World\Tiles\GrassTileHigh.xnb
+Content\Graphics\World\Tiles\GrassTileHigher.xnb
+Content\Graphics\World\Tiles\GrassTilePeak.xnb
+Content\Graphics\World\Tiles\WaterTileDeep.xnb
 App.config

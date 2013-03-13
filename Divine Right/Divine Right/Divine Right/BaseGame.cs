@@ -29,7 +29,7 @@ namespace Divine_Right
 
         public BaseGame()
         {
-            this.Window.Title = "Divine Right Milestone 0 Version 10";
+            this.Window.Title = "Divine Right Milestone 0 Version 11";
             graphics = new GraphicsDeviceManager(this);
 
             graphics.PreferredBackBufferWidth = WINDOWWIDTH;

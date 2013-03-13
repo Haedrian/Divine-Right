@@ -129,7 +129,16 @@ namespace DivineRightGame.Managers
             {
                 case (DRObjects.Enums.MapTypeEnum.GLOBAL)
                 :
-                        return GameState.GlobalMap.GetBlockAtCoordinate(point).ConvertToGraphicalBlock();   
+                    try
+                    {
+                        return GameState.GlobalMap.GetBlockAtCoordinate(point).ConvertToGraphicalBlock();
+                    }
+                    catch
+                    {//send an empty one
+                        GraphicalBlock block = new GraphicalBlock();
+                        block.MapCoordinate = point;
+                        return block;
+                    }
                 case (DRObjects.Enums.MapTypeEnum.LOCAL)
                 :
                         return GameState.LocalMap.GetBlockAtCoordinate(point).ConvertToGraphicalBlock();
