@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DRObjects.Enums;
 
 namespace DRObjects.Items.Tiles.Global
 {
@@ -101,6 +102,58 @@ namespace DRObjects.Items.Tiles.Global
 
         #endregion
 
+        #region Functions
+
+        public string GetGraphicsByOverlay(GlobalOverlay overlay)
+        {
+            string BROWN = @"Graphics/World/Overlay/Regions/Brown";
+            string GREEN = @"Graphics/World/Overlay/Regions/Green";
+            string ORANGE = @"Graphics/World/Overlay/Regions/Orange";
+            string PINK = @"Graphics/World/Overlay/Regions/Pink";
+            string PURPLE = @"Graphics/World/Overlay/Regions/Purple";
+            string RED = @"Graphics/World/Overlay/Regions/Red";
+            string YELLOW = @"Graphics/World/Overlay/Regions/Yellow";
+
+            if (overlay.Equals(GlobalOverlay.NONE))
+            {
+                return "";
+            }
+
+            else if (overlay.Equals(GlobalOverlay.REGION))
+            {
+                //if the elevation is underwater, nothing
+                if (this.Elevation < 0)
+                {
+                    return "";
+                }
+
+                //otherwise, depending on the region number, colour them
+                switch (Region % 7)
+                {
+                    case 0: return BROWN;
+                    case 1: return GREEN;
+                    case 2: return ORANGE;
+                    case 3: return PINK;
+                    case 4: return PURPLE;
+                    case 5: return RED;
+                    case 6: return YELLOW;
+                }
+
+                return "";
+
+            }
+
+            else
+            {
+                //todo:
+                return "";
+            }
+
+
+
+        }
+
+        #endregion
 
     }
 }

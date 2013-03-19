@@ -27,6 +27,7 @@ namespace Divine_Right.GraphicalObjects
             this.ItemGraphics = block.ItemGraphics;
             this.MapCoordinate = block.MapCoordinate;
             this.TileGraphics = block.TileGraphics;
+            this.OverlayGraphic = block.OverlayGraphic;
         }
     }
 }

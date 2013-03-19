@@ -71,8 +71,9 @@ namespace DivineRightGame.Managers
         /// <param name="xRange">How many tiles away from the centre point on the x axis will be obtained</param>
         /// <param name="yCount">How many tiles away from the centre point on the y axis will be obtained</param>
         /// <param name="zCount">How many tiles away from the centre point on the y axis will be obtained</param>
+        /// <param name="overlay">If its a global map, the overlay to apply on it</param>
         /// <returns></returns>
-        public static GraphicalBlock[] GetBlocksAroundPoint(MapCoordinate centrePoint, int xRange, int yRange, int zRange)
+        public static GraphicalBlock[] GetBlocksAroundPoint(MapCoordinate centrePoint, int xRange, int yRange, int zRange,GlobalOverlay overlay = GlobalOverlay.NONE)
         {
             int minZ = centrePoint.Z - Math.Abs(zRange);
             int maxZ = centrePoint.Z + Math.Abs(zRange);
@@ -95,7 +96,14 @@ namespace DivineRightGame.Managers
                     for (int xLoop = minX; xLoop <= maxX; xLoop++)
                     {
                         MapCoordinate coord = new MapCoordinate(xLoop, yLoop, zLoop, centrePoint.MapType);
-                        returnList.Add(GetBlockAtPoint(coord));
+                        if (overlay != GlobalOverlay.NONE)
+                        {
+                            returnList.Add(GetBlockAtPoint(coord, overlay));
+                        }
+                        else
+                        {
+                            returnList.Add(GetBlockAtPoint(coord));
+                        }
                     }
                 }
 
@@ -145,6 +153,37 @@ namespace DivineRightGame.Managers
                 default:
                         throw new NotImplementedException("There is no map manager for that type");
             }
+        }
+
+        /// <summary>
+        /// Gets a graphical block whch exists on a particular point, with a global overlay
+        /// </summary>
+        /// <param name="point"></param>
+        /// <param name="globalOverlay"></param>
+        /// <returns></returns>
+        public static GraphicalBlock GetBlockAtPoint(MapCoordinate point, GlobalOverlay globalOverlay)
+        {
+            switch (point.MapType)
+            {
+                case (DRObjects.Enums.MapTypeEnum.GLOBAL)
+                :
+                    try
+                    {
+                        return GameState.GlobalMap.GetBlockAtCoordinate(point).ConvertToGraphicalBlock(globalOverlay);
+                    }
+                    catch
+                    {//send an empty one
+                        GraphicalBlock block = new GraphicalBlock();
+                        block.MapCoordinate = point;
+                        return block;
+                    }
+                case (DRObjects.Enums.MapTypeEnum.LOCAL)
+                :
+                    return GameState.LocalMap.GetBlockAtCoordinate(point).ConvertToGraphicalBlock();
+                default:
+                    throw new NotImplementedException("There is no map manager for that type");
+            }
+
         }
 
         /// <summary>

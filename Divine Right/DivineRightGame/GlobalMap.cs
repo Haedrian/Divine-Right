@@ -5,6 +5,7 @@ using System.Text;
 using DRObjects;
 using DRObjects.Compare;
 using DRObjects.Items.Tiles.Global;
+using DRObjects.Enums;
 
 namespace DivineRightGame
 {

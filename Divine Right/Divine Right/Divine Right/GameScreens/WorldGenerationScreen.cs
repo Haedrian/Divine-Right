@@ -11,23 +11,23 @@ using Microsoft.Xna.Framework.Input;
 using DivineRightGame;
 using DRObjects.GraphicsEngineObjects;
 using Divine_Right.GraphicalObjects;
+using DRObjects.Enums;
 
 namespace Divine_Right.GameScreens
 {
     class WorldGenerationScreen : 
         DrawableGameComponent
     {
-        #region Constants
-        const int TILEWIDTH = 5;
-        const int TILEHEIGHT = 5;
+        #region Changable Values
+        private int TILEWIDTH = 10;
+        private int TILEHEIGHT = 10;
+        private GlobalOverlay OVERLAY = GlobalOverlay.NONE;
+
+        #endregion
         /// <summary>
         /// The time in miliseconds for a key press to be considered
         /// </summary>
         const int GAMEINPUTDELAY = 100;
-
-
-        #endregion
-
         #region Members
 
         protected Game game;
@@ -144,6 +144,35 @@ namespace Divine_Right.GameScreens
                 locationX+=5;
             }
 
+            if (keyboardState.IsKeyDown(Keys.OemPlus))
+            {
+                TILEWIDTH++;
+                TILEHEIGHT++;
+            }
+            else if (keyboardState.IsKeyDown(Keys.OemMinus))
+            {
+                TILEHEIGHT--;
+                TILEWIDTH--;
+            }
+
+            if (keyboardState.IsKeyDown(Keys.Tab))
+            {
+                //cycle through overlays
+                if (OVERLAY == GlobalOverlay.NONE)
+                {
+                    OVERLAY = GlobalOverlay.REGION;
+                }
+                else if (OVERLAY == GlobalOverlay.REGION)
+                {
+                    OVERLAY = GlobalOverlay.TEMPERATURE;
+                }
+                else if (OVERLAY == GlobalOverlay.TEMPERATURE)
+                {
+                    OVERLAY = GlobalOverlay.NONE;
+                }
+
+            }
+
 
         }
 
@@ -154,9 +183,11 @@ namespace Divine_Right.GameScreens
             GraphicalBlock[] blocks = null;
 
             //lock so we can access the map
+            
             lock (GlobalMap.lockMe)
             {
-                blocks = UserInterfaceManager.GetBlocksAroundPoint(new MapCoordinate(locationX, locationY, 0, DRObjects.Enums.MapTypeEnum.GLOBAL), TotalTilesWidth / 2, TotalTilesHeight / 2, 0);
+                //draw it with the region overlay for now - TODO: PICKING OVERLAY
+                blocks = UserInterfaceManager.GetBlocksAroundPoint(new MapCoordinate(locationX, locationY, 0, DRObjects.Enums.MapTypeEnum.GLOBAL), TotalTilesWidth / 2, TotalTilesHeight / 2, 0,OVERLAY);
             }
 
             List<InterfaceBlock> iBlocks = this.PrepareGrid(blocks.ToList<GraphicalBlock>());
@@ -166,7 +197,7 @@ namespace Divine_Right.GameScreens
             this.DrawGrid(iBlocks);
 
             //lets also draw the current step and the location of the cursor
-            spriteBatch.DrawString(this.game.Content.Load<SpriteFont>("Fonts/TextFeedbackFont"), this.locationX + "," + this.locationY, new Vector2(0, 0), Color.WhiteSmoke);
+            spriteBatch.DrawString(this.game.Content.Load<SpriteFont>("Fonts/TextFeedbackFont"), this.locationX + "," + this.locationY + " - " + OVERLAY.ToString(), new Vector2(0, 0), Color.WhiteSmoke);
 
             spriteBatch.DrawString(this.game.Content.Load<SpriteFont>("Fonts/TextFeedbackFont"), WorldGenerationManager.CurrentStep, new Vector2(0, PlayableHeight), Color.White);
 
@@ -293,6 +324,21 @@ namespace Divine_Right.GameScreens
                 {
                     //texture not found, lets draw the default
                     spriteBatch.Draw(defTex, rec, Color.MediumPurple);
+                }
+
+                //now draw the overlay
+
+                try
+                {
+                    if (block.OverlayGraphic != null && !block.OverlayGraphic.Equals(string.Empty))
+                    {
+                        //semi-transparent
+                        spriteBatch.Draw(this.game.Content.Load<Texture2D>(block.OverlayGraphic), rec, Color.White * 0.25f);
+                    }
+                }
+                catch
+                {
+                    //texutre not found, skip it
                 }
             }
 

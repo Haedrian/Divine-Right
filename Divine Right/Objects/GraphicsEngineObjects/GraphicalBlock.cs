@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DRObjects.Enums;
 
 namespace DRObjects.GraphicsEngineObjects
 {
@@ -26,6 +27,11 @@ namespace DRObjects.GraphicsEngineObjects
         public string[] ItemGraphics {get;set; }
 
         #region Overridden functions
+
+        /// <summary>
+        /// The overlay graphic when this graphical block was obtained when requesting an overlay
+        /// </summary>
+        public string OverlayGraphic { get; set; }
 
         public override string ToString()
         {

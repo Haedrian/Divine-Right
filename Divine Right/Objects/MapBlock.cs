@@ -5,6 +5,7 @@ using System.Text;
 using DRObjects.GraphicsEngineObjects.Abstract;
 using DRObjects.GraphicsEngineObjects;
 using DRObjects.Enums;
+using DRObjects.Items.Tiles.Global;
 
 namespace DRObjects
 {
@@ -208,6 +209,36 @@ namespace DRObjects
             block.MapCoordinate = this.Tile.Coordinate;
 
             return block;
+        }
+
+        public GraphicalBlock ConvertToGraphicalBlock(GlobalOverlay overlay)
+        {
+            GraphicalBlock block = new GraphicalBlock();
+            block.TileGraphics = this.Tile.Graphics.ToArray();
+            List<string> itemGraphics = new List<string>();
+
+            if (this.GetTopItem() != null)
+            {
+                //go through all the items and add them to the list in order
+                foreach (MapItem item in this.mapItems)
+                {
+                    itemGraphics.Add(item.Graphic);
+                }
+
+            }
+
+            block.ItemGraphics = itemGraphics.ToArray();
+            block.MapCoordinate = this.Tile.Coordinate;
+
+            //get the overlay images if its a global tile
+
+            if (this.Tile is GlobalTile)
+            {
+                block.OverlayGraphic = (this.Tile as GlobalTile).GetGraphicsByOverlay(overlay);
+            }
+
+            return block;
+
         }
 
         #endregion
