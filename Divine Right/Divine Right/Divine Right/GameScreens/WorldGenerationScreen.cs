@@ -155,24 +155,18 @@ namespace Divine_Right.GameScreens
                 TILEWIDTH--;
             }
 
-            if (keyboardState.IsKeyDown(Keys.Tab))
+            if (keyboardState.IsKeyDown(Keys.R))
             {
-                //cycle through overlays
-                if (OVERLAY == GlobalOverlay.NONE)
-                {
-                    OVERLAY = GlobalOverlay.REGION;
-                }
-                else if (OVERLAY == GlobalOverlay.REGION)
-                {
-                    OVERLAY = GlobalOverlay.TEMPERATURE;
-                }
-                else if (OVERLAY == GlobalOverlay.TEMPERATURE)
-                {
-                    OVERLAY = GlobalOverlay.NONE;
-                }
-
+                OVERLAY = GlobalOverlay.REGION;
             }
-
+            else if (keyboardState.IsKeyDown(Keys.T))
+            {
+                OVERLAY = GlobalOverlay.TEMPERATURE;
+            }
+            else if (keyboardState.IsKeyDown(Keys.N))
+            {
+                OVERLAY = GlobalOverlay.NONE;
+            }
 
         }
 
@@ -186,14 +180,13 @@ namespace Divine_Right.GameScreens
             
             lock (GlobalMap.lockMe)
             {
-                //draw it with the region overlay for now - TODO: PICKING OVERLAY
                 blocks = UserInterfaceManager.GetBlocksAroundPoint(new MapCoordinate(locationX, locationY, 0, DRObjects.Enums.MapTypeEnum.GLOBAL), TotalTilesWidth / 2, TotalTilesHeight / 2, 0,OVERLAY);
             }
 
             List<InterfaceBlock> iBlocks = this.PrepareGrid(blocks.ToList<GraphicalBlock>());
 
             //draw them
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
             this.DrawGrid(iBlocks);
 
             //lets also draw the current step and the location of the cursor
@@ -333,7 +326,7 @@ namespace Divine_Right.GameScreens
                     if (block.OverlayGraphic != null && !block.OverlayGraphic.Equals(string.Empty))
                     {
                         //semi-transparent
-                        spriteBatch.Draw(this.game.Content.Load<Texture2D>(block.OverlayGraphic), rec, Color.White * 0.25f);
+                        spriteBatch.Draw(this.game.Content.Load<Texture2D>(block.OverlayGraphic), rec, Color.White * 0.75f);
                     }
                 }
                 catch

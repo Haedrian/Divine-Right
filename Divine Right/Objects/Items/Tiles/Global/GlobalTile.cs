@@ -16,14 +16,14 @@ namespace DRObjects.Items.Tiles.Global
         /// <summary>
         /// The graphic for the mountain
         /// </summary>
-        public string PLAIN = @"";
+        private const string PLAIN = @"";
         
-        public string WATERTILE = @"Graphics/World/Tiles/WaterTile";
-        public string GRASSTILE = @"Graphics/World/Tiles/GrassTile";
+        private const string WATERTILE = @"Graphics/World/Tiles/WaterTile";
+        private const string GRASSTILE = @"Graphics/World/Tiles/GrassTile";
 
-        public string RIVER = @"Graphics/World/River";
+        private const string RIVER = @"Graphics/World/River";
 
-        public string CONTOUR = @"Graphics/World/Hill";
+        private const string CONTOUR = @"Graphics/World/Hill";
         #endregion
         #region members
 
@@ -49,6 +49,17 @@ namespace DRObjects.Items.Tiles.Global
         /// Do we draw a contour on this tile?
         /// </summary>
         public bool HasContour { get; set; }
+
+        /// <summary>
+        /// Temperature of the tile in Celcius
+        /// </summary>
+        public decimal ClimateTemperature { get; set; }
+
+        /// <summary>
+        /// The amount of rainfall this tile receives
+        /// </summary>
+        public int Rainfall { get; set; }
+
         #endregion
 
         #region Properties
@@ -113,6 +124,9 @@ namespace DRObjects.Items.Tiles.Global
             string PURPLE = @"Graphics/World/Overlay/Regions/Purple";
             string RED = @"Graphics/World/Overlay/Regions/Red";
             string YELLOW = @"Graphics/World/Overlay/Regions/Yellow";
+            string INDIGO = @"Graphics/World/Overlay/Regions/Indigo";
+            string MARBLEBLUE = @"Graphics/World/Overlay/Regions/MarbleBlue";
+            string WHITE = @"Graphics/World/Overlay/Regions/White";
 
             if (overlay.Equals(GlobalOverlay.NONE))
             {
@@ -143,13 +157,44 @@ namespace DRObjects.Items.Tiles.Global
 
             }
 
-            else
+            else if (overlay.Equals(GlobalOverlay.TEMPERATURE))
             {
-                //todo:
+
+                //Don't overlay the sea
+                if (this.Elevation < 0)
+                {
+                    return "";
+                }
+
+                if (this.ClimateTemperature > 30)
+                {
+                    return RED;
+                }
+                else if (this.ClimateTemperature > 20)
+                {
+                    return ORANGE;
+                }
+                else if (this.ClimateTemperature > 10)
+                {
+                    return YELLOW;
+                }
+                else if (this.ClimateTemperature > 0)
+                {
+                    return INDIGO;
+                }
+                else if (this.ClimateTemperature > -10)
+                {
+                    return MARBLEBLUE;
+                }
+                else if (this.ClimateTemperature < -10)
+                {
+                    return WHITE;
+                }
+
                 return "";
             }
 
-
+            return "";
 
         }
 

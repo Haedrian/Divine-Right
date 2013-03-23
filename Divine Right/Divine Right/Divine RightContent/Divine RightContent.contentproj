@@ -176,7 +176,13 @@
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Compile Include="Graphics\World\Overlay\Regions\Indigo.png">
+      <Name>Indigo</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="Graphics\World\Overlay\Regions\Brown.png">
       <Name>Brown</Name>
@@ -210,6 +216,18 @@
     </Compile>
     <Compile Include="Graphics\World\Overlay\Regions\Yellow.png">
       <Name>Yellow</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Graphics\World\Overlay\Regions\MarbleBlue.png">
+      <Name>MarbleBlue</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Graphics\World\Overlay\Regions\White.png">
+      <Name>White</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

@@ -386,6 +386,43 @@ namespace DivineRightGame.Managers
                     }
                 }
 
+                CurrentStep = "Setting Temperatures";
+
+            //To set temperatures we will do the following. We will design a gaussian graph, with a max of 40 at the equator, descending with distance from it
+            //We will also set a similar graph, with a max of 0 and a min of -40 with respect to elevation.
+            //The temperature of each point will be the sum of both
+
+                for (int x = 0; x < WORLDSIZE; x++)
+                {
+                    for (int y = 0; y < WORLDSIZE; y++)
+                    {
+                        MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapTypeEnum.GLOBAL));
+
+                        //determine the temperature we'll assign it
+                        GlobalTile tile = (block.Tile as GlobalTile);
+
+                        tile.ClimateTemperature = (decimal)WorldGenerationManager.GetPointOnGaussianCurve(40, WORLDSIZE / 2, WORLDSIZE / 30, tile.Coordinate.Y);
+                            
+                            if (tile.Elevation > 0)
+                            {
+                                tile.ClimateTemperature+= (decimal) WorldGenerationManager.GetPointOnGaussianCurve(20,0,300,tile.Elevation) - 20;
+                            }
+                            else if (tile.HasRiver)
+                            {
+                                //rivers tend to be cooler
+                                tile.ClimateTemperature -= 5;
+                            }
+                            else 
+                            {
+                                //water tiles tend to be warmer in their temperature
+                                tile.ClimateTemperature+=5;
+                            }
+                    }
+
+                }
+
+
+
             CurrentStep = "Done :) ";
 
 
@@ -409,6 +446,21 @@ namespace DivineRightGame.Managers
                          0 + 1* randStdNormal; //random normal(mean,stdDev^2)
 
             return randNormal;
+
+        }
+
+        /// <summary>
+        /// Plots a gaussian curve, and returns the value of f(x) for the given x
+        /// </summary>
+        /// <param name="peak"></param>
+        /// <param name="centre"></param>
+        /// <param name="width"></param>
+        /// <param name="x"></param>
+        /// <returns></returns>
+        public static double GetPointOnGaussianCurve(double peak, double centre, double width,double x)
+        {
+            return peak * Math.Pow(Math.E, -(Math.Pow((x - centre), 2) / Math.Pow(2 * width, 2)));
+
 
         }
 
