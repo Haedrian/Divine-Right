@@ -167,6 +167,10 @@ namespace Divine_Right.GameScreens
             {
                 OVERLAY = GlobalOverlay.NONE;
             }
+            else if (keyboardState.IsKeyDown(Keys.P))
+            {
+                OVERLAY = GlobalOverlay.RAINFALL;
+            }
 
         }
 

@@ -31,8 +31,8 @@ namespace DRObjects.Items.Tiles.Global
         /// This represents the elevation of the tile, from -500 to 500.
         /// Anything less than 0, is underwater
         /// Anything less than 80 is Plain
-        /// 255 or less is hilly
-        /// anything above 255 is mountainous
+        /// 250 or less is hilly
+        /// anything above 250 is mountainous
         /// </summary>
         public int Elevation { get; set; }
         /// <summary>
@@ -58,7 +58,12 @@ namespace DRObjects.Items.Tiles.Global
         /// <summary>
         /// The amount of rainfall this tile receives
         /// </summary>
-        public int Rainfall { get; set; }
+        public decimal Rainfall { get; set; }
+
+        /// <summary>
+        /// The biome of the tile, as determined by its traits
+        /// </summary>
+        public GlobalBiome? Biome { get; set; }
 
         #endregion
 
@@ -74,6 +79,18 @@ namespace DRObjects.Items.Tiles.Global
         {
             get
             {
+                const string DESERTTILE = @"Graphics/World/Tiles/DesertTile";
+                const string SWAMPTILE = @"Graphics/World/Tiles/SwampTile";
+                const string SNOWTILE = @"Graphics/World/Tiles/SnowTile";
+                const string GARIGUETILE = @"Graphics/World/Tiles/GarigueTile";
+                const string FORESTTILE = @"Graphics/World/Tiles/ForestTile";
+
+                const string BIGTREE = @"Graphics/World/BigTree";
+                const string TREE = @"Graphics/World/Tree";
+                const string TROPICALTREE = @"Graphics/World/TropicalTree";
+
+                const string MOUNTAIN = @"Graphics/World/Mountain";
+
                 //we need to determine what kind of items we have on the tile
                 List<string> graphics = new List<string>();
 
@@ -83,16 +100,45 @@ namespace DRObjects.Items.Tiles.Global
                 {
                     graphics.Add(WATERTILE);
                 }
+                else if (Biome.HasValue)
+                {
+                    //The graphic will depend on the biome
+                    switch (this.Biome)
+                    {
+                        case GlobalBiome.ARID_DESERT:
+                            graphics.Add(DESERTTILE);
+                            break;
+                        case GlobalBiome.DENSE_FOREST:
+                            graphics.Add(BIGTREE);
+                            graphics.Add(GRASSTILE);
+                            break;
+                        case GlobalBiome.GARIGUE:
+                            graphics.Add(GARIGUETILE);
+                            break;
+                        case GlobalBiome.GRASSLAND:
+                            graphics.Add(GRASSTILE);
+                            break;
+                        case GlobalBiome.POLAR_DESERT:
+                            graphics.Add(SNOWTILE);
+                            break;
+                        case GlobalBiome.RAINFOREST:
+                            graphics.Add(TROPICALTREE);
+                            graphics.Add(FORESTTILE);
+                            break;
+                        case GlobalBiome.WETLAND:
+                            graphics.Add(SWAMPTILE);
+                            break;
+                        case GlobalBiome.WOODLAND:
+                            graphics.Add(TREE);
+                            graphics.Add(GRASSTILE);
+                            break;
+
+                    }
+                }
                 else
                 {
+                    //default
                     graphics.Add(GRASSTILE);
-                }
-
-                //Do we draw a contour
-
-                if (HasContour)
-                {
-                    graphics.Insert(0, CONTOUR);
                 }
 
                 //Do we have a river?
@@ -100,6 +146,13 @@ namespace DRObjects.Items.Tiles.Global
                 if (HasRiver)
                 {
                     graphics.Insert(0, RIVER);
+                }
+
+                //do we have a mountain?
+
+                if (Elevation > 250)
+                {
+                    graphics.Insert(0, MOUNTAIN);
                 }
 
 
@@ -127,6 +180,8 @@ namespace DRObjects.Items.Tiles.Global
             string INDIGO = @"Graphics/World/Overlay/Regions/Indigo";
             string MARBLEBLUE = @"Graphics/World/Overlay/Regions/MarbleBlue";
             string WHITE = @"Graphics/World/Overlay/Regions/White";
+            string GREYBLUEDARK = @"Graphics/World/Overlay/Regions/GreyBlueDark";
+            string GREYBLUEDARKER = @"Graphics/World/Overlay/Regions/GreyBlueDarker";
 
             if (overlay.Equals(GlobalOverlay.NONE))
             {
@@ -192,6 +247,40 @@ namespace DRObjects.Items.Tiles.Global
                 }
 
                 return "";
+            }
+
+            else if (overlay.Equals(GlobalOverlay.RAINFALL))
+            {
+
+                if (Elevation < 0)
+                {
+                    return "";
+                }
+
+                if (Rainfall > 8)
+                {
+                    //really wet
+                    return RED;
+
+                }
+                else if (Rainfall > 6)
+                {
+                    //wet
+                    return ORANGE;
+                }
+                else if (Rainfall > 4)
+                {
+                    return YELLOW;
+                }
+                else if (Rainfall > 2)
+                {
+                    return INDIGO;
+                }
+                else if (Rainfall < 2)
+                {
+                    return "";
+                }
+
             }
 
             return "";

@@ -9,6 +9,7 @@ namespace DRObjects.Enums
     {
         NONE,
         REGION,
-        TEMPERATURE
+        TEMPERATURE,
+        RAINFALL
     }
 }
