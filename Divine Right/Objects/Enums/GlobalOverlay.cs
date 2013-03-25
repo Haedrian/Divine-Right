@@ -10,6 +10,8 @@ namespace DRObjects.Enums
         NONE,
         REGION,
         TEMPERATURE,
-        RAINFALL
+        RAINFALL,
+        ELEVATION,
+        DESIRABILITY,
     }
 }

@@ -7,6 +7,7 @@ using DRObjects;
 using DRObjects.Items.Tiles.Global;
 using DRObjects.Enums;
 using DivineRightGame.Managers.HelperFunctions;
+using DRObjects.Items.Archetypes.Global;
 
 namespace DivineRightGame.Managers
 {
@@ -18,7 +19,9 @@ namespace DivineRightGame.Managers
         public const int WORLDSIZE = 250;
         public const int EXPONENTWEIGHT = 2;
         public const int RIVERCOUNT = 50;
-        public const int RAINCENTERCOUNT = WORLDSIZE/50;
+        public const int RAINCENTERCOUNT = 6;
+        public const int HUMANSETTLEMENTCOUNT = 50;
+        public const int HUMANSETTLEMENTSEARCHRADIUS = 25;
 
         public const int REGIONSIZE = WORLDSIZE*2;
 
@@ -47,7 +50,56 @@ namespace DivineRightGame.Managers
         public static void GenerateWorld()
         {
             isGenerating = true;
+            Random random = new Random();
 
+            CurrentStep = "And in the Beginning, he Pondered on what the world would become...";
+            Initialisation();
+
+            CurrentStep = "And then he decreed the world would be surrounded by a border of waters";
+            GenerateBorder();
+
+            CurrentStep = "And he pondered on the shape of the world";
+            AssignRegions();
+
+            CurrentStep = "And with a thought, the world took shape";
+            AssignRegionSizes();
+
+            CurrentStep = "And the earthquakes came, and the earth shifted";
+            RoughSmooth();          
+            
+            CurrentStep = "And then the winds came, and the world was eroded";
+            ErodeWorld();
+
+            MarkHillSlopes();
+            
+            CurrentStep = "And the rains began, and the rivers formed";
+            GenerateRivers();
+            
+            CurrentStep = "And the sun shone upon the world, and it saw heat";
+            GenerateTemperatures();
+
+            CurrentStep = "With a single word, the storms came, bringing water to the lands...";
+            GenerateRains();
+            
+            CurrentStep = "And then came life";
+            DetermineBiomes();
+
+            CurrentStep = "And then he looked upon the land and determined the desires of man";
+            DetermineDesirability();
+
+            CurrentStep = "And the humans came and they colonised the land";
+            ColoniseWorld();
+
+            CurrentStep = "And thus the world was done";
+        }
+
+        #region World Generation Functions
+
+        /// <summary>
+        /// Initialises the World Map in preperation. Creates the regions with empty ones, and sets the default tile settings
+        /// </summary>
+        private static void Initialisation()
+        {
             //start the map
             GameState.GlobalMap = new GlobalMap(WORLDSIZE);
 
@@ -60,53 +112,64 @@ namespace DivineRightGame.Managers
                 regions[i] = new Region();
             }
 
-                //populate the world map with a number of tiles with an elevation of 40
+            //populate the world map with a number of tiles with an elevation of 40
 
-                CurrentStep = "And in the Beginning, he Pondered on what the world would become...";
 
-                for (int x = 0; x < WORLDSIZE; x++)
-                {
-                    lock (GlobalMap.lockMe)
-                    { //this is rather inefficient, but it will allow the interface to draw something
-                        //CurrentStep = "Populating Tiles for line :" + x;
+            for (int x = 0; x < WORLDSIZE; x++)
+            {
+                lock (GlobalMap.lockMe)
+                { //this is rather inefficient, but it will allow the interface to draw something
+                    //CurrentStep = "Populating Tiles for line :" + x;
 
                     for (int y = 0; y < WORLDSIZE; y++)
                     {
                         MapBlock block = new MapBlock();
                         block.Tile = new GlobalTile();
                         block.Tile.Coordinate = new MapCoordinate(x, y, 0, MapTypeEnum.GLOBAL);
-                        (block.Tile as GlobalTile).Elevation = 40;
+
+                        GlobalTile gTile = (block.Tile as GlobalTile);
+                        gTile.Elevation = 40;
+                        gTile.ClimateTemperature = 0;
+                        gTile.HasHillSlope = false;
+                        gTile.HasRiver = false;
+                        gTile.Rainfall = 0;
 
                         GameState.GlobalMap.AddToGlobalMap(block);
                     }
-                    }
                 }
-            
+            }
+
+
+
+        }
+        /// <summary>
+        /// Generates the border, and sets the elevation to underwater
+        /// </summary>
+        private static void GenerateBorder()
+        {
 
             lock (GlobalMap.lockMe)
             {
                 //set region 0, this is the border of the map
 
-                CurrentStep = "And then he decreed the world would be surrounded by a border of waters";
-
                 for (int x = 0; x < WORLDSIZE; x++)
                 {
-                    for (int y = 0; y < WORLDSIZE/100; y++)
+                    for (int y = 0; y < WORLDSIZE / 100; y++)
                     {
-                        regions[0].Blocks.Add(GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x,y,0,MapTypeEnum.GLOBAL)));
-                        (GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x,y,0,MapTypeEnum.GLOBAL)).Tile as GlobalTile).Region = 0;
+                        regions[0].Blocks.Add(GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapTypeEnum.GLOBAL)));
+                        (GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapTypeEnum.GLOBAL)).Tile as GlobalTile).Region = 0;
 
-                        regions[0].Blocks.Add(GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(y,x, 0, MapTypeEnum.GLOBAL)));
-                        (GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(y,x,0,MapTypeEnum.GLOBAL)).Tile as GlobalTile).Region = 0;
-                        
+                        regions[0].Blocks.Add(GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(y, x, 0, MapTypeEnum.GLOBAL)));
+                        (GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(y, x, 0, MapTypeEnum.GLOBAL)).Tile as GlobalTile).Region = 0;
+
                         regions[0].Blocks.Add(GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(WORLDSIZE - 1 - y, x, 0, MapTypeEnum.GLOBAL)));
-                        (GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(WORLDSIZE - 1 - y,x,0,MapTypeEnum.GLOBAL)).Tile as GlobalTile).Region = 0;
-                        
-                        regions[0].Blocks.Add(GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x,WORLDSIZE - 1 - y, 0, MapTypeEnum.GLOBAL)));
-                        (GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x,WORLDSIZE - 1 - y,0,MapTypeEnum.GLOBAL)).Tile as GlobalTile).Region = 0;
+                        (GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(WORLDSIZE - 1 - y, x, 0, MapTypeEnum.GLOBAL)).Tile as GlobalTile).Region = 0;
 
-                        
-                        regions[0].Center = new MapCoordinate(-1,-1,-1,MapTypeEnum.GLOBAL);
+                        regions[0].Blocks.Add(GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, WORLDSIZE - 1 - y, 0, MapTypeEnum.GLOBAL)));
+                        (GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, WORLDSIZE - 1 - y, 0, MapTypeEnum.GLOBAL)).Tile as GlobalTile).Region = 0;
+
+
+                        regions[0].Center = new MapCoordinate(-1, -1, -1, MapTypeEnum.GLOBAL);
                     }
 
                 }
@@ -124,12 +187,17 @@ namespace DivineRightGame.Managers
                     (regions[0].Blocks[i].Tile as GlobalTile).Elevation = -100;
                 }
             }
-
+        }
+        /// <summary>
+        /// Assigns each location to a different region
+        /// </summary>
+        private static void AssignRegions()
+        {
             Random random = new Random();
 
             lock (GlobalMap.lockMe)
             {
-                CurrentStep = "Then he pondered on the regions the world would have";
+                
                 //setting the region centres - 0 doesn't count
                 for (int i = 1; i < regions.Length; i++)
                 {
@@ -153,265 +221,272 @@ namespace DivineRightGame.Managers
                  }
             }
 
-
-                CurrentStep = "And he pondered on the shape of the world";
-                for (int x = 0; x < WORLDSIZE; x++)
-                {
-                    int assignedRegion = -1;
-
-                    for (int y = 0; y < WORLDSIZE; y++)
-                    {
-                        //populate the regions
-                        lock (GlobalMap.lockMe)
-                        {
-                           // CurrentStep = "And thus the Point " + x + "," + y + " was grouped with its brethren";
-
-                            //Is this tile already in a region?
-
-                            MapCoordinate currentCoordinate = new MapCoordinate(x, y, 0, MapTypeEnum.GLOBAL);
-
-                            MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(currentCoordinate);
-                            //Find the closest region to the current unassigned block
-
-                            if ((block.Tile as GlobalTile).Region.Equals(-1))
-                            {
-                                double minDistance = WORLDSIZE * WORLDSIZE;
-
-                                for (int i = 1; i <= REGIONSIZE; i++)
-                                {
-                                    double distance = Math.Abs(currentCoordinate - regions[i].Center);
-
-                                    if (distance <= minDistance)
-                                    {
-                                        minDistance = distance;
-                                        assignedRegion = i;
-                                        //this is the smallest region
-                                    }
-
-                                }
-                                regions[assignedRegion].Blocks.Add(block);
-                                (block.Tile as GlobalTile).Region = assignedRegion;
-                            }
-                        }
-                    }
-                }
-
-            //now we set random elevations for different regions
-
-                CurrentStep = "And with a thought, the world took shape";
-                for (int i = 1; i <= REGIONSIZE; i++)
-                {
-                    MapCoordinate regionCentre = regions[i].Center;
-                    int elev;
-
-                    double cartDistance = Math.Sqrt(Math.Pow(WORLDSIZE/2 - regionCentre.X,2) + Math.Pow(WORLDSIZE/2 - regionCentre.Y,2));
-
-                    if (cartDistance > WORLDSIZE * 0.4 - (GetRandomGaussian() * WORLDSIZE * 0.1 + WORLDSIZE * 0.1))
-                    {
-
-                        elev = random.Next(90) - 100;
-                    }
-                    else
-                    {
-                        elev = random.Next(180);
-                    }
-
-                    if (Math.Abs(elev) < 10)
-                    {
-                        elev = elev * 10;
-                    }
-
-
-                    foreach (MapBlock block in regions[i].Blocks)
-                    {
-                       // CurrentStep = "Setting elevation for block  " + block.Tile.Coordinate.X + " " + block.Tile.Coordinate.Y;
-                        lock (GlobalMap.lockMe)
-                        {
-                            (block.Tile as GlobalTile).Elevation = (int) Math.Round((double) elev);
-                        }
-
-
-                    }
-
-                }
-
-            //now we smooth the map
-                CurrentStep = "And the earthquakes came, and the earth shifted";
-            
-                for (int x = 0; x < WORLDSIZE; x++)
-                {
-                    for (int y = 0; y < WORLDSIZE; y++)
-                    {
-                        //CurrentStep = "And the tile " + x + "," + y + " was shifted by the earth";
-
-                        MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x,y,0,MapTypeEnum.GLOBAL));
-                        
-                        lock (GlobalMap.lockMe)
-                        {
-                            (block.Tile as GlobalTile).Elevation = Interpolation.InverseDistanceWeighting(block,EXPONENTWEIGHT,WORLDSIZE);
-                        }
-                    }
-                }                
-            
-            //and now we erode the map
-                CurrentStep = "And then the winds came, and the world was eroded";
-
-                for (int x = 0; x < WORLDSIZE; x++)
-                {
-                    for (int y = 0; y < WORLDSIZE; y++)
-                    {
-                        //We need to smooth the nearest neighbour
-
-                        //CurrentStep = "Eroding the tile " + x + "," + y;
-                        lock (GlobalMap.lockMe)
-                        {
-                            MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapTypeEnum.GLOBAL));
-
-                            (block.Tile as GlobalTile).Elevation = Interpolation.NearestNeighbour(WORLDSIZE, block);
-                        }
-
-                    }
-                }
-
-                for (int x = WORLDSIZE-1; x >= 0; x--)
-                {
-                    for (int y = 0; y < WORLDSIZE; y++)
-                    {
-                        //We need to smooth the nearest neighbour
-
-                        //CurrentStep = "Eroding the tile " + x + "," + y;
-                        lock (GlobalMap.lockMe)
-                        {
-                            MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapTypeEnum.GLOBAL));
-
-                            (block.Tile as GlobalTile).Elevation = Interpolation.NearestNeighbour(WORLDSIZE, block);
-                        }
-
-                    }
-                }
-
-                for (int y = WORLDSIZE - 1; y >= 0; y--)
-                {
-                    for (int x = 0; x < WORLDSIZE; x++)
-                    {
-                        //We need to smooth the nearest neighbour
-
-                        //CurrentStep = "Eroding the tile " + x + "," + y;
-                        lock (GlobalMap.lockMe)
-                        {
-                            MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapTypeEnum.GLOBAL));
-
-                            (block.Tile as GlobalTile).Elevation = Interpolation.NearestNeighbour(WORLDSIZE, block);
-                        }
-
-                    }
-                }
+            for (int x = 0; x < WORLDSIZE; x++)
+            {
+                int assignedRegion = -1;
 
                 for (int y = 0; y < WORLDSIZE; y++)
                 {
-                    for (int x = WORLDSIZE-1; x >= 0; x--)
+                    //populate the regions
+                    lock (GlobalMap.lockMe)
                     {
-                        //We need to smooth the nearest neighbour
+                        //Is this tile already in a region?
 
-                        //CurrentStep = "Eroding the tile " + x + "," + y;
-                        lock (GlobalMap.lockMe)
+                        MapCoordinate currentCoordinate = new MapCoordinate(x, y, 0, MapTypeEnum.GLOBAL);
+
+                        MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(currentCoordinate);
+                        //Find the closest region to the current unassigned block
+
+                        if ((block.Tile as GlobalTile).Region.Equals(-1))
                         {
-                            MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapTypeEnum.GLOBAL));
+                            double minDistance = WORLDSIZE * WORLDSIZE;
 
-                            (block.Tile as GlobalTile).Elevation = Interpolation.NearestNeighbour(WORLDSIZE, block);
+                            for (int i = 1; i <= REGIONSIZE; i++)
+                            {
+                                double distance = Math.Abs(currentCoordinate - regions[i].Center);
+
+                                if (distance <= minDistance)
+                                {
+                                    minDistance = distance;
+                                    assignedRegion = i;
+                                    //this is the smallest region
+                                }
+
+                            }
+                            regions[assignedRegion].Blocks.Add(block);
+                            (block.Tile as GlobalTile).Region = assignedRegion;
                         }
-
                     }
+                }
+            }
+
+        }
+        /// <summary>
+        /// Assigns each region a different height
+        /// </summary>
+        private static void AssignRegionSizes()
+        {
+            Random random = new Random();
+
+            for (int i = 1; i <= REGIONSIZE; i++)
+            {
+                MapCoordinate regionCentre = regions[i].Center;
+                int elev;
+
+                double cartDistance = Math.Sqrt(Math.Pow(WORLDSIZE / 2 - regionCentre.X, 2) + Math.Pow(WORLDSIZE / 2 - regionCentre.Y, 2));
+
+                if (cartDistance > WORLDSIZE * 0.4 - (GetRandomGaussian() * WORLDSIZE * 0.1 + WORLDSIZE * 0.1))
+                {
+
+                    elev = random.Next(90) - 100;
+                }
+                else
+                {
+                    elev = random.Next(180);
+                }
+
+                if (Math.Abs(elev) < 10)
+                {
+                    elev = elev * 10;
                 }
 
 
-           //How about some rivers?
-                CurrentStep = "And the rains began, and the rivers formed";
+                foreach (MapBlock block in regions[i].Blocks)
+                {
+                    // CurrentStep = "Setting elevation for block  " + block.Tile.Coordinate.X + " " + block.Tile.Coordinate.Y;
+                    lock (GlobalMap.lockMe)
+                    {
+                        (block.Tile as GlobalTile).Elevation = (int)Math.Round((double)elev);
+                    }
 
+
+                }
+
+            }
+
+        }
+        /// <summary>
+        /// Runs a rough Interpolation on the world
+        /// </summary>
+        private static void RoughSmooth()
+        {
+            for (int x = 0; x < WORLDSIZE; x++)
+            {
+                for (int y = 0; y < WORLDSIZE; y++)
+                {
+                    MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapTypeEnum.GLOBAL));
+
+                    lock (GlobalMap.lockMe)
+                    {
+                        (block.Tile as GlobalTile).Elevation = Interpolation.InverseDistanceWeighting(block, EXPONENTWEIGHT, WORLDSIZE);
+                    }
+                }
+            }      
+        }
+        /// <summary>
+        /// Erodes the world's elevation
+        /// </summary>
+        private static void ErodeWorld()
+        {
+            for (int x = 0; x < WORLDSIZE; x++)
+            {
+                for (int y = 0; y < WORLDSIZE; y++)
+                {
+                    //We need to smooth the nearest neighbour
+
+                    //CurrentStep = "Eroding the tile " + x + "," + y;
+                    lock (GlobalMap.lockMe)
+                    {
+                        MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapTypeEnum.GLOBAL));
+
+                        (block.Tile as GlobalTile).Elevation = Interpolation.NearestNeighbour(WORLDSIZE, block);
+                    }
+
+                }
+            }
+
+            for (int x = WORLDSIZE - 1; x >= 0; x--)
+            {
+                for (int y = 0; y < WORLDSIZE; y++)
+                {
+                    //We need to smooth the nearest neighbour
+
+                    //CurrentStep = "Eroding the tile " + x + "," + y;
+                    lock (GlobalMap.lockMe)
+                    {
+                        MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapTypeEnum.GLOBAL));
+
+                        (block.Tile as GlobalTile).Elevation = Interpolation.NearestNeighbour(WORLDSIZE, block);
+                    }
+
+                }
+            }
+
+            for (int y = WORLDSIZE - 1; y >= 0; y--)
+            {
+                for (int x = 0; x < WORLDSIZE; x++)
+                {
+                    //We need to smooth the nearest neighbour
+
+                    //CurrentStep = "Eroding the tile " + x + "," + y;
+                    lock (GlobalMap.lockMe)
+                    {
+                        MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapTypeEnum.GLOBAL));
+
+                        (block.Tile as GlobalTile).Elevation = Interpolation.NearestNeighbour(WORLDSIZE, block);
+                    }
+
+                }
+            }
+
+            for (int y = 0; y < WORLDSIZE; y++)
+            {
+                for (int x = WORLDSIZE - 1; x >= 0; x--)
+                {
+                    //We need to smooth the nearest neighbour
+
+                    //CurrentStep = "Eroding the tile " + x + "," + y;
+                    lock (GlobalMap.lockMe)
+                    {
+                        MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapTypeEnum.GLOBAL));
+
+                        (block.Tile as GlobalTile).Elevation = Interpolation.NearestNeighbour(WORLDSIZE, block);
+                    }
+
+                }
+            }
+        }
+        /// <summary>
+        /// Generates a number of rivers according to the maximum river count assigned
+        /// </summary>
+        private static void GenerateRivers()
+        {
             //We need the get the River-Count highest points on the map
-            
-                List<MapBlock> blocks = new List<MapBlock>();
 
-                //Lets take the highest point of each region
-                foreach (Region region in regions)
+            List<MapBlock> blocks = new List<MapBlock>();
+
+            //Lets take the highest point of each region
+            foreach (Region region in regions)
+            {
+                blocks.AddRange(region.Blocks.OrderByDescending(b => (b.Tile as GlobalTile).Elevation).Take(1));
+            }
+
+            //now take the top River-Count
+
+            List<MapBlock> blocksToProcess = blocks.OrderByDescending(b => (b.Tile as GlobalTile).Elevation).Take(RIVERCOUNT).ToList();
+
+            for (int i = 0; i < blocksToProcess.Count; i++)
+            {
+                MapBlock block = blocksToProcess[i];
+
+                //Start at the highest point, go around it and find the smallest point
+
+                GlobalTile currentTile = (block.Tile as GlobalTile);
+                GlobalTile nextTile = null;
+                bool run = true;
+
+                while (run)
                 {
-                    blocks.AddRange(region.Blocks.OrderByDescending(b => (b.Tile as GlobalTile).Elevation).Take(1));
-                }
-                
-                //now take the top River-Count
+                    //find the next tile - the smallest point around it.
+                    nextTile = null;
 
-                List<MapBlock> blocksToProcess = blocks.OrderByDescending(b => (b.Tile as GlobalTile).Elevation).Take(RIVERCOUNT).ToList();
+                    List<GlobalTile> surroundingTiles = new List<GlobalTile>();
 
-                for (int i=0; i < blocksToProcess.Count; i++)
-                {
-                    MapBlock block = blocksToProcess[i];
-
-                    CurrentStep = "And the rivers travelled to the waves or the flatter land";
-
-                    //Start at the highest point, go around it and find the smallest point
-
-                    GlobalTile currentTile = (block.Tile as GlobalTile);
-                    GlobalTile nextTile = null;
-                    bool run = true;
-
-                    while (run)
+                    for (int x = -1; x <= 1; x++)
                     {
-                        //find the next tile - the smallest point around it.
-                        nextTile = null;
-
-                        List<GlobalTile> surroundingTiles = new List<GlobalTile>();
-
-                        for (int x = -1; x <= 1; x++)
+                        for (int y = -1; y <= 1; y++)
                         {
-                            for (int y = -1; y <= 1; y++)
-                            {
-                                surroundingTiles.Add((GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(currentTile.Coordinate.X + x, currentTile.Coordinate.Y + y, 0, MapTypeEnum.GLOBAL)).Tile as GlobalTile));
-                            }
-                        }
-
-                        //now pick the smallest tile which has no river
-
-                        if (surroundingTiles.Count == 0)
-                        {
-                            run = false;
-                            break;
-                        }
-
-                        nextTile = surroundingTiles.Where(st => !st.HasRiver).OrderBy(st => st.Elevation).FirstOrDefault();
-
-                        //check whether this tile has a river, or is water
-
-                        if (nextTile == null || nextTile.Elevation <= 0)
-                        {
-                            //stop
-                            run = false;
-                        }
-                        else if (nextTile.Elevation > currentTile.Elevation)
-                        {
-                                //Can't go up a slope - stop
-                                run = false;
-                        }
-                        else 
-                        {
-                            //Valid. Give the next tile a river
-                            nextTile.HasRiver = true;
-
-                            //if the difference in elevations is larger than 75 - the river forms a delta
-                            if (currentTile.Elevation - nextTile.Elevation >= 75)
-                            {
-                                //process seperatly
-                                blocksToProcess.Add(block);
-                            }
-
-
-                            //swap them
-                            currentTile = nextTile;
+                            surroundingTiles.Add((GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(currentTile.Coordinate.X + x, currentTile.Coordinate.Y + y, 0, MapTypeEnum.GLOBAL)).Tile as GlobalTile));
                         }
                     }
-                }
-            /*
-                //CurrentStep = "Drawing Contours";
 
+                    //now pick the smallest tile which has no river
+
+                    if (surroundingTiles.Count == 0)
+                    {
+                        run = false;
+                        break;
+                    }
+
+                    nextTile = surroundingTiles.Where(st => !st.HasRiver).OrderBy(st => st.Elevation).FirstOrDefault();
+
+                    //check whether this tile has a river, or is water
+
+                    if (nextTile == null || nextTile.Elevation <= 0)
+                    {
+                        //stop
+                        run = false;
+                    }
+                    else if (nextTile.Elevation > currentTile.Elevation)
+                    {
+                        //Can't go up a slope - stop
+                        run = false;
+                    }
+                    else
+                    {
+                        //Valid. Give the next tile a river
+                        nextTile.HasRiver = true;
+
+                        //if the difference in elevations is larger than 75 - the river forms a delta
+                        if (currentTile.Elevation - nextTile.Elevation >= 75)
+                        {
+                            //process seperatly
+                            blocksToProcess.Add(block);
+                        }
+
+
+                        //swap them
+                        currentTile = nextTile;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Marks certain places as having large slopes
+        /// </summary>
+        public static void MarkHillSlopes()
+        {
             //we need to go through them one at a time
 
                 for (int x = 0; x < WORLDSIZE; x++)
@@ -435,210 +510,418 @@ namespace DivineRightGame.Managers
                                 }
                             }
 
+                            if (surroundingTiles.Count == 0)
+                            {
+                                continue;
+                            }
+
                             //now we check the top one
-                            if (surroundingTiles.OrderByDescending(st => st.Elevation).FirstOrDefault().Elevation > (block.Tile as GlobalTile).Elevation +25)
+                            if (surroundingTiles.OrderByDescending(st => st.Elevation).FirstOrDefault().Elevation > (block.Tile as GlobalTile).Elevation +50)
                             {
                                 //it is - mark this tile as a contour
-                                (block.Tile as GlobalTile).HasContour = true;
+                                (block.Tile as GlobalTile).HasHillSlope = true;
                             }
 
                         }
                     }
                 }
-             * */
+        }
 
-                CurrentStep = "And the sun shone upon the world, and it saw heat";
-
+        /// <summary>
+        /// Generates the temperatures of the world
+        /// </summary>
+        public static void GenerateTemperatures()
+        {
             //To set temperatures we will do the following. We will design a gaussian graph, with a max of 40 at the equator, descending with distance from it
             //We will also set a similar graph, with a max of 0 and a min of -40 with respect to elevation.
             //The temperature of each point will be the sum of both
 
-                for (int x = 0; x < WORLDSIZE; x++)
+            for (int x = 0; x < WORLDSIZE; x++)
+            {
+                for (int y = 0; y < WORLDSIZE; y++)
                 {
-                    for (int y = 0; y < WORLDSIZE; y++)
+                    MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapTypeEnum.GLOBAL));
+
+                    //determine the temperature we'll assign it
+                    GlobalTile tile = (block.Tile as GlobalTile);
+
+                    tile.ClimateTemperature = (decimal)WorldGenerationManager.GetPointOnGaussianCurve(31, WORLDSIZE / 2, WORLDSIZE / 5, tile.Coordinate.Y);
+
+                    if (tile.Elevation > 0)
                     {
-                        MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapTypeEnum.GLOBAL));
-
-                        //determine the temperature we'll assign it
-                        GlobalTile tile = (block.Tile as GlobalTile);
-
-                        tile.ClimateTemperature = (decimal)WorldGenerationManager.GetPointOnGaussianCurve(31, WORLDSIZE / 2, WORLDSIZE / 10, tile.Coordinate.Y);
-                            
-                            if (tile.Elevation > 0)
-                            {
-                                tile.ClimateTemperature+= (decimal) WorldGenerationManager.GetPointOnGaussianCurve(20,0,300,tile.Elevation) - 20;
-                            }
-                            else if (tile.HasRiver)
-                            {
-                                //rivers tend to be cooler
-                                tile.ClimateTemperature -= 5;
-                            }
-                            else 
-                            {
-                                //water tiles tend to be warmer in their temperature
-                                tile.ClimateTemperature+=5;
-                            }
+                        tile.ClimateTemperature += (decimal)WorldGenerationManager.GetPointOnGaussianCurve(20, 0, 200, tile.Elevation) - 20;
                     }
-
+                    else if (tile.HasRiver)
+                    {
+                        //rivers tend to be cooler
+                        tile.ClimateTemperature -= 5;
+                    }
+                    else
+                    {
+                        //water tiles tend to be warmer in their temperature
+                        tile.ClimateTemperature += 5;
+                    }
                 }
 
-                CurrentStep = "With a single word, the storms came, bringing water to the lands...";
+            }
 
+        }
+        /// <summary>
+        /// Generates the amount of rain in the world
+        /// </summary>
+        public static void GenerateRains()
+        {
             //To determine rain we will do the following. First we set rain at each location at 0 (dry)
             //Then we will drop a number of 'centres of rain' randomly which will have 10 'rain'
             //We will then put decreasing amounts of rain from these centres.
 
-            //first set all tiles to 0
-                for (int i = 0; i < WORLDSIZE; i++)
-                {
-                    for (int j = 0; j < WORLDSIZE; j++)
-                    {
-                        MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(i, j, 0, MapTypeEnum.GLOBAL));
-
-                        //determine the temperature we'll assign it
-                        GlobalTile tile = (block.Tile as GlobalTile);
-
-                        tile.Rainfall = 0;
-                    }
-                }
-
             //now we create a random x and y coordinate and we create some rain
 
-                for (int i = 0; i < RAINCENTERCOUNT; i++)
+            Random random = new Random();
+
+            for (int i = 0; i < RAINCENTERCOUNT; i++)
+            {
+                int xRain = random.Next(WORLDSIZE);
+                int yRain = random.Next(WORLDSIZE);
+
+                MapBlock targetBlock = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(xRain, yRain, 0, MapTypeEnum.GLOBAL));
+
+                int failureCount = 0;
+
+                if (failureCount > 100)
                 {
-                    int xRain = random.Next(WORLDSIZE);
-                    int yRain = random.Next(WORLDSIZE);
+                    //the world is saturated, lets break out before it crashes
+                    break;
+                }
 
-                    decimal rainAmount = 10;
-                    int radius = 0;
+                if ((targetBlock.Tile as GlobalTile).Elevation < 0 || (targetBlock.Tile as GlobalTile).Rainfall > 7)
+                {
+                    //don't put the block on the sea , and don't put it in places full of rain already
+                    i--;
+                    failureCount++;
+                    continue;
+                }
 
-                    while (rainAmount > 0)
+                decimal rainAmount = 9.0M;
+                int radius = 0;
+
+                while (rainAmount > 0)
+                {
+                    MapBlock[] rainBlocks = GetCircleAroundPoint(new MapCoordinate(xRain, yRain, 0, MapTypeEnum.GLOBAL), radius);
+
+                    foreach (MapBlock block in rainBlocks)
                     {
-                        MapBlock[] rainBlocks =GetCircleAroundPoint(new MapCoordinate(xRain, yRain, 0, MapTypeEnum.GLOBAL),radius);
+                        (block.Tile as GlobalTile).Rainfall += rainAmount;
+                    }
 
-                        foreach (MapBlock block in rainBlocks)
-                        {
-                            (block.Tile as GlobalTile).Rainfall += rainAmount;
-                        }
+                    rainAmount -= .10M;
 
+                    if (radius.Equals(5))
+                    {
+                        //reduce quite a bit
+                        rainAmount -= 2;
+                    }
+
+                    if (radius > 5)
+                    {
                         rainAmount -= .10M;
 
-                        if (radius > 5)
-                        {
-                            rainAmount -= .10M;
-
-                        }
-                        if (radius > 20)
-                        {
-                            rainAmount += .10M;
-                        }
-
-                        radius++;
-
                     }
-                    
-
-                }
-
-                CurrentStep = "And then came life";
-
-            //And now we determine their biome
-                for (int x = 0; x < WORLDSIZE; x++)
-                {
-                    for (int y = 0; y < WORLDSIZE; y++)
+                    if (radius > 20)
                     {
-                        MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapTypeEnum.GLOBAL));
-
-                        GlobalTile tile = (block.Tile as GlobalTile);
-
-                        //start with temperature
-                        if (tile.ClimateTemperature > 30)
-                        {
-                            //Very hot
-                            if (tile.Rainfall > 6)
-                            {
-                                //rainforest
-                                tile.Biome = GlobalBiome.RAINFOREST;
-                            }
-                            else
-                            {
-                                //desert
-                                tile.Biome = GlobalBiome.ARID_DESERT;
-                            }
-                        }
-                        else if (tile.ClimateTemperature > 20)
-                        {
-                            if (tile.Rainfall > 9)
-                            {
-                                //soaked
-                                tile.Biome = GlobalBiome.WETLAND;
-                            }
-                            else if (tile.Rainfall > 1)
-                            {
-                                //we should use a random value to determine what's the chance of getting a forest
-
-                                //from 2 to 10
-                                int randomInt = random.Next(3) + (int)tile.Rainfall;
-
-                                if (randomInt > 8)
-                                {
-                                    tile.Biome = GlobalBiome.DENSE_FOREST;
-                                }
-                                else if (randomInt > 5)
-                                {
-                                    tile.Biome = GlobalBiome.WOODLAND;
-                                }
-                                else
-                                {
-                                    tile.Biome = GlobalBiome.GRASSLAND;
-                                }
-
-                            }
-                            else
-                            {
-                                tile.Biome = GlobalBiome.GARIGUE;
-                            }
-
-                        }
-                        else if (tile.ClimateTemperature > 5)
-                        {
-                            //pretty cold
-                            int randomInt = random.Next(10);
-
-                            if (tile.Rainfall > 9)
-                            {
-                                tile.Biome = GlobalBiome.WETLAND;
-                            }
-                            else if (tile.Rainfall < 3)
-                            {
-                                tile.Biome = GlobalBiome.POLAR_DESERT;
-                            }
-
-                            //otherwise, there's a small chance you get a forest
-
-                            if (randomInt > 7)
-                            {
-                                tile.Biome = GlobalBiome.WOODLAND;
-                            }
-
-                        }
-                        else if (tile.ClimateTemperature  < 4)
-                        {
-                            //freezing cold
-                            tile.Biome = GlobalBiome.POLAR_DESERT;
-                        }
-
+                        rainAmount += .10M;
                     }
+
+                    radius++;
+
                 }
 
 
-            CurrentStep = "And he looked upon all he had created, and it was done";
-
-
+            }
 
         }
 
-#region Helper Functions
+        /// <summary>
+        /// Determines the biomes for each tile from their traits
+        /// </summary>
+        public static void DetermineBiomes()
+        {
+            Random random = new Random();
+
+            //And now we determine their biome
+            for (int x = 0; x < WORLDSIZE; x++)
+            {
+                for (int y = 0; y < WORLDSIZE; y++)
+                {
+                    MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapTypeEnum.GLOBAL));
+
+                    GlobalTile tile = (block.Tile as GlobalTile);
+
+                    //start with temperature
+                    if (tile.ClimateTemperature > 30)
+                    {
+                        //Very hot
+                        if (tile.Rainfall > 6)
+                        {
+                            //rainforest
+                            tile.Biome = GlobalBiome.RAINFOREST;
+                        }
+                        else
+                        {
+                            //desert
+                            tile.Biome = GlobalBiome.ARID_DESERT;
+                        }
+                    }
+                    else if (tile.ClimateTemperature > 20)
+                    {
+                        if (tile.Rainfall > 9)
+                        {
+                            //soaked
+                            tile.Biome = GlobalBiome.WETLAND;
+                        }
+                        else if (tile.Rainfall > 1)
+                        {
+                            //we should use a random value to determine what's the chance of getting a forest
+
+                            //from 2 to 10
+                            int randomInt = random.Next(3) + (int)tile.Rainfall;
+
+                            if (randomInt > 8)
+                            {
+                                tile.Biome = GlobalBiome.DENSE_FOREST;
+                            }
+                            else if (randomInt > 5)
+                            {
+                                tile.Biome = GlobalBiome.WOODLAND;
+                            }
+                            else
+                            {
+                                tile.Biome = GlobalBiome.GRASSLAND;
+                            }
+
+                        }
+                        else
+                        {
+                            tile.Biome = GlobalBiome.GARIGUE;
+                        }
+
+                    }
+                    else if (tile.ClimateTemperature > 5)
+                    {
+                        //pretty cold
+                        int randomInt = random.Next(10);
+
+                        if (tile.Rainfall > 9)
+                        {
+                            tile.Biome = GlobalBiome.POLAR_DESERT; //it'll be a very snowy desert
+                        }
+                        else if (tile.Rainfall < 3)
+                        {
+                            tile.Biome = GlobalBiome.POLAR_DESERT;
+                        }
+
+                        //otherwise, there's a small chance you get a forest
+
+                        if (randomInt > 7)
+                        {
+                            tile.Biome = GlobalBiome.POLAR_FOREST;
+                        }
+
+                    }
+                    else if (tile.ClimateTemperature < 4)
+                    {
+                        //freezing cold
+                        tile.Biome = GlobalBiome.POLAR_DESERT;
+                    }
+
+                }
+            }
+        }
+
+        /// <summary>
+        /// This determines the base desirability for all tile by examining the tile itself
+        /// </summary>
+        public static void DetermineDesirability()
+        {
+            for (int x = 0; x > WORLDSIZE; x++)
+            {
+                for (int y = 0; y > WORLDSIZE; y++)
+                {
+                    MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapTypeEnum.GLOBAL));
+
+                    GlobalTile tile = (block.Tile as GlobalTile);
+
+                    //calculate the desirability for the tile
+                    tile.BaseDesirability = DetermineDesirability(tile);
+                }
+            }
+        }
+        /// <summary>
+        /// Drops a number of settlements within the world
+        /// </summary>
+        public static void ColoniseWorld()
+        {
+            //The way this will be done will be as follows
+            //We will choose a random land region to colonise of a determined size
+            //We will then calculate the desirability of each tile, sum it with the deseribility of each tile bordering it
+            //The most desirable tile in the region will be colonised
+
+            Random random = new Random();
+
+            for (int i = 0; i < HUMANSETTLEMENTCOUNT; i++)
+            {
+                //choose a random x and y
+
+                MapBlock centreBlock = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(random.Next(WORLDSIZE), random.Next(WORLDSIZE), 0, MapTypeEnum.GLOBAL));
+
+                //Get all tiles in the 'region'
+                MapBlock[] regionalBlocks = GetBlocksAroundPoint(centreBlock.Tile.Coordinate, HUMANSETTLEMENTSEARCHRADIUS);
+
+                //order them by the sum of the desirabilty
+
+                //We only need to consider tiles which have no river, and actual land which isn't a mountain
+
+                var candidateBlocks = regionalBlocks.Where(rb => !(rb.Tile as GlobalTile).HasRiver && (rb.Tile as GlobalTile).Elevation > 0 && (rb.Tile as GlobalTile).Elevation < 250 && !(rb.GetTopItem() is Settlement))
+                    .OrderByDescending(rb => (rb.Tile as GlobalTile).BaseDesirability + (GetBlocksAroundPoint(rb.Tile.Coordinate, 1).Sum(rba => (rba.Tile as GlobalTile).BaseDesirability)));
+
+                if (candidateBlocks.ToArray().Length == 0)
+                {
+                    //no possible tiles - start over
+                    i--;
+                    continue;
+                }
+
+                //colonise
+
+                //TODO: ADD TO THE GLOBAL MAP'S COLONY LIST EVENTUALLY
+                MapBlock block = candidateBlocks.First();
+                GlobalTile blockTile = (block.Tile as GlobalTile);
+
+                //if it has a forest on it, cut it down
+                switch (blockTile.Biome)
+                {
+                    case GlobalBiome.DENSE_FOREST:
+                        blockTile.Biome = GlobalBiome.GRASSLAND;
+                        break;
+                    case GlobalBiome.WOODLAND:
+                        blockTile.Biome = GlobalBiome.GRASSLAND;
+                        break;
+                    case GlobalBiome.POLAR_FOREST:
+                        blockTile.Biome = GlobalBiome.POLAR_DESERT;
+                        break;
+                }
+                Settlement settlement = new Settlement();
+                settlement.Coordinate = blockTile.Coordinate;
+                settlement.SettlementType = SettlementType.VILLAGE;
+                settlement.MayContainItems = true;
+
+                block.PutItemOnBlock(settlement);
+                
+            }
+
+        }
+
+        #endregion World Generation Functions
+
+        #region Helper Functions
+
+        /// <summary>
+        /// Determines the Desirability of a particular global tile
+        /// </summary>
+        /// <param name="tile"></param>
+        /// <returns></returns>
+        public static int DetermineDesirability(GlobalTile tile)
+        {
+            int desirability = 0;
+
+            #region Temperature
+            //check the temperature
+            if (tile.ClimateTemperature > 30)
+            {
+                //very hot
+                desirability -= 2;
+            }
+            
+            if (tile.ClimateTemperature < 30 && tile.ClimateTemperature > 15)
+            {
+                //nice temperature
+                desirability+=2;
+            }
+            if (tile.ClimateTemperature > 5)
+            {
+                //ok temperature
+            }
+            if (tile.ClimateTemperature < 5)
+            {
+                //too cold
+                desirability -= 3;
+            }
+            #endregion
+
+            #region Rainfall
+            if (tile.Rainfall > 8)
+            {
+                //too rainy
+                desirability -= 2;
+            }
+            if (tile.Rainfall < 3)
+            {
+                //too dry
+                desirability -= 5;
+            }
+            #endregion
+
+            #region River?
+
+            if (tile.HasRiver) //rivers are very popular
+            {
+                desirability += 4;
+            }
+
+            #endregion
+
+            #region Elevation
+
+            if (tile.Elevation < 0)
+            {
+                desirability += 3; //while we can't build on the sea, having the sea next to you is desirable
+
+            }
+
+            if (tile.Elevation > 200)
+            {
+                desirability += 4; //Having a mountain next to you is useful too
+            }
+            else if (tile.Elevation > 80)
+            {
+                desirability += 3; //High land is preferred
+            }
+            #endregion
+
+            #region Got wood?
+            if (tile.Biome.HasValue)
+            {
+                switch (tile.Biome.Value)
+                {
+                    case GlobalBiome.DENSE_FOREST:
+                        desirability += 5; //Lots of wood
+                        break;
+                    case GlobalBiome.POLAR_FOREST:
+                        desirability += 2; //some wood
+                        break;
+                    case GlobalBiome.WOODLAND:
+                        desirability += 3; //wood
+                        break;
+                }
+
+            }
+
+            #endregion
+
+            //TODO - EVENTUALLY WE'LL HAVE RESOURCES TOO
+
+            return desirability;
+        }
 
         /// <summary>
         /// Gets a random number on a gaussian distribution with a mean 0.0 and standard deviation 1.0
@@ -689,6 +972,40 @@ namespace DivineRightGame.Managers
                 }
 
                 return returnList.Where(r => r.Tile.Coordinate.X.Equals(minX) || r.Tile.Coordinate.X.Equals(maxX) || r.Tile.Coordinate.Y.Equals(minY) || r.Tile.Coordinate.Y.Equals(maxY)).ToArray();
+        }
+
+        /// <summary>
+        /// Returns a filled square around a particular point
+        /// </summary>
+        /// <param name="centre"></param>
+        /// <param name="radius"></param>
+        /// <returns></returns>
+        public static MapBlock[] GetBlocksAroundPoint(MapCoordinate centre, int radius)
+        {
+            int minY = centre.Y - Math.Abs(radius);
+            int maxY = centre.Y + Math.Abs(radius);
+
+            int minX = centre.X - Math.Abs(radius);
+            int maxX = centre.X + Math.Abs(radius);
+
+            List<MapBlock> returnList = new List<MapBlock>();
+
+            //go through all of them
+
+            for (int yLoop = maxY; yLoop >= minY; yLoop--)
+            {
+                for (int xLoop = minX; xLoop <= maxX; xLoop++)
+                {
+                    MapCoordinate coord = new MapCoordinate(xLoop, yLoop, 0, MapTypeEnum.GLOBAL);
+
+                    if (xLoop >= 0 && xLoop < WORLDSIZE && yLoop >= 0 && yLoop < WORLDSIZE)
+                    { //make sure they're in the map
+                        returnList.Add(GameState.GlobalMap.GetBlockAtCoordinate(coord));
+                    }
+                }
+            }
+
+            return returnList.ToArray();
         }
 
         /// <summary>

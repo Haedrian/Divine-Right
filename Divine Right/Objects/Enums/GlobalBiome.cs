@@ -13,6 +13,7 @@ namespace DRObjects.Enums
         RAINFOREST,
         ARID_DESERT,
         POLAR_DESERT,
+        POLAR_FOREST,
         DENSE_FOREST,
         WOODLAND,
         GRASSLAND,

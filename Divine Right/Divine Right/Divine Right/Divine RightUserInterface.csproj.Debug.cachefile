@@ -36,4 +36,8 @@ Content\Graphics\World\TropicalTree.xnb
 Content\Graphics\World\Tiles\DesertTile.xnb
 Content\Graphics\World\Tiles\SnowTile.xnb
 Content\Graphics\World\Tiles\GarigueTile.xnb
+Content\Graphics\World\DeadTree.xnb
+Content\Graphics\World\Settlements\LargeSettlement.xnb
+Content\Graphics\World\Settlements\MediumSettlement.xnb
+Content\Graphics\World\Settlements\SmallSettlement.xnb
 App.config

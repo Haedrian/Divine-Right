@@ -97,12 +97,14 @@
     <Compile Include="Enums\GlobalOverlay.cs" />
     <Compile Include="Enums\InternalActionEnum.cs" />
     <Compile Include="Enums\MapType.cs" />
+    <Compile Include="Enums\SettlementType.cs" />
     <Compile Include="GraphicsEngineObjects\Abstract\PlayerFeedback.cs" />
     <Compile Include="GraphicsEngineObjects\CurrentLogFeedback.cs" />
     <Compile Include="GraphicsEngineObjects\GraphicalBlock.cs" />
     <Compile Include="GraphicsEngineObjects\TextFeedback.cs" />
     <Compile Include="Actor.cs" />
     <Compile Include="Enums\ActionTypeEnum.cs" />
+    <Compile Include="Items\Archetypes\Global\Settlement.cs" />
     <Compile Include="Items\Tiles\Air.cs" />
     <Compile Include="Items\Tiles\Global\GlobalTile.cs" />
     <Compile Include="MapBlock.cs" />
@@ -111,7 +113,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Items\Archetypes\Global\" />
     <Folder Include="Items\Archetypes\Local\" />
     <Folder Include="Items\Tiles\Local\" />
   </ItemGroup>

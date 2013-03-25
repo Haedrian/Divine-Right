@@ -12,19 +12,6 @@ namespace DRObjects.Items.Tiles.Global
     public class GlobalTile:
         MapItem
     {
-        #region Constants
-        /// <summary>
-        /// The graphic for the mountain
-        /// </summary>
-        private const string PLAIN = @"";
-        
-        private const string WATERTILE = @"Graphics/World/Tiles/WaterTile";
-        private const string GRASSTILE = @"Graphics/World/Tiles/GrassTile";
-
-        private const string RIVER = @"Graphics/World/River";
-
-        private const string CONTOUR = @"Graphics/World/Hill";
-        #endregion
         #region members
 
         /// <summary>
@@ -48,7 +35,7 @@ namespace DRObjects.Items.Tiles.Global
         /// <summary>
         /// Do we draw a contour on this tile?
         /// </summary>
-        public bool HasContour { get; set; }
+        public bool HasHillSlope { get; set; }
 
         /// <summary>
         /// Temperature of the tile in Celcius
@@ -65,6 +52,11 @@ namespace DRObjects.Items.Tiles.Global
         /// </summary>
         public GlobalBiome? Biome { get; set; }
 
+        /// <summary>
+        /// Determines how desirable the tile is, based on its temperature, elevation, and resources
+        /// </summary>
+        public int BaseDesirability { get; set; }
+
         #endregion
 
         #region Properties
@@ -73,22 +65,29 @@ namespace DRObjects.Items.Tiles.Global
         {
             Elevation = 0;
             Region = -1;
+            base.MayContainItems = true;
         }
 
         public override List<string> Graphics
         {
             get
-            {
+            {        
+                const string RIVER = @"Graphics/World/River";
+
                 const string DESERTTILE = @"Graphics/World/Tiles/DesertTile";
                 const string SWAMPTILE = @"Graphics/World/Tiles/SwampTile";
                 const string SNOWTILE = @"Graphics/World/Tiles/SnowTile";
                 const string GARIGUETILE = @"Graphics/World/Tiles/GarigueTile";
                 const string FORESTTILE = @"Graphics/World/Tiles/ForestTile";
+                const string WATERTILE = @"Graphics/World/Tiles/WaterTile";
+                const string GRASSTILE = @"Graphics/World/Tiles/GrassTile";
 
                 const string BIGTREE = @"Graphics/World/BigTree";
                 const string TREE = @"Graphics/World/Tree";
                 const string TROPICALTREE = @"Graphics/World/TropicalTree";
-
+                const string DEADTREE = @"Graphics/World/DeadTree";
+                
+                const string HILLSLOPE = @"Graphics/World/Hill";
                 const string MOUNTAIN = @"Graphics/World/Mountain";
 
                 //we need to determine what kind of items we have on the tile
@@ -132,6 +131,10 @@ namespace DRObjects.Items.Tiles.Global
                             graphics.Add(TREE);
                             graphics.Add(GRASSTILE);
                             break;
+                        case GlobalBiome.POLAR_FOREST:
+                            graphics.Add(DEADTREE);
+                            graphics.Add(SNOWTILE);
+                            break;
 
                     }
                 }
@@ -139,6 +142,13 @@ namespace DRObjects.Items.Tiles.Global
                 {
                     //default
                     graphics.Add(GRASSTILE);
+                }
+
+                //Do we have a slope?
+
+                if (HasHillSlope)
+                {
+                    graphics.Insert(0, HILLSLOPE);
                 }
 
                 //Do we have a river?
@@ -180,14 +190,13 @@ namespace DRObjects.Items.Tiles.Global
             string INDIGO = @"Graphics/World/Overlay/Regions/Indigo";
             string MARBLEBLUE = @"Graphics/World/Overlay/Regions/MarbleBlue";
             string WHITE = @"Graphics/World/Overlay/Regions/White";
-            string GREYBLUEDARK = @"Graphics/World/Overlay/Regions/GreyBlueDark";
-            string GREYBLUEDARKER = @"Graphics/World/Overlay/Regions/GreyBlueDarker";
 
             if (overlay.Equals(GlobalOverlay.NONE))
             {
                 return "";
             }
 
+            #region Region Overlay
             else if (overlay.Equals(GlobalOverlay.REGION))
             {
                 //if the elevation is underwater, nothing
@@ -211,7 +220,8 @@ namespace DRObjects.Items.Tiles.Global
                 return "";
 
             }
-
+            #endregion
+            #region Temperature Overlay
             else if (overlay.Equals(GlobalOverlay.TEMPERATURE))
             {
 
@@ -248,7 +258,8 @@ namespace DRObjects.Items.Tiles.Global
 
                 return "";
             }
-
+            #endregion
+            #region Rainfall Overlay
             else if (overlay.Equals(GlobalOverlay.RAINFALL))
             {
 
@@ -282,6 +293,55 @@ namespace DRObjects.Items.Tiles.Global
                 }
 
             }
+            #endregion
+            #region Elevation Overlay
+
+            if (Elevation > 250)
+            {
+                //mountain
+                return RED;
+            }
+            else if (Elevation > 100)
+            {
+                return ORANGE;
+            }
+            else if (Elevation > 50)
+            {
+                return YELLOW;
+            }
+            else if (Elevation > 25)
+            {
+                return INDIGO;
+            }
+            else if (Elevation > 0)
+            {
+                return WHITE;
+            }
+            else
+            {
+                return "";
+            }
+            #endregion
+            #region Desirability Overlay
+
+            if (BaseDesirability > 10)
+            {
+                return GREEN;
+            }
+            else if (BaseDesirability > 5)
+            {
+                return YELLOW;
+            }
+            else if (BaseDesirability > 0)
+            {
+                return ORANGE;
+            }
+            else if (BaseDesirability < 0)
+            {
+                return RED;
+            }
+
+            #endregion
 
             return "";
 

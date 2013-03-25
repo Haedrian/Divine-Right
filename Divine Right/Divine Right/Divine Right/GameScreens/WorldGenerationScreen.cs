@@ -40,7 +40,6 @@ namespace Divine_Right.GameScreens
         int locationY = WorldGenerationManager.WORLDSIZE/2;
         int previousGameTime = 0;
 
-
         int PlayableWidth
         {
             get
@@ -49,7 +48,6 @@ namespace Divine_Right.GameScreens
             }
 
         }
-
         int PlayableHeight
         {
             get
@@ -68,7 +66,6 @@ namespace Divine_Right.GameScreens
 
 
         }
-
         int TotalTilesHeight
         {
             get
@@ -151,8 +148,11 @@ namespace Divine_Right.GameScreens
             }
             else if (keyboardState.IsKeyDown(Keys.OemMinus))
             {
-                TILEHEIGHT--;
-                TILEWIDTH--;
+                if (TILEHEIGHT != 1) //this would cause a div by zero
+                {
+                    TILEHEIGHT--;
+                    TILEWIDTH--;
+                }
             }
 
             if (keyboardState.IsKeyDown(Keys.R))
@@ -171,7 +171,14 @@ namespace Divine_Right.GameScreens
             {
                 OVERLAY = GlobalOverlay.RAINFALL;
             }
-
+            else if (keyboardState.IsKeyDown(Keys.E))
+            {
+                OVERLAY = GlobalOverlay.ELEVATION;
+            }
+            else if (keyboardState.IsKeyDown(Keys.D))
+            {
+                OVERLAY = GlobalOverlay.DESIRABILITY;
+            }
         }
 
         public override void Draw(GameTime gameTime)
