@@ -40,9 +40,9 @@ namespace Divine_Right.GameScreens
             base.Initialize();
 
             //add the buttons
-            components.Add(new AutoSizeButton("Generate World", game.Content, DRObjects.Enums.InternalActionEnum.GENERATE, new object[0], 450, 150));
-            components.Add(new AutoSizeButton("Continue Game", game.Content, DRObjects.Enums.InternalActionEnum.LOAD, new object[0], 450, 200));
-            components.Add(new AutoSizeButton("Credits", game.Content, DRObjects.Enums.InternalActionEnum.NEW, new object[0], 450, 250));
+            components.Add(new AutoSizeButton("Generate World", game.Content, DRObjects.Enums.InternalActionEnum.GENERATE, new object[0], (GraphicsDevice.Viewport.Width/2), 150));
+           // components.Add(new AutoSizeButton("Continue Game", game.Content, DRObjects.Enums.InternalActionEnum.LOAD, new object[0], 450, 200));
+           // components.Add(new AutoSizeButton("Credits", game.Content, DRObjects.Enums.InternalActionEnum.NEW, new object[0], 450, 250));
         }
 
         protected override void LoadContent()
@@ -64,11 +64,20 @@ namespace Divine_Right.GameScreens
             Vector2 titleSize = titleFont.MeasureString("Divine Right");
 
             //We want it to be in the centre
-            Rectangle titleRect = new Rectangle((int)(450-titleSize.X),(int)(50-titleSize.Y),(int)titleSize.X*2,(int)titleSize.Y*2);
+            Rectangle titleRect = new Rectangle((int)(GraphicsDevice.Viewport.Width / 2 - titleSize.X), (int)(50 - titleSize.Y), (int)titleSize.X * 2, (int)titleSize.Y * 2);
 
             Vector2 stringDraw = new Vector2(titleRect.Center.X - (titleSize.X / 2), titleRect.Center.Y - (titleSize.Y / 2));
 
             sprites.DrawString(titleFont, "Divine Right", stringDraw, Color.SlateGray);
+
+            components.Clear();
+
+            //add the buttons
+            components.Add(new AutoSizeButton("Generate World", game.Content, DRObjects.Enums.InternalActionEnum.GENERATE, new object[0], (GraphicsDevice.Viewport.Width / 2), 150));
+            // components.Add(new AutoSizeButton("Continue Game", game.Content, DRObjects.Enums.InternalActionEnum.LOAD, new object[0], 450, 200));
+            // components.Add(new AutoSizeButton("Credits", game.Content, DRObjects.Enums.InternalActionEnum.NEW, new object[0], 450, 250));
+
+            
 
             foreach (ISystemInterfaceComponent component in components)
             {

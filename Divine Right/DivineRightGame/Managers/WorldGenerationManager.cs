@@ -579,14 +579,13 @@ namespace DivineRightGame.Managers
 
             Random random = new Random();
 
+            int failureCount = 0;
             for (int i = 0; i < RAINCENTERCOUNT; i++)
             {
                 int xRain = random.Next(WORLDSIZE);
                 int yRain = random.Next(WORLDSIZE);
 
-                MapBlock targetBlock = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(xRain, yRain, 0, MapTypeEnum.GLOBAL));
-
-                int failureCount = 0;
+                MapBlock targetBlock = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(xRain, yRain, 0, MapTypeEnum.GLOBAL));                
 
                 if (failureCount > 100)
                 {
@@ -594,7 +593,7 @@ namespace DivineRightGame.Managers
                     break;
                 }
 
-                if ((targetBlock.Tile as GlobalTile).Elevation < 0 || (targetBlock.Tile as GlobalTile).Rainfall > 7)
+                if ((targetBlock.Tile as GlobalTile).Elevation < 0 || (targetBlock.Tile as GlobalTile).Rainfall > 4)
                 {
                     //don't put the block on the sea , and don't put it in places full of rain already
                     i--;
