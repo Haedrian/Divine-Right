@@ -74,7 +74,7 @@ namespace Divine_Right.GameScreens
 
             //add the buttons
             components.Add(new AutoSizeButton("Generate World", game.Content, DRObjects.Enums.InternalActionEnum.GENERATE, new object[0], (GraphicsDevice.Viewport.Width / 2), 150));
-            // components.Add(new AutoSizeButton("Continue Game", game.Content, DRObjects.Enums.InternalActionEnum.LOAD, new object[0], 450, 200));
+             components.Add(new AutoSizeButton("Continue Game", game.Content, DRObjects.Enums.InternalActionEnum.LOAD, new object[0], (GraphicsDevice.Viewport.Width/2), 200));
             // components.Add(new AutoSizeButton("Credits", game.Content, DRObjects.Enums.InternalActionEnum.NEW, new object[0], 450, 250));
 
             

@@ -12,15 +12,24 @@ namespace DivineRightGame
     public class LocalMap
     {
         #region Members
-        private Dictionary<MapCoordinate, MapBlock> localGameMap;
+        private MapBlock[,,] localGameMap;
         private List<Actor> actors;
+        private int groundLevel;
         #endregion
 
         #region Constructors
 
-        public LocalMap()
+        /// <summary>
+        /// Creates a new Local map with x,y,z as size. The ground level determines the entry level for the map (generally 0)
+        /// </summary>
+        /// <param name="sizeX"></param>
+        /// <param name="sizeY"></param>
+        /// <param name="sizeZ"></param>
+        /// <param name="groundLevel"></param>
+        public LocalMap(int sizeX, int sizeY, int sizeZ, int groundLevel)
         {
-            this.localGameMap = new Dictionary<MapCoordinate, MapBlock>(new DRObjects.Compare.MapCoordinateCompare());
+            this.localGameMap = new MapBlock[sizeX,sizeY,sizeZ];
+            this.groundLevel = groundLevel;
             this.actors = new List<Actor>();
         }
         /// <summary>
@@ -41,7 +50,19 @@ namespace DivineRightGame
             {
                 try 
                 {
-                    localGameMap.Add(block.Tile.Coordinate,block);
+                    //Check whether the block is within the bounds of the map
+
+                    if (block.Tile.Coordinate.X < this.localGameMap.GetLength(0) && block.Tile.Coordinate.X >= 0)
+                    {
+                        if (block.Tile.Coordinate.Y < this.localGameMap.GetLength(1) && block.Tile.Coordinate.Y >= 0)
+                        {
+                            if (block.Tile.Coordinate.Z < this.localGameMap.GetLength(2) && block.Tile.Coordinate.Z >= 0)
+                            {
+                                //write it
+                                localGameMap[block.Tile.Coordinate.X, block.Tile.Coordinate.Y, block.Tile.Coordinate.Z] = block;
+                            }
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -72,28 +93,36 @@ namespace DivineRightGame
         {
             MapBlock ret;
 
-            if (this.localGameMap.TryGetValue(coordinate,out ret))
+            if (coordinate.X < this.localGameMap.GetLength(0) && coordinate.X >= 0)
             {
-                return ret;
+                if (coordinate.Y < this.localGameMap.GetLength(1) && coordinate.Y >= 0)
+                {
+                    if (coordinate.Z < this.localGameMap.GetLength(2) && coordinate.Z >= 0)
+                    {
+                        if (this.localGameMap[coordinate.X, coordinate.Y, coordinate.Z] != null)
+                        {
+                            return this.localGameMap[coordinate.X, coordinate.Y, coordinate.Z];
+                        }
+                    }
+                }
             }
-            else
-            {
+
                 //doesn't exist, send a blank one
                 MapBlock airBlock = new MapBlock();
                 airBlock.Tile = new DRObjects.Items.Tiles.Air(coordinate);
 
                 return airBlock;
-            }
+            
         }
 
         /// <summary>
         /// Loads a local map and clears actors
-        /// MAKE SURE THAT THE RIGHT COMPARER FOR THE DICTIONARY IS BEING USED OR UNINTENDED ERRORS MAY OCCUR
         /// </summary>
         /// <param name="map"></param>
-        public void LoadLocalMap(Dictionary<MapCoordinate, MapBlock> map)
+        public void LoadLocalMap(MapBlock[,,] map,int groundLevel)
         {
             this.localGameMap = map;
+            this.groundLevel = groundLevel;
             this.actors = new List<Actor>(); //clear actors
         }
 

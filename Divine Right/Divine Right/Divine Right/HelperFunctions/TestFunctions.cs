@@ -15,9 +15,9 @@ namespace Divine_Right.HelperFunctions
         {
             MapFactoryManager mgr = new MapFactoryManager();
 
-            GameState.LocalMap = new LocalMap();
+            GameState.LocalMap = new LocalMap(15,15,0,0);
 
-            GameState.LocalMap.LoadLocalMap(mgr.GetMap("testmap"));
+            GameState.LocalMap.LoadLocalMap(mgr.GetMap("testmap"),0);
 
             //Add player character
             //Player character
@@ -44,7 +44,7 @@ namespace Divine_Right.HelperFunctions
         /// </summary>
         public static void PrepareHardCodedTestMap()
         {
-            GameState.LocalMap = new LocalMap();
+            GameState.LocalMap = new LocalMap(15,15,0,0);
 
             //Player character
             DivineRightGame.GameState.PlayerCharacter = new DRObjects.Actor();

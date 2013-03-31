@@ -76,6 +76,8 @@
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
     <Reference Include="System.Xml">
       <Private>False</Private>
     </Reference>
@@ -115,6 +117,11 @@
   <ItemGroup>
     <Folder Include="Items\Archetypes\Local\" />
     <Folder Include="Items\Tiles\Local\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Items.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />

@@ -12,10 +12,10 @@ namespace DivineRightGame.MapFactory
     /// </summary>
     public class MapFactoryManager
     {
-        public Dictionary<MapCoordinate, MapBlock> GetMap(string filename)
+        public MapBlock[,,] GetMap(string filename)
         {
+            MapBlock[, , ] map = new MapBlock[20, 20, 1];
 
-            Dictionary<MapCoordinate, MapBlock> map = new Dictionary<MapCoordinate, MapBlock>(new MapCoordinateCompare());
             //First we read the actual file
 
             try
@@ -50,13 +50,13 @@ namespace DivineRightGame.MapFactory
                                 block.Tile = itemFact.CreateItem(splitline[4], splitline[5]);
                                 block.Tile.Coordinate =coo;
 
-                                map.Add(coo, block);
+                                map[coo.X, coo.Y, coo.Z] = block;
                             }
                             else
                             {
                                 //its an item
                                 //find the block
-                                MapBlock block = map[coo];
+                                MapBlock block = map[coo.X,coo.Y,coo.Z];
  
                                 ItemFactory.ItemFactory itemFact = new ItemFactory.ItemFactory();
 
@@ -83,7 +83,6 @@ namespace DivineRightGame.MapFactory
             return map;
 
         }
-
 
     }
 }
