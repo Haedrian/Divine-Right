@@ -1,3 +1,4 @@
 --Internal Name, Name, Description, Graphic, May Contain Items
 CastleWall,Castle Wall,The walls of a castle,CASTLEWALL,false
 Llama,Llama,A beautiful long-necked creature,LLAMA,false
+Door, Door, A door, DOOR, true

@@ -76,8 +76,6 @@ namespace Divine_Right.GameScreens
 
         }
 
-
-
         #endregion
         #region Constructor
 

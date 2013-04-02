@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace DRObjects.Graphics
 {
@@ -13,12 +14,14 @@ namespace DRObjects.Graphics
         private static SpriteData[] localSprites;
         private static SpriteData[] globalSprites;
         private static SpriteData[] colourSprites;
+        private static SpriteData[] interfaceSprites;
 
         static SpriteManager()
         {
             localSprites = new SpriteData[100]; //TODO: INCREASE WHEN YOU HAVE MORE
             globalSprites = new SpriteData[100];
             colourSprites = new SpriteData[100];
+            interfaceSprites = new SpriteData[100];
 
             globalSprites[(int)GlobalSpriteName.BIGTREE] = new SpriteData( @"Graphics/World/BigTree");
             globalSprites[(int)GlobalSpriteName.DEADTREE] = new SpriteData(@"Graphics/World/DeadTree");
@@ -50,11 +53,13 @@ namespace DRObjects.Graphics
             colourSprites[(int)ColourSpriteName.YELLOW] = new SpriteData(@"Graphics/World/Overlay/Regions/Yellow");
 
             localSprites[(int)LocalSpriteName.PLAYERCHAR] = new SpriteData(@"Graphics/Local/Player");
-            localSprites[(int)LocalSpriteName.CASTLEWALL] = new SpriteData(@"CastleWall");
-            localSprites[(int)LocalSpriteName.GRASSTILE] = new SpriteData(@"GrassTile");
-            localSprites[(int)LocalSpriteName.LLAMA] = new SpriteData(@"Llama");
-            localSprites[(int)LocalSpriteName.PAVEMENTTILE] = new SpriteData(@"PavementTile");
-            localSprites[(int)LocalSpriteName.WOODTILE] = new SpriteData(@"WoodTile");
+            localSprites[(int)LocalSpriteName.CASTLEWALL] = new SpriteData(@"Graphics/Local/Walls",new Microsoft.Xna.Framework.Rectangle(0,0,89,90));
+            localSprites[(int)LocalSpriteName.GRASSTILE] = new SpriteData(@"Graphics/Local/GrassTiles",new Microsoft.Xna.Framework.Rectangle(35,161,30,30));
+            localSprites[(int)LocalSpriteName.PAVEMENTTILE] = new SpriteData(@"Graphics/Local/BlackTiles",new Microsoft.Xna.Framework.Rectangle(45,164,30,30));
+            localSprites[(int)LocalSpriteName.WOODTILE] = new SpriteData(@"Graphics/Local/HouseTiles",new Microsoft.Xna.Framework.Rectangle(0,128,30,30));
+            localSprites[(int)LocalSpriteName.DOOR] = new SpriteData(@"Graphics/Local/HouseTiles", new Rectangle(257, 16, 32, 48));
+
+            interfaceSprites[(int)InterfaceSpriteName.SCROLL] = new SpriteData(@"Graphics/Interface/scrollsandblocks", new Rectangle(224, 190, 96, 34));
         }
 
         public static SpriteData GetSprite(GlobalSpriteName name)
@@ -70,6 +75,11 @@ namespace DRObjects.Graphics
         public static SpriteData GetSprite(ColourSpriteName name)
         {
             return colourSprites[(int)name];
+        }
+
+        public static SpriteData GetSprite(InterfaceSpriteName name)
+        {
+            return interfaceSprites[(int)name];
         }
     }
 }

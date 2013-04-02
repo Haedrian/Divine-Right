@@ -9,9 +9,9 @@ namespace DRObjects.Graphics
     {
         PLAYERCHAR,
         CASTLEWALL,
-        LLAMA,
         WOODTILE,
         GRASSTILE,
         PAVEMENTTILE,
+        DOOR,
     }
 }

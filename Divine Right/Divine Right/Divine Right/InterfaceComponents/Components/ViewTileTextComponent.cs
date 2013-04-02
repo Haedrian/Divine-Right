@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Divine_Right.InterfaceComponents.Objects.Enums;
+using DRObjects.Graphics;
 
 namespace Divine_Right.InterfaceComponents.Components
 {
@@ -68,13 +69,15 @@ namespace Divine_Right.InterfaceComponents.Components
             else
             {
                 Vector2 fontVector = content.Load<SpriteFont>(@"Fonts/TextFeedbackFont").MeasureString(text);
-                Vector2 locationVector = new Microsoft.Xna.Framework.Vector2(locationX, locationY);
+                Vector2 locationVector = new Microsoft.Xna.Framework.Vector2(locationX, locationY-12);
 
-                Rectangle box = new Rectangle((int)locationVector.X, (int)locationVector.Y, (int)fontVector.X + 20, (int)fontVector.Y);
+                Rectangle box = new Rectangle((int)locationVector.X, (int)locationVector.Y+5, (int)fontVector.X + 20, (int)fontVector.Y+10);
 
                 Vector2 fontDrawVector = new Vector2(locationX + 10, locationY);
 
-                batch.Draw(content.Load<Texture2D>("Scroll"), box, Color.White);
+                SpriteData sprite = SpriteManager.GetSprite(InterfaceSpriteName.SCROLL);
+
+                batch.Draw(content.Load<Texture2D>(sprite.path), box, sprite.sourceRectangle, Color.White);
                 batch.DrawString(content.Load<SpriteFont>(@"Fonts/TextFeedbackFont"), text, fontDrawVector, Color.Black);
 
                 this.componentRectangle = box;

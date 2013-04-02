@@ -278,15 +278,18 @@ namespace Divine_Right.GameScreens
                     }
                     else if (mouseAction.Value == MouseActionEnum.RIGHT_CLICK)
                     {
-                        //if it was a right click, we examine
-                        ActionTypeEnum[] actions = UserInterfaceManager.GetPossibleActions(iBlock.MapCoordinate);
-
-                        //we are going to get a context menu
-                        this.interfaceComponent = new ContextMenuComponent(mouse.X + 10, mouse.Y,iBlock.MapCoordinate);
-                        foreach (ActionTypeEnum act in actions)
+                        if (iBlock != null)
                         {
-                            (this.interfaceComponent as ContextMenuComponent).AddContextMenuItem(act, null, this.game.Content);
-                         }
+                            //if it was a right click, we examine
+                            ActionTypeEnum[] actions = UserInterfaceManager.GetPossibleActions(iBlock.MapCoordinate);
+
+                            //we are going to get a context menu
+                            this.interfaceComponent = new ContextMenuComponent(mouse.X + 10, mouse.Y, iBlock.MapCoordinate);
+                            foreach (ActionTypeEnum act in actions)
+                            {
+                                (this.interfaceComponent as ContextMenuComponent).AddContextMenuItem(act, null, this.game.Content);
+                            }
+                        }
                 }
             }
 
@@ -439,8 +442,8 @@ namespace Divine_Right.GameScreens
                 {
                     if (block.ItemGraphics.Length != 0)
                     {
-                        //we're using reverse here so items on the top get drawn last
-                        foreach (SpriteData itemGraphic in block.ItemGraphics.Reverse())
+                        
+                        foreach (SpriteData itemGraphic in block.ItemGraphics)
                         {
                             if (itemGraphic != null)
                             {

@@ -107,6 +107,7 @@
     <Compile Include="Actor.cs" />
     <Compile Include="Enums\ActionTypeEnum.cs" />
     <Compile Include="Graphics\ColourSpriteName.cs" />
+    <Compile Include="Graphics\InterfaceSpriteName.cs" />
     <Compile Include="Graphics\LocalSpriteName.cs" />
     <Compile Include="Graphics\SpriteData.cs" />
     <Compile Include="Graphics\SpriteManager.cs" />

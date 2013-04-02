@@ -9,6 +9,7 @@ using Divine_Right.InterfaceComponents.Objects;
 using Microsoft.Xna.Framework;
 using DRObjects.Enums;
 using Divine_Right.InterfaceComponents.Objects.Enums;
+using DRObjects.Graphics;
 
 namespace Divine_Right.InterfaceComponents.Components
 {
@@ -102,12 +103,16 @@ namespace Divine_Right.InterfaceComponents.Components
         public void Draw(ContentManager content, SpriteBatch batch)
         {
             //first the background
-            batch.Draw(content.Load<Texture2D>("Scroll"), this.drawRectangle, Color.White);
+            SpriteData sprite = SpriteManager.GetSprite(InterfaceSpriteName.SCROLL);
+
+            Rectangle drawHere = new Rectangle(this.drawRectangle.X - 10, this.drawRectangle.Y - 25, this.drawRectangle.Width + 20, this.drawRectangle.Height + 40);
+
+            batch.Draw(content.Load<Texture2D>(sprite.path), drawHere, sprite.sourceRectangle, Color.White);
 
             //now the items
             foreach (ContextMenuItem item in contextMenuItems)
             {
-                batch.DrawString(content.Load<SpriteFont>(@"Fonts/TextFeedbackFont"), item.Text, new Vector2(item.Rect.X, item.Rect.Y), Color.Blue);
+                batch.DrawString(content.Load<SpriteFont>(@"Fonts/TextFeedbackFont"), item.Text, new Vector2(item.Rect.X, item.Rect.Y), Color.Black);
             }
         }
 
