@@ -12,6 +12,7 @@ using DivineRightGame;
 using DRObjects.GraphicsEngineObjects;
 using Divine_Right.GraphicalObjects;
 using DRObjects.Enums;
+using DRObjects.Graphics;
 
 namespace Divine_Right.GameScreens
 {
@@ -297,11 +298,11 @@ namespace Divine_Right.GameScreens
                 try
                 {
                     //reverse it so what's on 0 gets to be on top
-                    foreach (string tileGraphic in block.TileGraphics.Reverse())
+                    foreach (SpriteData tileGraphic in block.TileGraphics.Reverse())
                     {
-                        if (tileGraphic != string.Empty)
+                        if (tileGraphic != null)
                         {
-                            spriteBatch.Draw(this.game.Content.Load<Texture2D>(tileGraphic), rec, Color.White);
+                            spriteBatch.Draw(this.game.Content.Load<Texture2D>(tileGraphic.path), rec,tileGraphic.sourceRectangle, Color.White);
                         }
                     }
                 }
@@ -318,9 +319,13 @@ namespace Divine_Right.GameScreens
                     if (block.ItemGraphics.Length != 0)
                     {
                         //we're using reverse here so items on the top get drawn last
-                        foreach (string itemGraphic in block.ItemGraphics.Reverse())
+                        foreach (SpriteData itemGraphic in block.ItemGraphics.Reverse())
                         {
-                            spriteBatch.Draw(this.game.Content.Load<Texture2D>(itemGraphic), rec, Color.White);
+                            if (itemGraphic != null)
+                            {
+                                spriteBatch.Draw(this.game.Content.Load<Texture2D>(itemGraphic.path), rec,itemGraphic.sourceRectangle, Color.White);
+                            }
+                            
                         }
                     }
                 }
@@ -334,10 +339,11 @@ namespace Divine_Right.GameScreens
 
                 try
                 {
-                    if (block.OverlayGraphic != null && !block.OverlayGraphic.Equals(string.Empty))
+                    if (block.OverlayGraphic != null)
                     {
                         //semi-transparent
-                        spriteBatch.Draw(this.game.Content.Load<Texture2D>(block.OverlayGraphic), rec, Color.White * 0.75f);
+
+                        spriteBatch.Draw(this.game.Content.Load<Texture2D>(block.OverlayGraphic.path), rec,block.OverlayGraphic.sourceRectangle, Color.White * 0.75f);
                     }
                 }
                 catch

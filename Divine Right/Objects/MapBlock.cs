@@ -6,6 +6,7 @@ using DRObjects.GraphicsEngineObjects.Abstract;
 using DRObjects.GraphicsEngineObjects;
 using DRObjects.Enums;
 using DRObjects.Items.Tiles.Global;
+using DRObjects.Graphics;
 
 namespace DRObjects
 {
@@ -194,7 +195,7 @@ namespace DRObjects
         {
             GraphicalBlock block = new GraphicalBlock();
             block.TileGraphics = this.Tile.Graphics.ToArray();
-            List<string> itemGraphics = new List<string>();
+            List<SpriteData> itemGraphics = new List<SpriteData>();
 
             if (this.GetTopMapItem() != null)
             {
@@ -215,7 +216,7 @@ namespace DRObjects
         {
             GraphicalBlock block = new GraphicalBlock();
             block.TileGraphics = this.Tile.Graphics.ToArray();
-            List<string> itemGraphics = new List<string>();
+            List<SpriteData> itemGraphics = new List<SpriteData>();
 
             if (this.GetTopItem() != null)
             {

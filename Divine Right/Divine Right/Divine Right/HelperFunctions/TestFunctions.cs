@@ -6,6 +6,7 @@ using DivineRightGame;
 using DRObjects;
 using DivineRightGame.ItemFactory;
 using DivineRightGame.MapFactory;
+using DRObjects.Graphics;
 
 namespace Divine_Right.HelperFunctions
 {
@@ -29,7 +30,7 @@ namespace Divine_Right.HelperFunctions
             MapItem player = new MapItem();
             player.Coordinate = new MapCoordinate(5,5,0,DRObjects.Enums.MapTypeEnum.LOCAL);
             player.Description = "The player character";
-            player.Graphic = "Player";
+            player.Graphic = SpriteManager.GetSprite(LocalSpriteName.PLAYERCHAR);
             player.InternalName = "Player Char";
             player.MayContainItems = false;
             player.Name = "Player";
@@ -91,7 +92,7 @@ namespace Divine_Right.HelperFunctions
             MapItem player = new MapItem();
             player.Coordinate = new MapCoordinate(0,0,0,DRObjects.Enums.MapTypeEnum.LOCAL);
             player.Description = "The player character";
-            player.Graphic = "Player";
+            player.Graphic = SpriteManager.GetSprite(LocalSpriteName.PLAYERCHAR);
             player.InternalName = "Player Char";
             player.MayContainItems = false;
             player.Name = "Player";

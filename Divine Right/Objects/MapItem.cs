@@ -5,6 +5,7 @@ using System.Text;
 using DRObjects.Enums;
 using DRObjects.GraphicsEngineObjects.Abstract;
 using DRObjects.GraphicsEngineObjects;
+using DRObjects.Graphics;
 
 namespace DRObjects
 {
@@ -34,18 +35,18 @@ namespace DRObjects
         /// <summary>
         /// Represents the graphics that this tile will use to represent itself. 
         /// </summary>
-        public virtual List<string> Graphics { get; set; }
+        public virtual List<SpriteData> Graphics { get; set; }
 
         /// <summary>
         /// Represents the top graphic that this tile uses to represent itself. Assigning this WILL OVERWRITE the top graphic
         /// </summary>
-        public virtual string Graphic
+        public virtual SpriteData Graphic
         {
             get
             {
                 if (Graphics.Count == 0)
                 {
-                    return "";
+                    return null;
                 }
                 else
                 {
@@ -136,7 +137,7 @@ namespace DRObjects
         /// </summary>
         public MapItem()
         {
-            this.Graphics = new List<string>();
+            this.Graphics = new List<SpriteData>();
         }
 
         /// <summary>
@@ -146,7 +147,7 @@ namespace DRObjects
         public MapItem(MapCoordinate coordinate)
         {
             this.Coordinate = coordinate;
-            this.Graphics = new List<string>();
+            this.Graphics = new List<SpriteData>();
         }
 
         #endregion

@@ -22,7 +22,7 @@ namespace DRObjects.Items.Tiles
             (coord)
         {
             this.Description = "";
-            this.Graphic = "";
+            this.Graphic = null;
             this.MayContainItems = false;
             this.Name = "";
             this.InternalName = "Air";
@@ -34,7 +34,7 @@ namespace DRObjects.Items.Tiles
         public Air()
         {
             this.Description = "";
-            this.Graphic = "";
+            this.Graphic = null;
             this.MayContainItems = false;
             this.Name = "";
             this.InternalName = "";

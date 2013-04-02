@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DRObjects.Enums;
+using DRObjects.Graphics;
 
 namespace DRObjects.Items.Tiles.Global
 {
@@ -12,6 +13,36 @@ namespace DRObjects.Items.Tiles.Global
     public class GlobalTile:
         MapItem
     {
+        #region Constants
+
+        private SpriteData BIGTREE = SpriteManager.GetSprite(GlobalSpriteName.BIGTREE);
+        private SpriteData DEADTREE = SpriteManager.GetSprite(GlobalSpriteName.DEADTREE);
+        private SpriteData DESERTTILE = SpriteManager.GetSprite(GlobalSpriteName.DESERTTILE);
+        private SpriteData FORESTTILE = SpriteManager.GetSprite(GlobalSpriteName.FORESTTILE);
+        private SpriteData GARIGUETILE = SpriteManager.GetSprite(GlobalSpriteName.GARIGUETILE);
+        private SpriteData GRASSTILE = SpriteManager.GetSprite(GlobalSpriteName.GRASSTILE);
+        private SpriteData HILLSLOPE = SpriteManager.GetSprite(GlobalSpriteName.HILLSLOPE);
+        private SpriteData MOUNTAIN = SpriteManager.GetSprite(GlobalSpriteName.MOUNTAIN);
+        private SpriteData RIVER = SpriteManager.GetSprite(GlobalSpriteName.RIVER);
+        private SpriteData SNOWTILE = SpriteManager.GetSprite(GlobalSpriteName.SNOWTILE);
+        private SpriteData SWAMPTILE = SpriteManager.GetSprite(GlobalSpriteName.SWAMPTILE);
+        private SpriteData TREE = SpriteManager.GetSprite(GlobalSpriteName.TREE);
+        private SpriteData TROPICALTREE = SpriteManager.GetSprite(GlobalSpriteName.TROPICALTREE);
+        private SpriteData WATERTILE = SpriteManager.GetSprite(GlobalSpriteName.WATERTILE);
+
+        private SpriteData BROWN = SpriteManager.GetSprite(ColourSpriteName.BROWN);
+        private SpriteData GREEN = SpriteManager.GetSprite(ColourSpriteName.GREEN);
+        private SpriteData INDIGO = SpriteManager.GetSprite(ColourSpriteName.INDIGO);
+        private SpriteData MARBLEBLUE = SpriteManager.GetSprite(ColourSpriteName.MARBLEBLUE);
+        private SpriteData ORANGE = SpriteManager.GetSprite(ColourSpriteName.ORANGE);
+        private SpriteData PINK = SpriteManager.GetSprite(ColourSpriteName.PINK);
+        private SpriteData PURPLE = SpriteManager.GetSprite(ColourSpriteName.PURPLE);
+        private SpriteData RED = SpriteManager.GetSprite(ColourSpriteName.RED);
+        private SpriteData WHITE = SpriteManager.GetSprite(ColourSpriteName.WHITE);
+        private SpriteData YELLOW = SpriteManager.GetSprite(ColourSpriteName.YELLOW);
+
+        #endregion
+
         #region members
 
         /// <summary>
@@ -68,36 +99,18 @@ namespace DRObjects.Items.Tiles.Global
             base.MayContainItems = true;
         }
 
-        public override List<string> Graphics
+        public override List<SpriteData> Graphics
         {
             get
             {        
-                const string RIVER = @"Graphics/World/River";
-
-                const string DESERTTILE = @"Graphics/World/Tiles/DesertTile";
-                const string SWAMPTILE = @"Graphics/World/Tiles/SwampTile";
-                const string SNOWTILE = @"Graphics/World/Tiles/SnowTile";
-                const string GARIGUETILE = @"Graphics/World/Tiles/GarigueTile";
-                const string FORESTTILE = @"Graphics/World/Tiles/ForestTile";
-                const string WATERTILE = @"Graphics/World/Tiles/WaterTile";
-                const string GRASSTILE = @"Graphics/World/Tiles/GrassTile";
-
-                const string BIGTREE = @"Graphics/World/BigTree";
-                const string TREE = @"Graphics/World/Tree";
-                const string TROPICALTREE = @"Graphics/World/TropicalTree";
-                const string DEADTREE = @"Graphics/World/DeadTree";
-                
-                const string HILLSLOPE = @"Graphics/World/Hill";
-                const string MOUNTAIN = @"Graphics/World/Mountain";
-
-                //we need to determine what kind of items we have on the tile
-                List<string> graphics = new List<string>();
+               //we need to determine what kind of items we have on the tile
+                List<SpriteData> graphics = new List<SpriteData>();
 
                 //check the elevation and determine which graphic we'll show
 
                 if (Elevation < 0)
                 {
-                    graphics.Add(WATERTILE);
+                    graphics.Add(RIVER);
                 }
                 else if (Biome.HasValue)
                 {
@@ -178,22 +191,11 @@ namespace DRObjects.Items.Tiles.Global
 
         #region Functions
 
-        public string GetGraphicsByOverlay(GlobalOverlay overlay)
+        public SpriteData GetGraphicsByOverlay(GlobalOverlay overlay)
         {
-            string BROWN = @"Graphics/World/Overlay/Regions/Brown";
-            string GREEN = @"Graphics/World/Overlay/Regions/Green";
-            string ORANGE = @"Graphics/World/Overlay/Regions/Orange";
-            string PINK = @"Graphics/World/Overlay/Regions/Pink";
-            string PURPLE = @"Graphics/World/Overlay/Regions/Purple";
-            string RED = @"Graphics/World/Overlay/Regions/Red";
-            string YELLOW = @"Graphics/World/Overlay/Regions/Yellow";
-            string INDIGO = @"Graphics/World/Overlay/Regions/Indigo";
-            string MARBLEBLUE = @"Graphics/World/Overlay/Regions/MarbleBlue";
-            string WHITE = @"Graphics/World/Overlay/Regions/White";
-
             if (overlay.Equals(GlobalOverlay.NONE))
             {
-                return "";
+                return null;
             }
 
             #region Region Overlay
@@ -202,7 +204,7 @@ namespace DRObjects.Items.Tiles.Global
                 //if the elevation is underwater, nothing
                 if (this.Elevation < 0)
                 {
-                    return "";
+                    return null;
                 }
 
                 //otherwise, depending on the region number, colour them
@@ -217,7 +219,7 @@ namespace DRObjects.Items.Tiles.Global
                     case 6: return YELLOW;
                 }
 
-                return "";
+                return null;
 
             }
             #endregion
@@ -228,7 +230,7 @@ namespace DRObjects.Items.Tiles.Global
                 //Don't overlay the sea
                 if (this.Elevation < 0)
                 {
-                    return "";
+                    return null;
                 }
 
                 if (this.ClimateTemperature > 30)
@@ -256,7 +258,7 @@ namespace DRObjects.Items.Tiles.Global
                     return WHITE;
                 }
 
-                return "";
+                return null;
             }
             #endregion
             #region Rainfall Overlay
@@ -265,7 +267,7 @@ namespace DRObjects.Items.Tiles.Global
 
                 if (Elevation < 0)
                 {
-                    return "";
+                    return null;
                 }
 
                 if (Rainfall > 8)
@@ -289,7 +291,7 @@ namespace DRObjects.Items.Tiles.Global
                 }
                 else if (Rainfall < 2)
                 {
-                    return "";
+                    return null;
                 }
 
             }
@@ -319,7 +321,7 @@ namespace DRObjects.Items.Tiles.Global
             }
             else
             {
-                return "";
+                return null;
             }
             #endregion
             #region Desirability Overlay
@@ -343,7 +345,7 @@ namespace DRObjects.Items.Tiles.Global
 
             #endregion
 
-            return "";
+            return null;
 
         }
 

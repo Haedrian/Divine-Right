@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using DRObjects;
 using DivineRightGame.ItemFactory.Object;
+using DRObjects.Graphics;
 
 namespace DivineRightGame.ItemFactory.ItemFactoryManagers
 {
@@ -53,7 +54,7 @@ namespace DivineRightGame.ItemFactory.ItemFactoryManagers
         {
             MapItem item = new MapItem();
             item.Description = description;
-            item.Graphic = graphic;
+            item.Graphic = SpriteManager.GetSprite((LocalSpriteName)Enum.Parse(typeof(LocalSpriteName), graphic)); 
             item.InternalName = internalName;
             item.MayContainItems = Boolean.Parse(canHaveItems);
             item.Name = name;

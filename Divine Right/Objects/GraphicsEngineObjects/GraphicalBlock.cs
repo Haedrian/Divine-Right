@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DRObjects.Enums;
+using DRObjects.Graphics;
 
 namespace DRObjects.GraphicsEngineObjects
 {
@@ -17,21 +18,21 @@ namespace DRObjects.GraphicsEngineObjects
         public MapCoordinate MapCoordinate { get; set; }
 
         /// <summary>
-        /// The Graphic of the Tile
+        /// The Graphics of the Tile
         /// </summary>
-        public string[] TileGraphics { get; set; }
+        public SpriteData[] TileGraphics { get; set; }
 
         /// <summary>
         /// The Graphics of the Item to show
         /// </summary>
-        public string[] ItemGraphics {get;set; }
+        public SpriteData[] ItemGraphics {get;set; }
 
         #region Overridden functions
 
         /// <summary>
         /// The overlay graphic when this graphical block was obtained when requesting an overlay
         /// </summary>
-        public string OverlayGraphic { get; set; }
+        public SpriteData OverlayGraphic { get; set; }
 
         public override string ToString()
         {

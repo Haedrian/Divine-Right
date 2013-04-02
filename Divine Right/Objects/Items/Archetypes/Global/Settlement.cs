@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DRObjects.Enums;
+using DRObjects.Graphics;
 
 namespace DRObjects.Items.Archetypes.Global
 {
@@ -18,25 +19,21 @@ namespace DRObjects.Items.Archetypes.Global
 
         #endregion
 
-        public override string Graphic
+        public override SpriteData Graphic
         {
             get
             {
-                const string HAMLET = @"Graphics/World/Settlements/SmallSettlement";
-                const string VILLAGE = @"Graphics/World/Settlements/MediumSettlement" ;
-                const string TOWN = @"Graphics/World/Settlements/LargeSettlement";
-
                 switch (SettlementType)
                 {
                     case SettlementType.HAMLET:
-                        return HAMLET;
+                        return SpriteManager.GetSprite(GlobalSpriteName.HAMLET);
                     case SettlementType.TOWN:
-                        return TOWN;
+                        return SpriteManager.GetSprite(GlobalSpriteName.TOWN);
                     case SettlementType.VILLAGE:
-                        return VILLAGE;
+                        return SpriteManager.GetSprite(GlobalSpriteName.VILLAGE);
                 }
 
-                return "";
+                return null;
 
             }
             set

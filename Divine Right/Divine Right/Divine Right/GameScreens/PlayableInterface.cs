@@ -16,6 +16,7 @@ using DRObjects.GraphicsEngineObjects.Abstract;
 using Divine_Right.InterfaceComponents;
 using Divine_Right.InterfaceComponents.Objects.Enums;
 using Divine_Right.InterfaceComponents.Components;
+using DRObjects.Graphics;
 
 namespace Divine_Right.GameScreens
 {
@@ -382,11 +383,18 @@ namespace Divine_Right.GameScreens
                 //Start with the tile
                 try
                 {
-                    foreach (string tileGraphic in block.TileGraphics)
+                    foreach (SpriteData tileGraphic in block.TileGraphics)
                     {
-                        if (tileGraphic != string.Empty)
+                        if (tileGraphic != null)
                         {
-                            spriteBatch.Draw(this.game.Content.Load<Texture2D>(tileGraphic), rec, Color.White);
+                            if (tileGraphic.sourceRectangle == null)
+                            {
+                                spriteBatch.Draw(this.game.Content.Load<Texture2D>(tileGraphic.path), rec, Color.White);
+                            }
+                            else
+                            { //part of a tileset
+                                spriteBatch.Draw(this.game.Content.Load<Texture2D>(tileGraphic.path), rec,tileGraphic.sourceRectangle, Color.White);
+                            }
                         }
                     }
                 }
@@ -403,9 +411,19 @@ namespace Divine_Right.GameScreens
                     if (block.ItemGraphics.Length != 0)
                     {
                         //we're using reverse here so items on the top get drawn last
-                        foreach (string itemGraphic in block.ItemGraphics.Reverse())
+                        foreach (SpriteData itemGraphic in block.ItemGraphics.Reverse())
                         {
-                            spriteBatch.Draw(this.game.Content.Load<Texture2D>(itemGraphic), rec, Color.White);
+                            if (itemGraphic != null)
+                            {
+                                if (itemGraphic.sourceRectangle == null)
+                                {
+                                    spriteBatch.Draw(this.game.Content.Load<Texture2D>(itemGraphic.path), rec, Color.White);
+                                }
+                                else
+                                { //part of a tileset
+                                    spriteBatch.Draw(this.game.Content.Load<Texture2D>(itemGraphic.path), rec, itemGraphic.sourceRectangle, Color.White);
+                                }
+                            }
                         }
                     }
                 }

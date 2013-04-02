@@ -40,5 +40,6 @@ Content\Graphics\World\DeadTree.xnb
 Content\Graphics\World\Settlements\LargeSettlement.xnb
 Content\Graphics\World\Settlements\MediumSettlement.xnb
 Content\Graphics\World\Settlements\SmallSettlement.xnb
-Items.sdf
+Content\Graphics\Local\Player.xnb
 App.config
+Items.sdf
