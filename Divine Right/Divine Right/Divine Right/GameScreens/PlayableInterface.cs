@@ -29,12 +29,41 @@ namespace Divine_Right.GameScreens
         #region Constants
         const int TILEWIDTH = 50;
         const int TILEHEIGHT = 50;
-        
-        const int PLAYABLEWIDTH = 950;
-        const int PLAYABLEHEIGHT = 450;
 
-        const int TOTALTILESWIDTH = (PLAYABLEWIDTH / TILEWIDTH) - 1;
-        const int TOTALTILESHEIGHT = (PLAYABLEHEIGHT / TILEHEIGHT) - 1;
+        int PlayableWidth
+        {
+            get
+            {
+                return GraphicsDevice.Viewport.Width;
+            }
+
+        }
+        int PlayableHeight
+        {
+            get
+            {
+                return GraphicsDevice.Viewport.Height - 50;
+
+            }
+
+        }
+        int TotalTilesWidth
+        {
+            get
+            {
+                return (PlayableWidth / TILEWIDTH) - 1; ;
+            }
+
+
+        }
+        int TotalTilesHeight
+        {
+            get
+            {
+                return (PlayableHeight / TILEHEIGHT) - 1;
+            }
+
+        }
 
         const int WINDOWWIDTH = 900;
         const int WINDOWHEIGHT = 500;
@@ -275,7 +304,7 @@ namespace Divine_Right.GameScreens
 
             //get the current state of the game
             //11,4,0
-            GraphicalBlock[] blocks = UserInterfaceManager.GetBlocksAroundPlayer((TOTALTILESWIDTH / 2), (TOTALTILESHEIGHT / 2), 0);
+            GraphicalBlock[] blocks = UserInterfaceManager.GetBlocksAroundPlayer((TotalTilesWidth / 2), (TotalTilesHeight / 2), 0);
             //clean the blocks up
 
             List<InterfaceBlock> iBlocks = this.PrepareGrid(blocks.ToList<GraphicalBlock>());
@@ -331,12 +360,12 @@ namespace Divine_Right.GameScreens
                     currentYCoord = block.MapCoordinate.Y;
                 }
 
-                if (yCount > TOTALTILESHEIGHT)
+                if (yCount > TotalTilesHeight)
                 {
                     return returnList; //we're done
                 }
 
-                if (xCount <= TOTALTILESWIDTH)
+                if (xCount <= TotalTilesWidth)
                 {
                     //add it
                     InterfaceBlock iBlock = new InterfaceBlock(block);
