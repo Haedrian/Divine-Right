@@ -58,6 +58,13 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.PAVEMENTTILE] = new SpriteData(@"Graphics/Local/BlackTiles",new Microsoft.Xna.Framework.Rectangle(45,164,30,30));
             localSprites[(int)LocalSpriteName.WOODTILE] = new SpriteData(@"Graphics/Local/HouseTiles",new Microsoft.Xna.Framework.Rectangle(0,128,30,30));
             localSprites[(int)LocalSpriteName.DOOR] = new SpriteData(@"Graphics/Local/HouseTiles", new Rectangle(257, 16, 32, 48));
+            localSprites[(int)LocalSpriteName.BED] = new SpriteData(@"Graphics/Local/HouseItems", new Rectangle(5, 11, 55, 89));
+            localSprites[(int)LocalSpriteName.CHAIR_LEFT] = new SpriteData(@"Graphics/Local/HouseItems", new Rectangle(97, 78, 33, 39));
+            localSprites[(int)LocalSpriteName.CHAIR_RIGHT] = new SpriteData(@"Graphics/Local/HouseItems", new Rectangle(129, 78, 30, 39));
+            localSprites[(int)LocalSpriteName.BOOKSHELF_FULL] = new SpriteData(@"Graphics/Local/HouseItems", new Rectangle(191, 3, 33, 70));
+            localSprites[(int)LocalSpriteName.WARDROBE_2] = new SpriteData(@"Graphics/Local/HouseItems", new Rectangle(192, 100, 32, 69));
+            localSprites[(int)LocalSpriteName.PUMP] = new SpriteData(@"Graphics/Local/HouseItems", new Rectangle(40, 314, 34, 33));
+            localSprites[(int)LocalSpriteName.OVEN] = new SpriteData(@"Graphics/Local/HouseItems", new Rectangle(7, 355, 35, 50));
 
             interfaceSprites[(int)InterfaceSpriteName.SCROLL] = new SpriteData(@"Graphics/Interface/scrollsandblocks", new Rectangle(224, 190, 96, 34));
         }

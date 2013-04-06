@@ -1,13 +1,4 @@
-Content\Player.xnb
-Content\WoodTile.xnb
-Content\CastleWall.xnb
-Content\GrassTile.xnb
 Content\Fonts\TextFeedbackFont.xnb
-Content\ScrollBackground.xnb
-Content\Scroll.xnb
-Content\Llama.xnb
-Content\PavementTile.xnb
-Content\MarbleTexture.xnb
 Content\Fonts\ButtonTextFont.xnb
 Content\Fonts\TitleFont.xnb
 Content\Graphics\World\Mountain.xnb
@@ -47,5 +38,6 @@ Content\Graphics\Local\BlackTiles.xnb
 Content\Graphics\Local\DungeonWalls.xnb
 Content\Graphics\Local\Walls.xnb
 Content\Graphics\Interface\scrollsandblocks.xnb
+Content\Graphics\Local\HouseItems.xnb
 App.config
 Items.sdf

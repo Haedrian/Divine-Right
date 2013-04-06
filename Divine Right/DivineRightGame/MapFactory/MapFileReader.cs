@@ -51,7 +51,7 @@ namespace DivineRightGame.MapFactory
         /// <returns></returns>
         public string[] ReadFile(string fileName)
         {
-            string path = System.Configuration.ConfigurationSettings.AppSettings["GamePath"].ToString();
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"/My Games/DivineRight"; 
             path += "/MapFiles/" + fileName + ".csv";
 
             return ReadFileFromPath(path);

@@ -77,6 +77,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
     <Reference Include="System.Xml">
       <Private>False</Private>
@@ -95,6 +96,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Compare\MapCoordinateCompare.cs" />
+    <Compile Include="Database\DatabaseHandling.cs" />
+    <Compile Include="Enums\Archetype.cs" />
     <Compile Include="Enums\GlobalBiome.cs" />
     <Compile Include="Enums\GlobalOverlay.cs" />
     <Compile Include="Enums\InternalActionEnum.cs" />
@@ -128,6 +131,9 @@
     <Content Include="Items.sdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />

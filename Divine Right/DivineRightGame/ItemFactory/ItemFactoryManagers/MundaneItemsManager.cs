@@ -5,25 +5,24 @@ using System.Text;
 using DRObjects;
 using DivineRightGame.ItemFactory.Object;
 using DRObjects.Graphics;
+using DRObjects.Database;
+using DRObjects.Enums;
 
 namespace DivineRightGame.ItemFactory.ItemFactoryManagers
 {
     public class MundaneItemsManager: IItemFactoryManager
     {
-        private const string FILENAME = "MundaneItems";
+        private const Archetype ARCHETYPE = Archetype.MUNDANEITEMS;
 
-        public MapItem CreateItem(string internalName)
+        public MapItem CreateItem(int itemID)
         {
-            //get the file
+            //get the traits from the database
 
-            FileReader reader = new FileReader();
-            MultiDictionary dict = reader.Read(FILENAME);
-
-            List<string> parameters = dict[internalName];
+            List<string> parameters = DatabaseHandling.GetItemProperties(ARCHETYPE, itemID);
 
             if (parameters == null)
             {
-                throw new Exception("There is no such item called " + internalName);
+                throw new Exception("There is no such item with id " + itemID);
             }
 
             //otherwise create it
@@ -38,7 +37,7 @@ namespace DivineRightGame.ItemFactory.ItemFactoryManagers
         /// <returns></returns>
         public MapItem CreateItem(List<string> parameters)
         {
-            return CreateItem(parameters[0], parameters[1], parameters[2], parameters[3], parameters[4]);
+            return CreateItem(parameters[1], parameters[2], parameters[3], parameters[4]);
         }
 
         /// <summary>
@@ -50,12 +49,11 @@ namespace DivineRightGame.ItemFactory.ItemFactoryManagers
         /// <param name="graphic">The graphic to show</param>
         /// <param name="canHaveItems">Whether it can have items placed on it or not</param>
         /// <returns></returns>
-        public MapItem CreateItem(string internalName, string name, string description, string graphic, string canHaveItems)
+        public MapItem CreateItem(string name, string description, string graphic, string canHaveItems)
         {
             MapItem item = new MapItem();
             item.Description = description;
             item.Graphic = SpriteManager.GetSprite((LocalSpriteName) Enum.Parse(typeof(LocalSpriteName), graphic));
-            item.InternalName = internalName;
             item.MayContainItems = Boolean.Parse(canHaveItems);
             item.Name = name;
 

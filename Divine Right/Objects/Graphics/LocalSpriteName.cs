@@ -13,5 +13,12 @@ namespace DRObjects.Graphics
         GRASSTILE,
         PAVEMENTTILE,
         DOOR,
+        BED,
+        CHAIR_LEFT,
+        CHAIR_RIGHT,
+        BOOKSHELF_FULL,
+        WARDROBE_2,
+        PUMP,
+        OVEN,
     }
 }

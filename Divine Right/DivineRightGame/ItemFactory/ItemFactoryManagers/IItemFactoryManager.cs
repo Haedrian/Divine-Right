@@ -22,6 +22,6 @@ namespace DivineRightGame.ItemFactory.ItemFactoryManagers
         /// </summary>
         /// <param name="internalName"></param>
         /// <returns></returns>
-        MapItem CreateItem(string internalName);
+        MapItem CreateItem(int internalID);
     }
 }

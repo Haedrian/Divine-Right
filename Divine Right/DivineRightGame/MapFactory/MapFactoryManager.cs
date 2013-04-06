@@ -14,23 +14,38 @@ namespace DivineRightGame.MapFactory
     {
         public MapBlock[,,] GetMap(string filename)
         {
-            MapBlock[, , ] map = new MapBlock[20, 20, 1];
+            MapBlock[, ,] map = null;
 
-            //First we read the actual file
+            //First we have to read the actual file and determine how large the map is going to be
 
-            try
-            {
                 MapFileReader reader = new MapFileReader();
-                string[] filedata = reader.ReadFile(filename);
+                string[] fileData = reader.ReadFile(filename);
 
-                //for now we only care about the coordiantaes
+                //find the line which tells us the size of the map
+                foreach (string line in fileData)
+                {
+                    if (line.StartsWith("-"))
+                    {
+                        if (line.ToLower().Contains("-mapsize"))
+                        {
+                            var cells = line.Split(',');
 
-                foreach (string s in filedata)
+                            map = new MapBlock[Int32.Parse(cells[1]), Int32.Parse(cells[2]), Int32.Parse(cells[3])];
+                            break;
+                        }
+                    }
+                }
+
+                if (map == null)
+                {
+                    //map was missing metainformation
+                    throw new Exception("Can't parse Map. It is missing the Mapsize metainformation");
+                }
+
+                foreach (string s in fileData)
                 {
                     if (!s.StartsWith("-"))
                     {
-                        try
-                        {
                             //split into its components    
                             var splitline = s.Split(',');
 
@@ -47,7 +62,7 @@ namespace DivineRightGame.MapFactory
 
                                 //TODO: STORAGE OF AN ITEM BY ITS PARAMETERS
 
-                                block.Tile = itemFact.CreateItem(splitline[4], splitline[5]);
+                                block.Tile = itemFact.CreateItem(splitline[4], Int32.Parse(splitline[5]));
                                 block.Tile.Coordinate =coo;
 
                                 map[coo.X, coo.Y, coo.Z] = block;
@@ -60,28 +75,14 @@ namespace DivineRightGame.MapFactory
  
                                 ItemFactory.ItemFactory itemFact = new ItemFactory.ItemFactory();
 
-                                block.PutItemOnBlock(itemFact.CreateItem(splitline[4],splitline[5]));
+                                block.PutItemOnBlock(itemFact.CreateItem(splitline[4],Int32.Parse(splitline[5])));
                             }
-                            
-                        }
-                        catch (Exception e)
-                        {
-
-                        }
-
                     }
                 }
 
                 return map;
 
-            }
-            catch (Exception ex)
-            {
-
-            }
-
-            return map;
-
+    
         }
 
     }

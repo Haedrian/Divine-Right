@@ -18,7 +18,7 @@ namespace DivineRightGame.ItemFactory
         /// <param name="category"></param>
         /// <param name="internalName"></param>
         /// <returns></returns>
-        public MapItem CreateItem(string category, string internalName)
+        public MapItem CreateItem(string category, int itemID)
         {
             IItemFactoryManager mgr = null;
             switch (category.ToLower())
@@ -33,7 +33,7 @@ namespace DivineRightGame.ItemFactory
                     throw new NotImplementedException("The category : " + category + " could not be found");
             }
 
-            return mgr.CreateItem(internalName);
+            return mgr.CreateItem(itemID);
         }
 
         public MapItem CreateItem(string category, List<string> parameters)

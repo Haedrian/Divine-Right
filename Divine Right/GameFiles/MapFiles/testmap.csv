@@ -1,6 +1,7 @@
 --This is a comment -This is meta information The rest is the map
--MapName = Test Map
--MapType = Local Map
+-MapName,Test Map
+-MapType,Local Map
+-MapSize,15,15,0
 
 --Putting the tiles
 0,0,0,T,Tile,Grass
