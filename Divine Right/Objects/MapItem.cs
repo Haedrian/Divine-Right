@@ -20,17 +20,17 @@ namespace DRObjects
         /// Defines whether the tile or item may have items placed on it.
         /// A value of false means that this tile can't have MapItems placed on it - this includes Actors walking on it
         /// </summary>
-        public bool MayContainItems { get; set; }
+        public virtual bool MayContainItems { get; set; }
 
         /// <summary>
         /// Represents the name of the tile or item
         /// </summary>
-        public string Name { get; set; }
+        public virtual string Name { get; set; }
 
         /// <summary>
         /// Represents the description to be shown when the user examines the tile or item
         /// </summary>
-        public string Description { get; set; }
+        public virtual string Description { get; set; }
 
         /// <summary>
         /// Represents the graphics that this tile will use to represent itself. 

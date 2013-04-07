@@ -116,6 +116,7 @@
     <Compile Include="Graphics\SpriteManager.cs" />
     <Compile Include="Graphics\GlobalSpriteName.cs" />
     <Compile Include="Items\Archetypes\Global\Settlement.cs" />
+    <Compile Include="Items\Archetypes\Local\ToggleItem.cs" />
     <Compile Include="Items\Tiles\Air.cs" />
     <Compile Include="Items\Tiles\Global\GlobalTile.cs" />
     <Compile Include="MapBlock.cs" />
@@ -124,7 +125,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Items\Archetypes\Local\" />
     <Folder Include="Items\Tiles\Local\" />
   </ItemGroup>
   <ItemGroup>

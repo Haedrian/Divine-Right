@@ -73,6 +73,7 @@
     <Compile Include="ItemFactory\ItemFactoryManagers\IItemFactoryManager.cs" />
     <Compile Include="ItemFactory\ItemFactoryManagers\MundaneItemsManager.cs" />
     <Compile Include="ItemFactory\ItemFactoryManagers\TilesManager.cs" />
+    <Compile Include="ItemFactory\ItemFactoryManagers\ToggleItemsManager.cs" />
     <Compile Include="ItemFactory\Object\CategoryEnum.cs" />
     <Compile Include="ItemFactory\Object\KeyListItem.cs" />
     <Compile Include="ItemFactory\Object\MultiDictionary.cs" />

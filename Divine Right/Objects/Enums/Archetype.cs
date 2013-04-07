@@ -12,6 +12,7 @@ namespace DRObjects.Enums
     {
         MUNDANEITEMS,
         TILES,
+        TOGGLEITEMS,
 
     }
 }
