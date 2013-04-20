@@ -13,7 +13,7 @@ namespace DRObjects
     {
         /// <summary>
         /// Which map item this Actor represents
-        /// </summary>
+        /// </summary> 
         public MapItem MapCharacter { get; set; }
 
         /// <summary>
