@@ -11,7 +11,7 @@ using DRObjects.Enums;
 
 namespace Divine_Right.GameScreens
 {
-    class MainMenuScreen:
+    class MainMenuScreen :
         DrawableGameComponent
     {
         #region members
@@ -20,13 +20,13 @@ namespace Divine_Right.GameScreens
         protected GraphicsDeviceManager graphics;
         protected string baseGameMessage;
         protected SpriteBatch sprites;
-        protected List<ISystemInterfaceComponent> components= new List<ISystemInterfaceComponent>();
+        protected List<ISystemInterfaceComponent> components = new List<ISystemInterfaceComponent>();
 
         #endregion
 
         #region Constructor
 
-        public MainMenuScreen(Game game, GraphicsDeviceManager graphics,string baseGameMessage)
+        public MainMenuScreen(Game game, GraphicsDeviceManager graphics, string baseGameMessage)
             : base(game)
         {
             this.game = game;
@@ -38,11 +38,6 @@ namespace Divine_Right.GameScreens
         public override void Initialize()
         {
             base.Initialize();
-
-            //add the buttons
-            components.Add(new AutoSizeButton("Generate World", game.Content, DRObjects.Enums.InternalActionEnum.GENERATE, new object[0], (GraphicsDevice.Viewport.Width/2), 150));
-           // components.Add(new AutoSizeButton("Continue Game", game.Content, DRObjects.Enums.InternalActionEnum.LOAD, new object[0], 450, 200));
-           // components.Add(new AutoSizeButton("Credits", game.Content, DRObjects.Enums.InternalActionEnum.NEW, new object[0], 450, 250));
         }
 
         protected override void LoadContent()
@@ -51,7 +46,7 @@ namespace Divine_Right.GameScreens
             sprites = new SpriteBatch(GraphicsDevice);
         }
 
-        public override void  Draw(GameTime gameTime)
+        public override void Draw(GameTime gameTime)
         {
 
             GraphicsDevice.Clear(Color.Black);
@@ -74,10 +69,11 @@ namespace Divine_Right.GameScreens
 
             //add the buttons
             components.Add(new AutoSizeButton("Generate World", game.Content, DRObjects.Enums.InternalActionEnum.GENERATE, new object[0], (GraphicsDevice.Viewport.Width / 2), 150));
-             components.Add(new AutoSizeButton("Continue Game", game.Content, DRObjects.Enums.InternalActionEnum.LOAD, new object[0], (GraphicsDevice.Viewport.Width/2), 200));
+            components.Add(new AutoSizeButton("Continue Game", game.Content, DRObjects.Enums.InternalActionEnum.LOAD, new object[0], (GraphicsDevice.Viewport.Width / 2), 200));
+            components.Add(new AutoSizeButton("Generate Test Local Map", game.Content, InternalActionEnum.LOAD, new object[1]{"House"}, (GraphicsDevice.Viewport.Width / 2), 250));
             // components.Add(new AutoSizeButton("Credits", game.Content, DRObjects.Enums.InternalActionEnum.NEW, new object[0], 450, 250));
 
-            
+
 
             foreach (ISystemInterfaceComponent component in components)
             {
@@ -86,7 +82,7 @@ namespace Divine_Right.GameScreens
 
             sprites.End();
 
- 	        base.Draw(gameTime);
+            base.Draw(gameTime);
         }
 
         public override void Update(GameTime gameTime)
@@ -108,10 +104,10 @@ namespace Divine_Right.GameScreens
                     if (component.ReturnLocation().Contains(mousePoint))
                     {
                         //handle it
-                        if (component.HandleClick(mouse.X, mouse.Y,out action,out args))
+                        if (component.HandleClick(mouse.X, mouse.Y, out action, out args))
                         {
                             break;
-                            
+
                         }
                     }
 

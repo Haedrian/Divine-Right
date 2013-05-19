@@ -20,7 +20,7 @@ namespace DivineRightGame.Managers
         public MapBlock[,] GenerateMap(int parentTileID, Maplet maplet)
         {
             PlanningMapItemType[,] planningMap = new PlanningMapItemType[maplet.SizeX, maplet.SizeY];
-            Random random = new Random();
+            Random random = new Random(DateTime.UtcNow.Millisecond);
 
             //Step 1: Plan how the map will look
 
@@ -94,6 +94,8 @@ namespace DivineRightGame.Managers
 
                         //Convert the child maplet into a planning map
                         PlanningMapItemType[,] childMapletBlueprint = this.CreateBlueprint(childMaplet.Maplet);
+                        //mark the areas covered by the blueprint as being held by that blueprint
+
 
                         if (Fits(planningMap, childMapletBlueprint, out x, out y, out newMap))
                         {
@@ -140,7 +142,7 @@ namespace DivineRightGame.Managers
                         if (contents is MapletContentsItem)
                         {
                             MapletContentsItem mapletContent = (MapletContentsItem)contents;
-                            itemPlaced = factory.CreateItem(mapletContent.ItemName, mapletContent.ItemID);
+                            itemPlaced = factory.CreateItem(mapletContent.ItemCategory, mapletContent.ItemID);
                         }
                         if (contents is MapletContentsItemTag)
                         {
@@ -149,13 +151,17 @@ namespace DivineRightGame.Managers
                             itemPlaced = factory.CreateItem(mapletContent.Category,mapletContent.Tag,out tempInt);
                         }
 
-                        //pick a place at random and add it to the maplet
-                        int position = random.Next(candidateBlocks.Count);
 
-                        candidateBlocks[position].PutItemOnBlock(itemPlaced);
+                        if (candidateBlocks.Count != 0)
+                        {
+                            //pick a place at random and add it to the maplet
+                            int position = random.Next(candidateBlocks.Count);
 
-                        //remove the candidate block from the list
-                        candidateBlocks.RemoveAt(position);
+                            candidateBlocks[position].PutItemOnBlock(itemPlaced);
+
+                            //remove the candidate block from the list
+                            candidateBlocks.RemoveAt(position);
+                        }
                     }
                 }
 
@@ -267,7 +273,15 @@ namespace DivineRightGame.Managers
             {
                 for (int y = 0; y < maplet.GetLength(1); y++)
                 {
-                    map[startX + x, startY + y] = maplet[x, y];
+                    if (maplet[x, y] == PlanningMapItemType.WALL)
+                    {
+                        map[startX + x, startY + y] = maplet[x, y];
+                    }
+                    else
+                    {
+                        //mark it as taken
+                        map[startX + x, startY + y] = PlanningMapItemType.MAPLET;
+                    }
                 }
             }
 
@@ -327,11 +341,19 @@ namespace DivineRightGame.Managers
                     MapBlock block = baseMap[x + startX, y + startY];
                     MapBlock mapletBlock = maplet[x, y];
 
-                    if (block.GetItems().Length != 0)
+                    if (block.GetItems().Length == 0)
                     {
                         //This means there is nothing on this block, so lets replace it
                         //The only time when this will be true is if there is a shared wall, in which case we'll keep the parent wall type
-                        block = mapletBlock;
+                        baseMap[x + startX, y+startY] = mapletBlock;
+                        //Fix the base coordinate
+                        baseMap[x + startX, y + startY].Tile.Coordinate = new MapCoordinate(x + startX, y + startY, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+
+                        //also fix any items on the tile
+                        foreach (MapItem item in baseMap[x + startX, y + startY].GetItems())
+                        {
+                            item.Coordinate = new MapCoordinate(x + startX, y + startY, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+                        }
                     }
 
                 }

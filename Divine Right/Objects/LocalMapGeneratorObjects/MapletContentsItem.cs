@@ -12,9 +12,9 @@ namespace DRObjects.LocalMapGeneratorObjects
     public class MapletContentsItem:MapletContents
     {
         /// <summary>
-        /// The name of the item
+        /// The category of the item
         /// </summary>
-        public string ItemName { get; set; }
+        public string ItemCategory { get; set; }
         /// <summary>
         /// The ID of the item
         /// </summary>

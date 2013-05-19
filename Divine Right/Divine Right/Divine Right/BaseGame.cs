@@ -62,7 +62,7 @@ namespace Divine_Right
 
                     //load the main game
                     this.Components.Clear();
-                    this.Components.Add (new PlayableInterface(this,graphics));
+                    this.Components.Add (new PlayableInterface(this,graphics,requestedArgs));
                 }
                 else if (requestedInternalAction.Value == InternalActionEnum.GENERATE)
                 {

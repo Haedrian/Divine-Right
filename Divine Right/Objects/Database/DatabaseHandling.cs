@@ -10,6 +10,7 @@ namespace DRObjects.Database
 {
     public static class DatabaseHandling
     {
+        private static Random _random = new Random();
 
         private static Dictionary<Archetype, Dictionary<int, List<string>>> dictionary = new Dictionary<Archetype, Dictionary<int, List<string>>>();
 
@@ -42,7 +43,7 @@ namespace DRObjects.Database
 
             //Now go through the values of the dictionary and pick out those who have that tag
             //Tags will be the last one
-            int[] items = dictionary[archetype].Values.Where(v => v[v.Count - 1].ToLower().Contains("," + tag + ",")).Select(v => Int32.Parse(v[0])).ToArray();
+            int[] items = dictionary[archetype].Values.Where(v => v[v.Count - 1].ToLower().Contains(tag)).Select(v => Int32.Parse(v[0])).ToArray();
 
             //do we have at least one?
             if (items.Length == 0)
@@ -57,61 +58,10 @@ namespace DRObjects.Database
             }
 
             //otherwise pick one at random to return
-            Random random = new Random();
 
-            return items[random.Next(items.Length)];
-        }
+            int id = _random.Next(items.Length);
 
-        /// <summary>
-        /// Gets a number of item at random which share the correct tag.
-        /// The first value of the list will be the archetype of the item
-        /// If unable to find anything, will throw an exception
-        /// </summary>
-        /// <param name="tag">The tag to look for</param>
-        /// <param name="archetype">The Archetype to search in</param>
-        /// <param name="maxAmount">The maximum amount of items to return</param>
-        /// <param name="probability">The probability out of 100% that one will be chosen</param>
-        /// <returns></returns>
-        public static List<string>[] GetItemsFromTag(Archetype archetype,string tag,double probability, int maxAmount=1)
-        {
-           //Get all the data belonging to the archtyle
-
-            if (!dictionary.Keys.Contains(archetype))
-            {
-                ReadTableIntoMemory(archetype);
-            }
-
-            //now go through the values of the dictionary and pick out those who have that tag
-
-            //The tags will be the last one
-            List<string>[] items = dictionary[archetype].Values.Where(v => v[v.Count - 1].ToLower().Contains("," + tag + ",")).ToArray();
-
-            //do we have at least one?
-            if (items.Length == 0)
-            {
-                //this is an exception
-                throw new Exception("No item with the selected tag was found");
-            }
-
-            List<List<string>> returnList = new List<List<string>>();
-
-            Random random = new Random();
-
-            for (int i = 0; i < maxAmount; i++)
-            {
-                if (random.NextDouble() * 100 <= probability)
-                {
-                    //Select one to add to the list
-                    if (items.Length == 1)
-                    {
-                        returnList.Add(items[0]);
-                    }
-                    //otherwise we pick one at random
-                    returnList.Add(items[random.Next(items.Length)]);
-                }
-            }
-
-            return returnList.ToArray();
+            return items[id];
         }
 
         /// <summary>

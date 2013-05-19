@@ -33,6 +33,20 @@ namespace DivineRightGame
         public static Actor PlayerCharacter { get; set; }
 
         /// <summary>
+        /// A random to use across
+        /// </summary>
+        public static Random Random
+        {
+            get
+            {
+
+                return _random;
+
+            }
+        }
+        private static Random _random = new Random();
+
+        /// <summary>
         /// Performs an internal action - TODO
         /// </summary>
         /// <param name="action"></param>

@@ -28,6 +28,9 @@ namespace DivineRightGame.ItemFactory
                 case "mundaneitem":
                     mgr = new MundaneItemsManager();
                     break;
+                case "mundaneitems":
+                    mgr = new MundaneItemsManager();
+                    break;
                 case "tile":
                     mgr = new TilesManager();
                     break;

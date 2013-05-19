@@ -81,7 +81,8 @@ namespace Divine_Right.GameScreens
         SpriteBatch spriteBatch;
         List<InterfaceBlock> blocks = new List<InterfaceBlock>();
         Game game;
-        IGameInterfaceComponent interfaceComponent = null;
+        private IGameInterfaceComponent interfaceComponent = null;
+        private object[] parameters;
 
         /// <summary>
         /// Stores how the left and right button were last update
@@ -96,17 +97,27 @@ namespace Divine_Right.GameScreens
 
         #endregion
 
-        public PlayableInterface(Game game,GraphicsDeviceManager gr) :
+        public PlayableInterface(Game game,GraphicsDeviceManager gr,object[] parameters) :
             base(game)
         {
             this.game = game;
             graphics = gr;
+            this.parameters = parameters;
         }
 
         public override void Initialize()
         {
             base.Initialize();
-            TestFunctions.PrepareFileTestMap();
+            if (parameters.Length == 0)
+            {
+                TestFunctions.PrepareFileTestMap();
+            }
+            else
+            {
+                //generate the house
+                TestFunctions.PrepareMapletTestMapHouse();
+                
+            }
         }
 
         protected override void LoadContent()

@@ -14,7 +14,6 @@ namespace DRObjects.Enums
         NEW,
         SAVE,
         LOAD,
-        EXIT
-
+        EXIT,
     }
 }
