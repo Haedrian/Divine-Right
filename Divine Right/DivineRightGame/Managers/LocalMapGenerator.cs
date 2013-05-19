@@ -85,7 +85,7 @@ namespace DivineRightGame.Managers
                 //Calculate the probability of putting the item in, and how many items we're putting
                 for (int i = 0; i < childMaplet.MaxAmount; i++)
                 {
-                    if (random.NextDouble() * 100 <= childMaplet.MaxAmount)
+                    if (random.NextDouble() * 100 <= childMaplet.ProbabilityPercentage)
                     {
                         //Does it fit?
                         int x = -1;
@@ -134,7 +134,7 @@ namespace DivineRightGame.Managers
                 for (int i = 0; i < contents.MaxAmount; i++)
                 {
                     //lets see what the probability of putting it in is
-                    if (((decimal)random.NextDouble() * 100) <= contents.ProbabilityPercentage)
+                    if ((random.NextDouble() * 100) <= contents.ProbabilityPercentage)
                     {
                         //Put it in
                         if (contents is MapletContentsItem)
@@ -183,7 +183,7 @@ namespace DivineRightGame.Managers
                 for (int mapY = 0; mapY < map.GetLength(1); mapY++)
                 {
                     //Do we have a starting point?
-                    if (map[mapX, mapY] == PlanningMapItemType.FREE || (map[mapX,mapY] == PlanningMapItemType.WALL && maplet[0,,0] == PlanningMapItemType.WALL)
+                    if (map[mapX, mapY] == PlanningMapItemType.FREE || (map[mapX,mapY] == PlanningMapItemType.WALL && maplet[0,0] == PlanningMapItemType.WALL))
                     {
                         //Does it fit?
                         bool fits = true;

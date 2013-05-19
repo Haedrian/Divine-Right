@@ -16,7 +16,7 @@ namespace DRObjects.LocalMapGeneratorObjects
         /// <summary>
         /// The probability of creating the Contents. Will be run for each potential amount.
         /// </summary>
-        public decimal ProbabilityPercentage { get; set; }
+        public double ProbabilityPercentage { get; set; }
         /// <summary>
         /// The Maximum Amount to be created
         /// </summary>

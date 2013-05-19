@@ -69,7 +69,7 @@ namespace DivineRightGame.ItemFactory
         /// <returns></returns>
         public MapItem CreateItem(string category, string tag, out int itemID)
         {
-            int id = DatabaseHandling.GetItemIdFromTag(category, tag);
+            int id = DatabaseHandling.GetItemIdFromTag((Archetype) Enum.Parse(typeof(Archetype),category,true), tag);
             itemID = id;
 
             //Now get the actual item
