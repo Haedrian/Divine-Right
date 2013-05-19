@@ -79,7 +79,9 @@
     <Compile Include="ItemFactory\Object\MultiDictionary.cs" />
     <Compile Include="LocalMap.cs" />
     <Compile Include="Managers\HelperFunctions\Interpolation.cs" />
+    <Compile Include="Managers\HelperObjects\HelperEnums\PlanningMapItemType.cs" />
     <Compile Include="Managers\HelperObjects\Region.cs" />
+    <Compile Include="Managers\LocalMapGenerator.cs" />
     <Compile Include="Managers\UserInterfaceManager.cs" />
     <Compile Include="Managers\WorldGenerationManager.cs" />
     <Compile Include="MapFactory\MapFactoryManager.cs" />

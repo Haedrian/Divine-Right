@@ -128,6 +128,10 @@ namespace DRObjects
             }
         }
 
+        public MapItem[] GetItems()
+        {
+            return this.mapItems.ToArray();
+        }
  
         /// <summary>
         /// Gets the actions which can be performed on this Block

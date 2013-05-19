@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using DRObjects;
 using DivineRightGame.ItemFactory.ItemFactoryManagers;
+using DRObjects.Enums;
+using DRObjects.Database;
 
 namespace DivineRightGame.ItemFactory
 {
@@ -37,6 +39,41 @@ namespace DivineRightGame.ItemFactory
             }
 
             return mgr.CreateItem(itemID);
+        }
+
+        /// <summary>
+        /// Creates an item from an Archetype and a tag.
+        /// The item to be created is random, as long as it shares the correct tag.
+        /// </summary>
+        /// <param name="archetype"></param>
+        /// <param name="tag"></param>
+        /// <param name="itemID">The id of the chosen item</param>
+        /// <returns></returns>
+        public MapItem CreateItem(Archetype archetype, string tag,out int itemID)
+        {
+            int id = DatabaseHandling.GetItemIdFromTag(archetype, tag);
+
+            itemID = id;
+
+            //Now get the actual item
+            return this.CreateItem(archetype.ToString().ToLower(), id);
+        }
+
+        /// <summary>
+        /// Creates an item from a category and a tag
+        /// The item to be created is random, as long as it shares the correct tag
+        /// </summary>
+        /// <param name="category"></param>
+        /// <param name="tag"></param>
+        /// <param name="itemID">The id of the chosen item, in case multiples need to be produced</param>
+        /// <returns></returns>
+        public MapItem CreateItem(string category, string tag, out int itemID)
+        {
+            int id = DatabaseHandling.GetItemIdFromTag(category, tag);
+            itemID = id;
+
+            //Now get the actual item
+            return this.CreateItem(category, id);
         }
 
         public MapItem CreateItem(string category, List<string> parameters)

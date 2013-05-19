@@ -119,6 +119,11 @@
     <Compile Include="Items\Archetypes\Local\ToggleItem.cs" />
     <Compile Include="Items\Tiles\Air.cs" />
     <Compile Include="Items\Tiles\Global\GlobalTile.cs" />
+    <Compile Include="LocalMapGeneratorObjects\Maplet.cs" />
+    <Compile Include="LocalMapGeneratorObjects\MapletContents.cs" />
+    <Compile Include="LocalMapGeneratorObjects\MapletContentsItem.cs" />
+    <Compile Include="LocalMapGeneratorObjects\MapletContentsItemTag.cs" />
+    <Compile Include="LocalMapGeneratorObjects\MapletContentsMaplet.cs" />
     <Compile Include="MapBlock.cs" />
     <Compile Include="MapCoordinates.cs" />
     <Compile Include="MapItem.cs" />
