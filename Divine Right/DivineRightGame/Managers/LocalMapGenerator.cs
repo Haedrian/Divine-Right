@@ -334,7 +334,9 @@ namespace DivineRightGame.Managers
                 if (segment.Start.X == segment.End.X)
                 {
                     //Get the entirety of the segment
+                    List<int> possibleYs = new List<int>();
 
+                    //Check in the real map whether the tile next to it is free for walking in
 
 
                     int smallerY = Math.Min(segment.Start.Y,segment.End.Y);
