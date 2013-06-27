@@ -81,6 +81,23 @@ namespace DRObjects
         }
 
         /// <summary>
+        /// Removes the Nth item in the block
+        /// </summary>
+        /// <param name="index"></param>
+        public void RemoveItemAt(int index)
+        {
+            this.mapItems.RemoveAt(index);
+        }
+
+        /// <summary>
+        /// Removes the top item
+        /// </summary>
+        public void RemoveTopItem()
+        {
+            this.mapItems.RemoveAt(this.mapItems.Count - 1);
+        }
+
+        /// <summary>
         /// Gets the top mapitem in the stack, or null if there is no item
         /// </summary>
         /// <returns></returns>

@@ -6,6 +6,7 @@ using DRObjects;
 using DRObjects.LocalMapGeneratorObjects;
 using DivineRightGame.MapFactory;
 using DivineRightGame.Managers.HelperObjects.HelperEnums;
+using DivineRightGame.Managers.HelperObjects;
 
 namespace DivineRightGame.Managers
 {
@@ -15,9 +16,10 @@ namespace DivineRightGame.Managers
         /// Generates a map based on the maplet assigned
         /// </summary>
         /// <param name="maplet">The maplet to generate</param>
+        /// <param name="parentWallID">The wall that the parent has</param>
         /// <param name="parentTileID">The ID of the tiles used in the parent maplet item</param>
         /// <returns></returns>
-        public MapBlock[,] GenerateMap(int parentTileID, Maplet maplet)
+        public MapBlock[,] GenerateMap(int parentTileID,int? parentWallID, Maplet maplet)
         {
             PlanningMapItemType[,] planningMap = new PlanningMapItemType[maplet.SizeX, maplet.SizeY];
             Random random = new Random(DateTime.UtcNow.Millisecond);
@@ -58,25 +60,40 @@ namespace DivineRightGame.Managers
             }
 
             //Do the walls now if they are required
-            int wallID = 0;
-            MapItem wall = factory.CreateItem(DRObjects.Enums.Archetype.MUNDANEITEMS, "wall",out wallID);
+            int? wallID = null;
+            int tempWallID = -1;
 
-            if (maplet.Walled)
+            if (parentWallID.HasValue)
+            {
+                MapItem wall = factory.CreateItem("MUNDANEITEMS", parentWallID.Value);
+                wallID = parentWallID;
+            }
+            else
+            {
+                MapItem wall = factory.CreateItem(DRObjects.Enums.Archetype.MUNDANEITEMS, "wall", out tempWallID);
+                wallID = tempWallID;
+            }
+
+            if (maplet.Walled && wallID.HasValue)
             {
 
                 //wall the edge tiles
                 for (int x = 0; x < maplet.SizeX; x++)
                 {
-                    generatedMap[x, 0].PutItemOnBlock(factory.CreateItem("mundaneitems",wallID));
-                    generatedMap[x, maplet.SizeY - 1].PutItemOnBlock(factory.CreateItem("mundaneitems",wallID));
+                    generatedMap[x, 0].PutItemOnBlock(factory.CreateItem("mundaneitems",wallID.Value));
+                    generatedMap[x, maplet.SizeY - 1].PutItemOnBlock(factory.CreateItem("mundaneitems",wallID.Value));
                 }
 
                 for (int y = 0; y < maplet.SizeY; y++)
                 {
-                    generatedMap[0, y].PutItemOnBlock(factory.CreateItem("mundaneitems", wallID));
-                    generatedMap[maplet.SizeX -1, y].PutItemOnBlock(factory.CreateItem("mundaneitems",wallID));
+                    generatedMap[0, y].PutItemOnBlock(factory.CreateItem("mundaneitems", wallID.Value));
+                    generatedMap[maplet.SizeX -1, y].PutItemOnBlock(factory.CreateItem("mundaneitems",wallID.Value));
                 }
 
+                //Now we need to see where to put the doors
+
+                //We'll check the planning map, if there is an edge which goes outside, then we put a door there
+                
             }
 
             //Step 1c: Determine where we'll put the maplets
@@ -100,7 +117,7 @@ namespace DivineRightGame.Managers
                         if (Fits(planningMap, childMapletBlueprint, out x, out y, out newMap))
                         {
                             //it fits, generate it - <3 Recursion
-                            MapBlock[,] childMap = this.GenerateMap(tileID, childMaplet.Maplet);
+                            MapBlock[,] childMap = this.GenerateMap(tileID,wallID.Value, childMaplet.Maplet);
 
                             //Join the two maps together
                             generatedMap = this.JoinMaps(generatedMap, childMap, x, y);
@@ -151,7 +168,6 @@ namespace DivineRightGame.Managers
                             itemPlaced = factory.CreateItem(mapletContent.Category,mapletContent.Tag,out tempInt);
                         }
 
-
                         if (candidateBlocks.Count != 0)
                         {
                             //pick a place at random and add it to the maplet
@@ -166,6 +182,186 @@ namespace DivineRightGame.Managers
                 }
 
             }
+
+            //Step 3: Stripe through the map except for the current maplet's walls - work out where the walls are, and for each wall segment, put a door in
+            #region Wall Segments
+            List<Line> wallSegments = new List<Line>();
+
+            for (int x = 1; x < planningMap.GetLength(0)-1; x++)
+            {
+                //lets see if we find a wall Segment
+                Line wallSegment = null;
+                
+                for (int y = 1; y < planningMap.GetLength(1) - 1; y++)
+                {
+                    if (planningMap[x, y] == PlanningMapItemType.WALL)
+                    {
+                        //Three possibilities exist. Either this is the start of a wall segment
+                        //Or this is a continuation of a wall segment
+                        //Or this is the end of a wall segment
+                        // -> Because there is an intersection
+                        // -> Because there was an active wall segment and there is no wall in this one
+                        if (wallSegment == null)
+                        {
+                            //Its a start
+                            wallSegment = new Line(new MapCoordinate(x, y, 0, DRObjects.Enums.MapTypeEnum.LOCAL), null);
+                        }
+                        else
+                        {
+                            //Continuation or end
+                            //Check if there's an interesection
+                            //Go up one and down one. If there is the maplet's walls there won't be a door - but then there'll be a double wall anyway which makes no sense
+                            if (planningMap[x + 1, y] == PlanningMapItemType.WALL || planningMap[x - 1, y] == PlanningMapItemType.WALL)
+                            {
+                                //terminate the wall - and start a new one
+                                wallSegment.End = new MapCoordinate(x, y, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+                                wallSegments.Add(wallSegment);
+
+                                wallSegment = new Line(new MapCoordinate(x, y, 0, DRObjects.Enums.MapTypeEnum.LOCAL), null);
+                            }
+                            else
+                            {
+                                //do nothing, its a continuation
+                            }
+                        }
+
+                    }
+                    else
+                    {
+                        //Mayhaps a line has stopped?
+                        if (wallSegment != null)
+                        {
+                            //It has - lets terminate it
+                            wallSegment.End = new MapCoordinate(x, y - 1, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+                            wallSegments.Add(wallSegment);
+
+                            wallSegment = null;
+                        }
+
+                    }
+
+
+                }
+
+                //Check if there's an active line - maybe it reaches till the end of the maplet
+                if (wallSegment != null)
+                {
+                    wallSegment.End = new MapCoordinate(x, (planningMap.GetLength(1) -1), 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+                    wallSegments.Add(wallSegment);
+                    wallSegment = null;
+                }
+            }
+
+            //Now stripe in the other direction
+            for (int y = 1; y < planningMap.GetLength(1) - 1; y++)
+            {
+                //lets see if we find a wall Segment
+                Line wallSegment = null;
+
+                for (int x = 1; x < planningMap.GetLength(0) - 1; x++)
+                {
+                    if (planningMap[x, y] == PlanningMapItemType.WALL)
+                    {
+                        //Three possibilities exist. Either this is the start of a wall segment
+                        //Or this is a continuation of a wall segment
+                        //Or this is the end of a wall segment
+                        // -> Because there is an intersection
+                        // -> Because there was an active wall segment and there is no wall in this one
+                        if (wallSegment == null)
+                        {
+                            //Its a start
+                            wallSegment = new Line(new MapCoordinate(x, y, 0, DRObjects.Enums.MapTypeEnum.LOCAL), null);
+                        }
+                        else
+                        {
+                            //Continuation or end
+                            //Check if there's an interesection
+                            //Go up one and down one. If there is the maplet's walls there won't be a door - but then there'll be a double wall anyway which makes no sense
+                            if (planningMap[x, y+1] == PlanningMapItemType.WALL || planningMap[x, y-1] == PlanningMapItemType.WALL)
+                            {
+                                //terminate the wall - and start a new one
+                                wallSegment.End = new MapCoordinate(x, y, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+                                wallSegments.Add(wallSegment);
+
+                                wallSegment = new Line(new MapCoordinate(x, y, 0, DRObjects.Enums.MapTypeEnum.LOCAL), null);
+                            }
+                            else
+                            {
+                                //do nothing, its a continuation
+                            }
+                        }
+
+                    }
+                    else
+                    {
+                        //Mayhaps a line has stopped?
+                        if (wallSegment != null)
+                        {
+                            //It has - lets terminate it
+                            wallSegment.End = new MapCoordinate(x -1, y, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+                            wallSegments.Add(wallSegment);
+
+                            wallSegment = null;
+                        }
+
+                    }
+
+
+                }
+
+                //Check if there's an active line - maybe it reaches till the end of the maplet
+                if (wallSegment != null)
+                {
+                    wallSegment.End = new MapCoordinate(planningMap.GetLength(0) -1, y, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+                    wallSegments.Add(wallSegment);
+                    wallSegment = null;
+                }
+            }
+            
+            #endregion Wall Segments
+
+            #region Doors
+
+            //Get all wall segments larger than 0, and we can put a door there
+ 
+            foreach (Line segment in wallSegments.Where(ws => ws.Length() > 0))
+            {
+                //Put a door somewhere, as long as its not the start or end
+                //Oh and remove the wall
+
+                MapBlock block = null;
+
+                if (segment.Start.X == segment.End.X)
+                {
+                    //Get the entirety of the segment
+
+
+
+                    int smallerY = Math.Min(segment.Start.Y,segment.End.Y);
+                    int largerY = Math.Min(segment.Start.Y,segment.End.Y);
+
+                    block = generatedMap[segment.Start.X,smallerY + 1 + random.Next(largerY - smallerY)]; 
+                }
+                else 
+                {
+                    int smallerX = Math.Min(segment.Start.X,segment.End.X);
+                    int largerX = Math.Min(segment.Start.X,segment.End.X);
+
+                    block = generatedMap[smallerX + 1 + random.Next(largerX - smallerX),segment.Start.Y]; 
+                }
+
+                try
+                {
+                    block.RemoveTopItem();
+                }
+                catch { }
+                int doorID = -1;
+                block.PutItemOnBlock(factory.CreateItem(DRObjects.Enums.Archetype.TOGGLEITEMS,"door",out doorID));
+            }
+
+            #endregion
+
+
             //we're done
             return generatedMap;
         }

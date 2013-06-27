@@ -34,7 +34,7 @@ namespace DivineRightGame.ItemFactory
                 case "tile":
                     mgr = new TilesManager();
                     break;
-                case "toggleitem":
+                case "toggleitems":
                     mgr = new ToggleItemsManager();
                     break;
                 default:

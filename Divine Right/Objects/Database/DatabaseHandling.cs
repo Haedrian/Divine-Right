@@ -74,7 +74,7 @@ namespace DRObjects.Database
 
         /// <summary>
         /// Read an entire table into memory
-        /// </summary>
+        /// </summary>s
         /// <param name="archetype"></param>
         /// <param name="itemID"></param>
         public static void ReadTableIntoMemory(Archetype archetype)

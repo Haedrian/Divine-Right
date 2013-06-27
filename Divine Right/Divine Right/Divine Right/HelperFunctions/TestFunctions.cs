@@ -85,15 +85,15 @@ namespace Divine_Right.HelperFunctions
 
             MapletContentsItemTag libraryStuff = new MapletContentsItemTag();
             libraryStuff.Category = "mundaneitems";
-            libraryStuff.MaxAmount = 2;
-            libraryStuff.ProbabilityPercentage = 75;
+            libraryStuff.MaxAmount = 3;
+            libraryStuff.ProbabilityPercentage = 50;
             libraryStuff.Tag = "reading";
 
             libraryMaplet.MapletContents.Add(libraryStuff);
 
             MapletContentsItemTag librarySeats = new MapletContentsItemTag();
             librarySeats.Category = "mundaneitems";
-            librarySeats.MaxAmount = 4;
+            librarySeats.MaxAmount = 1;
             librarySeats.ProbabilityPercentage = 75;
             librarySeats.Tag = "chair";
 
@@ -104,7 +104,7 @@ namespace Divine_Right.HelperFunctions
             //Now Generate it
             LocalMapGenerator gen = new LocalMapGenerator();
 
-            MapBlock[,] generatedMap = gen.GenerateMap(1, house);
+            MapBlock[,] generatedMap = gen.GenerateMap(1,null, house);
 
             //put in the map
 
