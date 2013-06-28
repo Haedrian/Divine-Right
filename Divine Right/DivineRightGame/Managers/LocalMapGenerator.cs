@@ -336,20 +336,57 @@ namespace DivineRightGame.Managers
                     //Get the entirety of the segment
                     List<int> possibleYs = new List<int>();
 
-                    //Check in the real map whether the tile next to it is free for walking in
-
-
                     int smallerY = Math.Min(segment.Start.Y,segment.End.Y);
-                    int largerY = Math.Min(segment.Start.Y,segment.End.Y);
+                    int largerY = Math.Max(segment.Start.Y,segment.End.Y);
 
-                    block = generatedMap[segment.Start.X,smallerY + 1 + random.Next(largerY - smallerY)]; 
+                    //Check in the real map whether the tile next to it is free for walking in
+                    for (int y = smallerY + 1; y <= largerY; y++)
+                    {
+                        if (generatedMap[segment.Start.X - 1, y].MayContainItems && generatedMap[segment.Start.X + 1, y].MayContainItems)
+                        {
+                            possibleYs.Add(y);
+                        }
+                    }
+
+                    //Now check whether there's a possible y, and pick a random one from it
+                    if (possibleYs.Count != 0)
+                    {
+                        block = generatedMap[segment.Start.X, possibleYs[random.Next(possibleYs.Count - 1)]];
+                    }
+                    else
+                    {
+                        //nothing to do - take the smallest one
+                        block = generatedMap[segment.Start.X, segment.Start.Y + 1];
+                    }
                 }
                 else 
                 {
-                    int smallerX = Math.Min(segment.Start.X,segment.End.X);
-                    int largerX = Math.Min(segment.Start.X,segment.End.X);
+                    List<int> possibleXs = new List<int>();
 
-                    block = generatedMap[smallerX + 1 + random.Next(largerX - smallerX),segment.Start.Y]; 
+                    int smallerX = Math.Min(segment.Start.X,segment.End.X);
+                    int largerX = Math.Max(segment.Start.X,segment.End.X);
+
+                    //Check in the real map whether the tile next to it is free for walking in
+                    for (int x = smallerX + 1; x <= largerX; x++)
+                    {
+                        if (generatedMap[x, segment.Start.Y -1].MayContainItems && generatedMap[x, segment.Start.Y +1].MayContainItems)
+                        {
+                            possibleXs.Add(x);
+                        }
+                    }
+
+                    //Now check whether there's a possible x, and pick a random one from it
+                    if (possibleXs.Count != 0)
+                    {
+                        block = generatedMap[possibleXs[random.Next(possibleXs.Count - 1)], segment.Start.Y];
+                    }
+                    else
+                    {
+                        //nothing to do - take the smallest one
+                        block = generatedMap[segment.Start.X+1, segment.Start.Y];
+                    }
+
+
                 }
 
                 try
