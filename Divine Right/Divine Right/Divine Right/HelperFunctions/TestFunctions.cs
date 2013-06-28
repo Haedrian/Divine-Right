@@ -54,14 +54,16 @@ namespace Divine_Right.HelperFunctions
             house.MapletContents = new List<MapletContents>();
 
             MapletContentsItem beds = new MapletContentsItem();
+            beds.Position = DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES;
             beds.ItemID = 37;
             beds.ItemCategory = "mundaneitems";
             beds.MaxAmount = 5;
-            beds.ProbabilityPercentage = 50;
+            beds.ProbabilityPercentage = 100;
 
             house.MapletContents.Add(beds);
 
             MapletContentsItemTag decorations = new MapletContentsItemTag();
+            decorations.Position = DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.MIDDLE;
             decorations.Category = "mundaneitems";
             decorations.MaxAmount = 7;
             decorations.ProbabilityPercentage = 50;
@@ -71,6 +73,8 @@ namespace Divine_Right.HelperFunctions
 
             MapletContentsMaplet library = new MapletContentsMaplet();
             Maplet libraryMaplet = new Maplet();
+            library.Position = DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES;
+            library.Position = DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES;
             library.Maplet = libraryMaplet;
             library.MaxAmount = 2;
             library.ProbabilityPercentage = 100;
@@ -84,6 +88,7 @@ namespace Divine_Right.HelperFunctions
             libraryMaplet.Walled = true;
 
             MapletContentsItemTag libraryStuff = new MapletContentsItemTag();
+            libraryStuff.Position = DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES;
             libraryStuff.Category = "mundaneitems";
             libraryStuff.MaxAmount = 3;
             libraryStuff.ProbabilityPercentage = 50;
@@ -92,6 +97,7 @@ namespace Divine_Right.HelperFunctions
             libraryMaplet.MapletContents.Add(libraryStuff);
 
             MapletContentsItemTag librarySeats = new MapletContentsItemTag();
+            librarySeats.Position = DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.ANYWHERE;
             librarySeats.Category = "mundaneitems";
             librarySeats.MaxAmount = 1;
             librarySeats.ProbabilityPercentage = 75;
@@ -131,6 +137,7 @@ namespace Divine_Right.HelperFunctions
             playerBlock.PutItemOnBlock(player);
             GameState.PlayerCharacter = new Actor();
             GameState.PlayerCharacter.MapCharacter = player;
+            GameState.PlayerCharacter.IsPlayerCharacter = true;
 
 
         }

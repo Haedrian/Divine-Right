@@ -19,7 +19,7 @@ namespace DivineRightGame.Managers
         /// <param name="parentWallID">The wall that the parent has</param>
         /// <param name="parentTileID">The ID of the tiles used in the parent maplet item</param>
         /// <returns></returns>
-        public MapBlock[,] GenerateMap(int parentTileID,int? parentWallID, Maplet maplet)
+        public MapBlock[,] GenerateMap(int parentTileID, int? parentWallID, Maplet maplet)
         {
             PlanningMapItemType[,] planningMap = new PlanningMapItemType[maplet.SizeX, maplet.SizeY];
             Random random = new Random(DateTime.UtcNow.Millisecond);
@@ -142,6 +142,69 @@ namespace DivineRightGame.Managers
 
                 }
             }
+            List<MapBlock> edgeBlocks = new List<MapBlock>();
+
+            //Lets also get the edge mapblocks - for those who prefer being on the edge
+            for (int x = 0; x < planningMap.GetLength(0); x++)
+            {
+                if (!maplet.Walled)
+                {
+                    if (planningMap[x, 0] == PlanningMapItemType.FREE)
+                    {
+                        edgeBlocks.Add(generatedMap[x,0]);
+                    }
+
+                    if (planningMap[x, planningMap.GetLength(1) - 1] == PlanningMapItemType.FREE)
+                    {
+                        edgeBlocks.Add(generatedMap[x,planningMap.GetLength(1) - 1]);
+                    }
+                }
+                else 
+                {
+                    if (planningMap[x, 1] == PlanningMapItemType.FREE)
+                    {
+                        edgeBlocks.Add(generatedMap[x,1]);
+                    }
+
+                    if (planningMap[x, planningMap.GetLength(1) - 2] == PlanningMapItemType.FREE)
+                    {
+                        edgeBlocks.Add(generatedMap[x,planningMap.GetLength(1) - 2]);
+                    }
+                }
+                
+            }
+
+            //Doing the y parts
+            for (int y=0; y < planningMap.GetLength(1); y++)
+            {
+                if (!maplet.Walled)
+                {
+                    if (planningMap[0,y] == PlanningMapItemType.FREE)
+                    {
+                        edgeBlocks.Add(generatedMap[0,y]);
+                    }
+
+                    if (planningMap[planningMap.GetLength(0) -1,y] == PlanningMapItemType.FREE)
+                    {
+                        edgeBlocks.Add(generatedMap[planningMap.GetLength(0) - 1,y]);
+                    }
+                }
+                else 
+                {
+                    if (planningMap[1,y] == PlanningMapItemType.FREE)
+                    {
+                        edgeBlocks.Add(generatedMap[1,y]);
+                    }
+
+                    if (planningMap[planningMap.GetLength(0) -2,y] == PlanningMapItemType.FREE)
+                    {
+                        edgeBlocks.Add(generatedMap[planningMap.GetLength(0) - 2,y]);
+                    }
+
+                }
+
+
+            }
 
             //go through the maplet contents
 
@@ -170,13 +233,46 @@ namespace DivineRightGame.Managers
 
                         if (candidateBlocks.Count != 0)
                         {
-                            //pick a place at random and add it to the maplet
-                            int position = random.Next(candidateBlocks.Count);
+                            //Lets decide where to put it
 
-                            candidateBlocks[position].PutItemOnBlock(itemPlaced);
+                            if (contents.Position == DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES && edgeBlocks.Count != 0)
+                            {
+                                //pick a place at random and add it to the maplet
+                                int position = random.Next(edgeBlocks.Count);
+                                
+                                edgeBlocks[position].PutItemOnBlock(itemPlaced);
 
-                            //remove the candidate block from the list
-                            candidateBlocks.RemoveAt(position);
+                                //remove it from both
+                                candidateBlocks.Remove(edgeBlocks[position]);
+                                edgeBlocks.RemoveAt(position);
+
+                            }
+
+                            if (contents.Position == DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.MIDDLE && candidateBlocks.Except(edgeBlocks).Count() != 0)
+                            {
+                                //pick a place at random and add it to the maplet
+                                int position = random.Next(candidateBlocks.Except(edgeBlocks).Count());
+
+                                MapBlock block = candidateBlocks.Except(edgeBlocks).ToArray()[position]; 
+
+                                block.PutItemOnBlock(itemPlaced);
+
+                                //remove it from both
+                                candidateBlocks.Remove(block);
+                                edgeBlocks.Remove(block);
+                            }
+
+                            if (contents.Position == DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.ANYWHERE)
+                            {
+                                //pick a place at random and add it to the maplet
+                                int position = random.Next(candidateBlocks.Count);
+
+                                candidateBlocks[position].PutItemOnBlock(itemPlaced);
+
+                                //remove it from both
+                                edgeBlocks.Remove(candidateBlocks[position]);
+                                candidateBlocks.RemoveAt(position);
+                            }
                         }
                     }
                 }
@@ -424,7 +520,7 @@ namespace DivineRightGame.Managers
                 for (int mapY = 0; mapY < map.GetLength(1); mapY++)
                 {
                     //Do we have a starting point?
-                    if (map[mapX, mapY] == PlanningMapItemType.FREE || (map[mapX,mapY] == PlanningMapItemType.WALL && maplet[0,0] == PlanningMapItemType.WALL))
+                    if (map[mapX, mapY] == PlanningMapItemType.FREE || (map[mapX, mapY] == PlanningMapItemType.WALL && maplet[0, 0] == PlanningMapItemType.WALL))
                     {
                         //Does it fit?
                         bool fits = true;
@@ -456,7 +552,7 @@ namespace DivineRightGame.Managers
                                             continue;
                                         }
                                     }
-                                    
+
                                     if (map[mapTotalX, mapTotalY] != PlanningMapItemType.FREE)
                                     {
                                         fits = false;
@@ -478,7 +574,7 @@ namespace DivineRightGame.Managers
 
                             //overlap the map
 
-                            newMap = FuseMaps(map,maplet,startX,startY);
+                            newMap = FuseMaps(map, maplet, startX, startY);
 
                             return true;
                         }
@@ -552,7 +648,7 @@ namespace DivineRightGame.Managers
                 for (int y = 0; y < maplet.SizeY; y++)
                 {
                     blueprint[0, y] = PlanningMapItemType.WALL;
-                    blueprint[maplet.SizeX-1, y] = PlanningMapItemType.WALL;
+                    blueprint[maplet.SizeX - 1, y] = PlanningMapItemType.WALL;
                 }
             }
 
@@ -580,7 +676,7 @@ namespace DivineRightGame.Managers
                     {
                         //This means there is nothing on this block, so lets replace it
                         //The only time when this will be true is if there is a shared wall, in which case we'll keep the parent wall type
-                        baseMap[x + startX, y+startY] = mapletBlock;
+                        baseMap[x + startX, y + startY] = mapletBlock;
                         //Fix the base coordinate
                         baseMap[x + startX, y + startY].Tile.Coordinate = new MapCoordinate(x + startX, y + startY, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
 

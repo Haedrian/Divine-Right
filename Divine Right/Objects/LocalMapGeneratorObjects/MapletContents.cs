@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DRObjects.LocalMapGeneratorObjects.Enums;
 
 namespace DRObjects.LocalMapGeneratorObjects
 {
@@ -21,5 +22,10 @@ namespace DRObjects.LocalMapGeneratorObjects
         /// The Maximum Amount to be created
         /// </summary>
         public int MaxAmount { get; set; }
+
+        /// <summary>
+        /// Determines whether this maplet prefers to be positioned.
+        /// </summary>
+        public PositionAffinity Position { get; set; }
     }
 }
