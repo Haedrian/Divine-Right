@@ -73,13 +73,14 @@ namespace Divine_Right.GameScreens
             components.Add(new AutoSizeButton("Generate Test Local Map", game.Content, InternalActionEnum.LOAD, new object[1]{"House"}, (GraphicsDevice.Viewport.Width / 2), 250));
             // components.Add(new AutoSizeButton("Credits", game.Content, DRObjects.Enums.InternalActionEnum.NEW, new object[0], 450, 250));
 
-
-
             foreach (ISystemInterfaceComponent component in components)
             {
                 component.Draw(game.Content, sprites);
             }
 
+            Rectangle logoRect = new Rectangle(5,(int)(GraphicsDevice.Viewport.Height - 27),70,27);
+
+            sprites.Draw(game.Content.Load<Texture2D>(@"Graphics/Interface/Level21"), logoRect, Color.White);
             sprites.End();
 
             base.Draw(gameTime);

@@ -37,6 +37,9 @@ namespace DivineRightGame.ItemFactory
                 case "toggleitems":
                     mgr = new ToggleItemsManager();
                     break;
+                case "toggleitem":
+                    mgr = new ToggleItemsManager();
+                    break;
                 default:
                     throw new NotImplementedException("The category : " + category + " could not be found");
             }
