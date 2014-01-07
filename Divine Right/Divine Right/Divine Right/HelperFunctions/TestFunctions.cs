@@ -57,10 +57,81 @@ namespace Divine_Right.HelperFunctions
             beds.Position = DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES;
             beds.ItemID = 37;
             beds.ItemCategory = "mundaneitems";
-            beds.MaxAmount = 5;
-            beds.ProbabilityPercentage = 100;
+            beds.MaxAmount = 2;
+            beds.ProbabilityPercentage = 75;
 
             house.MapletContents.Add(beds);
+
+            MapletContentsMaplet chairAndTable = new MapletContentsMaplet();
+            chairAndTable.Position = DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.MIDDLE;
+            Maplet chairAndTableMaplet = new Maplet();
+            chairAndTable.Maplet = chairAndTableMaplet;
+            chairAndTable.MaxAmount = 2;
+            chairAndTable.ProbabilityPercentage = 100;
+
+            chairAndTableMaplet.MapletContents = new List<MapletContents>();
+            chairAndTableMaplet.MapletName = "Chairs";
+            chairAndTableMaplet.SizeX = 3;
+            chairAndTableMaplet.SizeY = 3;
+            chairAndTableMaplet.Tiled = false;
+            chairAndTableMaplet.Walled = false;
+
+            chairAndTableMaplet.MapletContents = new List<MapletContents>();
+
+            MapletContentsItemTag table = new MapletContentsItemTag();
+            table.Position = DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.FIXED;
+            table.x = 1;
+            table.y = 1;
+            table.Category = "mundaneitems";
+            table.MaxAmount = 1;
+            table.ProbabilityPercentage = 100;
+            table.Tag = "table";
+
+            chairAndTableMaplet.MapletContents.Add(table);
+
+            chairAndTableMaplet.MapletContents.Add(new MapletContentsItemTag
+            {
+                Category = "mundaneitems",
+                MaxAmount = 1,
+                Position = DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.FIXED,
+                ProbabilityPercentage = 100,
+                Tag = "chair left",
+                x = 0,
+                y = 1
+            });
+
+            chairAndTableMaplet.MapletContents.Add(new MapletContentsItemTag
+            {
+                Category = "mundaneitems",
+                MaxAmount = 1,
+                Position = DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.FIXED,
+                ProbabilityPercentage = 50,
+                Tag = "chair right",
+                x = 2,
+                y = 1
+            });
+
+            chairAndTableMaplet.MapletContents.Add(new MapletContentsItemTag
+            {
+                Category = "mundaneitems",
+                MaxAmount = 1,
+                Position = DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.FIXED,
+                ProbabilityPercentage = 75,
+                Tag = "chair top",
+                x = 1,
+                y = 0
+            });
+
+            chairAndTableMaplet.MapletContents.Add(new MapletContentsItemTag
+            {
+                Category = "mundaneitems",
+                MaxAmount = 1,
+                Position = DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.FIXED,
+                ProbabilityPercentage = 75,
+                Tag = "chair bottom",
+                x = 1,
+                y = 2
+            });
 
             MapletContentsItemTag decorations = new MapletContentsItemTag();
             decorations.Position = DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.MIDDLE;
@@ -71,18 +142,27 @@ namespace Divine_Right.HelperFunctions
 
             house.MapletContents.Add(decorations);
 
+            MapletContentsItemTag furniture = new MapletContentsItemTag();
+            decorations.Position = DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.ANYWHERE;
+            decorations.Category = "mundaneitems";
+            decorations.MaxAmount = 3;
+            decorations.ProbabilityPercentage = 50;
+            decorations.Tag = "furniture";
+
+            house.MapletContents.Add(furniture);
+
             MapletContentsMaplet library = new MapletContentsMaplet();
             Maplet libraryMaplet = new Maplet();
-            library.Position = DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES;
-            library.Position = DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES;
             library.Maplet = libraryMaplet;
-            library.MaxAmount = 2;
+            library.Position = DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.ANYWHERE;
+            library.Maplet = libraryMaplet;
+            library.MaxAmount = 1;
             library.ProbabilityPercentage = 100;
 
             libraryMaplet.MapletContents = new List<MapletContents>();
             libraryMaplet.MapletName = "Library";
-            libraryMaplet.SizeX = 5;
-            libraryMaplet.SizeY = 6;
+            libraryMaplet.SizeX = 7;
+            libraryMaplet.SizeY = 7;
             libraryMaplet.Tiled = true;
             libraryMaplet.TileID = 1;
             libraryMaplet.Walled = true;
@@ -91,7 +171,7 @@ namespace Divine_Right.HelperFunctions
             libraryStuff.Position = DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES;
             libraryStuff.Category = "mundaneitems";
             libraryStuff.MaxAmount = 3;
-            libraryStuff.ProbabilityPercentage = 50;
+            libraryStuff.ProbabilityPercentage = 66;
             libraryStuff.Tag = "reading";
 
             libraryMaplet.MapletContents.Add(libraryStuff);
@@ -99,18 +179,19 @@ namespace Divine_Right.HelperFunctions
             MapletContentsItemTag libraryDesk = new MapletContentsItemTag();
             libraryDesk.Position = DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.MIDDLE;
             libraryDesk.Category = "mundaneitems";
-            libraryDesk.MaxAmount = 2;
+            libraryDesk.MaxAmount = 1;
             libraryDesk.ProbabilityPercentage = 75;
             libraryDesk.Tag = "desk";
 
             libraryMaplet.MapletContents.Add(libraryDesk);
 
             house.MapletContents.Add(library);
+            house.MapletContents.Add(chairAndTable);
 
             //Now Generate it
             LocalMapGenerator gen = new LocalMapGenerator();
 
-            MapBlock[,] generatedMap = gen.GenerateMap(1,null, house);
+            MapBlock[,] generatedMap = gen.GenerateMap(1,null, house,true);
 
             //put in the map
 

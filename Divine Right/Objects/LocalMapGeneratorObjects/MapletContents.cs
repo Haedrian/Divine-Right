@@ -27,5 +27,15 @@ namespace DRObjects.LocalMapGeneratorObjects
         /// Determines whether this maplet prefers to be positioned.
         /// </summary>
         public PositionAffinity Position { get; set; }
+
+        /// <summary>
+        /// If the position is fixed, the SINGLE item will be placed in this location. Otherwise will be ignored
+        /// </summary>
+        public int? x { get; set; }
+
+        /// <summary>
+        /// If the position is fixed, the SINGLE item will be placed in this location. Otherwise will be ignored
+        /// </summary>
+        public int? y { get; set; }
     }
 }

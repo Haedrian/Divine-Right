@@ -13,5 +13,6 @@ namespace DRObjects.LocalMapGeneratorObjects.Enums
         SIDES,
         MIDDLE,
         ANYWHERE,
+        FIXED,
     }
 }

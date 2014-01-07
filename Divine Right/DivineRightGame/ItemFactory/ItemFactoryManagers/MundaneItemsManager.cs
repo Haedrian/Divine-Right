@@ -13,7 +13,7 @@ namespace DivineRightGame.ItemFactory.ItemFactoryManagers
     public class MundaneItemsManager: IItemFactoryManager
     {
         private const Archetype ARCHETYPE = Archetype.MUNDANEITEMS;
-        private Random _random = new Random();
+        private static Random _random = new Random();
 
         public MapItem CreateItem(int itemID)
         {

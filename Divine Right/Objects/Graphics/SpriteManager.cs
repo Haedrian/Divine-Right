@@ -115,8 +115,8 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.LAMP_1] = new SpriteData(HOUSEITEM, new Rectangle(350, 150, 50, 50));
             localSprites[(int)LocalSpriteName.LAMP_2] = new SpriteData(HOUSEITEM, new Rectangle(400, 150, 50, 50));
             localSprites[(int)LocalSpriteName.PLANT_POT_3] = new SpriteData(HOUSEITEM, new Rectangle(450, 150, 50, 50));
-            localSprites[(int)LocalSpriteName.NICE_CHAIR_RIGHT] = new SpriteData(HOUSEITEM, new Rectangle(0, 200, 50, 50));
-            localSprites[(int)LocalSpriteName.NICE_CHAIR_LEFT] = new SpriteData(HOUSEITEM, new Rectangle(50, 200, 50, 50));
+            localSprites[(int)LocalSpriteName.NICE_CHAIR_RIGHT] = new SpriteData(HOUSEITEM, new Rectangle(50, 200, 50, 50));
+            localSprites[(int)LocalSpriteName.NICE_CHAIR_LEFT] = new SpriteData(HOUSEITEM, new Rectangle(0, 200, 50, 50));
             localSprites[(int)LocalSpriteName.NICE_CHAIR_TOP] = new SpriteData(HOUSEITEM, new Rectangle(100, 200, 50, 50));
             localSprites[(int)LocalSpriteName.NICE_CHAIR_BOTTOM] = new SpriteData(HOUSEITEM, new Rectangle(150, 200, 50, 50));
             localSprites[(int)LocalSpriteName.BLUE_POT_LARGE] = new SpriteData(HOUSEITEM, new Rectangle(200, 200, 50, 50));
@@ -135,10 +135,10 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.DESK_1] = new SpriteData(HOUSEITEM, new Rectangle(350, 250, 50, 50));
             localSprites[(int)LocalSpriteName.PLANT_CABINET_1] = new SpriteData(HOUSEITEM, new Rectangle(400, 250, 50, 50));
             localSprites[(int)LocalSpriteName.BOOKCASE_4] = new SpriteData(HOUSEITEM, new Rectangle(450, 250, 50, 50));
-            localSprites[(int)LocalSpriteName.DESK_2] = new SpriteData(HOUSEITEM, new Rectangle(50, 300, 50, 50));
-            localSprites[(int)LocalSpriteName.DESK_3] = new SpriteData(HOUSEITEM, new Rectangle(100, 300, 50, 50));
-            localSprites[(int)LocalSpriteName.PLANT_CABINET_2] = new SpriteData(HOUSEITEM, new Rectangle(150, 300, 50, 50));
-            localSprites[(int)LocalSpriteName.PLANT_CABINET_3] = new SpriteData(HOUSEITEM, new Rectangle(200, 300, 50, 50));
+            localSprites[(int)LocalSpriteName.DESK_2] = new SpriteData(HOUSEITEM, new Rectangle(0, 300, 50, 50));
+            localSprites[(int)LocalSpriteName.DESK_3] = new SpriteData(HOUSEITEM, new Rectangle(50, 300, 50, 50));
+            localSprites[(int)LocalSpriteName.PLANT_CABINET_2] = new SpriteData(HOUSEITEM, new Rectangle(100, 300, 50, 50));
+            localSprites[(int)LocalSpriteName.PLANT_CABINET_3] = new SpriteData(HOUSEITEM, new Rectangle(150, 300, 50, 50));
 
             
             localSprites[(int)LocalSpriteName.WOOD_LOGS] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(0, 0, 50, 50));

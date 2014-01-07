@@ -12,6 +12,8 @@ namespace DivineRightGame.Managers
 {
     public class LocalMapGenerator
     {
+        private Random random = new Random(DateTime.UtcNow.Millisecond);
+
         /// <summary>
         /// Generates a map based on the maplet assigned
         /// </summary>
@@ -19,10 +21,9 @@ namespace DivineRightGame.Managers
         /// <param name="parentWallID">The wall that the parent has</param>
         /// <param name="parentTileID">The ID of the tiles used in the parent maplet item</param>
         /// <returns></returns>
-        public MapBlock[,] GenerateMap(int parentTileID, int? parentWallID, Maplet maplet)
+        public MapBlock[,] GenerateMap(int parentTileID, int? parentWallID, Maplet maplet, bool preferSides)
         {
             PlanningMapItemType[,] planningMap = new PlanningMapItemType[maplet.SizeX, maplet.SizeY];
-            Random random = new Random(DateTime.UtcNow.Millisecond);
 
             //Step 1: Plan how the map will look
 
@@ -114,10 +115,10 @@ namespace DivineRightGame.Managers
                         //mark the areas covered by the blueprint as being held by that blueprint
 
 
-                        if (Fits(planningMap, childMapletBlueprint, out x, out y, out newMap))
+                        if (Fits(planningMap, childMapletBlueprint, childMaplet.Position == DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES, out x, out y, out newMap))
                         {
                             //it fits, generate it - <3 Recursion
-                            MapBlock[,] childMap = this.GenerateMap(tileID,wallID.Value, childMaplet.Maplet);
+                            MapBlock[,] childMap = this.GenerateMap(tileID,wallID.Value, childMaplet.Maplet,childMaplet.Position==DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES);
 
                             //Join the two maps together
                             generatedMap = this.JoinMaps(generatedMap, childMap, x, y);
@@ -208,6 +209,11 @@ namespace DivineRightGame.Managers
 
             //go through the maplet contents
 
+            //Get the smallest x and y coordinate in the candidate blocks so we can use it for fixed things
+
+            int smallestX = candidateBlocks.Select(b => b.Tile.Coordinate.X).Min();
+            int smallestY = candidateBlocks.Select(b => b.Tile.Coordinate.Y).Min();
+
             foreach (MapletContents contents in maplet.MapletContents.Where(mc => mc is MapletContentsItem || mc is MapletContentsItemTag).OrderByDescending(mc => mc.ProbabilityPercentage))
             {
                 //We'll see if we even put this at all
@@ -272,6 +278,23 @@ namespace DivineRightGame.Managers
                                 //remove it from both
                                 edgeBlocks.Remove(candidateBlocks[position]);
                                 candidateBlocks.RemoveAt(position);
+                            }
+
+                            if (contents.Position == DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.FIXED)
+                            {
+                                //Fix it in a particular position.
+                                MapCoordinate coordinate = new MapCoordinate(smallestX + contents.x.Value, smallestY + contents.y.Value, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+
+                                var selectedBlock = candidateBlocks.Where(cb => cb.Tile.Coordinate.Equals(coordinate)).FirstOrDefault();
+
+                                if (selectedBlock != null)
+                                { //maybe someone put something there already
+                                    selectedBlock.PutItemOnBlock(itemPlaced);
+                                }
+
+                                //and remoev it from both
+                                candidateBlocks.Remove(selectedBlock);
+                                edgeBlocks.Remove(selectedBlock);
                             }
                         }
                     }
@@ -508,17 +531,94 @@ namespace DivineRightGame.Managers
         /// </summary>
         /// <param name="map">The original map</param>
         /// <param name="maplet">The maplet we are trying to introduce</param>
+        /// <param name="edge">If this is set to true, will try to put them on the edge. Otherwise will try to be compeltly random</param>
         /// <param name="startX">Where the map will fit on the X coordinate</param>
         /// <param name="startY">Where the map will fit on the Y coordinate</param>
         /// <param name="newMap">What the map will look like with the maplet inside it. Will be equivalent to map if there is no fit</param>
         /// <returns></returns>
-        public bool Fits(PlanningMapItemType[,] map, PlanningMapItemType[,] maplet, out int startX, out int startY, out PlanningMapItemType[,] newMap)
+        public bool Fits(PlanningMapItemType[,] map, PlanningMapItemType[,] maplet, bool edge, out int startX, out int startY, out PlanningMapItemType[,] newMap)
         {
-            //Brute force, nothing to be done
-            for (int mapX = 0; mapX < map.GetLength(0); mapX++)
+
+            if (edge)
             {
-                for (int mapY = 0; mapY < map.GetLength(1); mapY++)
+                //Brute force, nothing to be done
+                for (int mapX = 0; mapX < map.GetLength(0); mapX++)
                 {
+                    for (int mapY = 0; mapY < map.GetLength(1); mapY++)
+                    {
+                        //Do we have a starting point?
+                        if (map[mapX, mapY] == PlanningMapItemType.FREE || (map[mapX, mapY] == PlanningMapItemType.WALL && maplet[0, 0] == PlanningMapItemType.WALL))
+                        {
+                            //Does it fit?
+                            bool fits = true;
+
+                            for (int mapletX = 0; mapletX < maplet.GetLength(0); mapletX++)
+                            {
+                                for (int mapletY = 0; mapletY < maplet.GetLength(1); mapletY++)
+                                {
+                                    int mapTotalX = mapletX + mapX;
+                                    int mapTotalY = mapletY + mapY;
+
+                                    if (mapTotalX < map.GetLength(0) && mapTotalY < map.GetLength(1))
+                                    {
+                                        /* The allowable fits are:
+                                         *  - Map is free and maplet is anything
+                                         *  - Map is wall and maplet is wall
+                                         */
+
+                                        //will it fit
+                                        if (map[mapTotalX, mapTotalY] == PlanningMapItemType.FREE)
+                                        {
+                                            continue;
+                                        }
+
+                                        if (map[mapTotalX, mapTotalY] == PlanningMapItemType.WALL)
+                                        {
+                                            if (maplet[mapletX, mapletY] == PlanningMapItemType.WALL)
+                                            {
+                                                continue;
+                                            }
+                                        }
+
+                                        if (map[mapTotalX, mapTotalY] != PlanningMapItemType.FREE)
+                                        {
+                                            fits = false;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        fits = false;
+                                    }
+
+                                }
+                            }
+
+                            if (fits)
+                            {
+                                //it fits, yaay
+                                startX = mapX;
+                                startY = mapY;
+
+                                //overlap the map
+
+                                newMap = FuseMaps(map, maplet, startX, startY);
+
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                //Lets try for a maximum 50 times
+                int attemptCount = 0;
+
+                while (attemptCount < 50)
+                {
+                    int mapX = random.Next(map.GetLength(0));
+                    int mapY = random.Next(map.GetLength(1));
+
                     //Do we have a starting point?
                     if (map[mapX, mapY] == PlanningMapItemType.FREE || (map[mapX, mapY] == PlanningMapItemType.WALL && maplet[0, 0] == PlanningMapItemType.WALL))
                     {
