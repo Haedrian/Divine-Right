@@ -128,7 +128,18 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.BARRELS] = new SpriteData(HOUSEITEM, new Rectangle(50, 250, 50, 50));
             localSprites[(int)LocalSpriteName.CHEST_CLOSED] = new SpriteData(HOUSEITEM, new Rectangle(100, 250, 50, 50));
             localSprites[(int)LocalSpriteName.CHEST_OPEN] = new SpriteData(HOUSEITEM, new Rectangle(150, 250, 50, 50));
-            
+
+            localSprites[(int)LocalSpriteName.BOOKCASE_1] = new SpriteData(HOUSEITEM, new Rectangle(200, 250, 50, 50));
+            localSprites[(int)LocalSpriteName.BOOKCASE_2] = new SpriteData(HOUSEITEM, new Rectangle(250, 250, 50, 50));
+            localSprites[(int)LocalSpriteName.BOOKCASE_3] = new SpriteData(HOUSEITEM, new Rectangle(300, 250, 50, 50));
+            localSprites[(int)LocalSpriteName.DESK_1] = new SpriteData(HOUSEITEM, new Rectangle(350, 250, 50, 50));
+            localSprites[(int)LocalSpriteName.PLANT_CABINET_1] = new SpriteData(HOUSEITEM, new Rectangle(400, 250, 50, 50));
+            localSprites[(int)LocalSpriteName.BOOKCASE_4] = new SpriteData(HOUSEITEM, new Rectangle(450, 250, 50, 50));
+            localSprites[(int)LocalSpriteName.DESK_2] = new SpriteData(HOUSEITEM, new Rectangle(50, 300, 50, 50));
+            localSprites[(int)LocalSpriteName.DESK_3] = new SpriteData(HOUSEITEM, new Rectangle(100, 300, 50, 50));
+            localSprites[(int)LocalSpriteName.PLANT_CABINET_2] = new SpriteData(HOUSEITEM, new Rectangle(150, 300, 50, 50));
+            localSprites[(int)LocalSpriteName.PLANT_CABINET_3] = new SpriteData(HOUSEITEM, new Rectangle(200, 300, 50, 50));
+
             
             localSprites[(int)LocalSpriteName.WOOD_LOGS] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(0, 0, 50, 50));
             localSprites[(int)LocalSpriteName.WOOD_LOGS_THREE] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(50, 0, 50, 50));

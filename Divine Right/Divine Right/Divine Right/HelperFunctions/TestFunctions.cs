@@ -96,14 +96,14 @@ namespace Divine_Right.HelperFunctions
 
             libraryMaplet.MapletContents.Add(libraryStuff);
 
-            MapletContentsItemTag librarySeats = new MapletContentsItemTag();
-            librarySeats.Position = DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.ANYWHERE;
-            librarySeats.Category = "mundaneitems";
-            librarySeats.MaxAmount = 1;
-            librarySeats.ProbabilityPercentage = 75;
-            librarySeats.Tag = "chair";
+            MapletContentsItemTag libraryDesk = new MapletContentsItemTag();
+            libraryDesk.Position = DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.MIDDLE;
+            libraryDesk.Category = "mundaneitems";
+            libraryDesk.MaxAmount = 2;
+            libraryDesk.ProbabilityPercentage = 75;
+            libraryDesk.Tag = "desk";
 
-            libraryMaplet.MapletContents.Add(librarySeats);
+            libraryMaplet.MapletContents.Add(libraryDesk);
 
             house.MapletContents.Add(library);
 

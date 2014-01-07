@@ -13,6 +13,7 @@ namespace DivineRightGame.ItemFactory.ItemFactoryManagers
     public class MundaneItemsManager: IItemFactoryManager
     {
         private const Archetype ARCHETYPE = Archetype.MUNDANEITEMS;
+        private Random _random = new Random();
 
         public MapItem CreateItem(int itemID)
         {
@@ -53,7 +54,27 @@ namespace DivineRightGame.ItemFactory.ItemFactoryManagers
         {
             MapItem item = new MapItem();
             item.Description = description;
-            item.Graphic = SpriteManager.GetSprite((LocalSpriteName) Enum.Parse(typeof(LocalSpriteName), graphic));
+
+
+            string chosenGraphic = String.Empty;
+
+            //Does graphic contain multiple choices?
+            if (graphic.Contains(","))
+            {
+                //yes, lets split it
+                var graphics = graphic.Split(',');
+
+                //use random to determine which one we want
+                chosenGraphic = graphics[_random.Next(graphics.Length)];
+
+                item.Graphic = SpriteManager.GetSprite((LocalSpriteName)Enum.Parse(typeof(LocalSpriteName), chosenGraphic));
+            }
+            else
+            {
+                //nope
+                item.Graphic = SpriteManager.GetSprite((LocalSpriteName)Enum.Parse(typeof(LocalSpriteName), graphic));
+            }
+
             item.MayContainItems = Boolean.Parse(canHaveItems);
             item.Name = name;
 

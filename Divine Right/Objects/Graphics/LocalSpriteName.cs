@@ -88,6 +88,19 @@ namespace DRObjects.Graphics
         CHEST_OPEN,
         PLAYERCHAR,
 
+        BOOKCASE_1,
+        BOOKCASE_2,
+        BOOKCASE_3,
+        BOOKCASE_4,
+
+        DESK_1,
+        DESK_2,
+        DESK_3,
+
+        PLANT_CABINET_1,
+        PLANT_CABINET_2,
+        PLANT_CABINET_3,
+
         //Resources
         WOOD_LOGS,
         WOOD_LOGS_THREE,
