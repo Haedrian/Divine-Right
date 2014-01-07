@@ -122,7 +122,7 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.BLUE_POT_LARGE] = new SpriteData(HOUSEITEM, new Rectangle(200, 200, 50, 50));
             localSprites[(int)LocalSpriteName.BARSTOOL] = new SpriteData(HOUSEITEM, new Rectangle(250, 200, 50, 50));
             localSprites[(int)LocalSpriteName.BLUE_POT_SMALL] = new SpriteData(HOUSEITEM, new Rectangle(300, 200, 50, 50));
-            localSprites[(int)LocalSpriteName.DARK_RED_WALL] = new SpriteData(HOUSEITEM, new Rectangle(350, 200, 50, 50));
+            localSprites[(int)LocalSpriteName.DARK_RED_WALL] = new SpriteData(HOUSEITEM, new Rectangle(350, 200, 49, 50));
             localSprites[(int)LocalSpriteName.LIGHT_RED_WALL] = new SpriteData(HOUSEITEM, new Rectangle(400, 200, 50, 50));
             localSprites[(int)LocalSpriteName.BARREL] = new SpriteData(HOUSEITEM, new Rectangle(450, 200, 50, 50));
             localSprites[(int)LocalSpriteName.BARRELS] = new SpriteData(HOUSEITEM, new Rectangle(50, 250, 50, 50));
