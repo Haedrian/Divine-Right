@@ -101,6 +101,10 @@ namespace DRObjects.Graphics
         PLANT_CABINET_2,
         PLANT_CABINET_3,
 
+        WINDOW_1,
+        WINDOW_2,
+        WINDOW_3,
+
         //Resources
         WOOD_LOGS,
         WOOD_LOGS_THREE,

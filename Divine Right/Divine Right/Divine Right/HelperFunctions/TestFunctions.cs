@@ -50,6 +50,7 @@ namespace Divine_Right.HelperFunctions
             house.Tiled = true;
             house.TileID = 4;
             house.Walled = true;
+            house.WindowProbability = 20;
 
             house.MapletContents = new List<MapletContents>();
 
@@ -154,7 +155,7 @@ namespace Divine_Right.HelperFunctions
             MapletContentsMaplet library = new MapletContentsMaplet();
             Maplet libraryMaplet = new Maplet();
             library.Maplet = libraryMaplet;
-            library.Position = DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.ANYWHERE;
+            library.Position = DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES;
             library.Maplet = libraryMaplet;
             library.MaxAmount = 1;
             library.ProbabilityPercentage = 100;

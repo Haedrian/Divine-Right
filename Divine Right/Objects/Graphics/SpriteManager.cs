@@ -140,7 +140,10 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.PLANT_CABINET_2] = new SpriteData(HOUSEITEM, new Rectangle(100, 300, 50, 50));
             localSprites[(int)LocalSpriteName.PLANT_CABINET_3] = new SpriteData(HOUSEITEM, new Rectangle(150, 300, 50, 50));
 
-            
+            localSprites[(int)LocalSpriteName.WINDOW_1] = new SpriteData(HOUSEITEM, new Rectangle(200, 300, 50, 50));
+            localSprites[(int)LocalSpriteName.WINDOW_2] = new SpriteData(HOUSEITEM, new Rectangle(250, 300, 50, 50));
+            localSprites[(int)LocalSpriteName.WINDOW_3] = new SpriteData(HOUSEITEM, new Rectangle(300, 300, 50, 50));
+
             localSprites[(int)LocalSpriteName.WOOD_LOGS] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(0, 0, 50, 50));
             localSprites[(int)LocalSpriteName.WOOD_LOGS_THREE] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(50, 0, 50, 50));
             localSprites[(int)LocalSpriteName.FLOUR_SACK] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(100, 0, 50, 50));

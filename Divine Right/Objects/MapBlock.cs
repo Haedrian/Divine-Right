@@ -81,6 +81,16 @@ namespace DRObjects
         }
 
         /// <summary>
+        /// Puts a local map item int he current block. Whether the tile lets it or not.
+        /// </summary>
+        /// <param name="item"></param>
+        public void ForcePutItemOnBlock(MapItem item)
+        {
+            item.Coordinate = Tile.Coordinate;
+            this.mapItems.Add(item);
+        }
+
+        /// <summary>
         /// Removes the Nth item in the block
         /// </summary>
         /// <param name="index"></param>

@@ -83,17 +83,49 @@ namespace DivineRightGame.Managers
                 {
                     generatedMap[x, 0].PutItemOnBlock(factory.CreateItem("mundaneitems",wallID.Value));
                     generatedMap[x, maplet.SizeY - 1].PutItemOnBlock(factory.CreateItem("mundaneitems",wallID.Value));
+
+                    if (maplet.WindowProbability.HasValue && maplet.WindowProbability.Value > 0)
+                    {
+                        if (random.Next(100) < maplet.WindowProbability.Value)
+                        {
+                            int itemID;
+                            //Put a window :)
+                            generatedMap[x, 0].ForcePutItemOnBlock(factory.CreateItem(DRObjects.Enums.Archetype.MUNDANEITEMS, "window", out itemID));
+                        }
+                        else if (random.Next(100) < maplet.WindowProbability.Value)
+                        {
+                            int itemID;
+                            //Put a window :)
+                            generatedMap[x, maplet.SizeY - 1].ForcePutItemOnBlock(factory.CreateItem(DRObjects.Enums.Archetype.MUNDANEITEMS, "window", out itemID));
+                        }
+                    }
                 }
 
                 for (int y = 0; y < maplet.SizeY; y++)
                 {
                     generatedMap[0, y].PutItemOnBlock(factory.CreateItem("mundaneitems", wallID.Value));
                     generatedMap[maplet.SizeX -1, y].PutItemOnBlock(factory.CreateItem("mundaneitems",wallID.Value));
+
+                    if (maplet.WindowProbability.HasValue && maplet.WindowProbability.Value > 0)
+                    {
+                        if (random.Next(100) < maplet.WindowProbability.Value)
+                        {
+                            int itemID;
+                            //Put a window :)
+                            generatedMap[0, y].ForcePutItemOnBlock(factory.CreateItem(DRObjects.Enums.Archetype.MUNDANEITEMS, "window", out itemID));
+                        }
+                        else if (random.Next(100) < maplet.WindowProbability.Value)
+                        {
+                            int itemID;
+                            //Put a window :)
+                            generatedMap[maplet.SizeX - 1, y].ForcePutItemOnBlock(factory.CreateItem(DRObjects.Enums.Archetype.MUNDANEITEMS, "window", out itemID));
+                        }
+                    }
                 }
 
-                //Now we need to see where to put the doors
+                //Shall we put a few winows as well?
 
-                //We'll check the planning map, if there is an edge which goes outside, then we put a door there
+
                 
             }
 

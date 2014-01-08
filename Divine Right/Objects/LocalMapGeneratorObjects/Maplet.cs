@@ -36,6 +36,11 @@ namespace DRObjects.LocalMapGeneratorObjects
         public bool Walled { get; set; }
 
         /// <summary>
+        /// If the maplet is walled, what's the probabilty of each single window appearing. 
+        /// </summary>
+        public int? WindowProbability { get; set; }
+
+        /// <summary>
         /// Whether the maplet has its own tiles, or if it inherits them from its parent maplet
         /// </summary>
         public bool Tiled { get; set; }
