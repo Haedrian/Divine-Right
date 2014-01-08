@@ -147,7 +147,7 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.WOOD_LOGS] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(0, 0, 50, 50));
             localSprites[(int)LocalSpriteName.WOOD_LOGS_THREE] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(50, 0, 50, 50));
             localSprites[(int)LocalSpriteName.FLOUR_SACK] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(100, 0, 50, 50));
-            localSprites[(int)LocalSpriteName.FLOUR_SACKS_THREE] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(150, 0, 50, 50));
+            localSprites[(int)LocalSpriteName.FLOUR_SACK_THREE] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(150, 0, 50, 50));
             localSprites[(int)LocalSpriteName.GRAIN_OPEN] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(200, 0, 50, 50));
             localSprites[(int)LocalSpriteName.GRAIN_OPEN_THREE] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(250, 0, 50, 50));
             localSprites[(int)LocalSpriteName.GREEN_OPEN] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(300, 0, 50, 50));

@@ -41,6 +41,152 @@ namespace Divine_Right.HelperFunctions
             GameState.PlayerCharacter.MapCharacter = player;
         }
 
+        public static void PrepareMapletTestFarmHouse()
+        {
+            Maplet farmArea = new Maplet();
+            farmArea.MapletName = "farmArea";
+            farmArea.SizeX = 30;
+            farmArea.SizeY = 30;
+            farmArea.Tiled = true;
+            farmArea.TileID = 3;
+            farmArea.Walled = false;
+
+            farmArea.MapletContents = new List<MapletContents>();
+
+            Maplet farmHouse = new Maplet();
+            farmHouse.MapletName = "farmHouse";
+            farmHouse.SizeX = 25;
+            farmHouse.SizeY = 15;
+            farmHouse.Tiled = true;
+            farmHouse.TileID = 1;
+            farmHouse.Walled = true;
+            farmHouse.WindowProbability = 10;
+            farmHouse.MapletContents = new List<MapletContents>();
+
+
+            MapletContentsMaplet farmHouseWrapper = new MapletContentsMaplet();
+            farmHouseWrapper.Maplet = farmHouse;
+            farmHouseWrapper.MaxAmount = 1;
+            farmHouseWrapper.Position = DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES;
+            farmHouseWrapper.ProbabilityPercentage = 100;
+
+            farmArea.MapletContents.Add(farmHouseWrapper);
+
+
+            Maplet fieldArea = new Maplet();
+            fieldArea.MapletName = "fieldArea";
+            fieldArea.SizeX = 25;
+            fieldArea.SizeY = 15;
+            fieldArea.Tiled = false;
+            fieldArea.Walled = false;
+            fieldArea.MapletContents = new List<MapletContents>();
+
+            MapletContentsMaplet fieldAreaWrapper = new MapletContentsMaplet();
+            fieldAreaWrapper.Maplet = fieldArea;
+            fieldAreaWrapper.MaxAmount = 1;
+            fieldAreaWrapper.Position = DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES;
+            fieldAreaWrapper.Padding = 3;
+            fieldAreaWrapper.ProbabilityPercentage = 100;
+
+            farmArea.MapletContents.Add(fieldAreaWrapper);
+
+            Maplet field = new Maplet();
+            field.MapletName = "field";
+            field.SizeX = 10;
+            field.SizeY = 10;
+            field.Tiled = true;
+            field.TileID = 5;
+            field.MapletContents = new List<MapletContents>();
+
+            Maplet storeHouse = new Maplet();
+            storeHouse.MapletName = "storeHouse";
+            storeHouse.SizeX = 7;
+            storeHouse.SizeY = 7;
+            storeHouse.Tiled = true;
+            storeHouse.TileID = 4;
+            storeHouse.Walled = true;
+            storeHouse.WindowProbability = 0;
+            storeHouse.MapletContents = new List<MapletContents>();
+
+            MapletContentsMaplet fieldWrapper = new MapletContentsMaplet();
+            fieldWrapper.Maplet = field;
+            fieldWrapper.MaxAmount = 1;
+            fieldWrapper.Position = DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES;
+            fieldAreaWrapper.Padding = 2;
+            fieldWrapper.ProbabilityPercentage = 100;
+
+            fieldArea.MapletContents.Add(fieldWrapper);
+
+            MapletContentsMaplet storeHouseWrapper = new MapletContentsMaplet();
+            storeHouseWrapper.Maplet = storeHouse;
+            storeHouseWrapper.MaxAmount = 1;
+            storeHouseWrapper.Position = DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES;
+            storeHouseWrapper.Padding = 2;
+            storeHouseWrapper.ProbabilityPercentage = 100;
+
+            fieldArea.MapletContents.Add(storeHouseWrapper);
+
+            MapletContentsItemTag fieldProduce = new MapletContentsItemTag();
+            fieldProduce.Category = "mundaneitems";
+            fieldProduce.MaxAmount = 30;
+            fieldProduce.Position = DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.MIDDLE;
+            fieldProduce.ProbabilityPercentage = 85;
+            fieldProduce.Tag = "plant";
+
+            field.MapletContents.Add(fieldProduce);
+
+            MapletContentsItemTag storeHouseItems = new MapletContentsItemTag();
+            storeHouseItems.Category = "mundaneitems";
+            storeHouseItems.MaxAmount = 20;
+            storeHouseItems.Position = DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.ANYWHERE;
+            storeHouseItems.ProbabilityPercentage = 100;
+            storeHouseItems.Tag = "farm produce";
+
+            storeHouse.MapletContents.Add(storeHouseItems);
+
+            MapletContentsItemTag tools = new MapletContentsItemTag();
+            tools.Category = "mundaneitems";
+            tools.MaxAmount = 2;
+            tools.Position = DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.ANYWHERE;
+            tools.ProbabilityPercentage = 75;
+            tools.Tag = "farm tool";
+
+            fieldArea.MapletContents.Add(tools);
+
+            //Now Generate it
+            LocalMapGenerator gen = new LocalMapGenerator();
+
+            MapBlock[,] generatedMap = gen.GenerateMap(1, null, farmArea, true);
+
+            //put in the map
+
+            GameState.LocalMap = new LocalMap(32, 32, 1, 0);
+
+            List<MapBlock> collapsedMap = new List<MapBlock>();
+
+            foreach (MapBlock block in generatedMap)
+            {
+                collapsedMap.Add(block);
+            }
+
+            GameState.LocalMap.AddToLocalMap(collapsedMap.ToArray());
+
+            MapItem player = new MapItem();
+            player.Coordinate = new MapCoordinate(10, 5, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+            player.Description = "The player character";
+            player.Graphic = SpriteManager.GetSprite(LocalSpriteName.PLAYERCHAR);
+            player.InternalName = "Player Char";
+            player.MayContainItems = false;
+            player.Name = "Player";
+
+            MapBlock playerBlock = GameState.LocalMap.GetBlockAtCoordinate(new MapCoordinate(10, 5, 0, DRObjects.Enums.MapTypeEnum.LOCAL));
+            playerBlock.PutItemOnBlock(player);
+            GameState.PlayerCharacter = new Actor();
+            GameState.PlayerCharacter.MapCharacter = player;
+            GameState.PlayerCharacter.IsPlayerCharacter = true;
+
+        }
+
         public static void PrepareMapletTestMapHouse()
         {
             Maplet house = new Maplet();

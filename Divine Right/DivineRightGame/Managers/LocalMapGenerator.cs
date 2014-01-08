@@ -146,8 +146,7 @@ namespace DivineRightGame.Managers
                         PlanningMapItemType[,] childMapletBlueprint = this.CreateBlueprint(childMaplet.Maplet);
                         //mark the areas covered by the blueprint as being held by that blueprint
 
-
-                        if (Fits(planningMap, childMapletBlueprint, childMaplet.Position == DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES, out x, out y, out newMap))
+                        if (Fits(planningMap, childMapletBlueprint, childMaplet.Position == DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES,childMaplet.Padding, out x, out y, out newMap))
                         {
                             //it fits, generate it - <3 Recursion
                             MapBlock[,] childMap = this.GenerateMap(tileID,wallID.Value, childMaplet.Maplet,childMaplet.Position==DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES);
@@ -568,15 +567,16 @@ namespace DivineRightGame.Managers
         /// <param name="startY">Where the map will fit on the Y coordinate</param>
         /// <param name="newMap">What the map will look like with the maplet inside it. Will be equivalent to map if there is no fit</param>
         /// <returns></returns>
-        public bool Fits(PlanningMapItemType[,] map, PlanningMapItemType[,] maplet, bool edge, out int startX, out int startY, out PlanningMapItemType[,] newMap)
+        public bool Fits(PlanningMapItemType[,] map, PlanningMapItemType[,] maplet, bool edge, int? padding, out int startX, out int startY, out PlanningMapItemType[,] newMap)
         {
+            padding = 0;
 
             if (edge)
             {
                 //Brute force, nothing to be done
-                for (int mapX = 0; mapX < map.GetLength(0); mapX++)
+                for (int mapX = (padding??0); mapX < (map.GetLength(0)- padding??0); mapX++)
                 {
-                    for (int mapY = 0; mapY < map.GetLength(1); mapY++)
+                    for (int mapY = (padding??0); mapY < (map.GetLength(1) - padding??0); mapY++)
                     {
                         //Do we have a starting point?
                         if (map[mapX, mapY] == PlanningMapItemType.FREE || (map[mapX, mapY] == PlanningMapItemType.WALL && maplet[0, 0] == PlanningMapItemType.WALL))
@@ -648,6 +648,8 @@ namespace DivineRightGame.Managers
 
                 while (attemptCount < 50)
                 {
+                    attemptCount++;
+
                     int mapX = random.Next(map.GetLength(0));
                     int mapY = random.Next(map.GetLength(1));
 

@@ -109,7 +109,7 @@ namespace DRObjects.Graphics
         WOOD_LOGS,
         WOOD_LOGS_THREE,
         FLOUR_SACK,
-        FLOUR_SACKS_THREE,
+        FLOUR_SACK_THREE,
         GRAIN_OPEN,
         GRAIN_OPEN_THREE,
         GREEN_OPEN,

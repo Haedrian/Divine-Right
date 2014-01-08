@@ -29,6 +29,12 @@ namespace DRObjects.LocalMapGeneratorObjects
         public PositionAffinity Position { get; set; }
 
         /// <summary>
+        /// For items with an affinity of "sides" - will shift the sides by the padding (ie - with a padding of N, will skip N tiles).
+        /// For other affinities, it is ignored
+        /// </summary>
+        public int? Padding { get; set; }
+
+        /// <summary>
         /// If the position is fixed, the SINGLE item will be placed in this location. Otherwise will be ignored
         /// </summary>
         public int? x { get; set; }
