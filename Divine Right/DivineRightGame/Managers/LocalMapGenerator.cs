@@ -569,20 +569,34 @@ namespace DivineRightGame.Managers
         /// <returns></returns>
         public bool Fits(PlanningMapItemType[,] map, PlanningMapItemType[,] maplet, bool edge, int? padding, out int startX, out int startY, out PlanningMapItemType[,] newMap)
         {
-            padding = 0;
+            if (!padding.HasValue)
+            {
+                padding = 0;
+            }
+
+            bool firstFit = false;
 
             if (edge)
             {
                 //Brute force, nothing to be done
-                for (int mapX = (padding??0); mapX < (map.GetLength(0)- padding??0); mapX++)
+                for (int mapX = 0; mapX < (map.GetLength(0)); mapX++)
                 {
-                    for (int mapY = (padding??0); mapY < (map.GetLength(1) - padding??0); mapY++)
+                    for (int mapY = 0; mapY < (map.GetLength(1)); mapY++)
                     {
                         //Do we have a starting point?
                         if (map[mapX, mapY] == PlanningMapItemType.FREE || (map[mapX, mapY] == PlanningMapItemType.WALL && maplet[0, 0] == PlanningMapItemType.WALL))
                         {
                             //Does it fit?
                             bool fits = true;
+
+                            //Now that we have a starting point, check if we have a padding. If we have a padding, then we need to incremement x and y by the padding amount, and continue the loop
+                            if (padding > 0)
+                            {
+                                firstFit = true;
+                                mapX += padding.Value-1;
+                                mapY += padding.Value-1;
+                                //continue;
+                            }
 
                             for (int mapletX = 0; mapletX < maplet.GetLength(0); mapletX++)
                             {

@@ -45,8 +45,8 @@ namespace Divine_Right.HelperFunctions
         {
             Maplet farmArea = new Maplet();
             farmArea.MapletName = "farmArea";
-            farmArea.SizeX = 30;
-            farmArea.SizeY = 30;
+            farmArea.SizeX = 35;
+            farmArea.SizeY = 35;
             farmArea.Tiled = true;
             farmArea.TileID = 3;
             farmArea.Walled = false;
