@@ -16,6 +16,7 @@ namespace DRObjects.Graphics
         private static string HOUSEITEM = @"Graphics/Local/HouseItems";
         private static string RESOURCES_AND_TOOLS = @"Graphics/Local/ResourcesAndTools";
         private static string TILES = @"Graphics/Local/TilesCropped";
+        private static string FORESTS_AND_MINES = @"Graphics/Local/ForestsAndMines";
 
         #endregion
 
@@ -219,6 +220,10 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.COURGETTE] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(250, 350, 50, 50));
             localSprites[(int)LocalSpriteName.CORN] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(300, 350, 50, 50));
 
+            localSprites[(int)LocalSpriteName.TREE_1] = new SpriteData(FORESTS_AND_MINES, new Rectangle(0, 0, 50, 50));
+            localSprites[(int)LocalSpriteName.DEAD_TREE] = new SpriteData(FORESTS_AND_MINES, new Rectangle(50, 0, 50, 50));
+            localSprites[(int)LocalSpriteName.TREE_2] = new SpriteData(FORESTS_AND_MINES, new Rectangle(100, 0, 50, 50));
+            localSprites[(int)LocalSpriteName.TREE_3] = new SpriteData(FORESTS_AND_MINES, new Rectangle(150, 0, 50, 50));
 
             interfaceSprites[(int)InterfaceSpriteName.SCROLL] = new SpriteData(@"Graphics/Interface/scrollsandblocks", new Rectangle(224, 190, 96, 34));
         }

@@ -180,6 +180,12 @@ namespace DRObjects.Graphics
         PEPPERS,
         COURGETTE,
         CORN,
+
+        //Forests and Mines and stuff
+        TREE_1,
+        TREE_2,
+        TREE_3,
+        DEAD_TREE
         
 
     }

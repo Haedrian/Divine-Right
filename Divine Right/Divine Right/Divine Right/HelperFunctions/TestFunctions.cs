@@ -72,6 +72,30 @@ namespace Divine_Right.HelperFunctions
 
             farmArea.MapletContents.Add(farmHouseWrapper);
 
+            MapletContentsItemTag trees = new MapletContentsItemTag();
+            trees.Category = "mundaneitems";
+            trees.MaxAmount = 150;
+            trees.Position = DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.ANYWHERE;
+            trees.ProbabilityPercentage = 60;
+            trees.Tag = "tree";
+
+            MapletContentsItemTag wood = new MapletContentsItemTag();
+            wood.Category = "mundaneitems";
+            wood.MaxAmount = 5;
+            wood.Position = DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.ANYWHERE;
+            wood.ProbabilityPercentage = 100;
+            wood.Tag = "wood resource";
+
+            MapletContentsItemTag woodTools = new MapletContentsItemTag();
+            woodTools.Category = "mundaneitems";
+            woodTools.MaxAmount = 2;
+            woodTools.Position = DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.ANYWHERE;
+            woodTools.ProbabilityPercentage = 100;
+            woodTools.Tag = "woodcutter tools";
+
+            farmArea.MapletContents.Add(wood);
+            farmArea.MapletContents.Add(trees);
+            farmArea.MapletContents.Add(woodTools);
 
             Maplet fieldArea = new Maplet();
             fieldArea.MapletName = "fieldArea";
