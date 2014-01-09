@@ -94,6 +94,7 @@ namespace Divine_Right.HelperFunctions
             field.MapletName = "field";
             field.SizeX = 10;
             field.SizeY = 10;
+            field.SizeRange = 3;
             field.Tiled = true;
             field.TileID = 5;
             field.MapletContents = new List<MapletContents>();
@@ -102,6 +103,7 @@ namespace Divine_Right.HelperFunctions
             storeHouse.MapletName = "storeHouse";
             storeHouse.SizeX = 7;
             storeHouse.SizeY = 7;
+            storeHouse.SizeRange = 2;
             storeHouse.Tiled = true;
             storeHouse.TileID = 4;
             storeHouse.Walled = true;

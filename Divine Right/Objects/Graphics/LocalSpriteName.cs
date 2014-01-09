@@ -105,6 +105,11 @@ namespace DRObjects.Graphics
         WINDOW_2,
         WINDOW_3,
 
+        DOOR_1_OPEN,
+        DOOR_1_CLOSED,
+        DOOR_2_OPEN,
+        DOOR_2_CLOSED,
+
         //Resources
         WOOD_LOGS,
         WOOD_LOGS_THREE,

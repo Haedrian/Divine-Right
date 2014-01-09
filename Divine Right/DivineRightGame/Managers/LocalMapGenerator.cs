@@ -77,7 +77,6 @@ namespace DivineRightGame.Managers
 
             if (maplet.Walled && wallID.HasValue)
             {
-
                 //wall the edge tiles
                 for (int x = 0; x < maplet.SizeX; x++)
                 {
@@ -573,9 +572,6 @@ namespace DivineRightGame.Managers
             {
                 padding = 0;
             }
-
-            bool firstFit = false;
-
             if (edge)
             {
                 //Brute force, nothing to be done
@@ -592,7 +588,6 @@ namespace DivineRightGame.Managers
                             //Now that we have a starting point, check if we have a padding. If we have a padding, then we need to incremement x and y by the padding amount, and continue the loop
                             if (padding > 0)
                             {
-                                firstFit = true;
                                 mapX += padding.Value-1;
                                 mapY += padding.Value-1;
                                 //continue;

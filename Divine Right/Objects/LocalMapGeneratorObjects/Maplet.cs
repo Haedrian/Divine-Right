@@ -11,6 +11,8 @@ namespace DRObjects.LocalMapGeneratorObjects
     /// </summary>
     public class Maplet
     {
+        private static Random random = new Random();
+
         /// <summary>
         /// The name of the maplet
         /// </summary>
@@ -20,15 +22,44 @@ namespace DRObjects.LocalMapGeneratorObjects
         /// </summary>
         public List<string> MapletTags { get; set; }
 
+        private int sizeX;
+        private int sizeY;
         /// <summary>
         /// The size of the maplet on the x axis
         /// </summary>
-        public int SizeX { get; set; }
+        public int SizeX
+        {
+            get
+            {
+                this.AddSizeRange();
+                return sizeX;
+            }
+            set
+            {
+                this.sizeX = value;
+            }
+        }
 
         /// <summary>
         /// The size of the maplet on the y axis
         /// </summary>
-        public int SizeY { get; set; }
+        public int SizeY
+        {
+            get
+            {
+                this.AddSizeRange();
+                return sizeY;
+            }
+            set
+            {
+                this.sizeY = value;
+            }
+        }
+
+        /// <summary>
+        /// What possible + to add to the size x and size y - random range
+        /// </summary>
+        public int SizeRange { get; set; }
 
         /// <summary>
         /// Whether the maplet is surrounded by a wall or not
@@ -54,5 +85,20 @@ namespace DRObjects.LocalMapGeneratorObjects
         /// The contents of the maplet
         /// </summary>
         public List<MapletContents> MapletContents {get;set;}
+
+        private bool sizeBitAdded = false;
+
+        /// <summary>
+        /// Adds some sort of size range to the X and Y
+        /// </summary>
+        public void AddSizeRange()
+        {
+            if (!sizeBitAdded)
+            {
+                this.sizeX += random.Next(SizeRange);
+                this.sizeY += random.Next(SizeRange);
+                this.sizeBitAdded = true;
+            }
+        }
     }
 }
