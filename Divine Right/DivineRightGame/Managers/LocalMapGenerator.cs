@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using DRObjects;
 using DRObjects.LocalMapGeneratorObjects;
-using DivineRightGame.MapFactory;
 using DivineRightGame.Managers.HelperObjects.HelperEnums;
 using DivineRightGame.Managers.HelperObjects;
 

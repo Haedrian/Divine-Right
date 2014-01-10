@@ -17,10 +17,6 @@ namespace DRObjects.LocalMapGeneratorObjects
         /// The name of the maplet
         /// </summary>
         public string MapletName{get;set;}
-        /// <summary>
-        /// Tags which represent the maplet
-        /// </summary>
-        public List<string> MapletTags { get; set; }
 
         private int sizeX;
         private int sizeY;

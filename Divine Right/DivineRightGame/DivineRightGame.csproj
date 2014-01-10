@@ -83,10 +83,9 @@
     <Compile Include="Managers\HelperObjects\Region.cs" />
     <Compile Include="Managers\HelperObjects\Line.cs" />
     <Compile Include="Managers\LocalMapGenerator.cs" />
+    <Compile Include="Managers\LocalMapXMLParser.cs" />
     <Compile Include="Managers\UserInterfaceManager.cs" />
     <Compile Include="Managers\WorldGenerationManager.cs" />
-    <Compile Include="MapFactory\MapFactoryManager.cs" />
-    <Compile Include="MapFactory\MapFileReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,0 +1,31 @@
+﻿<Maplet MapletName="house" SizeX="15" SizeY="11" Tiled="true" TileID="4" Walled="true" WindowProbability="20">
+  <MapletContents>
+    
+    <MapletContentsMaplet Position="Sides" MaxAmount="1" ProbabilityPercentage="100" >
+      <Maplet MapletName="Library" SizeX="7" SizeY="7" SizeRange="2" Tiled="true" TileID="1" Walled="true" >
+        <MapletContents>
+          <MapletContentsItemTag Position="Sides" Category="mundaneitems" MaxAmount="3" ProbabilityPercentage="66" Tag="reading" />
+          <MapletContentsItemTag Position="Middle" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="75" Tag="desk"/>
+        </MapletContents>
+      </Maplet>
+    </MapletContentsMaplet>
+    
+    <MapletContentsItem Position="Sides" ItemID="37" ItemCategory="mundaneitems" MaxAmount="2" ProbabilityPercentage="75" />
+    
+    <MapletContentsMaplet Position="Middle" MaxAmount="2" ProbabilityPercentage="100">
+      <Maplet MapletName="Chairs" SizeX="3" SizeY="3" Tiled="false" Walled="false">
+        <MapletContents>
+          <MapletContentsItemTag Position="Fixed" x="1" y="1" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="table"/>
+          <MapletContentsItemTag Position="Fixed" x="0" y="1" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="chair left"/>
+          <MapletContentsItemTag Position="Fixed" x="2" y="1" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="50" Tag="chair right"/>
+          <MapletContentsItemTag Position="Fixed" x="1" y="0" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="75" Tag="chair top"/>
+          <MapletContentsItemTag Position="Fixed" x="1" y="2" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="75" Tag="chair bottom"/>
+        </MapletContents>
+      </Maplet>
+    </MapletContentsMaplet>
+
+    <MapletContentsItemTag Position="Middle" MaxAmount="10" ProbabilityPercentage="50" Category="mundaneitems" Tag="decoration"/>
+    <MapletContentsItemTag Position="Anywhere" MaxAmount="3" ProbabilityPercentage="50" Category="mundaneitems" Tag="furniture"/>
+    
+  </MapletContents>
+</Maplet>

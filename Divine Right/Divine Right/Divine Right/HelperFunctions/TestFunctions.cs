@@ -5,7 +5,6 @@ using System.Text;
 using DivineRightGame;
 using DRObjects;
 using DivineRightGame.ItemFactory;
-using DivineRightGame.MapFactory;
 using DRObjects.Graphics;
 using DRObjects.LocalMapGeneratorObjects;
 using DivineRightGame.Managers;
@@ -16,11 +15,9 @@ namespace Divine_Right.HelperFunctions
     {
         public static void PrepareFileTestMap()
         {
-            MapFactoryManager mgr = new MapFactoryManager();
-
             GameState.LocalMap = new LocalMap(15,15,0,0);
 
-            GameState.LocalMap.LoadLocalMap(mgr.GetMap("testmap"),0);
+            //GameState.LocalMap.LoadLocalMap(mgr.GetMap("testmap"),0);
 
             //Add player character
             //Player character
@@ -39,6 +36,46 @@ namespace Divine_Right.HelperFunctions
 
             block.PutItemOnBlock(player);
             GameState.PlayerCharacter.MapCharacter = player;
+        }
+
+        public static void ParseXML()
+        {
+            LocalMapXMLParser parser = new LocalMapXMLParser();
+
+            Maplet maplet = parser.ParseMaplet(@"Maplets/HouseMaplet.xml");
+
+            //Generate it
+            LocalMapGenerator gen = new LocalMapGenerator();
+
+            MapBlock[,] generatedMap = gen.GenerateMap(0, null, maplet, true);
+
+            //put in the map
+
+            GameState.LocalMap = new LocalMap(32, 32, 1, 0);
+
+            List<MapBlock> collapsedMap = new List<MapBlock>();
+
+            foreach (MapBlock block in generatedMap)
+            {
+                collapsedMap.Add(block);
+            }
+
+            GameState.LocalMap.AddToLocalMap(collapsedMap.ToArray());
+
+            MapItem player = new MapItem();
+            player.Coordinate = new MapCoordinate(10, 5, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+            player.Description = "The player character";
+            player.Graphic = SpriteManager.GetSprite(LocalSpriteName.PLAYERCHAR);
+            player.InternalName = "Player Char";
+            player.MayContainItems = false;
+            player.Name = "Player";
+
+            MapBlock playerBlock = GameState.LocalMap.GetBlockAtCoordinate(new MapCoordinate(10, 5, 0, DRObjects.Enums.MapTypeEnum.LOCAL));
+            playerBlock.PutItemOnBlock(player);
+            GameState.PlayerCharacter = new Actor();
+            GameState.PlayerCharacter.MapCharacter = player;
+            GameState.PlayerCharacter.IsPlayerCharacter = true;
+
         }
 
         public static void PrepareMapletTestFarmHouse()
