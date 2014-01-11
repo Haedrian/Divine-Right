@@ -13,15 +13,7 @@
     <MapletContentsItem Position="Sides" ItemID="37" ItemCategory="mundaneitems" MaxAmount="2" ProbabilityPercentage="75" />
     
     <MapletContentsMaplet Position="Middle" MaxAmount="2" ProbabilityPercentage="100">
-      <Maplet MapletName="Chairs" SizeX="3" SizeY="3" Tiled="false" Walled="false">
-        <MapletContents>
-          <MapletContentsItemTag Position="Fixed" x="1" y="1" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="table"/>
-          <MapletContentsItemTag Position="Fixed" x="0" y="1" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="chair left"/>
-          <MapletContentsItemTag Position="Fixed" x="2" y="1" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="50" Tag="chair right"/>
-          <MapletContentsItemTag Position="Fixed" x="1" y="0" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="75" Tag="chair top"/>
-          <MapletContentsItemTag Position="Fixed" x="1" y="2" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="75" Tag="chair bottom"/>
-        </MapletContents>
-      </Maplet>
+      <MapletTag Tag="TableSet" />
     </MapletContentsMaplet>
 
     <MapletContentsItemTag Position="Middle" MaxAmount="10" ProbabilityPercentage="50" Category="mundaneitems" Tag="decoration"/>

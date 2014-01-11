@@ -10,6 +10,7 @@ namespace DivineRightGame.LocalMapGenerator
 {
     public class LocalMapXMLParser
     {
+        private const string MAPLETTAG = "MapletTag";
 
         public Maplet ParseMaplet(string path)
         {
@@ -90,7 +91,15 @@ namespace DivineRightGame.LocalMapGenerator
                 //Now if its a MapletContentsMaplet, it'll contain an element which is the maplet
                 if (typeof(MapletContentsMaplet).Equals(content.GetType()))
                 {
-                    ((MapletContentsMaplet)content).Maplet = ParseMaplet(contents.Elements().First());
+                    if (contents.Elements().First().Name.LocalName.Equals(MAPLETTAG))
+                    {
+                        //This is a maplet tag - we load it from the file instead
+                        ((MapletContentsMaplet)content).Maplet = ParseMaplet(MapletDatabaseHandler.GetMapletByTag(contents.Elements().First().Attribute("Tag").Value));
+                    }
+                    else
+                    {
+                        ((MapletContentsMaplet)content).Maplet = ParseMaplet(contents.Elements().First());
+                    }
                 }
                
             }

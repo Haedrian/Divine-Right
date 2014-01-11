@@ -119,6 +119,7 @@
     <Compile Include="Items\Archetypes\Local\ToggleItem.cs" />
     <Compile Include="Items\Tiles\Air.cs" />
     <Compile Include="Items\Tiles\Global\GlobalTile.cs" />
+    <Compile Include="LocalMapGeneratorObjects\DatabaseHandling\MapletDatabaseDatum.cs" />
     <Compile Include="LocalMapGeneratorObjects\Enums\PositionAffinity.cs" />
     <Compile Include="LocalMapGeneratorObjects\Maplet.cs" />
     <Compile Include="LocalMapGeneratorObjects\MapletContents.cs" />
@@ -138,6 +139,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Maplets\HouseMaplet.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Maplets\TableSet.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

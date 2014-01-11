@@ -50,6 +50,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="System.Xml">
       <Private>False</Private>
     </Reference>
@@ -78,6 +79,7 @@
     <Compile Include="ItemFactory\Object\KeyListItem.cs" />
     <Compile Include="ItemFactory\Object\MultiDictionary.cs" />
     <Compile Include="LocalMap.cs" />
+    <Compile Include="LocalMapGenerator\MapletDatabaseHandler.cs" />
     <Compile Include="Managers\HelperFunctions\Interpolation.cs" />
     <Compile Include="Managers\HelperObjects\HelperEnums\PlanningMapItemType.cs" />
     <Compile Include="Managers\HelperObjects\Region.cs" />
