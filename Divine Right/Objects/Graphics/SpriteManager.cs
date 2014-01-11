@@ -92,6 +92,7 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.WARDROBE_1] = new SpriteData(HOUSEITEM, new Rectangle(50, 50, 50, 50));
             localSprites[(int)LocalSpriteName.WARDROBE_2] = new SpriteData(HOUSEITEM, new Rectangle(100, 50, 50, 50));
             localSprites[(int)LocalSpriteName.WARDROBE_3] = new SpriteData(HOUSEITEM, new Rectangle(200, 50, 50, 50));
+            localSprites[(int)LocalSpriteName.WARDROBE_4] = new SpriteData(HOUSEITEM, new Rectangle(150, 50, 50, 50));
             localSprites[(int)LocalSpriteName.STOVE_UNLIT] = new SpriteData(HOUSEITEM, new Rectangle(250, 50, 50, 50));
             localSprites[(int)LocalSpriteName.STOVE_LIT] = new SpriteData(HOUSEITEM, new Rectangle(300, 50, 50, 50));
             localSprites[(int)LocalSpriteName.PUMP] = new SpriteData(HOUSEITEM, new Rectangle(350, 50, 50, 50));
@@ -149,6 +150,13 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.DOOR_1_OPEN] = new SpriteData(HOUSEITEM, new Rectangle(400, 301, 30, 42));
             localSprites[(int)LocalSpriteName.DOOR_2_CLOSED] = new SpriteData(HOUSEITEM, new Rectangle(451, 300, 32, 45));
             localSprites[(int)LocalSpriteName.DOOR_2_OPEN] = new SpriteData(HOUSEITEM, new Rectangle(2, 350, 32, 45));
+
+            localSprites[(int)LocalSpriteName.CHEST_OF_DRAWERS_1] = new SpriteData(HOUSEITEM, new Rectangle(50, 350, 50, 50));
+            localSprites[(int)LocalSpriteName.CHEST_OF_DRAWERS_2] = new SpriteData(HOUSEITEM, new Rectangle(100, 350, 50, 50));
+            localSprites[(int)LocalSpriteName.CHEST_OF_DRAWERS_3] = new SpriteData(HOUSEITEM, new Rectangle(150, 350, 50, 50));
+            localSprites[(int)LocalSpriteName.CHEST_OF_DRAWERS_4] = new SpriteData(HOUSEITEM, new Rectangle(200, 350, 50, 50));
+
+            localSprites[(int)LocalSpriteName.CABINET_1] = new SpriteData(HOUSEITEM, new Rectangle(250, 350, 50, 50));
 
             localSprites[(int)LocalSpriteName.WOOD_LOGS] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(0, 0, 50, 50));
             localSprites[(int)LocalSpriteName.WOOD_LOGS_THREE] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(50, 0, 50, 50));
