@@ -41,5 +41,6 @@ Content\Graphics\Local\ForestsAndMines.xnb
 App.config
 Maplets.sdf
 Items.sdf
+Maplets\Bedroom.xml
 Maplets\HouseMaplet.xml
 Maplets\TableSet.xml

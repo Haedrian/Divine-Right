@@ -43,7 +43,7 @@ namespace Divine_Right.HelperFunctions
         {
             LocalMapXMLParser parser = new LocalMapXMLParser();
 
-            Maplet maplet = parser.ParseMaplet(@"Maplets/HouseMaplet.xml");
+            Maplet maplet = parser.ParseMaplet(@"Maplets/Bedroom.xml");
 
             //Generate it
             LocalMapGenerator gen = new LocalMapGenerator();
@@ -71,7 +71,7 @@ namespace Divine_Right.HelperFunctions
             player.MayContainItems = false;
             player.Name = "Player";
 
-            MapBlock playerBlock = GameState.LocalMap.GetBlockAtCoordinate(new MapCoordinate(10, 5, 0, DRObjects.Enums.MapTypeEnum.LOCAL));
+            MapBlock playerBlock = GameState.LocalMap.GetBlockAtCoordinate(new MapCoordinate(5, 5, 0, DRObjects.Enums.MapTypeEnum.LOCAL));
             playerBlock.PutItemOnBlock(player);
             GameState.PlayerCharacter = new Actor();
             GameState.PlayerCharacter.MapCharacter = player;

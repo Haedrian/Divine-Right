@@ -43,7 +43,7 @@ namespace DRObjects.Database
 
             //Now go through the values of the dictionary and pick out those who have that tag
             //Tags will be the last one
-            int[] items = dictionary[archetype].Values.Where(v => v[v.Count - 1].ToLower().Contains(tag)).Select(v => Int32.Parse(v[0])).ToArray();
+            int[] items = dictionary[archetype].Values.Where(v => v[v.Count - 1].ToLower().Split(',').Contains(tag)).Select(v => Int32.Parse(v[0])).ToArray();
 
             //do we have at least one?
             if (items.Length == 0)
