@@ -8,6 +8,7 @@ using DivineRightGame.ItemFactory;
 using DRObjects.Graphics;
 using DRObjects.LocalMapGeneratorObjects;
 using DivineRightGame.Managers;
+using DivineRightGame.LocalMapGenerator;
 
 namespace Divine_Right.HelperFunctions
 {

@@ -6,7 +6,7 @@ using DRObjects.LocalMapGeneratorObjects;
 using System.Xml.Linq;
 using DRObjects.LocalMapGeneratorObjects.Enums;
 
-namespace DivineRightGame.Managers
+namespace DivineRightGame.LocalMapGenerator
 {
     public class LocalMapXMLParser
     {

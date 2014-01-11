@@ -82,8 +82,8 @@
     <Compile Include="Managers\HelperObjects\HelperEnums\PlanningMapItemType.cs" />
     <Compile Include="Managers\HelperObjects\Region.cs" />
     <Compile Include="Managers\HelperObjects\Line.cs" />
-    <Compile Include="Managers\LocalMapGenerator.cs" />
-    <Compile Include="Managers\LocalMapXMLParser.cs" />
+    <Compile Include="LocalMapGenerator\LocalMapGenerator.cs" />
+    <Compile Include="LocalMapGenerator\LocalMapXMLParser.cs" />
     <Compile Include="Managers\UserInterfaceManager.cs" />
     <Compile Include="Managers\WorldGenerationManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -97,6 +97,9 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="App.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Maplets.sdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

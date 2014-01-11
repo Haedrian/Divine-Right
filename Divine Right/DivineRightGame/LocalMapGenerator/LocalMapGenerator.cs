@@ -7,7 +7,7 @@ using DRObjects.LocalMapGeneratorObjects;
 using DivineRightGame.Managers.HelperObjects.HelperEnums;
 using DivineRightGame.Managers.HelperObjects;
 
-namespace DivineRightGame.Managers
+namespace DivineRightGame.LocalMapGenerator
 {
     public class LocalMapGenerator
     {
