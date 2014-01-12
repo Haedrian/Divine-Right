@@ -24,6 +24,11 @@ namespace DRObjects.LocalMapGeneratorObjects
         public int MaxAmount { get; set; }
 
         /// <summary>
+        /// If this is set to true, the item will allow other items to be placed on top of it
+        /// </summary>
+        public bool AllowItemsOnTop { get; set; }
+
+        /// <summary>
         /// Determines whether this maplet prefers to be positioned.
         /// </summary>
         public PositionAffinity Position { get; set; }

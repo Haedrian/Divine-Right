@@ -121,14 +121,12 @@ namespace DivineRightGame.LocalMapGenerator
                     }
                 }
 
-                //Shall we put a few winows as well?
-
 
                 
             }
 
             //Step 1c: Determine where we'll put the maplets
-            foreach (MapletContentsMaplet childMaplet in maplet.MapletContents.Where(mc => (mc is MapletContentsMaplet)).OrderByDescending(mc => mc.ProbabilityPercentage))
+            foreach (MapletContentsMaplet childMaplet in maplet.MapletContents.Where(mc => (mc is MapletContentsMaplet)).OrderByDescending(mc => mc.ProbabilityPercentage).ThenBy(mc => random.Next()))
             {
                 //Calculate the probability of putting the item in, and how many items we're putting
                 for (int i = 0; i < childMaplet.MaxAmount; i++)
@@ -240,8 +238,19 @@ namespace DivineRightGame.LocalMapGenerator
 
             //Get the smallest x and y coordinate in the candidate blocks so we can use it for fixed things
 
-            int smallestX = candidateBlocks.Select(b => b.Tile.Coordinate.X).Min();
-            int smallestY = candidateBlocks.Select(b => b.Tile.Coordinate.Y).Min();
+            int smallestX = -1;
+            int smallestY = -1;
+
+            try
+            {
+                smallestX = candidateBlocks.Select(b => b.Tile.Coordinate.X).Min();
+                smallestY = candidateBlocks.Select(b => b.Tile.Coordinate.Y).Min();
+            }
+            catch
+            {
+                //No space :(
+
+            }
 
             foreach (MapletContents contents in maplet.MapletContents.Where(mc => mc is MapletContentsItem || mc is MapletContentsItemTag).OrderByDescending(mc => mc.ProbabilityPercentage))
             {
@@ -277,10 +286,12 @@ namespace DivineRightGame.LocalMapGenerator
                                 
                                 edgeBlocks[position].PutItemOnBlock(itemPlaced);
 
-                                //remove it from both
-                                candidateBlocks.Remove(edgeBlocks[position]);
-                                edgeBlocks.RemoveAt(position);
-
+                                if (!contents.AllowItemsOnTop)
+                                {
+                                    //remove it from both
+                                    candidateBlocks.Remove(edgeBlocks[position]);
+                                    edgeBlocks.RemoveAt(position);
+                                }
                             }
 
                             if (contents.Position == DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.MIDDLE && candidateBlocks.Except(edgeBlocks).Count() != 0)
@@ -292,9 +303,12 @@ namespace DivineRightGame.LocalMapGenerator
 
                                 block.PutItemOnBlock(itemPlaced);
 
-                                //remove it from both
-                                candidateBlocks.Remove(block);
-                                edgeBlocks.Remove(block);
+                                if (!contents.AllowItemsOnTop)
+                                {
+                                    //remove it from both
+                                    candidateBlocks.Remove(block);
+                                    edgeBlocks.Remove(block);
+                                }
                             }
 
                             if (contents.Position == DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.ANYWHERE)
@@ -304,9 +318,12 @@ namespace DivineRightGame.LocalMapGenerator
 
                                 candidateBlocks[position].PutItemOnBlock(itemPlaced);
 
-                                //remove it from both
-                                edgeBlocks.Remove(candidateBlocks[position]);
-                                candidateBlocks.RemoveAt(position);
+                                if (!contents.AllowItemsOnTop)
+                                {
+                                    //remove it from both
+                                    edgeBlocks.Remove(candidateBlocks[position]);
+                                    candidateBlocks.RemoveAt(position);
+                                }
                             }
 
                             if (contents.Position == DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.FIXED)
@@ -321,9 +338,12 @@ namespace DivineRightGame.LocalMapGenerator
                                     selectedBlock.PutItemOnBlock(itemPlaced);
                                 }
 
-                                //and remoev it from both
-                                candidateBlocks.Remove(selectedBlock);
-                                edgeBlocks.Remove(selectedBlock);
+                                if (!contents.AllowItemsOnTop)
+                                {
+                                    //and remoev it from both
+                                    candidateBlocks.Remove(selectedBlock);
+                                    edgeBlocks.Remove(selectedBlock);
+                                }
                             }
                         }
                     }

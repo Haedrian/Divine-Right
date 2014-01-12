@@ -1,0 +1,12 @@
+﻿<Maplet name="kitchen" Tiled="false" SizeX ="7" SizeY="7" Walled="true">
+  <MapletContents>
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="2" AllowItemsOnTop="false" ProbabilityPercentage="80" Tag="carpet"/>
+    <MapletContentsItem Position="Sides" ItemID="2" ItemCategory="toggleitems" MaxAmount="1" ProbabilityPercentage="50" />
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="80" Tag="decoration"/>
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="80" Tag="kitchen furniture"/>
+    <MapletContentsItemTag Position="Sides" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="80" Tag="counter"/>
+    <MapletContentsMaplet Position="Anywhere" MaxAmount="1" ProbabilityPercentage="100">
+      <MapletTag Tag="TableSet" />
+    </MapletContentsMaplet>
+  </MapletContents>
+</Maplet>

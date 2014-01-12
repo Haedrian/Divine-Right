@@ -43,7 +43,7 @@ namespace Divine_Right.HelperFunctions
         {
             LocalMapXMLParser parser = new LocalMapXMLParser();
 
-            Maplet maplet = parser.ParseMaplet(@"Maplets/Bedroom.xml");
+            Maplet maplet = parser.ParseMaplet(@"Maplets/SmallHouse.xml");
 
             //Generate it
             LocalMapGenerator gen = new LocalMapGenerator();
@@ -52,7 +52,7 @@ namespace Divine_Right.HelperFunctions
 
             //put in the map
 
-            GameState.LocalMap = new LocalMap(32, 32, 1, 0);
+            GameState.LocalMap = new LocalMap(100, 100, 1, 0);
 
             List<MapBlock> collapsedMap = new List<MapBlock>();
 

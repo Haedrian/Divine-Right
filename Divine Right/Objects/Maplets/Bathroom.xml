@@ -1,0 +1,7 @@
+﻿<Maplet name="bathroom" Tiled="false" SizeX ="5" SizeY="5" Walled="true">
+  <MapletContents>
+    <MapletContentsItem Position="Anywhere" ItemID="49" ItemCategory="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" />
+    <MapletContentsItemTag Position="Sides" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="66" Tag="bath" />
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="bucket" />
+  </MapletContents>
+</Maplet>

@@ -116,6 +116,22 @@ namespace DRObjects.Graphics
         DOOR_2_OPEN,
         DOOR_2_CLOSED,
 
+        POT_PLANT_1,
+        POT_PLANT_2,
+        POT_PLANT_3,
+        POT_PLANT_4,
+
+        BATH,
+
+        CARPET_1,
+        CARPET_2,
+        CARPET_3,
+
+        RED_BED_TOP,
+        RED_BED_BOTTOM,
+
+        BUCKET,
+
         //Resources
         WOOD_LOGS,
         WOOD_LOGS_THREE,

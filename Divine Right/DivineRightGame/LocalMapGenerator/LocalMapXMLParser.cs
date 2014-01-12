@@ -45,6 +45,7 @@ namespace DivineRightGame.LocalMapGenerator
                     case "WindowProbability": maplet.WindowProbability = Int32.Parse(value); break;
                     case "Tiled": maplet.Tiled = Boolean.Parse(value); break;
                     case "TileID": maplet.TileID = Int32.Parse(value); break;
+
                 }
             }
 
@@ -77,6 +78,7 @@ namespace DivineRightGame.LocalMapGenerator
                         case "MaxAmount": content.MaxAmount = Int32.Parse(value); break;
                         case "Position": content.Position = (PositionAffinity) Enum.Parse(typeof(PositionAffinity), value, true); break;
                         case "Padding": content.Padding = Int32.Parse(value); break;
+                        case "AllowItemsOnTop": content.AllowItemsOnTop = Boolean.Parse(value); break;
                         case "x": content.x = Int32.Parse(value); break;
                         case "y": content.y = Int32.Parse(value); break;
                         case "ItemCategory": ((MapletContentsItem)content).ItemCategory = value; break;

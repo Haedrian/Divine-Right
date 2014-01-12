@@ -156,7 +156,23 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.CHEST_OF_DRAWERS_3] = new SpriteData(HOUSEITEM, new Rectangle(150, 350, 50, 50));
             localSprites[(int)LocalSpriteName.CHEST_OF_DRAWERS_4] = new SpriteData(HOUSEITEM, new Rectangle(200, 350, 50, 50));
 
+            localSprites[(int)LocalSpriteName.POT_PLANT_1] = new SpriteData(HOUSEITEM, new Rectangle(300, 350, 50, 50));
+            localSprites[(int)LocalSpriteName.POT_PLANT_2] = new SpriteData(HOUSEITEM, new Rectangle(350, 350, 50, 50));
+            localSprites[(int)LocalSpriteName.POT_PLANT_3] = new SpriteData(HOUSEITEM, new Rectangle(400, 350, 50, 50));
+            localSprites[(int)LocalSpriteName.POT_PLANT_4] = new SpriteData(HOUSEITEM, new Rectangle(450, 350, 50, 50));
+
             localSprites[(int)LocalSpriteName.CABINET_1] = new SpriteData(HOUSEITEM, new Rectangle(250, 350, 50, 50));
+
+            localSprites[(int)LocalSpriteName.BATH] = new SpriteData(HOUSEITEM, new Rectangle(0, 400, 50, 50));
+
+            localSprites[(int)LocalSpriteName.CARPET_1] = new SpriteData(HOUSEITEM, new Rectangle(50, 400, 50, 50));
+            localSprites[(int)LocalSpriteName.CARPET_2] = new SpriteData(HOUSEITEM, new Rectangle(100, 400, 50, 50));
+            localSprites[(int)LocalSpriteName.CARPET_3] = new SpriteData(HOUSEITEM, new Rectangle(150, 400, 50, 50));
+
+            localSprites[(int)LocalSpriteName.RED_BED_TOP] = new SpriteData(HOUSEITEM, new Rectangle(200, 400, 50, 50));
+            localSprites[(int)LocalSpriteName.RED_BED_BOTTOM] = new SpriteData(HOUSEITEM, new Rectangle(200, 450, 50, 50));
+
+            localSprites[(int)LocalSpriteName.BUCKET] = new SpriteData(HOUSEITEM, new Rectangle(250, 400, 50, 50));
 
             localSprites[(int)LocalSpriteName.WOOD_LOGS] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(0, 0, 50, 50));
             localSprites[(int)LocalSpriteName.WOOD_LOGS_THREE] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(50, 0, 50, 50));
