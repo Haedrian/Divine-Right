@@ -1,0 +1,17 @@
+﻿<Maplet MapletName="Bar" SizeX="5" SizeY="3" Tiled="false" Walled="false">
+  <MapletContents>
+    <MapletContentsItemTag Position="Fixed" x="0" y="1" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="bar"/>
+    <MapletContentsItemTag Position="Fixed" x="1" y="1" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="bar"/>
+    <MapletContentsItemTag Position="Fixed" x="2" y="1" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="bar"/>
+    <MapletContentsItemTag Position="Fixed" x="3" y="1" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="bar"/>
+    <MapletContentsItemTag Position="Fixed" x="4" y="1" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="bar"/>
+
+    <MapletContentsItemTag Position="Fixed" x="0" y="2" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="stool"/>
+    <MapletContentsItemTag Position="Fixed" x="1" y="2" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="stool"/>
+    <MapletContentsItemTag Position="Fixed" x="2" y="2" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="stool"/>
+    <MapletContentsItemTag Position="Fixed" x="3" y="2" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="stool"/>
+    <MapletContentsItemTag Position="Fixed" x="4" y="2" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="stool"/>
+
+
+  </MapletContents>
+</Maplet>

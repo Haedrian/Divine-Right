@@ -132,6 +132,8 @@ namespace DRObjects.Graphics
 
         BUCKET,
 
+        BAR,
+
         //Resources
         WOOD_LOGS,
         WOOD_LOGS_THREE,

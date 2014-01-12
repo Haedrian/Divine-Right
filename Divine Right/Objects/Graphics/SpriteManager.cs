@@ -174,6 +174,8 @@ namespace DRObjects.Graphics
 
             localSprites[(int)LocalSpriteName.BUCKET] = new SpriteData(HOUSEITEM, new Rectangle(250, 400, 50, 50));
 
+            localSprites[(int)LocalSpriteName.BAR] = new SpriteData(HOUSEITEM, new Rectangle(300, 400, 50, 50));
+
             localSprites[(int)LocalSpriteName.WOOD_LOGS] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(0, 0, 50, 50));
             localSprites[(int)LocalSpriteName.WOOD_LOGS_THREE] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(50, 0, 50, 50));
             localSprites[(int)LocalSpriteName.FLOUR_SACK] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(100, 0, 50, 50));

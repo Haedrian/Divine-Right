@@ -114,7 +114,7 @@ namespace Divine_Right.GameScreens
             }
             else
             {
-                TestFunctions.PrepareMapletTestFarmHouse();
+                TestFunctions.ParseXML();
                 //generate the house
                 //TestFunctions.PrepareMapletTestFarmHouse();
                 

@@ -1,0 +1,24 @@
+﻿<Maplet MapletName="tavern" SizeX="15" SizeY="15" Tiled="true" TileID="1" Walled="true" WindowProbability="40">
+  <MapletContents>
+    <MapletContentsMaplet Position="Sides" MaxAmount="1" ProbabilityPercentage="103" >
+      <Maplet MapletName="backRoom" SizeX="15" SizeY="4" Walled="true" Tiled="true" TileID="4">
+        <MapletContents>
+          <MapletContentsItem Position="Sides" ItemID="2" ItemCategory="toggleitems" MaxAmount="1" ProbabilityPercentage="102" />
+          <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="3" ProbabilityPercentage="80" Tag="kitchen furniture"/>
+          <MapletContentsItemTag Position="Sides" Category="mundaneitems" MaxAmount="4" ProbabilityPercentage="100" Tag="barrel"/>
+          <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="80" Tag="meat"/>
+          <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="80" Tag="fish"/>
+          <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="80" Tag="farm produce"/>
+        </MapletContents>
+      </Maplet>
+    </MapletContentsMaplet>
+    <MapletContentsMaplet Position="Sides" MaxAmount="1" ProbabilityPercentage="102" >
+      <MapletTag Tag="Bar" />
+    </MapletContentsMaplet>
+    <!-- Main Floor-->
+    <MapletContentsMaplet Position="Anywhere" MaxAmount="7" ProbabilityPercentage="100" >
+      <MapletTag Tag="TableSet" />
+    </MapletContentsMaplet>
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="5" ProbabilityPercentage="80" Tag="decoration"/>
+  </MapletContents>
+</Maplet>

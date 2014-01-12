@@ -1,0 +1,13 @@
+﻿<Maplet MapletName="house" SizeX="100" SizeY="100" Tiled="true" TileID="3" Walled="false" WindowProbability="20">
+  <MapletContents>
+    <MapletContentsMaplet Position="Middle" MaxAmount="5" ProbabilityPercentage="100">
+    <Maplet Tiled="true" TileID="5" SizeX="17" SizeY="11" Walled="false" Padding="5">
+      <MapletContents>
+        <MapletContentsMaplet Position="Sides" MaxAmount="1" ProbabilityPercentage="100">
+          <MapletTag Tag="House" /> 
+        </MapletContentsMaplet>
+      </MapletContents>
+    </Maplet>
+    </MapletContentsMaplet>
+  </MapletContents>
+</Maplet>
