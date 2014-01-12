@@ -91,16 +91,25 @@ namespace Divine_Right.HelperFunctions
 
             farmArea.MapletContents = new List<MapletContents>();
 
+            LocalMapXMLParser parser = new LocalMapXMLParser();
+
             Maplet farmHouse = new Maplet();
             farmHouse.MapletName = "farmHouse";
-            farmHouse.SizeX = 25;
-            farmHouse.SizeY = 15;
+            farmHouse.SizeX = 17;
+            farmHouse.SizeY = 9;
             farmHouse.Tiled = true;
             farmHouse.TileID = 1;
             farmHouse.Walled = true;
             farmHouse.WindowProbability = 10;
             farmHouse.MapletContents = new List<MapletContents>();
 
+            farmArea.MapletContents.Add(new MapletContentsMaplet()
+                {
+                    MaxAmount = 1,
+                    Position = DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES,
+                    ProbabilityPercentage = 100,
+                    Maplet = parser.ParseMaplet(@"Maplets/SmallHouse.xml")
+                });
 
             MapletContentsMaplet farmHouseWrapper = new MapletContentsMaplet();
             farmHouseWrapper.Maplet = farmHouse;
@@ -108,7 +117,7 @@ namespace Divine_Right.HelperFunctions
             farmHouseWrapper.Position = DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES;
             farmHouseWrapper.ProbabilityPercentage = 100;
 
-            farmArea.MapletContents.Add(farmHouseWrapper);
+           // farmArea.MapletContents.Add(farmHouseWrapper);
 
             MapletContentsItemTag trees = new MapletContentsItemTag();
             trees.Category = "mundaneitems";
