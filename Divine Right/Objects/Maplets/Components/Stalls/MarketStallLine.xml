@@ -1,0 +1,12 @@
+﻿<Maplet SizeX="5" SizeY="4" Walled="false" Tiled="false">
+  <MapletContents>
+    <MapletContentsItemTag Position="Fixed" x="0" y="3" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="stall"/>
+    <MapletContentsItemTag Position="Fixed" x="1" y="3" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="stall"/>
+    <MapletContentsItemTag Position="Fixed" x="2" y="3" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="stall"/>
+    <MapletContentsItemTag Position="Fixed" x="3" y="3" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="stall"/>
+    <MapletContentsItemTag Position="Fixed" x="4" y="3" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="stall"/>
+    
+    <!-- Random items strewn about-->
+    <MapletContentsItemTag Position="Anywhere" x="0" y="0" Category="mundaneitems" MaxAmount="5" ProbabilityPercentage="75" Tag="resource"/>
+  </MapletContents>
+</Maplet>

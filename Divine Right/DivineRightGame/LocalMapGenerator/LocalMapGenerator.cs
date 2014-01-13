@@ -610,6 +610,11 @@ namespace DivineRightGame.LocalMapGenerator
                                 mapX += padding.Value-1;
                                 mapY += padding.Value-1;
                                 //continue;
+
+                                if (mapX >= map.GetLength(0))
+                                {
+                                    break;
+                                }
                             }
 
                             for (int mapletX = 0; mapletX < maplet.GetLength(0); mapletX++)

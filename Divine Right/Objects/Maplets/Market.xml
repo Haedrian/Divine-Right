@@ -1,0 +1,33 @@
+﻿<Maplet MapletName="Market" SizeX="20" SizeY="10" Walled="false" Tiled="true" TileID ="4">
+  <MapletContents>
+    <MapletContentsMaplet Position="Sides" MaxAmount="1" ProbabilityPercentage="104">
+      <Maplet Name="bottomSection" SizeX="19" SizeY="4" Walled="false" Tiled="false">
+        <MapletContents>
+          <MapletContentsMaplet Position="Anywhere" MaxAmount="4" ProbabilityPercentage="75">
+            <MapletTag Tag="MarketStallLine" />
+          </MapletContentsMaplet>
+          <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="10" ProbabilityPercentage="74" Tag="resource"/>
+        </MapletContents>
+      </Maplet>
+    </MapletContentsMaplet>
+
+    <MapletContentsMaplet Position="Sides" MaxAmount="1" ProbabilityPercentage="103">
+      <Maplet Name="middleClearSection" SizeX="19" SizeY="3" Walled="false" Tiled="false">
+        <MapletContents>
+        </MapletContents>
+      </Maplet>
+    </MapletContentsMaplet>
+
+    <MapletContentsMaplet Position="Sides" MaxAmount="1" ProbabilityPercentage="102">
+      <Maplet Name="topSection" SizeX="19" SizeY="3" Walled="false" Tiled="false">
+        <MapletContents>
+          <MapletContentsMaplet Position="Anywhere" MaxAmount="5" ProbabilityPercentage="75">
+            <MapletTag Tag="MarketStallSquare" />
+          </MapletContentsMaplet>
+          <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="10" ProbabilityPercentage="74" Tag="resource"/>
+        </MapletContents>
+      </Maplet>
+    </MapletContentsMaplet>
+
+  </MapletContents>
+</Maplet>

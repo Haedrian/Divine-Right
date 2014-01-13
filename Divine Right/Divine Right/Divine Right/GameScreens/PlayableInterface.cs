@@ -27,8 +27,8 @@ namespace Divine_Right.GameScreens
         DrawableGameComponent
     {
         #region Constants
-        const int TILEWIDTH = 50;
-        const int TILEHEIGHT = 50;
+        const int TILEWIDTH = 25;
+        const int TILEHEIGHT = 25;
 
         int PlayableWidth
         {

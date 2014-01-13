@@ -46,7 +46,7 @@ namespace DivineRightGame.LocalMapGenerator
             }
 
             //Search for it
-            var data = databaseData.Values.Where(v => v.Tags.Contains(tag));
+            var data = databaseData.Values.Where(v => v.Tags.Split(',').Contains(tag));
 
             return LoadFile(data.Select(d => d.MapletPath).ToArray()[_random.Next(data.Count())]);
         }
