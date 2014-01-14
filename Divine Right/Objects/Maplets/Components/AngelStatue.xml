@@ -1,0 +1,7 @@
+﻿<Maplet MapletName="Angel Statue" SizeX="7" SizeY="7" Tiled="true" TileID="3" Walled="false">
+  <MapletContents>
+    <MapletContentsItemTag Position="Fixed" x="3" y="6" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="angel statue top"/>
+    <MapletContentsItemTag Position="Fixed" x="3" y="5" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="angel statue bottom"/>
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="20" ProbabilityPercentage="90" Tag="flower"/>
+  </MapletContents>
+</Maplet>

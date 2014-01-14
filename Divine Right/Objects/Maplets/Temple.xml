@@ -1,0 +1,47 @@
+﻿<Maplet Name="temple" Tiled="true" TileID="1" SizeX ="23" SizeY="16" Walled="true">
+  <MapletContents>
+    
+    <MapletContentsMaplet Position="Sides" MaxAmount="1" ProbabilityPercentage="110">
+      <Maplet Name="Free Area" Tiled="false" SizeX="7" SizeY="7" Walled="false">
+        <MapletContents>
+        </MapletContents>
+      </Maplet>
+    </MapletContentsMaplet>
+
+    <MapletContentsMaplet Position="Sides" MaxAmount="1" ProbabilityPercentage="109">
+      <Maplet Name="Left Chairs" Tiled="false" SizeX="7" SizeY="7" Walled="false">
+        <MapletContents>
+          <MapletContentsItemTag Position="Middle" Category="mundaneitems" MaxAmount="35" ProbabilityPercentage="100" Tag="chair left"/>
+        </MapletContents>
+      </Maplet>
+    </MapletContentsMaplet>
+
+    <MapletContentsMaplet Position="Sides" MaxAmount="1" ProbabilityPercentage="107">
+      <Maplet Name="Bottom Chairs" Tiled="false" SizeX="7" SizeY="7" Walled="false">
+        <MapletContents>
+          <MapletContentsItemTag Position="Middle" Category="mundaneitems" MaxAmount="35" ProbabilityPercentage="100" Tag="chair top"/>
+        </MapletContents>
+      </Maplet>
+    </MapletContentsMaplet>
+
+    <MapletContentsMaplet Position="Sides" MaxAmount="1" ProbabilityPercentage="106">
+      <MapletTag Tag="AngelStatue"/>
+    </MapletContentsMaplet>
+
+    <MapletContentsMaplet Position="Sides" MaxAmount="1" ProbabilityPercentage="105">
+      <Maplet Name="Free Area" Tiled="false" SizeX="7" SizeY="7" Walled="false">
+        <MapletContents>
+        </MapletContents>
+      </Maplet>
+    </MapletContentsMaplet>
+
+    <MapletContentsMaplet Position="Sides" MaxAmount="1" ProbabilityPercentage="104">
+      <Maplet Name="Right Chairs" Tiled="false" SizeX="7" SizeY="7" Walled="false">
+        <MapletContents>
+          <MapletContentsItemTag Position="Middle" Category="mundaneitems" MaxAmount="35" ProbabilityPercentage="100" Tag="chair right"/>
+        </MapletContents>
+      </Maplet>
+    </MapletContentsMaplet>
+
+  </MapletContents>  
+</Maplet>

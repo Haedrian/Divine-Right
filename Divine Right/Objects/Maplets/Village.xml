@@ -28,5 +28,9 @@
       <MapletTag Tag="Smithy"/>
     </MapletContentsMaplet>
 
+    <MapletContentsMaplet Position="Middle" MaxAmount="1" ProbabilityPercentage="102">
+      <MapletTag Tag="Temple"/>
+    </MapletContentsMaplet>
+
   </MapletContents>
 </Maplet>

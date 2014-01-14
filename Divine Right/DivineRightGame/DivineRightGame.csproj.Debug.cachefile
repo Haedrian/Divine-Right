@@ -2,6 +2,7 @@ Items.sdf
 Maplets\Bathroom.xml
 Maplets\Bed.xml
 Maplets\Bedroom.xml
+Maplets\Components\AngelStatue.xml
 Maplets\Components\Stalls\MarketStallLine.xml
 Maplets\Components\Stalls\MarketStallSquare.xml
 Maplets\Components\TavernBar.xml
@@ -13,6 +14,7 @@ Maplets\Smithy.xml
 Maplets\Study.xml
 Maplets\TableSet.xml
 Maplets\Tavern.xml
+Maplets\Temple.xml
 Maplets\Village.xml
 App.config
 Maplets.sdf
