@@ -560,10 +560,10 @@ namespace DivineRightGame.LocalMapGenerator
                 try
                 {
                     block.RemoveTopItem();
-                }
-                catch { }
                 int doorID = -1;
                 block.PutItemOnBlock(factory.CreateItem(DRObjects.Enums.Archetype.TOGGLEITEMS,"door",out doorID));
+                }
+                catch { }
             }
 
             #endregion

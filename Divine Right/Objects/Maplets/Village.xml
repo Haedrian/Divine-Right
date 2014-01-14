@@ -1,12 +1,12 @@
-﻿<Maplet MapletName="village" SizeX="75" SizeY="75" Tiled="true" TileID="3" Walled="false" WindowProbability="20">
+﻿<Maplet MapletName="village" SizeX="60" SizeY="60" Tiled="true" TileID="3" Walled="false" WindowProbability="20">
   <MapletContents>
 
     <MapletContentsMaplet Position="Middle" MaxAmount="1" ProbabilityPercentage="100">
       <MapletTag Tag="Market"/>
     </MapletContentsMaplet>
 
-    <MapletContentsMaplet Position="Middle" MaxAmount="5" ProbabilityPercentage="100">
-      <Maplet Tiled="false" SizeX="60" SizeY="50" Walled="false">
+    <MapletContentsMaplet Position="Middle" MaxAmount="5" ProbabilityPercentage="101">
+      <Maplet Tiled="false" SizeX="40" SizeY="40" Walled="false">
         <MapletContents>
           <MapletContentsMaplet Position="Middle" MaxAmount="5" ProbabilityPercentage="100">
             <Maplet Tiled="false" TileID="5" SizeX="19" SizeY="11" Walled="false">
@@ -22,6 +22,10 @@
     </MapletContentsMaplet>
     <MapletContentsMaplet Position="Middle" MaxAmount="1" ProbabilityPercentage="100">
       <MapletTag Tag="Tavern"/>
+    </MapletContentsMaplet>
+
+    <MapletContentsMaplet Position="Middle" MaxAmount="1" ProbabilityPercentage="100">
+      <MapletTag Tag="Smithy"/>
     </MapletContentsMaplet>
 
   </MapletContents>

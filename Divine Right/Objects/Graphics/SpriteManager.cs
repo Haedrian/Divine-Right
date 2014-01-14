@@ -231,6 +231,10 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.IRON_ORE] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(100, 250, 50, 50));
             localSprites[(int)LocalSpriteName.COPPER_ORE] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(150, 250, 50, 50));
             localSprites[(int)LocalSpriteName.MINING_TOOLS] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(200, 250, 50, 50));
+            localSprites[(int)LocalSpriteName.FURNACE] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(300, 250, 50, 50));
+            localSprites[(int)LocalSpriteName.IRON_BARS_1] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(350, 250, 50, 50));
+            localSprites[(int)LocalSpriteName.IRON_BARS_2] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(400, 250, 50, 50));
+            
             localSprites[(int)LocalSpriteName.TOMATO_PLANT] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(0, 300, 50, 50));
             localSprites[(int)LocalSpriteName.POTATO_PLANT] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(50, 300, 50, 50));
             localSprites[(int)LocalSpriteName.CARROT_PLANT] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(100, 300, 50, 50));

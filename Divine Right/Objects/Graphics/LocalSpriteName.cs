@@ -190,6 +190,10 @@ namespace DRObjects.Graphics
         IRON_ORE,
         COPPER_ORE,
         MINING_TOOLS,
+        FURNACE,
+        IRON_BARS_1,
+        IRON_BARS_2,
+
         TOMATO_PLANT,
         POTATO_PLANT,
         CARROT_PLANT,

@@ -1,0 +1,27 @@
+﻿<Maplet name="smithy" Tiled="false" SizeX ="14" SizeY="10" Walled="false">
+  <MapletContents>
+    <MapletContentsMaplet Position="Sides" MaxAmount="1" ProbabilityPercentage="100" >
+      <Maplet Tiled="true" SizeX="7" SizeY="7" Walled="true" TileID="1">
+      <MapletContents>
+        <MapletContentsMaplet Position="Sides" MaxAmount="1" ProbabilityPercentage="100" >
+          <MapletTag Tag="Bedroom"/>
+        </MapletContentsMaplet>
+      </MapletContents>
+    </Maplet>
+    </MapletContentsMaplet>
+
+    <MapletContentsMaplet Position="Sides" MaxAmount="1" ProbabilityPercentage="100">
+      <Maplet Tiled="true" SizeX="7" SizeY="10" Walled="true" TileID="4" WindowProbability="20">
+        <MapletContents>
+          <MapletContentsItemTag Position="Middle" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="80" Tag="anvil"/>
+          <MapletContentsItemTag Position="Sides" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="furnace"/>
+          <MapletContentsItemTag Position="Middle" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="bucket"/>
+          <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="3" ProbabilityPercentage="75" Tag="smith tool"/>
+          <MapletContentsItemTag Position="Sides" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="container"/>
+          <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="10" ProbabilityPercentage="50" Tag="metal"/>
+        </MapletContents>
+      </Maplet>
+    </MapletContentsMaplet>
+    
+  </MapletContents>
+</Maplet>
