@@ -70,6 +70,12 @@ namespace Divine_Right
                     this.Components.Clear();
                     this.Components.Add(new WorldGenerationScreen(this, graphics));
                 }
+                else if (requestedInternalAction.Value == InternalActionEnum.EXIT)
+                {
+                    //Load the main menu
+                    this.Components.Clear();
+                    this.Components.Add(new MainMenuScreen(this, graphics, ""));
+                }
 
                 requestedInternalAction = null; //set it back to null
             }

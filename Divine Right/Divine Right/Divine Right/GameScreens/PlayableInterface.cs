@@ -137,10 +137,21 @@ namespace Divine_Right.GameScreens
 
             KeyboardState keyboardState = Keyboard.GetState();
 
+            //Has the user pressed esc?
+            if (keyboardState.IsKeyDown(Keys.Escape))
+            {
+                //Go back to the main menu for now
+                BaseGame.requestedInternalAction = InternalActionEnum.EXIT;
+                BaseGame.requestedArgs = new object[0];
+            }
+
+            bool shiftHeld = keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift);
+
             //has the user pressed one of the directional keys?
             //If yes, try to move
 
-            if (gameTime.TotalGameTime.TotalMilliseconds - previousGameTime < GAMEINPUTDELAY)
+            //If shift was held, then we wait for less, so game moves faster
+            if (gameTime.TotalGameTime.TotalMilliseconds - previousGameTime < GAMEINPUTDELAY / (shiftHeld ? 2 : 1))
             {
                 //do nothing
             }
