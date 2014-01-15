@@ -181,6 +181,21 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.ANGEL_STATUE_TOP] = new SpriteData(HOUSEITEM, new Rectangle(350, 400, 50, 50));
             localSprites[(int)LocalSpriteName.ANGEL_STATUE_BOTTOM] = new SpriteData(HOUSEITEM, new Rectangle(350, 450, 50, 50));
 
+            localSprites[(int)LocalSpriteName.POT_PLANT_5] = new SpriteData(HOUSEITEM, new Rectangle(100, 450, 50, 50));
+            localSprites[(int)LocalSpriteName.FOOD_CABINET_1] = new SpriteData(HOUSEITEM, new Rectangle(0, 450, 50, 50));
+            localSprites[(int)LocalSpriteName.FOOD_CABINET_2] = new SpriteData(HOUSEITEM, new Rectangle(50, 450, 50, 50));
+
+            localSprites[(int)LocalSpriteName.LARGE_TABLE_TL] = new SpriteData(HOUSEITEM, new Rectangle(400, 400, 50, 50));
+            localSprites[(int)LocalSpriteName.LARGE_TABLE_TR] = new SpriteData(HOUSEITEM, new Rectangle(450, 400, 50, 50));
+            localSprites[(int)LocalSpriteName.LARGE_TABLE_BL] = new SpriteData(HOUSEITEM, new Rectangle(400, 450, 50, 50));
+            localSprites[(int)LocalSpriteName.LARGE_TABLE_BR] = new SpriteData(HOUSEITEM, new Rectangle(450, 450, 50, 50));
+
+            localSprites[(int)LocalSpriteName.LARGE_TABLE_TEA_TL] = new SpriteData(HOUSEITEM, new Rectangle(0, 500, 50, 50));
+            localSprites[(int)LocalSpriteName.LARGE_TABLE_TEA_TR] = new SpriteData(HOUSEITEM, new Rectangle(50, 500, 50, 50));
+            localSprites[(int)LocalSpriteName.LARGE_TABLE_TEA_BL] = new SpriteData(HOUSEITEM, new Rectangle(0, 550, 50, 50));
+            localSprites[(int)LocalSpriteName.LARGE_TABLE_TEA_BR] = new SpriteData(HOUSEITEM, new Rectangle(50, 550, 50, 50));
+
+
             localSprites[(int)LocalSpriteName.WOOD_LOGS] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(0, 0, 50, 50));
             localSprites[(int)LocalSpriteName.WOOD_LOGS_THREE] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(50, 0, 50, 50));
             localSprites[(int)LocalSpriteName.FLOUR_SACK] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(100, 0, 50, 50));

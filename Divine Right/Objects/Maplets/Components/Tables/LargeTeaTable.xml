@@ -1,0 +1,8 @@
+﻿<Maplet MapletName="Large Tea Table" SizeX="2" SizeY="2" Tiled="false" Walled="false">
+  <MapletContents>
+    <MapletContentsItemTag Position="Fixed" x="0" y="1" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="largetableteatl"/>
+    <MapletContentsItemTag Position="Fixed" x="1" y="1" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="largetableteatr"/>
+    <MapletContentsItemTag Position="Fixed" x="0" y="0" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="largetableteabl"/>
+    <MapletContentsItemTag Position="Fixed" x="1" y="0" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="largetableteabr"/>
+  </MapletContents>
+</Maplet>

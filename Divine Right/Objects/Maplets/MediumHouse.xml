@@ -1,0 +1,19 @@
+﻿<Maplet name="MediumHouse" Tiled="true" TileTag="Wood" SizeX ="23" SizeY="9" Walled="true">
+  <MapletContents>
+    <MapletContentsMaplet Position="Sides" MaxAmount="1" ProbabilityPercentage="100">
+      <MapletTag Tag="Bedroom" />
+    </MapletContentsMaplet>
+    <MapletContentsMaplet Position="Sides" MaxAmount="1" ProbabilityPercentage="100">
+      <MapletTag Tag="Kitchen" />
+    </MapletContentsMaplet>
+    <MapletContentsMaplet Position="Sides" MaxAmount="1" ProbabilityPercentage="100">
+      <MapletTag Tag="Bathroom" />
+    </MapletContentsMaplet>
+    <MapletContentsMaplet Position="Sides" MaxAmount="1" ProbabilityPercentage="100">
+      <MapletTag Tag="DiningRoom" />
+    </MapletContentsMaplet>
+    <MapletContentsMaplet Position="Sides" MaxAmount="1" ProbabilityPercentage="100">
+      <MapletTag Tag="Study" />
+    </MapletContentsMaplet>
+  </MapletContents>
+</Maplet>

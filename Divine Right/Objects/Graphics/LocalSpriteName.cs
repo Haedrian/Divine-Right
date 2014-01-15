@@ -107,6 +107,7 @@ namespace DRObjects.Graphics
         POT_PLANT_2,
         POT_PLANT_3,
         POT_PLANT_4,
+        POT_PLANT_5,
 
         BATH,
 
@@ -120,6 +121,19 @@ namespace DRObjects.Graphics
         BUCKET,
 
         BAR,
+
+        LARGE_TABLE_TL,
+        LARGE_TABLE_TR,
+        LARGE_TABLE_BL,
+        LARGE_TABLE_BR,
+
+        FOOD_CABINET_1,
+        FOOD_CABINET_2,
+
+        LARGE_TABLE_TEA_TL,
+        LARGE_TABLE_TEA_TR,
+        LARGE_TABLE_TEA_BL,
+        LARGE_TABLE_TEA_BR,
 
         //Resources
         WOOD_LOGS,

@@ -1,0 +1,8 @@
+﻿<Maplet name="Dining Room" Tiled="false" SizeX ="7" SizeY="7" Walled="true">
+  <MapletContents>
+    <MapletContentsMaplet Position="Middle" MaxAmount="1" ProbabilityPercentage="100" >
+      <MapletTag Tag="LargeTable" />
+    </MapletContentsMaplet>
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="7" ProbabilityPercentage="80" Tag="decoration"/>
+  </MapletContents>
+</Maplet>
