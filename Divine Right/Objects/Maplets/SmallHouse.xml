@@ -1,4 +1,4 @@
-﻿<Maplet name="SmallHouse" Tiled="true" TileID="4" SizeX ="17" SizeY="9" Walled="true">
+﻿<Maplet name="SmallHouse" Tiled="true" TileTag="Wood" SizeX ="17" SizeY="9" Walled="true">
   <MapletContents>
     <MapletContentsMaplet Position="Sides" MaxAmount="1" ProbabilityPercentage="100">
       <MapletTag Tag="Bedroom" />

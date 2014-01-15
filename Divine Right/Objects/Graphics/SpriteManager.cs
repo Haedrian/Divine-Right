@@ -63,19 +63,20 @@ namespace DRObjects.Graphics
             colourSprites[(int)ColourSpriteName.WHITE] = new SpriteData(@"Graphics/World/Overlay/Regions/White");
             colourSprites[(int)ColourSpriteName.YELLOW] = new SpriteData(@"Graphics/World/Overlay/Regions/Yellow");
 
-            localSprites[(int)LocalSpriteName.WOOD_TILE] = new SpriteData(HOUSEITEM,new Microsoft.Xna.Framework.Rectangle(0,100,31,29));
-            localSprites[(int)LocalSpriteName.SAND_TILE] = new SpriteData(TILES, new Rectangle(0, 2, 50, 48));
-            localSprites[(int)LocalSpriteName.WET_SAND_TILE] = new SpriteData(TILES, new Rectangle(52, 2, 49, 47));
-            localSprites[(int)LocalSpriteName.DARK_TILE] = new SpriteData(TILES, new Rectangle(100, 0, 49, 50));
-            localSprites[(int)LocalSpriteName.LAVA_TILE] = new SpriteData(TILES, new Rectangle(151, 1, 48, 49));
-            localSprites[(int)LocalSpriteName.ROUGH_STONE_TILE] = new SpriteData(TILES, new Rectangle(200, 0, 49, 50));
-            localSprites[(int)LocalSpriteName.COBBLESTONE_TILE] = new SpriteData(TILES, new Rectangle(251, 0, 49, 50));
-            localSprites[(int)LocalSpriteName.SWAMP_TILE] = new SpriteData(TILES, new Rectangle(300, 0, 50, 50));
-            localSprites[(int)LocalSpriteName.DIRT_TILE] = new SpriteData(TILES, new Rectangle(350, 0, 50, 50));
-            localSprites[(int)LocalSpriteName.SOIL_TILE] = new SpriteData(TILES, new Rectangle(400, 0, 50, 50));
-            localSprites[(int)LocalSpriteName.WOOD_2_TILE] = new SpriteData(TILES, new Rectangle(300,50,50,49));
-            localSprites[(int)LocalSpriteName.ROAD_TILE] = new SpriteData(TILES, new Rectangle(351, 51, 49, 50));
-            localSprites[(int)LocalSpriteName.GRASS_TILE] = new SpriteData(TILES,new Rectangle(302,100,49,50));
+            localSprites[(int)LocalSpriteName.SOIL_TILE] = new SpriteData(TILES, new Rectangle(0, 0, 50, 50));
+            localSprites[(int)LocalSpriteName.WET_SOIL_TILE] = new SpriteData(TILES, new Rectangle(50, 0, 50, 50));
+            localSprites[(int)LocalSpriteName.GRASS_TILE] = new SpriteData(TILES, new Rectangle(100, 0, 50, 50));
+            localSprites[(int)LocalSpriteName.WOOD_TILE_1] = new SpriteData(TILES, new Rectangle(150, 0, 50, 50));
+            localSprites[(int)LocalSpriteName.ROAD_TILE] = new SpriteData(TILES, new Rectangle(200, 0, 50, 50));
+            localSprites[(int)LocalSpriteName.CAVE_TILE] = new SpriteData(TILES, new Rectangle(250, 0, 50, 50));
+            localSprites[(int)LocalSpriteName.MARBLE_TILE] = new SpriteData(TILES, new Rectangle(300, 0, 50, 50));
+            localSprites[(int)LocalSpriteName.PAVEMENT_TILE_1] = new SpriteData(TILES, new Rectangle(350, 0, 50, 50));
+            localSprites[(int)LocalSpriteName.PAVEMENT_TILE_2] = new SpriteData(TILES, new Rectangle(400, 0, 50, 50));
+            localSprites[(int)LocalSpriteName.WOOD_TILE_2] = new SpriteData(TILES, new Rectangle(450, 0, 50, 50));
+            localSprites[(int)LocalSpriteName.WOOD_TILE_3] = new SpriteData(TILES, new Rectangle(0, 50, 50, 50));
+            localSprites[(int)LocalSpriteName.WOOD_TILE_4] = new SpriteData(TILES, new Rectangle(50, 50, 50, 50));
+            localSprites[(int)LocalSpriteName.WOOD_TILE_5] = new SpriteData(TILES, new Rectangle(100, 50, 50, 50));
+
             //todo: dungeons
 
             localSprites[(int)LocalSpriteName.PLAYERCHAR] = new SpriteData(@"Graphics/Local/Player");

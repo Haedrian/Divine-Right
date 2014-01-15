@@ -1,4 +1,4 @@
-﻿<Maplet Name="temple" Tiled="true" TileID="1" SizeX ="23" SizeY="16" Walled="true">
+﻿<Maplet Name="temple" Tiled="true" TileTag="Marble" SizeX ="23" SizeY="16" Walled="true">
   <MapletContents>
     
     <MapletContentsMaplet Position="Sides" MaxAmount="1" ProbabilityPercentage="110">

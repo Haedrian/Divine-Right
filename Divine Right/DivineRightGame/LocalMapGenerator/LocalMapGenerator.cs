@@ -6,6 +6,7 @@ using DRObjects;
 using DRObjects.LocalMapGeneratorObjects;
 using DivineRightGame.Managers.HelperObjects.HelperEnums;
 using DivineRightGame.Managers.HelperObjects;
+using DRObjects.Enums;
 
 namespace DivineRightGame.LocalMapGenerator
 {
@@ -37,7 +38,16 @@ namespace DivineRightGame.LocalMapGenerator
 
             if (maplet.Tiled)
             {
-                tileID = maplet.TileID;
+                if (maplet.TileID.HasValue)
+                {
+                    tileID = maplet.TileID.Value;
+                }
+                else
+                {
+                    //Load the tileID from the factory
+                    factory.CreateItem(Archetype.TILES, maplet.TileTag, out tileID);
+                }
+                
             }
             else
             {

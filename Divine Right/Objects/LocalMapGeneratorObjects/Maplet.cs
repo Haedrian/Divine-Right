@@ -75,7 +75,12 @@ namespace DRObjects.LocalMapGeneratorObjects
         /// <summary>
         /// If the maplet is tiled, what tiles to put on it
         /// </summary>
-        public int TileID { get; set; }
+        public int? TileID { get; set; }
+
+        /// <summary>
+        /// If the maplet is tiled, the tag to load
+        /// </summary>
+        public string TileTag { get; set; }
 
         /// <summary>
         /// The contents of the maplet

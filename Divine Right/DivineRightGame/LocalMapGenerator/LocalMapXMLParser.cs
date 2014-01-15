@@ -45,6 +45,7 @@ namespace DivineRightGame.LocalMapGenerator
                     case "WindowProbability": maplet.WindowProbability = Int32.Parse(value); break;
                     case "Tiled": maplet.Tiled = Boolean.Parse(value); break;
                     case "TileID": maplet.TileID = Int32.Parse(value); break;
+                    case "TileTag": maplet.TileTag = value; break;
 
                 }
             }

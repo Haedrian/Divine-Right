@@ -1,4 +1,4 @@
-﻿<Maplet MapletName="Market" SizeX="20" SizeY="10" Walled="false" Tiled="true" TileID ="4">
+﻿<Maplet MapletName="Market" SizeX="20" SizeY="10" Walled="false" Tiled="true" TileTag="Pavement">
   <MapletContents>
     <MapletContentsMaplet Position="Sides" MaxAmount="1" ProbabilityPercentage="104">
       <Maplet Name="bottomSection" SizeX="19" SizeY="4" Walled="false" Tiled="false">

@@ -149,6 +149,7 @@
     </Content>
     <Content Include="Maplets\Components\AngelStatue.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Maplets\Components\Stalls\MarketStallLine.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -172,6 +173,7 @@
     </Content>
     <Content Include="Maplets\SmallHouse.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Maplets\Smithy.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

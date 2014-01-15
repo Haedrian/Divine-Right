@@ -1,4 +1,4 @@
-﻿<Maplet MapletName="tavern" SizeX="15" SizeY="15" Tiled="true" TileID="1" Walled="true" WindowProbability="40">
+﻿<Maplet MapletName="tavern" SizeX="15" SizeY="15" Tiled="true" TileTag="Wood" Walled="true" WindowProbability="40">
   <MapletContents>
     <MapletContentsMaplet Position="Sides" MaxAmount="1" ProbabilityPercentage="103" >
       <Maplet MapletName="backRoom" SizeX="15" SizeY="4" Walled="true" Tiled="true" TileID="4">
