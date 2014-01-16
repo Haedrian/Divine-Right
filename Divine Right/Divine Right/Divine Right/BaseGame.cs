@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Divine_Right.GameScreens;
 using DRObjects.Enums;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Divine_Right
 {
@@ -37,9 +38,10 @@ namespace Divine_Right
 
             this.IsMouseVisible = true;
             this.Window.AllowUserResizing = true;
-
-
+           
             Content.RootDirectory = "Content";
+
+            this.Window.ClientSizeChanged += new EventHandler<EventArgs>(Window_ClientSizeChanged);
 
             //PlayableInterface pI = new PlayableInterface(this,graphics);
             MainMenuScreen mI = new MainMenuScreen(this, graphics, "");
@@ -77,9 +79,20 @@ namespace Divine_Right
                     this.Components.Add(new MainMenuScreen(this, graphics, ""));
                 }
 
-                requestedInternalAction = null; //set it back to null
+                requestedInternalAction = null; //set it back to 
             }
+
+
+            graphics.ApplyChanges();
         }
 
+        #region Control Events
+        void Window_ClientSizeChanged(object sender, EventArgs e)
+        {
+            graphics.PreferredBackBufferWidth = Window.ClientBounds.Width;
+            graphics.PreferredBackBufferHeight = Window.ClientBounds.Height;
         }
+        #endregion
+
+    }
     }

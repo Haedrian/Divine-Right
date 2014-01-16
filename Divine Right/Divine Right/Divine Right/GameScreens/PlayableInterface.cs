@@ -17,6 +17,7 @@ using Divine_Right.InterfaceComponents;
 using Divine_Right.InterfaceComponents.Objects.Enums;
 using Divine_Right.InterfaceComponents.Components;
 using DRObjects.Graphics;
+using Divine_Right.GameScreens.Components;
 
 namespace Divine_Right.GameScreens
 {
@@ -103,6 +104,9 @@ namespace Divine_Right.GameScreens
             this.game = game;
             graphics = gr;
             this.parameters = parameters;
+
+
+            game.Components.Add(new FPSCounter(game));
         }
 
         public override void Initialize()
@@ -351,6 +355,14 @@ namespace Divine_Right.GameScreens
             spriteBatch.End();
 
             base.Draw(gameTime);
+
+            foreach (var comp in this.game.Components)
+            {
+                if (comp.GetType().Equals(typeof(FPSCounter)))
+                {
+                    (comp as FPSCounter).Draw(gameTime);
+                }
+            }
         }
 
         #region Helper Functions

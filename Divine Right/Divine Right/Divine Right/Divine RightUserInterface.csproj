@@ -97,6 +97,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseGame.cs" />
+    <Compile Include="GameScreens\Components\FPSCounter.cs" />
     <Compile Include="GameScreens\MainMenuScreen.cs" />
     <Compile Include="GameScreens\PlayableInterface.cs" />
     <Compile Include="GameScreens\WorldGenerationScreen.cs" />
