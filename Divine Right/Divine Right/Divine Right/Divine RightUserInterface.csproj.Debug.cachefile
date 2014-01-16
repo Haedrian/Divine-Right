@@ -6,9 +6,7 @@ Content\Graphics\World\Tiles\GrassTile.xnb
 Content\Graphics\World\Tiles\WaterTile.xnb
 Content\Graphics\World\Hill.xnb
 Content\Graphics\World\River.xnb
-Content\Graphics\World\Tiles\ForestTile.xnb
 Content\Graphics\World\Tiles\WaterTileDeep.xnb
-Content\Graphics\World\Overlay\Regions\Indigo.xnb
 Content\Graphics\World\Overlay\Regions\Brown.xnb
 Content\Graphics\World\Overlay\Regions\Green.xnb
 Content\Graphics\World\Overlay\Regions\Orange.xnb
@@ -16,10 +14,12 @@ Content\Graphics\World\Overlay\Regions\Pink.xnb
 Content\Graphics\World\Overlay\Regions\Purple.xnb
 Content\Graphics\World\Overlay\Regions\Red.xnb
 Content\Graphics\World\Overlay\Regions\Yellow.xnb
+Content\Graphics\World\Overlay\Regions\Indigo.xnb
 Content\Graphics\World\Overlay\Regions\MarbleBlue.xnb
 Content\Graphics\World\Overlay\Regions\White.xnb
 Content\Graphics\World\Overlay\Regions\GreyBlueDark.xnb
 Content\Graphics\World\Overlay\Regions\GreyBlueDarker.xnb
+Content\Graphics\World\Tiles\ForestTile.xnb
 Content\Graphics\World\Tiles\SwampTile.xnb
 Content\Graphics\World\BigTree.xnb
 Content\Graphics\World\Tree.xnb
