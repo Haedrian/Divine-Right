@@ -1,0 +1,26 @@
+﻿<Maplet MapletName="Statue Plaza" SizeX="9" SizeY="9" Walled="false" Tiled="true" TileTag="Pavement">
+  <MapletContents>
+    <MapletContentsItemTag Position="Fixed" x="4" y="4" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="statue"/>
+
+    <!-- Circle around the statue-->
+    <MapletContentsItemTag Position="Fixed" x="4" y="3" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="flower"/>
+    <MapletContentsItemTag Position="Fixed" x="4" y="5" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="flower"/>
+    <MapletContentsItemTag Position="Fixed" x="5" y="3" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="flower"/>
+    <MapletContentsItemTag Position="Fixed" x="5" y="4" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="flower"/>
+    <MapletContentsItemTag Position="Fixed" x="5" y="5" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="flower"/>
+    <MapletContentsItemTag Position="Fixed" x="3" y="3" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="flower"/>
+    <MapletContentsItemTag Position="Fixed" x="3" y="4" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="flower"/>
+    <MapletContentsItemTag Position="Fixed" x="3" y="5" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="flower"/>
+    
+    <!-- Put some benches too-->
+    <MapletContentsItemTag Position="Fixed" x="2" y="8" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="bench down"/>
+    <MapletContentsItemTag Position="Fixed" x="6" y="8" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="bench down"/>
+
+    <MapletContentsItemTag Position="Fixed" x="0" y="6" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="bench right"/>
+    <MapletContentsItemTag Position="Fixed" x="0" y="2" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="bench right"/>
+
+    <MapletContentsItemTag Position="Fixed" x="8" y="6" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="bench left"/>
+    <MapletContentsItemTag Position="Fixed" x="8" y="2" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="bench left"/>
+
+  </MapletContents>
+</Maplet>

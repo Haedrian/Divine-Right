@@ -5,6 +5,18 @@
       <MapletTag Tag="Market"/>
     </MapletContentsMaplet>
 
+    <MapletContentsMaplet Position="Middle" MaxAmount="1" ProbabilityPercentage="100">
+      <MapletTag Tag="FountainPlaza"/>
+    </MapletContentsMaplet>
+
+    <MapletContentsMaplet Position="Middle" MaxAmount="1" ProbabilityPercentage="103">
+      <MapletTag Tag="StatuePlaza"/>
+    </MapletContentsMaplet>
+
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="50" ProbabilityPercentage="80" Tag="outdoor flower"/>
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="50" ProbabilityPercentage="80" Tag="flower"/>
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="50" ProbabilityPercentage="80" Tag="tree"/>
+    
     <MapletContentsMaplet Position="Middle" MaxAmount="1" ProbabilityPercentage="101">
       <Maplet Tiled="false" SizeX="40" SizeY="40" Walled="false">
         <MapletContents>
