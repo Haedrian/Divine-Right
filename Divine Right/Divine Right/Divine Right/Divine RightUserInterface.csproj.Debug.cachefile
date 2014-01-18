@@ -39,6 +39,7 @@ Content\Graphics\Local\ResourcesAndTools.xnb
 Content\Graphics\Interface\Level21.xnb
 Content\Graphics\Local\ForestsAndMines.xnb
 Content\Graphics\Local\OutdoorItems.xnb
+Content\Fonts\TextFeedbackFont.spritefont
 App.config
 Maplets.sdf
 Items.sdf

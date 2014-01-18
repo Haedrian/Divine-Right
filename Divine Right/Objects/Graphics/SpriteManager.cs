@@ -275,6 +275,10 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.DEAD_TREE] = new SpriteData(FORESTS_AND_MINES, new Rectangle(50, 0, 50, 50));
             localSprites[(int)LocalSpriteName.TREE_2] = new SpriteData(FORESTS_AND_MINES, new Rectangle(100, 0, 50, 50));
             localSprites[(int)LocalSpriteName.TREE_3] = new SpriteData(FORESTS_AND_MINES, new Rectangle(150, 0, 50, 50));
+            localSprites[(int)LocalSpriteName.TREE_4] = new SpriteData(FORESTS_AND_MINES, new Rectangle(200, 0, 50, 50));
+            localSprites[(int)LocalSpriteName.TREE_5] = new SpriteData(FORESTS_AND_MINES, new Rectangle(250, 0, 50, 50));
+            localSprites[(int)LocalSpriteName.TREE_6] = new SpriteData(FORESTS_AND_MINES, new Rectangle(300, 0, 50, 50));
+            localSprites[(int)LocalSpriteName.TREE_7] = new SpriteData(FORESTS_AND_MINES, new Rectangle(350, 0, 50, 50));
 
             localSprites[(int)LocalSpriteName.FLOWER_1] = new SpriteData(OUTDOORS, new Rectangle(0, 0, 50, 50));
             localSprites[(int)LocalSpriteName.FLOWER_2] = new SpriteData(OUTDOORS, new Rectangle(50, 0, 50, 50));
@@ -293,8 +297,29 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.FLOWER_15] = new SpriteData(OUTDOORS, new Rectangle(200, 50, 50, 50));
             localSprites[(int)LocalSpriteName.FLOWER_16] = new SpriteData(OUTDOORS, new Rectangle(250, 50, 50, 50));
             localSprites[(int)LocalSpriteName.FLOWER_17] = new SpriteData(OUTDOORS, new Rectangle(300, 50, 50, 50));
+            localSprites[(int)LocalSpriteName.BENCH_LEFT] = new SpriteData(OUTDOORS, new Rectangle(350, 50, 50, 50));
+            localSprites[(int)LocalSpriteName.BENCH_RIGHT] = new SpriteData(OUTDOORS, new Rectangle(400, 50, 50, 50));
+            localSprites[(int)LocalSpriteName.BENCH_DOWN] = new SpriteData(OUTDOORS, new Rectangle(450, 50, 50, 50));
+            
+            localSprites[(int)LocalSpriteName.FLOWER_18] = new SpriteData(OUTDOORS, new Rectangle(0, 100, 50, 50));
+            localSprites[(int)LocalSpriteName.FLOWER_19] = new SpriteData(OUTDOORS, new Rectangle(50, 100, 50, 50));
+            localSprites[(int)LocalSpriteName.FLOWER_20] = new SpriteData(OUTDOORS, new Rectangle(100, 100, 50, 50));
+            localSprites[(int)LocalSpriteName.FLOWER_21] = new SpriteData(OUTDOORS, new Rectangle(150, 100, 50, 50));
+            localSprites[(int)LocalSpriteName.FLOWER_22] = new SpriteData(OUTDOORS, new Rectangle(200, 100, 50, 50));
+            localSprites[(int)LocalSpriteName.FLOWER_23] = new SpriteData(OUTDOORS, new Rectangle(250, 100, 50, 50));
+            localSprites[(int)LocalSpriteName.FOUNTAIN_1] = new SpriteData(OUTDOORS, new Rectangle(300, 100, 50, 50));
+            localSprites[(int)LocalSpriteName.FLOWER_24] = new SpriteData(OUTDOORS, new Rectangle(350, 100, 50, 50));
+            localSprites[(int)LocalSpriteName.BENCH_2_DOWN] = new SpriteData(OUTDOORS, new Rectangle(400, 100, 50, 50));
+            localSprites[(int)LocalSpriteName.FLOWER_25] = new SpriteData(OUTDOORS, new Rectangle(450, 100, 50, 50));
 
-
+            localSprites[(int)LocalSpriteName.FLOWER_26] = new SpriteData(OUTDOORS, new Rectangle(0, 150, 50, 50));
+            localSprites[(int)LocalSpriteName.COLUMN] = new SpriteData(OUTDOORS, new Rectangle(50, 150, 50, 50));
+            localSprites[(int)LocalSpriteName.FOUNTAIN_2] = new SpriteData(OUTDOORS, new Rectangle(100, 150, 50, 50));
+            localSprites[(int)LocalSpriteName.POTS_1] = new SpriteData(OUTDOORS, new Rectangle(150, 150, 50, 50));
+            localSprites[(int)LocalSpriteName.FLOWER_27] = new SpriteData(OUTDOORS, new Rectangle(200, 150, 50, 50));
+            localSprites[(int)LocalSpriteName.GIRL_STATUE] = new SpriteData(OUTDOORS, new Rectangle(250, 150, 50, 50));
+            localSprites[(int)LocalSpriteName.WELL_1] = new SpriteData(OUTDOORS, new Rectangle(300, 150, 50, 50));
+            localSprites[(int)LocalSpriteName.FLOWER_28] = new SpriteData(OUTDOORS, new Rectangle(350, 150, 50, 50));
 
 
             interfaceSprites[(int)InterfaceSpriteName.SCROLL] = new SpriteData(@"Graphics/Interface/scrollsandblocks", new Rectangle(224, 190, 96, 34));
