@@ -91,6 +91,7 @@ namespace DivineRightGame.Managers
             ColoniseWorld();
 
             CurrentStep = "And thus the world was done";
+            isGenerating = false;
         }
 
         #region World Generation Functions

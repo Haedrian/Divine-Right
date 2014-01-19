@@ -16,7 +16,7 @@ using DRObjects.Graphics;
 
 namespace Divine_Right.GameScreens
 {
-    class WorldGenerationScreen : 
+    class WorldGenerationScreen :
         DrawableGameComponent
     {
         #region Changable Values
@@ -37,9 +37,10 @@ namespace Divine_Right.GameScreens
         protected SpriteBatch spriteBatch;
 
         //The locations we're looking at right now
-        int locationX = WorldGenerationManager.WORLDSIZE/2;
-        int locationY = WorldGenerationManager.WORLDSIZE/2;
+        int locationX = WorldGenerationManager.WORLDSIZE / 2;
+        int locationY = WorldGenerationManager.WORLDSIZE / 2;
         int previousGameTime = 0;
+        int dotCount = 0;
 
         int PlayableWidth
         {
@@ -125,19 +126,19 @@ namespace Divine_Right.GameScreens
 
             if (keyboardState.IsKeyDown(Keys.Up))
             {
-                locationY+=5;
+                locationY += 5;
             }
             else if (keyboardState.IsKeyDown(Keys.Down))
             {
-                locationY-=5;
+                locationY -= 5;
             }
             else if (keyboardState.IsKeyDown(Keys.Left))
             {
-                locationX-=5;
+                locationX -= 5;
             }
             else if (keyboardState.IsKeyDown(Keys.Right))
             {
-                locationX+=5;
+                locationX += 5;
             }
 
             if (keyboardState.IsKeyDown(Keys.OemPlus))
@@ -183,14 +184,14 @@ namespace Divine_Right.GameScreens
         public override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
-            
+
             GraphicalBlock[] blocks = null;
 
             //lock so we can access the map
-            
+
             lock (GlobalMap.lockMe)
             {
-                blocks = UserInterfaceManager.GetBlocksAroundPoint(new MapCoordinate(locationX, locationY, 0, DRObjects.Enums.MapTypeEnum.GLOBAL), TotalTilesWidth / 2, TotalTilesHeight / 2, 0,OVERLAY);
+                blocks = UserInterfaceManager.GetBlocksAroundPoint(new MapCoordinate(locationX, locationY, 0, DRObjects.Enums.MapTypeEnum.GLOBAL), TotalTilesWidth / 2, TotalTilesHeight / 2, 0, OVERLAY);
             }
 
             List<InterfaceBlock> iBlocks = this.PrepareGrid(blocks.ToList<GraphicalBlock>());
@@ -202,7 +203,33 @@ namespace Divine_Right.GameScreens
             //lets also draw the current step and the location of the cursor
             spriteBatch.DrawString(this.game.Content.Load<SpriteFont>("Fonts/TextFeedbackFont"), this.locationX + "," + this.locationY + " - " + OVERLAY.ToString(), new Vector2(0, 0), Color.WhiteSmoke);
 
-            spriteBatch.DrawString(this.game.Content.Load<SpriteFont>("Fonts/TextFeedbackFont"), WorldGenerationManager.CurrentStep, new Vector2(0, PlayableHeight), Color.White);
+            dotCount++;
+
+            if (dotCount > 50)
+            {
+                dotCount = 0;
+            }
+
+            string text = WorldGenerationManager.CurrentStep;
+
+            if (WorldGenerationManager.IsGenerating)
+            {
+                text += "[";
+
+                for (int i = 0; i < dotCount / 10; i++)
+                {
+                    text += ".";
+                }
+
+                for (int i = 0; i < 5 - (dotCount / 10) ; i++)
+                {
+                    text += " "; //so they always have the same size
+                }
+
+                    text += "]";
+            }
+
+            spriteBatch.DrawString(this.game.Content.Load<SpriteFont>("Fonts/TextFeedbackFont"), text, new Vector2(0, PlayableHeight), Color.White);
 
 
             spriteBatch.End();
@@ -300,7 +327,7 @@ namespace Divine_Right.GameScreens
                     {
                         if (tileGraphic != null)
                         {
-                            spriteBatch.Draw(this.game.Content.Load<Texture2D>(tileGraphic.path), rec,tileGraphic.sourceRectangle, Color.White);
+                            spriteBatch.Draw(this.game.Content.Load<Texture2D>(tileGraphic.path), rec, tileGraphic.sourceRectangle, Color.White);
                         }
                     }
                 }
@@ -321,9 +348,9 @@ namespace Divine_Right.GameScreens
                         {
                             if (itemGraphic != null)
                             {
-                                spriteBatch.Draw(this.game.Content.Load<Texture2D>(itemGraphic.path), rec,itemGraphic.sourceRectangle, Color.White);
+                                spriteBatch.Draw(this.game.Content.Load<Texture2D>(itemGraphic.path), rec, itemGraphic.sourceRectangle, Color.White);
                             }
-                            
+
                         }
                     }
                 }
@@ -341,7 +368,7 @@ namespace Divine_Right.GameScreens
                     {
                         //semi-transparent
 
-                        spriteBatch.Draw(this.game.Content.Load<Texture2D>(block.OverlayGraphic.path), rec,block.OverlayGraphic.sourceRectangle, Color.White * 0.75f);
+                        spriteBatch.Draw(this.game.Content.Load<Texture2D>(block.OverlayGraphic.path), rec, block.OverlayGraphic.sourceRectangle, Color.White * 0.75f);
                     }
                 }
                 catch
