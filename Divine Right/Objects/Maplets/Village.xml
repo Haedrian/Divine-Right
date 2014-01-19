@@ -1,4 +1,4 @@
-﻿<Maplet MapletName="village" SizeX="100" SizeY="100" Tiled="true" TileID="3" Walled="false" WindowProbability="20">
+﻿<Maplet MapletName="village" SizeX="70" SizeY="70" Tiled="true" TileID="3" Walled="false" WindowProbability="20">
   <MapletContents>
 
     <MapletContentsMaplet Position="Middle" MaxAmount="1" ProbabilityPercentage="100">
@@ -16,39 +16,27 @@
     <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="50" ProbabilityPercentage="80" Tag="outdoor flower"/>
     <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="50" ProbabilityPercentage="80" Tag="flower"/>
     <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="50" ProbabilityPercentage="80" Tag="tree"/>
-    
-    <MapletContentsMaplet Position="Middle" MaxAmount="1" ProbabilityPercentage="101">
-      <Maplet Tiled="false" SizeX="40" SizeY="40" Walled="false">
+
+    <MapletContentsMaplet Position="Middle" MaxAmount="3" ProbabilityPercentage="50">
+      <Maplet Tiled="false" TileID="5" SizeX="19" SizeY="11" Walled="false">
         <MapletContents>
-          <MapletContentsMaplet Position="Middle" MaxAmount="5" ProbabilityPercentage="100">
-            <Maplet Tiled="false" TileID="5" SizeX="19" SizeY="11" Walled="false">
-              <MapletContents>
-                <MapletContentsMaplet Position="Sides" MaxAmount="1" ProbabilityPercentage="100">
-                  <MapletTag Tag="House" />
-                </MapletContentsMaplet>
-              </MapletContents>
-            </Maplet>
+          <MapletContentsMaplet Position="Sides" MaxAmount="1" ProbabilityPercentage="100">
+            <MapletTag Tag="House" />
           </MapletContentsMaplet>
         </MapletContents>
       </Maplet>
     </MapletContentsMaplet>
 
-    <MapletContentsMaplet Position="Middle" MaxAmount="1" ProbabilityPercentage="101">
-      <Maplet Tiled="false" SizeX="40" SizeY="40" Walled="false">
+    <MapletContentsMaplet Position="Middle" MaxAmount="2" ProbabilityPercentage="75">
+      <Maplet Tiled="false" TileID="5" SizeX="26" SizeY="11" Walled="false">
         <MapletContents>
-          <MapletContentsMaplet Position="Middle" MaxAmount="2" ProbabilityPercentage="100">
-            <Maplet Tiled="false" TileID="5" SizeX="26" SizeY="11" Walled="false">
-              <MapletContents>
-                <MapletContentsMaplet Position="Sides" MaxAmount="1" ProbabilityPercentage="100">
-                  <MapletTag Tag="Medium House" />
-                </MapletContentsMaplet>
-              </MapletContents>
-            </Maplet>
+          <MapletContentsMaplet Position="Sides" MaxAmount="1" ProbabilityPercentage="100">
+            <MapletTag Tag="Medium House" />
           </MapletContentsMaplet>
         </MapletContents>
       </Maplet>
     </MapletContentsMaplet>
-    
+
     <MapletContentsMaplet Position="Middle" MaxAmount="1" ProbabilityPercentage="100">
       <MapletTag Tag="Tavern"/>
     </MapletContentsMaplet>

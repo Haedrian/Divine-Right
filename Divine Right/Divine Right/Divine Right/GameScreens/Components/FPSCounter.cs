@@ -65,8 +65,8 @@ namespace Divine_Right.GameScreens.Components
 
             spriteBatch.Begin();
 
-            spriteBatch.DrawString(spriteFont, fps, new Vector2(33, 33), Color.Red);
-            spriteBatch.DrawString(spriteFont, fps, new Vector2(32, 32), Color.White);
+            spriteBatch.DrawString(spriteFont, fps, new Vector2(33, 10), Color.CornflowerBlue);
+            spriteBatch.DrawString(spriteFont, fps, new Vector2(32, 10), Color.White);
 
             spriteBatch.End();
         }
