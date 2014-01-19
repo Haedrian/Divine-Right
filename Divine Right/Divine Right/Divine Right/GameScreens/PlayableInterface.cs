@@ -27,9 +27,9 @@ namespace Divine_Right.GameScreens
     class PlayableInterface: 
         DrawableGameComponent
     {
-        #region Constants
-        const int TILEWIDTH = 50;
-        const int TILEHEIGHT = 50;
+
+        public int TILEWIDTH = 50;
+        public int TILEHEIGHT = 50;
 
         int PlayableWidth
         {
@@ -65,6 +65,12 @@ namespace Divine_Right.GameScreens
             }
 
         }
+        #region Constants
+        const int MAXTILEWIDTH = 50;
+        const int MAXTILEHEIGHT = 50;
+
+        const int MINTILEWIDTH = 20;
+        const int MINTILEHEIGHT = 20;
 
         const int WINDOWWIDTH = 900;
         const int WINDOWHEIGHT = 500;
@@ -193,7 +199,24 @@ namespace Divine_Right.GameScreens
 
                 }
                 else 
-                { //not handled, lets walk
+                { 
+                    //Lets see if tab is held down
+                    if (keyboardState.IsKeyDown(Keys.Tab))
+                    {
+                        //Zoom out a bit
+                        TILEWIDTH = MINTILEWIDTH;
+                        TILEHEIGHT = MINTILEHEIGHT;
+                    }
+                    else
+                    {
+                        //Let's animate it :)
+
+                        //Leave it zoomed in
+                        TILEWIDTH = MAXTILEWIDTH;
+                        TILEHEIGHT = MAXTILEHEIGHT;
+                    }
+                    
+                    //not handled, lets walk
                 //where is the user?
                 MapCoordinate coord = UserInterfaceManager.GetPlayerActor().MapCharacter.Coordinate;
                 MapCoordinate difference = new MapCoordinate(0, 0, 0, coord.MapType);

@@ -41,8 +41,6 @@ namespace Divine_Right
            
             Content.RootDirectory = "Content";
 
-            this.Window.ClientSizeChanged += new EventHandler<EventArgs>(Window_ClientSizeChanged);
-
             //PlayableInterface pI = new PlayableInterface(this,graphics);
             MainMenuScreen mI = new MainMenuScreen(this, graphics, "");
             this.Components.Add(mI);
@@ -81,17 +79,9 @@ namespace Divine_Right
 
                 requestedInternalAction = null; //set it back to 
             }
-
-
-            graphics.ApplyChanges();
         }
 
         #region Control Events
-        void Window_ClientSizeChanged(object sender, EventArgs e)
-        {
-            graphics.PreferredBackBufferWidth = Window.ClientBounds.Width;
-            graphics.PreferredBackBufferHeight = Window.ClientBounds.Height;
-        }
         #endregion
 
     }
