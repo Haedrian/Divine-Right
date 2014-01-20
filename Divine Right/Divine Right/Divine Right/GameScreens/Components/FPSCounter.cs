@@ -39,8 +39,10 @@ namespace Divine_Right.GameScreens.Components
 
         protected override void UnloadContent()
         {
-
-            content.Unload();
+            if (content != null)
+            {
+                content.Unload();
+            }
         }
 
 

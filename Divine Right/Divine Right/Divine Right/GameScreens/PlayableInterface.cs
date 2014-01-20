@@ -122,12 +122,13 @@ namespace Divine_Right.GameScreens
             {
                 TestFunctions.PrepareFileTestMap();
             }
-            else
+            else if (parameters[0].ToString().Equals("Village"))
             {
                 TestFunctions.ParseXML();
-                //generate the house
-                //TestFunctions.PrepareMapletTestFarmHouse();
-                
+            }
+            else
+            {
+                //TODO: Dungeon
             }
         }
 
