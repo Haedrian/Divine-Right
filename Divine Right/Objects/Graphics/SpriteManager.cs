@@ -18,6 +18,7 @@ namespace DRObjects.Graphics
         private static string TILES = @"Graphics/Local/TilesCropped";
         private static string FORESTS_AND_MINES = @"Graphics/Local/ForestsAndMines";
         private static string OUTDOORS = @"Graphics/Local/OutdoorItems";
+        private static string DUNGEON = @"Graphics/Local/dungeonitems";
 
         #endregion
 
@@ -76,6 +77,7 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.WOOD_TILE_3] = new SpriteData(TILES, new Rectangle(0, 50, 50, 50));
             localSprites[(int)LocalSpriteName.WOOD_TILE_4] = new SpriteData(TILES, new Rectangle(50, 50, 50, 50));
             localSprites[(int)LocalSpriteName.WOOD_TILE_5] = new SpriteData(TILES, new Rectangle(100, 50, 50, 50));
+            localSprites[(int)LocalSpriteName.DUNGEON_TILE] = new SpriteData(TILES, new Rectangle(150, 50, 50, 50));
 
             //todo: dungeons
 
@@ -321,6 +323,64 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.WELL_1] = new SpriteData(OUTDOORS, new Rectangle(300, 150, 50, 50));
             localSprites[(int)LocalSpriteName.FLOWER_28] = new SpriteData(OUTDOORS, new Rectangle(350, 150, 50, 50));
 
+            localSprites[(int)LocalSpriteName.STONE_1] = new SpriteData(DUNGEON, new Rectangle(0, 0, 50, 50));
+            localSprites[(int)LocalSpriteName.STONE_2] = new SpriteData(DUNGEON, new Rectangle(50, 0, 50, 50));
+            localSprites[(int)LocalSpriteName.STONE_3] = new SpriteData(DUNGEON, new Rectangle(100, 0, 50, 50));
+            localSprites[(int)LocalSpriteName.STONE_4] = new SpriteData(DUNGEON, new Rectangle(150, 0, 50, 50));
+            localSprites[(int)LocalSpriteName.STONE_5] = new SpriteData(DUNGEON, new Rectangle(200, 0, 50, 50));
+            localSprites[(int)LocalSpriteName.STONE_6] = new SpriteData(DUNGEON, new Rectangle(250, 0, 50, 50));
+            localSprites[(int)LocalSpriteName.STONE_7] = new SpriteData(DUNGEON, new Rectangle(300, 0, 50, 50));
+            localSprites[(int)LocalSpriteName.STONE_8] = new SpriteData(DUNGEON, new Rectangle(350, 0, 50, 50));
+            localSprites[(int)LocalSpriteName.STONE_9] = new SpriteData(DUNGEON, new Rectangle(400, 0, 50, 50));
+            localSprites[(int)LocalSpriteName.STONE_10] = new SpriteData(DUNGEON, new Rectangle(450, 0, 50, 50));
+
+            localSprites[(int)LocalSpriteName.BIG_STONE_1] = new SpriteData(DUNGEON, new Rectangle(0, 50, 50, 50));
+            localSprites[(int)LocalSpriteName.BIG_STONE_2] = new SpriteData(DUNGEON, new Rectangle(50, 50, 50, 50));
+            localSprites[(int)LocalSpriteName.BIG_STONE_3] = new SpriteData(DUNGEON, new Rectangle(100, 50, 50, 50));
+            localSprites[(int)LocalSpriteName.BIG_STONE_4] = new SpriteData(DUNGEON, new Rectangle(150, 50, 50, 50));
+
+            localSprites[(int)LocalSpriteName.BONES_1] = new SpriteData(DUNGEON, new Rectangle(200, 50, 50, 50));
+            localSprites[(int)LocalSpriteName.BONES_2] = new SpriteData(DUNGEON, new Rectangle(250, 50, 50, 50));
+            localSprites[(int)LocalSpriteName.BONES_3] = new SpriteData(DUNGEON, new Rectangle(300, 50, 50, 50));
+
+            localSprites[(int)LocalSpriteName.BIG_STONE_5] = new SpriteData(DUNGEON, new Rectangle(350, 50, 50, 50));
+            localSprites[(int)LocalSpriteName.BIG_STONE_6] = new SpriteData(DUNGEON, new Rectangle(400, 50, 50, 50));
+            localSprites[(int)LocalSpriteName.BIG_STONE_7] = new SpriteData(DUNGEON, new Rectangle(450, 50, 50, 50));
+            localSprites[(int)LocalSpriteName.BIG_STONE_8] = new SpriteData(DUNGEON, new Rectangle(0, 100, 50, 50));
+            localSprites[(int)LocalSpriteName.BIG_STONE_9] = new SpriteData(DUNGEON, new Rectangle(50, 100, 50, 50));
+            localSprites[(int)LocalSpriteName.BIG_STONE_10] = new SpriteData(DUNGEON, new Rectangle(100, 100, 50, 50));
+
+            localSprites[(int)LocalSpriteName.STONE_11] = new SpriteData(DUNGEON, new Rectangle(150, 100, 50, 50));
+            localSprites[(int)LocalSpriteName.STONE_12] = new SpriteData(DUNGEON, new Rectangle(200, 100, 50, 50));
+            localSprites[(int)LocalSpriteName.STONE_13] = new SpriteData(DUNGEON, new Rectangle(250, 100, 50, 50));
+            localSprites[(int)LocalSpriteName.STONE_14] = new SpriteData(DUNGEON, new Rectangle(300, 100, 50, 50));
+            localSprites[(int)LocalSpriteName.STONE_15] = new SpriteData(DUNGEON, new Rectangle(350, 100, 50, 50));
+
+            localSprites[(int)LocalSpriteName.BIG_STONES_TL] = new SpriteData(DUNGEON, new Rectangle(400, 100, 50, 50));
+            localSprites[(int)LocalSpriteName.BIG_STONES_TR] = new SpriteData(DUNGEON, new Rectangle(450, 100, 50, 50));
+            localSprites[(int)LocalSpriteName.BIG_STONES_BL] = new SpriteData(DUNGEON, new Rectangle(400, 150, 50, 50));
+            localSprites[(int)LocalSpriteName.BIG_STONES_BR] = new SpriteData(DUNGEON, new Rectangle(450, 150, 50, 50));
+
+            localSprites[(int)LocalSpriteName.BIG_STONE_11] = new SpriteData(DUNGEON, new Rectangle(0, 150, 50, 50));
+            localSprites[(int)LocalSpriteName.STONE_16] = new SpriteData(DUNGEON, new Rectangle(50, 150, 50, 50));
+            localSprites[(int)LocalSpriteName.STONE_17] = new SpriteData(DUNGEON, new Rectangle(100, 150, 50, 50));
+            localSprites[(int)LocalSpriteName.STONE_18] = new SpriteData(DUNGEON, new Rectangle(150, 150, 50, 50));
+
+            localSprites[(int)LocalSpriteName.BONES_4] = new SpriteData(DUNGEON, new Rectangle(200, 150, 50, 50));
+            localSprites[(int)LocalSpriteName.BONES_5] = new SpriteData(DUNGEON, new Rectangle(250, 150, 50, 50));
+            localSprites[(int)LocalSpriteName.BONES_6] = new SpriteData(DUNGEON, new Rectangle(300, 150, 50, 50));
+
+            localSprites[(int)LocalSpriteName.DRAGON_STATUE_1] = new SpriteData(DUNGEON, new Rectangle(350, 150, 50, 50));
+            localSprites[(int)LocalSpriteName.DRAGON_STATUE_2] = new SpriteData(DUNGEON, new Rectangle(0, 200, 50, 50));
+
+            localSprites[(int)LocalSpriteName.TREASURE_1] = new SpriteData(DUNGEON, new Rectangle(50, 200, 50, 50));
+            localSprites[(int)LocalSpriteName.TREASURE_2] = new SpriteData(DUNGEON, new Rectangle(100, 200, 50, 50));
+            localSprites[(int)LocalSpriteName.CANDLE_1] = new SpriteData(DUNGEON, new Rectangle(150, 200, 50, 50));
+            localSprites[(int)LocalSpriteName.CANDLE_2] = new SpriteData(DUNGEON, new Rectangle(200, 200, 50, 50));
+            localSprites[(int)LocalSpriteName.ARMOUR_RACK_1] = new SpriteData(DUNGEON, new Rectangle(250, 200, 50, 50));
+            localSprites[(int)LocalSpriteName.ARMOUR_RACK_2] = new SpriteData(DUNGEON, new Rectangle(300, 200, 50, 50));
+            localSprites[(int)LocalSpriteName.WEAPON_RACK_1] = new SpriteData(DUNGEON, new Rectangle(350, 200, 50, 50));
+            localSprites[(int)LocalSpriteName.WEAPON_RACK_2] = new SpriteData(DUNGEON, new Rectangle(400, 200, 50, 50));
 
             interfaceSprites[(int)InterfaceSpriteName.SCROLL] = new SpriteData(@"Graphics/Interface/scrollsandblocks", new Rectangle(224, 190, 96, 34));
         }

@@ -21,6 +21,8 @@ namespace DRObjects.Graphics
         WOOD_TILE_3,
         WOOD_TILE_4,
         WOOD_TILE_5,
+        DUNGEON_TILE,
+
         //Town Indoor Items
         BLUE_BED,
         WOOD_CHAIR_LEFT,
@@ -261,6 +263,69 @@ namespace DRObjects.Graphics
         TREE_5,
         TREE_6,
         TREE_7,
+
+        //Dungeons
+        STONE_1,
+        STONE_2,
+        STONE_3,
+        STONE_4,
+        STONE_5,
+        STONE_6,
+        STONE_7,
+        STONE_8,
+        STONE_9,
+        STONE_10,
+
+        BIG_STONE_1,
+        BIG_STONE_2,
+        BIG_STONE_3,
+        BIG_STONE_4,
+
+        BONES_1,
+        BONES_2,
+        BONES_3,
+
+        BIG_STONE_5,
+        BIG_STONE_6,
+        BIG_STONE_7,
+        BIG_STONE_8,
+        BIG_STONE_9,
+        BIG_STONE_10,
+
+        STONE_11,
+        STONE_12,
+        STONE_13,
+        STONE_14,
+        STONE_15,
+
+        BIG_STONES_TL,
+        BIG_STONES_TR,
+        BIG_STONES_BL,
+        BIG_STONES_BR,
+
+        BIG_STONE_11,
+        STONE_16,
+        STONE_17,
+        STONE_18,
+
+        BONES_4,
+        BONES_5,
+        BONES_6,
+        BONES_7,
+
+        DRAGON_STATUE_1,
+        DRAGON_STATUE_2,
+
+        TREASURE_1,
+        TREASURE_2,
+
+        CANDLE_1,
+        CANDLE_2,
+
+        ARMOUR_RACK_1,
+        ARMOUR_RACK_2,
+        WEAPON_RACK_1,
+        WEAPON_RACK_2,
         
 
     }

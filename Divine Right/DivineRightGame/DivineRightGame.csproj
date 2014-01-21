@@ -79,7 +79,9 @@
     <Compile Include="ItemFactory\Object\KeyListItem.cs" />
     <Compile Include="ItemFactory\Object\MultiDictionary.cs" />
     <Compile Include="LocalMap.cs" />
+    <Compile Include="LocalMapGenerator\DungeonGenerator.cs" />
     <Compile Include="LocalMapGenerator\MapletDatabaseHandler.cs" />
+    <Compile Include="LocalMapGenerator\Objects\DungeonRoom.cs" />
     <Compile Include="Managers\HelperFunctions\Interpolation.cs" />
     <Compile Include="Managers\HelperObjects\HelperEnums\PlanningMapItemType.cs" />
     <Compile Include="Managers\HelperObjects\Region.cs" />
