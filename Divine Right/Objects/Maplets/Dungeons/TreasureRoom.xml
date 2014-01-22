@@ -1,0 +1,5 @@
+﻿<Maplet MapletName="TreasureRoom" SizeX="15" SizeY="15" Walled="false" Tiled="true" TileTag="Dungeon">
+  <MapletContents>
+    
+  </MapletContents>
+</Maplet>

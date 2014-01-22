@@ -36,6 +36,11 @@ namespace DivineRightGame.LocalMapGenerator.Objects
         /// </summary>
         public List<int> Connections { get; set; }
 
+        public DungeonRoom()
+        {
+            Connections = new List<int>();
+        }
+
          
     }
 }

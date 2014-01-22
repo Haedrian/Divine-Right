@@ -18,6 +18,7 @@ using Divine_Right.InterfaceComponents.Objects.Enums;
 using Divine_Right.InterfaceComponents.Components;
 using DRObjects.Graphics;
 using Divine_Right.GameScreens.Components;
+using DivineRightGame.LocalMapGenerator;
 
 namespace Divine_Right.GameScreens
 {
@@ -129,6 +130,8 @@ namespace Divine_Right.GameScreens
             else
             {
                 //TODO: Dungeon
+                DungeonGenerator gen = new DungeonGenerator();
+                gen.GenerateDungeon(6, 2, 2, 2);
             }
         }
 
