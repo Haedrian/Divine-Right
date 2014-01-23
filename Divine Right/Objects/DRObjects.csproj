@@ -118,6 +118,15 @@
     <Content Include="Maplets\Components\Plazas\StatuePlaza.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Maplets\Dungeons\EmptyRoom.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Maplets\Dungeons\GuardRoom.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Maplets\Dungeons\TreasureRoom.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Maplets\MediumHouse.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

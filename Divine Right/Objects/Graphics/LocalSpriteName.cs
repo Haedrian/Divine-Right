@@ -22,6 +22,7 @@ namespace DRObjects.Graphics
         WOOD_TILE_4,
         WOOD_TILE_5,
         DUNGEON_TILE,
+        NONE,
 
         //Town Indoor Items
         BLUE_BED,

@@ -39,6 +39,38 @@ namespace Divine_Right.HelperFunctions
             GameState.PlayerCharacter.MapCharacter = player;
         }
 
+        public static void GenerateDungeon()
+        {
+            DungeonGenerator gen = new DungeonGenerator();
+            MapBlock[,] generatedMap = gen.GenerateDungeon(5, 2, 2, 2);
+
+            GameState.LocalMap = new LocalMap(500, 500, 1, 0);
+
+            List<MapBlock> collapsedMap = new List<MapBlock>();
+
+            foreach (MapBlock block in generatedMap)
+            {
+                collapsedMap.Add(block);
+            }
+
+            GameState.LocalMap.AddToLocalMap(collapsedMap.ToArray());
+
+            MapItem player = new MapItem();
+            player.Coordinate = new MapCoordinate(50, 5, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+            player.Description = "The player character";
+            player.Graphic = SpriteManager.GetSprite(LocalSpriteName.PLAYERCHAR);
+            player.InternalName = "Player Char";
+            player.MayContainItems = false;
+            player.Name = "Player";
+
+            MapBlock playerBlock = GameState.LocalMap.GetBlockAtCoordinate(new MapCoordinate(5, 5, 0, DRObjects.Enums.MapTypeEnum.LOCAL));
+            playerBlock.PutItemOnBlock(player);
+            GameState.PlayerCharacter = new Actor();
+            GameState.PlayerCharacter.MapCharacter = player;
+            GameState.PlayerCharacter.IsPlayerCharacter = true;
+
+        }
+
         public static void ParseXML()
         {
             LocalMapXMLParser parser = new LocalMapXMLParser();

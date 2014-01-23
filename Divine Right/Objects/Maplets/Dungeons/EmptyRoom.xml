@@ -1,0 +1,5 @@
+﻿<Maplet MapletName="EmptyRoom" SizeX="15" SizeY="15" Walled="false" Tiled="true" TileTag="Dungeon">
+  <MapletContents>
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="25" ProbabilityPercentage="74" Tag="dungeon decoration"/>
+  </MapletContents>
+</Maplet>

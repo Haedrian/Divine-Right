@@ -68,6 +68,11 @@ namespace Divine_Right.InterfaceComponents.Components
             }
             else
             {
+                if (text == null)
+                {
+                    return; //draw nothing
+                }
+
                 Vector2 fontVector = content.Load<SpriteFont>(@"Fonts/TextFeedbackFont").MeasureString(text);
                 Vector2 locationVector = new Microsoft.Xna.Framework.Vector2(locationX, locationY-12);
 

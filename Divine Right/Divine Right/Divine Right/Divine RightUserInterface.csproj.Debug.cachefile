@@ -39,12 +39,16 @@ Content\Graphics\Local\ResourcesAndTools.xnb
 Content\Graphics\Interface\Level21.xnb
 Content\Graphics\Local\ForestsAndMines.xnb
 Content\Graphics\Local\OutdoorItems.xnb
+Content\Graphics\Local\dungeonitems.xnb
 Content\Fonts\TextFeedbackFont.spritefont
 App.config
 Maplets.sdf
 Items.sdf
 Maplets\Components\Plazas\FountainPlaza.xml
 Maplets\Components\Plazas\StatuePlaza.xml
+Maplets\Dungeons\EmptyRoom.xml
+Maplets\Dungeons\GuardRoom.xml
+Maplets\Dungeons\TreasureRoom.xml
 Maplets\MediumHouse.xml
 Maplets\Rooms\Bathroom.xml
 Maplets\Components\Bed.xml

@@ -12,6 +12,11 @@ namespace DivineRightGame.LocalMapGenerator
     {
         private const string MAPLETTAG = "MapletTag";
 
+        public Maplet ParseMapletFromTag(string tag)
+        {
+            return ParseMaplet(MapletDatabaseHandler.GetMapletByTag(tag));
+        }
+
         public Maplet ParseMaplet(string path)
         {
             XDocument doc = XDocument.Load(path);

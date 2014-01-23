@@ -1,6 +1,9 @@
 Items.sdf
 Maplets\Components\Plazas\FountainPlaza.xml
 Maplets\Components\Plazas\StatuePlaza.xml
+Maplets\Dungeons\EmptyRoom.xml
+Maplets\Dungeons\GuardRoom.xml
+Maplets\Dungeons\TreasureRoom.xml
 Maplets\MediumHouse.xml
 Maplets\Rooms\Bathroom.xml
 Maplets\Components\Bed.xml

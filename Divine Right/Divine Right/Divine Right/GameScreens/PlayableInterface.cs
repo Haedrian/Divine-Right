@@ -129,9 +129,7 @@ namespace Divine_Right.GameScreens
             }
             else
             {
-                //TODO: Dungeon
-                DungeonGenerator gen = new DungeonGenerator();
-                gen.GenerateDungeon(6, 2, 2, 2);
+                TestFunctions.GenerateDungeon();
             }
         }
 

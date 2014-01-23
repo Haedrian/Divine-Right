@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using DRObjects.LocalMapGeneratorObjects;
 using DivineRightGame.LocalMapGenerator.Objects;
+using DRObjects;
 
 namespace DivineRightGame.LocalMapGenerator
 {
@@ -20,14 +21,14 @@ namespace DivineRightGame.LocalMapGenerator
         /// </summary>
         /// <param name="tiers"></param>
         /// <returns></returns>
-        public Maplet GenerateDungeon(int tiers, int trapRooms, int guardRooms, int treasureRooms)
+        public MapBlock[,] GenerateDungeon(int tiers, int trapRooms, int guardRooms, int treasureRooms)
         {
             List<DungeonRoom> rooms = new List<DungeonRoom>();
             int uniqueID = 0;
 
             //Start with the root node
             DungeonRoom root = new DungeonRoom();
-            root.SquareNumber = (int) Math.Ceiling((double)WIDTH / 5);
+            root.SquareNumber = (int) Math.Ceiling((double)WIDTH / 2);
             root.TierNumber = 0;
             root.UniqueID = uniqueID++;
 
@@ -122,12 +123,120 @@ namespace DivineRightGame.LocalMapGenerator
                 }
             }
 
+            //Lets assign the rooms based on the maximum amount.
+
+            //Some rooms have more probability in certain regions.
+
+            //So lets divide the rooms in 3
+            //Favoured - x3
+            //Other - x2
+            //Unfavoured - x1
+
+            int lowerBoundary = rooms.Count/3;
+            int upperBoundary = 2*rooms.Count/3;
+
+            //Start with trap rooms
+            var orderedTrap = rooms.OrderByDescending(o => random.Next(100) *
+                (o.UniqueID > upperBoundary ? 2 : o.UniqueID > lowerBoundary ? 3 : 1)).Where(r => r.DungeonRoomType == DungeonRoomType.EMPTY_ROOM
+                    ).Take(trapRooms);
+
+            foreach (var room in orderedTrap)
+            {
+                room.DungeonRoomType = DungeonRoomType.TRAPPED_ROOM;
+            }
+
+            //Same thing for treasure rooms
+            var orderedTreasure = rooms.OrderByDescending(o => random.Next(100) *
+                (o.UniqueID > upperBoundary ? 1 : o.UniqueID > lowerBoundary ? 2 : 3)).Where(r => r.DungeonRoomType == DungeonRoomType.EMPTY_ROOM
+                    ).Take(treasureRooms);
+
+            foreach (var room in orderedTreasure)
+            {
+                room.DungeonRoomType = DungeonRoomType.TREASURE_ROOM;
+            }
             
+            //And guard rooms
+            var orderedGuard = rooms.OrderByDescending(o => random.Next(100) *
+                (o.UniqueID > upperBoundary ? 3 : o.UniqueID > lowerBoundary ? 1 : 2)).Where(r => r.DungeonRoomType == DungeonRoomType.EMPTY_ROOM
+                    ).Take(guardRooms);
+
+            foreach (var room in orderedGuard)
+            {
+                room.DungeonRoomType = DungeonRoomType.GUARD_ROOM;
+            }
+
+            //Now that that part is done, we put them on the actual grid.
+
+            //We go for a 15x15 room and connect the items in it.
+
+            //15x15 - with a gap of 7 between them for tunnels
+            int mapWidth = ((WIDTH+1) * 16);
+            int mapHeight = ((tiers+1) * 16);
 
 
+            //Create new blocks
+            MapBlock[,] map = new MapBlock[mapWidth, mapHeight];
+
+            for (int x = 0; x < map.GetLength(0); x++)
+            {
+                for (int y = 0; y < map.GetLength(1); y++)
+                {
+                    map[x, y] = new MapBlock()
+                        {
+                            Tile = new MapItem()
+                            {
+                                Coordinate = new MapCoordinate(x,y,0,DRObjects.Enums.MapTypeEnum.LOCAL)
+                            }
+                        };
+                }
+            }
+
+            LocalMapGenerator gen = new LocalMapGenerator();
+            LocalMapXMLParser xmlGen = new LocalMapXMLParser();
+
+            //Start generating the maps and then stitch them upon the main map
+            foreach (DungeonRoom room in rooms)
+            {
+                MapBlock[,] gennedMap = null;
+                string tag = String.Empty;
+
+                switch(room.DungeonRoomType)
+                {
+                    case DungeonRoomType.EMPTY_ROOM: tag = "Empty Dungeon"; break;
+                    case DungeonRoomType.GUARD_ROOM: tag = "Guard Dungeon"; break;
+                    case DungeonRoomType.TRAPPED_ROOM: tag = "Trap Dungeon"; break;
+                    case DungeonRoomType.TREASURE_ROOM: tag = "Treasure Dungeon"; break;
+                    default:
+                        throw new NotImplementedException("Dungeon Room " + room.DungeonRoomType + " not planned for yet.");
+                }
+
+                //Generate it :)
+                Maplet maplet = xmlGen.ParseMapletFromTag(tag);
+
+                gennedMap = gen.GenerateMap(25, null, maplet, true);
+
+                //fit her onto the main map
+
+                int xIncreaser = room.SquareNumber*16;
+                int yIncreaser = room.TierNumber*16;
+
+                for (int x = 0; x < gennedMap.GetLength(0); x++)
+                {
+                    for (int y = 0; y < gennedMap.GetLength(1); y++)
+                    {
+                        map[x + xIncreaser,y + yIncreaser] = gennedMap[x,y];
+                        map[x + xIncreaser, y + yIncreaser].Tile.Coordinate = new MapCoordinate(x + xIncreaser, y + yIncreaser, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+
+                        foreach (var item in map[x + xIncreaser, y + yIncreaser].GetItems())
+                        {
+                            item.Coordinate = new MapCoordinate(x + xIncreaser, y + yIncreaser, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+                        }
+                    }
+                }
+            }
 
 
-            return null;
+            return map;
 
         }
 
