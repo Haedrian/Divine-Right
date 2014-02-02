@@ -43,7 +43,17 @@ namespace DRObjects.Database
 
             //Now go through the values of the dictionary and pick out those who have that tag
             //Tags will be the last one
-            int[] items = dictionary[archetype].Values.Where(v => v[v.Count - 1].ToLower().Split(',').Contains(tag.ToLower())).Select(v => Int32.Parse(v[0])).ToArray();
+            int[] items = null;
+
+            if (archetype == Archetype.MUNDANEITEMS)
+            {
+                //Multiply by the amount of graphics they have. If they have more than one graphic, they must appear multiple times
+                items = dictionary[archetype].Values.Where(v => v[v.Count - 1].ToLower().Split(',').Contains(tag.ToLower())).SelectMany(v => Enumerable.Repeat(Int32.Parse(v[0]),v[3].Split(',').Length > 0 ? v[3].Split(',').Length : 1)).ToArray();
+            }
+            else
+            {
+                items = dictionary[archetype].Values.Where(v => v[v.Count - 1].ToLower().Split(',').Contains(tag.ToLower())).Select(v => Int32.Parse(v[0])).ToArray();
+            }
 
             //do we have at least one?
             if (items.Length == 0)
@@ -58,7 +68,6 @@ namespace DRObjects.Database
             }
 
             //otherwise pick one at random to return
-
             int id = _random.Next(items.Length);
 
             return items[id];
