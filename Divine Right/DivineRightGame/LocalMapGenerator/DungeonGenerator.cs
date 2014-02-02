@@ -261,7 +261,7 @@ namespace DivineRightGame.LocalMapGenerator
                         int xStart = (bottomEdgeXMax - bottomEdgeXMin)/2 + bottomEdgeXMin;
 
                         //Set the start point
-                        startPoint = new MapCoordinate(xStart, topEdgeY, 0, MapTypeEnum.LOCAL);
+                        startPoint = new MapCoordinate(xStart+1, topEdgeY-2, 0, MapTypeEnum.LOCAL);
 
                         int x = xStart;
                         int y = topEdgeY;
