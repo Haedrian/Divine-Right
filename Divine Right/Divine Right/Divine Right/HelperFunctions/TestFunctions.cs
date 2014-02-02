@@ -42,7 +42,8 @@ namespace Divine_Right.HelperFunctions
         public static void GenerateDungeon()
         {
             DungeonGenerator gen = new DungeonGenerator();
-            MapBlock[,] generatedMap = gen.GenerateDungeon(5, 2, 2, 2);
+            MapCoordinate start = null;
+            MapBlock[,] generatedMap = gen.GenerateDungeon(5, 2, 2, 2,out start);
 
             GameState.LocalMap = new LocalMap(500, 500, 1, 0);
 
@@ -63,7 +64,7 @@ namespace Divine_Right.HelperFunctions
             player.MayContainItems = false;
             player.Name = "Player";
 
-            MapBlock playerBlock = GameState.LocalMap.GetBlockAtCoordinate(new MapCoordinate(5, 5, 0, DRObjects.Enums.MapTypeEnum.LOCAL));
+            MapBlock playerBlock = GameState.LocalMap.GetBlockAtCoordinate(start);
             playerBlock.PutItemOnBlock(player);
             GameState.PlayerCharacter = new Actor();
             GameState.PlayerCharacter.MapCharacter = player;

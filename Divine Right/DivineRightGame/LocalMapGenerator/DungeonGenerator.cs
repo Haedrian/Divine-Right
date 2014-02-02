@@ -5,6 +5,7 @@ using System.Text;
 using DRObjects.LocalMapGeneratorObjects;
 using DivineRightGame.LocalMapGenerator.Objects;
 using DRObjects;
+using DRObjects.Enums;
 
 namespace DivineRightGame.LocalMapGenerator
 {
@@ -12,17 +13,23 @@ namespace DivineRightGame.LocalMapGenerator
     {
         private const int WIDTH = 5;
         //Probability for the game to create 2..3..4 rooms in the same tier
-        private const int PROB_2 = 75;
-        private const int PROB_3 = 40;
-        private const int PROB_4 = 10;
+        //private const int PROB_2 = 65;
+        //private const int PROB_3 = 55;
+        //private const int PROB_4 = 30;
+
+        private const int PROB_2 = 95;
+        private const int PROB_3 = 96;
+        private const int PROB_4 = 96;
 
         /// <summary>
         /// Generates a dungeon having a particular amount of tiers, trap rooms, guard rooms and treasure rooms
         /// </summary>
         /// <param name="tiers"></param>
         /// <returns></returns>
-        public MapBlock[,] GenerateDungeon(int tiers, int trapRooms, int guardRooms, int treasureRooms)
+        public MapBlock[,] GenerateDungeon(int tiers, int trapRooms, int guardRooms, int treasureRooms, out MapCoordinate startPoint)
         {
+            startPoint = new MapCoordinate(0, 0, 0, MapTypeEnum.LOCAL);
+
             List<DungeonRoom> rooms = new List<DungeonRoom>();
             int uniqueID = 0;
 
@@ -31,6 +38,7 @@ namespace DivineRightGame.LocalMapGenerator
             root.SquareNumber = (int) Math.Ceiling((double)WIDTH / 2);
             root.TierNumber = 0;
             root.UniqueID = uniqueID++;
+            root.Connections.Add(-1); //this is a special id. We'll use it to create a start point
 
             rooms.Add(root);
 
@@ -137,7 +145,7 @@ namespace DivineRightGame.LocalMapGenerator
 
             //Start with trap rooms
             var orderedTrap = rooms.OrderByDescending(o => random.Next(100) *
-                (o.UniqueID > upperBoundary ? 2 : o.UniqueID > lowerBoundary ? 3 : 1)).Where(r => r.DungeonRoomType == DungeonRoomType.EMPTY_ROOM
+                (o.UniqueID > upperBoundary ? 1 : o.UniqueID > lowerBoundary ? 2 : 3)).Where(r => r.DungeonRoomType == DungeonRoomType.EMPTY_ROOM
                     ).Take(trapRooms);
 
             foreach (var room in orderedTrap)
@@ -147,7 +155,7 @@ namespace DivineRightGame.LocalMapGenerator
 
             //Same thing for treasure rooms
             var orderedTreasure = rooms.OrderByDescending(o => random.Next(100) *
-                (o.UniqueID > upperBoundary ? 1 : o.UniqueID > lowerBoundary ? 2 : 3)).Where(r => r.DungeonRoomType == DungeonRoomType.EMPTY_ROOM
+                (o.UniqueID > upperBoundary ? 3 : o.UniqueID > lowerBoundary ? 2 : 1)).Where(r => r.DungeonRoomType == DungeonRoomType.EMPTY_ROOM
                     ).Take(treasureRooms);
 
             foreach (var room in orderedTreasure)
@@ -157,7 +165,7 @@ namespace DivineRightGame.LocalMapGenerator
             
             //And guard rooms
             var orderedGuard = rooms.OrderByDescending(o => random.Next(100) *
-                (o.UniqueID > upperBoundary ? 3 : o.UniqueID > lowerBoundary ? 1 : 2)).Where(r => r.DungeonRoomType == DungeonRoomType.EMPTY_ROOM
+                (o.UniqueID > upperBoundary ? 1 : o.UniqueID > lowerBoundary ? 3 : 2)).Where(r => r.DungeonRoomType == DungeonRoomType.EMPTY_ROOM
                     ).Take(guardRooms);
 
             foreach (var room in orderedGuard)
@@ -170,8 +178,8 @@ namespace DivineRightGame.LocalMapGenerator
             //We go for a 15x15 room and connect the items in it.
 
             //15x15 - with a gap of 7 between them for tunnels
-            int mapWidth = ((WIDTH+1) * 16);
-            int mapHeight = ((tiers+1) * 16);
+            int mapWidth = ((WIDTH+7) * 20);
+            int mapHeight = ((tiers+7) * 20);
 
 
             //Create new blocks
@@ -185,7 +193,8 @@ namespace DivineRightGame.LocalMapGenerator
                         {
                             Tile = new MapItem()
                             {
-                                Coordinate = new MapCoordinate(x,y,0,DRObjects.Enums.MapTypeEnum.LOCAL)
+                                Coordinate = new MapCoordinate(x,y,0,DRObjects.Enums.MapTypeEnum.LOCAL),
+                                MayContainItems = false
                             }
                         };
                 }
@@ -217,8 +226,8 @@ namespace DivineRightGame.LocalMapGenerator
 
                 //fit her onto the main map
 
-                int xIncreaser = room.SquareNumber*16;
-                int yIncreaser = room.TierNumber*16;
+                int xIncreaser = room.SquareNumber*20 ;
+                int yIncreaser = (room.TierNumber*20) + 3;
 
                 for (int x = 0; x < gennedMap.GetLength(0); x++)
                 {
@@ -233,6 +242,169 @@ namespace DivineRightGame.LocalMapGenerator
                         }
                     }
                 }
+
+                //Lets draw the connections - only the ones who's rooms we've drawn yet
+
+                ItemFactory.ItemFactory factory = new ItemFactory.ItemFactory();
+
+                foreach (var connection in room.Connections.Where(c => c < room.UniqueID))
+                {
+                    if (connection == -1)
+                    {
+                        //Entrance hall!
+                        //Create a line of 3 at the bottom and return the coordinates
+                        int topEdgeY = yIncreaser;
+                        int bottomEdgeXMin = 0 + xIncreaser;
+                        int bottomEdgeXMax = gennedMap.GetLength(0) + xIncreaser;
+
+                        //Find the start
+                        int xStart = (bottomEdgeXMax - bottomEdgeXMin)/2 + bottomEdgeXMin;
+
+                        //Set the start point
+                        startPoint = new MapCoordinate(xStart, topEdgeY, 0, MapTypeEnum.LOCAL);
+
+                        int x = xStart;
+                        int y = topEdgeY;
+                        
+                        //go 3 steps down
+                        for(int a = 0; a < 3; a++)
+                        {
+                            for (int x1 = 0; x1 < 3; x1++)
+                            {
+                                //Draw!
+                                map[x + x1, y].Tile = factory.CreateItem("TILES", 25);
+                                map[x + x1, y].Tile.Coordinate = new MapCoordinate(x + x1, y, 0, MapTypeEnum.LOCAL);
+                            }
+
+                            y--; //move down
+                        }
+
+                        continue;
+                    }
+
+                    //Identify the room to be connected with
+                    var roomToBeConnected = rooms.Where(r => r.UniqueID.Equals(connection)).FirstOrDefault();
+
+                    //Determine the direction relative to the current room
+                    if (roomToBeConnected.SquareNumber > room.SquareNumber)
+                    {
+                        //RIGHT
+                        //Find the rightmost edge of the room and start... somewhere
+
+                        int rightEdgeX = gennedMap.GetLength(0) + xIncreaser;
+                        int rightEdgeYMin = 0 + yIncreaser;
+                        int rightEdgeYMax = gennedMap.GetLength(1) + yIncreaser;
+ 
+                        //Pick a start at random
+                        int yStart = random.Next(rightEdgeYMax - rightEdgeYMin-2) + rightEdgeYMin;
+
+                        //Now 'walk' from ystart-ystart+3 until you hit on something which has a block in it
+
+                        int x = rightEdgeX;
+                        int y = yStart;
+
+                        while ( x < map.GetLength(0) && y < map.GetLength(1) && !map[x, y].Tile.MayContainItems)
+                        {
+                            for (int y1 = 0; y1 < 3; y1++)
+                            {
+                                //Draw!
+                                map[x, y + y1].Tile = factory.CreateItem("TILES",25);
+                                map[x,y+y1].Tile.Coordinate = new MapCoordinate(x,y+y1,0,MapTypeEnum.LOCAL);
+                            }
+
+                            x++; //increment x
+                        }
+
+                    }
+                    else if (roomToBeConnected.SquareNumber < room.SquareNumber)
+                    {
+                        //LEFT
+                        //Find the leftMose edge of the room and start... somewhere
+
+                        int leftEdgeX = xIncreaser;
+                        int leftEdgeYMin = 0 + yIncreaser;
+                        int leftEdgeYMax = gennedMap.GetLength(1) + yIncreaser;
+
+                        //Pick a start at random
+                        int yStart = random.Next(leftEdgeYMax - leftEdgeYMin-2) + leftEdgeYMin;
+
+                        //Now 'walk' from ystart-ystart+3 until you hit on something which has a block in it
+
+                        int x = leftEdgeX;
+                        int y = yStart;
+
+                        do
+                        {
+                            for (int y1 = 0; y1 < 3; y1++)
+                            {
+                                //Draw!
+                                map[x, y + y1].Tile = factory.CreateItem("TILES", 25);
+                                map[x, y + y1].Tile.Coordinate = new MapCoordinate(x, y + y1, 0, MapTypeEnum.LOCAL);
+                            }
+
+                            x--; //decrement x
+                        } while (x >= 0 && y < map.GetLength(1) && !map[x, y].Tile.MayContainItems);
+                    }
+                    else if (roomToBeConnected.TierNumber < room.TierNumber)
+                    {
+                        //BOTTOM
+                        //Find the bottommost edge of the room and start... somewhere
+
+                        int bottomEdgeY = yIncreaser;
+                        int bottomEdgeXMin = 0 + xIncreaser;
+                        int bottomEdgeXMax = gennedMap.GetLength(0) + xIncreaser;
+
+                        //Pick a start at random
+                        int xStart = random.Next(bottomEdgeXMax - bottomEdgeXMin- 2) + bottomEdgeXMin;
+
+                        //Now 'walk' from xstart-xstart+3 until you hit on something which has a block in it
+
+                        int x = xStart;
+                        int y = bottomEdgeY;
+
+                        do
+                        {
+                            for (int x1 = 0; x1 < 3; x1++)
+                            {
+                                //Draw!
+                                map[x+x1, y].Tile = factory.CreateItem("TILES", 25);
+                                map[x+x1, y].Tile.Coordinate = new MapCoordinate(x+x1, y, 0, MapTypeEnum.LOCAL);
+                            }
+
+                            y--; //decrement y
+                        } while (!map[x, y].Tile.MayContainItems);
+                        
+                    }
+                    else if (roomToBeConnected.TierNumber > room.TierNumber)
+                    {
+                        //TOP - Won't ever happen - but sure
+                        //Find the topmost edge of the room and start... somewhere
+
+                        int topEdgeY = yIncreaser + gennedMap.GetLength(1);
+                        int bottomEdgeXMin = 0 + xIncreaser;
+                        int bottomEdgeXMax = gennedMap.GetLength(0) + xIncreaser;
+
+                        //Pick a start at random
+                        int xStart = random.Next(bottomEdgeXMax - bottomEdgeXMin - 2) + bottomEdgeXMin;
+
+                        //Now 'walk' from xstart-xstart+3 until you hit on something which has a block in it
+
+                        int x = xStart;
+                        int y = topEdgeY;
+
+                        do
+                        {
+                            for (int x1 = 0; x1 < 3; x1++)
+                            {
+                                //Draw!
+                                map[x + x1, y].Tile = factory.CreateItem("TILES", 25);
+                                map[x + x1, y].Tile.Coordinate = new MapCoordinate(x + x1, y, 0, MapTypeEnum.LOCAL);
+                            }
+
+                            y++; //move up
+                        } while (!map[x, y].Tile.MayContainItems);
+                    }
+                }
             }
 
 
@@ -242,9 +414,12 @@ namespace DivineRightGame.LocalMapGenerator
 
         private DungeonRoom[] GetPathableRooms(List<DungeonRoom> sourceList, int tier, int square)
         {
-            return sourceList.Where(
-                sl => (sl.TierNumber.Equals(tier+1) && sl.SquareNumber.Equals(square))
-                || sl.TierNumber.Equals(tier+1) && (sl.SquareNumber.Equals(square+1) || sl.SquareNumber.Equals(square-1 ) )).ToArray();
+            return sourceList.Where
+                (
+                sl => (sl.TierNumber.Equals(tier+1) && sl.SquareNumber.Equals(square)
+                    )
+                
+                    || (sl.TierNumber.Equals(tier) && (sl.SquareNumber.Equals(square+1) || sl.SquareNumber.Equals(square-1 ) ))).ToArray();
         }
     }
 }

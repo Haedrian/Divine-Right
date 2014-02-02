@@ -190,7 +190,7 @@ namespace DRObjects
                 //the block must handle this
                 //TODO: Future - the block can transmit 'moved on' action on the top item or the tile for things like traps
 
-                if (this.MayContainItems)
+              //  if (this.MayContainItems) -- turn this on to turn cliping back on
                 {
                     //it is possible to move there
 
@@ -207,7 +207,7 @@ namespace DRObjects
                     this.mapItems.Add(actor.MapCharacter);
                     return new PlayerFeedback[0];
                 }
-                else
+               // else
                 {
                     //not possible
                     return new PlayerFeedback[] { new TextFeedback("Not possible to move there") };
