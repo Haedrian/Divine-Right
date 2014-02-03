@@ -46,6 +46,9 @@ Maplets.sdf
 Items.sdf
 Maplets\Components\Plazas\FountainPlaza.xml
 Maplets\Components\Plazas\StatuePlaza.xml
+Maplets\Dungeons\Components\Pit.xml
+Maplets\Dungeons\Components\LavaPit.xml
+Maplets\Dungeons\Components\Stalegmites.xml
 Maplets\Dungeons\EmptyRoom.xml
 Maplets\Dungeons\GuardRoom.xml
 Maplets\Dungeons\TreasureRoom.xml

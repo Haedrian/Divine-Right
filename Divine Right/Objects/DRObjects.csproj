@@ -118,6 +118,15 @@
     <Content Include="Maplets\Components\Plazas\StatuePlaza.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Maplets\Dungeons\Components\Pit.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Maplets\Dungeons\Components\LavaPit.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Maplets\Dungeons\Components\Stalegmites.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Maplets\Dungeons\EmptyRoom.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

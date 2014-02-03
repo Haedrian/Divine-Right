@@ -78,7 +78,8 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.WOOD_TILE_4] = new SpriteData(TILES, new Rectangle(50, 50, 50, 50));
             localSprites[(int)LocalSpriteName.WOOD_TILE_5] = new SpriteData(TILES, new Rectangle(100, 50, 50, 50));
             localSprites[(int)LocalSpriteName.DUNGEON_TILE] = new SpriteData(TILES, new Rectangle(150, 50, 50, 50));
-            localSprites[(int)LocalSpriteName.NONE] = new SpriteData(TILES, new Rectangle(200, 50, 1, 1));
+            localSprites[(int)LocalSpriteName.LAVA_TILE] = new SpriteData(TILES, new Rectangle(200, 50, 50, 50));
+            localSprites[(int)LocalSpriteName.NONE] = new SpriteData(TILES, new Rectangle(450, 450, 1, 1));
 
             //todo: dungeons
 

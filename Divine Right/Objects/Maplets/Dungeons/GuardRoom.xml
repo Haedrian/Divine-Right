@@ -1,5 +1,8 @@
 ﻿<Maplet MapletName="GuardRoom" SizeX="15" SizeY="15" Walled="false" Tiled="true" TileTag="Dungeon">
   <MapletContents>
+    <MapletContentsMaplet Position="Middle" MaxAmount="2" ProbabilityPercentage="76">
+      <MapletTag Tag="Obstacle" />
+    </MapletContentsMaplet>
     <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="15" ProbabilityPercentage="74" Tag="dungeon decoration"/>
     <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="24" Tag="treasure"/>
     <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="5" ProbabilityPercentage="74" Tag="weapon decoration"/>
