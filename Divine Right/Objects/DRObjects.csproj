@@ -126,12 +126,15 @@
     </Content>
     <Content Include="Maplets\Dungeons\Components\Stalegmites.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Maplets\Dungeons\EmptyRoom.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Maplets\Dungeons\GuardRoom.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Maplets\Dungeons\TreasureRoom.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

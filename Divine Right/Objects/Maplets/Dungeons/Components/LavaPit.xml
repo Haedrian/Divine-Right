@@ -1,4 +1,4 @@
-﻿<Maplet MapletName="Lava Pit" SizeX="2" SizeY="2" Walled="false" Tiled="true" TileTag="Lava">
+﻿<Maplet MapletName="Lava Pit" SizeX="3" SizeY="3" Walled="false" Tiled="true" TileTag="Lava">
   <MapletContents>
   </MapletContents>
 </Maplet>

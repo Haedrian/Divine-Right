@@ -1,4 +1,4 @@
-﻿<Maplet MapletName="Lava Pit" SizeX="2" SizeY="2" Walled="false" Tiled="true" TileTag="None">
+﻿<Maplet MapletName="Pit" SizeX="2" SizeY="2" SizeRange="4" Walled="false" Tiled="true" TileTag="None">
   <MapletContents>
   </MapletContents>
 </Maplet>
