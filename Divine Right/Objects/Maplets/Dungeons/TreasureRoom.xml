@@ -1,7 +1,14 @@
 ﻿<Maplet MapletName="TreasureRoom" SizeX="15" SizeY="15" Walled="false" Tiled="true" TileTag="Dungeon">
   <MapletContents>
-    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="15" ProbabilityPercentage="74" Tag="dungeon decoration"/>
-    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="74" Tag="treasure"/>
+    
+    <MapletContentsMaplet Position="Middle" MaxAmount="3" ProbabilityPercentage="77">
+      <MapletTag Tag="Pit" />
+    </MapletContentsMaplet>
+
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="74" Tag="container"/>
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="10" ProbabilityPercentage="74" Tag="dungeon decoration"/>
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="5" ProbabilityPercentage="74" Tag="treasure"/>
     <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="74" Tag="weapon decoration"/>
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="10" ProbabilityPercentage="73" Tag="decoration"/>
   </MapletContents>
 </Maplet>

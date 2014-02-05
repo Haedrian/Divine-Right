@@ -1,13 +1,13 @@
 ﻿<Maplet MapletName="EmptyRoom" SizeX="15" SizeY="15" Walled="false" Tiled="true" TileTag="Dungeon">
   <MapletContents>
-    <MapletContentsMaplet Position="Middle" MaxAmount="2" ProbabilityPercentage="76">
+    <MapletContentsMaplet Position="Middle" MaxAmount="1" ProbabilityPercentage="76">
       <MapletTag Tag="Obstacle" />
     </MapletContentsMaplet>
-    <MapletContentsMaplet Position="Middle" MaxAmount="2" ProbabilityPercentage="76">
+    <MapletContentsMaplet Position="Middle" MaxAmount="1" ProbabilityPercentage="76">
       <MapletTag Tag="Obstacle" />
     </MapletContentsMaplet>
-    <MapletContentsMaplet Position="Middle" MaxAmount="2" ProbabilityPercentage="76">
-      <MapletTag Tag="Obstacle" />
+    <MapletContentsMaplet Position="Middle" MaxAmount="3" ProbabilityPercentage="76">
+      <MapletTag Tag="Pit" />
     </MapletContentsMaplet>
     <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="25" ProbabilityPercentage="74" Tag="dungeon decoration"/>
   </MapletContents>

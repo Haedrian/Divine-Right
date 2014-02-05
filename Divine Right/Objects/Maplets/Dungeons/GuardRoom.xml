@@ -3,6 +3,18 @@
     <MapletContentsMaplet Position="Middle" MaxAmount="2" ProbabilityPercentage="76">
       <MapletTag Tag="Obstacle" />
     </MapletContentsMaplet>
+
+    <MapletContentsMaplet Position="Middle" MaxAmount="2" ProbabilityPercentage="77">
+      <MapletTag Tag="Pit" />
+    </MapletContentsMaplet>
+    
+    <MapletContentsMaplet Position="Anywhere" MaxAmount="3" ProbabilityPercentage="73">
+      <MapletTag Tag="TableSet" />
+    </MapletContentsMaplet>
+
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="74" Tag="bed"/>
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="4" ProbabilityPercentage="74" Tag="meat"/>
+
     <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="15" ProbabilityPercentage="74" Tag="dungeon decoration"/>
     <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="24" Tag="treasure"/>
     <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="5" ProbabilityPercentage="74" Tag="weapon decoration"/>
