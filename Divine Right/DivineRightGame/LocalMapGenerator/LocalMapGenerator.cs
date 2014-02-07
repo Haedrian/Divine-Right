@@ -47,7 +47,7 @@ namespace DivineRightGame.LocalMapGenerator
                     //Load the tileID from the factory
                     factory.CreateItem(Archetype.TILES, maplet.TileTag, out tileID);
                 }
-                
+
             }
             else
             {
@@ -89,8 +89,8 @@ namespace DivineRightGame.LocalMapGenerator
                 //wall the edge tiles
                 for (int x = 0; x < maplet.SizeX; x++)
                 {
-                    generatedMap[x, 0].PutItemOnBlock(factory.CreateItem("mundaneitems",wallID.Value));
-                    generatedMap[x, maplet.SizeY - 1].PutItemOnBlock(factory.CreateItem("mundaneitems",wallID.Value));
+                    generatedMap[x, 0].PutItemOnBlock(factory.CreateItem("mundaneitems", wallID.Value));
+                    generatedMap[x, maplet.SizeY - 1].PutItemOnBlock(factory.CreateItem("mundaneitems", wallID.Value));
 
                     if (maplet.WindowProbability.HasValue && maplet.WindowProbability.Value > 0)
                     {
@@ -112,7 +112,7 @@ namespace DivineRightGame.LocalMapGenerator
                 for (int y = 0; y < maplet.SizeY; y++)
                 {
                     generatedMap[0, y].PutItemOnBlock(factory.CreateItem("mundaneitems", wallID.Value));
-                    generatedMap[maplet.SizeX -1, y].PutItemOnBlock(factory.CreateItem("mundaneitems",wallID.Value));
+                    generatedMap[maplet.SizeX - 1, y].PutItemOnBlock(factory.CreateItem("mundaneitems", wallID.Value));
 
                     if (maplet.WindowProbability.HasValue && maplet.WindowProbability.Value > 0)
                     {
@@ -132,7 +132,7 @@ namespace DivineRightGame.LocalMapGenerator
                 }
 
 
-                
+
             }
 
             //Step 1c: Determine where we'll put the maplets
@@ -152,10 +152,10 @@ namespace DivineRightGame.LocalMapGenerator
                         PlanningMapItemType[,] childMapletBlueprint = this.CreateBlueprint(childMaplet.Maplet);
                         //mark the areas covered by the blueprint as being held by that blueprint
 
-                        if (Fits(planningMap, childMapletBlueprint, childMaplet.Position == DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES,childMaplet.Padding, out x, out y, out newMap))
+                        if (Fits(planningMap, childMapletBlueprint, childMaplet.Position == DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES,childMaplet.FirstFit, childMaplet.Padding, out x, out y, out newMap))
                         {
                             //it fits, generate it - <3 Recursion
-                            MapBlock[,] childMap = this.GenerateMap(tileID,wallID.Value, childMaplet.Maplet,childMaplet.Position==DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES);
+                            MapBlock[,] childMap = this.GenerateMap(tileID, wallID.Value, childMaplet.Maplet, childMaplet.Position == DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES);
 
                             //Join the two maps together
                             generatedMap = this.JoinMaps(generatedMap, childMap, x, y);
@@ -189,54 +189,54 @@ namespace DivineRightGame.LocalMapGenerator
                 {
                     if (planningMap[x, 0] == PlanningMapItemType.FREE)
                     {
-                        edgeBlocks.Add(generatedMap[x,0]);
+                        edgeBlocks.Add(generatedMap[x, 0]);
                     }
 
                     if (planningMap[x, planningMap.GetLength(1) - 1] == PlanningMapItemType.FREE)
                     {
-                        edgeBlocks.Add(generatedMap[x,planningMap.GetLength(1) - 1]);
+                        edgeBlocks.Add(generatedMap[x, planningMap.GetLength(1) - 1]);
                     }
                 }
-                else 
+                else
                 {
                     if (planningMap[x, 1] == PlanningMapItemType.FREE)
                     {
-                        edgeBlocks.Add(generatedMap[x,1]);
+                        edgeBlocks.Add(generatedMap[x, 1]);
                     }
 
                     if (planningMap[x, planningMap.GetLength(1) - 2] == PlanningMapItemType.FREE)
                     {
-                        edgeBlocks.Add(generatedMap[x,planningMap.GetLength(1) - 2]);
+                        edgeBlocks.Add(generatedMap[x, planningMap.GetLength(1) - 2]);
                     }
                 }
-                
+
             }
 
             //Doing the y parts
-            for (int y=0; y < planningMap.GetLength(1); y++)
+            for (int y = 0; y < planningMap.GetLength(1); y++)
             {
                 if (!maplet.Walled)
                 {
-                    if (planningMap[0,y] == PlanningMapItemType.FREE)
+                    if (planningMap[0, y] == PlanningMapItemType.FREE)
                     {
-                        edgeBlocks.Add(generatedMap[0,y]);
+                        edgeBlocks.Add(generatedMap[0, y]);
                     }
 
-                    if (planningMap[planningMap.GetLength(0) -1,y] == PlanningMapItemType.FREE)
+                    if (planningMap[planningMap.GetLength(0) - 1, y] == PlanningMapItemType.FREE)
                     {
-                        edgeBlocks.Add(generatedMap[planningMap.GetLength(0) - 1,y]);
+                        edgeBlocks.Add(generatedMap[planningMap.GetLength(0) - 1, y]);
                     }
                 }
-                else 
+                else
                 {
-                    if (planningMap[1,y] == PlanningMapItemType.FREE)
+                    if (planningMap[1, y] == PlanningMapItemType.FREE)
                     {
-                        edgeBlocks.Add(generatedMap[1,y]);
+                        edgeBlocks.Add(generatedMap[1, y]);
                     }
 
-                    if (planningMap[planningMap.GetLength(0) -2,y] == PlanningMapItemType.FREE)
+                    if (planningMap[planningMap.GetLength(0) - 2, y] == PlanningMapItemType.FREE)
                     {
-                        edgeBlocks.Add(generatedMap[planningMap.GetLength(0) - 2,y]);
+                        edgeBlocks.Add(generatedMap[planningMap.GetLength(0) - 2, y]);
                     }
 
                 }
@@ -282,7 +282,7 @@ namespace DivineRightGame.LocalMapGenerator
                         {
                             MapletContentsItemTag mapletContent = (MapletContentsItemTag)contents;
                             int tempInt;
-                            itemPlaced = factory.CreateItem(mapletContent.Category,mapletContent.Tag,out tempInt);
+                            itemPlaced = factory.CreateItem(mapletContent.Category, mapletContent.Tag, out tempInt);
                         }
 
                         if (candidateBlocks.Count != 0)
@@ -293,7 +293,7 @@ namespace DivineRightGame.LocalMapGenerator
                             {
                                 //pick a place at random and add it to the maplet
                                 int position = random.Next(edgeBlocks.Count);
-                                
+
                                 edgeBlocks[position].PutItemOnBlock(itemPlaced);
 
                                 if (!contents.AllowItemsOnTop)
@@ -309,7 +309,7 @@ namespace DivineRightGame.LocalMapGenerator
                                 //pick a place at random and add it to the maplet
                                 int position = random.Next(candidateBlocks.Except(edgeBlocks).Count());
 
-                                MapBlock block = candidateBlocks.Except(edgeBlocks).ToArray()[position]; 
+                                MapBlock block = candidateBlocks.Except(edgeBlocks).ToArray()[position];
 
                                 block.PutItemOnBlock(itemPlaced);
 
@@ -365,11 +365,11 @@ namespace DivineRightGame.LocalMapGenerator
             #region Wall Segments
             List<Line> wallSegments = new List<Line>();
 
-            for (int x = 1; x < planningMap.GetLength(0)-1; x++)
+            for (int x = 1; x < planningMap.GetLength(0) - 1; x++)
             {
                 //lets see if we find a wall Segment
                 Line wallSegment = null;
-                
+
                 for (int y = 1; y < planningMap.GetLength(1) - 1; y++)
                 {
                     if (planningMap[x, y] == PlanningMapItemType.WALL)
@@ -424,7 +424,7 @@ namespace DivineRightGame.LocalMapGenerator
                 //Check if there's an active line - maybe it reaches till the end of the maplet
                 if (wallSegment != null)
                 {
-                    wallSegment.End = new MapCoordinate(x, (planningMap.GetLength(1) -1), 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+                    wallSegment.End = new MapCoordinate(x, (planningMap.GetLength(1) - 1), 0, DRObjects.Enums.MapTypeEnum.LOCAL);
                     wallSegments.Add(wallSegment);
                     wallSegment = null;
                 }
@@ -455,7 +455,7 @@ namespace DivineRightGame.LocalMapGenerator
                             //Continuation or end
                             //Check if there's an interesection
                             //Go up one and down one. If there is the maplet's walls there won't be a door - but then there'll be a double wall anyway which makes no sense
-                            if (planningMap[x, y+1] == PlanningMapItemType.WALL || planningMap[x, y-1] == PlanningMapItemType.WALL)
+                            if (planningMap[x, y + 1] == PlanningMapItemType.WALL || planningMap[x, y - 1] == PlanningMapItemType.WALL)
                             {
                                 //terminate the wall - and start a new one
                                 wallSegment.End = new MapCoordinate(x, y, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
@@ -476,7 +476,7 @@ namespace DivineRightGame.LocalMapGenerator
                         if (wallSegment != null)
                         {
                             //It has - lets terminate it
-                            wallSegment.End = new MapCoordinate(x -1, y, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+                            wallSegment.End = new MapCoordinate(x - 1, y, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
                             wallSegments.Add(wallSegment);
 
                             wallSegment = null;
@@ -490,18 +490,18 @@ namespace DivineRightGame.LocalMapGenerator
                 //Check if there's an active line - maybe it reaches till the end of the maplet
                 if (wallSegment != null)
                 {
-                    wallSegment.End = new MapCoordinate(planningMap.GetLength(0) -1, y, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+                    wallSegment.End = new MapCoordinate(planningMap.GetLength(0) - 1, y, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
                     wallSegments.Add(wallSegment);
                     wallSegment = null;
                 }
             }
-            
+
             #endregion Wall Segments
 
             #region Doors
 
             //Get all wall segments larger than 0, and we can put a door there
- 
+
             foreach (Line segment in wallSegments.Where(ws => ws.Length() > 0))
             {
                 //Put a door somewhere, as long as its not the start or end
@@ -514,8 +514,8 @@ namespace DivineRightGame.LocalMapGenerator
                     //Get the entirety of the segment
                     List<int> possibleYs = new List<int>();
 
-                    int smallerY = Math.Min(segment.Start.Y,segment.End.Y);
-                    int largerY = Math.Max(segment.Start.Y,segment.End.Y);
+                    int smallerY = Math.Min(segment.Start.Y, segment.End.Y);
+                    int largerY = Math.Max(segment.Start.Y, segment.End.Y);
 
                     //Check in the real map whether the tile next to it is free for walking in
                     for (int y = smallerY + 1; y <= largerY; y++)
@@ -537,17 +537,17 @@ namespace DivineRightGame.LocalMapGenerator
                         block = generatedMap[segment.Start.X, segment.Start.Y + 1];
                     }
                 }
-                else 
+                else
                 {
                     List<int> possibleXs = new List<int>();
 
-                    int smallerX = Math.Min(segment.Start.X,segment.End.X);
-                    int largerX = Math.Max(segment.Start.X,segment.End.X);
+                    int smallerX = Math.Min(segment.Start.X, segment.End.X);
+                    int largerX = Math.Max(segment.Start.X, segment.End.X);
 
                     //Check in the real map whether the tile next to it is free for walking in
                     for (int x = smallerX + 1; x <= largerX; x++)
                     {
-                        if (generatedMap[x, segment.Start.Y -1].MayContainItems && generatedMap[x, segment.Start.Y +1].MayContainItems)
+                        if (generatedMap[x, segment.Start.Y - 1].MayContainItems && generatedMap[x, segment.Start.Y + 1].MayContainItems)
                         {
                             possibleXs.Add(x);
                         }
@@ -561,7 +561,7 @@ namespace DivineRightGame.LocalMapGenerator
                     else
                     {
                         //nothing to do - take the smallest one
-                        block = generatedMap[segment.Start.X+1, segment.Start.Y];
+                        block = generatedMap[segment.Start.X + 1, segment.Start.Y];
                     }
 
 
@@ -570,8 +570,8 @@ namespace DivineRightGame.LocalMapGenerator
                 try
                 {
                     block.RemoveTopItem();
-                int doorID = -1;
-                block.PutItemOnBlock(factory.CreateItem(DRObjects.Enums.Archetype.TOGGLEITEMS,"door",out doorID));
+                    int doorID = -1;
+                    block.PutItemOnBlock(factory.CreateItem(DRObjects.Enums.Archetype.TOGGLEITEMS, "door", out doorID));
                 }
                 catch { }
             }
@@ -591,17 +591,18 @@ namespace DivineRightGame.LocalMapGenerator
         /// <param name="map">The original map</param>
         /// <param name="maplet">The maplet we are trying to introduce</param>
         /// <param name="edge">If this is set to true, will try to put them on the edge. Otherwise will try to be compeltly random</param>
+        /// <param name="firstFit">If this is set to true, and edge is set to true, it will try to fit the object in the first place it can find</param>
         /// <param name="startX">Where the map will fit on the X coordinate</param>
         /// <param name="startY">Where the map will fit on the Y coordinate</param>
         /// <param name="newMap">What the map will look like with the maplet inside it. Will be equivalent to map if there is no fit</param>
         /// <returns></returns>
-        public bool Fits(PlanningMapItemType[,] map, PlanningMapItemType[,] maplet, bool edge, int? padding, out int startX, out int startY, out PlanningMapItemType[,] newMap)
+        public bool Fits(PlanningMapItemType[,] map, PlanningMapItemType[,] maplet, bool edge,bool firstFit, int? padding, out int startX, out int startY, out PlanningMapItemType[,] newMap)
         {
             if (!padding.HasValue)
             {
                 padding = 0;
             }
-            if (edge)
+            if (edge && firstFit)
             {
                 //Brute force, nothing to be done
                 for (int mapX = 0; mapX < (map.GetLength(0)); mapX++)
@@ -617,8 +618,8 @@ namespace DivineRightGame.LocalMapGenerator
                             //Now that we have a starting point, check if we have a padding. If we have a padding, then we need to incremement x and y by the padding amount, and continue the loop
                             if (padding > 0)
                             {
-                                mapX += padding.Value-1;
-                                mapY += padding.Value-1;
+                                mapX += padding.Value - 1;
+                                mapY += padding.Value - 1;
                                 //continue;
 
                                 if (mapX >= map.GetLength(0))
@@ -684,7 +685,7 @@ namespace DivineRightGame.LocalMapGenerator
                     }
                 }
             }
-            else
+            else if (!edge)
             {
                 //Lets try for a maximum 50 times
                 int attemptCount = 0;
@@ -757,6 +758,105 @@ namespace DivineRightGame.LocalMapGenerator
                         }
                     }
                 }
+            }
+            else if (edge && !firstFit)
+            {
+                List<Tuple<int, int>> edgeBlocks = new List<Tuple<int, int>>();
+
+                //Get all the edge blocks
+                for (int x = 0; x < map.GetLength(0); x++)
+                {
+
+                    edgeBlocks.Add(new Tuple<int, int>(x, 0));
+                    edgeBlocks.Add(new Tuple<int, int>(x, map.GetLength(1) - 1));
+                }
+
+                //Doing the y parts
+                for (int y = 0; y < map.GetLength(1); y++)
+                {
+                    edgeBlocks.Add(new Tuple<int, int>(0, y));
+                    edgeBlocks.Add(new Tuple<int, int>(map.GetLength(0) - 1, y));
+                }
+
+                //Okay, now we randomly choose a block and see if it fits
+                //Lets try for a maximum 50 times
+                int attemptCount = 0;
+
+                while (attemptCount < 50)
+                {
+                    attemptCount++;
+
+                    var tuple = edgeBlocks[random.Next(edgeBlocks.Count - 1)];
+
+                    int mapX = tuple.Item1;
+                    int mapY = tuple.Item2;
+
+                    edgeBlocks.Remove(tuple);
+
+                    //Do we have a starting point?
+                    if (map[mapX, mapY] == PlanningMapItemType.FREE || (map[mapX, mapY] == PlanningMapItemType.WALL && maplet[0, 0] == PlanningMapItemType.WALL))
+                    {
+                        //Does it fit?
+                        bool fits = true;
+
+                        for (int mapletX = 0; mapletX < maplet.GetLength(0); mapletX++)
+                        {
+                            for (int mapletY = 0; mapletY < maplet.GetLength(1); mapletY++)
+                            {
+                                int mapTotalX = mapletX + mapX;
+                                int mapTotalY = mapletY + mapY;
+
+                                if (mapTotalX < map.GetLength(0) && mapTotalY < map.GetLength(1))
+                                {
+                                    /* The allowable fits are:
+                                     *  - Map is free and maplet is anything
+                                     *  - Map is wall and maplet is wall
+                                     */
+
+                                    //will it fit
+                                    if (map[mapTotalX, mapTotalY] == PlanningMapItemType.FREE)
+                                    {
+                                        continue;
+                                    }
+
+                                    if (map[mapTotalX, mapTotalY] == PlanningMapItemType.WALL)
+                                    {
+                                        if (maplet[mapletX, mapletY] == PlanningMapItemType.WALL)
+                                        {
+                                            continue;
+                                        }
+                                    }
+
+                                    if (map[mapTotalX, mapTotalY] != PlanningMapItemType.FREE)
+                                    {
+                                        fits = false;
+                                    }
+                                }
+                                else
+                                {
+                                    fits = false;
+                                }
+
+                            }
+                        }
+
+                        if (fits)
+                        {
+                            //it fits, yaay
+                            startX = mapX;
+                            startY = mapY;
+
+                            //overlap the map
+
+                            newMap = FuseMaps(map, maplet, startX, startY);
+
+                            return true;
+                        }
+                    }
+                }
+
+
+
             }
 
             //no fit

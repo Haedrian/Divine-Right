@@ -4,11 +4,11 @@
       <MapletTag Tag="Obstacle" />
     </MapletContentsMaplet>
     <MapletContentsMaplet Position="Middle" MaxAmount="1" ProbabilityPercentage="76">
-      <MapletTag Tag="Obstacle" />
-    </MapletContentsMaplet>
-    <MapletContentsMaplet Position="Middle" MaxAmount="3" ProbabilityPercentage="76">
       <MapletTag Tag="Pit" />
     </MapletContentsMaplet>
-    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="25" ProbabilityPercentage="74" Tag="dungeon decoration"/>
+    <MapletContentsMaplet Position="SIDES" FirstFit="false" MaxAmount="15" ProbabilityPercentage="78">
+      <MapletTag Tag="Erosion" />
+    </MapletContentsMaplet>
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="25" ProbabilityPercentage="68" Tag="dungeon decoration"/>
   </MapletContents>
 </Maplet>

@@ -315,6 +315,22 @@ namespace DivineRightGame.LocalMapGenerator
                             x++; //increment x
                         }
 
+                        x = rightEdgeX - 1;
+
+                        //now lets walk backwards too
+                        while (x < map.GetLength(0) && y < map.GetLength(1) && !map[x, y].Tile.MayContainItems)
+                        {
+                            for (int y1 = 0; y1 < 3; y1++)
+                            {
+                                //Draw!
+                                map[x, y + y1].Tile = factory.CreateItem("TILES", 25);
+                                map[x, y + y1].Tile.Coordinate = new MapCoordinate(x, y + y1, 0, MapTypeEnum.LOCAL);
+                            }
+
+                            x--; //walk back
+                        }
+
+
                     }
                     else if (roomToBeConnected.SquareNumber < room.SquareNumber)
                     {
@@ -344,6 +360,23 @@ namespace DivineRightGame.LocalMapGenerator
 
                             x--; //decrement x
                         } while (x >= 0 && y < map.GetLength(1) && !map[x, y].Tile.MayContainItems);
+
+                        x = leftEdgeX + 1;
+                        //walk backwards
+                        do
+                        {
+                            for (int y1 = 0; y1 < 3; y1++)
+                            {
+                                //Draw!
+                                map[x, y + y1].Tile = factory.CreateItem("TILES", 25);
+                                map[x, y + y1].Tile.Coordinate = new MapCoordinate(x, y + y1, 0, MapTypeEnum.LOCAL);
+                            }
+
+                            x++; //walk back
+                        } while (x >= 0 && y < map.GetLength(1) && !map[x, y].Tile.MayContainItems);
+
+
+
                     }
                     else if (roomToBeConnected.TierNumber < room.TierNumber)
                     {
@@ -372,6 +405,21 @@ namespace DivineRightGame.LocalMapGenerator
                             }
 
                             y--; //decrement y
+                        } while (!map[x, y].Tile.MayContainItems);
+
+                        y = bottomEdgeY + 1;
+
+                        //Walk backwards
+                        do
+                        {
+                            for (int x1 = 0; x1 < 3; x1++)
+                            {
+                                //Draw!
+                                map[x + x1, y].Tile = factory.CreateItem("TILES", 25);
+                                map[x + x1, y].Tile.Coordinate = new MapCoordinate(x + x1, y, 0, MapTypeEnum.LOCAL);
+                            }
+
+                            y++; //walk back
                         } while (!map[x, y].Tile.MayContainItems);
                         
                     }
@@ -402,6 +450,21 @@ namespace DivineRightGame.LocalMapGenerator
                             }
 
                             y++; //move up
+                        } while (!map[x, y].Tile.MayContainItems);
+
+                        //walk back
+                        y = topEdgeY + 1;
+
+                        do
+                        {
+                            for (int x1 = 0; x1 < 3; x1++)
+                            {
+                                //Draw!
+                                map[x + x1, y].Tile = factory.CreateItem("TILES", 25);
+                                map[x + x1, y].Tile.Coordinate = new MapCoordinate(x + x1, y, 0, MapTypeEnum.LOCAL);
+                            }
+
+                            y--; //move down
                         } while (!map[x, y].Tile.MayContainItems);
                     }
                 }

@@ -91,6 +91,7 @@ namespace DivineRightGame.LocalMapGenerator
                         case "ItemID": ((MapletContentsItem)content).ItemID = Int32.Parse(value); break;
                         case "Category": ((MapletContentsItemTag)content).Category = value; break;
                         case "Tag": ((MapletContentsItemTag)content).Tag = value; break;
+                        case "FirstFit": ((MapletContentsMaplet)content).FirstFit = bool.Parse(value); break;
                     }
                 }
 

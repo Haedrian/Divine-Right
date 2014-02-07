@@ -118,6 +118,9 @@
     <Content Include="Maplets\Components\Plazas\StatuePlaza.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Maplets\Dungeons\Components\Erosion.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Maplets\Dungeons\Components\Pit.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
