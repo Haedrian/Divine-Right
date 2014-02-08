@@ -300,8 +300,6 @@ namespace DivineRightGame.LocalMapGenerator
                         map[xStart, topEdgeY - 2].ForcePutItemOnBlock(factory.CreateItem(Archetype.MUNDANEITEMS, "spikes", out dummy));
                         map[xStart+2, topEdgeY - 2].ForcePutItemOnBlock(factory.CreateItem(Archetype.MUNDANEITEMS, "spikes", out dummy));
 
-                        map[xStart, topEdgeY].ForcePutItemOnBlock(factory.CreateItem(Archetype.MUNDANEITEMS, "spikes", out dummy));
-                        map[xStart + 2, topEdgeY].ForcePutItemOnBlock(factory.CreateItem(Archetype.MUNDANEITEMS, "spikes", out dummy));
 
                         continue;
                     }
@@ -353,7 +351,7 @@ namespace DivineRightGame.LocalMapGenerator
                         x = rightEdgeX - 1;
 
                         //now lets walk backwards too
-                        while (x < map.GetLength(0) && y < map.GetLength(1) && !map[x, y].Tile.MayContainItems)
+                        while (x >= 0 && x < map.GetLength(0) && y >= 0 && y < map.GetLength(1) && !map[x, y].Tile.MayContainItems)
                         {
                             for (int y1 = 0; y1 < 3; y1++)
                             {
@@ -407,7 +405,7 @@ namespace DivineRightGame.LocalMapGenerator
                             }
 
                             x--; //decrement x
-                        } while (x >= 0 && y < map.GetLength(1) && !map[x, y].Tile.MayContainItems);
+                        } while (x >= 0 && x < map.GetLength(0) && y >= 0 && y < map.GetLength(1) && !map[x, y].Tile.MayContainItems);
 
                         x = leftEdgeX + 1;
                         //walk backwards
@@ -421,7 +419,7 @@ namespace DivineRightGame.LocalMapGenerator
                             }
 
                             x++; //walk back
-                        } while (x >= 0 && y < map.GetLength(1) && !map[x, y].Tile.MayContainItems);
+                        } while (x >= 0 && x < map.GetLength(0) && y >= 0 && y < map.GetLength(1) && !map[x, y].Tile.MayContainItems);
 
 
 
@@ -466,7 +464,7 @@ namespace DivineRightGame.LocalMapGenerator
                             }
 
                             y--; //decrement y
-                        } while (!map[x, y].Tile.MayContainItems);
+                        } while (x >= 0 && x < map.GetLength(0) && y >= 0 && y < map.GetLength(1) &&!map[x, y].Tile.MayContainItems);
 
                         y = bottomEdgeY + 1;
 
@@ -481,7 +479,7 @@ namespace DivineRightGame.LocalMapGenerator
                             }
 
                             y++; //walk back
-                        } while (!map[x, y].Tile.MayContainItems);
+                        } while (x >= 0 && x < map.GetLength(0) && y >= 0 && y < map.GetLength(1) && !map[x, y].Tile.MayContainItems);
                         
                     }
                     else if (roomToBeConnected.TierNumber > room.TierNumber)
@@ -524,7 +522,7 @@ namespace DivineRightGame.LocalMapGenerator
                             }
 
                             y++; //move up
-                        } while (!map[x, y].Tile.MayContainItems);
+                        } while (x >= 0 && x < map.GetLength(0) && y >= 0 && y < map.GetLength(1) && !map[x, y].Tile.MayContainItems);
 
                         //walk back
                         y = topEdgeY + 1;
@@ -539,7 +537,7 @@ namespace DivineRightGame.LocalMapGenerator
                             }
 
                             y--; //move down
-                        } while (!map[x, y].Tile.MayContainItems);
+                        } while (x >= 0 && x < map.GetLength(0) && y >= 0 && y < map.GetLength(1) && !map[x, y].Tile.MayContainItems);
                     }
                 }
             }
