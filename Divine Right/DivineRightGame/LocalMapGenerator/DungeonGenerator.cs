@@ -294,6 +294,15 @@ namespace DivineRightGame.LocalMapGenerator
                             y++; //move up
                         }while (x >= 0 && y < map.GetLength(1) && !map[x, y].Tile.MayContainItems);
 
+                        //Put the spikes at the entrance
+                        int dummy = -1;
+
+                        map[xStart, topEdgeY - 2].ForcePutItemOnBlock(factory.CreateItem(Archetype.MUNDANEITEMS, "spikes", out dummy));
+                        map[xStart+2, topEdgeY - 2].ForcePutItemOnBlock(factory.CreateItem(Archetype.MUNDANEITEMS, "spikes", out dummy));
+
+                        map[xStart, topEdgeY].ForcePutItemOnBlock(factory.CreateItem(Archetype.MUNDANEITEMS, "spikes", out dummy));
+                        map[xStart + 2, topEdgeY].ForcePutItemOnBlock(factory.CreateItem(Archetype.MUNDANEITEMS, "spikes", out dummy));
+
                         continue;
                     }
 
@@ -326,7 +335,7 @@ namespace DivineRightGame.LocalMapGenerator
                                 if (!holed)
                                 {
                                     //Have a chance of putting in a hole
-                                    if (random.Next(4) == 0)
+                                    if (random.Next(8) == 0)
                                     {
                                         holed = true;
                                         continue; //don't put in a tile
@@ -385,7 +394,7 @@ namespace DivineRightGame.LocalMapGenerator
                                 if (!holed)
                                 {
                                     //Have a chance of putting in a hole
-                                    if (random.Next(4) == 0)
+                                    if (random.Next(8) == 0)
                                     {
                                         holed = true;
                                         continue; //don't put in a tile
@@ -444,7 +453,7 @@ namespace DivineRightGame.LocalMapGenerator
                                 if (!holed)
                                 {
                                     //Have a chance of putting in a hole
-                                    if (random.Next(4) == 0)
+                                    if (random.Next(8) == 0)
                                     {
                                         holed = true;
                                         continue; //don't put in a tile
@@ -502,7 +511,7 @@ namespace DivineRightGame.LocalMapGenerator
                                 if (!holed)
                                 {
                                     //Have a chance of putting in a hole
-                                    if (random.Next(4) == 0)
+                                    if (random.Next(8) == 0)
                                     {
                                         holed = true;
                                         continue; //don't put in a tile

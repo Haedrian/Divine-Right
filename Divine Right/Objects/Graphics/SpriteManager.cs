@@ -383,6 +383,8 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.ARMOUR_RACK_2] = new SpriteData(DUNGEON, new Rectangle(300, 200, 50, 50));
             localSprites[(int)LocalSpriteName.WEAPON_RACK_1] = new SpriteData(DUNGEON, new Rectangle(350, 200, 50, 50));
             localSprites[(int)LocalSpriteName.WEAPON_RACK_2] = new SpriteData(DUNGEON, new Rectangle(400, 200, 50, 50));
+            localSprites[(int)LocalSpriteName.SPIKES] = new SpriteData(DUNGEON, new Rectangle(450, 200, 50, 50));
+
 
             interfaceSprites[(int)InterfaceSpriteName.SCROLL] = new SpriteData(@"Graphics/Interface/scrollsandblocks", new Rectangle(224, 190, 96, 34));
         }

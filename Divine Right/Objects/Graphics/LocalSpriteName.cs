@@ -328,6 +328,8 @@ namespace DRObjects.Graphics
         ARMOUR_RACK_2,
         WEAPON_RACK_1,
         WEAPON_RACK_2,
+
+        SPIKES,
         
 
     }
