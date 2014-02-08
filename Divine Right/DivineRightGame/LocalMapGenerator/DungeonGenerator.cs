@@ -305,8 +305,19 @@ namespace DivineRightGame.LocalMapGenerator
 
                         while ( x < map.GetLength(0) && y < map.GetLength(1) && !map[x, y].Tile.MayContainItems)
                         {
+                            bool holed = false;
                             for (int y1 = 0; y1 < 3; y1++)
                             {
+                                if (!holed)
+                                {
+                                    //Have a chance of putting in a hole
+                                    if (random.Next(4) == 0)
+                                    {
+                                        holed = true;
+                                        continue; //don't put in a tile
+                                    }
+                                }
+
                                 //Draw!
                                 map[x, y + y1].Tile = factory.CreateItem("TILES",25);
                                 map[x,y+y1].Tile.Coordinate = new MapCoordinate(x,y+y1,0,MapTypeEnum.LOCAL);
@@ -351,8 +362,21 @@ namespace DivineRightGame.LocalMapGenerator
 
                         do
                         {
+                            bool holed = false;
+
                             for (int y1 = 0; y1 < 3; y1++)
                             {
+
+                                if (!holed)
+                                {
+                                    //Have a chance of putting in a hole
+                                    if (random.Next(4) == 0)
+                                    {
+                                        holed = true;
+                                        continue; //don't put in a tile
+                                    }
+                                }
+
                                 //Draw!
                                 map[x, y + y1].Tile = factory.CreateItem("TILES", 25);
                                 map[x, y + y1].Tile.Coordinate = new MapCoordinate(x, y + y1, 0, MapTypeEnum.LOCAL);
@@ -397,8 +421,21 @@ namespace DivineRightGame.LocalMapGenerator
 
                         do
                         {
+                            bool holed = false;
+
                             for (int x1 = 0; x1 < 3; x1++)
                             {
+
+                                if (!holed)
+                                {
+                                    //Have a chance of putting in a hole
+                                    if (random.Next(4) == 0)
+                                    {
+                                        holed = true;
+                                        continue; //don't put in a tile
+                                    }
+                                }
+
                                 //Draw!
                                 map[x+x1, y].Tile = factory.CreateItem("TILES", 25);
                                 map[x+x1, y].Tile.Coordinate = new MapCoordinate(x+x1, y, 0, MapTypeEnum.LOCAL);
@@ -442,8 +479,21 @@ namespace DivineRightGame.LocalMapGenerator
 
                         do
                         {
+                            bool holed = false;
+
                             for (int x1 = 0; x1 < 3; x1++)
                             {
+
+                                if (!holed)
+                                {
+                                    //Have a chance of putting in a hole
+                                    if (random.Next(4) == 0)
+                                    {
+                                        holed = true;
+                                        continue; //don't put in a tile
+                                    }
+                                }
+
                                 //Draw!
                                 map[x + x1, y].Tile = factory.CreateItem("TILES", 25);
                                 map[x + x1, y].Tile.Coordinate = new MapCoordinate(x + x1, y, 0, MapTypeEnum.LOCAL);

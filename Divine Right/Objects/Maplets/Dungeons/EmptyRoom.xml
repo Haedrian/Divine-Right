@@ -6,7 +6,7 @@
     <MapletContentsMaplet Position="Middle" MaxAmount="1" ProbabilityPercentage="76">
       <MapletTag Tag="Pit" />
     </MapletContentsMaplet>
-    <MapletContentsMaplet Position="SIDES" FirstFit="false" MaxAmount="15" ProbabilityPercentage="78">
+    <MapletContentsMaplet Position="SIDES" FirstFit="false" MaxAmount="10" ProbabilityPercentage="78">
       <MapletTag Tag="Erosion" />
     </MapletContentsMaplet>
     <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="25" ProbabilityPercentage="68" Tag="dungeon decoration"/>

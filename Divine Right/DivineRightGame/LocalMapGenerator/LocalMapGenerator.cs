@@ -784,6 +784,12 @@ namespace DivineRightGame.LocalMapGenerator
 
                 while (attemptCount < 50)
                 {
+                    if (edgeBlocks.Count == 0)
+                    {
+                        //Nothing to do
+                        break;
+                    }
+
                     attemptCount++;
 
                     var tuple = edgeBlocks[random.Next(edgeBlocks.Count - 1)];
