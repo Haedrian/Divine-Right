@@ -1,4 +1,4 @@
-﻿<Maplet MapletName="GuardRoom" SizeX="15" SizeY="15" Walled="false" Tiled="true" TileTag="Dungeon">
+﻿<Maplet MapletName="GuardRoom" SizeX="12" SizeY="12" SizeRange="3" Walled="false" Tiled="true" TileTag="Dungeon">
   <MapletContents>
     <MapletContentsMaplet Position="Middle" MaxAmount="2" ProbabilityPercentage="76">
       <MapletTag Tag="Obstacle" />

@@ -279,6 +279,21 @@ namespace DivineRightGame.LocalMapGenerator
                             y--; //move down
                         }
 
+                        y = topEdgeY;
+
+                        //Walk back
+                        do
+                        {
+                            for (int x1 = 0; x1 < 3; x1++)
+                            {
+                                //Draw!
+                                map[x + x1, y].Tile = factory.CreateItem("TILES", 25);
+                                map[x + x1, y].Tile.Coordinate = new MapCoordinate(x + x1, y, 0, MapTypeEnum.LOCAL);
+                            }
+
+                            y++; //move up
+                        }while (x >= 0 && y < map.GetLength(1) && !map[x, y].Tile.MayContainItems);
+
                         continue;
                     }
 
