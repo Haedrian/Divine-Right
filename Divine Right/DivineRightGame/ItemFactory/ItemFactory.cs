@@ -43,6 +43,9 @@ namespace DivineRightGame.ItemFactory
                 case "toggleitem":
                     mgr = new ToggleItemsManager();
                     break;
+                case "enemies":
+                    mgr = new EnemyManager();
+                    break;
                 default:
                     throw new NotImplementedException("The category : " + category + " could not be found");
             }
@@ -98,6 +101,9 @@ namespace DivineRightGame.ItemFactory
                     break;
                 case "toggleitem":
                     mgr = new ToggleItemsManager();
+                    break;
+                case "enemies":
+                    mgr = new EnemyManager();
                     break;
                 default: throw new NotImplementedException("The category : " + category + " could not be found");
             }

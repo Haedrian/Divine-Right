@@ -19,9 +19,9 @@ namespace DRObjects.Graphics
         private static string FORESTS_AND_MINES = @"Graphics/Local/ForestsAndMines";
         private static string OUTDOORS = @"Graphics/Local/OutdoorItems";
         private static string DUNGEON = @"Graphics/Local/dungeonitems";
+        private static string ENEMIES = @"Graphics/Local/enemies";
 
         #endregion
-
 
         private static SpriteData[] localSprites;
         private static SpriteData[] globalSprites;
@@ -385,6 +385,10 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.WEAPON_RACK_2] = new SpriteData(DUNGEON, new Rectangle(400, 200, 50, 50));
             localSprites[(int)LocalSpriteName.SPIKES] = new SpriteData(DUNGEON, new Rectangle(450, 200, 50, 50));
 
+            localSprites[(int)LocalSpriteName.ENEMY_SKELETON] = new SpriteData(ENEMIES, new Rectangle(0, 0, 50, 50));
+            localSprites[(int)LocalSpriteName.ENEMY_THOUGHT_WALK] = new SpriteData(ENEMIES, new Rectangle(0, 50, 50, 50));
+            localSprites[(int)LocalSpriteName.ENEMY_THOUGHT_WAIT] = new SpriteData(ENEMIES, new Rectangle(50, 50, 50, 50));
+            localSprites[(int)LocalSpriteName.ENEMY_THOUGHT_ATTACK] = new SpriteData(ENEMIES, new Rectangle(100, 50, 50, 50));
 
             interfaceSprites[(int)InterfaceSpriteName.SCROLL] = new SpriteData(@"Graphics/Interface/scrollsandblocks", new Rectangle(224, 190, 96, 34));
         }

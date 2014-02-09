@@ -583,6 +583,50 @@ namespace DivineRightGame.LocalMapGenerator
             return generatedMap;
         }
 
+        /// <summary>
+        /// Generates enemies on the map. Will later be expanded to support more customisation on the enemy types and will output the handles to the actual enemies for AI processing
+        /// </summary>
+        /// <param name="enemyCount"></param>
+        /// <param name="enemyType"></param>
+        /// <returns></returns>
+        public MapBlock[,] GenerateEnemies(MapBlock[,] blocks,int enemyCount,string enemyTag)
+        {
+            ItemFactory.ItemFactory fact = new ItemFactory.ItemFactory();
+
+            //We'll just pick blocks at random until we fail 50 times in a row or run out of enemies to place
+            int failureCount = 0;
+
+            for (int i = 0; i < enemyCount; i++)
+            {
+                if (failureCount == 50)
+                {
+                    break;
+                }
+
+                int x = random.Next(blocks.GetLength(0));
+                int y = random.Next(blocks.GetLength(1));
+
+                //Is the block free
+                if (blocks[x, y].MayContainItems)
+                {
+                    int dummy = -1;
+                    //Put the enemy in there
+                    blocks[x,y].ForcePutItemOnBlock(fact.CreateItem(Archetype.ENEMIES,enemyTag,out dummy));
+
+                    failureCount = 0;//reset
+                }
+                else
+                {
+                    failureCount++;
+                    i--; //And again
+                }
+            }
+
+            //return the map
+            return blocks;
+
+        }
+
         #region Helper Functions
 
         /// <summary>

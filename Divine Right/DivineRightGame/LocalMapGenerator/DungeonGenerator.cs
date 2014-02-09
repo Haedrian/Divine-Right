@@ -224,6 +224,12 @@ namespace DivineRightGame.LocalMapGenerator
 
                 gennedMap = gen.GenerateMap(25, null, maplet, true);
 
+                if (room.DungeonRoomType == DungeonRoomType.GUARD_ROOM)
+                {
+                    //Create 3 enemies
+                    gennedMap = gen.GenerateEnemies(gennedMap, 3, "skeleton");
+                }
+
                 //fit her onto the main map
 
                 int xIncreaser = room.SquareNumber*20 ;
@@ -244,7 +250,7 @@ namespace DivineRightGame.LocalMapGenerator
                 }
 
                 //Lets draw the connections - only the ones who's rooms we've drawn yet
-
+                
                 ItemFactory.ItemFactory factory = new ItemFactory.ItemFactory();
 
                 foreach (var connection in room.Connections.Where(c => c < room.UniqueID))

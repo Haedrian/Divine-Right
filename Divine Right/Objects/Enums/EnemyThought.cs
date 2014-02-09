@@ -6,14 +6,12 @@ using System.Text;
 namespace DRObjects.Enums
 {
     /// <summary>
-    /// The archetype of the item
+    /// What the enemy is thinking
     /// </summary>
-    public enum Archetype
+    public enum EnemyThought
     {
-        MUNDANEITEMS,
-        TILES,
-        TOGGLEITEMS,
-        ENEMIES,
-
+        WAIT,
+        WALK,
+        ATTACK
     }
 }

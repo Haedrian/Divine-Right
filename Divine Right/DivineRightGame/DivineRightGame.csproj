@@ -71,6 +71,7 @@
     <Compile Include="GlobalMap.cs" />
     <Compile Include="ItemFactory\FileReader.cs" />
     <Compile Include="ItemFactory\ItemFactory.cs" />
+    <Compile Include="ItemFactory\ItemFactoryManagers\EnemyManager.cs" />
     <Compile Include="ItemFactory\ItemFactoryManagers\IItemFactoryManager.cs" />
     <Compile Include="ItemFactory\ItemFactoryManagers\MundaneItemsManager.cs" />
     <Compile Include="ItemFactory\ItemFactoryManagers\TilesManager.cs" />

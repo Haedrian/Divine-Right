@@ -331,6 +331,11 @@ namespace DRObjects.Graphics
 
         SPIKES,
         
+        //ENEMIES
+        ENEMY_SKELETON,
+        ENEMY_THOUGHT_WALK,
+        ENEMY_THOUGHT_WAIT,
+        ENEMY_THOUGHT_ATTACK,
 
     }
 }

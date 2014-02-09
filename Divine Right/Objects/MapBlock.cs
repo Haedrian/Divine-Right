@@ -233,7 +233,7 @@ namespace DRObjects
                 //go through all the items and add them to the list in order
                 foreach (MapItem item in this.mapItems)
                 {
-                    itemGraphics.Add(item.Graphic);
+                    itemGraphics.AddRange(item.Graphics);
                 }
             }
 
