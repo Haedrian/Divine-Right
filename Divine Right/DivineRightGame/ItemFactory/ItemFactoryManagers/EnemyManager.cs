@@ -17,7 +17,7 @@ namespace DivineRightGame.ItemFactory.ItemFactoryManagers
 
         public DRObjects.MapItem CreateItem(List<string> parameters)
         {
-            return CreateItem(parameters[1], parameters[2], parameters[3]);
+            return CreateItem(parameters[1], parameters[2], parameters[3],Int32.Parse(parameters[6]));
         }
 
         public DRObjects.MapItem CreateItem(int internalID)
@@ -35,7 +35,7 @@ namespace DivineRightGame.ItemFactory.ItemFactoryManagers
             return CreateItem(parameters);
         }
 
-        public LocalEnemy CreateItem(string enemyName,string enemyDescription,string graphic)
+        public LocalEnemy CreateItem(string enemyName,string enemyDescription,string graphic,int lineOfSight)
         {
             LocalEnemy enemy = new LocalEnemy();
             enemy.Description = enemyDescription;
@@ -60,6 +60,7 @@ namespace DivineRightGame.ItemFactory.ItemFactoryManagers
                 enemy.Graphic = SpriteManager.GetSprite((LocalSpriteName)Enum.Parse(typeof(LocalSpriteName), graphic));
             }
 
+            enemy.LineOfSightRange = lineOfSight;
             enemy.InternalName = enemyName;
             enemy.MayContainItems = false;
             enemy.Name = enemyName;

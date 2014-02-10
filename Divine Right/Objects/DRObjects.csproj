@@ -69,6 +69,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActorHandling\ActorMission.cs" />
+    <Compile Include="ActorHandling\ActorMissions\AttackMission.cs" />
+    <Compile Include="ActorHandling\ActorMissions\IdleMission.cs" />
+    <Compile Include="ActorHandling\ActorMissions\PatrolMission.cs" />
+    <Compile Include="ActorHandling\ActorMissionType.cs" />
     <Compile Include="Compare\MapCoordinateCompare.cs" />
     <Compile Include="Database\DatabaseHandling.cs" />
     <Compile Include="Enums\Archetype.cs" />

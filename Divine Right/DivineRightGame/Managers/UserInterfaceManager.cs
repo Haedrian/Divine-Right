@@ -6,6 +6,7 @@ using DRObjects.GraphicsEngineObjects;
 using DRObjects;
 using DRObjects.Enums;
 using DRObjects.GraphicsEngineObjects.Abstract;
+using System.Diagnostics;
 
 namespace DivineRightGame.Managers
 {
@@ -22,15 +23,39 @@ namespace DivineRightGame.Managers
         /// <param name="args"></param>
         public static PlayerFeedback[] PerformAction(MapCoordinate coordinate, ActionTypeEnum actionType, object[] args)
         {
+            PlayerFeedback[] feedback = null;
+
             switch (coordinate.MapType)
             {
                 case MapTypeEnum.LOCAL:
-                    return GameState.LocalMap.GetBlockAtCoordinate(coordinate).PerformAction(actionType, GameState.PlayerCharacter, args);
+                    feedback = GameState.LocalMap.GetBlockAtCoordinate(coordinate).PerformAction(actionType, GameState.PlayerCharacter, args);
+                    break;
                 case MapTypeEnum.GLOBAL:
-                    return GameState.GlobalMap.GetBlockAtCoordinate(coordinate).PerformAction(actionType, GameState.PlayerCharacter, args);
+                    feedback = GameState.GlobalMap.GetBlockAtCoordinate(coordinate).PerformAction(actionType, GameState.PlayerCharacter, args);
+                    break;
                 default:
                     throw new NotImplementedException("There is no support for that particular maptype");
             }
+
+            if (actionType == ActionTypeEnum.EXAMINE || actionType == ActionTypeEnum.MOVE)
+            {
+                //Perform a tick
+                UserInterfaceManager.PerformLocalTick();
+            }
+
+            return feedback;
+        }
+
+        /// <summary>
+        /// Performs a local map tick
+        /// </summary>
+        public static void PerformLocalTick()
+        {
+            Stopwatch sWatch = new Stopwatch();
+            sWatch.Start();
+            GameState.LocalMap.Tick();
+            sWatch.Stop();
+            Console.WriteLine("Time taken for tick :" + sWatch.ElapsedMilliseconds);
         }
 
         /// <summary>

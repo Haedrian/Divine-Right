@@ -79,5 +79,10 @@ namespace DRObjects.Items.Archetypes.Local
                 //dummy :)
             }
         }
+
+        /// <summary>
+        /// How far this enemy can see
+        /// </summary>
+        public int LineOfSightRange { get; set; }
     }
 }

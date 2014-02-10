@@ -7,6 +7,7 @@ using DRObjects.LocalMapGeneratorObjects;
 using DivineRightGame.Managers.HelperObjects.HelperEnums;
 using DivineRightGame.Managers.HelperObjects;
 using DRObjects.Enums;
+using DRObjects.ActorHandling.ActorMissions;
 
 namespace DivineRightGame.LocalMapGenerator
 {
@@ -589,9 +590,10 @@ namespace DivineRightGame.LocalMapGenerator
         /// <param name="enemyCount"></param>
         /// <param name="enemyType"></param>
         /// <returns></returns>
-        public MapBlock[,] GenerateEnemies(MapBlock[,] blocks,int enemyCount,string enemyTag)
+        public MapBlock[,] GenerateEnemies(MapBlock[,] blocks,int enemyCount,string enemyTag,out Actor[] actors)
         {
             ItemFactory.ItemFactory fact = new ItemFactory.ItemFactory();
+            List<Actor> actorList = new List<Actor>();
 
             //We'll just pick blocks at random until we fail 50 times in a row or run out of enemies to place
             int failureCount = 0;
@@ -611,8 +613,27 @@ namespace DivineRightGame.LocalMapGenerator
                 {
                     int dummy = -1;
                     //Put the enemy in there
-                    blocks[x,y].ForcePutItemOnBlock(fact.CreateItem(Archetype.ENEMIES,enemyTag,out dummy));
 
+                    var enemyObject = fact.CreateItem(Archetype.ENEMIES, enemyTag, out dummy);
+
+                    //Create the Actor
+                    Actor actor = new Actor();
+                    actor.GlobalCoordinates = null; //useless for now
+                    actor.IsPlayerCharacter = false;
+                    actor.LineOfSight = 5; 
+                    actor.MapCharacter = enemyObject;
+                    actor.UniqueId = Guid.NewGuid();
+
+                    actorList.Add(actor);
+
+                    blocks[x,y].ForcePutItemOnBlock(enemyObject);
+
+                    PatrolMission mission = new PatrolMission();
+                    mission.PatrolPoint = new MapCoordinate(x, y, 0, MapTypeEnum.LOCAL);
+                    mission.PatrolRange = 5;
+
+                    actor.MissionStack.Push(mission);
+                    
                     failureCount = 0;//reset
                 }
                 else
@@ -623,6 +644,7 @@ namespace DivineRightGame.LocalMapGenerator
             }
 
             //return the map
+            actors = actorList.ToArray();
             return blocks;
 
         }

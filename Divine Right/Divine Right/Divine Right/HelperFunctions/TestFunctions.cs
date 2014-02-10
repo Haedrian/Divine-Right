@@ -43,7 +43,8 @@ namespace Divine_Right.HelperFunctions
         {
             DungeonGenerator gen = new DungeonGenerator();
             MapCoordinate start = null;
-            MapBlock[,] generatedMap = gen.GenerateDungeon(5, 2, 2, 2,out start);
+            Actor[] actors = null;
+            MapBlock[,] generatedMap = gen.GenerateDungeon(5, 2, 2, 2,out start,out actors);
 
             GameState.LocalMap = new LocalMap(500, 500, 1, 0);
 
@@ -55,9 +56,10 @@ namespace Divine_Right.HelperFunctions
             }
 
             GameState.LocalMap.AddToLocalMap(collapsedMap.ToArray());
+            GameState.LocalMap.Actors = actors.ToList<Actor>();
 
             MapItem player = new MapItem();
-            player.Coordinate = new MapCoordinate(50, 5, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+            player.Coordinate = start;
             player.Description = "The player character";
             player.Graphic = SpriteManager.GetSprite(LocalSpriteName.PLAYERCHAR);
             player.InternalName = "Player Char";
@@ -69,6 +71,8 @@ namespace Divine_Right.HelperFunctions
             GameState.PlayerCharacter = new Actor();
             GameState.PlayerCharacter.MapCharacter = player;
             GameState.PlayerCharacter.IsPlayerCharacter = true;
+
+            GameState.LocalMap.Actors.Add(GameState.PlayerCharacter);
 
         }
 

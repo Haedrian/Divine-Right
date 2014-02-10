@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DRObjects;
+using DRObjects.Items.Archetypes.Local;
+using DRObjects.Enums;
+using DRObjects.ActorHandling.ActorMissions;
 
 namespace DivineRightGame
 {
@@ -14,7 +17,19 @@ namespace DivineRightGame
         #region Members
         private MapBlock[,,] localGameMap;
         private List<Actor> actors;
+
         private int groundLevel;
+        #endregion
+
+        #region Properties
+        /// <summary>
+        /// The actors in the local map
+        /// </summary>
+        public List<Actor> Actors
+        {
+            get { return actors; }
+            set { actors = value; }
+        }
         #endregion
 
         #region Constructors
@@ -126,6 +141,120 @@ namespace DivineRightGame
             this.actors = new List<Actor>(); //clear actors
         }
 
+        /// <summary>
+        /// Perform a tick. Checks all actors and allow them an action
+        /// </summary>
+        public void Tick()
+        {
+            MapCoordinate playerLocation = actors.Where(a => a.IsPlayerCharacter).FirstOrDefault().MapCharacter.Coordinate;
+
+            foreach (Actor actor in actors.Where(a => !a.IsPlayerCharacter))
+            {
+                //First check whether they have a mission
+                if (actor.CurrentMission == null)
+                {
+                    //Try to pop a new one
+                    actor.CurrentMission = actor.MissionStack.Pop();
+
+                    if (actor.CurrentMission == null)
+                    {
+                        //Just idle then
+                        actor.CurrentMission = new IdleMission();
+                    }
+
+                }
+
+                //Update the graphic
+                switch (actor.CurrentMission.MissionType)
+                {
+                    case DRObjects.ActorHandling.ActorMissionType.ATTACK:
+                        (actor.MapCharacter as LocalEnemy).EnemyThought = EnemyThought.ATTACK;
+                        break;
+                    case DRObjects.ActorHandling.ActorMissionType.IDLE:
+                        (actor.MapCharacter as LocalEnemy).EnemyThought = EnemyThought.WAIT;
+                        break;
+                    case DRObjects.ActorHandling.ActorMissionType.PATROL:
+                        (actor.MapCharacter as LocalEnemy).EnemyThought = EnemyThought.WALK;
+                        break;
+                    default:
+                        throw new NotImplementedException("No graphic exists for mission type " + actor.CurrentMission.MissionType);
+                }
+
+                if (actor.CurrentMission.MissionType == DRObjects.ActorHandling.ActorMissionType.PATROL)
+                {
+                    PatrolMission mission = actor.CurrentMission as PatrolMission;
+
+                    //Is he seeing the player character?
+                    if (Math.Abs(actor.MapCharacter.Coordinate - playerLocation) < actor.LineOfSight)
+                    {
+                        //He's there. Push the current mission into the stack and go on the attack
+                        actor.MissionStack.Push(actor.CurrentMission);
+                        actor.CurrentMission = new AttackMission(actors.Where(a => a.IsPlayerCharacter).FirstOrDefault());
+                        continue;
+                    }
+
+                    //Perform an action accordingly
+                    //Is he outside of the patrol area?
+                    if (Math.Abs(actor.MapCharacter.Coordinate - mission.PatrolPoint) > mission.PatrolRange)
+                    {
+                        //Send him back. TODO later. For now idle like a drooling idiot
+                    }
+                    else
+                    {
+                        
+                        //Walk somewhere randomly
+                        int direction = GameState.Random.Next(4);
+
+                        MapCoordinate coord = actor.MapCharacter.Coordinate;
+                        //Copy it
+                        MapCoordinate newCoord = new MapCoordinate(coord.X, coord.Y, coord.Z, coord.MapType);
+
+                        switch(direction)
+                        {
+                            case 0: //Top
+                                newCoord.Y++;
+                                break;
+                            case 1: //Bottom
+                                newCoord.Y--;
+                                break;
+                            case 2: //Right
+                                newCoord.X++;
+                                break;
+                            case 3: //Left
+                                newCoord.X--;
+                                break;
+                        }
+
+                        //Can we go there?
+                        if (this.GetBlockAtCoordinate(newCoord).MayContainItems && Math.Abs(newCoord - mission.PatrolPoint) < mission.PatrolRange)
+                        {
+                            //Do it
+                            this.GetBlockAtCoordinate(newCoord).PutItemOnBlock(actor.MapCharacter);
+                            actor.MapCharacter.Coordinate = newCoord;
+
+                            //And that's done
+                        }
+                        //Otherwise do nothing. Stay there
+
+
+
+                    }
+                }
+                else if (actor.CurrentMission.MissionType == DRObjects.ActorHandling.ActorMissionType.ATTACK)
+                {
+                    //Do they still see the character?
+                    AttackMission mission = (actor.CurrentMission as AttackMission);
+
+                    if (Math.Abs(mission.AttackTarget.MapCharacter.Coordinate - actor.MapCharacter.Coordinate) > actor.LineOfSight)
+                    {
+                        //Ran away - cancel the mission
+                        actor.CurrentMission = null;
+                    }
+                }
+
+            }
+        }
+        
         #endregion
 
     }

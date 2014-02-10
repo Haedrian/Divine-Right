@@ -224,7 +224,12 @@ namespace Divine_Right.GameScreens
                 MapCoordinate difference = new MapCoordinate(0, 0, 0, coord.MapType);
                 //we will either increase or decrease it by an amount depending on the directional key pressed
 
-                if (keyboardState.IsKeyDown(Keys.Up))
+                if (keyboardState.IsKeyDown(Keys.OemPeriod))
+                {
+                    //Just waste time
+                    UserInterfaceManager.PerformLocalTick();
+                }
+                else if (keyboardState.IsKeyDown(Keys.Up))
                 {
                     difference = new MapCoordinate(0, 1, 0, coord.MapType);
                 }
@@ -240,6 +245,7 @@ namespace Divine_Right.GameScreens
                 {
                     difference = new MapCoordinate(1, 0, 0, coord.MapType);
                 }
+                
 
                 //The fact that they'er not the same means the user pressed a key, lets move
                 if (!difference.Equals(new MapCoordinate(0, 0, 0, coord.MapType)))
@@ -251,6 +257,7 @@ namespace Divine_Right.GameScreens
                     this.PerformAction(coord, DRObjects.Enums.ActionTypeEnum.MOVE, null);
 
                 }
+                
                 }
                 //mark the current time
                 previousGameTime = (int)gameTime.TotalGameTime.TotalMilliseconds;
@@ -551,7 +558,7 @@ namespace Divine_Right.GameScreens
                     this.interfaceComponent = new ViewTileTextComponent(mouse.X + 15, mouse.Y, (feedback as TextFeedback).Text);
                 }
                 //TODO: THE REST
-            }
+            }           
 
         }
         /// <summary>

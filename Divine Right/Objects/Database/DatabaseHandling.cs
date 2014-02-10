@@ -50,6 +50,10 @@ namespace DRObjects.Database
                 //Multiply by the amount of graphics they have. If they have more than one graphic, they must appear multiple times
                 items = dictionary[archetype].Values.Where(v => v[v.Count - 1].ToLower().Split(',').Contains(tag.ToLower())).SelectMany(v => Enumerable.Repeat(Int32.Parse(v[0]),v[3].Split(',').Length > 0 ? v[3].Split(',').Length : 1)).ToArray();
             }
+            else if (archetype == Archetype.ENEMIES)
+            {
+                items = dictionary[archetype].Values.Where(v => v[5].ToLower().Split(',').Contains(tag.ToLower())).Select(v => Int32.Parse(v[0])).ToArray();
+            }
             else
             {
                 items = dictionary[archetype].Values.Where(v => v[v.Count - 1].ToLower().Split(',').Contains(tag.ToLower())).Select(v => Int32.Parse(v[0])).ToArray();

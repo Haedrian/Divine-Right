@@ -35,7 +35,8 @@ namespace DRObjects
         {
             get
             {
-                return GetTopItem().MayContainItems;
+                
+                return GetTopItem() == null ? false : GetTopItem().MayContainItems;
             }
 
         }

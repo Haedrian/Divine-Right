@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DRObjects.Enums;
+using DRObjects.ActorHandling;
 
 namespace DRObjects
 {
@@ -22,9 +24,24 @@ namespace DRObjects
         public MapCoordinate GlobalCoordinates { get; set; }
 
         /// <summary>
+        /// The stack of missions for the actor to perform
+        /// </summary>
+        public Stack<ActorMission> MissionStack { get; set; }
+
+        /// <summary>
+        /// The actor's current mission.
+        /// </summary>
+        public ActorMission CurrentMission { get; set; }
+
+        /// <summary>
         /// Represents whether this actor is the player character or not
         /// </summary>
         public bool IsPlayerCharacter { get; set; }
+
+        /// <summary>
+        /// How many tiles the actor can see. Null means they're blind
+        /// </summary>
+        public int? LineOfSight { get; set; }
 
         /// <summary>
         /// A unique ID for determining which Actors are which
@@ -49,6 +66,11 @@ namespace DRObjects
             }
 
             return false;
+        }
+
+        public Actor()
+        {
+            this.MissionStack = new Stack<ActorMission>();
         }
 
     }

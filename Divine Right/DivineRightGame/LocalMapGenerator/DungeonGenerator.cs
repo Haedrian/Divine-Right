@@ -6,6 +6,7 @@ using DRObjects.LocalMapGeneratorObjects;
 using DivineRightGame.LocalMapGenerator.Objects;
 using DRObjects;
 using DRObjects.Enums;
+using DRObjects.ActorHandling.ActorMissions;
 
 namespace DivineRightGame.LocalMapGenerator
 {
@@ -26,10 +27,11 @@ namespace DivineRightGame.LocalMapGenerator
         /// </summary>
         /// <param name="tiers"></param>
         /// <returns></returns>
-        public MapBlock[,] GenerateDungeon(int tiers, int trapRooms, int guardRooms, int treasureRooms, out MapCoordinate startPoint)
+        public MapBlock[,] GenerateDungeon(int tiers, int trapRooms, int guardRooms, int treasureRooms, out MapCoordinate startPoint,out Actor[] enemyArray)
         {
             startPoint = new MapCoordinate(0, 0, 0, MapTypeEnum.LOCAL);
 
+            List<Actor> enemies = new List<Actor>();
             List<DungeonRoom> rooms = new List<DungeonRoom>();
             int uniqueID = 0;
 
@@ -224,16 +226,32 @@ namespace DivineRightGame.LocalMapGenerator
 
                 gennedMap = gen.GenerateMap(25, null, maplet, true);
 
+
+                Actor[] roomEnemies = new Actor[]{};
                 if (room.DungeonRoomType == DungeonRoomType.GUARD_ROOM)
                 {
                     //Create 3 enemies
-                    gennedMap = gen.GenerateEnemies(gennedMap, 3, "skeleton");
+                    gennedMap = gen.GenerateEnemies(gennedMap, 3, "skeleton",out roomEnemies);
+
+                    enemies.AddRange(roomEnemies);
                 }
 
                 //fit her onto the main map
 
                 int xIncreaser = room.SquareNumber*20 ;
                 int yIncreaser = (room.TierNumber*20) + 3;
+
+                //Fix the patrol points of any enemies 
+                foreach (Actor enemy in roomEnemies)
+                {
+                    if (enemy.MissionStack.Count != 0 && enemy.MissionStack.Peek().MissionType  == DRObjects.ActorHandling.ActorMissionType.PATROL)
+                    {
+                        //Change patrol point
+                        MapCoordinate point = (enemy.MissionStack.Peek() as PatrolMission).PatrolPoint;
+                        point.X += xIncreaser;
+                        point.Y += yIncreaser;
+                    }
+                }
 
                 for (int x = 0; x < gennedMap.GetLength(0); x++)
                 {
@@ -548,7 +566,7 @@ namespace DivineRightGame.LocalMapGenerator
                 }
             }
 
-
+            enemyArray = enemies.ToArray();
             return map;
 
         }
