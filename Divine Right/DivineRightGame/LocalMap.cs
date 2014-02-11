@@ -6,6 +6,7 @@ using DRObjects;
 using DRObjects.Items.Archetypes.Local;
 using DRObjects.Enums;
 using DRObjects.ActorHandling.ActorMissions;
+using DivineRightGame.Pathfinding;
 
 namespace DivineRightGame
 {
@@ -15,7 +16,7 @@ namespace DivineRightGame
     public class LocalMap
     {
         #region Members
-        private MapBlock[,,] localGameMap;
+        private MapBlock[, ,] localGameMap;
         private List<Actor> actors;
 
         private int groundLevel;
@@ -30,6 +31,8 @@ namespace DivineRightGame
             get { return actors; }
             set { actors = value; }
         }
+
+        public Byte[,] PathfindingMap { get; set; }
         #endregion
 
         #region Constructors
@@ -43,7 +46,7 @@ namespace DivineRightGame
         /// <param name="groundLevel"></param>
         public LocalMap(int sizeX, int sizeY, int sizeZ, int groundLevel)
         {
-            this.localGameMap = new MapBlock[sizeX,sizeY,sizeZ];
+            this.localGameMap = new MapBlock[sizeX, sizeY, sizeZ];
             this.groundLevel = groundLevel;
             this.actors = new List<Actor>();
         }
@@ -61,9 +64,9 @@ namespace DivineRightGame
                 //Error
                 throw new Exception("The map block is not for a local map");
             }
-            else 
+            else
             {
-                try 
+                try
                 {
                     //Check whether the block is within the bounds of the map
 
@@ -122,23 +125,63 @@ namespace DivineRightGame
                 }
             }
 
-                //doesn't exist, send a blank one
-                MapBlock airBlock = new MapBlock();
-                airBlock.Tile = new DRObjects.Items.Tiles.Air(coordinate);
+            //doesn't exist, send a blank one
+            MapBlock airBlock = new MapBlock();
+            airBlock.Tile = new DRObjects.Items.Tiles.Air(coordinate);
 
-                return airBlock;
-            
+            return airBlock;
+
         }
 
         /// <summary>
         /// Loads a local map and clears actors
         /// </summary>
         /// <param name="map"></param>
-        public void LoadLocalMap(MapBlock[,,] map,int groundLevel)
+        public void LoadLocalMap(MapBlock[, ,] map, int groundLevel)
         {
             this.localGameMap = map;
             this.groundLevel = groundLevel;
             this.actors = new List<Actor>(); //clear actors
+        }
+
+        /// <summary>
+        /// Generates the map required for pathfinding, and assign it to the Interface
+        /// </summary>
+        public void GeneratePathfindingMap()
+        {
+            //Generate a byte map of x and y
+            int squareSize = PathfinderInterface.CeilToPower2(Math.Max(localGameMap.GetLength(0), localGameMap.GetLength(1)));
+
+            PathfindingMap = new byte[squareSize, squareSize];
+
+            for (int i = 0; i < localGameMap.GetLength(0); i++)
+            {
+                for (int j = 0; j < localGameMap.GetLength(1); j++)
+                {
+                    if (i < localGameMap.GetLength(0) - 1 && j < localGameMap.GetLength(1) - 1)
+                    {
+                        //Copyable - if it may contain items, put a weight of 1, otherwise an essagerated one
+                        PathfindingMap[i, j] = localGameMap[i, j, 0] != null ? localGameMap[i, j, 0].MayContainItems ? (byte)1 : (byte)150 : (byte)150;
+                    }
+                    else
+                    {
+                        //Put in the largest possible weight
+                        PathfindingMap[i, j] = Byte.MaxValue;
+                    }
+                }
+            }
+
+            PathfinderInterface.Nodes = PathfindingMap;
+        }
+
+        /// <summary>
+        /// Updates the pathfinding map for that particular coordinate
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        public void UpdatePathfindingMap(int x, int y)
+        {
+            PathfindingMap[x, y] = localGameMap[x, y, 0].MayContainItems ? (byte)1 : (byte)150;
         }
 
         /// <summary>
@@ -176,6 +219,9 @@ namespace DivineRightGame
                     case DRObjects.ActorHandling.ActorMissionType.PATROL:
                         (actor.MapCharacter as LocalEnemy).EnemyThought = EnemyThought.WALK;
                         break;
+                    case DRObjects.ActorHandling.ActorMissionType.HUNTDOWN:
+                        (actor.MapCharacter as LocalEnemy).EnemyThought = EnemyThought.ATTACK;
+                        break;
                     default:
                         throw new NotImplementedException("No graphic exists for mission type " + actor.CurrentMission.MissionType);
                 }
@@ -185,23 +231,35 @@ namespace DivineRightGame
                     PatrolMission mission = actor.CurrentMission as PatrolMission;
 
                     //Is he seeing the player character?
-                    if (Math.Abs(actor.MapCharacter.Coordinate - playerLocation) < actor.LineOfSight)
+                    if (Math.Abs(actor.MapCharacter.Coordinate - playerLocation) <= 1)
                     {
                         //He's there. Push the current mission into the stack and go on the attack
                         actor.MissionStack.Push(actor.CurrentMission);
                         actor.CurrentMission = new AttackMission(actors.Where(a => a.IsPlayerCharacter).FirstOrDefault());
                         continue;
                     }
+                    else if (Math.Abs(actor.MapCharacter.Coordinate - playerLocation) < actor.LineOfSight)
+                    {
+                        //He's there. Push the current mission into the stack and follow him
+                        actor.MissionStack.Push(actor.CurrentMission);
+                        actor.CurrentMission = new HuntDownMission()
+                            {
+                                Target = actors.Where(a => a.IsPlayerCharacter).FirstOrDefault(),
+                                TargetCoordinate = actors.Where(a => a.IsPlayerCharacter).FirstOrDefault().MapCharacter.Coordinate
+                            };
+
+                        continue;
+                    }
 
                     //Perform an action accordingly
                     //Is he outside of the patrol area?
-                    if (Math.Abs(actor.MapCharacter.Coordinate - mission.PatrolPoint) > mission.PatrolRange)
+                    else if (Math.Abs(actor.MapCharacter.Coordinate - mission.PatrolPoint) > mission.PatrolRange)
                     {
                         //Send him back. TODO later. For now idle like a drooling idiot
                     }
                     else
                     {
-                        
+
                         //Walk somewhere randomly
                         int direction = GameState.Random.Next(4);
 
@@ -209,7 +267,7 @@ namespace DivineRightGame
                         //Copy it
                         MapCoordinate newCoord = new MapCoordinate(coord.X, coord.Y, coord.Z, coord.MapType);
 
-                        switch(direction)
+                        switch (direction)
                         {
                             case 0: //Top
                                 newCoord.Y++;
@@ -242,6 +300,7 @@ namespace DivineRightGame
                 }
                 else if (actor.CurrentMission.MissionType == DRObjects.ActorHandling.ActorMissionType.ATTACK)
                 {
+                    //TODO - ACTUAL HUNT DOWN
                     //Do they still see the character?
                     AttackMission mission = (actor.CurrentMission as AttackMission);
 
@@ -250,11 +309,60 @@ namespace DivineRightGame
                         //Ran away - cancel the mission
                         actor.CurrentMission = null;
                     }
+                    else if (Math.Abs(mission.AttackTarget.MapCharacter.Coordinate - actor.MapCharacter.Coordinate) > 1)
+                    {
+                        //Hunt him down!
+                        actor.CurrentMission = new HuntDownMission()
+                        {
+                            Target = mission.AttackTarget,
+                            TargetCoordinate = mission.AttackTarget.MapCharacter.Coordinate
+                        };
+                    }
                 }
+                else if (actor.CurrentMission.MissionType == DRObjects.ActorHandling.ActorMissionType.HUNTDOWN)
+                {
+                    HuntDownMission mission = (actor.CurrentMission as HuntDownMission);
+
+                    //Are we near the mission point?
+                    if (Math.Abs(actor.MapCharacter.Coordinate - mission.Target.MapCharacter.Coordinate) <= 1)
+                    {
+                        //MIssion is done. Attack!
+                        actor.CurrentMission = new AttackMission(mission.Target);
+                    }
+
+                    //Otherwise, check whether the target is still where he was before, and whether we have anywhere to go to
+                    if (mission.Coordinates == null || mission.Target.MapCharacter.Coordinate != mission.TargetCoordinate)
+                    {
+                        //Regenerate the path
+                        GeneratePathfindingMap();
+                        mission.TargetCoordinate = mission.Target.MapCharacter.Coordinate;
+                        mission.Coordinates = PathfinderInterface.GetPath(actor.MapCharacter.Coordinate, mission.TargetCoordinate);
+                    }
+
+                    //Okay, now...advance
+                    if (mission.Coordinates.Count == 0)
+                    {
+                        //Where did he go? Take a turn to figure it out
+                        mission.Coordinates = null;
+                        continue;
+                    }
+
+                    MapCoordinate nextStep = mission.Coordinates.Pop();
+
+                    //Do it
+                    if (this.GetBlockAtCoordinate(nextStep).MayContainItems)
+                    {
+                        this.GetBlockAtCoordinate(nextStep).PutItemOnBlock(actor.MapCharacter);
+                        actor.MapCharacter.Coordinate = nextStep;
+                    }
+                    //And that's done
+
+                }
+
 
             }
         }
-        
+
         #endregion
 
     }

@@ -29,6 +29,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <PlatformTarget>x86</PlatformTarget>
     <XnaCompressContent>false</XnaCompressContent>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>pdbonly</DebugType>
@@ -51,6 +52,7 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml">
       <Private>False</Private>
     </Reference>
@@ -67,6 +69,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Pathfinding\AuthorAttribute.cs" />
+    <Compile Include="Pathfinding\HighResolutionTime.cs" />
+    <Compile Include="Pathfinding\IPathFinder.cs" />
+    <Compile Include="Pathfinding\PathFinder.cs" />
+    <Compile Include="Pathfinding\PathFinderFast.cs" />
+    <Compile Include="Pathfinding\PathfinderInterface.cs" />
+    <Compile Include="Pathfinding\PriorityQueueB.cs" />
     <Compile Include="GameState.cs" />
     <Compile Include="GlobalMap.cs" />
     <Compile Include="ItemFactory\FileReader.cs" />

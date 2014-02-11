@@ -10,5 +10,7 @@ namespace DRObjects.ActorHandling
         PATROL,
         IDLE,
         ATTACK,
+        WALKTO,
+        HUNTDOWN,
     }
 }
