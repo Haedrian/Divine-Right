@@ -17,7 +17,7 @@ namespace DRObjects.ActorHandling.ActorMissions
             get { return Enums.EnemyThought.WALK; }
         }
 
-        public Stack<MapCoordinate> coordinates { get; set; }
-        public MapCoordinate targetCoordinate { get; set; }
+        public Stack<MapCoordinate> Coordinates { get; set; }
+        public MapCoordinate TargetCoordinate { get; set; }
     }
 }

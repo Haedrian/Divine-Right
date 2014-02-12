@@ -189,10 +189,12 @@ namespace DivineRightGame
         /// </summary>
         public void Tick()
         {
+
             MapCoordinate playerLocation = actors.Where(a => a.IsPlayerCharacter).FirstOrDefault().MapCharacter.Coordinate;
 
             foreach (Actor actor in actors.Where(a => !a.IsPlayerCharacter))
             {
+                
                 //First check whether they have a mission
                 if (actor.CurrentMission == null)
                 {
@@ -222,8 +224,21 @@ namespace DivineRightGame
                     case DRObjects.ActorHandling.ActorMissionType.HUNTDOWN:
                         (actor.MapCharacter as LocalEnemy).EnemyThought = EnemyThought.ATTACK;
                         break;
+                    case DRObjects.ActorHandling.ActorMissionType.WALKTO:
+                        (actor.MapCharacter as LocalEnemy).EnemyThought = EnemyThought.WALK;
+                        break;
                     default:
                         throw new NotImplementedException("No graphic exists for mission type " + actor.CurrentMission.MissionType);
+                }
+
+                if (actor.HasActedLastTurn)
+                {
+                    actor.HasActedLastTurn = false;
+                    continue;
+                }
+                else
+                {
+                    actor.HasActedLastTurn = true;
                 }
 
                 if (actor.CurrentMission.MissionType == DRObjects.ActorHandling.ActorMissionType.PATROL)
@@ -255,7 +270,13 @@ namespace DivineRightGame
                     //Is he outside of the patrol area?
                     else if (Math.Abs(actor.MapCharacter.Coordinate - mission.PatrolPoint) > mission.PatrolRange)
                     {
-                        //Send him back. TODO later. For now idle like a drooling idiot
+                        //Send him back.
+                        WalkToMission walkMission = new WalkToMission();
+                        walkMission.TargetCoordinate = mission.PatrolPoint;
+
+                        //Push it
+                        actor.MissionStack.Push(mission);
+                        actor.CurrentMission = walkMission;
                     }
                     else
                     {
@@ -300,7 +321,6 @@ namespace DivineRightGame
                 }
                 else if (actor.CurrentMission.MissionType == DRObjects.ActorHandling.ActorMissionType.ATTACK)
                 {
-                    //TODO - ACTUAL HUNT DOWN
                     //Do they still see the character?
                     AttackMission mission = (actor.CurrentMission as AttackMission);
 
@@ -330,6 +350,12 @@ namespace DivineRightGame
                         actor.CurrentMission = new AttackMission(mission.Target);
                     }
 
+                    if (Math.Abs(mission.Target.MapCharacter.Coordinate - actor.MapCharacter.Coordinate) > actor.LineOfSight)
+                    {
+                        //Ran away - cancel the mission
+                        actor.CurrentMission = null;
+                    }
+
                     //Otherwise, check whether the target is still where he was before, and whether we have anywhere to go to
                     if (mission.Coordinates == null || mission.Target.MapCharacter.Coordinate != mission.TargetCoordinate)
                     {
@@ -356,6 +382,52 @@ namespace DivineRightGame
                         actor.MapCharacter.Coordinate = nextStep;
                     }
                     //And that's done
+
+                }
+                else if (actor.CurrentMission.MissionType == DRObjects.ActorHandling.ActorMissionType.WALKTO)
+                {
+                    WalkToMission mission = actor.CurrentMission as WalkToMission;
+
+                    //Are we near the mission point?
+                    if (Math.Abs(actor.MapCharacter.Coordinate - mission.TargetCoordinate) <= 1)
+                    {
+                        //MIssion is done.
+                        actor.CurrentMission = null;
+                    }
+                    else if (mission.Coordinates == null)
+                    {
+                        //(Re)generate the path
+                        GeneratePathfindingMap();
+                        mission.Coordinates = PathfinderInterface.GetPath(actor.MapCharacter.Coordinate, mission.TargetCoordinate);
+                    }
+                    else
+                    {
+                        //Walk
+                        //Okay, now...advance
+                        if (mission.Coordinates.Count == 0)
+                        {
+                            //Where did he go? Take a turn to figure it out
+                            mission.Coordinates = null;
+                            continue;
+                        }
+
+                        MapCoordinate nextStep = mission.Coordinates.Pop();
+
+                        //Do it
+                        if (this.GetBlockAtCoordinate(nextStep).MayContainItems)
+                        {
+                            this.GetBlockAtCoordinate(nextStep).PutItemOnBlock(actor.MapCharacter);
+                            actor.MapCharacter.Coordinate = nextStep;
+                        }
+                        else
+                        {
+                            //Something changed. Let's regenerate the map and try again
+                            mission.Coordinates = null;
+                            continue;
+                        }
+                    }
+                    
+
 
                 }
 

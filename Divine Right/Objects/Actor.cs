@@ -39,6 +39,11 @@ namespace DRObjects
         public bool IsPlayerCharacter { get; set; }
 
         /// <summary>
+        /// Represents whether The actor has moved last turn
+        /// </summary>
+        public bool HasActedLastTurn { get; set; }
+
+        /// <summary>
         /// How many tiles the actor can see. Null means they're blind
         /// </summary>
         public int? LineOfSight { get; set; }
