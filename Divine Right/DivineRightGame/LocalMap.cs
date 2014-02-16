@@ -19,6 +19,7 @@ namespace DivineRightGame
         #region Members
         private MapBlock[, ,] localGameMap;
         private List<Actor> actors;
+        private Random random = new Random();
 
         private int groundLevel;
         #endregion
@@ -162,7 +163,7 @@ namespace DivineRightGame
                     if (i < localGameMap.GetLength(0) - 1 && j < localGameMap.GetLength(1) - 1)
                     {
                         //Copyable - if it may contain items, put a weight of 1, otherwise an essagerated one
-                        PathfindingMap[i, j] = localGameMap[i, j, 0] != null ? localGameMap[i, j, 0].MayContainItems ? (byte)1 : (byte)150 : (byte)150;
+                        PathfindingMap[i, j] = localGameMap[i, j, 0] != null ? localGameMap[i, j, 0].MayContainItems ? (byte)1 : Byte.MaxValue : Byte.MaxValue;
                     }
                     else
                     {
@@ -199,7 +200,13 @@ namespace DivineRightGame
                 //First check whether they have a mission
                 if (actor.CurrentMission == null)
                 {
-                    //Try to pop a new one
+                    //Try to pop a new one 
+                    if (actor.MissionStack.Peek() == null)
+                    {
+                        //no mission. ah well
+                        continue;
+                    }
+
                     actor.CurrentMission = actor.MissionStack.Pop();
 
                     if (actor.CurrentMission == null)
@@ -211,26 +218,7 @@ namespace DivineRightGame
                 }
 
                 //Update the graphic
-                switch (actor.CurrentMission.MissionType)
-                {
-                    case DRObjects.ActorHandling.ActorMissionType.ATTACK:
-                        (actor.MapCharacter as LocalEnemy).EnemyThought = EnemyThought.ATTACK;
-                        break;
-                    case DRObjects.ActorHandling.ActorMissionType.IDLE:
-                        (actor.MapCharacter as LocalEnemy).EnemyThought = EnemyThought.WAIT;
-                        break;
-                    case DRObjects.ActorHandling.ActorMissionType.PATROL:
-                        (actor.MapCharacter as LocalEnemy).EnemyThought = EnemyThought.WALK;
-                        break;
-                    case DRObjects.ActorHandling.ActorMissionType.HUNTDOWN:
-                        (actor.MapCharacter as LocalEnemy).EnemyThought = EnemyThought.ATTACK;
-                        break;
-                    case DRObjects.ActorHandling.ActorMissionType.WALKTO:
-                        (actor.MapCharacter as LocalEnemy).EnemyThought = EnemyThought.WALK;
-                        break;
-                    default:
-                        throw new NotImplementedException("No graphic exists for mission type " + actor.CurrentMission.MissionType);
-                }
+                (actor.MapCharacter as LocalEnemy).EnemyThought = actor.CurrentMission.EnemyThought;
 
                 if (actor.HasActedLastTurn)
                 {
@@ -257,9 +245,9 @@ namespace DivineRightGame
                         continue;
                     }
                 }
-                else if (actor.CurrentMission.MissionType == DRObjects.ActorHandling.ActorMissionType.PATROL)
+                else if (actor.CurrentMission.MissionType == DRObjects.ActorHandling.ActorMissionType.WANDER)
                 {
-                    PatrolMission mission = actor.CurrentMission as PatrolMission;
+                    WanderMission mission = actor.CurrentMission as WanderMission;
 
                     //Is he seeing the player character?
                     if (Math.Abs(actor.MapCharacter.Coordinate - playerLocation) <= 1)
@@ -284,11 +272,11 @@ namespace DivineRightGame
 
                     //Perform an action accordingly
                     //Is he outside of the patrol area?
-                    else if (Math.Abs(actor.MapCharacter.Coordinate - mission.PatrolPoint) > mission.PatrolRange)
+                    else if (Math.Abs(actor.MapCharacter.Coordinate - mission.WanderPoint) > mission.WanderRange)
                     {
                         //Send him back.
                         WalkToMission walkMission = new WalkToMission();
-                        walkMission.TargetCoordinate = mission.PatrolPoint;
+                        walkMission.TargetCoordinate = mission.WanderPoint;
 
                         //Push it
                         actor.MissionStack.Push(mission);
@@ -321,7 +309,7 @@ namespace DivineRightGame
                         }
 
                         //Can we go there?
-                        if (this.GetBlockAtCoordinate(newCoord).MayContainItems && Math.Abs(newCoord - mission.PatrolPoint) < mission.PatrolRange)
+                        if (this.GetBlockAtCoordinate(newCoord).MayContainItems && Math.Abs(newCoord - mission.WanderPoint) < mission.WanderRange)
                         {
                             //Do it
                             this.GetBlockAtCoordinate(newCoord).PutItemOnBlock(actor.MapCharacter);
@@ -404,6 +392,20 @@ namespace DivineRightGame
                 {
                     WalkToMission mission = actor.CurrentMission as WalkToMission;
 
+                    if (Math.Abs(actor.MapCharacter.Coordinate - playerLocation) < actor.LineOfSight)
+                    {
+                        //Can we see the character?
+                        //He's there. Push the current mission into the stack and follow him
+                        actor.MissionStack.Push(actor.CurrentMission);
+                        actor.CurrentMission = new HuntDownMission()
+                        {
+                            Target = actors.Where(a => a.IsPlayerCharacter).FirstOrDefault(),
+                            TargetCoordinate = actors.Where(a => a.IsPlayerCharacter).FirstOrDefault().MapCharacter.Coordinate
+                        };
+
+                        continue;
+                    }
+
                     //Are we near the mission point?
                     if (Math.Abs(actor.MapCharacter.Coordinate - mission.TargetCoordinate) <= 1)
                     {
@@ -415,6 +417,21 @@ namespace DivineRightGame
                         //(Re)generate the path
                         GeneratePathfindingMap();
                         mission.Coordinates = PathfinderInterface.GetPath(actor.MapCharacter.Coordinate, mission.TargetCoordinate);
+
+                        //Is the new first coordinate valid?
+                        if (mission.Coordinates == null)
+                        {
+                            //No path
+                            actor.CurrentMission = null; //lose the mission
+                        }
+                        else
+                        if (!GetBlockAtCoordinate(mission.Coordinates.Peek()).MayContainItems)
+                        {
+                            //Invalid path
+                            Console.WriteLine("Invalid Path");
+                            //lose the mission
+                            actor.CurrentMission = null;
+                        }
                     }
                     else
                     {
@@ -429,6 +446,14 @@ namespace DivineRightGame
 
                         MapCoordinate nextStep = mission.Coordinates.Pop();
 
+                        //Are we close enough to move?
+                        if (Math.Abs(nextStep - actor.MapCharacter.Coordinate) > 1)
+                        {
+                            //We moved off the path. Regenerate it
+                            mission.Coordinates = null;
+                            continue;
+                        }
+
                         //Do it
                         if (this.GetBlockAtCoordinate(nextStep).MayContainItems)
                         {
@@ -442,9 +467,24 @@ namespace DivineRightGame
                             continue;
                         }
                     }
-                    
+                }
+                else if (actor.CurrentMission.MissionType == DRObjects.ActorHandling.ActorMissionType.PATROL)
+                {
+                    PatrolMission mission = actor.CurrentMission as PatrolMission;
 
+                    //Create a move to mission which moves the actor to the point of interest
+                    PointOfInterest poi = this.PointsOfInterest[random.Next(this.PointsOfInterest.Count - 1)];
 
+                    //Push the patrol on the stack
+                    actor.MissionStack.Push(mission);
+
+                    //Log it
+                    Console.WriteLine("Actor " + actor.ToString() + " is going to" + poi.Coordinate.ToString());
+
+                    actor.CurrentMission = new WalkToMission()
+                    {
+                        TargetCoordinate = poi.Coordinate
+                    };
                 }
 
 

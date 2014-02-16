@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DRObjects.LocalMapGeneratorObjects;
 
 namespace DRObjects.ActorHandling.ActorMissions
 {
-    public class PatrolMission:
-        ActorMission
+    /// <summary>
+    /// A mission where we walk to a target point. This is a dummy mission of sorts. It has no data.
+    /// </summary>
+    public class PatrolMission: ActorMission
     {
         public override ActorMissionType MissionType
         {
@@ -17,16 +20,5 @@ namespace DRObjects.ActorHandling.ActorMissions
         {
             get { return Enums.EnemyThought.WALK; }
         }
-
-        /// <summary>
-        /// The point to center patrol around
-        /// </summary>
-        public MapCoordinate PatrolPoint { get; set; }
-
-        /// <summary>
-        /// The range in which to patrol
-        /// </summary>
-        public int PatrolRange { get; set; }
-
     }
 }

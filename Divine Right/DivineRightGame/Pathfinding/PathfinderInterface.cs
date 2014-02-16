@@ -58,6 +58,13 @@ namespace DivineRightGame.Pathfinding
 
             Stack<MapCoordinate> coordStack = new Stack<MapCoordinate>();
 
+            if (path == null)
+            {
+                Console.WriteLine("No path found :( ");
+                return null;
+                
+            }
+
             foreach (PathFinderNode node in path)
             {
                 coordStack.Push(new MapCoordinate(node.X, node.Y, 0, startPoint.MapType));

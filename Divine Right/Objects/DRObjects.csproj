@@ -74,6 +74,7 @@
     <Compile Include="ActorHandling\ActorMissions\HuntDownMission.cs" />
     <Compile Include="ActorHandling\ActorMissions\IdleMission.cs" />
     <Compile Include="ActorHandling\ActorMissions\PatrolMission.cs" />
+    <Compile Include="ActorHandling\ActorMissions\WanderMission.cs" />
     <Compile Include="ActorHandling\ActorMissions\WalkToMission.cs" />
     <Compile Include="ActorHandling\ActorMissionType.cs" />
     <Compile Include="Compare\MapCoordinateCompare.cs" />

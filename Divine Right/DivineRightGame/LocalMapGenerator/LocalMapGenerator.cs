@@ -628,18 +628,28 @@ namespace DivineRightGame.LocalMapGenerator
 
                     blocks[x,y].ForcePutItemOnBlock(enemyObject);
 
-                    if (random.Next(2) == 0)
-                    {
-                        //50% of them will Patrol - the rest will idle
-                        PatrolMission mission = new PatrolMission();
-                        mission.PatrolPoint = new MapCoordinate(x, y, 0, MapTypeEnum.LOCAL);
-                        mission.PatrolRange = 5;
+                    int missionType = random.Next(3); //TODO:CHANGE AFTER TESTING
 
+                    if (missionType == 0)
+                    {
+                        //33% of them will Wander - 
+                        WanderMission mission = new WanderMission();
+                        mission.WanderPoint = new MapCoordinate(x, y, 0, MapTypeEnum.LOCAL);
+                        mission.WanderRange = 5;
+
+                        actor.MissionStack.Push(mission);
+                    }
+                    else if (missionType == 1)
+                    {
+                        //33% will idle
+                        IdleMission mission = new IdleMission();
                         actor.MissionStack.Push(mission);
                     }
                     else
                     {
-                        IdleMission mission = new IdleMission();
+                        //The rest will patrol
+                        PatrolMission mission = new PatrolMission();
+                        //Don't give them the point. We;ll choose it later
                         actor.MissionStack.Push(mission);
                     }
 

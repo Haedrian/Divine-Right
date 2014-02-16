@@ -227,6 +227,8 @@ namespace DivineRightGame.LocalMapGenerator
 
                 gennedMap = gen.GenerateMap(25, null, maplet, true);
 
+                PointOfInterest mapletInterest = null;
+
                 if (room.DungeonRoomType == DungeonRoomType.GUARD_ROOM || room.DungeonRoomType == DungeonRoomType.TREASURE_ROOM)
                 {
                     //This will be a point of interest. Select a random walkable point in the room and mark the place as such
@@ -252,7 +254,8 @@ namespace DivineRightGame.LocalMapGenerator
                             }
 
                             pointsOfInterest.Add(interest);
-
+                            mapletInterest = interest;
+                            break;
                         }
                     }
                 }
@@ -261,7 +264,7 @@ namespace DivineRightGame.LocalMapGenerator
                 if (room.DungeonRoomType == DungeonRoomType.GUARD_ROOM)
                 {
                     //Create 3 enemies
-                    gennedMap = gen.GenerateEnemies(gennedMap, 5, "orc",out roomEnemies);
+                    gennedMap = gen.GenerateEnemies(gennedMap, 4, "orc",out roomEnemies);
 
                     enemies.AddRange(roomEnemies);
                 }
@@ -271,16 +274,23 @@ namespace DivineRightGame.LocalMapGenerator
                 int xIncreaser = room.SquareNumber*20 ;
                 int yIncreaser = (room.TierNumber*20) + 3;
 
+
                 //Fix the patrol points of any enemies 
                 foreach (Actor enemy in roomEnemies)
                 {
-                    if (enemy.MissionStack.Count != 0 && enemy.MissionStack.Peek().MissionType  == DRObjects.ActorHandling.ActorMissionType.PATROL)
+                    if (enemy.MissionStack.Count != 0 && enemy.MissionStack.Peek().MissionType  == DRObjects.ActorHandling.ActorMissionType.WANDER)
                     {
                         //Change patrol point
-                        MapCoordinate point = (enemy.MissionStack.Peek() as PatrolMission).PatrolPoint;
+                        MapCoordinate point = (enemy.MissionStack.Peek() as WanderMission).WanderPoint;
                         point.X += xIncreaser;
                         point.Y += yIncreaser;
                     }
+                }
+                //Update the point of interest if there is one
+                if (mapletInterest != null)
+                {
+                    mapletInterest.Coordinate.X += xIncreaser;
+                    mapletInterest.Coordinate.Y += yIncreaser;
                 }
 
                 for (int x = 0; x < gennedMap.GetLength(0); x++)

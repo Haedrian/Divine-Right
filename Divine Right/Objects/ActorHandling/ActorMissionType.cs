@@ -7,10 +7,11 @@ namespace DRObjects.ActorHandling
 {
     public enum ActorMissionType
     {
-        PATROL,
+        WANDER,
         IDLE,
         ATTACK,
         WALKTO,
         HUNTDOWN,
+        PATROL
     }
 }
