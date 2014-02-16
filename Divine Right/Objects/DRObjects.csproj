@@ -84,6 +84,7 @@
     <Compile Include="Enums\GlobalOverlay.cs" />
     <Compile Include="Enums\InternalActionEnum.cs" />
     <Compile Include="Enums\MapType.cs" />
+    <Compile Include="Enums\PointOfInterestType.cs" />
     <Compile Include="Enums\SettlementType.cs" />
     <Compile Include="GraphicsEngineObjects\Abstract\PlayerFeedback.cs" />
     <Compile Include="GraphicsEngineObjects\CurrentLogFeedback.cs" />
@@ -109,6 +110,7 @@
     <Compile Include="LocalMapGeneratorObjects\MapletContentsItem.cs" />
     <Compile Include="LocalMapGeneratorObjects\MapletContentsItemTag.cs" />
     <Compile Include="LocalMapGeneratorObjects\MapletContentsMaplet.cs" />
+    <Compile Include="LocalMapGeneratorObjects\PointOfInterest.cs" />
     <Compile Include="MapBlock.cs" />
     <Compile Include="MapCoordinates.cs" />
     <Compile Include="MapItem.cs" />

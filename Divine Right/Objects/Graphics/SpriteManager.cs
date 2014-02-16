@@ -386,6 +386,7 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.SPIKES] = new SpriteData(DUNGEON, new Rectangle(450, 200, 50, 50));
 
             localSprites[(int)LocalSpriteName.ENEMY_SKELETON] = new SpriteData(ENEMIES, new Rectangle(0, 0, 50, 50));
+            localSprites[(int)LocalSpriteName.ENEMY_ORC] = new SpriteData(ENEMIES, new Rectangle(50, 0, 50, 50));
             localSprites[(int)LocalSpriteName.ENEMY_THOUGHT_WALK] = new SpriteData(ENEMIES, new Rectangle(0, 50, 50, 50));
             localSprites[(int)LocalSpriteName.ENEMY_THOUGHT_WAIT] = new SpriteData(ENEMIES, new Rectangle(50, 50, 50, 50));
             localSprites[(int)LocalSpriteName.ENEMY_THOUGHT_ATTACK] = new SpriteData(ENEMIES, new Rectangle(100, 50, 50, 50));

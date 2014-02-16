@@ -628,11 +628,22 @@ namespace DivineRightGame.LocalMapGenerator
 
                     blocks[x,y].ForcePutItemOnBlock(enemyObject);
 
-                    PatrolMission mission = new PatrolMission();
-                    mission.PatrolPoint = new MapCoordinate(x, y, 0, MapTypeEnum.LOCAL);
-                    mission.PatrolRange = 5;
+                    if (random.Next(2) == 0)
+                    {
+                        //50% of them will Patrol - the rest will idle
+                        PatrolMission mission = new PatrolMission();
+                        mission.PatrolPoint = new MapCoordinate(x, y, 0, MapTypeEnum.LOCAL);
+                        mission.PatrolRange = 5;
 
-                    actor.MissionStack.Push(mission);
+                        actor.MissionStack.Push(mission);
+                    }
+                    else
+                    {
+                        IdleMission mission = new IdleMission();
+                        actor.MissionStack.Push(mission);
+                    }
+
+                    
                     
                     failureCount = 0;//reset
                 }

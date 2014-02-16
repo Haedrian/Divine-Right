@@ -7,6 +7,7 @@ using DRObjects.Items.Archetypes.Local;
 using DRObjects.Enums;
 using DRObjects.ActorHandling.ActorMissions;
 using DivineRightGame.Pathfinding;
+using DRObjects.LocalMapGeneratorObjects;
 
 namespace DivineRightGame
 {
@@ -31,7 +32,7 @@ namespace DivineRightGame
             get { return actors; }
             set { actors = value; }
         }
-
+        public List<PointOfInterest> PointsOfInterest { get; set; }
         public Byte[,] PathfindingMap { get; set; }
         #endregion
 
@@ -241,7 +242,22 @@ namespace DivineRightGame
                     actor.HasActedLastTurn = true;
                 }
 
-                if (actor.CurrentMission.MissionType == DRObjects.ActorHandling.ActorMissionType.PATROL)
+                if (actor.CurrentMission.MissionType == DRObjects.ActorHandling.ActorMissionType.IDLE)
+                {
+                    if (Math.Abs(actor.MapCharacter.Coordinate - playerLocation) < actor.LineOfSight)
+                    {
+                        //He's there. Push the current mission into the stack and follow him
+                        actor.MissionStack.Push(actor.CurrentMission);
+                        actor.CurrentMission = new HuntDownMission()
+                        {
+                            Target = actors.Where(a => a.IsPlayerCharacter).FirstOrDefault(),
+                            TargetCoordinate = actors.Where(a => a.IsPlayerCharacter).FirstOrDefault().MapCharacter.Coordinate
+                        };
+
+                        continue;
+                    }
+                }
+                else if (actor.CurrentMission.MissionType == DRObjects.ActorHandling.ActorMissionType.PATROL)
                 {
                     PatrolMission mission = actor.CurrentMission as PatrolMission;
 

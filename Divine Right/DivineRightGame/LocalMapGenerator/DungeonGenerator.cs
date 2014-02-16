@@ -27,9 +27,10 @@ namespace DivineRightGame.LocalMapGenerator
         /// </summary>
         /// <param name="tiers"></param>
         /// <returns></returns>
-        public MapBlock[,] GenerateDungeon(int tiers, int trapRooms, int guardRooms, int treasureRooms, out MapCoordinate startPoint,out Actor[] enemyArray)
+        public MapBlock[,] GenerateDungeon(int tiers, int trapRooms, int guardRooms, int treasureRooms, out MapCoordinate startPoint,out Actor[] enemyArray,out List<PointOfInterest> pointsOfInterest)
         {
             startPoint = new MapCoordinate(0, 0, 0, MapTypeEnum.LOCAL);
+            pointsOfInterest = new List<PointOfInterest>();
 
             List<Actor> enemies = new List<Actor>();
             List<DungeonRoom> rooms = new List<DungeonRoom>();
@@ -226,12 +227,41 @@ namespace DivineRightGame.LocalMapGenerator
 
                 gennedMap = gen.GenerateMap(25, null, maplet, true);
 
+                if (room.DungeonRoomType == DungeonRoomType.GUARD_ROOM || room.DungeonRoomType == DungeonRoomType.TREASURE_ROOM)
+                {
+                    //This will be a point of interest. Select a random walkable point in the room and mark the place as such
+                    for (int tryAmount = 0; tryAmount < 50; tryAmount++)
+                    {
+                        //Try for a maximum of 50 times
+                        int x = random.Next(gennedMap.GetLength(0));
+                        int y = random.Next(gennedMap.GetLength(1));
+
+                        if (gennedMap[x, y].Tile.MayContainItems)
+                        {
+                            //Put this as the point
+                            PointOfInterest interest = new PointOfInterest();
+                            interest.Coordinate = new MapCoordinate(x, y, 0, MapTypeEnum.LOCAL);
+
+                            if (room.DungeonRoomType == DungeonRoomType.GUARD_ROOM)
+                            {
+                                interest.Type = PointOfInterestType.GUARD_ROOM;
+                            }
+                            else if (room.DungeonRoomType == DungeonRoomType.TREASURE_ROOM)
+                            {
+                                interest.Type = PointOfInterestType.TREASURE;
+                            }
+
+                            pointsOfInterest.Add(interest);
+
+                        }
+                    }
+                }
 
                 Actor[] roomEnemies = new Actor[]{};
                 if (room.DungeonRoomType == DungeonRoomType.GUARD_ROOM)
                 {
                     //Create 3 enemies
-                    gennedMap = gen.GenerateEnemies(gennedMap, 3, "skeleton",out roomEnemies);
+                    gennedMap = gen.GenerateEnemies(gennedMap, 5, "orc",out roomEnemies);
 
                     enemies.AddRange(roomEnemies);
                 }

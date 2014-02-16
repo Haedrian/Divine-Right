@@ -44,9 +44,12 @@ namespace Divine_Right.HelperFunctions
             DungeonGenerator gen = new DungeonGenerator();
             MapCoordinate start = null;
             Actor[] actors = null;
-            MapBlock[,] generatedMap = gen.GenerateDungeon(5, 2, 2, 2,out start,out actors);
+            List<PointOfInterest> pointsOfInterest = null;
+
+            MapBlock[,] generatedMap = gen.GenerateDungeon(5, 2, 2, 2,out start,out actors,out pointsOfInterest);
 
             GameState.LocalMap = new LocalMap(500, 500, 1, 0);
+            GameState.LocalMap.PointsOfInterest = pointsOfInterest;
 
             List<MapBlock> collapsedMap = new List<MapBlock>();
 
