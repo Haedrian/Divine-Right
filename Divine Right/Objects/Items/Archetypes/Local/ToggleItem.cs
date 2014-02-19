@@ -36,7 +36,19 @@ namespace DRObjects.Items.Archetypes.Local
         public bool AllowItemsStateB { get; set; }
         public string MessageToStateA{get;set;}
         public string MessageToStateB{get;set;}
- 
+
+        public override List<SpriteData> Graphics
+        {
+            get
+            {
+                return new List<SpriteData>(){Graphic};
+            }
+            set
+            {
+                base.Graphics = value;
+            }
+        }
+
         /// <summary>
         /// Returns the Graphic based on the state of the object
         /// </summary>

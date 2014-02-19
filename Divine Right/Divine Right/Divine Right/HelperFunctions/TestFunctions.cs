@@ -37,6 +37,7 @@ namespace Divine_Right.HelperFunctions
 
             block.PutItemOnBlock(player);
             GameState.PlayerCharacter.MapCharacter = player;
+
         }
 
         public static void GenerateDungeon()
@@ -116,6 +117,8 @@ namespace Divine_Right.HelperFunctions
             GameState.PlayerCharacter = new Actor();
             GameState.PlayerCharacter.MapCharacter = player;
             GameState.PlayerCharacter.IsPlayerCharacter = true;
+
+            GameState.LocalMap.Actors.Add(GameState.PlayerCharacter);
 
         }
 

@@ -52,6 +52,8 @@ namespace DivineRightGame
             this.groundLevel = groundLevel;
             this.actors = new List<Actor>();
         }
+
+        #endregion
         /// <summary>
         /// Add a block to a local map
         /// </summary>
@@ -111,8 +113,6 @@ namespace DivineRightGame
         /// <returns></returns>
         public MapBlock GetBlockAtCoordinate(MapCoordinate coordinate)
         {
-            MapBlock ret;
-
             if (coordinate.X < this.localGameMap.GetLength(0) && coordinate.X >= 0)
             {
                 if (coordinate.Y < this.localGameMap.GetLength(1) && coordinate.Y >= 0)
@@ -177,13 +177,21 @@ namespace DivineRightGame
         }
 
         /// <summary>
-        /// Updates the pathfinding map for that particular coordinate
+        /// Updates the pathfinding map for that particular coordinate. and for the 9 tiles around it
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
         public void UpdatePathfindingMap(int x, int y)
         {
-            PathfindingMap[x, y] = localGameMap[x, y, 0].MayContainItems ? (byte)1 : (byte)150;
+            PathfindingMap[x, y] = localGameMap[x, y, 0].MayContainItems ? (byte)1 : Byte.MaxValue;
+
+            for (int xLoop=-1; xLoop >= 0 && xLoop < localGameMap.GetLength(0) && xLoop < 2; xLoop++ )
+            {
+                for (int yLoop = -1; yLoop >= 0 && yLoop < localGameMap.GetLength(1) && yLoop <2; yLoop++)
+                {
+                    PathfindingMap[x+xLoop,y+yLoop] = localGameMap[x+xLoop,y+yLoop,0].MayContainItems ? (byte)1: Byte.MaxValue;
+                }
+            }
         }
 
         /// <summary>
@@ -490,8 +498,6 @@ namespace DivineRightGame
 
             }
         }
-
-        #endregion
 
     }
 }
