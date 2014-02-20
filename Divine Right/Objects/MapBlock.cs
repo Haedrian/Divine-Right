@@ -65,7 +65,7 @@ namespace DRObjects
 
             MapItem top = this.GetTopItem();
 
-            if (!top.MayContainItems)
+            if (top == null || !top.MayContainItems)
             {
                 //can't do it
                 return new PlayerFeedback[] { new TextFeedback("Can't do that") };

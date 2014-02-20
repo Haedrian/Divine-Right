@@ -8,6 +8,7 @@ using DivineRightGame.Managers.HelperObjects.HelperEnums;
 using DivineRightGame.Managers.HelperObjects;
 using DRObjects.Enums;
 using DRObjects.ActorHandling.ActorMissions;
+using Microsoft.Xna.Framework;
 
 namespace DivineRightGame.LocalMapGenerator
 {
@@ -635,7 +636,7 @@ namespace DivineRightGame.LocalMapGenerator
                         //33% of them will Wander - 
                         WanderMission mission = new WanderMission();
                         mission.WanderPoint = new MapCoordinate(x, y, 0, MapTypeEnum.LOCAL);
-                        mission.WanderRange = 5;
+                        mission.WanderRectangle = new Rectangle(0, 0, blocks.GetLength(0), blocks.GetLength(1));
 
                         actor.MissionStack.Push(mission);
                     }

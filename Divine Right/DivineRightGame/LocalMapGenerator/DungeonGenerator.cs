@@ -7,6 +7,7 @@ using DivineRightGame.LocalMapGenerator.Objects;
 using DRObjects;
 using DRObjects.Enums;
 using DRObjects.ActorHandling.ActorMissions;
+using Microsoft.Xna.Framework;
 
 namespace DivineRightGame.LocalMapGenerator
 {
@@ -284,6 +285,13 @@ namespace DivineRightGame.LocalMapGenerator
                         MapCoordinate point = (enemy.MissionStack.Peek() as WanderMission).WanderPoint;
                         point.X += xIncreaser;
                         point.Y += yIncreaser;
+
+                        //Change the rectangle x and y too
+                        Rectangle rect = (enemy.MissionStack.Peek() as WanderMission).WanderRectangle;
+                        rect.X = xIncreaser;
+                        rect.Y = yIncreaser;
+
+                        (enemy.MissionStack.Peek() as WanderMission).WanderRectangle = rect; //apparently rectangles are immutable or something
                     }
                 }
                 //Update the point of interest if there is one

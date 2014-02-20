@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace DRObjects.ActorHandling.ActorMissions
 {
@@ -26,7 +27,8 @@ namespace DRObjects.ActorHandling.ActorMissions
         /// <summary>
         /// The range in which to wander
         /// </summary>
-        public int WanderRange { get; set; }
+        public Rectangle WanderRectangle { get; set; }
 
+        
     }
 }

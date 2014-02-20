@@ -8,6 +8,7 @@ using DRObjects.Enums;
 using DRObjects.ActorHandling.ActorMissions;
 using DivineRightGame.Pathfinding;
 using DRObjects.LocalMapGeneratorObjects;
+using Microsoft.Xna.Framework;
 
 namespace DivineRightGame
 {
@@ -280,7 +281,7 @@ namespace DivineRightGame
 
                     //Perform an action accordingly
                     //Is he outside of the patrol area?
-                    else if (Math.Abs(actor.MapCharacter.Coordinate - mission.WanderPoint) > mission.WanderRange)
+                    else if (!mission.WanderRectangle.Contains( new Point(actor.MapCharacter.Coordinate.X,actor.MapCharacter.Coordinate.Y)))
                     {
                         //Send him back.
                         WalkToMission walkMission = new WalkToMission();
@@ -317,7 +318,7 @@ namespace DivineRightGame
                         }
 
                         //Can we go there?
-                        if (this.GetBlockAtCoordinate(newCoord).MayContainItems && Math.Abs(newCoord - mission.WanderPoint) < mission.WanderRange)
+                        if (this.GetBlockAtCoordinate(newCoord).MayContainItems && mission.WanderRectangle.Contains(new Point(newCoord.X, newCoord.Y)))
                         {
                             //Do it
                             this.GetBlockAtCoordinate(newCoord).PutItemOnBlock(actor.MapCharacter);
