@@ -23,6 +23,7 @@ namespace DRObjects.Graphics
         WOOD_TILE_5,
         DUNGEON_TILE,
         LAVA_TILE,
+        WATER_TILE,
         NONE,
 
         //Town Indoor Items
