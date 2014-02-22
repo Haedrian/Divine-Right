@@ -77,6 +77,8 @@
     <Compile Include="ActorHandling\ActorMissions\WanderMission.cs" />
     <Compile Include="ActorHandling\ActorMissions\WalkToMission.cs" />
     <Compile Include="ActorHandling\ActorMissionType.cs" />
+    <Compile Include="ActorHandling\EnemyData.cs" />
+    <Compile Include="ActorHandling\EnemyDataManager.cs" />
     <Compile Include="Compare\MapCoordinateCompare.cs" />
     <Compile Include="Database\DatabaseHandling.cs" />
     <Compile Include="Enums\Archetype.cs" />

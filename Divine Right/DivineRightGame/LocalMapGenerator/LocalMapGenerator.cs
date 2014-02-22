@@ -9,6 +9,7 @@ using DivineRightGame.Managers.HelperObjects;
 using DRObjects.Enums;
 using DRObjects.ActorHandling.ActorMissions;
 using Microsoft.Xna.Framework;
+using DRObjects.ActorHandling;
 
 namespace DivineRightGame.LocalMapGenerator
 {
@@ -612,16 +613,19 @@ namespace DivineRightGame.LocalMapGenerator
                 //Is the block free
                 if (blocks[x, y].MayContainItems)
                 {
-                    int dummy = -1;
+                    int returnedID = -1;
                     //Put the enemy in there
 
-                    var enemyObject = fact.CreateItem(Archetype.ENEMIES, enemyTag, out dummy);
+                    var enemyObject = fact.CreateItem(Archetype.ENEMIES, enemyTag, out returnedID);
+
+                    //Get the enemy data
+                    var data = EnemyDataManager.GetEnemyData(returnedID);
 
                     //Create the Actor
                     Actor actor = new Actor();
                     actor.GlobalCoordinates = null; //useless for now
                     actor.IsPlayerCharacter = false;
-                    actor.LineOfSight = 5; 
+                    actor.LineOfSight = data.EnemyLineOfSight; 
                     actor.MapCharacter = enemyObject;
                     actor.UniqueId = Guid.NewGuid();
 
