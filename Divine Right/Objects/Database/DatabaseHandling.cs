@@ -25,6 +25,17 @@ namespace DRObjects.Database
            
         }
 
+        public static Dictionary<int,List<string>> GetDatabase(Archetype archetype)
+        {
+            //Get's a particular archetype's worth of data
+            if (!dictionary.Keys.Contains(archetype))
+            {
+                ReadTableIntoMemory(archetype);
+            }
+
+            return dictionary[archetype];
+        }
+
         /// <summary>
         /// Gets the id of an item randomly belonging to a particular archetype and having the right tag
         /// If unable to find anything, will throw an exception

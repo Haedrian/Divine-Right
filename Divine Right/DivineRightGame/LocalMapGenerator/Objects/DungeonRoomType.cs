@@ -10,6 +10,7 @@ namespace DivineRightGame.LocalMapGenerator.Objects
         EMPTY_ROOM,
         TRAPPED_ROOM,
         GUARD_ROOM,
-        TREASURE_ROOM
+        TREASURE_ROOM,
+        WILD_ROOM,
     }
 }

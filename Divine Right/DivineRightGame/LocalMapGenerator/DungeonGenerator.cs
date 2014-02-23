@@ -8,6 +8,7 @@ using DRObjects;
 using DRObjects.Enums;
 using DRObjects.ActorHandling.ActorMissions;
 using Microsoft.Xna.Framework;
+using DRObjects.ActorHandling;
 
 namespace DivineRightGame.LocalMapGenerator
 {
@@ -26,9 +27,21 @@ namespace DivineRightGame.LocalMapGenerator
         /// <summary>
         /// Generates a dungeon having a particular amount of tiers, trap rooms, guard rooms and treasure rooms
         /// </summary>
-        /// <param name="tiers"></param>
+        /// <param name="tiers">How many 'layers' the dungeon contains</param>
+        /// <param name="enemyArray">A list of enemy actors</param>
+        /// <param name="guardRooms">The maximum amount of guardrooms contained in the dungeon</param>
+        /// <param name="maxOwnedPopulation">For each owned room which generates enemies, the maximum amount GENERATED in each room (does not preclude patrols from entering the same room)</param>
+        /// <param name="maxWildPopulation">For each wild room which generates enemies, the maximum amount GENERATED in each room.</param>
+        /// <param name="ownerType">For each owned room, the type of the enemies to create</param>
+        /// <param name="percentageOwned">The percentage of the rooms which are owned as opposed to being wild. Bear in mind that wild rooms can spawn quite a bit of enemies</param>
+        /// <param name="pointsOfInterest">The points of interest (ie guard and treasure rooms for instance) which have been generated. Used for patrols</param>
+        /// <param name="startPoint">The entrance start point</param>
+        /// <param name="trapRooms">The maximum amount of trap rooms to generate</param>
+        /// <param name="treasureRooms">The maximum amount of teasure rooms to generate</param>
         /// <returns></returns>
-        public MapBlock[,] GenerateDungeon(int tiers, int trapRooms, int guardRooms, int treasureRooms, out MapCoordinate startPoint,out Actor[] enemyArray,out List<PointOfInterest> pointsOfInterest)
+        public MapBlock[,] GenerateDungeon(int tiers, int trapRooms, int guardRooms, int treasureRooms,string ownerType, 
+            decimal percentageOwned, int maxWildPopulation, int maxOwnedPopulation,
+            out MapCoordinate startPoint,out Actor[] enemyArray,out List<PointOfInterest> pointsOfInterest)
         {
             startPoint = new MapCoordinate(0, 0, 0, MapTypeEnum.LOCAL);
             pointsOfInterest = new List<PointOfInterest>();
@@ -60,6 +73,7 @@ namespace DivineRightGame.LocalMapGenerator
                 newNode.SquareNumber = square;
                 newNode.TierNumber = currentTier;
                 newNode.UniqueID = uniqueID++;
+                newNode.DungeonRoomType = DungeonRoomType.EMPTY_ROOM;
                 //connect the focus node to this node
                 focusNode.Connections.Add(newNode.UniqueID);
                 newNode.Connections.Add(focusNode.UniqueID);
@@ -135,6 +149,16 @@ namespace DivineRightGame.LocalMapGenerator
                 }
             }
 
+            //go through the rooms and set some as wild rooms already
+            foreach (var room in rooms)
+            {
+                if (random.Next(100) > percentageOwned)
+                {
+                    //Wild room
+                    room.DungeonRoomType = DungeonRoomType.WILD_ROOM;
+                }
+            }
+
             //Lets assign the rooms based on the maximum amount.
 
             //Some rooms have more probability in certain regions.
@@ -147,10 +171,10 @@ namespace DivineRightGame.LocalMapGenerator
             int lowerBoundary = rooms.Count/3;
             int upperBoundary = 2*rooms.Count/3;
 
-            //Start with trap rooms
-            var orderedTrap = rooms.OrderByDescending(o => random.Next(100) *
+            var orderedTrap = rooms.Where
+                (o => o.DungeonRoomType == DungeonRoomType.EMPTY_ROOM).OrderByDescending(o => random.Next(100) *
                 (o.UniqueID > upperBoundary ? 1 : o.UniqueID > lowerBoundary ? 2 : 3)).Where(r => r.DungeonRoomType == DungeonRoomType.EMPTY_ROOM
-                    ).Take(trapRooms);
+                    ).ToArray().Take(trapRooms);
 
             foreach (var room in orderedTrap)
             {
@@ -158,7 +182,8 @@ namespace DivineRightGame.LocalMapGenerator
             }
 
             //Same thing for treasure rooms
-            var orderedTreasure = rooms.OrderByDescending(o => random.Next(100) *
+            var orderedTreasure = rooms.Where
+                (o => o.DungeonRoomType == DungeonRoomType.EMPTY_ROOM).OrderByDescending(o => random.Next(100) *
                 (o.UniqueID > upperBoundary ? 3 : o.UniqueID > lowerBoundary ? 2 : 1)).Where(r => r.DungeonRoomType == DungeonRoomType.EMPTY_ROOM
                     ).Take(treasureRooms);
 
@@ -168,7 +193,8 @@ namespace DivineRightGame.LocalMapGenerator
             }
             
             //And guard rooms
-            var orderedGuard = rooms.OrderByDescending(o => random.Next(100) *
+            var orderedGuard = rooms.Where
+                (o => o.DungeonRoomType == DungeonRoomType.EMPTY_ROOM).OrderByDescending(o => random.Next(100) *
                 (o.UniqueID > upperBoundary ? 1 : o.UniqueID > lowerBoundary ? 3 : 2)).Where(r => r.DungeonRoomType == DungeonRoomType.EMPTY_ROOM
                     ).Take(guardRooms);
 
@@ -219,6 +245,7 @@ namespace DivineRightGame.LocalMapGenerator
                     case DungeonRoomType.GUARD_ROOM: tag = "Guard Dungeon"; break;
                     case DungeonRoomType.TRAPPED_ROOM: tag = "Trap Dungeon"; break;
                     case DungeonRoomType.TREASURE_ROOM: tag = "Treasure Dungeon"; break;
+                    case DungeonRoomType.WILD_ROOM: tag = "Empty Dungeon"; break;
                     default:
                         throw new NotImplementedException("Dungeon Room " + room.DungeonRoomType + " not planned for yet.");
                 }
@@ -262,12 +289,27 @@ namespace DivineRightGame.LocalMapGenerator
                 }
 
                 Actor[] roomEnemies = new Actor[]{};
-                if (room.DungeonRoomType == DungeonRoomType.GUARD_ROOM)
+                if (room.DungeonRoomType == DungeonRoomType.GUARD_ROOM || room.DungeonRoomType == DungeonRoomType.TREASURE_ROOM)
                 {
-                    //Create 3 enemies
-                    gennedMap = gen.GenerateEnemies(gennedMap, 4, "orc",out roomEnemies);
+                    //Create an amount of enemies
+                    gennedMap = gen.GenerateEnemies(gennedMap, random.Next(maxOwnedPopulation), ownerType,out roomEnemies);
 
                     enemies.AddRange(roomEnemies);
+                }
+
+                if (room.DungeonRoomType == DungeonRoomType.WILD_ROOM)
+                {
+                    //Create an amount of wild enemies - let's get a random type for this room
+                    string type = EnemyDataManager.GetEnemyType(false);
+
+                    gennedMap = gen.GenerateEnemies(gennedMap, random.Next(maxWildPopulation), type, out roomEnemies);
+
+                    //go through all of room enemies and set them to idle
+                    foreach (var enemy in roomEnemies)
+                    {
+                        enemy.MissionStack.Clear();
+                        enemy.MissionStack.Push(new IdleMission());
+                    }
                 }
 
                 //fit her onto the main map

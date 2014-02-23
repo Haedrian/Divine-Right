@@ -9,6 +9,7 @@ using DRObjects.Graphics;
 using DRObjects.LocalMapGeneratorObjects;
 using DivineRightGame.Managers;
 using DivineRightGame.LocalMapGenerator;
+using DRObjects.ActorHandling;
 
 namespace Divine_Right.HelperFunctions
 {
@@ -47,7 +48,9 @@ namespace Divine_Right.HelperFunctions
             Actor[] actors = null;
             List<PointOfInterest> pointsOfInterest = null;
 
-            MapBlock[,] generatedMap = gen.GenerateDungeon(5, 2, 2, 2,out start,out actors,out pointsOfInterest);
+            string getOwner = EnemyDataManager.GetEnemyType(true);
+
+            MapBlock[,] generatedMap = gen.GenerateDungeon(5, 2, 2, 2,getOwner,75,2,3,out start,out actors,out pointsOfInterest);
 
             GameState.LocalMap = new LocalMap(500, 500, 1, 0);
             GameState.LocalMap.PointsOfInterest = pointsOfInterest;

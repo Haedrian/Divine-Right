@@ -13,5 +13,7 @@ namespace DRObjects.ActorHandling
         public int EnemyID { get; set; }
         public string EnemyName { get; set; }
         public int EnemyLineOfSight { get; set; }
+        public string EnemyType { get; set; }
+        public bool Intelligent { get; set; }
     }
 }

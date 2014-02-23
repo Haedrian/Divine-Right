@@ -592,7 +592,7 @@ namespace DivineRightGame.LocalMapGenerator
         /// <param name="enemyCount"></param>
         /// <param name="enemyType"></param>
         /// <returns></returns>
-        public MapBlock[,] GenerateEnemies(MapBlock[,] blocks,int enemyCount,string enemyTag,out Actor[] actors)
+        public MapBlock[,] GenerateEnemies(MapBlock[,] blocks,int enemyCount,string enemyType,out Actor[] actors)
         {
             ItemFactory.ItemFactory fact = new ItemFactory.ItemFactory();
             List<Actor> actorList = new List<Actor>();
@@ -616,24 +616,21 @@ namespace DivineRightGame.LocalMapGenerator
                     int returnedID = -1;
                     //Put the enemy in there
 
-                    var enemyObject = fact.CreateItem(Archetype.ENEMIES, enemyTag, out returnedID);
+                    //Get the basic Actor object
+                    Actor actor = EnemyDataManager.CreateEnemy(enemyType, null, null,out returnedID);
 
-                    //Get the enemy data
-                    var data = EnemyDataManager.GetEnemyData(returnedID);
+                    var mapObject = fact.CreateItem("enemies", returnedID);
 
                     //Create the Actor
-                    Actor actor = new Actor();
                     actor.GlobalCoordinates = null; //useless for now
                     actor.IsPlayerCharacter = false;
-                    actor.LineOfSight = data.EnemyLineOfSight; 
-                    actor.MapCharacter = enemyObject;
-                    actor.UniqueId = Guid.NewGuid();
+                    actor.MapCharacter = mapObject;
 
                     actorList.Add(actor);
 
-                    blocks[x,y].ForcePutItemOnBlock(enemyObject);
+                    blocks[x,y].ForcePutItemOnBlock(mapObject);
 
-                    int missionType = random.Next(3); //TODO:CHANGE AFTER TESTING
+                    int missionType = random.Next(3); 
 
                     if (missionType == 0)
                     {

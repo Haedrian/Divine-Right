@@ -14,6 +14,11 @@ namespace DRObjects
     public class Actor
     {
         /// <summary>
+        /// If its an enemy, holds some auxillary data
+        /// </summary>
+        public EnemyData EnemyData {get;set;}
+
+        /// <summary>
         /// Which map item this Actor represents
         /// </summary> 
         public MapItem MapCharacter { get; set; }
