@@ -376,6 +376,7 @@ namespace DivineRightGame
                         GeneratePathfindingMap();
                         mission.TargetCoordinate = mission.Target.MapCharacter.Coordinate;
                         mission.Coordinates = PathfinderInterface.GetPath(actor.MapCharacter.Coordinate, mission.TargetCoordinate);
+                        continue;
                     }
 
                     //Okay, now...advance

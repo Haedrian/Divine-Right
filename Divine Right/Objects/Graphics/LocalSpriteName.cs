@@ -334,7 +334,12 @@ namespace DRObjects.Graphics
         
         //ENEMIES
         ENEMY_SKELETON,
-        ENEMY_ORC,
+        ENEMY_ORC_CIV,
+        ENEMY_ORC_LIGHT,
+        ENEMY_ORC_HEAVY,
+
+        DIRE_RAT,
+        DIRE_BEAR,
 
         //ENEMY THOUGHTS
         ENEMY_THOUGHT_WALK,
