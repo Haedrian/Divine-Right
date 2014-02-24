@@ -20,6 +20,7 @@ namespace DRObjects.Graphics
         private static string OUTDOORS = @"Graphics/Local/OutdoorItems";
         private static string DUNGEON = @"Graphics/Local/dungeonitems";
         private static string ENEMIES = @"Graphics/Local/enemies";
+        private static string HEALTH = @"Graphics/Interface/health";
 
         #endregion
 
@@ -400,6 +401,31 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.ENEMY_THOUGHT_ATTACK] = new SpriteData(ENEMIES, new Rectangle(100, 50, 50, 50));
 
             interfaceSprites[(int)InterfaceSpriteName.SCROLL] = new SpriteData(@"Graphics/Interface/scrollsandblocks", new Rectangle(224, 190, 96, 34));
+
+            interfaceSprites[(int)InterfaceSpriteName.HEAD_GOOD] = new SpriteData(HEALTH, new Rectangle(0, 0, 250, 93));
+            interfaceSprites[(int)InterfaceSpriteName.HEAD_HURT] = new SpriteData(HEALTH, new Rectangle(250, 0, 250, 93));
+            interfaceSprites[(int)InterfaceSpriteName.HEAD_INJURED] = new SpriteData(HEALTH, new Rectangle(500, 0, 250, 93));
+            interfaceSprites[(int)InterfaceSpriteName.HEAD_MISSING] = new SpriteData(HEALTH, new Rectangle(750, 0, 250, 93));
+
+            interfaceSprites[(int)InterfaceSpriteName.LEFT_ARM_GOOD] = new SpriteData(HEALTH,new Rectangle(0,93,71,211));
+            interfaceSprites[(int)InterfaceSpriteName.LEFT_ARM_HURT] = new SpriteData(HEALTH, new Rectangle(250, 93, 71, 211));
+            interfaceSprites[(int)InterfaceSpriteName.LEFT_ARM_INJURED] = new SpriteData(HEALTH, new Rectangle(500, 93, 71, 211));
+            interfaceSprites[(int)InterfaceSpriteName.LEFT_ARM_MISSING] = new SpriteData(HEALTH, new Rectangle(750, 93, 71, 211));
+
+            interfaceSprites[(int)InterfaceSpriteName.CHEST_GOOD] = new SpriteData(HEALTH, new Rectangle(71, 93, 107, 211));
+            interfaceSprites[(int)InterfaceSpriteName.CHEST_HURT] = new SpriteData(HEALTH, new Rectangle(321, 93, 107, 211));
+            interfaceSprites[(int)InterfaceSpriteName.CHEST_INJURED] = new SpriteData(HEALTH, new Rectangle(571, 93, 107, 211));
+            interfaceSprites[(int)InterfaceSpriteName.CHEST_MISSING] = new SpriteData(HEALTH, new Rectangle(821, 93, 107, 211));
+
+            interfaceSprites[(int)InterfaceSpriteName.RIGHT_ARM_GOOD] = new SpriteData(HEALTH, new Rectangle(178, 93, 71, 211));
+            interfaceSprites[(int)InterfaceSpriteName.RIGHT_ARM_HURT] = new SpriteData(HEALTH, new Rectangle(428, 93, 71, 211));
+            interfaceSprites[(int)InterfaceSpriteName.RIGHT_ARM_INJURED] = new SpriteData(HEALTH, new Rectangle(678, 93, 71, 211));
+            interfaceSprites[(int)InterfaceSpriteName.RIGHT_ARM_MISSING] = new SpriteData(HEALTH, new Rectangle(928, 93, 71, 211));
+
+            interfaceSprites[(int)InterfaceSpriteName.LEGS_GOOD] = new SpriteData(HEALTH, new Rectangle(0, 304, 250, 217));
+            interfaceSprites[(int)InterfaceSpriteName.LEGS_HURT] = new SpriteData(HEALTH, new Rectangle(250, 304, 250, 217));
+            interfaceSprites[(int)InterfaceSpriteName.LEGS_INJURED] = new SpriteData(HEALTH, new Rectangle(500, 304, 250, 217));
+            interfaceSprites[(int)InterfaceSpriteName.LEGS_MISSING] = new SpriteData(HEALTH, new Rectangle(750, 304, 250, 217));
         }
 
         public static SpriteData GetSprite(GlobalSpriteName name)

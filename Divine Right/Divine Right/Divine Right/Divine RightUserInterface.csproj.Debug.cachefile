@@ -41,6 +41,7 @@ Content\Graphics\Local\ForestsAndMines.xnb
 Content\Graphics\Local\OutdoorItems.xnb
 Content\Graphics\Local\dungeonitems.xnb
 Content\Graphics\Local\enemies.xnb
+Content\Graphics\Interface\health.xnb
 Content\Fonts\TextFeedbackFont.spritefont
 App.config
 Maplets.sdf
