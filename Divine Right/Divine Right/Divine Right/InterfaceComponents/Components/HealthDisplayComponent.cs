@@ -27,8 +27,16 @@ namespace Divine_Right.InterfaceComponents.Components
         private Rectangle rightArmRect;
         private Rectangle legRect;
 
+        private bool visible;
+
         private Texture2D blackTexture;
         #endregion
+
+        public bool Visible
+        {
+            get { return visible; }
+            set { visible = value; }
+        }
 
         /// <summary>
         /// Creates a new HealthDisplayComponent for a particular actor at a particular position
@@ -41,6 +49,7 @@ namespace Divine_Right.InterfaceComponents.Components
             this.locationX = locationX;
             this.locationY = locationY;
             this.actor = actor;
+            this.visible = true;
 
             rect = new Rectangle(locationX, locationY, 100, 209); //100 x 200 ?
 
@@ -55,6 +64,11 @@ namespace Divine_Right.InterfaceComponents.Components
 
         public void Draw(Microsoft.Xna.Framework.Content.ContentManager content, Microsoft.Xna.Framework.Graphics.SpriteBatch batch)
         {
+            if (!visible)
+            {
+                return; //draw nothing
+            }
+
             //Time to draw :)
             if (blackTexture == null)
             {
@@ -95,7 +109,7 @@ namespace Divine_Right.InterfaceComponents.Components
             destroy = false;
             actionType = null;
 
-            return true; //but it won't allow click through
+            return visible; //If it's visible - block it. Otherwise do nothing
         }
 
         public bool HandleKeyboard(Microsoft.Xna.Framework.Input.KeyboardState keyboard, out DRObjects.Enums.ActionTypeEnum? actionType, out object[] args, out DRObjects.MapCoordinate coord, out bool destroy)
@@ -106,7 +120,7 @@ namespace Divine_Right.InterfaceComponents.Components
             destroy = false;
             actionType = null;
 
-            return false;
+            return false; //This never does anything
         }
 
         public Microsoft.Xna.Framework.Rectangle ReturnLocation()

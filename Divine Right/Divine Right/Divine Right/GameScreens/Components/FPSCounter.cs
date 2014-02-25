@@ -10,7 +10,6 @@ namespace Divine_Right.GameScreens.Components
 {
     public class FPSCounter : DrawableGameComponent
     {
-        ContentManager content;
         SpriteBatch spriteBatch;
         SpriteFont spriteFont;
         Game game;
@@ -39,10 +38,7 @@ namespace Divine_Right.GameScreens.Components
 
         protected override void UnloadContent()
         {
-            if (content != null)
-            {
-                content.Unload();
-            }
+           
         }
 
 

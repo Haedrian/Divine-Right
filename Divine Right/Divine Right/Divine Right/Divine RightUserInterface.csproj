@@ -107,6 +107,7 @@
     <Compile Include="GameScreens\WorldGenerationScreen.cs" />
     <Compile Include="GraphicalObjects\InterfaceBlock.cs" />
     <Compile Include="HelperFunctions\TestFunctions.cs" />
+    <Compile Include="InterfaceComponents\Components\AutoSizeGameButton.cs" />
     <Compile Include="InterfaceComponents\Components\ContextMenuComponent.cs" />
     <Compile Include="InterfaceComponents\Components\HealthDisplayComponent.cs" />
     <Compile Include="InterfaceComponents\Components\ViewTileTextComponent.cs" />

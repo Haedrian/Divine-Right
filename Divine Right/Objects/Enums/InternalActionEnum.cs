@@ -15,5 +15,7 @@ namespace DRObjects.Enums
         SAVE,
         LOAD,
         EXIT,
+
+        OPEN_HEALTH,
     }
 }

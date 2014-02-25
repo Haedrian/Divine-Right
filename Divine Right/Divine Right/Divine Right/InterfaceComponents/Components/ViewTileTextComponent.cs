@@ -30,6 +30,7 @@ namespace Divine_Right.InterfaceComponents.Components
 
         #region Properties
 
+        protected bool visible;
         protected int locationX;
         protected int locationY;
         DateTime destroyTime;
@@ -51,6 +52,8 @@ namespace Divine_Right.InterfaceComponents.Components
             this.locationX = x;
             this.locationY = y;
             this.text = displayText;
+
+            visible = true;
 
             destroyTime = DateTime.Now.AddSeconds(LIFETIME);
         }
@@ -120,6 +123,19 @@ namespace Divine_Right.InterfaceComponents.Components
         public bool IsModal()
         {
             return false;
+        }
+
+
+        public bool Visible
+        {
+            get
+            {
+                return visible;
+            }
+            set
+            {
+                visible = value;
+            }
         }
     }
 }

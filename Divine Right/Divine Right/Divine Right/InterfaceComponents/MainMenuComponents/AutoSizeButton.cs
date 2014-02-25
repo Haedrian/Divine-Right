@@ -14,10 +14,10 @@ namespace Divine_Right.InterfaceComponents.MainMenuComponents
     {
         #region members
 
-        Rectangle drawRect;
-        string displayText;
-        InternalActionEnum action;
-        Object[] args;
+       internal Rectangle drawRect;
+       internal string displayText;
+       internal InternalActionEnum action;
+       internal Object[] args;
 
         #endregion
 
@@ -46,11 +46,16 @@ namespace Divine_Right.InterfaceComponents.MainMenuComponents
             this.drawRect = new Rectangle((int)(centerX - fontVector.X/2),(int)(centreY - fontVector.Y/2),(int)fontVector.X,(int)fontVector.Y);
         }
 
+        protected AutoSizeButton()
+        {
+
+        }
+
         #endregion
 
         #region Functions
 
-        public void Draw(ContentManager content, SpriteBatch batch)
+        public virtual void Draw(ContentManager content, SpriteBatch batch)
         {
             //draw a box
            // batch.Draw(content.Load<Texture2D>("MarbleTexture"), drawRect, Color.White);

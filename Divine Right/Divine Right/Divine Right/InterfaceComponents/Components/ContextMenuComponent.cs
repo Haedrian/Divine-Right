@@ -25,8 +25,16 @@ namespace Divine_Right.InterfaceComponents.Components
         protected List<ContextMenuItem> contextMenuItems;
         protected Rectangle drawRectangle;
         protected MapCoordinate coordinate;
+        private bool visible;
 
         #endregion
+
+        public bool Visible
+        {
+            get { return visible; }
+            set { visible = value; }
+        }
+
 
         #region Constructor
 
@@ -42,6 +50,7 @@ namespace Divine_Right.InterfaceComponents.Components
             this.drawRectangle.X = x;
             this.drawRectangle.Y = y;
             this.coordinate = coordinate;
+            Visible = true;
         }
 
 

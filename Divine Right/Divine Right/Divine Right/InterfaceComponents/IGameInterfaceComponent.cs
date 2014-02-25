@@ -58,5 +58,10 @@ namespace Divine_Right.InterfaceComponents
         /// </summary>
         /// <returns></returns>
         bool IsModal();
+
+        /// <summary>
+        /// Whether the control is visible
+        /// </summary>
+        bool Visible { get; set; }
     }
 }

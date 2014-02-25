@@ -89,7 +89,10 @@ namespace Divine_Right.GameScreens
         SpriteBatch spriteBatch;
         List<InterfaceBlock> blocks = new List<InterfaceBlock>();
         Game game;
+
         private List<IGameInterfaceComponent> interfaceComponents = new List<IGameInterfaceComponent>();
+        List<ISystemInterfaceComponent> menuButtons = new List<ISystemInterfaceComponent>();
+       
         private object[] parameters;
 
         /// <summary>
@@ -133,7 +136,12 @@ namespace Divine_Right.GameScreens
             }
 
             //Add the health control
-            interfaceComponents.Add(new HealthDisplayComponent(50, 50, null));
+            HealthDisplayComponent hdc = new HealthDisplayComponent(50, 50, null);
+            hdc.Visible = false;
+            interfaceComponents.Add(hdc);
+
+            //Create the menu buttons
+            menuButtons.Add(new AutoSizeGameButton("  Health  ", this.game.Content, InternalActionEnum.OPEN_HEALTH, new object[]{}, 50, PlayableHeight + 25));
         }
 
         protected override void LoadContent()
@@ -294,8 +302,44 @@ namespace Divine_Right.GameScreens
             {
                 bool mouseHandled = false;
 
+                InternalActionEnum? internalAction = null;
+                object[] arg = null;
+
+                foreach (var menuButton in menuButtons)
+                {
+
+                    if (menuButton.ReturnLocation().Contains(new Point(mouse.X,mouse.Y)) && menuButton.HandleClick(mouse.X, mouse.Y, out internalAction, out arg))
+                    {
+                        mouseHandled = true; //don't get into the other loop
+                        break; //break out
+                    }
+                }
+
+                if (internalAction.HasValue)
+                {
+                    //Let's do it here
+                    switch(internalAction.Value)
+                    {
+                        case InternalActionEnum.OPEN_HEALTH:
+                            //Toggle the health
+                            var health = this.interfaceComponents.Where(ic => ic.GetType().Equals(typeof(HealthDisplayComponent))).FirstOrDefault();
+
+                            health.Visible = !health.Visible;
+
+                            break;
+                            //TODO: THE REST
+                    }
+                }
+
+
+
                 for (int i = interfaceComponents.Count - 1; i >= 0; i--)
                 {
+                    if (mouseHandled)
+                    {
+                        break;
+                    }
+
                     var interfaceComponent = interfaceComponents[i];
 
                     //is the click within this interface's scope? or is it modal?
@@ -415,6 +459,10 @@ namespace Divine_Right.GameScreens
             this.DrawGrid(iBlocks);
 
             //any interface components to draw?
+            foreach (var button in menuButtons)
+            {
+                button.Draw(this.game.Content, this.spriteBatch);
+            }
 
             foreach (var interfaceComponent in interfaceComponents)
             {
