@@ -8,6 +8,7 @@ namespace DRObjects.Graphics
     public enum InterfaceSpriteName
     {
         SCROLL,
+        PAPER_TEXTURE,
         
         HEAD_GOOD,
         HEAD_HURT,

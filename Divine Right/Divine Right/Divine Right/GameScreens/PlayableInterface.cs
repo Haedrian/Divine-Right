@@ -131,6 +131,9 @@ namespace Divine_Right.GameScreens
             {
                 TestFunctions.GenerateDungeon();
             }
+
+            //Add the health control
+            interfaceComponents.Add(new HealthDisplayComponent(50, 50, null));
         }
 
         protected override void LoadContent()
