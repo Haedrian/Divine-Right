@@ -18,6 +18,7 @@ namespace Divine_Right.InterfaceComponents.Components
     public class AutoSizeGameButton:
         AutoSizeButton
     {
+
         public AutoSizeGameButton(string text, ContentManager content, InternalActionEnum action, Object[] args, int centerX, int centreY)
         {
             this.displayText = text;

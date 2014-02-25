@@ -459,8 +459,9 @@ namespace Divine_Right.GameScreens
             this.DrawGrid(iBlocks);
 
             //any interface components to draw?
-            foreach (var button in menuButtons)
+            foreach (AutoSizeGameButton button in menuButtons)
             {
+                button.drawRect.Y = PlayableHeight + 20;
                 button.Draw(this.game.Content, this.spriteBatch);
             }
 
