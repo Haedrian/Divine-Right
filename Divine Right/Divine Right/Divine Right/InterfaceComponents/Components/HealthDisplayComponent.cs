@@ -45,11 +45,11 @@ namespace Divine_Right.InterfaceComponents.Components
             rect = new Rectangle(locationX, locationY, 100, 209); //100 x 200 ?
 
             //Divide everything by 2.5
-            headRect = new Rectangle(locationX+21, locationY, 43, 38);
-            leftArmRect = new Rectangle(locationX,locationY+37, 33, 85);
-            chestRect = new Rectangle(locationX + 21, locationY + 37, 60, 72);
-            rightArmRect = new Rectangle(locationX + 58, locationY + 36, 33, 85);
-            legRect = new Rectangle(locationX+21, locationY + 108, 50, 87);
+            headRect = new Rectangle(locationX+20, locationY, 43, 38);
+            leftArmRect = new Rectangle(locationX,locationY+35, 33, 85);
+            chestRect = new Rectangle(locationX +27, locationY + 37, 55, 72);
+            rightArmRect = new Rectangle(locationX + 60, locationY + 36, 33, 85);
+            legRect = new Rectangle(locationX+20, locationY + 108, 50, 87);
             
         }
 
@@ -70,18 +70,19 @@ namespace Divine_Right.InterfaceComponents.Components
 
             
             //Start with head
-            var head = SpriteManager.GetSprite(InterfaceSpriteName.HEAD_GOOD);
-            var leftArm = SpriteManager.GetSprite(InterfaceSpriteName.LEFT_ARM_HURT);
-            var chest = SpriteManager.GetSprite(InterfaceSpriteName.CHEST_GOOD);
-            var rightArm = SpriteManager.GetSprite(InterfaceSpriteName.RIGHT_ARM_HURT);
-            var legs = SpriteManager.GetSprite(InterfaceSpriteName.LEGS_GOOD);
+            var head = SpriteManager.GetSprite(InterfaceSpriteName.HEAD);
+            var leftArm = SpriteManager.GetSprite(InterfaceSpriteName.LEFT_ARM);
+            var chest = SpriteManager.GetSprite(InterfaceSpriteName.CHEST);
+            var rightArm = SpriteManager.GetSprite(InterfaceSpriteName.RIGHT_ARM);
+            var legs = SpriteManager.GetSprite(InterfaceSpriteName.LEGS);
 
            // batch.Draw(content.Load<Texture2D>(head.path,))
-            batch.Draw(content.Load<Texture2D>(head.path), headRect, head.sourceRectangle, Color.Black);
-            batch.Draw(content.Load<Texture2D>(leftArm.path), leftArmRect, leftArm.sourceRectangle, Color.White);
-            batch.Draw(content.Load<Texture2D>(chest.path), chestRect, chest.sourceRectangle, Color.White);
-            batch.Draw(content.Load<Texture2D>(rightArm.path), rightArmRect, rightArm.sourceRectangle, Color.White);
-            batch.Draw(content.Load<Texture2D>(legs.path), legRect, legs.sourceRectangle, Color.White);
+            batch.Draw(content.Load<Texture2D>(head.path), headRect, head.sourceRectangle, Color.LightGray);
+            batch.Draw(content.Load<Texture2D>(leftArm.path), leftArmRect, leftArm.sourceRectangle, Color.Yellow);  
+            batch.Draw(content.Load<Texture2D>(rightArm.path), rightArmRect, rightArm.sourceRectangle, Color.Red);
+            batch.Draw(content.Load<Texture2D>(chest.path), chestRect, chest.sourceRectangle, Color.LightGray);
+
+            batch.Draw(content.Load<Texture2D>(legs.path), legRect, legs.sourceRectangle, Color.LightGray);
 
         }
 
