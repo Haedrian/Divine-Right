@@ -25,7 +25,7 @@ namespace Divine_Right.GameScreens
     /// <summary>
     /// The Actual Game Interface that the user plays in
     /// </summary>
-    class PlayableInterface: 
+    class PlayableInterface :
         DrawableGameComponent
     {
 
@@ -89,7 +89,7 @@ namespace Divine_Right.GameScreens
         SpriteBatch spriteBatch;
         List<InterfaceBlock> blocks = new List<InterfaceBlock>();
         Game game;
-        private IGameInterfaceComponent interfaceComponent = null;
+        private List<IGameInterfaceComponent> interfaceComponents = new List<IGameInterfaceComponent>();
         private object[] parameters;
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Divine_Right.GameScreens
 
         #endregion
 
-        public PlayableInterface(Game game,GraphicsDeviceManager gr,object[] parameters) :
+        public PlayableInterface(Game game, GraphicsDeviceManager gr, object[] parameters) :
             base(game)
         {
             this.game = game;
@@ -177,31 +177,41 @@ namespace Divine_Right.GameScreens
                 bool keyHandled = false;
                 bool destroy = false;
 
-                if (this.interfaceComponent != null)
+                //Do it upside down, so the stuff which appears on top happens first
+                for (int i = interfaceComponents.Count - 1; i >= 0; i--)
                 {
-                    keyHandled = this.interfaceComponent.HandleKeyboard(keyboardState, out kAction, out kArgs, out kTargetCoord, out destroy);
+                    var interfaceComponent = interfaceComponents[i];
+
+                    keyHandled = interfaceComponent.HandleKeyboard(keyboardState, out kAction, out kArgs, out kTargetCoord, out destroy);
 
                     //do we destroy?
 
                     if (destroy)
                     {
-                        this.interfaceComponent = null;
+                        interfaceComponents.RemoveAt(i);
+                        i++; //increment by 1
+                    }
+
+                    if (keyHandled)
+                    {
+                        //Break out of the loop - someone handled it
+                        break;
                     }
                 }
 
                 if (kAction != null)
                 {
-                   this.PerformAction(kTargetCoord, kAction.Value, kArgs);
+                    this.PerformAction(kTargetCoord, kAction.Value, kArgs);
                 }
 
                 //did we do anything?
                 if (keyHandled)
                 {
-                    
+
 
                 }
-                else 
-                { 
+                else
+                {
                     //Lets see if tab is held down
                     if (keyboardState.IsKeyDown(Keys.Tab))
                     {
@@ -217,52 +227,52 @@ namespace Divine_Right.GameScreens
                         TILEWIDTH = MAXTILEWIDTH;
                         TILEHEIGHT = MAXTILEHEIGHT;
                     }
-                    
+
                     //not handled, lets walk
-                //where is the user?
-                MapCoordinate coord = UserInterfaceManager.GetPlayerActor().MapCharacter.Coordinate;
-                MapCoordinate difference = new MapCoordinate(0, 0, 0, coord.MapType);
-                //we will either increase or decrease it by an amount depending on the directional key pressed
+                    //where is the user?
+                    MapCoordinate coord = UserInterfaceManager.GetPlayerActor().MapCharacter.Coordinate;
+                    MapCoordinate difference = new MapCoordinate(0, 0, 0, coord.MapType);
+                    //we will either increase or decrease it by an amount depending on the directional key pressed
 
-                if (keyboardState.IsKeyDown(Keys.OemPeriod))
-                {
-                    //Just waste time
-                    UserInterfaceManager.PerformLocalTick();
-                }
-                else if (keyboardState.IsKeyDown(Keys.Up))
-                {
-                    difference = new MapCoordinate(0, 1, 0, coord.MapType);
-                }
-                else if (keyboardState.IsKeyDown(Keys.Down))
-                {
-                    difference = new MapCoordinate(0, -1, 0, coord.MapType);
-                }
-                else if (keyboardState.IsKeyDown(Keys.Left))
-                {
-                    difference = new MapCoordinate(-1, 0, 0, coord.MapType);
-                }
-                else if (keyboardState.IsKeyDown(Keys.Right))
-                {
-                    difference = new MapCoordinate(1, 0, 0, coord.MapType);
-                }
-                
+                    if (keyboardState.IsKeyDown(Keys.OemPeriod))
+                    {
+                        //Just waste time
+                        UserInterfaceManager.PerformLocalTick();
+                    }
+                    else if (keyboardState.IsKeyDown(Keys.Up))
+                    {
+                        difference = new MapCoordinate(0, 1, 0, coord.MapType);
+                    }
+                    else if (keyboardState.IsKeyDown(Keys.Down))
+                    {
+                        difference = new MapCoordinate(0, -1, 0, coord.MapType);
+                    }
+                    else if (keyboardState.IsKeyDown(Keys.Left))
+                    {
+                        difference = new MapCoordinate(-1, 0, 0, coord.MapType);
+                    }
+                    else if (keyboardState.IsKeyDown(Keys.Right))
+                    {
+                        difference = new MapCoordinate(1, 0, 0, coord.MapType);
+                    }
 
-                //The fact that they'er not the same means the user pressed a key, lets move
-                if (!difference.Equals(new MapCoordinate(0, 0, 0, coord.MapType)))
-                {
-                    //add the difference to the coordinate
-                    coord += difference;
 
-                    //send a move message to that coordinate
-                    this.PerformAction(coord, DRObjects.Enums.ActionTypeEnum.MOVE, null);
+                    //The fact that they'er not the same means the user pressed a key, lets move
+                    if (!difference.Equals(new MapCoordinate(0, 0, 0, coord.MapType)))
+                    {
+                        //add the difference to the coordinate
+                        coord += difference;
 
-                }
-                
+                        //send a move message to that coordinate
+                        this.PerformAction(coord, DRObjects.Enums.ActionTypeEnum.MOVE, null);
+
+                    }
+
                 }
                 //mark the current time
                 previousGameTime = (int)gameTime.TotalGameTime.TotalMilliseconds;
             }
-            
+
             #region Mouse Handling
 
             //See what the mouse is doing
@@ -281,23 +291,32 @@ namespace Divine_Right.GameScreens
             {
                 bool mouseHandled = false;
 
-                if (this.interfaceComponent != null)
+                for (int i = interfaceComponents.Count - 1; i >= 0; i--)
                 {
+                    var interfaceComponent = interfaceComponents[i];
+
                     //is the click within this interface's scope? or is it modal?
 
-                    Point mousePoint = new Point(mouse.X,mouse.Y);
+                    Point mousePoint = new Point(mouse.X, mouse.Y);
 
-                    if (this.interfaceComponent.IsModal() || this.interfaceComponent.ReturnLocation().Contains(mousePoint))
+                    if (interfaceComponent.IsModal() || interfaceComponent.ReturnLocation().Contains(mousePoint))
                     {
                         bool destroy;
 
                         //see if the component can handle it
-                        mouseHandled = this.interfaceComponent.HandleClick(mouse.X, mouse.Y, mouseAction.Value, out action, out args,out targetCoord,out destroy);
+                        mouseHandled = interfaceComponent.HandleClick(mouse.X, mouse.Y, mouseAction.Value, out action, out args, out targetCoord, out destroy);
 
                         if (destroy)
                         {
                             //destroy the component
-                            this.interfaceComponent = null;
+                            interfaceComponents.RemoveAt(i);
+                            i++;
+                        }
+
+                        if (mouseHandled)
+                        {
+                            //Get out of the loop - someone has handled it
+                            break;
                         }
                     }
                 }
@@ -312,7 +331,7 @@ namespace Divine_Right.GameScreens
                 //do we continue?
                 if (mouseHandled)
                 {
-                    
+
                 }
                 else
                 {
@@ -339,18 +358,33 @@ namespace Divine_Right.GameScreens
                     {
                         if (iBlock != null)
                         {
-                            //if it was a right click, we examine
                             ActionTypeEnum[] actions = UserInterfaceManager.GetPossibleActions(iBlock.MapCoordinate);
 
                             //we are going to get a context menu
-                            this.interfaceComponent = new ContextMenuComponent(mouse.X + 10, mouse.Y, iBlock.MapCoordinate);
+                            
+                            //Check for other context menus and remove them - we can only have one
+                            for (int i = 0; i < interfaceComponents.Count; i++)
+                            {
+                                if (interfaceComponents[i].GetType().Equals(typeof(ContextMenuComponent)))
+                                {
+                                    //remove it
+                                    interfaceComponents.RemoveAt(i);
+                                    i--;
+                                }
+                            }
+
+                            ContextMenuComponent comp = new ContextMenuComponent(mouse.X + 10, mouse.Y, iBlock.MapCoordinate);
+
                             foreach (ActionTypeEnum act in actions)
                             {
-                                (this.interfaceComponent as ContextMenuComponent).AddContextMenuItem(act, null, this.game.Content);
+                                comp.AddContextMenuItem(act, null, this.game.Content);
                             }
+
+                            //And add it
+                            interfaceComponents.Add(comp);
                         }
+                    }
                 }
-            }
 
             } //end mouse handling
 
@@ -376,14 +410,15 @@ namespace Divine_Right.GameScreens
             //draw them
             spriteBatch.Begin();
             this.DrawGrid(iBlocks);
-            
+
             //any interface components to draw?
 
-            if (interfaceComponent != null)
+            foreach (var interfaceComponent in interfaceComponents)
             {
                 interfaceComponent.Draw(this.game.Content, this.spriteBatch);
-
             }
+
+
             spriteBatch.End();
 
             base.Draw(gameTime);
@@ -492,7 +527,7 @@ namespace Divine_Right.GameScreens
                             }
                             else
                             { //part of a tileset
-                                spriteBatch.Draw(this.game.Content.Load<Texture2D>(tileGraphic.path), rec,tileGraphic.sourceRectangle, Color.White);
+                                spriteBatch.Draw(this.game.Content.Load<Texture2D>(tileGraphic.path), rec, tileGraphic.sourceRectangle, Color.White);
                             }
                         }
                     }
@@ -509,7 +544,7 @@ namespace Divine_Right.GameScreens
                 {
                     if (block.ItemGraphics.Length != 0)
                     {
-                        
+
                         foreach (SpriteData itemGraphic in block.ItemGraphics)
                         {
                             if (itemGraphic != null)
@@ -542,7 +577,19 @@ namespace Divine_Right.GameScreens
         public void PerformAction(MapCoordinate coord, DRObjects.Enums.ActionTypeEnum actionType, object[] args)
         {
             //remove any interface component
-            this.interfaceComponent = null;
+            
+            //remove any viewtiletext components or contextmenu components
+            for (int i = 0; i < interfaceComponents.Count; i++)
+            {
+                var type = interfaceComponents[i].GetType();
+                if (type.Equals(typeof(ViewTileTextComponent)) || type.Equals(typeof(ContextMenuComponent)))
+                {
+                    //delete
+                    interfaceComponents.RemoveAt(i);
+                    i--;
+                }
+            }
+
 
             PlayerFeedback[] fb = UserInterfaceManager.PerformAction(coord, actionType, args);
 
@@ -554,11 +601,11 @@ namespace Divine_Right.GameScreens
                 {
                     MouseState mouse = Mouse.GetState();
 
-                    //add it to the list
-                    this.interfaceComponent = new ViewTileTextComponent(mouse.X + 15, mouse.Y, (feedback as TextFeedback).Text);
+                    //Display it
+                    interfaceComponents.Add(new ViewTileTextComponent(mouse.X + 15, mouse.Y, (feedback as TextFeedback).Text));
                 }
                 //TODO: THE REST
-            }           
+            }
 
         }
         /// <summary>
