@@ -25,6 +25,7 @@ namespace Divine_Right.HelperFunctions
             //Player character
             DivineRightGame.GameState.PlayerCharacter = new DRObjects.Actor();
             GameState.PlayerCharacter.IsPlayerCharacter = true;
+            GameState.PlayerCharacter.Anatomy = new HumanoidAnatomy(AnatomyType.HUMAN);
 
             MapBlock block = GameState.LocalMap.GetBlockAtCoordinate(new MapCoordinate(5, 5, 0, DRObjects.Enums.MapTypeEnum.LOCAL));
             
@@ -78,6 +79,7 @@ namespace Divine_Right.HelperFunctions
             GameState.PlayerCharacter = new Actor();
             GameState.PlayerCharacter.MapCharacter = player;
             GameState.PlayerCharacter.IsPlayerCharacter = true;
+            GameState.PlayerCharacter.Anatomy = new HumanoidAnatomy(AnatomyType.HUMAN);
 
             GameState.LocalMap.Actors.Add(GameState.PlayerCharacter);
 

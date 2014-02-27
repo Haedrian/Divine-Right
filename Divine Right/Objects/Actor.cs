@@ -59,6 +59,11 @@ namespace DRObjects
         public Guid UniqueId { get; set; }
 
         /// <summary>
+        /// The anatomy of the actor. For now we'll stick with humanoid. Later we'll expand.
+        /// </summary>
+        public HumanoidAnatomy Anatomy { get; set; }
+
+        /// <summary>
         /// Two LocalActors are considered equal if they share the same UniqueID
         /// </summary>
         /// <param name="obj"></param>

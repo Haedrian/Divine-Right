@@ -69,6 +69,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActorHandling\ActorHealth.cs" />
     <Compile Include="ActorHandling\ActorMission.cs" />
     <Compile Include="ActorHandling\ActorMissions\AttackMission.cs" />
     <Compile Include="ActorHandling\ActorMissions\HuntDownMission.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="ActorHandling\ActorMissions\WanderMission.cs" />
     <Compile Include="ActorHandling\ActorMissions\WalkToMission.cs" />
     <Compile Include="ActorHandling\ActorMissionType.cs" />
+    <Compile Include="ActorHandling\AnatomyEnum.cs" />
     <Compile Include="ActorHandling\EnemyData.cs" />
     <Compile Include="ActorHandling\EnemyDataManager.cs" />
     <Compile Include="Compare\MapCoordinateCompare.cs" />

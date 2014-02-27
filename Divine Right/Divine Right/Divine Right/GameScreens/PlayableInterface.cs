@@ -19,6 +19,7 @@ using Divine_Right.InterfaceComponents.Components;
 using DRObjects.Graphics;
 using Divine_Right.GameScreens.Components;
 using DivineRightGame.LocalMapGenerator;
+using DivineRightGame;
 
 namespace Divine_Right.GameScreens
 {
@@ -136,7 +137,7 @@ namespace Divine_Right.GameScreens
             }
 
             //Add the health control
-            HealthDisplayComponent hdc = new HealthDisplayComponent(50, 50, null);
+            HealthDisplayComponent hdc = new HealthDisplayComponent(50, 50, GameState.LocalMap.Actors.Where(a => a.IsPlayerCharacter).FirstOrDefault() );
             hdc.Visible = false;
             interfaceComponents.Add(hdc);
 
