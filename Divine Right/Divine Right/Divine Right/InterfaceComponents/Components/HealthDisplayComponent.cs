@@ -12,7 +12,7 @@ namespace Divine_Right.InterfaceComponents.Components
     /// <summary>
     /// An interface component which shows the health of the actor in question
     /// </summary>
-    public class HealthDisplayComponent:
+    public class HealthDisplayComponent :
         IGameInterfaceComponent
     {
         #region Properties
@@ -54,12 +54,12 @@ namespace Divine_Right.InterfaceComponents.Components
             rect = new Rectangle(locationX, locationY, 100, 209); //100 x 200 ?
 
             //Divide everything by 2.5
-            headRect = new Rectangle(locationX+20, locationY, 43, 38);
-            leftArmRect = new Rectangle(locationX,locationY+35, 33, 85);
-            chestRect = new Rectangle(locationX +27, locationY + 37, 55, 72);
+            headRect = new Rectangle(locationX + 20, locationY, 43, 38);
+            leftArmRect = new Rectangle(locationX, locationY + 35, 33, 85);
+            chestRect = new Rectangle(locationX + 27, locationY + 37, 55, 72);
             rightArmRect = new Rectangle(locationX + 60, locationY + 36, 33, 85);
-            legRect = new Rectangle(locationX+23, locationY + 108, 50, 87);
-            
+            legRect = new Rectangle(locationX + 23, locationY + 108, 50, 87);
+
         }
 
         public void Draw(Microsoft.Xna.Framework.Content.ContentManager content, Microsoft.Xna.Framework.Graphics.SpriteBatch batch)
@@ -82,21 +82,21 @@ namespace Divine_Right.InterfaceComponents.Components
 
             batch.Draw(content.Load<Texture2D>(scrollBackground.path), rect, scrollBackground.sourceRectangle, Color.White);
 
-            
+
             //Let's determine how injured each part is.
             var health = actor.Anatomy;
 
-            var head = SpriteManager.GetSprite(InterfaceSpriteName.HEAD);            
+            var head = SpriteManager.GetSprite(InterfaceSpriteName.HEAD);
             var leftArm = SpriteManager.GetSprite(InterfaceSpriteName.LEFT_ARM);
             var chest = SpriteManager.GetSprite(InterfaceSpriteName.CHEST);
             var rightArm = SpriteManager.GetSprite(InterfaceSpriteName.RIGHT_ARM);
             var legs = SpriteManager.GetSprite(InterfaceSpriteName.LEGS);
 
-            batch.Draw(content.Load<Texture2D>(head.path), headRect, head.sourceRectangle, this.GetColour(health.Head,health.HeadMax));
-            batch.Draw(content.Load<Texture2D>(leftArm.path), leftArmRect, leftArm.sourceRectangle, this.GetColour(health.LeftArm,health.LeftArmMax));
-            batch.Draw(content.Load<Texture2D>(rightArm.path), rightArmRect, rightArm.sourceRectangle, this.GetColour(health.RightArm,health.RightArmMax));
-            batch.Draw(content.Load<Texture2D>(chest.path), chestRect, chest.sourceRectangle, this.GetColour(health.Chest,health.ChestMax));
-            batch.Draw(content.Load<Texture2D>(legs.path), legRect, legs.sourceRectangle, this.GetColour(health.Legs,health.LegsMax));
+            batch.Draw(content.Load<Texture2D>(head.path), headRect, head.sourceRectangle, this.GetColour(health.Head, health.HeadMax));
+            batch.Draw(content.Load<Texture2D>(leftArm.path), leftArmRect, leftArm.sourceRectangle, this.GetColour(health.LeftArm, health.LeftArmMax));
+            batch.Draw(content.Load<Texture2D>(rightArm.path), rightArmRect, rightArm.sourceRectangle, this.GetColour(health.RightArm, health.RightArmMax));
+            batch.Draw(content.Load<Texture2D>(chest.path), chestRect, chest.sourceRectangle, this.GetColour(health.Chest, health.ChestMax));
+            batch.Draw(content.Load<Texture2D>(legs.path), legRect, legs.sourceRectangle, this.GetColour(health.Legs, health.LegsMax));
 
         }
 
@@ -109,35 +109,34 @@ namespace Divine_Right.InterfaceComponents.Components
         private Color GetColour(int health, int maxHealth)
         {
             var currentColour = Color.Blue;
+            double healthPercentage = (double) health / maxHealth;
 
-            if (health < -5) //missing
+            if (health <= -5) //missing
             {
                 currentColour = Color.Transparent;
             }
-
+            else
             if (health <= 0) //destroyed
             {
                 currentColour = Color.Red;
             }
-
-            double healthPercentage = health/ maxHealth;
-
-            if (healthPercentage < 0.33)
+            else
+            if (healthPercentage > 0.66)
             {
-                //Really hurt
-                currentColour = Color.Orange;
+                //fine
+                currentColour = Color.GhostWhite;
             }
-
+            else
             if (healthPercentage < 0.66)
             {
                 //Hurt
                 currentColour = Color.Yellow;
             }
-
-            if (healthPercentage > 0.66)
+            else
+            if (healthPercentage < 0.33)
             {
-                //fine
-                currentColour = Color.GhostWhite;
+                //Really hurt
+                currentColour = Color.Orange;
             }
 
             return currentColour;

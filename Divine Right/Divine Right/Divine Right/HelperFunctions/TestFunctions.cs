@@ -81,6 +81,13 @@ namespace Divine_Right.HelperFunctions
             GameState.PlayerCharacter.IsPlayerCharacter = true;
             GameState.PlayerCharacter.Anatomy = new HumanoidAnatomy(AnatomyType.HUMAN);
 
+            GameState.PlayerCharacter.Anatomy.Chest = 8;
+            GameState.PlayerCharacter.Anatomy.Head = 4;
+            GameState.PlayerCharacter.Anatomy.LeftArm = -7;
+            GameState.PlayerCharacter.Anatomy.RightArm = -1;
+            GameState.PlayerCharacter.Anatomy.Legs = 3;
+
+
             GameState.LocalMap.Actors.Add(GameState.PlayerCharacter);
 
         }
