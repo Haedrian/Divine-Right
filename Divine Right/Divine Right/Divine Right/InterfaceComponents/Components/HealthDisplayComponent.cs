@@ -69,14 +69,6 @@ namespace Divine_Right.InterfaceComponents.Components
                 return; //draw nothing
             }
 
-            //Time to draw :)
-            if (blackTexture == null)
-            {
-                //Create it, then cache it
-                blackTexture = new Texture2D(batch.GraphicsDevice, 1, 1);
-                blackTexture.SetData(new Color[] { Color.Black });
-            }
-
             //Draw the background
             var scrollBackground = SpriteManager.GetSprite(InterfaceSpriteName.PAPER_TEXTURE);
 

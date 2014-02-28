@@ -25,6 +25,7 @@ namespace DRObjects.Graphics
         AXE,
         MACE,
         DEFENSE,
-        SPEAR
+        SPEAR,
+        BLOOD
     }
 }

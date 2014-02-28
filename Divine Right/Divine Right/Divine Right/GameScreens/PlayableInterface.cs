@@ -141,6 +141,10 @@ namespace Divine_Right.GameScreens
             hdc.Visible = false;
             interfaceComponents.Add(hdc);
 
+            CharacterSheetComponent csc = new CharacterSheetComponent(50, 50, GameState.LocalMap.Actors.Where(a => a.IsPlayerCharacter).FirstOrDefault());
+            csc.Visible = true;
+            interfaceComponents.Add(csc);
+
             //Create the menu buttons
             menuButtons.Add(new AutoSizeGameButton("  Health  ", this.game.Content, InternalActionEnum.OPEN_HEALTH, new object[]{}, 50, PlayableHeight + 25));
         }
