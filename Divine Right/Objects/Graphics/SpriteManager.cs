@@ -21,6 +21,7 @@ namespace DRObjects.Graphics
         private static string DUNGEON = @"Graphics/Local/dungeonitems";
         private static string ENEMIES = @"Graphics/Local/enemies";
         private static string HEALTH = @"Graphics/Interface/health2";
+        private static string CHARACTER_SHEET = @"Graphics/Interface/CharacterSheetIcons";
 
         #endregion
 
@@ -408,6 +409,17 @@ namespace DRObjects.Graphics
             interfaceSprites[(int)InterfaceSpriteName.CHEST] = new SpriteData(HEALTH, new Rectangle(271, 91, 120, 181));
             interfaceSprites[(int)InterfaceSpriteName.RIGHT_ARM] = new SpriteData(HEALTH, new Rectangle(396, 275, 88, 213));
             interfaceSprites[(int)InterfaceSpriteName.LEGS] = new SpriteData(HEALTH, new Rectangle(250, 275, 124, 248));
+
+            interfaceSprites[(int)InterfaceSpriteName.BRAWN] = new SpriteData(CHARACTER_SHEET, new Rectangle(0, 0, 50, 50));
+            interfaceSprites[(int)InterfaceSpriteName.DEX] = new SpriteData(CHARACTER_SHEET, new Rectangle(50, 0, 50, 50));
+            interfaceSprites[(int)InterfaceSpriteName.AGIL] = new SpriteData(CHARACTER_SHEET, new Rectangle(100, 0, 50, 50));
+            interfaceSprites[(int)InterfaceSpriteName.PERC] = new SpriteData(CHARACTER_SHEET, new Rectangle(150, 0, 50, 50));
+            interfaceSprites[(int)InterfaceSpriteName.INTEL] = new SpriteData(CHARACTER_SHEET, new Rectangle(200, 0, 50, 50));
+            interfaceSprites[(int)InterfaceSpriteName.SWORD] = new SpriteData(CHARACTER_SHEET, new Rectangle(250, 0, 50, 50));
+            interfaceSprites[(int)InterfaceSpriteName.AXE] = new SpriteData(CHARACTER_SHEET, new Rectangle(300, 0, 50, 50));
+            interfaceSprites[(int)InterfaceSpriteName.MACE] = new SpriteData(CHARACTER_SHEET, new Rectangle(350, 0, 50, 50));
+            interfaceSprites[(int)InterfaceSpriteName.DEFENSE] = new SpriteData(CHARACTER_SHEET, new Rectangle(400, 0, 50, 50));
+            interfaceSprites[(int)InterfaceSpriteName.SPEAR] = new SpriteData(CHARACTER_SHEET, new Rectangle(450, 0, 50, 50));
         }
 
         public static SpriteData GetSprite(GlobalSpriteName name)

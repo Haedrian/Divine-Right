@@ -15,5 +15,16 @@ namespace DRObjects.Graphics
         CHEST,
         RIGHT_ARM,
         LEGS,
+
+        BRAWN,
+        DEX,
+        AGIL,
+        PERC,
+        INTEL,
+        SWORD,
+        AXE,
+        MACE,
+        DEFENSE,
+        SPEAR
     }
 }
