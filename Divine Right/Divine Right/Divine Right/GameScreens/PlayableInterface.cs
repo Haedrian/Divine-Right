@@ -147,6 +147,8 @@ namespace Divine_Right.GameScreens
 
             //Create the menu buttons
             menuButtons.Add(new AutoSizeGameButton("  Health  ", this.game.Content, InternalActionEnum.OPEN_HEALTH, new object[]{}, 50, PlayableHeight + 25));
+            menuButtons.Add(new AutoSizeGameButton(" Attributes ", this.game.Content, InternalActionEnum.OPEN_ATTRIBUTES, new object[] { }, 150, PlayableHeight + 25));
+
         }
 
         protected override void LoadContent()
@@ -154,6 +156,11 @@ namespace Divine_Right.GameScreens
             base.LoadContent();
             spriteBatch = new SpriteBatch(GraphicsDevice);
         }
+
+        bool isDragging = false;
+        int dragPointX = -1;
+        int dragPointY = -1;
+        IGameInterfaceComponent dragItem = null;
 
         public override void Update(GameTime gameTime)
         {
@@ -313,7 +320,7 @@ namespace Divine_Right.GameScreens
                 foreach (var menuButton in menuButtons)
                 {
 
-                    if (menuButton.ReturnLocation().Contains(new Point(mouse.X,mouse.Y)) && menuButton.HandleClick(mouse.X, mouse.Y, out internalAction, out arg))
+                    if (menuButton.ReturnLocation().Contains(new Point(mouse.X,mouse.Y)) && mouseAction == MouseActionEnum.LEFT_CLICK && menuButton.HandleClick(mouse.X, mouse.Y, out internalAction, out arg))
                     {
                         mouseHandled = true; //don't get into the other loop
                         break; //break out
@@ -332,10 +339,39 @@ namespace Divine_Right.GameScreens
                             health.Visible = !health.Visible;
 
                             break;
+                        case InternalActionEnum.OPEN_ATTRIBUTES:
+                            //Toggle the attributes
+                            var att = this.interfaceComponents.Where(ic => ic.GetType().Equals(typeof(CharacterSheetComponent))).FirstOrDefault();
+                            att.Visible = !att.Visible;
+
+                            break;
                             //TODO: THE REST
                     }
                 }
 
+                //Are we dragging something?
+
+                if (isDragging)
+                {
+                    //Check the location we're at
+                    int deltaX = mouse.X - dragPointX;
+                    int deltaY = mouse.Y - dragPointY;
+
+                    //Drag it
+                    dragItem.PerformDrag(deltaX, deltaY);
+
+                    //Update the dragpoints
+
+                    dragPointX = deltaX;
+                    dragPointY = deltaY;
+
+                    //are we still dragging?
+                    if (mouseAction.Value != MouseActionEnum.DRAG)
+                    {
+                        //Nope
+                        isDragging = false;
+                    }
+                }
 
 
                 for (int i = interfaceComponents.Count - 1; i >= 0; i--)
@@ -354,6 +390,19 @@ namespace Divine_Right.GameScreens
                     if (interfaceComponent.IsModal() || interfaceComponent.ReturnLocation().Contains(mousePoint))
                     {
                         bool destroy;
+
+                        //Are we dragging?
+                        if (mouseAction.Value == MouseActionEnum.DRAG)
+                        {
+                            //Yes
+                            this.dragPointX = mouse.X;
+                            this.dragPointY = mouse.Y;
+                            isDragging = true;
+                            dragItem = interfaceComponent;
+
+                            mouseHandled = true;
+                            break; //break out
+                        }
 
                         //see if the component can handle it
                         mouseHandled = interfaceComponent.HandleClick(mouse.X, mouse.Y, mouseAction.Value, out action, out args, out targetCoord, out destroy);
@@ -676,6 +725,12 @@ namespace Divine_Right.GameScreens
             {
                 //left click
                 return MouseActionEnum.LEFT_CLICK;
+            }
+
+            if (this.lastLeftButtonClicked && state.LeftButton == ButtonState.Pressed)
+            {
+                //Starting to drag
+                return MouseActionEnum.DRAG;
             }
 
             if (this.lastRightButtonClicked && (state.RightButton == ButtonState.Released))

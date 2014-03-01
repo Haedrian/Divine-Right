@@ -185,5 +185,11 @@ namespace Divine_Right.InterfaceComponents.Components
         {
             return false;
         }
+
+
+        public void PerformDrag(int x, int y)
+        {
+            return; //Do nothing
+        }
     }
 }

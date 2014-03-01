@@ -54,6 +54,13 @@ namespace Divine_Right.InterfaceComponents
         Rectangle ReturnLocation();
 
         /// <summary>
+        /// What happens when there is an attempt to drag the component. Could be ignored.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        void PerformDrag(int deltaX, int deltaY);
+
+        /// <summary>
         /// Determines whether the current component is modal (blocks all interface controls or not)
         /// </summary>
         /// <returns></returns>

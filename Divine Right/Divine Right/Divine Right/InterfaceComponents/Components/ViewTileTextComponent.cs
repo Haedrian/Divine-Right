@@ -137,5 +137,11 @@ namespace Divine_Right.InterfaceComponents.Components
                 visible = value;
             }
         }
+
+
+        public void PerformDrag(int x, int y)
+        {
+           //Do nothing
+        }
     }
 }

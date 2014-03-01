@@ -12,7 +12,7 @@ namespace Divine_Right.InterfaceComponents.Objects.Enums
     {
         LEFT_CLICK,
         RIGHT_CLICK,
-        DRAG_START,
+        DRAG,
         DRAG_RELEASE,
         DOUBLE_CLICK,
 

@@ -17,5 +17,7 @@ namespace DRObjects.Enums
         EXIT,
 
         OPEN_HEALTH,
+        OPEN_ATTRIBUTES,
+
     }
 }

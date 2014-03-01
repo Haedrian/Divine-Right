@@ -97,7 +97,14 @@ namespace Divine_Right.InterfaceComponents.Components
 
         public bool HandleClick(int x, int y, Objects.Enums.MouseActionEnum mouseAction, out DRObjects.Enums.ActionTypeEnum? actionType, out object[] args, out DRObjects.MapCoordinate coord, out bool destroy)
         {
-            throw new NotImplementedException();
+            //This does nothing
+
+            args = null;
+            coord = null;
+            destroy = false;
+            actionType = null;
+
+            return visible; //If it's visible - block it. Otherwise do nothing
         }
 
         public bool HandleKeyboard(Microsoft.Xna.Framework.Input.KeyboardState keyboard, out DRObjects.Enums.ActionTypeEnum? actionType, out object[] args, out DRObjects.MapCoordinate coord, out bool destroy)
@@ -129,6 +136,15 @@ namespace Divine_Right.InterfaceComponents.Components
             {
                 visible = value;
             }
+        }
+
+
+        public void PerformDrag(int x, int y)
+        {
+            this.locationX += x;
+            this.locationY += y;
+
+            rect = new Rectangle(locationX, locationY, 210, 170);
         }
     }
 }

@@ -167,5 +167,22 @@ namespace Divine_Right.InterfaceComponents.Components
         {
             return false;
         }
+
+
+        public void PerformDrag(int x, int y)
+        {
+            this.locationX += x;
+            this.locationY += y;
+
+            //Move everything
+            rect = new Rectangle(locationX, locationY, 100, 209); //100 x 200 ?
+
+            //Divide everything by 2.5
+            headRect = new Rectangle(locationX + 20, locationY, 43, 38);
+            leftArmRect = new Rectangle(locationX, locationY + 35, 33, 85);
+            chestRect = new Rectangle(locationX + 27, locationY + 37, 55, 72);
+            rightArmRect = new Rectangle(locationX + 60, locationY + 36, 33, 85);
+            legRect = new Rectangle(locationX + 23, locationY + 108, 50, 87);
+        }
     }
 }
