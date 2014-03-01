@@ -142,7 +142,7 @@ namespace Divine_Right.GameScreens
             interfaceComponents.Add(hdc);
 
             CharacterSheetComponent csc = new CharacterSheetComponent(50, 50, GameState.LocalMap.Actors.Where(a => a.IsPlayerCharacter).FirstOrDefault());
-            csc.Visible = true;
+            csc.Visible = false;
             interfaceComponents.Add(csc);
 
             //Create the menu buttons
