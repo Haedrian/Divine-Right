@@ -401,6 +401,12 @@ namespace Divine_Right.GameScreens
                             dragItem = interfaceComponent;
 
                             mouseHandled = true;
+
+                            //insert the item again
+                            interfaceComponents.RemoveAt(i);
+
+                            interfaceComponents.Add(interfaceComponent);
+
                             break; //break out
                         }
 
