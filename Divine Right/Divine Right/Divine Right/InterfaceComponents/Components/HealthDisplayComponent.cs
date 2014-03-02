@@ -28,8 +28,6 @@ namespace Divine_Right.InterfaceComponents.Components
         private Rectangle legRect;
 
         private bool visible;
-
-        private Texture2D blackTexture;
         #endregion
 
         public bool Visible

@@ -14,6 +14,7 @@ namespace DRObjects.Enums
         TILES,
         TOGGLEITEMS,
         ENEMIES,
+        RACE,
 
     }
 }

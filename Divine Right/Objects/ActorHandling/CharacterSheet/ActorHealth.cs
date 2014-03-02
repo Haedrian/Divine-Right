@@ -25,28 +25,5 @@ namespace DRObjects.ActorHandling
         public int Legs { get; set; }
         public int LegsMax { get; set; }
 
-
-
-        /// <summary>
-        /// Creates a brand new fully healthy anatomy from a type
-        /// </summary>
-        /// <param name="type"></param>
-        public HumanoidAnatomy(AnatomyType type)
-        {
-            switch(type)
-            {
-                case AnatomyType.HUMAN:
-                    Head = HeadMax = 4;
-                    LeftArm = LeftArmMax = 6;
-                    RightArm = RightArmMax = 6;
-                    Chest = ChestMax = 12;
-                    Legs = LegsMax = 8;
-                    break;
-
-                default:
-                    throw new NotImplementedException("No idea what to do with anatomy type " + type);
-            }
-        }
-
     }
 }

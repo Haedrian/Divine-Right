@@ -6,9 +6,9 @@ using System.Text;
 namespace DRObjects.ActorHandling
 {
     /// <summary>
-    /// The type of anatomy.
+    /// The Race of the Actor.
     /// </summary>
-    public enum AnatomyType
+    public enum Race
     {
         HUMAN
     }

@@ -10,6 +10,7 @@ using DRObjects.LocalMapGeneratorObjects;
 using DivineRightGame.Managers;
 using DivineRightGame.LocalMapGenerator;
 using DRObjects.ActorHandling;
+using DivineRightGame.ActorHandling;
 
 namespace Divine_Right.HelperFunctions
 {
@@ -25,7 +26,7 @@ namespace Divine_Right.HelperFunctions
             //Player character
             DivineRightGame.GameState.PlayerCharacter = new DRObjects.Actor();
             GameState.PlayerCharacter.IsPlayerCharacter = true;
-            GameState.PlayerCharacter.Anatomy = new HumanoidAnatomy(AnatomyType.HUMAN);
+            GameState.PlayerCharacter.Anatomy = ActorGeneration.GenerateAnatomy("human");
 
             MapBlock block = GameState.LocalMap.GetBlockAtCoordinate(new MapCoordinate(5, 5, 0, DRObjects.Enums.MapTypeEnum.LOCAL));
             
@@ -46,10 +47,10 @@ namespace Divine_Right.HelperFunctions
         {
             DungeonGenerator gen = new DungeonGenerator();
             MapCoordinate start = null;
-            Actor[] actors = null;
+            DRObjects.Actor[] actors = null;
             List<PointOfInterest> pointsOfInterest = null;
 
-            string getOwner = EnemyDataManager.GetEnemyType(true);
+            string getOwner = ActorGeneration.GetEnemyType(true);
 
             MapBlock[,] generatedMap = gen.GenerateDungeon(5, 2, 2, 2,getOwner,75,2,7,out start,out actors,out pointsOfInterest);
 
@@ -79,7 +80,7 @@ namespace Divine_Right.HelperFunctions
             GameState.PlayerCharacter = new Actor();
             GameState.PlayerCharacter.MapCharacter = player;
             GameState.PlayerCharacter.IsPlayerCharacter = true;
-            GameState.PlayerCharacter.Anatomy = new HumanoidAnatomy(AnatomyType.HUMAN);
+            GameState.PlayerCharacter.Anatomy = ActorGeneration.GenerateAnatomy("human");
 
             GameState.PlayerCharacter.Anatomy.Chest = 8;
             GameState.PlayerCharacter.Anatomy.Head = 4;

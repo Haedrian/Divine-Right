@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DRObjects.ActorHandling.CharacterSheet.Enums;
 
 namespace DRObjects.ActorHandling
 {
@@ -15,5 +16,8 @@ namespace DRObjects.ActorHandling
         public int EnemyLineOfSight { get; set; }
         public string EnemyType { get; set; }
         public bool Intelligent { get; set; }
+        public ActorProfession Profession { get; set; }
+
+        
     }
 }
