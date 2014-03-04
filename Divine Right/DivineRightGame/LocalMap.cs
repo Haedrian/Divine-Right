@@ -87,7 +87,7 @@ namespace DivineRightGame
                         }
                     }
                 }
-                catch (Exception ex)
+                catch
                 {
                     //Error
                     throw new Exception("The map already has data at the coordinate " + block.Tile.Coordinate);

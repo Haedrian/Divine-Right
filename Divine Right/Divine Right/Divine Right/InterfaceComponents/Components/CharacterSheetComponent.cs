@@ -54,27 +54,33 @@ namespace Divine_Right.InterfaceComponents.Components
 
             batch.Draw(content.Load<Texture2D>(scrollBackground.path), rect, scrollBackground.sourceRectangle, Color.White);
 
+            var attributes = actor.Attributes;
+
             //Do the attributes
             batch.Draw(content.Load<Texture2D>(SpriteManager.GetSprite(InterfaceSpriteName.BRAWN).path), new Rectangle(locationX + 10, locationY + 10, 30, 30), SpriteManager.GetSprite(InterfaceSpriteName.BRAWN).sourceRectangle, Color.White);
-            batch.DrawString(font, "7", new Vector2(locationX + 50, locationY + 15), Color.Black);
+            batch.DrawString(font, attributes.Brawn.ToString(), new Vector2(locationX + 50, locationY + 15), Color.Black);
 
             batch.Draw(content.Load<Texture2D>(SpriteManager.GetSprite(InterfaceSpriteName.DEX).path), new Rectangle(locationX + 10, locationY + 40, 30, 30), SpriteManager.GetSprite(InterfaceSpriteName.DEX).sourceRectangle, Color.White);
-            batch.DrawString(font, "5", new Vector2(locationX + 50, locationY + 45), Color.Black);
+            batch.DrawString(font, attributes.Dex.ToString(), new Vector2(locationX + 50, locationY + 45), Color.Black);
 
             batch.Draw(content.Load<Texture2D>(SpriteManager.GetSprite(InterfaceSpriteName.AGIL).path), new Rectangle(locationX + 10, locationY + 70, 30, 30), SpriteManager.GetSprite(InterfaceSpriteName.AGIL).sourceRectangle, Color.White);
-            batch.DrawString(font, "6", new Vector2(locationX + 50, locationY + 75), Color.Black);
+            batch.DrawString(font, attributes.Agil.ToString(), new Vector2(locationX + 50, locationY + 75), Color.Black);
 
             batch.Draw(content.Load<Texture2D>(SpriteManager.GetSprite(InterfaceSpriteName.PERC).path), new Rectangle(locationX + 10, locationY + 100, 30, 30), SpriteManager.GetSprite(InterfaceSpriteName.PERC).sourceRectangle, Color.White);
-            batch.DrawString(font, "4", new Vector2(locationX + 50, locationY + 105), Color.Black);
+            batch.DrawString(font, attributes.Perc.ToString(), new Vector2(locationX + 50, locationY + 105), Color.Black);
 
             batch.Draw(content.Load<Texture2D>(SpriteManager.GetSprite(InterfaceSpriteName.INTEL).path), new Rectangle(locationX + 10, locationY + 130, 30, 30), SpriteManager.GetSprite(InterfaceSpriteName.INTEL).sourceRectangle, Color.White);
-            batch.DrawString(font, "4", new Vector2(locationX + 50, locationY + 135), Color.Black);
+            batch.DrawString(font, attributes.Intel.ToString(), new Vector2(locationX + 50, locationY + 135), Color.Black);
 
             //Weapon proficiencies
 
             batch.Draw(content.Load<Texture2D>(SpriteManager.GetSprite(InterfaceSpriteName.SWORD).path), new Rectangle(locationX + 80, locationY + 10, 30, 30), SpriteManager.GetSprite(InterfaceSpriteName.SWORD).sourceRectangle, Color.White);
-            batch.DrawString(font, "12", new Vector2(locationX + 120, locationY + 15), Color.Black);
+            batch.DrawString(font, attributes.HandToHand.ToString(), new Vector2(locationX + 120, locationY + 15), Color.Gray);
 
+            batch.Draw(content.Load<Texture2D>(SpriteManager.GetSprite(InterfaceSpriteName.DEFENSE).path), new Rectangle(locationX + 80, locationY + 40, 30, 30), SpriteManager.GetSprite(InterfaceSpriteName.DEFENSE).sourceRectangle, Color.White);
+            batch.DrawString(font, attributes.Evasion.ToString(), new Vector2(locationX + 120, locationY + 45), Color.Gray);
+
+            /*
             batch.Draw(content.Load<Texture2D>(SpriteManager.GetSprite(InterfaceSpriteName.AXE).path), new Rectangle(locationX + 80, locationY + 40, 30, 30), SpriteManager.GetSprite(InterfaceSpriteName.AXE).sourceRectangle, Color.White);
             batch.DrawString(font, "2", new Vector2(locationX + 120, locationY + 45), Color.Black);
 
@@ -83,14 +89,17 @@ namespace Divine_Right.InterfaceComponents.Components
 
             batch.Draw(content.Load<Texture2D>(SpriteManager.GetSprite(InterfaceSpriteName.MACE).path), new Rectangle(locationX + 80, locationY + 100, 30, 30), SpriteManager.GetSprite(InterfaceSpriteName.MACE).sourceRectangle, Color.White);
             batch.DrawString(font, "0", new Vector2(locationX + 120, locationY + 105), Color.Black);
+            */
+            //Totals
 
-            //Defence
+            batch.Draw(content.Load<Texture2D>(SpriteManager.GetSprite(InterfaceSpriteName.SWORD).path), new Rectangle(locationX + 150, locationY + 10, 30, 30), SpriteManager.GetSprite(InterfaceSpriteName.SWORD).sourceRectangle, Color.White);
+            batch.DrawString(font, (attributes.HandToHand + attributes.Brawn - 5).ToString(), new Vector2(locationX + 190, locationY + 15), Color.Black);
 
-            batch.Draw(content.Load<Texture2D>(SpriteManager.GetSprite(InterfaceSpriteName.DEFENSE).path), new Rectangle(locationX + 150, locationY + 10, 30, 30), SpriteManager.GetSprite(InterfaceSpriteName.DEFENSE).sourceRectangle, Color.White);
-            batch.DrawString(font, "14", new Vector2(locationX + 190, locationY + 15), Color.Black);
+            batch.Draw(content.Load<Texture2D>(SpriteManager.GetSprite(InterfaceSpriteName.DEFENSE).path), new Rectangle(locationX + 150, locationY + 40, 30, 30), SpriteManager.GetSprite(InterfaceSpriteName.DEFENSE).sourceRectangle, Color.White);
+            batch.DrawString(font, attributes.Dodge.ToString(), new Vector2(locationX + 190, locationY + 45), Color.Black);
 
-            batch.Draw(content.Load<Texture2D>(SpriteManager.GetSprite(InterfaceSpriteName.BLOOD).path), new Rectangle(locationX + 150, locationY + 40, 30, 30), SpriteManager.GetSprite(InterfaceSpriteName.BLOOD).sourceRectangle, Color.White);
-            batch.DrawString(font, "+3", new Vector2(locationX + 190, locationY + 45), Color.Black);
+            batch.Draw(content.Load<Texture2D>(SpriteManager.GetSprite(InterfaceSpriteName.BLOOD).path), new Rectangle(locationX + 150, locationY + 70, 30, 30), SpriteManager.GetSprite(InterfaceSpriteName.BLOOD).sourceRectangle, Color.White);
+            batch.DrawString(font,(attributes.Brawn - 5).ToString("+#;-#;0"), new Vector2(locationX + 190, locationY + 75), Color.Black);
 
 
         }

@@ -70,6 +70,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActorHandling\ActorGeneration.cs" />
     <Compile Include="Pathfinding\AuthorAttribute.cs" />
     <Compile Include="Pathfinding\HighResolutionTime.cs" />
     <Compile Include="Pathfinding\IPathFinder.cs" />

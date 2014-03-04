@@ -77,10 +77,16 @@ namespace Divine_Right.HelperFunctions
 
             MapBlock playerBlock = GameState.LocalMap.GetBlockAtCoordinate(start);
             playerBlock.PutItemOnBlock(player);
+
+            int temp = 0;
             GameState.PlayerCharacter = new Actor();
             GameState.PlayerCharacter.MapCharacter = player;
             GameState.PlayerCharacter.IsPlayerCharacter = true;
+
+            GameState.PlayerCharacter.Attributes = ActorGeneration.GenerateAttributes("human", DRObjects.ActorHandling.CharacterSheet.Enums.ActorProfession.WARRIOR, 10);
             GameState.PlayerCharacter.Anatomy = ActorGeneration.GenerateAnatomy("human");
+
+//            GameState.PlayerCharacter.Anatomy = ActorGeneration.GenerateAnatomy("human");
 
             GameState.PlayerCharacter.Anatomy.Chest = 8;
             GameState.PlayerCharacter.Anatomy.Head = 4;

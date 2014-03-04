@@ -9,6 +9,7 @@ using DRObjects.Enums;
 using DRObjects.ActorHandling.ActorMissions;
 using Microsoft.Xna.Framework;
 using DRObjects.ActorHandling;
+using DivineRightGame.ActorHandling;
 
 namespace DivineRightGame.LocalMapGenerator
 {
@@ -41,12 +42,12 @@ namespace DivineRightGame.LocalMapGenerator
         /// <returns></returns>
         public MapBlock[,] GenerateDungeon(int tiers, int trapRooms, int guardRooms, int treasureRooms,string ownerType, 
             decimal percentageOwned, int maxWildPopulation, int maxOwnedPopulation,
-            out MapCoordinate startPoint,out Actor[] enemyArray,out List<PointOfInterest> pointsOfInterest)
+            out MapCoordinate startPoint,out DRObjects.Actor[] enemyArray,out List<PointOfInterest> pointsOfInterest)
         {
             startPoint = new MapCoordinate(0, 0, 0, MapTypeEnum.LOCAL);
             pointsOfInterest = new List<PointOfInterest>();
 
-            List<Actor> enemies = new List<Actor>();
+            List<DRObjects.Actor> enemies = new List<DRObjects.Actor>();
             List<DungeonRoom> rooms = new List<DungeonRoom>();
             int uniqueID = 0;
 
@@ -288,7 +289,7 @@ namespace DivineRightGame.LocalMapGenerator
                     }
                 }
 
-                Actor[] roomEnemies = new Actor[]{};
+                DRObjects.Actor[] roomEnemies = new DRObjects.Actor[] { };
                 if (room.DungeonRoomType == DungeonRoomType.GUARD_ROOM || room.DungeonRoomType == DungeonRoomType.TREASURE_ROOM)
                 {
                     //Create an amount of enemies
@@ -300,7 +301,7 @@ namespace DivineRightGame.LocalMapGenerator
                 if (room.DungeonRoomType == DungeonRoomType.WILD_ROOM)
                 {
                     //Create an amount of wild enemies - let's get a random type for this room
-                    string type = EnemyDataManager.GetEnemyType(false);
+                    string type = ActorGeneration.GetEnemyType(false);
 
                     gennedMap = gen.GenerateEnemies(gennedMap, random.Next(maxWildPopulation), type, out roomEnemies);
 

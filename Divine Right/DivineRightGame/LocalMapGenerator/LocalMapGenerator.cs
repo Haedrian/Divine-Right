@@ -10,6 +10,8 @@ using DRObjects.Enums;
 using DRObjects.ActorHandling.ActorMissions;
 using Microsoft.Xna.Framework;
 using DRObjects.ActorHandling;
+using DivineRightGame.ActorHandling;
+using DRObjects.ActorHandling.CharacterSheet.Enums;
 
 namespace DivineRightGame.LocalMapGenerator
 {
@@ -592,7 +594,7 @@ namespace DivineRightGame.LocalMapGenerator
         /// <param name="enemyCount"></param>
         /// <param name="enemyType"></param>
         /// <returns></returns>
-        public MapBlock[,] GenerateEnemies(MapBlock[,] blocks,int enemyCount,string enemyType,out Actor[] actors)
+        public MapBlock[,] GenerateEnemies(MapBlock[,] blocks,int enemyCount,string enemyType,out DRObjects.Actor[] actors)
         {
             ItemFactory.ItemFactory fact = new ItemFactory.ItemFactory();
             List<Actor> actorList = new List<Actor>();
@@ -616,8 +618,8 @@ namespace DivineRightGame.LocalMapGenerator
                     int returnedID = -1;
                     //Put the enemy in there
 
-                    //Get the basic Actor object
-                    Actor actor = EnemyDataManager.CreateEnemy(enemyType, null, null,out returnedID);
+                    //Get the basic Actor object - hard coded for level 10
+                    Actor actor = ActorGeneration.CreateEnemy(enemyType, null, null,10, out returnedID);
 
                     var mapObject = fact.CreateItem("enemies", returnedID);
 
