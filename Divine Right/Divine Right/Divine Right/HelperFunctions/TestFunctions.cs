@@ -78,7 +78,6 @@ namespace Divine_Right.HelperFunctions
             MapBlock playerBlock = GameState.LocalMap.GetBlockAtCoordinate(start);
             playerBlock.PutItemOnBlock(player);
 
-            int temp = 0;
             GameState.PlayerCharacter = new Actor();
             GameState.PlayerCharacter.MapCharacter = player;
             GameState.PlayerCharacter.IsPlayerCharacter = true;
