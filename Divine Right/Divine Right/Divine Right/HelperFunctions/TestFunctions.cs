@@ -87,7 +87,7 @@ namespace Divine_Right.HelperFunctions
 
 //            GameState.PlayerCharacter.Anatomy = ActorGeneration.GenerateAnatomy("human");
 
-            GameState.PlayerCharacter.Anatomy.Chest = 8;
+            GameState.PlayerCharacter.Anatomy.Chest = 2;
             GameState.PlayerCharacter.Anatomy.Head = 4;
             GameState.PlayerCharacter.Anatomy.LeftArm = -7;
             GameState.PlayerCharacter.Anatomy.RightArm = -1;

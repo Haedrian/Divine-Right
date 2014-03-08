@@ -108,7 +108,8 @@ namespace Divine_Right.InterfaceComponents.Components
             else
             if (health <= 0) //destroyed
             {
-                currentColour = Color.Red;
+               // currentColour = Color.Red;
+                currentColour = Color.Black;
             }
             else
             if (healthPercentage > 0.66)
@@ -117,16 +118,18 @@ namespace Divine_Right.InterfaceComponents.Components
                 currentColour = Color.GhostWhite;
             }
             else
-            if (healthPercentage < 0.66)
-            {
-                //Hurt
-                currentColour = Color.Yellow;
-            }
-            else
             if (healthPercentage < 0.33)
             {
                 //Really hurt
-                currentColour = Color.Orange;
+                //currentColour = Color.Orange;
+                currentColour = Color.DarkGray;
+            }
+            else
+            if (healthPercentage < 0.66)
+            {
+                //Hurt
+                //currentColour = Color.Yellow;
+                currentColour = Color.LightGray;
             }
 
             return currentColour;
