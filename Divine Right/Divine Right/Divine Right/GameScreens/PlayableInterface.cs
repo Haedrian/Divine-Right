@@ -115,6 +115,7 @@ namespace Divine_Right.GameScreens
             this.game = game;
             graphics = gr;
             this.parameters = parameters;
+            this.game.Window.ClientSizeChanged += new EventHandler<EventArgs>(Window_ClientSizeChanged);
 
 
             game.Components.Add(new FPSCounter(game));
@@ -154,6 +155,25 @@ namespace Divine_Right.GameScreens
             menuButtons.Add(new AutoSizeGameButton(" Attributes ", this.game.Content, InternalActionEnum.OPEN_ATTRIBUTES, new object[] { }, 150, PlayableHeight + 125));
             //menuButtons.Add(new AutoSizeGameButton(" Log ", this.game.Content, InternalActionEnum.OPEN_LOG, new object[] { }, 230, PlayableHeight + 125));
 
+        }
+
+        void Window_ClientSizeChanged(object sender, EventArgs e)
+        {
+            //Resizing
+            foreach (AutoSizeGameButton button in menuButtons)
+            {
+                button.drawRect.Y = PlayableHeight + 125;
+            }
+
+            foreach (var interfaceComponent in interfaceComponents)
+            {
+                var textLog = interfaceComponent as TextLogComponent;
+
+                if (textLog != null)
+                {
+                    textLog.Move(textLog.ReturnLocation().X, PlayableHeight);
+                }
+            }
         }
 
         protected override void LoadContent()
@@ -530,24 +550,24 @@ namespace Divine_Right.GameScreens
             this.DrawGrid(iBlocks);
 
             //any interface components to draw?
+
             foreach (AutoSizeGameButton button in menuButtons)
             {
-                button.drawRect.Y = PlayableHeight + 125;
                 button.Draw(this.game.Content, this.spriteBatch);
+                //button.drawRect.Y = PlayableHeight + 125;
             }
 
             foreach (var interfaceComponent in interfaceComponents)
             {
-                var textLog = interfaceComponent as TextLogComponent;
+            //    var textLog = interfaceComponent as TextLogComponent;
 
-                if (textLog != null)
-                {
-                    textLog.rect.Y = PlayableHeight;
-                }
+            //    if (textLog != null)
+            //    {
+            //        textLog.rect.Y = PlayableHeight;
+            //    }
 
-                interfaceComponent.Draw(this.game.Content, this.spriteBatch);
+               interfaceComponent.Draw(this.game.Content, this.spriteBatch);
             }
-
 
             spriteBatch.End();
 

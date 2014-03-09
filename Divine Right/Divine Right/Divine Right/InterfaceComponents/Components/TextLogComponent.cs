@@ -19,8 +19,7 @@ namespace Divine_Right.InterfaceComponents.Components
         protected int locationX;
         protected int locationY;
 
-        //Sorry :( Need to do this for a really ugly hack which involves resizing it to fit the bottom of the screen
-        public Rectangle rect;
+        private Rectangle rect;
         private SpriteFont font;
 
         /// <summary>
@@ -36,6 +35,7 @@ namespace Divine_Right.InterfaceComponents.Components
         protected List<CurrentLogFeedback> globalLog;
 
         private bool visible;
+        private bool bigMode;
         #endregion
 
         public TextLogComponent(int x, int y,List<CurrentLogFeedback> globalLog)
@@ -54,6 +54,30 @@ namespace Divine_Right.InterfaceComponents.Components
             feedback.Add(new CurrentLogFeedback(InterfaceSpriteName.BLOOD,Color.DarkRed, "You start bleeding. Oh dear."));
             feedback.Add(new CurrentLogFeedback(InterfaceSpriteName.HEAD,Color.ForestGreen, "Your skill in Being Awesome has increased."));
             feedback.Add(new CurrentLogFeedback(InterfaceSpriteName.DEFENSE,Color.Black, "The Orc swings at your chest (4), but you dodge away"));
+
+            bigMode = false;
+        }
+
+        /// <summary>
+        /// Moves the TextLogComponent to a new location. This is intended to be used for resizing purposes
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        public void Move(int x, int y)
+        {
+            locationX = x;
+            locationY = y;
+
+            if (bigMode)
+            {
+                this.rect.X = x;
+                this.rect.Y = y - 200;
+            }
+            else
+            {
+                this.rect.X = x;
+                this.rect.Y = y;
+            }
         }
 
         public void Draw(Microsoft.Xna.Framework.Content.ContentManager content, Microsoft.Xna.Framework.Graphics.SpriteBatch batch)
@@ -122,7 +146,27 @@ namespace Divine_Right.InterfaceComponents.Components
                 return false;
             }
 
-            throw new NotImplementedException();
+            //toggle big mode
+            this.bigMode = !this.bigMode;
+
+            if (this.bigMode)
+            {
+                //Expand rectangle by 200 pixels
+                this.rect.Y -= 200;
+                this.rect.Height += 200;
+            }
+            else
+            {
+                this.rect.Y += 200;
+                this.rect.Height -= 200;
+            }
+
+            actionType = null;
+            destroy = false;
+            coord = null;
+            args = null;
+            return true;
+
         }
 
         public bool HandleKeyboard(Microsoft.Xna.Framework.Input.KeyboardState keyboard, out DRObjects.Enums.ActionTypeEnum? actionType, out object[] args, out DRObjects.MapCoordinate coord, out bool destroy)
