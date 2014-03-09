@@ -5,6 +5,7 @@ using System.Text;
 using DRObjects;
 using DRObjects.Enums;
 using DRObjects.GraphicsEngineObjects.Abstract;
+using DRObjects.GraphicsEngineObjects;
 
 namespace DivineRightGame
 {
@@ -32,6 +33,10 @@ namespace DivineRightGame
         /// </summary>
         public static Actor PlayerCharacter { get; set; }
 
+        /// <summary>
+        /// A log for storing feedback. Only holds one tick's worth.
+        /// </summary>
+        public static List<CurrentLogFeedback> NewLog { get; set; }
         /// <summary>
         /// A random to use across
         /// </summary>

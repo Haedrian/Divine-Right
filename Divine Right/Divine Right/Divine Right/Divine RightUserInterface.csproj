@@ -111,6 +111,7 @@
     <Compile Include="InterfaceComponents\Components\CharacterSheetComponent.cs" />
     <Compile Include="InterfaceComponents\Components\ContextMenuComponent.cs" />
     <Compile Include="InterfaceComponents\Components\HealthDisplayComponent.cs" />
+    <Compile Include="InterfaceComponents\Components\TextLogComponent.cs" />
     <Compile Include="InterfaceComponents\Components\ViewTileTextComponent.cs" />
     <Compile Include="InterfaceComponents\IGameInterfaceComponent.cs" />
     <Compile Include="InterfaceComponents\MainMenuComponents\AutoSizeButton.cs" />
