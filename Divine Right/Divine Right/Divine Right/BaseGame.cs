@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Divine_Right.GameScreens;
 using DRObjects.Enums;
 using Microsoft.Xna.Framework.Graphics;
+using DivineRightGame;
 
 namespace Divine_Right
 {
@@ -44,6 +45,8 @@ namespace Divine_Right
             //PlayableInterface pI = new PlayableInterface(this,graphics);
             MainMenuScreen mI = new MainMenuScreen(this, graphics, "");
             this.Components.Add(mI);
+
+            GameState.NewLog = new List<DRObjects.GraphicsEngineObjects.CurrentLogFeedback>();
         }
 
         protected override void Update(GameTime gameTime)

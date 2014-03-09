@@ -6,6 +6,7 @@ using DRObjects.Enums;
 using DRObjects.GraphicsEngineObjects.Abstract;
 using DRObjects.GraphicsEngineObjects;
 using DRObjects.Graphics;
+using Microsoft.Xna.Framework;
 
 namespace DRObjects
 {
@@ -94,7 +95,7 @@ namespace DRObjects
                 switch (actionType)
                 {
                     case ActionTypeEnum.EXAMINE :
-                        return new PlayerFeedback[] { new TextFeedback("You see " + this.Description) };
+                        return new PlayerFeedback[] { new CurrentLogFeedback(InterfaceSpriteName.PERC,Color.Black,"You see " + this.Description) };
                     case ActionTypeEnum.LOOK:
                         return new PlayerFeedback[] { new TextFeedback(this.Name) };
                     default:

@@ -38,7 +38,7 @@ namespace Divine_Right.InterfaceComponents.Components
         private bool bigMode;
         #endregion
 
-        public TextLogComponent(int x, int y,List<CurrentLogFeedback> globalLog)
+        public TextLogComponent(int x, int y, List<CurrentLogFeedback> globalLog)
         {
             //Tall and wide (that's what she said)
             this.locationX = x;
@@ -49,11 +49,11 @@ namespace Divine_Right.InterfaceComponents.Components
             this.feedback = new List<CurrentLogFeedback>();
             this.globalLog = globalLog;
 
-            //test data
-            feedback.Add(new CurrentLogFeedback(InterfaceSpriteName.SWORD,Color.Black, "Orc attacks your chest with his mace (7) and hits!"));
-            feedback.Add(new CurrentLogFeedback(InterfaceSpriteName.BLOOD,Color.DarkRed, "You start bleeding. Oh dear."));
-            feedback.Add(new CurrentLogFeedback(InterfaceSpriteName.HEAD,Color.ForestGreen, "Your skill in Being Awesome has increased."));
-            feedback.Add(new CurrentLogFeedback(InterfaceSpriteName.DEFENSE,Color.Black, "The Orc swings at your chest (4), but you dodge away"));
+            ////test data
+            //feedback.Add(new CurrentLogFeedback(InterfaceSpriteName.SWORD, Color.Black, "Orc attacks your chest with his mace (7) and hits!"));
+            //feedback.Add(new CurrentLogFeedback(InterfaceSpriteName.BLOOD, Color.DarkRed, "You start bleeding. Oh dear."));
+            //feedback.Add(new CurrentLogFeedback(InterfaceSpriteName.HEAD, Color.ForestGreen, "Your skill in Being Awesome has increased."));
+            //feedback.Add(new CurrentLogFeedback(InterfaceSpriteName.DEFENSE, Color.Black, "The Orc swings at your chest (4), but you dodge away"));
 
             bigMode = false;
         }
@@ -102,7 +102,7 @@ namespace Divine_Right.InterfaceComponents.Components
 
             Vector2 currentPosition = new Vector2(rect.X + 10, rect.Y + 10);
 
-            for(int i=feedback.Count()-1; i >= 0; i--)
+            for (int i = feedback.Count() - 1; i >= 0; i--)
             {
                 var item = feedback[i];
 
@@ -126,7 +126,7 @@ namespace Divine_Right.InterfaceComponents.Components
                 if (item.Icon.HasValue)
                 {
                     //Draw it
-                    batch.Draw(content.Load<Texture2D>(SpriteManager.GetSprite(item.Icon.Value).path), new Rectangle((int)currentPosition.X,(int)currentPosition.Y, 15, 15), SpriteManager.GetSprite(item.Icon.Value).sourceRectangle, Color.Black);
+                    batch.Draw(content.Load<Texture2D>(SpriteManager.GetSprite(item.Icon.Value).path), new Rectangle((int)currentPosition.X, (int)currentPosition.Y, 15, 15), SpriteManager.GetSprite(item.Icon.Value).sourceRectangle, Color.Black);
                 }
 
                 //Update the current position
@@ -185,7 +185,7 @@ namespace Divine_Right.InterfaceComponents.Components
 
         public void PerformDrag(int deltaX, int deltaY)
         {
-            return; //do later
+            return; //Do nothing
         }
 
         public bool IsModal()
@@ -206,11 +206,22 @@ namespace Divine_Right.InterfaceComponents.Components
         }
 
         /// <summary>
-        /// Updates the log with new items, and cleans them up
+        /// Updates the log with new items
         /// </summary>
-        private void UpdateLog()
+        public void UpdateLog()
         {
+            if (this.globalLog.Count() != 0)
+            {
+                this.feedback.AddRange(this.globalLog);
 
+                //Do we have more than say 50 messages?
+
+                if (this.feedback.Count > 50)
+                {
+                    //Remove 20 of them
+                    this.feedback.RemoveRange(0, 20);
+                }
+            }
         }
     }
 }

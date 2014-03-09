@@ -92,6 +92,7 @@ namespace Divine_Right.GameScreens
         Game game;
 
         private List<IGameInterfaceComponent> interfaceComponents = new List<IGameInterfaceComponent>();
+        TextLogComponent log;
         List<ISystemInterfaceComponent> menuButtons = new List<ISystemInterfaceComponent>();
        
         private object[] parameters;
@@ -116,7 +117,6 @@ namespace Divine_Right.GameScreens
             graphics = gr;
             this.parameters = parameters;
             this.game.Window.ClientSizeChanged += new EventHandler<EventArgs>(Window_ClientSizeChanged);
-
 
             game.Components.Add(new FPSCounter(game));
         }
@@ -150,10 +150,14 @@ namespace Divine_Right.GameScreens
             tlc.Visible = true;
             interfaceComponents.Add(tlc);
 
+            log = tlc;
+
             //Create the menu buttons
             menuButtons.Add(new AutoSizeGameButton("  Health  ", this.game.Content, InternalActionEnum.OPEN_HEALTH, new object[]{}, 50, PlayableHeight + 125));
             menuButtons.Add(new AutoSizeGameButton(" Attributes ", this.game.Content, InternalActionEnum.OPEN_ATTRIBUTES, new object[] { }, 150, PlayableHeight + 125));
-            //menuButtons.Add(new AutoSizeGameButton(" Log ", this.game.Content, InternalActionEnum.OPEN_LOG, new object[] { }, 230, PlayableHeight + 125));
+          
+            //Invoke a size change
+            Window_ClientSizeChanged(null, null);
 
         }
 
@@ -554,18 +558,10 @@ namespace Divine_Right.GameScreens
             foreach (AutoSizeGameButton button in menuButtons)
             {
                 button.Draw(this.game.Content, this.spriteBatch);
-                //button.drawRect.Y = PlayableHeight + 125;
             }
 
             foreach (var interfaceComponent in interfaceComponents)
             {
-            //    var textLog = interfaceComponent as TextLogComponent;
-
-            //    if (textLog != null)
-            //    {
-            //        textLog.rect.Y = PlayableHeight;
-            //    }
-
                interfaceComponent.Draw(this.game.Content, this.spriteBatch);
             }
 
@@ -754,8 +750,15 @@ namespace Divine_Right.GameScreens
                     //Display it
                     interfaceComponents.Add(new ViewTileTextComponent(mouse.X + 15, mouse.Y, (feedback as TextFeedback).Text));
                 }
+                else if (feedback.GetType().Equals(typeof(CurrentLogFeedback)))
+                {
+                    GameState.NewLog.Add(feedback as CurrentLogFeedback);
+                }
                 //TODO: THE REST
             }
+
+            //Update the log control
+            log.UpdateLog();
 
         }
         /// <summary>

@@ -40,6 +40,8 @@ namespace DivineRightGame.Managers
             if (actionType == ActionTypeEnum.EXAMINE || actionType == ActionTypeEnum.MOVE)
             {
                 //Perform a tick
+                //Clear the Log
+                GameState.NewLog.Clear();
                 UserInterfaceManager.PerformLocalTick();
             }
 
