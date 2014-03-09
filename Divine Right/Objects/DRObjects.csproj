@@ -124,6 +124,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="GraphicsEngineObjects\Enums\" />
     <Folder Include="Items\Tiles\Local\" />
   </ItemGroup>
   <ItemGroup>

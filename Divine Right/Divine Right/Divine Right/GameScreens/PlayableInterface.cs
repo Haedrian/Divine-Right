@@ -45,7 +45,7 @@ namespace Divine_Right.GameScreens
         {
             get
             {
-                return GraphicsDevice.Viewport.Height - 50;
+                return GraphicsDevice.Viewport.Height - 150;
 
             }
 
@@ -145,9 +145,14 @@ namespace Divine_Right.GameScreens
             csc.Visible = false;
             interfaceComponents.Add(csc);
 
+            TextLogComponent tlc = new TextLogComponent(10, PlayableHeight,GameState.NewLog);
+            tlc.Visible = true;
+            interfaceComponents.Add(tlc);
+
             //Create the menu buttons
-            menuButtons.Add(new AutoSizeGameButton("  Health  ", this.game.Content, InternalActionEnum.OPEN_HEALTH, new object[]{}, 50, PlayableHeight + 25));
-            menuButtons.Add(new AutoSizeGameButton(" Attributes ", this.game.Content, InternalActionEnum.OPEN_ATTRIBUTES, new object[] { }, 150, PlayableHeight + 25));
+            menuButtons.Add(new AutoSizeGameButton("  Health  ", this.game.Content, InternalActionEnum.OPEN_HEALTH, new object[]{}, 50, PlayableHeight + 125));
+            menuButtons.Add(new AutoSizeGameButton(" Attributes ", this.game.Content, InternalActionEnum.OPEN_ATTRIBUTES, new object[] { }, 150, PlayableHeight + 125));
+            //menuButtons.Add(new AutoSizeGameButton(" Log ", this.game.Content, InternalActionEnum.OPEN_LOG, new object[] { }, 230, PlayableHeight + 125));
 
         }
 
@@ -345,6 +350,12 @@ namespace Divine_Right.GameScreens
                             att.Visible = !att.Visible;
 
                             break;
+
+                        case InternalActionEnum.OPEN_LOG:
+                            //Toggle the log
+                            var log = this.interfaceComponents.Where(ic => ic.GetType().Equals(typeof(TextLogComponent))).FirstOrDefault();
+                            log.Visible = !log.Visible;
+                            break;
                             //TODO: THE REST
                     }
                 }
@@ -387,7 +398,7 @@ namespace Divine_Right.GameScreens
 
                     Point mousePoint = new Point(mouse.X, mouse.Y);
 
-                    if (interfaceComponent.IsModal() || interfaceComponent.ReturnLocation().Contains(mousePoint))
+                    if (interfaceComponent.IsModal() || interfaceComponent.ReturnLocation().Contains(mousePoint) && interfaceComponent.Visible)
                     {
                         bool destroy;
 
@@ -521,12 +532,19 @@ namespace Divine_Right.GameScreens
             //any interface components to draw?
             foreach (AutoSizeGameButton button in menuButtons)
             {
-                button.drawRect.Y = PlayableHeight + 20;
+                button.drawRect.Y = PlayableHeight + 125;
                 button.Draw(this.game.Content, this.spriteBatch);
             }
 
             foreach (var interfaceComponent in interfaceComponents)
             {
+                var textLog = interfaceComponent as TextLogComponent;
+
+                if (textLog != null)
+                {
+                    textLog.rect.Y = PlayableHeight;
+                }
+
                 interfaceComponent.Draw(this.game.Content, this.spriteBatch);
             }
 

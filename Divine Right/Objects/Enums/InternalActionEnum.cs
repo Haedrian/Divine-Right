@@ -18,6 +18,7 @@ namespace DRObjects.Enums
 
         OPEN_HEALTH,
         OPEN_ATTRIBUTES,
+        OPEN_LOG,
 
     }
 }
