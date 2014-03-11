@@ -22,6 +22,9 @@ namespace Divine_Right.InterfaceComponents.Components
         private Rectangle rect;
         private SpriteFont font;
 
+        private const int BIGSIZE = 200;
+        private int bigSizeSwitch = 0;
+
         /// <summary>
         /// Cleaned feedback to display.
         /// We will basically take a look at the global log each time. If there's anything new, we clean it up and put it in the top.
@@ -93,6 +96,23 @@ namespace Divine_Right.InterfaceComponents.Components
                 font = content.Load<SpriteFont>(@"Fonts/TextFeedbackFont");
             }
 
+            if (bigMode && bigSizeSwitch < BIGSIZE)
+            {
+                //Increment by 20
+                bigSizeSwitch += 20;
+
+                this.rect.Y -= 20;
+                this.rect.Height += 20;
+            }
+            else if (!bigMode && bigSizeSwitch > 0)
+            {
+                //Decrement by 20
+                bigSizeSwitch -= 20;
+
+                this.rect.Y += 20;
+                this.rect.Height -= 20;
+            }
+
             //Draw the background
             var scrollBackground = SpriteManager.GetSprite(InterfaceSpriteName.PAPER_TEXTURE);
 
@@ -151,14 +171,19 @@ namespace Divine_Right.InterfaceComponents.Components
 
             if (this.bigMode)
             {
-                //Expand rectangle by 200 pixels
-                this.rect.Y -= 200;
-                this.rect.Height += 200;
+                //Expand rectangle by 200 pixels - gradually              
+
+                this.bigSizeSwitch = 0;
+
+              //  this.rect.Y -= 200;
+               // this.rect.Height += 200;
             }
             else
             {
-                this.rect.Y += 200;
-                this.rect.Height -= 200;
+                this.bigSizeSwitch = 200;
+
+               // this.rect.Y += 200;
+               // this.rect.Height -= 200;
             }
 
             actionType = null;
