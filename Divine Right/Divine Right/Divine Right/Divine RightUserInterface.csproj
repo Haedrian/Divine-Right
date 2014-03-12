@@ -106,7 +106,10 @@
     <Compile Include="GameScreens\PlayableInterface.cs" />
     <Compile Include="GameScreens\WorldGenerationScreen.cs" />
     <Compile Include="GraphicalObjects\InterfaceBlock.cs" />
+    <Compile Include="HelperFunctions\Alignment.cs" />
+    <Compile Include="HelperFunctions\DrawStringHelper.cs" />
     <Compile Include="HelperFunctions\TestFunctions.cs" />
+    <Compile Include="InterfaceComponents\Components\AttackActorComponent.cs" />
     <Compile Include="InterfaceComponents\Components\AutoSizeGameButton.cs" />
     <Compile Include="InterfaceComponents\Components\CharacterSheetComponent.cs" />
     <Compile Include="InterfaceComponents\Components\ContextMenuComponent.cs" />

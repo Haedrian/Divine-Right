@@ -152,6 +152,12 @@ namespace Divine_Right.GameScreens
 
             log = tlc;
 
+            //Remove this later. Obviously
+            AttackActorComponent aac = new AttackActorComponent(50, 50, GameState.PlayerCharacter, GameState.PlayerCharacter);
+            aac.Visible = true;
+
+            interfaceComponents.Add(aac);
+
             //Create the menu buttons
             menuButtons.Add(new AutoSizeGameButton("  Health  ", this.game.Content, InternalActionEnum.OPEN_HEALTH, new object[]{}, 50, PlayableHeight + 125));
             menuButtons.Add(new AutoSizeGameButton(" Attributes ", this.game.Content, InternalActionEnum.OPEN_ATTRIBUTES, new object[] { }, 150, PlayableHeight + 125));
