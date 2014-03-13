@@ -166,24 +166,28 @@ namespace Divine_Right.InterfaceComponents.Components
                 return false;
             }
 
-            //toggle big mode
-            this.bigMode = !this.bigMode;
-
-            if (this.bigMode)
+            //Check if we're in the middle of an animation cycle
+            if (this.bigSizeSwitch == 0 || this.bigSizeSwitch == BIGSIZE) 
             {
-                //Expand rectangle by 200 pixels - gradually              
+                //toggle big mode
+                this.bigMode = !this.bigMode;
 
-                this.bigSizeSwitch = 0;
+                if (this.bigMode)
+                {
+                    //Expand rectangle by 200 pixels - gradually              
 
-              //  this.rect.Y -= 200;
-               // this.rect.Height += 200;
-            }
-            else
-            {
-                this.bigSizeSwitch = 200;
+                    this.bigSizeSwitch = 0;
 
-               // this.rect.Y += 200;
-               // this.rect.Height -= 200;
+                    //  this.rect.Y -= 200;
+                    // this.rect.Height += 200;
+                }
+                else
+                {
+                    this.bigSizeSwitch = 200;
+
+                    // this.rect.Y += 200;
+                    // this.rect.Height -= 200;
+                }
             }
 
             actionType = null;
