@@ -16,11 +16,6 @@ namespace DRObjects.ActorHandling
         public int Perc { get; set; }
         public int Intel { get; set; }
 
-        //public int Sword { get; set; }
-        //public int Axe { get; set; }
-        //public int Club { get; set; }
-        //public int Spear { get; set; }
-
         public int HandToHand { get; set; }
         public int Ranged { get; set; }
         public int Evasion { get; set; }
@@ -29,7 +24,7 @@ namespace DRObjects.ActorHandling
         {
             get
             {
-                return Evasion + Agil - 5;
+                return Evasion + Agil;
             }
         }
 

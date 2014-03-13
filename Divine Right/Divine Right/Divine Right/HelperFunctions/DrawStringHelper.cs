@@ -27,10 +27,7 @@ namespace Divine_Right.HelperFunctions
            if (align.HasFlag(Alignment.Bottom))
                origin.Y -= bounds.Height / 2 - size.Y / 2;
 
-           //batch.DrawString(font, text, pos, color);
-
            batch.DrawString(font, new StringBuilder(text), new Vector2(pos.X,pos.Y), color, 0f, origin, 1, SpriteEffects.None, 0);
-               //DrawString(font, text, pos, color, 0, origin, 1, SpriteEffects.None, 0);
        }
 
     }

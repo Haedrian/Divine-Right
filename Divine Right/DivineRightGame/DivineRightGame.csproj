@@ -71,6 +71,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActorHandling\ActorGeneration.cs" />
+    <Compile Include="CombatHandling\AttackLocation.cs" />
+    <Compile Include="CombatHandling\CombatManager.cs" />
     <Compile Include="Pathfinding\AuthorAttribute.cs" />
     <Compile Include="Pathfinding\HighResolutionTime.cs" />
     <Compile Include="Pathfinding\IPathFinder.cs" />
