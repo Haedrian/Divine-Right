@@ -20,6 +20,7 @@ using DRObjects.Graphics;
 using Divine_Right.GameScreens.Components;
 using DivineRightGame.LocalMapGenerator;
 using DivineRightGame;
+using DRObjects.Items.Archetypes.Local;
 
 namespace Divine_Right.GameScreens
 {
@@ -152,11 +153,11 @@ namespace Divine_Right.GameScreens
 
             log = tlc;
 
-            //Remove this later. Obviously
-            AttackActorComponent aac = new AttackActorComponent(50, 50, GameState.PlayerCharacter, GameState.PlayerCharacter);
-            aac.Visible = true;
+            ////Remove this later. Obviously
+            //AttackActorComponent aac = new AttackActorComponent(50, 50, GameState.PlayerCharacter, GameState.PlayerCharacter);
+            //aac.Visible = true;
 
-            interfaceComponents.Add(aac);
+            //interfaceComponents.Add(aac);
 
             //Create the menu buttons
             menuButtons.Add(new AutoSizeGameButton("  Health  ", this.game.Content, InternalActionEnum.OPEN_HEALTH, new object[]{}, 50, PlayableHeight + 125));
@@ -728,8 +729,6 @@ namespace Divine_Right.GameScreens
         /// <param name="?"></param>
         public void PerformAction(MapCoordinate coord, DRObjects.Enums.ActionTypeEnum actionType, object[] args)
         {
-            //remove any interface component
-            
             //remove any viewtiletext components or contextmenu components
             for (int i = 0; i < interfaceComponents.Count; i++)
             {
@@ -759,6 +758,39 @@ namespace Divine_Right.GameScreens
                 else if (feedback.GetType().Equals(typeof(CurrentLogFeedback)))
                 {
                     GameState.NewLog.Add(feedback as CurrentLogFeedback);
+                }
+                else if (feedback.GetType().Equals(typeof(InterfaceOpenFeedback)))
+                {
+                    InterfaceOpenFeedback iop = feedback as InterfaceOpenFeedback;
+
+                    if (iop.InterfaceComponent == InternalActionEnum.OPEN_ATTACK)
+                    {
+                        //Open the attack interface for a particular actor. If one is not open already
+                        //Identify the actor in question
+                        var actorMapItem = iop.Argument as LocalEnemy;
+
+                        //Locate the actual actor
+                        Actor actor = GameState.LocalMap.Actors.Where(lm => lm.MapCharacter == actorMapItem).FirstOrDefault(); //Yep, it's a pointer equals
+
+                        bool openAlready = false;
+
+                        //Do we have one open already?
+                        foreach (AttackActorComponent aac in interfaceComponents.Where(ic => ic.GetType().Equals(typeof(AttackActorComponent))))
+                        {
+                            if (aac.TargetActor.Equals(actor))
+                            {
+                                openAlready = true;
+                                break;
+                            }
+                        }
+
+                        if (!openAlready)
+                        {
+                            //Open it. Otherwise don't do anything
+                            interfaceComponents.Add(new AttackActorComponent(150, 150, GameState.PlayerCharacter, actor) { Visible = true });
+                        }
+
+                    }
                 }
                 //TODO: THE REST
             }

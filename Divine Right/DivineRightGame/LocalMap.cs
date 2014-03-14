@@ -203,7 +203,7 @@ namespace DivineRightGame
 
             MapCoordinate playerLocation = actors.Where(a => a.IsPlayerCharacter).FirstOrDefault().MapCharacter.Coordinate;
 
-            foreach (Actor actor in actors.Where(a => !a.IsPlayerCharacter))
+            foreach (Actor actor in actors.Where(a => !a.IsPlayerCharacter && a.IsAlive))
             {
                 
                 //First check whether they have a mission

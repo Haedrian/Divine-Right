@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using DRObjects.Enums;
 using DRObjects.Graphics;
+using DRObjects.GraphicsEngineObjects;
 
 namespace DRObjects.Items.Archetypes.Local
 {
@@ -77,6 +78,34 @@ namespace DRObjects.Items.Archetypes.Local
             set
             {
                 //dummy :)
+            }
+        }
+
+        public override ActionTypeEnum[] GetPossibleActions(Actor actor)
+        {
+            List<ActionTypeEnum> actions = new List<ActionTypeEnum>();
+
+            actions.AddRange(base.GetPossibleActions(actor));
+
+            //Are we next to the target?
+            if (this.Coordinate - actor.MapCharacter.Coordinate < 2)
+            {
+                //Add the attack one too
+                actions.Add(ActionTypeEnum.PREPARE_ATTACK);
+            }
+
+            return actions.ToArray();
+        }
+
+        public override GraphicsEngineObjects.Abstract.PlayerFeedback[] PerformAction(ActionTypeEnum actionType, Actor actor, object[] args)
+        {
+            if (actionType == ActionTypeEnum.PREPARE_ATTACK)
+            {
+                return new InterfaceOpenFeedback[] { new InterfaceOpenFeedback(InternalActionEnum.OPEN_ATTACK,this) };
+            }
+            else
+            {
+                return base.PerformAction(actionType, actor, args);
             }
         }
 

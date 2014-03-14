@@ -19,6 +19,11 @@ namespace DRObjects
         public EnemyData EnemyData {get;set;}
 
         /// <summary>
+        /// Determines whether the actor is still alive
+        /// </summary>
+        public bool IsAlive { get; set; }
+
+        /// <summary>
         /// Which map item this Actor represents
         /// </summary> 
         public MapItem MapCharacter { get; set; }
@@ -68,6 +73,18 @@ namespace DRObjects
         /// </summary>
         public ActorAttributes Attributes { get; set; }
 
+        //These are the total effective points of attributes after temporary and equipment has been taken into consideration
+        public int TotalBrawn { get { return Attributes.Brawn; } }
+        public int TotalAgil { get { return Attributes.Agil; } }
+        public int TotalDex { get { return Attributes.Dex; } }
+        public int TotalPerc { get { return Attributes.Perc; } }
+        public int TotalIntel { get { return Attributes.Intel; } }
+
+        /// <summary>
+        /// The character's combat stance
+        /// </summary>
+        public ActorStance CombatStance { get; set; }
+
         /// <summary>
         /// Two LocalActors are considered equal if they share the same UniqueID
         /// </summary>
@@ -91,6 +108,8 @@ namespace DRObjects
         public Actor()
         {
             this.MissionStack = new Stack<ActorMission>();
+            this.CombatStance = ActorStance.NEUTRAL;
+            this.IsAlive = true;
         }
 
     }

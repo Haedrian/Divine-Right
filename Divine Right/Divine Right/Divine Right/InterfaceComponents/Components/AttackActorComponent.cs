@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using DRObjects.Graphics;
 using Divine_Right.HelperFunctions;
+using DivineRightGame.CombatHandling;
 
 namespace Divine_Right.InterfaceComponents.Components
 {
@@ -19,7 +20,7 @@ namespace Divine_Right.InterfaceComponents.Components
         protected int locationX;
         protected int locationY;
         private Actor attacker;
-        private Actor targetActor;
+        public Actor TargetActor{get;set;}
 
         private Rectangle rect;
 
@@ -64,7 +65,7 @@ namespace Divine_Right.InterfaceComponents.Components
             this.locationX = locationX;
             this.locationY = locationY;
             this.attacker = attacker;
-            this.targetActor = target;
+            this.TargetActor = target;
 
            //Force a move
             this.PerformDrag(locationX, locationY);
@@ -91,7 +92,7 @@ namespace Divine_Right.InterfaceComponents.Components
 
             //Draw the body parts. 
             //Let's determine how injured each part is.
-            var health = targetActor.Anatomy;
+            var health = TargetActor.Anatomy;
 
             var head = SpriteManager.GetSprite(InterfaceSpriteName.HEAD);
             var leftArm = SpriteManager.GetSprite(InterfaceSpriteName.LEFT_ARM);
@@ -113,44 +114,97 @@ namespace Divine_Right.InterfaceComponents.Components
             var sword = SpriteManager.GetSprite(InterfaceSpriteName.SWORD);
             var agressive = SpriteManager.GetSprite(InterfaceSpriteName.MACE);
 
+            //If we have a particular chosen stance, draw a white box underneath to show its selected
+            var seperator = SpriteManager.GetSprite(ColourSpriteName.WHITE);
+
+            //pick the stance
+            string stance = "Unknown Stance";
+
+
+            switch (attacker.CombatStance)
+            {
+                case DRObjects.ActorHandling.ActorStance.AGGRESSIVE:
+                    stance = "Aggressive";
+                    batch.Draw(content.Load<Texture2D>(seperator.path), aggressiveStatusRect, seperator.sourceRectangle, Color.GhostWhite);
+                    break;
+                case DRObjects.ActorHandling.ActorStance.COMPLETE_AGGRESSIVE:
+                    stance = "Berzerk"; break;
+                case DRObjects.ActorHandling.ActorStance.COMPLETE_DEFENSIVE:
+                    stance = "Hunkered"; break;
+                case DRObjects.ActorHandling.ActorStance.DEFENSIVE:
+                    stance = "Defensive";
+                    batch.Draw(content.Load<Texture2D>(seperator.path), defensiveStatusRect, seperator.sourceRectangle, Color.GhostWhite);
+                    break;
+                case DRObjects.ActorHandling.ActorStance.NEUTRAL:
+                    stance = "Neutral";
+                    batch.Draw(content.Load<Texture2D>(seperator.path), normalStatusRect, seperator.sourceRectangle, Color.GhostWhite);
+                    break;
+                default:
+                    throw new NotImplementedException("No text was prepared for stance " + stance);
+            }
+
+
             batch.Draw(content.Load<Texture2D>(shield.path), defensiveStatusRect, shield.sourceRectangle, Color.White);
             batch.Draw(content.Load<Texture2D>(shield.path), tinyStatusRect, shield.sourceRectangle, Color.White);
             batch.Draw(content.Load<Texture2D>(sword.path), normalStatusRect, sword.sourceRectangle, Color.White);
             batch.Draw(content.Load<Texture2D>(agressive.path), aggressiveStatusRect, agressive.sourceRectangle, Color.White);
 
-            batch.DrawString(font,"Normal Stance",statusRect,Alignment.Center,Color.Black);
-
-            var seperator = SpriteManager.GetSprite(ColourSpriteName.WHITE);
+            batch.DrawString(font,stance,statusRect,Alignment.Center,Color.Black);
 
             batch.Draw(content.Load <Texture2D>(seperator.path), seperatorRect, seperator.sourceRectangle, Color.DarkGray);
 
-            batch.DrawString(font, "Orc", enemyNameRect, Alignment.Center, Color.White);
+            batch.DrawString(font, TargetActor.EnemyData == null ? "Unknown" : TargetActor.EnemyData.EnemyName, enemyNameRect, Alignment.Center, Color.White);
             batch.Draw(content.Load<Texture2D>(shield.path), enemyArmourIconRect, shield.sourceRectangle, Color.White);
             batch.Draw(content.Load<Texture2D>(sword.path), enemyWeaponIconRect, sword.sourceRectangle, Color.White);
 
-            batch.DrawString(font, "Mace", enemyWeaponRect, Alignment.Center, Color.Black);
-            batch.DrawString(font, "Heavy", enemyArmourRect, Alignment.Center, Color.Black);
+            batch.DrawString(font, "TODO", enemyWeaponRect, Alignment.Center, Color.Black);
+            batch.DrawString(font, "Later", enemyArmourRect, Alignment.Center, Color.Black);
 
             batch.Draw(content.Load<Texture2D>(scrollBackground.path), attackButtonRectangle, scrollBackground.sourceRectangle, Color.DarkGray);
             batch.DrawString(font, "ATTACK", attackButtonRectangle, Alignment.Center, Color.White);
 
-            batch.DrawString(font, "10%", headPercentageRect, Alignment.Center, Color.Red);
-            batch.DrawString(font, "20%", leftArmPercentageRect, Alignment.Center, Color.Red);
-            batch.DrawString(font, "30%", chestPercentageRect, Alignment.Center, Color.Red);
-            batch.DrawString(font, "40%", rightArmPercentageRect, Alignment.Center, Color.Red);
-            batch.DrawString(font, "50%", legsPercentageRect, Alignment.Center, Color.Red);
-
+            batch.DrawString(font,CombatManager.CalculateHitPercentage(attacker,TargetActor,AttackLocation.HEAD) + "%", headPercentageRect, Alignment.Center, Color.Red);
+            batch.DrawString(font, CombatManager.CalculateHitPercentage(attacker, TargetActor, AttackLocation.LEFT_ARM) + "%", leftArmPercentageRect, Alignment.Center, Color.Red);
+            batch.DrawString(font, CombatManager.CalculateHitPercentage(attacker, TargetActor, AttackLocation.CHEST) + "%", chestPercentageRect, Alignment.Center, Color.Red);
+            batch.DrawString(font, CombatManager.CalculateHitPercentage(attacker, TargetActor, AttackLocation.RIGHT_ARM) + "%", rightArmPercentageRect, Alignment.Center, Color.Red);
+            batch.DrawString(font, CombatManager.CalculateHitPercentage(attacker, TargetActor, AttackLocation.LEGS) + "%", legsPercentageRect, Alignment.Center, Color.Red);
 
         }
 
         public bool HandleClick(int x, int y, Objects.Enums.MouseActionEnum mouseAction, out DRObjects.Enums.ActionTypeEnum? actionType, out object[] args, out DRObjects.MapCoordinate coord, out bool destroy)
         {
-            //This does nothing - TODO
+            Point point = new Point(x,y);
 
             args = null;
             coord = null;
             destroy = false;
             actionType = null;
+
+            if (!visible)
+            {
+                return false; //don't do anything
+            }
+
+            //If we pressed a stance button, just change it
+            if (this.defensiveStatusRect.Contains(point))
+            {
+                //Swap stance to defensive
+                attacker.CombatStance = DRObjects.ActorHandling.ActorStance.DEFENSIVE;
+                return true;
+            }
+            else if (this.aggressiveStatusRect.Contains(point))
+            {
+                //Aggressive
+                attacker.CombatStance = DRObjects.ActorHandling.ActorStance.AGGRESSIVE;
+                return true;
+            }
+            else if (this.normalStatusRect.Contains(point))
+            {
+                //Normal
+                attacker.CombatStance = DRObjects.ActorHandling.ActorStance.NEUTRAL;
+                return true;
+            }
+
 
             return visible; //If it's visible - block it. Otherwise do nothing
         }
@@ -206,7 +260,7 @@ namespace Divine_Right.InterfaceComponents.Components
             enemyArmourRect = new Rectangle(locationX + 155, locationY + 30, 50, 15);
             enemyWeaponRect = new Rectangle(locationX + 155, locationY + 55, 50, 15);
 
-            attackButtonRectangle = new Rectangle(locationX + 155, locationY + 170, 50, 20);
+            attackButtonRectangle = new Rectangle(locationX + 80, locationY + 160, 100, 30);
 
             headPercentageRect = new Rectangle(locationX + 225, locationY, 43, 38);
             leftArmPercentageRect = new Rectangle(locationX + 200, locationY + 35, 33, 85);

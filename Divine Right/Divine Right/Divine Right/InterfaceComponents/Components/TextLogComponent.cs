@@ -120,8 +120,6 @@ namespace Divine_Right.InterfaceComponents.Components
 
             //Now we start the drawing process
 
-            //Vector2 currentPosition = new Vector2(rect.X + 10, rect.Y + 10);
-
             Vector2 currentPosition = new Vector2(rect.X + 10, rect.Bottom - 20);
 
             for (int i = feedback.Count() - 1; i >= 0; i--)
@@ -134,12 +132,6 @@ namespace Divine_Right.InterfaceComponents.Components
 
                 //Will it fit?
 
-                //if (v2.Y + currentPosition.Y > rect.Bottom)
-                //{
-                //    //Nope. Break
-                //    break;
-                //}
-
                 if (currentPosition.Y < rect.Y)
                 {
                     //Nope. Break
@@ -148,7 +140,6 @@ namespace Divine_Right.InterfaceComponents.Components
 
                 //Put the text in
                 batch.DrawString(font, item.Text, new Vector2(currentPosition.X + 30, currentPosition.Y), item.DrawColour);
-
 
                 //Then we draw the icon - very small - call it 15x15 :)
                 if (item.Icon.HasValue)

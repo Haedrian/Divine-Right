@@ -85,15 +85,6 @@ namespace Divine_Right.HelperFunctions
             GameState.PlayerCharacter.Attributes = ActorGeneration.GenerateAttributes("human", DRObjects.ActorHandling.CharacterSheet.Enums.ActorProfession.WARRIOR, 10);
             GameState.PlayerCharacter.Anatomy = ActorGeneration.GenerateAnatomy("human");
 
-//            GameState.PlayerCharacter.Anatomy = ActorGeneration.GenerateAnatomy("human");
-
-            GameState.PlayerCharacter.Anatomy.Chest = 2;
-            GameState.PlayerCharacter.Anatomy.Head = 4;
-            GameState.PlayerCharacter.Anatomy.LeftArm = 0;
-            GameState.PlayerCharacter.Anatomy.RightArm = -1;
-            GameState.PlayerCharacter.Anatomy.Legs = 3;
-
-
             GameState.LocalMap.Actors.Add(GameState.PlayerCharacter);
 
         }

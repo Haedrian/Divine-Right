@@ -12,5 +12,7 @@ namespace DRObjects.Enums
         EXAMINE = 2,
         USE = 3,
         MOVE = 4,
+        PREPARE_ATTACK = 5,
+        ATTACK = 6
     }
 }
