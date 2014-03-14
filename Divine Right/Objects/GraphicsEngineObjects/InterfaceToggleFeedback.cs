@@ -7,16 +7,18 @@ using DRObjects.Enums;
 
 namespace DRObjects.GraphicsEngineObjects
 {
-    public class InterfaceOpenFeedback :
+    public class InterfaceToggleFeedback :
         PlayerFeedback
     {
         public InternalActionEnum InterfaceComponent { get; set; }
         public object Argument { get; set; }
+        public bool Open { get; set; }
 
-        public InterfaceOpenFeedback(InternalActionEnum action,object argument)
+        public InterfaceToggleFeedback(InternalActionEnum action,bool open,object argument)
         {
             this.InterfaceComponent = action;
             this.Argument = argument;
+            this.Open = open;
         }
     }
 }

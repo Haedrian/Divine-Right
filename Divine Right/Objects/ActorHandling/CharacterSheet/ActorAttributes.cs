@@ -32,7 +32,7 @@ namespace DRObjects.ActorHandling
         {
             get
             {
-                return Brawn;
+                return Brawn-5;
             }
         }
     }

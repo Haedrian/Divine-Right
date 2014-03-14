@@ -7,6 +7,8 @@ using DRObjects;
 using DRObjects.Enums;
 using DRObjects.GraphicsEngineObjects.Abstract;
 using System.Diagnostics;
+using DivineRightGame.CombatHandling;
+using Microsoft.Xna.Framework;
 
 namespace DivineRightGame.Managers
 {
@@ -25,19 +27,48 @@ namespace DivineRightGame.Managers
         {
             PlayerFeedback[] feedback = null;
 
-            switch (coordinate.MapType)
+            bool validAttack = false;
+
+            if (actionType == ActionTypeEnum.ATTACK)
             {
-                case MapTypeEnum.LOCAL:
-                    feedback = GameState.LocalMap.GetBlockAtCoordinate(coordinate).PerformAction(actionType, GameState.PlayerCharacter, args);
-                    break;
-                case MapTypeEnum.GLOBAL:
-                    feedback = GameState.GlobalMap.GetBlockAtCoordinate(coordinate).PerformAction(actionType, GameState.PlayerCharacter, args);
-                    break;
-                default:
-                    throw new NotImplementedException("There is no support for that particular maptype");
+                //Handle this seperatly
+                //Argument 0 - attacker
+                //Argument 1 - target
+                //Argument 2 - Body part to attack
+
+                //Are we in the right place?
+                Actor attacker = args[0] as Actor;
+                Actor defender = args[1] as Actor;
+                AttackLocation location = (AttackLocation) args[2];
+
+                if (defender.MapCharacter != null && attacker.MapCharacter.Coordinate - defender.MapCharacter.Coordinate < 2)
+                {
+                    //Valid
+                    feedback = CombatManager.Attack(attacker,defender,location);
+                    validAttack = true; //perform the tick
+                }
+                else
+                {
+                    //Invalid - no tick
+                    return new PlayerFeedback[] { new CurrentLogFeedback(null,Color.Black,"You are too far away to hit your target")};
+                }
+            }
+            else
+            {
+                switch (coordinate.MapType)
+                {
+                    case MapTypeEnum.LOCAL:
+                        feedback = GameState.LocalMap.GetBlockAtCoordinate(coordinate).PerformAction(actionType, GameState.PlayerCharacter, args);
+                        break;
+                    case MapTypeEnum.GLOBAL:
+                        feedback = GameState.GlobalMap.GetBlockAtCoordinate(coordinate).PerformAction(actionType, GameState.PlayerCharacter, args);
+                        break;
+                    default:
+                        throw new NotImplementedException("There is no support for that particular maptype");
+                }
             }
 
-            if (actionType == ActionTypeEnum.EXAMINE || actionType == ActionTypeEnum.MOVE)
+            if (actionType == ActionTypeEnum.EXAMINE || actionType == ActionTypeEnum.MOVE || (actionType == ActionTypeEnum.ATTACK && validAttack))
             {
                 //Perform a tick
                 //Clear the Log

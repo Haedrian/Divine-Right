@@ -8,10 +8,11 @@ using Microsoft.Xna.Framework.Graphics;
 using DRObjects.Graphics;
 using Divine_Right.HelperFunctions;
 using DivineRightGame.CombatHandling;
+using DRObjects.Enums;
 
 namespace Divine_Right.InterfaceComponents.Components
 {
-    public class AttackActorComponent:
+    public class AttackActorComponent :
         IGameInterfaceComponent
     {
         #region Properties
@@ -20,7 +21,7 @@ namespace Divine_Right.InterfaceComponents.Components
         protected int locationX;
         protected int locationY;
         private Actor attacker;
-        public Actor TargetActor{get;set;}
+        public Actor TargetActor { get; set; }
 
         private Rectangle rect;
 
@@ -67,7 +68,7 @@ namespace Divine_Right.InterfaceComponents.Components
             this.attacker = attacker;
             this.TargetActor = target;
 
-           //Force a move
+            //Force a move
             this.PerformDrag(locationX, locationY);
         }
 
@@ -107,7 +108,7 @@ namespace Divine_Right.InterfaceComponents.Components
             batch.Draw(content.Load<Texture2D>(legs.path), legRect, legs.sourceRectangle, this.GetColour(health.Legs, health.LegsMax));
 
             //Draw the title and the statuses
-           // batch.DrawString(font, "Attack", statusTitleRect, Alignment.Center, Color.GhostWhite);
+            // batch.DrawString(font, "Attack", statusTitleRect, Alignment.Center, Color.GhostWhite);
 
             var shield = SpriteManager.GetSprite(InterfaceSpriteName.DEFENSE);
             var balanced = SpriteManager.GetSprite(InterfaceSpriteName.DEX);
@@ -149,9 +150,9 @@ namespace Divine_Right.InterfaceComponents.Components
             batch.Draw(content.Load<Texture2D>(sword.path), normalStatusRect, sword.sourceRectangle, Color.White);
             batch.Draw(content.Load<Texture2D>(agressive.path), aggressiveStatusRect, agressive.sourceRectangle, Color.White);
 
-            batch.DrawString(font,stance,statusRect,Alignment.Center,Color.Black);
+            batch.DrawString(font, stance, statusRect, Alignment.Center, Color.Black);
 
-            batch.Draw(content.Load <Texture2D>(seperator.path), seperatorRect, seperator.sourceRectangle, Color.DarkGray);
+            batch.Draw(content.Load<Texture2D>(seperator.path), seperatorRect, seperator.sourceRectangle, Color.DarkGray);
 
             batch.DrawString(font, TargetActor.EnemyData == null ? "Unknown" : TargetActor.EnemyData.EnemyName, enemyNameRect, Alignment.Center, Color.White);
             batch.Draw(content.Load<Texture2D>(shield.path), enemyArmourIconRect, shield.sourceRectangle, Color.White);
@@ -163,17 +164,35 @@ namespace Divine_Right.InterfaceComponents.Components
             batch.Draw(content.Load<Texture2D>(scrollBackground.path), attackButtonRectangle, scrollBackground.sourceRectangle, Color.DarkGray);
             batch.DrawString(font, "ATTACK", attackButtonRectangle, Alignment.Center, Color.White);
 
-            batch.DrawString(font,CombatManager.CalculateHitPercentage(attacker,TargetActor,AttackLocation.HEAD) + "%", headPercentageRect, Alignment.Center, Color.Red);
-            batch.DrawString(font, CombatManager.CalculateHitPercentage(attacker, TargetActor, AttackLocation.LEFT_ARM) + "%", leftArmPercentageRect, Alignment.Center, Color.Red);
-            batch.DrawString(font, CombatManager.CalculateHitPercentage(attacker, TargetActor, AttackLocation.CHEST) + "%", chestPercentageRect, Alignment.Center, Color.Red);
-            batch.DrawString(font, CombatManager.CalculateHitPercentage(attacker, TargetActor, AttackLocation.RIGHT_ARM) + "%", rightArmPercentageRect, Alignment.Center, Color.Red);
-            batch.DrawString(font, CombatManager.CalculateHitPercentage(attacker, TargetActor, AttackLocation.LEGS) + "%", legsPercentageRect, Alignment.Center, Color.Red);
+            if (CombatManager.CalculateHitPercentage(attacker, TargetActor, AttackLocation.HEAD) != -1) //not present
+            {
+                batch.DrawString(font, CombatManager.CalculateHitPercentage(attacker, TargetActor, AttackLocation.HEAD) + "%", headPercentageRect, Alignment.Center, Color.Red);
+            }
 
+            if (CombatManager.CalculateHitPercentage(attacker, TargetActor, AttackLocation.LEFT_ARM) != -1)
+            {
+                batch.DrawString(font, CombatManager.CalculateHitPercentage(attacker, TargetActor, AttackLocation.LEFT_ARM) + "%", leftArmPercentageRect, Alignment.Center, Color.Red);
+            }
+
+            if (CombatManager.CalculateHitPercentage(attacker, TargetActor, AttackLocation.CHEST) != -1)
+            {
+                batch.DrawString(font, CombatManager.CalculateHitPercentage(attacker, TargetActor, AttackLocation.CHEST) + "%", chestPercentageRect, Alignment.Center, Color.Red);
+            }
+
+            if (CombatManager.CalculateHitPercentage(attacker, TargetActor, AttackLocation.RIGHT_ARM) != -1)
+            {
+                batch.DrawString(font, CombatManager.CalculateHitPercentage(attacker, TargetActor, AttackLocation.RIGHT_ARM) + "%", rightArmPercentageRect, Alignment.Center, Color.Red);
+            }
+
+            if (CombatManager.CalculateHitPercentage(attacker, TargetActor, AttackLocation.LEGS) != -1)
+            {
+                batch.DrawString(font, CombatManager.CalculateHitPercentage(attacker, TargetActor, AttackLocation.LEGS) + "%", legsPercentageRect, Alignment.Center, Color.Red);
+            }
         }
 
         public bool HandleClick(int x, int y, Objects.Enums.MouseActionEnum mouseAction, out DRObjects.Enums.ActionTypeEnum? actionType, out object[] args, out DRObjects.MapCoordinate coord, out bool destroy)
         {
-            Point point = new Point(x,y);
+            Point point = new Point(x, y);
 
             args = null;
             coord = null;
@@ -205,6 +224,94 @@ namespace Divine_Right.InterfaceComponents.Components
                 return true;
             }
 
+            //Where did the user click?
+            if (attackButtonRectangle.Contains(point))
+            {
+                //Then attack
+                actionType = ActionTypeEnum.ATTACK;
+                List<object> argumentList = new List<object>();
+                argumentList.Add(this.attacker);
+                argumentList.Add(this.TargetActor);
+                argumentList.Add(CombatManager.GetRandomAttackLocation(this.attacker, this.TargetActor));
+
+                args = argumentList.ToArray();
+
+                return true;
+            }
+
+            //Did they click on something
+            if (headRect.Contains(point))
+            {
+                //Then attack
+                actionType = ActionTypeEnum.ATTACK;
+                List<object> argumentList = new List<object>();
+                argumentList.Add(this.attacker);
+                argumentList.Add(this.TargetActor);
+                argumentList.Add(AttackLocation.HEAD);
+
+                args = argumentList.ToArray();
+
+                return true;
+            }
+
+            if (leftArmRect.Contains(point))
+            {
+                //Then attack
+                actionType = ActionTypeEnum.ATTACK;
+                List<object> argumentList = new List<object>();
+                argumentList.Add(this.attacker);
+                argumentList.Add(this.TargetActor);
+                argumentList.Add(AttackLocation.LEFT_ARM);
+
+                args = argumentList.ToArray();
+
+                return true;
+            }
+
+            if (chestRect.Contains(point))
+            {
+                //Then attack
+                actionType = ActionTypeEnum.ATTACK;
+                List<object> argumentList = new List<object>();
+                argumentList.Add(this.attacker);
+                argumentList.Add(this.TargetActor);
+                argumentList.Add(AttackLocation.CHEST);
+
+                args = argumentList.ToArray();
+
+                return true;
+
+            }
+
+            if (rightArmRect.Contains(point))
+            {
+                //Then attack
+                actionType = ActionTypeEnum.ATTACK;
+                List<object> argumentList = new List<object>();
+                argumentList.Add(this.attacker);
+                argumentList.Add(this.TargetActor);
+                argumentList.Add(AttackLocation.RIGHT_ARM);
+
+                args = argumentList.ToArray();
+
+                return true;
+
+            }
+
+            if (legRect.Contains(point))
+            {
+                //Then attack
+                actionType = ActionTypeEnum.ATTACK;
+                List<object> argumentList = new List<object>();
+                argumentList.Add(this.attacker);
+                argumentList.Add(this.TargetActor);
+                argumentList.Add(AttackLocation.LEGS);
+
+                args = argumentList.ToArray();
+
+                return true;
+
+            }
 
             return visible; //If it's visible - block it. Otherwise do nothing
         }
@@ -241,7 +348,7 @@ namespace Divine_Right.InterfaceComponents.Components
             legRect = new Rectangle(locationX + 223, locationY + 108, 50, 87);
 
             //Let's put everything in place
-            statusTitleRect = new Rectangle(locationX +10,locationY+ 10, 110, 10);
+            statusTitleRect = new Rectangle(locationX + 10, locationY + 10, 110, 10);
 
             defensiveStatusRect = new Rectangle(locationX + 10, locationY + 30, 30, 30);
             normalStatusRect = new Rectangle(locationX + 50, locationY + 30, 30, 30);
@@ -302,7 +409,7 @@ namespace Divine_Right.InterfaceComponents.Components
                 currentColour = Color.Transparent;
             }
             else
-                if (health <= 0) //destroyed
+                if (health < 0) //destroyed
                 {
                     // currentColour = Color.Red;
                     currentColour = Color.Black;

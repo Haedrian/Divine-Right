@@ -95,7 +95,7 @@ namespace Divine_Right.GameScreens
         private List<IGameInterfaceComponent> interfaceComponents = new List<IGameInterfaceComponent>();
         TextLogComponent log;
         List<ISystemInterfaceComponent> menuButtons = new List<ISystemInterfaceComponent>();
-       
+
         private object[] parameters;
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace Divine_Right.GameScreens
             }
 
             //Add the health control
-            HealthDisplayComponent hdc = new HealthDisplayComponent(50, 50, GameState.LocalMap.Actors.Where(a => a.IsPlayerCharacter).FirstOrDefault() );
+            HealthDisplayComponent hdc = new HealthDisplayComponent(50, 50, GameState.LocalMap.Actors.Where(a => a.IsPlayerCharacter).FirstOrDefault());
             hdc.Visible = false;
             interfaceComponents.Add(hdc);
 
@@ -147,22 +147,16 @@ namespace Divine_Right.GameScreens
             csc.Visible = false;
             interfaceComponents.Add(csc);
 
-            TextLogComponent tlc = new TextLogComponent(10, PlayableHeight,GameState.NewLog);
+            TextLogComponent tlc = new TextLogComponent(10, PlayableHeight, GameState.NewLog);
             tlc.Visible = true;
             interfaceComponents.Add(tlc);
 
             log = tlc;
 
-            ////Remove this later. Obviously
-            //AttackActorComponent aac = new AttackActorComponent(50, 50, GameState.PlayerCharacter, GameState.PlayerCharacter);
-            //aac.Visible = true;
-
-            //interfaceComponents.Add(aac);
-
             //Create the menu buttons
-            menuButtons.Add(new AutoSizeGameButton("  Health  ", this.game.Content, InternalActionEnum.OPEN_HEALTH, new object[]{}, 50, PlayableHeight + 125));
+            menuButtons.Add(new AutoSizeGameButton("  Health  ", this.game.Content, InternalActionEnum.OPEN_HEALTH, new object[] { }, 50, PlayableHeight + 125));
             menuButtons.Add(new AutoSizeGameButton(" Attributes ", this.game.Content, InternalActionEnum.OPEN_ATTRIBUTES, new object[] { }, 150, PlayableHeight + 125));
-          
+
             //Invoke a size change
             Window_ClientSizeChanged(null, null);
 
@@ -356,7 +350,7 @@ namespace Divine_Right.GameScreens
                 foreach (var menuButton in menuButtons)
                 {
 
-                    if (menuButton.ReturnLocation().Contains(new Point(mouse.X,mouse.Y)) && mouseAction == MouseActionEnum.LEFT_CLICK && menuButton.HandleClick(mouse.X, mouse.Y, out internalAction, out arg))
+                    if (menuButton.ReturnLocation().Contains(new Point(mouse.X, mouse.Y)) && mouseAction == MouseActionEnum.LEFT_CLICK && menuButton.HandleClick(mouse.X, mouse.Y, out internalAction, out arg))
                     {
                         mouseHandled = true; //don't get into the other loop
                         break; //break out
@@ -366,7 +360,7 @@ namespace Divine_Right.GameScreens
                 if (internalAction.HasValue)
                 {
                     //Let's do it here
-                    switch(internalAction.Value)
+                    switch (internalAction.Value)
                     {
                         case InternalActionEnum.OPEN_HEALTH:
                             //Toggle the health
@@ -387,7 +381,7 @@ namespace Divine_Right.GameScreens
                             var log = this.interfaceComponents.Where(ic => ic.GetType().Equals(typeof(TextLogComponent))).FirstOrDefault();
                             log.Visible = !log.Visible;
                             break;
-                            //TODO: THE REST
+                        //TODO: THE REST
                     }
                 }
 
@@ -510,7 +504,7 @@ namespace Divine_Right.GameScreens
                             ActionTypeEnum[] actions = UserInterfaceManager.GetPossibleActions(iBlock.MapCoordinate);
 
                             //we are going to get a context menu
-                            
+
                             //Check for other context menus and remove them - we can only have one
                             for (int i = 0; i < interfaceComponents.Count; i++)
                             {
@@ -569,7 +563,7 @@ namespace Divine_Right.GameScreens
 
             foreach (var interfaceComponent in interfaceComponents)
             {
-               interfaceComponent.Draw(this.game.Content, this.spriteBatch);
+                interfaceComponent.Draw(this.game.Content, this.spriteBatch);
             }
 
             spriteBatch.End();
@@ -741,7 +735,6 @@ namespace Divine_Right.GameScreens
                 }
             }
 
-
             PlayerFeedback[] fb = UserInterfaceManager.PerformAction(coord, actionType, args);
 
             //go through all the feedback
@@ -759,11 +752,11 @@ namespace Divine_Right.GameScreens
                 {
                     GameState.NewLog.Add(feedback as CurrentLogFeedback);
                 }
-                else if (feedback.GetType().Equals(typeof(InterfaceOpenFeedback)))
+                else if (feedback.GetType().Equals(typeof(InterfaceToggleFeedback)))
                 {
-                    InterfaceOpenFeedback iop = feedback as InterfaceOpenFeedback;
+                    InterfaceToggleFeedback iop = feedback as InterfaceToggleFeedback;
 
-                    if (iop.InterfaceComponent == InternalActionEnum.OPEN_ATTACK)
+                    if (iop.InterfaceComponent == InternalActionEnum.OPEN_ATTACK && iop.Open)
                     {
                         //Open the attack interface for a particular actor. If one is not open already
                         //Identify the actor in question
@@ -788,6 +781,29 @@ namespace Divine_Right.GameScreens
                         {
                             //Open it. Otherwise don't do anything
                             interfaceComponents.Add(new AttackActorComponent(150, 150, GameState.PlayerCharacter, actor) { Visible = true });
+                        }
+
+                    }
+                    else if (iop.InterfaceComponent == InternalActionEnum.OPEN_ATTACK && !iop.Open)
+                    {
+                        //Close it
+                        var actor = iop.Argument as Actor;
+
+                        AttackActorComponent component = null;
+
+                        foreach (AttackActorComponent aac in interfaceComponents.Where(ic => ic.GetType().Equals(typeof(AttackActorComponent))))
+                        {
+                            if (aac.TargetActor.Equals(actor))
+                            {
+                                component = aac;
+                            }
+                        }
+
+                        //Did we have a match?
+                        if (component != null)
+                        {
+                            //remove it
+                            interfaceComponents.Remove(component);
                         }
 
                     }

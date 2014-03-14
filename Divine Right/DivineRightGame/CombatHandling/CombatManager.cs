@@ -7,6 +7,8 @@ using DRObjects.ActorHandling;
 using DRObjects.GraphicsEngineObjects;
 using DRObjects.Graphics;
 using Microsoft.Xna.Framework;
+using DRObjects.GraphicsEngineObjects.Abstract;
+using DRObjects.Enums;
 
 namespace DivineRightGame.CombatHandling
 {
@@ -16,15 +18,15 @@ namespace DivineRightGame.CombatHandling
     public static class CombatManager
     {
         private static readonly Dictionary<AttackLocation, int> penaltyDict;
-        private static Random random;
+        private static Random random = new Random();
 
         static CombatManager()
         {
             //Create the penalty dict
             penaltyDict = new Dictionary<AttackLocation, int>();
-            penaltyDict.Add(AttackLocation.CHEST,0);
-            penaltyDict.Add(AttackLocation.HEAD,-5);
-            penaltyDict.Add(AttackLocation.LEFT_ARM,+1);
+            penaltyDict.Add(AttackLocation.CHEST, 0);
+            penaltyDict.Add(AttackLocation.HEAD, -5);
+            penaltyDict.Add(AttackLocation.LEFT_ARM, +1);
             penaltyDict.Add(AttackLocation.LEGS, -3);
             penaltyDict.Add(AttackLocation.RIGHT_ARM, -3);
         }
@@ -38,10 +40,45 @@ namespace DivineRightGame.CombatHandling
         /// <returns></returns>
         public static int CalculateHitPercentage(Actor attacker, Actor defender, AttackLocation location)
         {
+            //If the bodypart is destroyed, give a percentage of -1 so we can filter it out later
+            switch (location)
+            {
+                case AttackLocation.CHEST:
+                    if (defender.Anatomy.Chest <= -5)
+                    {
+                        return -1;
+                    }
+                    break;
+                case AttackLocation.HEAD:
+                    if (defender.Anatomy.Head <= -5)
+                    {
+                        return -1;
+                    }
+                    break;
+                case AttackLocation.LEFT_ARM:
+                    if (defender.Anatomy.LeftArm <= -5)
+                    {
+                        return - 1;
+                    }
+                    break;
+                case AttackLocation.LEGS:
+                    if (defender.Anatomy.Legs <= -5)
+                    {
+                        return -1;
+                    }
+                    break;
+                case AttackLocation.RIGHT_ARM:
+                    if (defender.Anatomy.RightArm <= -5)
+                    {
+                        return -1;
+                    }
+                    break;
+            }
+
             int atk = 0;
             int def = 0;
 
-            GetStanceEffect(out atk,out def,attacker.CombatStance);
+            GetStanceEffect(out atk, out def, attacker.CombatStance);
 
             //Chance to hit -
             // Attacker Skill + Brawn - 5 + location penalty + stance effect  VS Defender Skill + Agil + stance effect
@@ -54,7 +91,7 @@ namespace DivineRightGame.CombatHandling
             //See what the difference is
             int difference = 10 + (hitChance - defendChance);
 
-            return difference > 10 ? 100 : difference < 0 ? 0 : difference*10;
+            return difference > 10 ? 100 : difference < 0 ? 0 : difference * 10;
         }
 
         /// <summary>
@@ -68,9 +105,44 @@ namespace DivineRightGame.CombatHandling
         {
             List<AttackLocation> attackLocations = new List<AttackLocation>();
 
-            foreach(AttackLocation loc in  Enum.GetValues(typeof(AttackLocation)).Cast<AttackLocation>())
+            foreach (AttackLocation loc in Enum.GetValues(typeof(AttackLocation)).Cast<AttackLocation>())
             {
-                for (int i = 0; i < CalculateHitPercentage(attacker, defender, loc); i++ )
+                //Avoid hitting parts which have been disabled already
+                switch (loc)
+                {
+                    case AttackLocation.CHEST:
+                        if (defender.Anatomy.Chest < 0)
+                        {
+                            continue; //No use
+                        }
+                        break;
+                    case AttackLocation.HEAD:
+                        if (defender.Anatomy.Head < 0)
+                        {
+                            continue;
+                        }
+                        break;
+                    case AttackLocation.LEFT_ARM:
+                        if (defender.Anatomy.LeftArm < 0)
+                        {
+                            continue;
+                        }
+                        break;
+                    case AttackLocation.LEGS:
+                        if (defender.Anatomy.Legs < 0)
+                        {
+                            continue;
+                        }
+                        break;
+                    case AttackLocation.RIGHT_ARM:
+                        if (defender.Anatomy.RightArm < 0)
+                        {
+                            continue;
+                        }
+                        break;
+                }
+
+                for (int i = 0; i < CalculateHitPercentage(attacker, defender, loc); i++)
                 {
                     attackLocations.Add(loc);
                 }
@@ -87,16 +159,16 @@ namespace DivineRightGame.CombatHandling
         /// <param name="defender"></param>
         /// <param name="location"></param>
         /// <returns></returns>
-        public static CurrentLogFeedback[] Attack(Actor attacker, Actor defender, AttackLocation location)
+        public static PlayerFeedback[] Attack(Actor attacker, Actor defender, AttackLocation location)
         {
-            List<CurrentLogFeedback> feedback = new List<CurrentLogFeedback>();
+            List<PlayerFeedback> feedback = new List<PlayerFeedback>();
 
             //Do we succeed in the attack?
             int atk = 0;
             int def = 0;
 
             int weaponDamage = 3;
-            int weaponWoundPotential = 7;
+            int weaponWoundPotential = 9;
             DamageType damageType = DamageType.SLASH;
 
             GetStanceEffect(out atk, out def, attacker.CombatStance);
@@ -117,18 +189,18 @@ namespace DivineRightGame.CombatHandling
 
             //TODO: CRITICAL HANDLING
 
-            if (difference + diceRoll > 10)
+            if (difference + diceRoll > 0)
             {
                 //We have a hit
-                
-                feedback.Add(LogAction(attacker,defender,location,damageType,LogMessageStatus.HIT,diceRoll));
+
+                feedback.Add(LogAction(attacker, defender, location, damageType, LogMessageStatus.HIT, diceRoll));
 
                 //TODO: HP AND CONCIOUSNESS
 
                 //Do we wound the character?
                 diceRoll = random.Next(10) + 1;
 
-                int woundRoll = diceRoll + defender.Attributes.WoundResist - weaponWoundPotential;
+                int woundRoll = diceRoll / 2 + defender.Attributes.WoundResist - weaponWoundPotential;
 
                 //TODO: ACTUAL WEAPON DAMAGE
                 int damage = weaponDamage;
@@ -137,6 +209,7 @@ namespace DivineRightGame.CombatHandling
                 {
                     //No damage!
                     feedback.Add(LogAction(attacker, defender, location, damageType, LogMessageStatus.NO_WOUND, diceRoll));
+                    return feedback.ToArray();
                 }
                 else if (woundRoll < 0)
                 {
@@ -161,7 +234,7 @@ namespace DivineRightGame.CombatHandling
                 }
 
                 //Apply the damage
-                switch(location)
+                switch (location)
                 {
                     case AttackLocation.CHEST:
                         defender.Anatomy.Chest -= damage;
@@ -181,15 +254,15 @@ namespace DivineRightGame.CombatHandling
                     default:
                         throw new NotImplementedException(location + " has no code prepared for damage");
                 }
-                
+
                 //Damage assessment - Do this properly later
                 //TODO: ATTRIBUTE PENALTIES AND SUCH THINGS
-                switch(location)
+                switch (location)
                 {
                     case AttackLocation.HEAD:
                         if (defender.Anatomy.Head < 0)
                         {
-                            if (defender.Anatomy.Head < -5)
+                            if (defender.Anatomy.Head <= -5)
                             {
                                 //Destroyed
                                 feedback.Add(LogAction(attacker, defender, location, damageType, LogMessageStatus.DESTROY, diceRoll));
@@ -201,7 +274,9 @@ namespace DivineRightGame.CombatHandling
                             }
 
                             //Dead
-                            feedback.Add(LogAction(attacker,defender,location,damageType,LogMessageStatus.KILL,diceRoll));
+                            feedback.Add(LogAction(attacker, defender, location, damageType, LogMessageStatus.KILL, diceRoll));
+                            //Close the interface
+                            feedback.Add(new InterfaceToggleFeedback(InternalActionEnum.OPEN_ATTACK,false,defender));
                             KillCharacter(defender);
                         }
                         break;
@@ -209,7 +284,7 @@ namespace DivineRightGame.CombatHandling
                     case AttackLocation.CHEST:
                         if (defender.Anatomy.Chest < 0)
                         {
-                            if (defender.Anatomy.Chest < -5)
+                            if (defender.Anatomy.Chest <= -5)
                             {
                                 //Destroyed
                                 feedback.Add(LogAction(attacker, defender, location, damageType, LogMessageStatus.DESTROY, diceRoll));
@@ -221,7 +296,8 @@ namespace DivineRightGame.CombatHandling
                             }
 
                             //Dead
-                            feedback.Add(LogAction(attacker,defender,location,damageType,LogMessageStatus.KILL,diceRoll));
+                            feedback.Add(LogAction(attacker, defender, location, damageType, LogMessageStatus.KILL, diceRoll));
+                            feedback.Add(new InterfaceToggleFeedback(InternalActionEnum.OPEN_ATTACK, false, defender));
                             KillCharacter(defender);
                         }
                         break;
@@ -229,7 +305,7 @@ namespace DivineRightGame.CombatHandling
                     case AttackLocation.LEFT_ARM:
                         if (defender.Anatomy.LeftArm < 0)
                         {
-                            if (defender.Anatomy.LeftArm < -5)
+                            if (defender.Anatomy.LeftArm <= -5)
                             {
                                 //Destroyed
                                 feedback.Add(LogAction(attacker, defender, location, damageType, LogMessageStatus.DESTROY, diceRoll));
@@ -245,7 +321,7 @@ namespace DivineRightGame.CombatHandling
                     case AttackLocation.LEGS:
                         if (defender.Anatomy.Legs < 0)
                         {
-                            if (defender.Anatomy.Legs < -5)
+                            if (defender.Anatomy.Legs <= -5)
                             {
                                 //Destroyed
                                 feedback.Add(LogAction(attacker, defender, location, damageType, LogMessageStatus.DESTROY, diceRoll));
@@ -261,7 +337,7 @@ namespace DivineRightGame.CombatHandling
                     case AttackLocation.RIGHT_ARM:
                         if (defender.Anatomy.RightArm < 0)
                         {
-                            if (defender.Anatomy.RightArm < -5)
+                            if (defender.Anatomy.RightArm <= -5)
                             {
                                 //Destroyed
                                 feedback.Add(LogAction(attacker, defender, location, damageType, LogMessageStatus.DESTROY, diceRoll));
@@ -494,7 +570,7 @@ namespace DivineRightGame.CombatHandling
                 //No damage!
                 if (attacker.IsPlayerCharacter)
                 {
-                     log = new CurrentLogFeedback(InterfaceSpriteName.BLOOD, Color.DarkRed, "You however fail to wound your opponent");
+                    log = new CurrentLogFeedback(InterfaceSpriteName.BLOOD, Color.DarkRed, "You however fail to wound your opponent");
                 }
                 else
                 {
@@ -515,7 +591,7 @@ namespace DivineRightGame.CombatHandling
         /// <param name="stance"></param>
         private static void GetStanceEffect(out int attack, out int defence, ActorStance stance)
         {
-            switch(stance)
+            switch (stance)
             {
                 case ActorStance.COMPLETE_DEFENSIVE:
                     attack = -6;

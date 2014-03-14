@@ -101,7 +101,7 @@ namespace DRObjects.Items.Archetypes.Local
         {
             if (actionType == ActionTypeEnum.PREPARE_ATTACK)
             {
-                return new InterfaceOpenFeedback[] { new InterfaceOpenFeedback(InternalActionEnum.OPEN_ATTACK,this) };
+                return new InterfaceToggleFeedback[] { new InterfaceToggleFeedback(InternalActionEnum.OPEN_ATTACK,true,this) };
             }
             else
             {
