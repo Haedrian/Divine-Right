@@ -529,7 +529,7 @@ namespace DivineRightGame.CombatHandling
                 }
                 else
                 {
-                    log = new CurrentLogFeedback(InterfaceSpriteName.SWORD, Color.DarkRed, defender.EnemyData.EnemyName + " swings (" + diceroll + ") at you and hits you in the " + loc.ToString().ToLower().Replace("_", " "));
+                    log = new CurrentLogFeedback(InterfaceSpriteName.SWORD, Color.DarkRed, attacker.EnemyData.EnemyName + " swings (" + diceroll + ") at you and hits you in the " + loc.ToString().ToLower().Replace("_", " "));
                 }
 
                 return log;
@@ -559,7 +559,7 @@ namespace DivineRightGame.CombatHandling
                 else
                 {
                     //Player is the defender
-                    log = new CurrentLogFeedback(InterfaceSpriteName.SWORD, Color.DarkGreen, "The " + defender.EnemyData.EnemyName + " swings (" + diceroll + ") at your " + loc.ToString().ToLower().Replace("_", " ") + ", but misses");
+                    log = new CurrentLogFeedback(InterfaceSpriteName.SWORD, Color.DarkGreen, "The " + attacker.EnemyData.EnemyName + " swings (" + diceroll + ") at your " + loc.ToString().ToLower().Replace("_", " ") + ", but misses");
                 }
 
                 return log;

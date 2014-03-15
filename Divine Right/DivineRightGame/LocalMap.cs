@@ -9,6 +9,8 @@ using DRObjects.ActorHandling.ActorMissions;
 using DivineRightGame.Pathfinding;
 using DRObjects.LocalMapGeneratorObjects;
 using Microsoft.Xna.Framework;
+using DivineRightGame.CombatHandling;
+using DRObjects.GraphicsEngineObjects;
 
 namespace DivineRightGame
 {
@@ -358,6 +360,24 @@ namespace DivineRightGame
                             Target = mission.AttackTarget,
                             TargetCoordinate = mission.AttackTarget.MapCharacter.Coordinate
                         };
+                    }
+                    else
+                    {
+                        if (CombatManager.GetRandomAttackLocation(actor, mission.AttackTarget).HasValue) //we can hit them
+                        {
+                            //Attack!
+                            var logMessages = CombatManager.Attack(actor, mission.AttackTarget, CombatManager.GetRandomAttackLocation(actor, mission.AttackTarget).Value);
+
+                            //Filter the current log messages
+                            var currentLogMessages = logMessages.Where(lm => lm.GetType().Equals(typeof(CurrentLogFeedback))).Select(lm => lm as CurrentLogFeedback).ToArray();
+
+                           GameState.NewLog.AddRange(currentLogMessages);
+                        }
+                        else
+                        {
+                            //TODO: Run away!
+                        }
+
                     }
                 }
                 else if (actor.CurrentMission.MissionType == DRObjects.ActorHandling.ActorMissionType.HUNTDOWN)
