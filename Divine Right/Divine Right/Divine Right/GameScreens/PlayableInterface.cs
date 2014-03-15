@@ -198,6 +198,14 @@ namespace Divine_Right.GameScreens
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 game.Exit();
 
+            //Is the player dead?
+            if (!GameState.PlayerCharacter.IsAlive)
+            {
+                //:(
+                BaseGame.requestedInternalAction = InternalActionEnum.DIE;
+                BaseGame.requestedArgs = new object[0];
+            }
+
             //Lets see if there are any keyboard keys being pressed
 
             KeyboardState keyboardState = Keyboard.GetState();

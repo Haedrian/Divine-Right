@@ -188,11 +188,11 @@ namespace DivineRightGame
         {
             PathfindingMap[x, y] = localGameMap[x, y, 0].MayContainItems ? (byte)1 : Byte.MaxValue;
 
-            for (int xLoop=-1; xLoop >= 0 && xLoop < localGameMap.GetLength(0) && xLoop < 2; xLoop++ )
+            for (int xLoop = -1; xLoop >= 0 && xLoop < localGameMap.GetLength(0) && xLoop < 2; xLoop++)
             {
-                for (int yLoop = -1; yLoop >= 0 && yLoop < localGameMap.GetLength(1) && yLoop <2; yLoop++)
+                for (int yLoop = -1; yLoop >= 0 && yLoop < localGameMap.GetLength(1) && yLoop < 2; yLoop++)
                 {
-                    PathfindingMap[x+xLoop,y+yLoop] = localGameMap[x+xLoop,y+yLoop,0].MayContainItems ? (byte)1: Byte.MaxValue;
+                    PathfindingMap[x + xLoop, y + yLoop] = localGameMap[x + xLoop, y + yLoop, 0].MayContainItems ? (byte)1 : Byte.MaxValue;
                 }
             }
         }
@@ -206,16 +206,17 @@ namespace DivineRightGame
             MapCoordinate playerLocation = actors.Where(a => a.IsPlayerCharacter).FirstOrDefault().MapCharacter.Coordinate;
 
             //Check if we have any dead actors to clean up
-            foreach (Actor deadActor in actors.Where(a => !a.IsAlive && a.MapCharacter != null))
+            foreach (Actor deadActor in actors.Where(a => !a.IsAlive && !a.IsPlayerCharacter && a.MapCharacter != null))
             {
                 this.GetBlockAtCoordinate(deadActor.MapCharacter.Coordinate).RemoveTopItem(); //remove the character
+
                 //TODO: PUT A CORPSE OF SOME SORT
                 deadActor.MapCharacter = null; //detatch it
             }
 
             foreach (Actor actor in actors.Where(a => !a.IsPlayerCharacter && a.IsAlive))
             {
-                
+
                 //First check whether they have a mission
                 if (actor.CurrentMission == null)
                 {
@@ -291,7 +292,7 @@ namespace DivineRightGame
 
                     //Perform an action accordingly
                     //Is he outside of the patrol area?
-                    else if (!mission.WanderRectangle.Contains( new Point(actor.MapCharacter.Coordinate.X,actor.MapCharacter.Coordinate.Y)))
+                    else if (!mission.WanderRectangle.Contains(new Point(actor.MapCharacter.Coordinate.X, actor.MapCharacter.Coordinate.Y)))
                     {
                         //Send him back.
                         WalkToMission walkMission = new WalkToMission();
@@ -371,7 +372,7 @@ namespace DivineRightGame
                             //Filter the current log messages
                             var currentLogMessages = logMessages.Where(lm => lm.GetType().Equals(typeof(CurrentLogFeedback))).Select(lm => lm as CurrentLogFeedback).ToArray();
 
-                           GameState.NewLog.AddRange(currentLogMessages);
+                            GameState.NewLog.AddRange(currentLogMessages);
                         }
                         else
                         {
@@ -463,13 +464,13 @@ namespace DivineRightGame
                             actor.CurrentMission = null; //lose the mission
                         }
                         else
-                        if (!GetBlockAtCoordinate(mission.Coordinates.Peek()).MayContainItems)
-                        {
-                            //Invalid path
-                            Console.WriteLine("Invalid Path");
-                            //lose the mission
-                            actor.CurrentMission = null;
-                        }
+                            if (!GetBlockAtCoordinate(mission.Coordinates.Peek()).MayContainItems)
+                            {
+                                //Invalid path
+                                Console.WriteLine("Invalid Path");
+                                //lose the mission
+                                actor.CurrentMission = null;
+                            }
                     }
                     else
                     {

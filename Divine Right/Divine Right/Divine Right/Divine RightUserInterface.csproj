@@ -102,12 +102,13 @@
   <ItemGroup>
     <Compile Include="BaseGame.cs" />
     <Compile Include="GameScreens\Components\FPSCounter.cs" />
+    <Compile Include="GameScreens\DeathScreen.cs" />
     <Compile Include="GameScreens\MainMenuScreen.cs" />
     <Compile Include="GameScreens\PlayableInterface.cs" />
     <Compile Include="GameScreens\WorldGenerationScreen.cs" />
     <Compile Include="GraphicalObjects\InterfaceBlock.cs" />
     <Compile Include="HelperFunctions\Alignment.cs" />
-    <Compile Include="HelperFunctions\DrawStringHelper.cs" />
+    <Compile Include="HelperFunctions\Extensions.cs" />
     <Compile Include="HelperFunctions\TestFunctions.cs" />
     <Compile Include="InterfaceComponents\Components\AttackActorComponent.cs" />
     <Compile Include="InterfaceComponents\Components\AutoSizeGameButton.cs" />

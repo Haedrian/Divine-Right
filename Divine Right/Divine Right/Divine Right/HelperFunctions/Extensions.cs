@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using DRObjects.Graphics;
+using Microsoft.Xna.Framework.Content;
 
 namespace Divine_Right.HelperFunctions
 {
-   public static class DrawStringHelper
+   public static class Extensions
     {
        public static void DrawString(this SpriteBatch batch, SpriteFont font, string text, Rectangle bounds, Alignment align, Color color)
        {
@@ -30,5 +32,11 @@ namespace Divine_Right.HelperFunctions
            batch.DrawString(font, new StringBuilder(text), new Vector2(pos.X,pos.Y), color, 0f, origin, 1, SpriteEffects.None, 0);
        }
 
+
+       public static void Draw(this SpriteBatch batch, ContentManager content, SpriteData data, Rectangle drawRect, Color colour)
+       {
+            batch.Draw(content.Load<Texture2D>(data.path),drawRect,data.sourceRectangle,colour);
+       }
+           
     }
 }

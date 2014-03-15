@@ -16,6 +16,8 @@ namespace DRObjects.Enums
         LOAD,
         EXIT,
 
+        DIE,
+
         OPEN_HEALTH,
         OPEN_ATTRIBUTES,
         OPEN_LOG,

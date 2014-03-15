@@ -44,6 +44,7 @@ Content\Graphics\Local\enemies.xnb
 Content\Graphics\Interface\paperTexture.xnb
 Content\Graphics\Interface\health2.xnb
 Content\Graphics\Interface\CharacterSheetIcons.xnb
+Content\Graphics\Interface\graveyard.xnb
 Content\Fonts\TextFeedbackFont.spritefont
 App.config
 Maplets.sdf

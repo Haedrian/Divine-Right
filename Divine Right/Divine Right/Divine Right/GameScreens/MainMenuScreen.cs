@@ -34,6 +34,8 @@ namespace Divine_Right.GameScreens
             this.baseGameMessage = baseGameMessage;
 
         }
+        #endregion
+        #region Function
 
         public override void Initialize()
         {

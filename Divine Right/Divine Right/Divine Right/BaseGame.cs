@@ -79,6 +79,12 @@ namespace Divine_Right
                     this.Components.Clear();
                     this.Components.Add(new MainMenuScreen(this, graphics, ""));
                 }
+                else if (requestedInternalAction.Value == InternalActionEnum.DIE)
+                {
+                    //Load the death
+                    this.Components.Clear();
+                    this.Components.Add(new DeathScreen(this, graphics));
+                }
 
                 requestedInternalAction = null; //set it back to 
             }
