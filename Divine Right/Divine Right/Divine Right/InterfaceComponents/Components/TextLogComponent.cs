@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using DRObjects.GraphicsEngineObjects;
 using DRObjects.Graphics;
 using Microsoft.Xna.Framework.Graphics;
+using DRObjects.Enums;
 
 namespace Divine_Right.InterfaceComponents.Components
 {
@@ -154,7 +155,7 @@ namespace Divine_Right.InterfaceComponents.Components
 
         }
 
-        public bool HandleClick(int x, int y, Objects.Enums.MouseActionEnum mouseAction, out DRObjects.Enums.ActionTypeEnum? actionType, out object[] args, out DRObjects.MapCoordinate coord, out bool destroy)
+        public bool HandleClick(int x, int y, Objects.Enums.MouseActionEnum mouseAction, out DRObjects.Enums.ActionTypeEnum? actionType,out InternalActionEnum? internalActionType, out object[] args, out DRObjects.MapCoordinate coord, out bool destroy)
         {
             if (!visible)
             {
@@ -162,6 +163,7 @@ namespace Divine_Right.InterfaceComponents.Components
                 destroy = false;
                 coord = null;
                 args = null;
+                internalActionType = null;
                 return false;
             }
 
@@ -193,6 +195,7 @@ namespace Divine_Right.InterfaceComponents.Components
             destroy = false;
             coord = null;
             args = null;
+            internalActionType = null;
             return true;
 
         }

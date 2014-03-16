@@ -153,6 +153,11 @@ namespace Divine_Right.GameScreens
 
             log = tlc;
 
+            var cemetry = SpriteManager.GetSprite(InterfaceSpriteName.DEAD);
+
+            DecisionPopupComponent comp = new DecisionPopupComponent(PlayableWidth/2 - 150,PlayableHeight/2 - 150,"DEATH","You died. Good going.",cemetry,new DecisionPopupChoice[]{new DecisionPopupChoice("Go towards the light!",null,null,null),new DecisionPopupChoice("Oh noes!",null,null,null)});
+            interfaceComponents.Add(comp);
+
             //Create the menu buttons
             menuButtons.Add(new AutoSizeGameButton("  Health  ", this.game.Content, InternalActionEnum.OPEN_HEALTH, new object[] { }, 50, PlayableHeight + 125));
             menuButtons.Add(new AutoSizeGameButton(" Attributes ", this.game.Content, InternalActionEnum.OPEN_ATTRIBUTES, new object[] { }, 150, PlayableHeight + 125));
@@ -198,13 +203,13 @@ namespace Divine_Right.GameScreens
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 game.Exit();
 
-            //Is the player dead?
-            if (!GameState.PlayerCharacter.IsAlive)
-            {
-                //:(
-                BaseGame.requestedInternalAction = InternalActionEnum.DIE;
-                BaseGame.requestedArgs = new object[0];
-            }
+            ////Is the player dead?
+            //if (!GameState.PlayerCharacter.IsAlive)
+            //{
+            //    //:(
+            //    BaseGame.requestedInternalAction = InternalActionEnum.DIE;
+            //    BaseGame.requestedArgs = new object[0];
+            //}
 
             //Lets see if there are any keyboard keys being pressed
 
@@ -357,39 +362,10 @@ namespace Divine_Right.GameScreens
 
                 foreach (var menuButton in menuButtons)
                 {
-
                     if (menuButton.ReturnLocation().Contains(new Point(mouse.X, mouse.Y)) && mouseAction == MouseActionEnum.LEFT_CLICK && menuButton.HandleClick(mouse.X, mouse.Y, out internalAction, out arg))
                     {
                         mouseHandled = true; //don't get into the other loop
                         break; //break out
-                    }
-                }
-
-                if (internalAction.HasValue)
-                {
-                    //Let's do it here
-                    switch (internalAction.Value)
-                    {
-                        case InternalActionEnum.OPEN_HEALTH:
-                            //Toggle the health
-                            var health = this.interfaceComponents.Where(ic => ic.GetType().Equals(typeof(HealthDisplayComponent))).FirstOrDefault();
-
-                            health.Visible = !health.Visible;
-
-                            break;
-                        case InternalActionEnum.OPEN_ATTRIBUTES:
-                            //Toggle the attributes
-                            var att = this.interfaceComponents.Where(ic => ic.GetType().Equals(typeof(CharacterSheetComponent))).FirstOrDefault();
-                            att.Visible = !att.Visible;
-
-                            break;
-
-                        case InternalActionEnum.OPEN_LOG:
-                            //Toggle the log
-                            var log = this.interfaceComponents.Where(ic => ic.GetType().Equals(typeof(TextLogComponent))).FirstOrDefault();
-                            log.Visible = !log.Visible;
-                            break;
-                        //TODO: THE REST
                     }
                 }
 
@@ -417,6 +393,25 @@ namespace Divine_Right.GameScreens
                     }
                 }
 
+                //Do we have a MODAL interface component?
+                var modalComponent = interfaceComponents.Where(ic => ic.IsModal()).FirstOrDefault();
+
+                if (modalComponent != null)
+                {
+                    //Force it to handle it
+                    bool destroy = false;
+
+                    modalComponent.HandleClick(mouse.X, mouse.Y, mouseAction.Value, out action,out internalAction, out args, out targetCoord, out destroy);
+
+                    if (destroy)
+                    {
+                        //Destroy it
+                        interfaceComponents.Remove(modalComponent);
+                    }
+
+                    //It's handled
+                    mouseHandled = true;
+                }
 
                 for (int i = interfaceComponents.Count - 1; i >= 0; i--)
                 {
@@ -455,7 +450,7 @@ namespace Divine_Right.GameScreens
                         }
 
                         //see if the component can handle it
-                        mouseHandled = interfaceComponent.HandleClick(mouse.X, mouse.Y, mouseAction.Value, out action, out args, out targetCoord, out destroy);
+                        mouseHandled = interfaceComponent.HandleClick(mouse.X, mouse.Y, mouseAction.Value, out action,out internalAction, out args, out targetCoord, out destroy);
 
                         if (destroy)
                         {
@@ -473,10 +468,40 @@ namespace Divine_Right.GameScreens
                 }
 
                 //dispatch the action, if any
-                if (action != null)
+                if (action.HasValue)
                 {
                     this.PerformAction(targetCoord, action.Value, args);
                 }
+
+                //Dispatch the internal action, if any
+                if (internalAction.HasValue)
+                {
+                    //Let's do it here
+                    switch (internalAction.Value)
+                    {
+                        case InternalActionEnum.OPEN_HEALTH:
+                            //Toggle the health
+                            var health = this.interfaceComponents.Where(ic => ic.GetType().Equals(typeof(HealthDisplayComponent))).FirstOrDefault();
+
+                            health.Visible = !health.Visible;
+
+                            break;
+                        case InternalActionEnum.OPEN_ATTRIBUTES:
+                            //Toggle the attributes
+                            var att = this.interfaceComponents.Where(ic => ic.GetType().Equals(typeof(CharacterSheetComponent))).FirstOrDefault();
+                            att.Visible = !att.Visible;
+
+                            break;
+
+                        case InternalActionEnum.OPEN_LOG:
+                            //Toggle the log
+                            var log = this.interfaceComponents.Where(ic => ic.GetType().Equals(typeof(TextLogComponent))).FirstOrDefault();
+                            log.Visible = !log.Visible;
+                            break;
+                        //TODO: THE REST
+                    }
+                }
+
 
 
                 //do we continue?

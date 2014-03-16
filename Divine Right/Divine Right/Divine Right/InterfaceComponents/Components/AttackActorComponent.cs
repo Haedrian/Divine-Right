@@ -190,7 +190,7 @@ namespace Divine_Right.InterfaceComponents.Components
             }
         }
 
-        public bool HandleClick(int x, int y, Objects.Enums.MouseActionEnum mouseAction, out DRObjects.Enums.ActionTypeEnum? actionType, out object[] args, out DRObjects.MapCoordinate coord, out bool destroy)
+        public bool HandleClick(int x, int y, Objects.Enums.MouseActionEnum mouseAction, out DRObjects.Enums.ActionTypeEnum? actionType, out InternalActionEnum? internalActionType, out object[] args, out DRObjects.MapCoordinate coord, out bool destroy)
         {
             Point point = new Point(x, y);
 
@@ -198,6 +198,7 @@ namespace Divine_Right.InterfaceComponents.Components
             coord = null;
             destroy = false;
             actionType = null;
+            internalActionType = null;
 
             if (!visible)
             {

@@ -31,11 +31,12 @@ namespace Divine_Right.InterfaceComponents
         /// <param name="y">The y coordinate where the mouse clicked</param>
         /// <param name="mouseAction">The action which has been performed by the mouse</param>
         /// <param name="actionType">The type of action to perform</param>
+        /// <param name="internalActionType">The type of internal action to perform</param>
         /// <param name="args">The arguments of the action to perform</param>
         /// <param name="coord">The map coordinate to perform the actions on</param>
         /// <param name="destroy">Whether to destroy the component after we're done</param>
         /// <returns></returns>
-        bool HandleClick(int x, int y, MouseActionEnum mouseAction, out ActionTypeEnum? actionType,out object[] args, out MapCoordinate coord, out bool destroy);
+        bool HandleClick(int x, int y, MouseActionEnum mouseAction, out ActionTypeEnum? actionType,out InternalActionEnum? internalActionType, out object[] args, out MapCoordinate coord, out bool destroy);
         /// <summary>
         /// Handle the keyboard being pressed
         /// Return true if it was handled, false if you want something else to handle it

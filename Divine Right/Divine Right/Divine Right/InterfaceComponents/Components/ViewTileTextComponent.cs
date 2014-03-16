@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Divine_Right.InterfaceComponents.Objects.Enums;
 using DRObjects.Graphics;
+using DRObjects.Enums;
 
 namespace Divine_Right.InterfaceComponents.Components
 {
@@ -92,13 +93,14 @@ namespace Divine_Right.InterfaceComponents.Components
             }
         }
 
-        bool IGameInterfaceComponent.HandleClick(int x, int y, MouseActionEnum mouse, out DRObjects.Enums.ActionTypeEnum? actionType, out object[] args, out DRObjects.MapCoordinate coord, out bool destroy)
+        bool IGameInterfaceComponent.HandleClick(int x, int y, MouseActionEnum mouse, out DRObjects.Enums.ActionTypeEnum? actionType,out InternalActionEnum? internalActionType, out object[] args, out DRObjects.MapCoordinate coord, out bool destroy)
         {
             //This component will 'absorb' the click, but do nothing whatsoever.
             actionType = null;
             args = null;
             coord = null;
             destroy = false;
+            internalActionType = null;
 
             return true;
 
