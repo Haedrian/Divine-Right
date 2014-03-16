@@ -297,52 +297,55 @@ namespace DRObjects.Items.Tiles.Global
             }
             #endregion
             #region Elevation Overlay
-
-            if (Elevation > 250)
+            else if (overlay == GlobalOverlay.ELEVATION)
             {
-                //mountain
-                return RED;
-            }
-            else if (Elevation > 100)
-            {
-                return ORANGE;
-            }
-            else if (Elevation > 50)
-            {
-                return YELLOW;
-            }
-            else if (Elevation > 25)
-            {
-                return INDIGO;
-            }
-            else if (Elevation > 0)
-            {
-                return WHITE;
-            }
-            else
-            {
-                return null;
+                if (Elevation > 250)
+                {
+                    //mountain
+                    return RED;
+                }
+                else if (Elevation > 100)
+                {
+                    return ORANGE;
+                }
+                else if (Elevation > 50)
+                {
+                    return YELLOW;
+                }
+                else if (Elevation > 25)
+                {
+                    return INDIGO;
+                }
+                else if (Elevation > 0)
+                {
+                    return WHITE;
+                }
+                else
+                {
+                    return null;
+                }
             }
             #endregion
             #region Desirability Overlay
-
-            if (BaseDesirability > 10)
+            else if (overlay == GlobalOverlay.DESIRABILITY)
             {
-                return GREEN;
+                if (BaseDesirability > 10)
+                {
+                    return GREEN;
+                }
+                else if (BaseDesirability > 5)
+                {
+                    return YELLOW;
+                }
+                else if (BaseDesirability > 0)
+                {
+                    return ORANGE;
+                }
+                else if (BaseDesirability < 0)
+                {
+                    return RED;
+                }
             }
-            else if (BaseDesirability > 5)
-            {
-                return YELLOW;
-            }
-            else if (BaseDesirability > 0)
-            {
-                return ORANGE;
-            }
-            else if (BaseDesirability < 0)
-            {
-                return RED;
-            }
-
             #endregion
 
             return null;
