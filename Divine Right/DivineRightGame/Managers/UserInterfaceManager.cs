@@ -25,7 +25,7 @@ namespace DivineRightGame.Managers
         /// <param name="args"></param>
         public static PlayerFeedback[] PerformAction(MapCoordinate coordinate, ActionTypeEnum actionType, object[] args)
         {
-            PlayerFeedback[] feedback = null;
+            List<PlayerFeedback> feedback = new List<PlayerFeedback>();
 
             bool validAttack = false;
 
@@ -44,7 +44,7 @@ namespace DivineRightGame.Managers
                 if (defender.MapCharacter != null && attacker.MapCharacter.Coordinate - defender.MapCharacter.Coordinate < 2)
                 {
                     //Valid
-                    feedback = CombatManager.Attack(attacker,defender,location);
+                    feedback.AddRange(CombatManager.Attack(attacker,defender,location));
                     validAttack = true; //perform the tick
                 }
                 else
@@ -53,42 +53,48 @@ namespace DivineRightGame.Managers
                     return new PlayerFeedback[] { new CurrentLogFeedback(null,Color.Black,"You are too far away to hit your target")};
                 }
             }
+            else if (actionType == ActionTypeEnum.IDLE)
+            {
+                //Do nothing
+            }
             else
             {
                 switch (coordinate.MapType)
                 {
                     case MapTypeEnum.LOCAL:
-                        feedback = GameState.LocalMap.GetBlockAtCoordinate(coordinate).PerformAction(actionType, GameState.PlayerCharacter, args);
+                        feedback.AddRange(GameState.LocalMap.GetBlockAtCoordinate(coordinate).PerformAction(actionType, GameState.PlayerCharacter, args));
                         break;
                     case MapTypeEnum.GLOBAL:
-                        feedback = GameState.GlobalMap.GetBlockAtCoordinate(coordinate).PerformAction(actionType, GameState.PlayerCharacter, args);
+                        feedback.AddRange(GameState.GlobalMap.GetBlockAtCoordinate(coordinate).PerformAction(actionType, GameState.PlayerCharacter, args));
                         break;
                     default:
                         throw new NotImplementedException("There is no support for that particular maptype");
                 }
             }
 
-            if (actionType == ActionTypeEnum.EXAMINE || actionType == ActionTypeEnum.MOVE || (actionType == ActionTypeEnum.ATTACK && validAttack))
+            if (actionType == ActionTypeEnum.EXAMINE || actionType == ActionTypeEnum.MOVE || (actionType == ActionTypeEnum.ATTACK && validAttack) || actionType == ActionTypeEnum.IDLE)
             {
                 //Perform a tick
                 //Clear the Log
                 GameState.NewLog.Clear();
-                UserInterfaceManager.PerformLocalTick();
+                feedback.AddRange(UserInterfaceManager.PerformLocalTick());
             }
 
-            return feedback;
+            return feedback.ToArray();
         }
 
         /// <summary>
         /// Performs a local map tick
         /// </summary>
-        public static void PerformLocalTick()
+        public static PlayerFeedback[] PerformLocalTick()
         {
             Stopwatch sWatch = new Stopwatch();
             sWatch.Start();
-            GameState.LocalMap.Tick();
+            var playerFeedback = GameState.LocalMap.Tick();
             sWatch.Stop();
             Console.WriteLine("Time taken for tick :" + sWatch.ElapsedMilliseconds);
+
+            return playerFeedback;
         }
 
         /// <summary>

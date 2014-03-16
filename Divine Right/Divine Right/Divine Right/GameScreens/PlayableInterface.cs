@@ -21,6 +21,7 @@ using Divine_Right.GameScreens.Components;
 using DivineRightGame.LocalMapGenerator;
 using DivineRightGame;
 using DRObjects.Items.Archetypes.Local;
+using DivineRightGame.EventHandling;
 
 namespace Divine_Right.GameScreens
 {
@@ -154,9 +155,6 @@ namespace Divine_Right.GameScreens
             log = tlc;
 
             var cemetry = SpriteManager.GetSprite(InterfaceSpriteName.DEAD);
-
-            DecisionPopupComponent comp = new DecisionPopupComponent(PlayableWidth/2 - 150,PlayableHeight/2 - 150,"DEATH","You died. Good going.",cemetry,new DecisionPopupChoice[]{new DecisionPopupChoice("Go towards the light!",null,null,null),new DecisionPopupChoice("Oh noes!",null,null,null)});
-            interfaceComponents.Add(comp);
 
             //Create the menu buttons
             menuButtons.Add(new AutoSizeGameButton("  Health  ", this.game.Content, InternalActionEnum.OPEN_HEALTH, new object[] { }, 50, PlayableHeight + 125));
@@ -303,7 +301,7 @@ namespace Divine_Right.GameScreens
                     if (keyboardState.IsKeyDown(Keys.OemPeriod))
                     {
                         //Just waste time
-                        UserInterfaceManager.PerformLocalTick();
+                        this.PerformAction(null, ActionTypeEnum.IDLE, null);
                     }
                     else if (keyboardState.IsKeyDown(Keys.Up))
                     {
@@ -497,6 +495,12 @@ namespace Divine_Right.GameScreens
                             //Toggle the log
                             var log = this.interfaceComponents.Where(ic => ic.GetType().Equals(typeof(TextLogComponent))).FirstOrDefault();
                             log.Visible = !log.Visible;
+                            break;
+
+                        case InternalActionEnum.LOSE:
+                            //For now, just go back to the main menu
+                             BaseGame.requestedInternalAction = InternalActionEnum.EXIT;
+                             BaseGame.requestedArgs = new object[0];
                             break;
                         //TODO: THE REST
                     }
@@ -840,6 +844,16 @@ namespace Divine_Right.GameScreens
                         }
 
                     }
+                }
+                else if (feedback.GetType().Equals(typeof(CreateEventFeedback)))
+                {
+                    CreateEventFeedback eventFeedback = feedback as CreateEventFeedback;
+
+                    var gameEvent = EventHandlingManager.CreateEvent(eventFeedback.EventName);
+
+                    //Create the actual control
+                    interfaceComponents.Add(new DecisionPopupComponent(PlayableWidth / 2 - 150, PlayableHeight / 2 - 150, gameEvent));
+
                 }
                 //TODO: THE REST
             }

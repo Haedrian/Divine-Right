@@ -8,6 +8,7 @@ using DRObjects.Graphics;
 using Divine_Right.HelperFunctions;
 using Microsoft.Xna.Framework.Graphics;
 using DRObjects.Enums;
+using DRObjects.EventHandling;
 
 namespace Divine_Right.InterfaceComponents.Components
 {
@@ -48,6 +49,28 @@ namespace Divine_Right.InterfaceComponents.Components
             PerformDrag(0, 0); //Trigger the drag code
         }
 
+        /// <summary>
+        /// Creates a Decision Popup Component from a game event
+        /// </summary>
+        /// <param name="locationX"></param>
+        /// <param name="locationY"></param>
+        /// <param name="gameEvent"></param>
+        public DecisionPopupComponent(int locationX, int locationY, GameEvent gameEvent)
+        {
+            this.locationX = locationX;
+            this.locationY = locationY;
+
+            this.decisions = gameEvent.EventChoices.Select(ec => new DecisionPopupChoice(ec.Text,ec.InternalAction,ec.Action,ec.Agrs)).ToArray();
+
+            this.text = gameEvent.Text;
+            this.title = gameEvent.Title;
+            this.image = gameEvent.Image;
+
+            this.visible = true;
+
+            PerformDrag(0, 0);
+        }
+
         public void Draw(Microsoft.Xna.Framework.Content.ContentManager content, Microsoft.Xna.Framework.Graphics.SpriteBatch batch)
         {
             if (font == null)
@@ -73,21 +96,51 @@ namespace Divine_Right.InterfaceComponents.Components
             //Draw the options 
             foreach (var option in decisions)
             {
-                batch.Draw(content, parchment, option.rect, Color.White);
-                batch.DrawString(font, option.Text, option.rect, Alignment.Center, Color.Black);
+                batch.Draw(content, parchment, option.Rect, Color.White);
+                batch.DrawString(font, option.Text, option.Rect, Alignment.Center, Color.Black);
             }
 
         }
 
         public bool HandleClick(int x, int y, Objects.Enums.MouseActionEnum mouseAction, out DRObjects.Enums.ActionTypeEnum? actionType, out InternalActionEnum? internalActionType, out object[] args, out DRObjects.MapCoordinate coord, out bool destroy)
         {
+            Point point = new Point(x, y);
+
             actionType = null;
             args = null;
             coord = null;
             destroy = false;
             internalActionType = null;
 
-            return true;
+            if (!Visible)
+            {
+                return false;
+            }
+
+            //Did the user click on one of the choices?
+            foreach (var decision in decisions)
+            {
+                if (decision.Rect.Contains(point))
+                {
+                    //Send the details pertaing to this decision
+                    actionType = decision.ActionType;
+                    internalActionType = decision.InternalAction;
+                    args = decision.Args;
+                    destroy = true; //User has made a choice, so close it
+
+                    return true;
+                }
+            }
+
+            //Not handled. But if it's modal, we expect it to catch all handling
+            if (IsModal())
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public bool HandleKeyboard(Microsoft.Xna.Framework.Input.KeyboardState keyboard, out DRObjects.Enums.ActionTypeEnum? actionType, out object[] args, out DRObjects.MapCoordinate coord, out bool destroy)
@@ -111,18 +164,18 @@ namespace Divine_Right.InterfaceComponents.Components
             this.locationY += 0;
 
             //Create a rectangle. It'll be 300 x 200 + 30for every option
-            this.rect = new Rectangle(this.locationX, this.locationY, 300, 300 + (30 * this.decisions.Length));
+            this.rect = new Rectangle(this.locationX, this.locationY, 300, 350 + (30 * this.decisions.Length));
 
             this.titleRect = new Rectangle(this.locationX + 10, this.locationY + 5, 280, 25);
             this.drawingRect = new Rectangle(this.locationX + 10, this.locationY + 30, 280, 200);
-            this.textRect = new Rectangle(this.locationX + 10, this.locationY + 220, 280, 50);
+            this.textRect = new Rectangle(this.locationX + 10, this.locationY + 240, 280, 100);
 
             //the rectangles for the choices
             for (int i = 0; i < decisions.Length; i++)
             {
                 DecisionPopupChoice choice = decisions[i];
 
-                choice.rect = new Rectangle(this.locationX, this.locationY + 300 + (i * 30), 300, 30);
+                choice.Rect = new Rectangle(this.locationX, this.locationY + 350 + (i * 30), 300, 30);
             }
         }
 

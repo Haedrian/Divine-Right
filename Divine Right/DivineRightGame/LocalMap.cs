@@ -11,6 +11,7 @@ using DRObjects.LocalMapGeneratorObjects;
 using Microsoft.Xna.Framework;
 using DivineRightGame.CombatHandling;
 using DRObjects.GraphicsEngineObjects;
+using DRObjects.GraphicsEngineObjects.Abstract;
 
 namespace DivineRightGame
 {
@@ -200,8 +201,9 @@ namespace DivineRightGame
         /// <summary>
         /// Perform a tick. Checks all actors and allow them an action
         /// </summary>
-        public void Tick()
+        public PlayerFeedback[] Tick()
         {
+            List<PlayerFeedback> feedback = new List<PlayerFeedback>();
 
             MapCoordinate playerLocation = actors.Where(a => a.IsPlayerCharacter).FirstOrDefault().MapCharacter.Coordinate;
 
@@ -338,9 +340,6 @@ namespace DivineRightGame
                             //And that's done
                         }
                         //Otherwise do nothing. Stay there
-
-
-
                     }
                 }
                 else if (actor.CurrentMission.MissionType == DRObjects.ActorHandling.ActorMissionType.ATTACK)
@@ -369,10 +368,8 @@ namespace DivineRightGame
                             //Attack!
                             var logMessages = CombatManager.Attack(actor, mission.AttackTarget, CombatManager.GetRandomAttackLocation(actor, mission.AttackTarget).Value);
 
-                            //Filter the current log messages
-                            var currentLogMessages = logMessages.Where(lm => lm.GetType().Equals(typeof(CurrentLogFeedback))).Select(lm => lm as CurrentLogFeedback).ToArray();
-
-                            GameState.NewLog.AddRange(currentLogMessages);
+                            feedback.AddRange(logMessages);
+                            
                         }
                         else
                         {
@@ -526,8 +523,9 @@ namespace DivineRightGame
                     };
                 }
 
-
             }
+
+            return feedback.ToArray();
         }
 
     }

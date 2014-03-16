@@ -22,6 +22,7 @@ namespace DRObjects.Enums
         OPEN_ATTRIBUTES,
         OPEN_LOG,
         OPEN_ATTACK,
+        LOSE,
 
     }
 }

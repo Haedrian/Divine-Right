@@ -27,19 +27,19 @@ namespace Divine_Right.InterfaceComponents.Objects
         /// <summary>
         /// The arguments to send with the action
         /// </summary>
-        public object[] arguments { get; set; }
+        public object[] Args { get; set; }
 
         /// <summary>
         /// The rectangle that the decision is saved in. Populated when it's drawn on the screen
         /// </summary>
-        public Rectangle rect { get; set; }
+        public Rectangle Rect { get; set; }
 
         public DecisionPopupChoice(string text, InternalActionEnum? internalAction, ActionTypeEnum? gameAction,object[] arguments)
         {
             this.Text = text;
             this.InternalAction = internalAction;
             this.ActionType = gameAction;
-            this.arguments = arguments;
+            this.Args = arguments;
         }
     }
 }
