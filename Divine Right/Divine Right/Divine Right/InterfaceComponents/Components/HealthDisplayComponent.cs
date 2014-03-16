@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using DRObjects.Graphics;
 using DRObjects.Enums;
+using Divine_Right.HelperFunctions;
 
 namespace Divine_Right.InterfaceComponents.Components
 {
@@ -27,6 +28,9 @@ namespace Divine_Right.InterfaceComponents.Components
         private Rectangle chestRect;
         private Rectangle rightArmRect;
         private Rectangle legRect;
+
+        private Rectangle bleedingRect;
+        private Rectangle stunnedRect;
 
         private bool visible;
         #endregion
@@ -50,14 +54,7 @@ namespace Divine_Right.InterfaceComponents.Components
             this.actor = actor;
             this.visible = true;
 
-            rect = new Rectangle(locationX, locationY, 100, 209); //100 x 200 ?
-
-            //Divide everything by 2.5
-            headRect = new Rectangle(locationX + 20, locationY, 43, 38);
-            leftArmRect = new Rectangle(locationX, locationY + 35, 33, 85);
-            chestRect = new Rectangle(locationX + 27, locationY + 37, 55, 72);
-            rightArmRect = new Rectangle(locationX + 60, locationY + 36, 33, 85);
-            legRect = new Rectangle(locationX + 23, locationY + 108, 50, 87);
+            PerformDrag(0, 0);
 
         }
 
@@ -73,7 +70,6 @@ namespace Divine_Right.InterfaceComponents.Components
 
             batch.Draw(content.Load<Texture2D>(scrollBackground.path), rect, scrollBackground.sourceRectangle, Color.White);
 
-
             //Let's determine how injured each part is.
             var health = actor.Anatomy;
 
@@ -82,6 +78,8 @@ namespace Divine_Right.InterfaceComponents.Components
             var chest = SpriteManager.GetSprite(InterfaceSpriteName.CHEST);
             var rightArm = SpriteManager.GetSprite(InterfaceSpriteName.RIGHT_ARM);
             var legs = SpriteManager.GetSprite(InterfaceSpriteName.LEGS);
+            var spiral = SpriteManager.GetSprite(InterfaceSpriteName.SPIRAL);
+            var bleeding = SpriteManager.GetSprite(InterfaceSpriteName.BLEEDING);
 
             batch.Draw(content.Load<Texture2D>(head.path), headRect, head.sourceRectangle, this.GetColour(health.Head, health.HeadMax));
             batch.Draw(content.Load<Texture2D>(leftArm.path), leftArmRect, leftArm.sourceRectangle, this.GetColour(health.LeftArm, health.LeftArmMax));
@@ -89,6 +87,8 @@ namespace Divine_Right.InterfaceComponents.Components
             batch.Draw(content.Load<Texture2D>(chest.path), chestRect, chest.sourceRectangle, this.GetColour(health.Chest, health.ChestMax));
             batch.Draw(content.Load<Texture2D>(legs.path), legRect, legs.sourceRectangle, this.GetColour(health.Legs, health.LegsMax));
 
+            batch.Draw(content, spiral, stunnedRect, Color.DarkGray);
+            batch.Draw(content, bleeding, bleedingRect, Color.Black);
         }
 
         /// <summary>
@@ -100,44 +100,44 @@ namespace Divine_Right.InterfaceComponents.Components
         private Color GetColour(int health, int maxHealth)
         {
             var currentColour = Color.Blue;
-            double healthPercentage = (double) health / maxHealth;
+            double healthPercentage = (double)health / maxHealth;
 
             if (health <= -5) //missing
             {
                 currentColour = Color.Transparent;
             }
             else
-            if (health <= 0) //destroyed
-            {
-               // currentColour = Color.Red;
-                currentColour = Color.Black;
-            }
-            else
-            if (healthPercentage > 0.66)
-            {
-                //fine
-                currentColour = Color.GhostWhite;
-            }
-            else
-            if (healthPercentage < 0.33)
-            {
-                //Really hurt
-                //currentColour = Color.Orange;
-                currentColour = Color.DarkGray;
-            }
-            else
-            if (healthPercentage < 0.66)
-            {
-                //Hurt
-                //currentColour = Color.Yellow;
-                currentColour = Color.LightGray;
-            }
+                if (health <= 0) //destroyed
+                {
+                    // currentColour = Color.Red;
+                    currentColour = Color.Black;
+                }
+                else
+                    if (healthPercentage > 0.66)
+                    {
+                        //fine
+                        currentColour = Color.GhostWhite;
+                    }
+                    else
+                        if (healthPercentage < 0.33)
+                        {
+                            //Really hurt
+                            //currentColour = Color.Orange;
+                            currentColour = Color.DarkGray;
+                        }
+                        else
+                            if (healthPercentage < 0.66)
+                            {
+                                //Hurt
+                                //currentColour = Color.Yellow;
+                                currentColour = Color.LightGray;
+                            }
 
             return currentColour;
 
         }
 
-        public bool HandleClick(int x, int y, Objects.Enums.MouseActionEnum mouseAction, out DRObjects.Enums.ActionTypeEnum? actionType,out InternalActionEnum? internalActionType, out object[] args, out DRObjects.MapCoordinate coord, out bool destroy)
+        public bool HandleClick(int x, int y, Objects.Enums.MouseActionEnum mouseAction, out DRObjects.Enums.ActionTypeEnum? actionType, out InternalActionEnum? internalActionType, out object[] args, out DRObjects.MapCoordinate coord, out bool destroy)
         {
             //This does nothing
 
@@ -178,7 +178,7 @@ namespace Divine_Right.InterfaceComponents.Components
             this.locationY += y;
 
             //Move everything
-            rect = new Rectangle(locationX, locationY, 100, 209); //100 x 200 ?
+            rect = new Rectangle(locationX, locationY, 125, 209); //100 x 200 ?
 
             //Divide everything by 2.5
             headRect = new Rectangle(locationX + 20, locationY, 43, 38);
@@ -186,6 +186,9 @@ namespace Divine_Right.InterfaceComponents.Components
             chestRect = new Rectangle(locationX + 27, locationY + 37, 55, 72);
             rightArmRect = new Rectangle(locationX + 60, locationY + 36, 33, 85);
             legRect = new Rectangle(locationX + 23, locationY + 108, 50, 87);
+
+            stunnedRect = new Rectangle(locationX + 90, locationY + 5, 30, 30);
+            bleedingRect = new Rectangle(locationX + 90, locationY + 45, 30, 30);
         }
     }
 }

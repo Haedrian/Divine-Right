@@ -28,6 +28,9 @@ namespace DRObjects.Graphics
         SPEAR,
         BLOOD,
 
-        DEAD
+        DEAD,
+
+        SPIRAL,
+        BLEEDING
     }
 }

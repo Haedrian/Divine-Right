@@ -10,6 +10,11 @@ namespace DRObjects.ActorHandling
     /// </summary>
     public class HumanoidAnatomy
     {
+        public const int BLOOD_STUN_AMOUNT = 15;
+
+        public const int BLOODTOTAL = 50;
+        public const int BODY_TIMER_FLIP = 5;
+
         public int Head { get; set; }
         public int HeadMax { get; set; }
 
@@ -25,5 +30,21 @@ namespace DRObjects.ActorHandling
         public int Legs { get; set; }
         public int LegsMax { get; set; }
 
+        /// <summary>
+        /// Total amount of blood in the body
+        /// </summary>
+        public int BloodTotal { get; set; }
+        /// <summary>
+        /// The amount of blood being lost
+        /// </summary>
+        public int BloodLoss { get; set; }
+        /// <summary>
+        /// The amount of stun which the character is suffering from
+        /// </summary>
+        public int StunAmount { get; set; }
+        /// <summary>
+        /// Where the character's body timer is. When this runs to BODY_TIMER_FLIP - both blood loss and stun amount go down by 1
+        /// </summary>
+        public int BodyTimer { get; set; }
     }
 }

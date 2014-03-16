@@ -421,6 +421,9 @@ namespace DRObjects.Graphics
             interfaceSprites[(int)InterfaceSpriteName.DEFENSE] = new SpriteData(CHARACTER_SHEET, new Rectangle(400, 0, 50, 50));
             interfaceSprites[(int)InterfaceSpriteName.SPEAR] = new SpriteData(CHARACTER_SHEET, new Rectangle(450, 0, 50, 50));
             interfaceSprites[(int)InterfaceSpriteName.BLOOD] = new SpriteData(CHARACTER_SHEET, new Rectangle(0, 50, 50, 50));
+            interfaceSprites[(int)InterfaceSpriteName.SPIRAL] = new SpriteData(CHARACTER_SHEET, new Rectangle(50, 50, 50, 50));
+            interfaceSprites[(int)InterfaceSpriteName.BLEEDING] = new SpriteData(CHARACTER_SHEET, new Rectangle(100, 50, 50, 50));
+            
             interfaceSprites[(int)InterfaceSpriteName.DEAD] = new SpriteData(@"Graphics/Interface/death", null);
         }
 
