@@ -73,10 +73,15 @@ namespace Divine_Right.InterfaceComponents.Components
 
         public void Draw(Microsoft.Xna.Framework.Content.ContentManager content, Microsoft.Xna.Framework.Graphics.SpriteBatch batch)
         {
+            var grey = SpriteManager.GetSprite(ColourSpriteName.WHITE);
+
             if (font == null)
             {
                 font = content.Load<SpriteFont>(@"Fonts/TextFeedbackFont");
             }
+
+            //Background
+            batch.Draw(content.Load<Texture2D>(grey.path), new Rectangle(0, 0, 5000, 5000), Color.Black*0.85f);
 
             //Get the partchment
             var parchment = SpriteManager.GetSprite(InterfaceSpriteName.PAPER_TEXTURE);
