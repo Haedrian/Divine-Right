@@ -348,8 +348,6 @@ namespace DivineRightGame.CombatHandling
                                 feedback.Add(LogAction(attacker, defender, location, damageType, LogMessageStatus.DISABLE, diceRoll));
                             }
 
-                            //Dead
-                            KillCharacter(defender);
                         }
                         break;
 
@@ -382,11 +380,11 @@ namespace DivineRightGame.CombatHandling
         /// Returns a particular logged action.
         /// </summary>
         /// <returns></returns>
-        private static CurrentLogFeedback LogAction(Actor attacker, Actor defender, AttackLocation loc, DamageType type, LogMessageStatus status, int diceroll)
+        private static PlayerFeedback LogAction(Actor attacker, Actor defender, AttackLocation loc, DamageType type, LogMessageStatus status, int diceroll)
         {
             //Later we'll expand this and put in some randomisation and stuff
 
-            CurrentLogFeedback log = null;
+            PlayerFeedback log = null;
 
             if (status == LogMessageStatus.BOUNCE)
             {
@@ -543,7 +541,8 @@ namespace DivineRightGame.CombatHandling
                 }
                 else
                 {
-                    log = new CurrentLogFeedback(InterfaceSpriteName.HEAD, Color.DarkRed, "You die");
+                    //log = new CurrentLogFeedback(InterfaceSpriteName.HEAD, Color.DarkRed, "You die");
+                    log = new CreateEventFeedback("Death");
                 }
 
                 return log;

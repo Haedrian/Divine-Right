@@ -94,7 +94,10 @@
     <Compile Include="Enums\MapType.cs" />
     <Compile Include="Enums\PointOfInterestType.cs" />
     <Compile Include="Enums\SettlementType.cs" />
+    <Compile Include="EventHandling\Event.cs" />
+    <Compile Include="EventHandling\EventChoice.cs" />
     <Compile Include="GraphicsEngineObjects\Abstract\PlayerFeedback.cs" />
+    <Compile Include="GraphicsEngineObjects\CreateEventFeedback.cs" />
     <Compile Include="GraphicsEngineObjects\CurrentLogFeedback.cs" />
     <Compile Include="GraphicsEngineObjects\GraphicalBlock.cs" />
     <Compile Include="GraphicsEngineObjects\InterfaceToggleFeedback.cs" />
