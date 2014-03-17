@@ -242,15 +242,20 @@ namespace DivineRightGame
                 //Update the graphic
                 (actor.MapCharacter as LocalEnemy).EnemyThought = actor.CurrentMission.EnemyThought;
 
-                if (actor.HasActedLastTurn)
+                if (actor.IsStunned)
                 {
-                    actor.HasActedLastTurn = false;
-                    continue;
+                    continue; //do nothing
                 }
-                else
-                {
-                    actor.HasActedLastTurn = true;
-                }
+
+                //if (actor.IsStunned)
+                //{
+                //    actor.IsStunned = false;
+                //    continue;
+                //}
+                //else
+                //{
+                //    actor.IsStunned = true;
+                //}
 
                 if (actor.CurrentMission.MissionType == DRObjects.ActorHandling.ActorMissionType.IDLE)
                 {
@@ -523,6 +528,12 @@ namespace DivineRightGame
                     };
                 }
 
+            }
+
+            //Health check
+            foreach (Actor actor in actors.Where(a => a.IsAlive))
+            {
+                feedback.AddRange(HealthCheckManager.CheckHealth(actor));
             }
 
             return feedback.ToArray();

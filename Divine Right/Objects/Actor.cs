@@ -49,9 +49,9 @@ namespace DRObjects
         public bool IsPlayerCharacter { get; set; }
 
         /// <summary>
-        /// Represents whether The actor has moved last turn
+        /// Represents whether the actor is stunned or not. If they are stunned, they do nothing in that turn
         /// </summary>
-        public bool HasActedLastTurn { get; set; }
+        public bool IsStunned { get; set; }
 
         /// <summary>
         /// How many tiles the actor can see. Null means they're blind
