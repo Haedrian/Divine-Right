@@ -13,6 +13,7 @@ namespace DivineRightGame.CombatHandling
         BOUNCE,
         DISABLE,
         DESTROY,
-        KILL
+        KILL,
+        BLEED
     }
 }

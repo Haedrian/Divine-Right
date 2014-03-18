@@ -87,8 +87,47 @@ namespace Divine_Right.InterfaceComponents.Components
             batch.Draw(content.Load<Texture2D>(chest.path), chestRect, chest.sourceRectangle, this.GetColour(health.Chest, health.ChestMax));
             batch.Draw(content.Load<Texture2D>(legs.path), legRect, legs.sourceRectangle, this.GetColour(health.Legs, health.LegsMax));
 
-            batch.Draw(content, spiral, stunnedRect, Color.DarkGray);
-            batch.Draw(content, bleeding, bleedingRect, Color.Black);
+            batch.Draw(content, spiral, stunnedRect, this.GetBadEffectColours(health.StunAmount, 10));
+            batch.Draw(content, bleeding, bleedingRect, this.GetBadEffectColours(health.BloodLoss, 10));
+        }
+
+        /// <summary>
+        /// Gets the right colour to draw depending on how bad it is
+        /// </summary>
+        /// <param name="amount"></param>
+        /// <param name="max"></param>
+        /// <returns></returns>
+        private Color GetBadEffectColours(int amount, int max)
+        {
+            double effectPercentage = (double)amount / max;
+            var currentColour = Color.Blue;
+
+            if (effectPercentage <= 0) //none
+            {
+                // currentColour = Color.Red;
+                currentColour = Color.Transparent;
+            }
+            else
+                if (effectPercentage > 0.66)
+                {
+                    //Going very badly
+                    currentColour = Color.Black;
+                }
+                else
+                    if (effectPercentage < 0.33)
+                    {
+                        //Mostly fine
+                        currentColour = Color.GhostWhite;
+                    }
+                    else
+                        if (effectPercentage < 0.66)
+                        {
+                            //Not too well
+                            currentColour = Color.LightGray;
+                        }
+
+            return currentColour;
+
         }
 
         /// <summary>

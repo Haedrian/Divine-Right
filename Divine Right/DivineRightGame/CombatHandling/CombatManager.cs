@@ -195,32 +195,11 @@ namespace DivineRightGame.CombatHandling
 
                 feedback.Add(LogAction(attacker, defender, location, damageType, LogMessageStatus.HIT, diceRoll));
 
-                //TODO: HP AND CONCIOUSNESS
-
-                //Do we wound the character?
-                diceRoll = random.Next(10) + 1;
-
-                int woundRoll = diceRoll / 2 + defender.Attributes.WoundResist - weaponWoundPotential;
-
                 //TODO: ACTUAL WEAPON DAMAGE
                 int damage = weaponDamage;
 
-                if (woundRoll > 0)
-                {
-                    //No damage!
-                    feedback.Add(LogAction(attacker, defender, location, damageType, LogMessageStatus.NO_WOUND, diceRoll));
-                    return feedback.ToArray();
-                }
-                else if (woundRoll < 0)
-                {
-                    //Full damage
-                    damage = weaponDamage;
-                }
-                else
-                {
-                    //Half damage
-                    damage = weaponDamage / 2;
-                }
+                //Full damage
+                damage = weaponDamage;
 
                 //Apply the damage
 
@@ -232,6 +211,21 @@ namespace DivineRightGame.CombatHandling
                     feedback.Add(LogAction(attacker, defender, location, damageType, LogMessageStatus.BOUNCE, diceRoll));
                     return feedback.ToArray();
                 }
+
+                //Do we wound the character?
+                diceRoll = random.Next(10) + 1;
+
+                int woundRoll = diceRoll + (defender.Attributes.WoundResist - weaponWoundPotential) - 5;
+
+                if (woundRoll <= 0)
+                {
+                    //Yes - open a wound
+                    defender.Anatomy.BloodLoss++;
+
+                    //Log it
+                    feedback.Add(LogAction(attacker, defender, location, damageType, LogMessageStatus.BLEED, woundRoll));
+                }
+
 
                 //Apply the damage
                 switch (location)
@@ -574,6 +568,25 @@ namespace DivineRightGame.CombatHandling
                 else
                 {
                     log = new CurrentLogFeedback(InterfaceSpriteName.BLOOD, Color.DarkGreen, "It fails to properly wound you, however");
+                }
+
+                return log;
+            }
+
+            if (status == LogMessageStatus.BLEED)
+            {
+                if (defender.IsPlayerCharacter)
+                {
+                    if (defender.Anatomy.BloodLoss == 1)
+                    {
+                        //Wound opened
+                        log = new CurrentLogFeedback(InterfaceSpriteName.BLEEDING, Color.DarkRed, "The attack opens a wound");
+                    }
+                    else
+                    {
+                        //Wound worsended
+                        log = new CurrentLogFeedback(InterfaceSpriteName.BLEEDING, Color.DarkRed, "The attack worsens your wound");
+                    }
                 }
 
                 return log;

@@ -65,7 +65,7 @@ namespace DivineRightGame.CombatHandling
                 //Increase the blood amount
                 actor.Anatomy.BloodTotal++;
             }
-            else if (actor.Anatomy.BloodLoss <= 0)
+            else if (actor.Anatomy.BloodLoss > 0)
             {
                 //Is it time to reduce the blood level?
                 if (actor.Anatomy.BodyTimer++ >= HumanoidAnatomy.BODY_TIMER_FLIP)
