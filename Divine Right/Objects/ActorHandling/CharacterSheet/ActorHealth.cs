@@ -12,7 +12,7 @@ namespace DRObjects.ActorHandling
     {
         public const int BLOOD_STUN_AMOUNT = 15;
 
-        public const int BLOODTOTAL = 50;
+        public const int BLOODTOTAL = 100;
         public const int BODY_TIMER_FLIP = 5;
 
         public int Head { get; set; }

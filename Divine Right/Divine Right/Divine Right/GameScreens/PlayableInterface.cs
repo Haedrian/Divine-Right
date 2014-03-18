@@ -786,6 +786,11 @@ namespace Divine_Right.GameScreens
 
             foreach (PlayerFeedback feedback in fb)
             {
+                if (feedback == null)
+                {
+                    continue;
+                }
+
                 if (feedback.GetType().Equals(typeof(TextFeedback)))
                 {
                     MouseState mouse = Mouse.GetState();
