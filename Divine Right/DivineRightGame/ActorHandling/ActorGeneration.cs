@@ -232,7 +232,12 @@ namespace DivineRightGame.ActorHandling
                     Chest = 12,
                     ChestMax = 12,
                     Legs = 8,
-                    LegsMax = 8
+                    LegsMax = 8,
+
+                    BloodLoss = 0, 
+                    BloodTotal = HumanoidAnatomy.BLOODTOTAL,
+                    BodyTimer = 0, 
+                    StunAmount = 0
             };
 
             return anatomy;

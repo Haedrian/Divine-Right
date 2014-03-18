@@ -589,9 +589,16 @@ namespace Divine_Right.GameScreens
 
             //draw them
             spriteBatch.Begin();
+
             this.DrawGrid(iBlocks);
 
             //any interface components to draw?
+
+            //var grey = SpriteManager.GetSprite(ColourSpriteName.WHITE);
+
+            ////Background
+            //spriteBatch.Draw(game.Content.Load<Texture2D>(grey.path), new Rectangle(0, 0, 5000, 5000), Color.Black* 0.55f);
+
 
             foreach (AutoSizeGameButton button in menuButtons)
             {
@@ -602,6 +609,7 @@ namespace Divine_Right.GameScreens
             {
                 interfaceComponent.Draw(this.game.Content, this.spriteBatch);
             }
+
 
             spriteBatch.End();
 

@@ -80,6 +80,12 @@ namespace DivineRightGame.Managers
                 feedback.AddRange(UserInterfaceManager.PerformLocalTick());
             }
 
+            //Is the player stunned?
+            while (GameState.PlayerCharacter.IsStunned && GameState.PlayerCharacter.IsAlive)
+            {
+                feedback.AddRange(UserInterfaceManager.PerformLocalTick());
+            }
+
             return feedback.ToArray();
         }
 

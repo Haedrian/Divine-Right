@@ -109,7 +109,7 @@ namespace DivineRightGame.CombatHandling
 
             if (actor.Anatomy.StunAmount > 0)
             {
-                if (actor.Anatomy.StunAmount < 10)
+                if (actor.Anatomy.StunAmount > 10)
                 {
                     //Reduce it to the max amount. 10
                     actor.Anatomy.StunAmount = 10;
