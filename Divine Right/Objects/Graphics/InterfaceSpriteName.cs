@@ -9,7 +9,7 @@ namespace DRObjects.Graphics
     {
         SCROLL,
         PAPER_TEXTURE,
-        
+
         HEAD,
         LEFT_ARM,
         CHEST,
@@ -31,6 +31,7 @@ namespace DRObjects.Graphics
         DEAD,
 
         SPIRAL,
-        BLEEDING
+        BLEEDING,
+        CLOSE
     }
 }

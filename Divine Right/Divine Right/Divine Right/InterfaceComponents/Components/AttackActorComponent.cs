@@ -57,6 +57,8 @@ namespace Divine_Right.InterfaceComponents.Components
         private Rectangle targetHealthStatusRect;
         private Rectangle attackButtonRectangle;
 
+        private Rectangle closeRect;
+
         private SpriteFont font;
 
         #endregion
@@ -118,6 +120,8 @@ namespace Divine_Right.InterfaceComponents.Components
             //If we have a particular chosen stance, draw a white box underneath to show its selected
             var seperator = SpriteManager.GetSprite(ColourSpriteName.WHITE);
 
+            var close = SpriteManager.GetSprite(InterfaceSpriteName.CLOSE);
+
             //pick the stance
             string stance = "Unknown Stance";
 
@@ -163,6 +167,8 @@ namespace Divine_Right.InterfaceComponents.Components
 
             batch.Draw(content.Load<Texture2D>(scrollBackground.path), attackButtonRectangle, scrollBackground.sourceRectangle, Color.DarkGray);
             batch.DrawString(font, "ATTACK", attackButtonRectangle, Alignment.Center, Color.White);
+
+            batch.Draw(content, close, closeRect, Color.White);
 
             if (CombatManager.CalculateHitPercentage(attacker, TargetActor, AttackLocation.HEAD) != -1) //not present
             {
@@ -314,6 +320,14 @@ namespace Divine_Right.InterfaceComponents.Components
 
             }
 
+            if (closeRect.Contains(point))
+            {
+                //Then close it
+                destroy = true;
+
+                return true;
+            }
+
             return visible; //If it's visible - block it. Otherwise do nothing
         }
 
@@ -375,6 +389,8 @@ namespace Divine_Right.InterfaceComponents.Components
             chestPercentageRect = new Rectangle(locationX + 220, locationY + 37, 55, 50);
             rightArmPercentageRect = new Rectangle(locationX + 260, locationY + 35, 33, 85);
             legsPercentageRect = new Rectangle(locationX + 223, locationY + 108, 50, 87);
+
+            closeRect = new Rectangle(locationX +270,locationY+ 0, 30, 30);
         }
 
         public bool IsModal()
