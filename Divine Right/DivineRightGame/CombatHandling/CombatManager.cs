@@ -167,8 +167,11 @@ namespace DivineRightGame.CombatHandling
             int atk = 0;
             int def = 0;
 
-            int weaponDamage = 3;
-            int weaponWoundPotential = 9;
+            //int weaponDamage = 3;
+            //The type of dice we roll 3 of to determine weapon damage
+            int weaponDiceRolls = 2;
+            int weaponWoundPotential = 3;
+            int weaponStunAmount = 3;
             DamageType damageType = DamageType.SLASH;
 
             GetStanceEffect(out atk, out def, attacker.CombatStance);
@@ -195,11 +198,13 @@ namespace DivineRightGame.CombatHandling
 
                 feedback.Add(LogAction(attacker, defender, location, damageType, LogMessageStatus.HIT, diceRoll));
 
-                //TODO: ACTUAL WEAPON DAMAGE
-                int damage = weaponDamage;
+                //Calculate the amount of damage we're going to do. Roll 3 dice of a particular kind
 
-                //Full damage
-                damage = weaponDamage;
+                int weaponDamage = random.Next(weaponDiceRolls) + random.Next(weaponDiceRolls) + random.Next(weaponDiceRolls);
+
+                Console.WriteLine("Damage Roll : " + weaponDamage);
+
+                int damage = weaponDamage;
 
                 //Apply the damage
 
@@ -222,10 +227,23 @@ namespace DivineRightGame.CombatHandling
                     //Yes - open a wound
                     defender.Anatomy.BloodLoss++;
 
+                    Console.WriteLine("Wounded " + woundRoll);
+
                     //Log it
                     feedback.Add(LogAction(attacker, defender, location, damageType, LogMessageStatus.BLEED, woundRoll));
                 }
 
+                //Roll again
+                diceRoll = random.Next(10) + 1;
+                int stunRoll = diceRoll + (defender.Attributes.WoundResist - weaponStunAmount) - 5;
+
+                if (stunRoll <= 0)
+                {
+                    //Stun him
+                    defender.Anatomy.StunAmount++;
+
+                    Console.WriteLine("Stunned " + stunRoll);
+                }
 
                 //Apply the damage
                 switch (location)

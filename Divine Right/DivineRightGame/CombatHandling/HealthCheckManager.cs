@@ -100,8 +100,6 @@ namespace DivineRightGame.CombatHandling
             }
 
 
-           
-
             if (actor.IsStunned) //unstun
             {
                 actor.IsStunned = false;
