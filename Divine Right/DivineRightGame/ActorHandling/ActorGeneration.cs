@@ -119,6 +119,9 @@ namespace DivineRightGame.ActorHandling
             //Set his anatomy too
             actor.Anatomy = GenerateAnatomy(data.EnemyType);
 
+            //link one to another
+            actor.Attributes.Health = actor.Anatomy;
+
             return actor;
         }
 
@@ -199,18 +202,18 @@ namespace DivineRightGame.ActorHandling
             //Add the racial bonuses
             RaceData data = ReadRaceData(race);
 
-            att.Agil += data.AgilModifier;
-            att.Brawn += data.BrawnModifier;
-            att.Dex += data.DexModifier;
-            att.Intel += data.IntelModifier;
-            att.Perc += data.PercModifier;
+            att.Agil = att.BaseAgil + data.AgilModifier;
+            att.Brawn = att.BaseBrawn + data.BrawnModifier;
+            att.Dex = att.BaseDex + data.DexModifier;
+            att.Intel = att.BaseIntel + data.IntelModifier;
+            att.Perc = att.BasePerc + data.PercModifier;
 
             //Make sure all attributes are larger than 0
-            att.Agil = att.Agil > 0 ? att.Agil : 0;
-            att.Brawn = att.Brawn > 0 ? att.Brawn : 0;
-            att.Dex = att.Dex > 0 ? att.Dex : 0;
-            att.Intel = att.Intel > 0 ? att.Intel : 0;
-            att.Perc = att.Perc > 0 ? att.Perc : 0;
+            att.Agil = att.BaseAgil > 0 ? att.BaseAgil : 0;
+            att.Brawn = att.BaseBrawn > 0 ? att.BaseBrawn : 0;
+            att.Dex = att.BaseDex > 0 ? att.BaseDex : 0;
+            att.Intel = att.BaseIntel > 0 ? att.BaseIntel : 0;
+            att.Perc = att.BasePerc > 0 ? att.BasePerc : 0;
 
             //TODO: actual skills
 
