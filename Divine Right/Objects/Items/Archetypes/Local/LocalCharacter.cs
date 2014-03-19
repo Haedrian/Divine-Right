@@ -8,7 +8,7 @@ using DRObjects.GraphicsEngineObjects;
 
 namespace DRObjects.Items.Archetypes.Local
 {
-    public class LocalEnemy: MapItem
+    public class LocalCharacter: MapItem
     {
         private static SpriteData WalkSprite
         {
@@ -29,6 +29,13 @@ namespace DRObjects.Items.Archetypes.Local
             get
             {
                 return SpriteManager.GetSprite(LocalSpriteName.ENEMY_THOUGHT_ATTACK);
+            }
+        }
+        private static SpriteData StunnedSprite
+        {
+            get
+            {
+                return SpriteManager.GetSprite(LocalSpriteName.ENEMY_THOUGH_CONFUSED);
             }
         }
 
@@ -58,19 +65,26 @@ namespace DRObjects.Items.Archetypes.Local
                 //The bottom one will always be the base sprite
                 List<SpriteData> sprites = new List<SpriteData> { this.Graphic };
 
-                switch (EnemyThought)
+                if (IsStunned)
                 {
-                    case Enums.EnemyThought.ATTACK:
-                        sprites.Insert(0,AttackSprite);  
-                        break;
-                    case Enums.EnemyThought.WAIT:
-                        sprites.Insert(0, WaitSprite);
-                        break;
-                    case Enums.EnemyThought.WALK:
-                        sprites.Insert(0, WalkSprite);
-                        break;
-                    default:
-                        throw new NotImplementedException("There is no graphic for the thought " + EnemyThought);
+                    sprites.Insert(0, StunnedSprite);
+                }
+                else
+                {
+                    switch (EnemyThought)
+                    {
+                        case Enums.EnemyThought.ATTACK:
+                            sprites.Insert(0, AttackSprite);
+                            break;
+                        case Enums.EnemyThought.WAIT:
+                            sprites.Insert(0, WaitSprite);
+                            break;
+                        case Enums.EnemyThought.WALK:
+                            sprites.Insert(0, WalkSprite);
+                            break;
+                        default:
+                            throw new NotImplementedException("There is no graphic for the thought " + EnemyThought);
+                    }
                 }
 
                 return sprites;
@@ -113,5 +127,10 @@ namespace DRObjects.Items.Archetypes.Local
         /// How far this enemy can see
         /// </summary>
         public int LineOfSightRange { get; set; }
+
+        /// <summary>
+        /// The actor being linked to
+        /// </summary>
+        public bool IsStunned { get; set; }
     }
 }

@@ -35,9 +35,9 @@ namespace DivineRightGame.ItemFactory.ItemFactoryManagers
             return CreateItem(parameters);
         }
 
-        public LocalEnemy CreateItem(string enemyName,string enemyDescription,string graphic,int lineOfSight)
+        public LocalCharacter CreateItem(string enemyName,string enemyDescription,string graphic,int lineOfSight)
         {
-            LocalEnemy enemy = new LocalEnemy();
+            LocalCharacter enemy = new LocalCharacter();
             enemy.Description = enemyDescription;
             enemy.EnemyThought = DRObjects.Enums.EnemyThought.WAIT;
 

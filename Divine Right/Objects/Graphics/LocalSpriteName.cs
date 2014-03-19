@@ -331,7 +331,7 @@ namespace DRObjects.Graphics
         WEAPON_RACK_2,
 
         SPIKES,
-        
+
         //ENEMIES
         ENEMY_SKELETON,
         ENEMY_ORC_CIV,
@@ -345,6 +345,7 @@ namespace DRObjects.Graphics
         ENEMY_THOUGHT_WALK,
         ENEMY_THOUGHT_WAIT,
         ENEMY_THOUGHT_ATTACK,
+        ENEMY_THOUGH_CONFUSED,
 
     }
 }

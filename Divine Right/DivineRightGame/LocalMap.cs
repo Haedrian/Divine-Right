@@ -240,7 +240,7 @@ namespace DivineRightGame
                 }
 
                 //Update the graphic
-                (actor.MapCharacter as LocalEnemy).EnemyThought = actor.CurrentMission.EnemyThought;
+                (actor.MapCharacter as LocalCharacter).EnemyThought = actor.CurrentMission.EnemyThought;
 
                 if (actor.IsStunned)
                 {

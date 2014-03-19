@@ -9,6 +9,7 @@ using DivineRightGame.EventHandling;
 using DRObjects.ActorHandling;
 using DRObjects.Graphics;
 using Microsoft.Xna.Framework;
+using DRObjects.Items.Archetypes.Local;
 
 namespace DivineRightGame.CombatHandling
 {
@@ -31,7 +32,7 @@ namespace DivineRightGame.CombatHandling
             if (!actor.IsAlive)
             {
                 //Nothing we can do here
-                return new PlayerFeedback[]{};
+                return new PlayerFeedback[] { };
             }
 
             //Check for body part damage
@@ -103,6 +104,10 @@ namespace DivineRightGame.CombatHandling
             if (actor.IsStunned) //unstun
             {
                 actor.IsStunned = false;
+                if (actor.MapCharacter as LocalCharacter != null)
+                {
+                    (actor.MapCharacter as LocalCharacter).IsStunned = false;
+                }
             }
 
             if (actor.Anatomy.StunAmount > 0)
@@ -115,18 +120,23 @@ namespace DivineRightGame.CombatHandling
 
                 //Check whether the actor is stunned or not
 
-                int diceRoll = random.Next(10) + 1;
-
-                if (diceRoll < actor.Anatomy.StunAmount)
+                if (actor.Anatomy.StunAmount > 0)
                 {
                     //Stunned
                     actor.IsStunned = true;
-                    return new PlayerFeedback[] { new CurrentLogFeedback(InterfaceSpriteName.SPIRAL, Color.Red, "You black out")};
-                }
-                else
-                {
+                    
+                    if (actor.MapCharacter as LocalCharacter != null)
+                    {
+                        (actor.MapCharacter as LocalCharacter).IsStunned = true;
+                    }
+                    
                     //Feel better
                     actor.Anatomy.StunAmount--;
+
+                    if (actor.IsPlayerCharacter)
+                    {
+                        return new PlayerFeedback[] { new CurrentLogFeedback(InterfaceSpriteName.SPIRAL, Color.Red, "You black out") };
+                    }
                 }
             }
 

@@ -810,7 +810,7 @@ namespace Divine_Right.GameScreens
                     {
                         //Open the attack interface for a particular actor. If one is not open already
                         //Identify the actor in question
-                        var actorMapItem = iop.Argument as LocalEnemy;
+                        var actorMapItem = iop.Argument as LocalCharacter;
 
                         //Locate the actual actor
                         Actor actor = GameState.LocalMap.Actors.Where(lm => lm.MapCharacter == actorMapItem).FirstOrDefault(); //Yep, it's a pointer equals

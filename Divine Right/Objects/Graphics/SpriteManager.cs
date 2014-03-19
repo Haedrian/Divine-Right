@@ -400,6 +400,7 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.ENEMY_THOUGHT_WALK] = new SpriteData(ENEMIES, new Rectangle(0, 50, 50, 50));
             localSprites[(int)LocalSpriteName.ENEMY_THOUGHT_WAIT] = new SpriteData(ENEMIES, new Rectangle(50, 50, 50, 50));
             localSprites[(int)LocalSpriteName.ENEMY_THOUGHT_ATTACK] = new SpriteData(ENEMIES, new Rectangle(100, 50, 50, 50));
+            localSprites[(int)LocalSpriteName.ENEMY_THOUGH_CONFUSED] = new SpriteData(ENEMIES, new Rectangle(150, 50, 50, 50));
 
             interfaceSprites[(int)InterfaceSpriteName.SCROLL] = new SpriteData(@"Graphics/Interface/scrollsandblocks", new Rectangle(224, 190, 96, 34));
             interfaceSprites[(int)InterfaceSpriteName.PAPER_TEXTURE] = new SpriteData(@"Graphics/Interface/paperTexture");
