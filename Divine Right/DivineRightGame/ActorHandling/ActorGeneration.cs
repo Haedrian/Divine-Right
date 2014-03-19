@@ -101,7 +101,7 @@ namespace DivineRightGame.ActorHandling
             }
 
             //Pick one at random
-            var selected = possibleMatches.ToArray()[random.Next(possibleMatches.Count() - 1)];
+            var selected = possibleMatches.ToArray()[random.Next(possibleMatches.Count())];
 
             //Create the details
             enemyID = Int32.Parse(selected[0]);
