@@ -311,6 +311,9 @@ namespace DivineRightGame.LocalMapGenerator
                         enemy.MissionStack.Clear();
                         enemy.MissionStack.Push(new IdleMission());
                     }
+
+                    enemies.AddRange(roomEnemies);
+
                 }
 
                 //fit her onto the main map
