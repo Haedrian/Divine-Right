@@ -70,6 +70,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActorHandling\ActorAIManager.cs" />
     <Compile Include="ActorHandling\ActorGeneration.cs" />
     <Compile Include="CombatHandling\AttackLocation.cs" />
     <Compile Include="CombatHandling\CombatManager.cs" />
