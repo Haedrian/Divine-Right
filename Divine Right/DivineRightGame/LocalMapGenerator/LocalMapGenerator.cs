@@ -618,8 +618,23 @@ namespace DivineRightGame.LocalMapGenerator
                     int returnedID = -1;
                     //Put the enemy in there
 
-                    //Get the basic Actor object - hard coded for level 10
-                    Actor actor = ActorGeneration.CreateEnemy(enemyType, null, null,10, out returnedID);
+                    //Get the basic Actor object
+
+                    //What level is the player character?
+                    //int handToHand = GameState.LocalMap.Actors.Where(a => a.IsPlayerCharacter).Select(a => a.Attributes.HandToHand).FirstOrDefault();
+                    int handToHand = 10;
+
+                    int randomLevel = (int) (handToHand + handToHand*random.NextDouble()/2 - handToHand*random.NextDouble());
+
+                    if (randomLevel < 0)
+                    {
+                        randomLevel = 0;
+                    }
+
+                    Console.WriteLine("Level : " + randomLevel);
+
+                    Actor actor = ActorGeneration.CreateEnemy(enemyType, null, null, randomLevel , out returnedID);
+
 
                     var mapObject = fact.CreateItem("enemies", returnedID);
 

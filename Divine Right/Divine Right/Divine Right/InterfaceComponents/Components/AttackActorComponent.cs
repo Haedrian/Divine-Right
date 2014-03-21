@@ -162,8 +162,8 @@ namespace Divine_Right.InterfaceComponents.Components
             batch.Draw(content.Load<Texture2D>(shield.path), enemyArmourIconRect, shield.sourceRectangle, Color.White);
             batch.Draw(content.Load<Texture2D>(sword.path), enemyWeaponIconRect, sword.sourceRectangle, Color.White);
 
-            batch.DrawString(font, "TODO", enemyWeaponRect, Alignment.Center, Color.Black);
-            batch.DrawString(font, "Later", enemyArmourRect, Alignment.Center, Color.Black);
+            batch.DrawString(font, "("+ TargetActor.Attributes.HandToHand +")", enemyWeaponRect, Alignment.Center, Color.Black);
+            batch.DrawString(font, "(" + TargetActor.Attributes.Evasion+ ")", enemyArmourRect, Alignment.Center, Color.Black);
 
             batch.Draw(content.Load<Texture2D>(scrollBackground.path), attackButtonRectangle, scrollBackground.sourceRectangle, Color.DarkGray);
             batch.DrawString(font, "ATTACK", attackButtonRectangle, Alignment.Center, Color.White);
