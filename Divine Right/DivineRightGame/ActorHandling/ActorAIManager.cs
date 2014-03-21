@@ -19,6 +19,11 @@ namespace DivineRightGame.ActorHandling
     {
         public static IEnumerable<PlayerFeedback> PerformActions(Actor actor,IEnumerable<Actor>actors, MapCoordinate playerLocation)
         {
+            if (GameState.LocalMap.PathfindingMap == null)
+            {
+                GameState.LocalMap.GeneratePathfindingMap();
+            }
+
             List<PlayerFeedback> feedback = new List<PlayerFeedback>();
 
             //First check whether they have a mission
@@ -196,7 +201,7 @@ namespace DivineRightGame.ActorHandling
                 if (mission.Coordinates == null || mission.Target.MapCharacter.Coordinate != mission.TargetCoordinate)
                 {
                     //Regenerate the path
-                    GameState.LocalMap.GeneratePathfindingMap();
+                    //GameState.LocalMap.GeneratePathfindingMap();
                     mission.TargetCoordinate = mission.Target.MapCharacter.Coordinate;
                     mission.Coordinates = PathfinderInterface.GetPath(actor.MapCharacter.Coordinate, mission.TargetCoordinate);
                     return feedback;
@@ -247,8 +252,6 @@ namespace DivineRightGame.ActorHandling
                 }
                 else if (mission.Coordinates == null)
                 {
-                    //(Re)generate the path
-                    GameState.LocalMap.GeneratePathfindingMap();
                     mission.Coordinates = PathfinderInterface.GetPath(actor.MapCharacter.Coordinate, mission.TargetCoordinate);
 
                     //Is the new first coordinate valid?
@@ -264,6 +267,8 @@ namespace DivineRightGame.ActorHandling
                             Console.WriteLine("Invalid Path");
                             //lose the mission
                             actor.CurrentMission = null;
+                            //Regenerate the path 
+                            GameState.LocalMap.GeneratePathfindingMap();
                         }
                 }
                 else
