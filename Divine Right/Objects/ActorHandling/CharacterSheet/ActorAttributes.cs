@@ -56,7 +56,7 @@ namespace DRObjects.ActorHandling
         {
             get
             {
-                return Evasion + Agil;
+                return Evasion + Agil+5;
             }
         }
 

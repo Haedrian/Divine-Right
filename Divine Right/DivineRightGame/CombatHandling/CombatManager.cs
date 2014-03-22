@@ -25,10 +25,10 @@ namespace DivineRightGame.CombatHandling
             //Create the penalty dict
             penaltyDict = new Dictionary<AttackLocation, int>();
             penaltyDict.Add(AttackLocation.CHEST, 0);
-            penaltyDict.Add(AttackLocation.HEAD, -5);
+            penaltyDict.Add(AttackLocation.HEAD, -10);
             penaltyDict.Add(AttackLocation.LEFT_ARM, +1);
-            penaltyDict.Add(AttackLocation.LEGS, -3);
-            penaltyDict.Add(AttackLocation.RIGHT_ARM, -3);
+            penaltyDict.Add(AttackLocation.LEGS, -6);
+            penaltyDict.Add(AttackLocation.RIGHT_ARM, -6);
         }
 
         /// <summary>
@@ -89,9 +89,9 @@ namespace DivineRightGame.CombatHandling
             int defendChance = defender.Attributes.Dodge + def;
 
             //See what the difference is
-            int difference = 10 + (hitChance - defendChance);
+            int difference = 20 + (hitChance - defendChance);
 
-            return difference > 10 ? 100 : difference < 0 ? 0 : difference * 10;
+            return difference > 20 ? 100 : difference < 0 ? 0 : difference/2 * 10;
         }
 
         /// <summary>
@@ -187,8 +187,8 @@ namespace DivineRightGame.CombatHandling
             //See what the difference is
             int difference = hitChance - defendChance;
 
-            //Now roll a d10 and see whether we hit
-            int diceRoll = random.Next(10) + 1;
+            //Now roll a d20 and see whether we hit
+            int diceRoll = random.Next(20) + 1;
 
             //TODO: CRITICAL HANDLING
 
@@ -624,24 +624,24 @@ namespace DivineRightGame.CombatHandling
             switch (stance)
             {
                 case ActorStance.COMPLETE_DEFENSIVE:
-                    attack = -6;
-                    defence = 3;
+                    attack = -8;
+                    defence = 6;
                     break;
                 case ActorStance.DEFENSIVE:
-                    attack = -2;
-                    defence = 1;
+                    attack = -4;
+                    defence = 2;
                     break;
                 case ActorStance.NEUTRAL:
                     attack = 0;
                     defence = 0;
                     break;
                 case ActorStance.AGGRESSIVE:
-                    attack = 1;
-                    defence = -2;
+                    attack = 2;
+                    defence = -4;
                     break;
                 case ActorStance.COMPLETE_AGGRESSIVE:
-                    attack = 3;
-                    defence = -6;
+                    attack = 6;
+                    defence = -8;
                     break;
                 default:
                     throw new NotImplementedException("No stance effects for " + stance.ToString());
