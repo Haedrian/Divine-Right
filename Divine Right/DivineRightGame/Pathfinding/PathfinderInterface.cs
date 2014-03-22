@@ -58,7 +58,7 @@ namespace DivineRightGame.Pathfinding
 
             Stack<MapCoordinate> coordStack = new Stack<MapCoordinate>();
 
-            if (path == null)
+            if (path == null || nodes[path[0].X, path[0].Y] == 255) 
             {
                 Console.WriteLine("No path found :( ");
                 return null;

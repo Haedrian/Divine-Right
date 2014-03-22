@@ -69,6 +69,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActorHandling\ActorMissions\WaitMission.cs" />
     <Compile Include="ActorHandling\ActorStance.cs" />
     <Compile Include="ActorHandling\CharacterSheet\ActorAttributes.cs" />
     <Compile Include="ActorHandling\CharacterSheet\ActorHealth.cs" />

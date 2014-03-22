@@ -17,7 +17,7 @@ namespace DivineRightGame.ActorHandling
     /// </summary>
     public static class ActorAIManager
     {
-        public static IEnumerable<PlayerFeedback> PerformActions(Actor actor,IEnumerable<Actor>actors, MapCoordinate playerLocation)
+        public static IEnumerable<PlayerFeedback> PerformActions(Actor actor, IEnumerable<Actor> actors, MapCoordinate playerLocation)
         {
             if (GameState.LocalMap.PathfindingMap == null)
             {
@@ -33,7 +33,7 @@ namespace DivineRightGame.ActorHandling
                 if (actor.MissionStack.Peek() == null)
                 {
                     //no mission. ah well
-                    return new PlayerFeedback[]{};
+                    return new PlayerFeedback[] { };
                 }
 
                 actor.CurrentMission = actor.MissionStack.Pop();
@@ -67,6 +67,18 @@ namespace DivineRightGame.ActorHandling
                     };
 
                     return new PlayerFeedback[] { };
+                }
+            }
+            else if (actor.CurrentMission.MissionType == DRObjects.ActorHandling.ActorMissionType.WAIT)
+            {
+                WaitMission wait = actor.CurrentMission as WaitMission;
+
+                wait.Wait();
+
+                if (wait.WaitTime <= 0)
+                {
+                    //Done waiting
+                    actor.CurrentMission = null;
                 }
             }
             else if (actor.CurrentMission.MissionType == DRObjects.ActorHandling.ActorMissionType.WANDER)
@@ -260,16 +272,15 @@ namespace DivineRightGame.ActorHandling
                         //No path
                         actor.CurrentMission = null; //lose the mission
                     }
-                    else
-                        if (!GameState.LocalMap.GetBlockAtCoordinate(mission.Coordinates.Peek()).MayContainItems)
-                        {
-                            //Invalid path
-                            Console.WriteLine("Invalid Path");
-                            //lose the mission
-                            actor.CurrentMission = null;
-                            //Regenerate the path 
-                            GameState.LocalMap.GeneratePathfindingMap();
-                        }
+                    else if (!GameState.LocalMap.GetBlockAtCoordinate(mission.Coordinates.Peek()).MayContainItems)
+                    {
+                        //Invalid path
+                        Console.WriteLine("Invalid Path");
+                        //lose the mission
+                        actor.CurrentMission = new WaitMission(2); //wait for 2 turns
+                        //Regenerate the path 
+                        GameState.LocalMap.GeneratePathfindingMap();
+                    }
                 }
                 else
                 {

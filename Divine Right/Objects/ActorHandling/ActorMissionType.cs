@@ -12,6 +12,7 @@ namespace DRObjects.ActorHandling
         ATTACK,
         WALKTO,
         HUNTDOWN,
-        PATROL
+        PATROL,
+        WAIT
     }
 }
