@@ -82,9 +82,9 @@ namespace Divine_Right.GameScreens
                 component.Draw(game.Content, sprites);
             }
 
-            Rectangle logoRect = new Rectangle(5,(int)(GraphicsDevice.Viewport.Height - 27),70,27);
+            Rectangle logoRect = new Rectangle(5,(int)(GraphicsDevice.Viewport.Height - 85),50,60);
 
-            sprites.Draw(game.Content.Load<Texture2D>(@"Graphics/Interface/Level21"), logoRect, Color.White);
+            sprites.Draw(game.Content.Load<Texture2D>(@"Graphics/Interface/epicLlama"), logoRect, Color.White);
             sprites.End();
 
             base.Draw(gameTime);
