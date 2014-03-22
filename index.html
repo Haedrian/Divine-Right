@@ -1,48 +1,96 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Divine-right by Haedrian</title>
-
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    <title>Divine-right by Haedrian</title>
   </head>
+
   <body>
-    <div class="wrapper">
-      <header>
-        <h1>Divine-right</h1>
-        <p>Repository for the Open Source RPG Divine Right</p>
+    <div id="container">
+      <div class="inner">
 
-        <p class="view"><a href="https://github.com/Haedrian/Divine-Right">View the Project on GitHub <small>Haedrian/Divine-Right</small></a></p>
+        <header>
+          <h1>Divine-right</h1>
+          <h2>An open source, procedurally generated RPG.</h2>
+        </header>
 
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/Haedrian/Divine-Right/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/Haedrian/Divine-Right/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/Haedrian/Divine-Right" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
 
-        <ul>
-          <li><a href="https://github.com/Haedrian/Divine-Right/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/Haedrian/Divine-Right/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/Haedrian/Divine-Right">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
-        <h1>
-<a name="divine-right" class="anchor" href="#divine-right"><span class="octicon octicon-link"></span></a>Divine-Right</h1>
+        <hr>
 
-<p>Repository for the Open Source RPG Divine Right.</p>
+        <section id="main_content">
+          <h1>
+<a name="the-idea" class="anchor" href="#the-idea"><span class="octicon octicon-link"></span></a>The idea</h1>
 
-<p>It is a Roleplaying Game to be set in a completely dynamic world, where every character is as powerful and important as the player character.</p>
+<p>The idea behind Divine Right is that of an RPG in a completely dynamic world. There is no fixed plot, no fixed quests, no scripted sequences and no fixed world or map. The world is acted upon by a number of NPCs who all make their own decisions, and help shape the world. And the player character is in the midst of it all...</p>
 
-<p>Read the Wiki on github for more information.</p>
-      </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/Haedrian">Haedrian</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-      </footer>
+<p>The main concept here is that, contrary to other RPGs in which the player character is the most important being on the planet, and the world revolves around him (and the plot waits for him) - NPCs are just as powerful as the player. The player has an underlying mission, but how he does it, and how NPCs will react to it is up to them.</p>
+
+<p>For instance, if a bandit leader takes up home in a town's mine, he has done so for a reason. The town mayor might offer the job to the Player character, or any number of NPCs. If the player character takes the job, there is no guarantee that the bandit will not be killed by someone else in the meanwhile, or die of sickness, or leave of his own volition. And if nobody takes up the mantle, the town's economy could suffer for it.</p>
+
+<h1>
+<a name="done-so-far-development-branch" class="anchor" href="#done-so-far-development-branch"><span class="octicon octicon-link"></span></a>Done so far (Development branch)</h1>
+
+<ul>
+<li>World Generates procedurally [Version 1]</li>
+<li>Local Map Generation based on a number of maplets [Version 1]</li>
+<li>Local Map Generation based on maplets read from xml file [Version 1]</li>
+<li>The underlying code for moving around and interacting with objects and object classes</li>
+<li>Dungeon Generation</li>
+<li>Enemy Generation including basic combat system and attributes</li>
+</ul><h1>
+<a name="screenshots" class="anchor" href="#screenshots"><span class="octicon octicon-link"></span></a>Screenshots</h1>
+
+<h2>
+<a name="random-world-generation" class="anchor" href="#random-world-generation"><span class="octicon octicon-link"></span></a>Random World Generation</h2>
+
+<h3>
+<a name="in-progress" class="anchor" href="#in-progress"><span class="octicon octicon-link"></span></a>In progress</h3>
+
+<p><img src="https://f.cloud.github.com/assets/1496891/1872400/bfbcbcbe-78a5-11e3-9ac0-dd5d6ecdf6c1.PNG" alt=""></p>
+
+<h3>
+<a name="finished-map" class="anchor" href="#finished-map"><span class="octicon octicon-link"></span></a>Finished Map</h3>
+
+<p><img src="https://f.cloud.github.com/assets/1496891/1872399/bf8d749a-78a5-11e3-8630-7baf363c71b4.PNG" alt=""></p>
+
+<h2>
+<a name="local-map-generation" class="anchor" href="#local-map-generation"><span class="octicon octicon-link"></span></a>Local Map Generation</h2>
+
+<p><img src="https://f.cloud.github.com/assets/1496891/1872372/3e7dae2e-78a5-11e3-82d5-0478c40cffb8.PNG" alt=""></p>
+
+<p><img src="https://f.cloud.github.com/assets/1496891/1882598/45a687d8-7978-11e3-8294-fc50ed364f6d.png" alt=""></p>
+
+<h2>
+<a name="dungeon-generation" class="anchor" href="#dungeon-generation"><span class="octicon octicon-link"></span></a>Dungeon Generation</h2>
+
+<p><img src="https://f.cloud.github.com/assets/1496891/2118613/b0601b7c-9113-11e3-8f05-9def2ff73fe3.png" alt=""></p>
+
+<h2>
+<a name="combat" class="anchor" href="#combat"><span class="octicon octicon-link"></span></a>Combat</h2>
+
+<p><img src="https://f.cloud.github.com/assets/1496891/2491320/dcb931ba-b1e6-11e3-91e6-ec6c68eff540.PNG" alt=""></p>
+        </section>
+
+        <footer>
+          Divine-right is maintained by <a href="https://github.com/Haedrian">Haedrian</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
     </div>
-    <script src="javascripts/scale.fix.js"></script>
-    
   </body>
 </html>
