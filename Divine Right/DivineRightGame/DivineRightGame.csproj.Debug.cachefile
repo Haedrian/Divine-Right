@@ -29,5 +29,7 @@ Maplets\Components\Tables\TableSet.xml
 Maplets\Tavern.xml
 Maplets\Temple.xml
 Maplets\Village.xml
+Resources\SettlementNames\Prefix.txt
+Resources\SettlementNames\Suffix.txt
 App.config
 Maplets.sdf

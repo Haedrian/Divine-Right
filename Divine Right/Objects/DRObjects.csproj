@@ -128,6 +128,9 @@
     <Compile Include="MapCoordinates.cs" />
     <Compile Include="MapItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settlements\Districts\District.cs" />
+    <Compile Include="Settlements\Districts\DistrictType.cs" />
+    <Compile Include="Settlements\Settlement.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="GraphicsEngineObjects\Enums\" />
@@ -237,6 +240,12 @@
     <Content Include="Maplets\Village.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Resources\SettlementNames\Prefix.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\SettlementNames\Suffix.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
