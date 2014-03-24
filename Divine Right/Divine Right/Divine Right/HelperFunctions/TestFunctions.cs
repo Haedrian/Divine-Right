@@ -11,6 +11,7 @@ using DivineRightGame.Managers;
 using DivineRightGame.LocalMapGenerator;
 using DRObjects.ActorHandling;
 using DivineRightGame.ActorHandling;
+using DivineRightGame.SettlementHandling;
 
 namespace Divine_Right.HelperFunctions
 {
@@ -54,7 +55,13 @@ namespace Divine_Right.HelperFunctions
 
             MapBlock[,] generatedMap = gen.GenerateDungeon(5, 2, 2, 2,getOwner,75,2,7,out start,out actors,out pointsOfInterest);
 
-            GameState.LocalMap = new LocalMap(500, 500, 1, 0);
+            //Generate 100 random names
+            for (int i = 0; i < 100; i++)
+            {
+                Console.WriteLine(SettlementNameGenerator.GenerateName());
+            }
+
+                GameState.LocalMap = new LocalMap(500, 500, 1, 0);
             GameState.LocalMap.PointsOfInterest = pointsOfInterest;
 
             List<MapBlock> collapsedMap = new List<MapBlock>();
