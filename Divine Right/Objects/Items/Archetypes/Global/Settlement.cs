@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using DRObjects.Enums;
 using DRObjects.Graphics;
+using DRObjects.Settlements.Districts;
 
 namespace DRObjects.Items.Archetypes.Global
 {
@@ -15,7 +16,26 @@ namespace DRObjects.Items.Archetypes.Global
     {
         #region Members
 
-        public SettlementType SettlementType { get; set; }
+        public SettlementType SettlementType
+        {
+            get
+            {
+                if (this.SettlementSize < 3)
+                {
+                    return SettlementType.HAMLET;
+                }
+                else if (this.SettlementSize < 5)
+                {
+                    return SettlementType.VILLAGE;
+                }
+                else
+                {
+                    return SettlementType.TOWN;
+                }
+            }
+        }
+        public int SettlementSize { get; set; }
+        public List<District> Districts { get; set; }
 
         #endregion
 

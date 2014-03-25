@@ -130,7 +130,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settlements\Districts\District.cs" />
     <Compile Include="Settlements\Districts\DistrictType.cs" />
-    <Compile Include="Settlements\Settlement.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="GraphicsEngineObjects\Enums\" />

@@ -126,6 +126,12 @@ namespace DRObjects
             this.Y = y;
             this.Z = z;
         }
+
+        public MapCoordinate Clone()
+        {
+            return this.MemberwiseClone() as MapCoordinate;
+        }
+
         #endregion
 
     }

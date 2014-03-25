@@ -8,6 +8,7 @@ using DRObjects.Items.Tiles.Global;
 using DRObjects.Enums;
 using DivineRightGame.Managers.HelperFunctions;
 using DRObjects.Items.Archetypes.Global;
+using DivineRightGame.SettlementHandling;
 
 namespace DivineRightGame.Managers
 {
@@ -810,10 +811,7 @@ namespace DivineRightGame.Managers
                         blockTile.Biome = GlobalBiome.POLAR_DESERT;
                         break;
                 }
-                Settlement settlement = new Settlement();
-                settlement.Coordinate = blockTile.Coordinate;
-                settlement.SettlementType = SettlementType.VILLAGE;
-                settlement.MayContainItems = true;
+                Settlement settlement = SettlementGenerator.GenerateSettlement(block.Tile.Coordinate, random.Next(10) + 3);
 
                 block.PutItemOnBlock(settlement);
                 
