@@ -22,7 +22,9 @@ Bright
 Silver
 Granite
 Bauxite
-Lime
 Apple
 Diamond
 Green
+River
+York
+Briar
