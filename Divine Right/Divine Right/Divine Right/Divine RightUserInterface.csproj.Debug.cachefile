@@ -47,7 +47,13 @@ Content\Graphics\Interface\CharacterSheetIcons.xnb
 Content\Graphics\Interface\graveyard.xnb
 Content\Graphics\Interface\death.xnb
 Content\Graphics\Interface\epicLlama.xnb
+Content\Graphics\Interface\banners.xnb
+Content\Graphics\Interface\woodTexture.xnb
+Content\Fonts\h1.xnb
+Content\Graphics\Interface\locationInterface.xnb
 Content\Fonts\TextFeedbackFont.spritefont
+App.config
+Maplets.sdf
 Items.sdf
 Maplets\Components\Plazas\FountainPlaza.xml
 Maplets\Components\Plazas\StatuePlaza.xml
@@ -81,5 +87,3 @@ Maplets\Temple.xml
 Maplets\Village.xml
 Resources\SettlementNames\Prefix.txt
 Resources\SettlementNames\Suffix.txt
-App.config
-Maplets.sdf

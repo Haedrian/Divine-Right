@@ -13,13 +13,10 @@ namespace DRObjects.Settlements.Districts
         PALACE,
         LIBRARY,
         TEMPLE,
-        GENERAL_STORE,
         IRON_WORKS,
         WOOD_WORKS,
         STONE_WORKS,
         BARRACKS,
         TRADING,
-        TAVERN,
-
     }
 }

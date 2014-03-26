@@ -48,10 +48,6 @@ namespace DivineRightGame.SettlementHandling
         {
             List<District> districts = new List<District>(size);
 
-            //We're always going to need the tavern and the general store
-            districts.Add(new District(DistrictType.GENERAL_STORE, 1));
-            districts.Add(new District(DistrictType.TAVERN, 1));
-
             var districtTypes = (DistrictType[]) Enum.GetValues(typeof(DistrictType));
 
             //Generate the rest of it

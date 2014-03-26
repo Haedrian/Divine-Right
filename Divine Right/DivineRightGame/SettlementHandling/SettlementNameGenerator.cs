@@ -25,7 +25,7 @@ namespace DivineRightGame.SettlementHandling
                 //Read them all, split them into components and populate the string
                 prefixes = new List<string>();
 
-                prefixes.AddRange(reader.ReadToEnd().Replace("\r","").Split('\n'));
+                prefixes.AddRange(reader.ReadToEnd().Replace("\r", "").Split('\n').Where(r => !String.IsNullOrEmpty(r)));
             }
 
             //And suffixes
@@ -34,7 +34,7 @@ namespace DivineRightGame.SettlementHandling
                 //Read them all, split them into components and populate the string
                 suffixes = new List<string>();
 
-                suffixes.AddRange(reader.ReadToEnd().Replace("\r", "").Split('\n'));
+                suffixes.AddRange(reader.ReadToEnd().Replace("\r", "").Split('\n').Where(r => !String.IsNullOrEmpty(r)));
             }
 
             random = new Random();

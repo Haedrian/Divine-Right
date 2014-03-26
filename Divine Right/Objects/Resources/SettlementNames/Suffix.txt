@@ -27,3 +27,5 @@ vale
 vales
 town
 pass
+spires
+spire

@@ -22,6 +22,7 @@ using DivineRightGame.LocalMapGenerator;
 using DivineRightGame;
 using DRObjects.Items.Archetypes.Local;
 using DivineRightGame.EventHandling;
+using DivineRightGame.SettlementHandling;
 
 namespace Divine_Right.GameScreens
 {
@@ -151,6 +152,10 @@ namespace Divine_Right.GameScreens
             TextLogComponent tlc = new TextLogComponent(10, PlayableHeight, GameState.NewLog);
             tlc.Visible = true;
             interfaceComponents.Add(tlc);
+
+            LocationDetailsComponent ldc = new LocationDetailsComponent(SettlementGenerator.GenerateSettlement(new MapCoordinate(10,10,0,MapTypeEnum.GLOBAL),10), 100, 100);
+            ldc.Visible = true;
+            interfaceComponents.Add(ldc);
 
             log = tlc;
 

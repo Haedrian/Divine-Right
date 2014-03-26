@@ -116,6 +116,7 @@
     <Compile Include="InterfaceComponents\Components\ContextMenuComponent.cs" />
     <Compile Include="InterfaceComponents\Components\HealthDisplayComponent.cs" />
     <Compile Include="InterfaceComponents\Components\DecisionPopupComponent.cs" />
+    <Compile Include="InterfaceComponents\Components\LocationDetailsComponent.cs" />
     <Compile Include="InterfaceComponents\Components\TextLogComponent.cs" />
     <Compile Include="InterfaceComponents\Components\ViewTileTextComponent.cs" />
     <Compile Include="InterfaceComponents\IGameInterfaceComponent.cs" />

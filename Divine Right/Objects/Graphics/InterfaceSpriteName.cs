@@ -32,6 +32,25 @@ namespace DRObjects.Graphics
 
         SPIRAL,
         BLEEDING,
-        CLOSE
+        CLOSE,
+
+        BANNER_GREEN,
+        BANNER_YELLOW,
+        BANNER_RED,
+        WOOD_TEXTURE,
+
+        DISTRICT_BOX,
+        DISTRICT_STAR,
+        POOR_HOUSING,
+        RICH_HOUSING,
+        SLUM_HOUSING,
+        PALACE,
+        LIBRARY,
+        TEMPLE,
+        MARKET,
+        SMITH,
+        CARPENTER,
+        STONEWORKER,
+        BARRACKS
     }
 }
