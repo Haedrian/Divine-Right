@@ -28,3 +28,9 @@ Green
 River
 York
 Briar
+Orange
+Gab
+Dragon
+Harpy
+Yellow
+Griffin

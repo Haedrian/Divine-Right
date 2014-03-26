@@ -48,7 +48,7 @@ namespace Divine_Right.GameScreens
         {
             get
             {
-                return GraphicsDevice.Viewport.Height - 150;
+                return GraphicsDevice.Viewport.Height;
 
             }
 
@@ -57,7 +57,7 @@ namespace Divine_Right.GameScreens
         {
             get
             {
-                return (PlayableWidth / TILEWIDTH) - 1; ;
+                return (PlayableWidth / TILEWIDTH);
             }
 
 
@@ -66,7 +66,7 @@ namespace Divine_Right.GameScreens
         {
             get
             {
-                return (PlayableHeight / TILEHEIGHT) - 1;
+                return (PlayableHeight / TILEHEIGHT);
             }
 
         }
@@ -149,7 +149,7 @@ namespace Divine_Right.GameScreens
             csc.Visible = false;
             interfaceComponents.Add(csc);
 
-            TextLogComponent tlc = new TextLogComponent(10, PlayableHeight, GameState.NewLog);
+            TextLogComponent tlc = new TextLogComponent(10, GraphicsDevice.Viewport.Height - 150, GameState.NewLog);
             tlc.Visible = true;
             interfaceComponents.Add(tlc);
 
@@ -162,8 +162,8 @@ namespace Divine_Right.GameScreens
             var cemetry = SpriteManager.GetSprite(InterfaceSpriteName.DEAD);
 
             //Create the menu buttons
-            menuButtons.Add(new AutoSizeGameButton("  Health  ", this.game.Content, InternalActionEnum.OPEN_HEALTH, new object[] { }, 50, PlayableHeight + 125));
-            menuButtons.Add(new AutoSizeGameButton(" Attributes ", this.game.Content, InternalActionEnum.OPEN_ATTRIBUTES, new object[] { }, 150, PlayableHeight + 125));
+            menuButtons.Add(new AutoSizeGameButton("  Health  ", this.game.Content, InternalActionEnum.OPEN_HEALTH, new object[] { }, 50, GraphicsDevice.Viewport.Height -35));
+            menuButtons.Add(new AutoSizeGameButton(" Attributes ", this.game.Content, InternalActionEnum.OPEN_ATTRIBUTES, new object[] { }, 150, GraphicsDevice.Viewport.Height -35));
 
             //Invoke a size change
             Window_ClientSizeChanged(null, null);
@@ -175,7 +175,7 @@ namespace Divine_Right.GameScreens
             //Resizing
             foreach (AutoSizeGameButton button in menuButtons)
             {
-                button.drawRect.Y = PlayableHeight + 125;
+                button.drawRect.Y = GraphicsDevice.Viewport.Height - 35;
             }
 
             foreach (var interfaceComponent in interfaceComponents)
@@ -184,7 +184,7 @@ namespace Divine_Right.GameScreens
 
                 if (textLog != null)
                 {
-                    textLog.Move(textLog.ReturnLocation().X, PlayableHeight);
+                    textLog.Move(textLog.ReturnLocation().X, GraphicsDevice.Viewport.Height - 175);
                 }
             }
         }

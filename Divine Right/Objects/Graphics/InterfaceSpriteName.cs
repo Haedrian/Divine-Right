@@ -41,7 +41,7 @@ namespace DRObjects.Graphics
 
         DISTRICT_BOX,
         DISTRICT_STAR,
-        POOR_HOUSING,
+        MIDDLE_HOUSING,
         RICH_HOUSING,
         SLUM_HOUSING,
         PALACE,
@@ -51,6 +51,8 @@ namespace DRObjects.Graphics
         SMITH,
         CARPENTER,
         STONEWORKER,
-        BARRACKS
+        BARRACKS,
+        MAN,
+        HALFMAN
     }
 }

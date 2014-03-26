@@ -32,6 +32,17 @@ namespace DivineRightGame.SettlementHandling
             settlement.MayContainItems = false;
             settlement.SettlementSize = size;
 
+            settlement.RichPercentage = random.Next(6) + random.Next(6) + random.Next(6);
+
+            settlement.MiddlePercentage = 0;
+
+            for (int i = 0; i < 10; i++)
+            {
+                settlement.MiddlePercentage += random.Next(6);
+            }
+                
+            settlement.PoorPercentage = 100 - settlement.RichPercentage - settlement.MiddlePercentage;
+
             //Generate the districts
             settlement.Districts = GenerateDistricts(size);
 

@@ -435,21 +435,26 @@ namespace DRObjects.Graphics
 
             interfaceSprites[(int)InterfaceSpriteName.DISTRICT_BOX] = new SpriteData(LOCATIONINTERFACE, new Rectangle(0, 0, 75, 75));
             interfaceSprites[(int)InterfaceSpriteName.DISTRICT_STAR] = new SpriteData(LOCATIONINTERFACE, new Rectangle(75, 0, 30, 30));
-            interfaceSprites[(int)InterfaceSpriteName.POOR_HOUSING] = new SpriteData(LOCATIONINTERFACE, new Rectangle(150, 0, 75, 75));
+            interfaceSprites[(int)InterfaceSpriteName.MIDDLE_HOUSING] = new SpriteData(LOCATIONINTERFACE, new Rectangle(150, 0, 75, 75));
             interfaceSprites[(int)InterfaceSpriteName.RICH_HOUSING] = new SpriteData(LOCATIONINTERFACE, new Rectangle(225, 0, 75, 75));
             interfaceSprites[(int)InterfaceSpriteName.SLUM_HOUSING] = new SpriteData(LOCATIONINTERFACE, new Rectangle(300, 0, 75, 75));
-            interfaceSprites[(int)InterfaceSpriteName.PALACE] = new SpriteData(LOCATIONINTERFACE, new Rectangle(375, 0, 75, 75));
+            interfaceSprites[(int)InterfaceSpriteName.TEMPLE] = new SpriteData(LOCATIONINTERFACE, new Rectangle(375, 0, 75, 75));
             interfaceSprites[(int)InterfaceSpriteName.LIBRARY] = new SpriteData(LOCATIONINTERFACE, new Rectangle(450, 0, 75, 75));
-            interfaceSprites[(int)InterfaceSpriteName.TEMPLE] = new SpriteData(LOCATIONINTERFACE, new Rectangle(525, 0, 75, 75));
             interfaceSprites[(int)InterfaceSpriteName.MARKET] = new SpriteData(LOCATIONINTERFACE, new Rectangle(600, 0, 75, 75));
             interfaceSprites[(int)InterfaceSpriteName.SMITH] = new SpriteData(LOCATIONINTERFACE, new Rectangle(675, 0, 75, 75));
 
             interfaceSprites[(int)InterfaceSpriteName.CARPENTER] = new SpriteData(LOCATIONINTERFACE, new Rectangle(0, 75, 75, 75));
             interfaceSprites[(int)InterfaceSpriteName.STONEWORKER] = new SpriteData(LOCATIONINTERFACE, new Rectangle(75, 75, 75, 75));
             interfaceSprites[(int)InterfaceSpriteName.BARRACKS] = new SpriteData(LOCATIONINTERFACE, new Rectangle(150, 75, 75, 75));
+            interfaceSprites[(int)InterfaceSpriteName.PALACE] = new SpriteData(LOCATIONINTERFACE, new Rectangle(225, 75, 75, 75));
+
+            interfaceSprites[(int)InterfaceSpriteName.MAN] = new SpriteData(LOCATIONINTERFACE, new Rectangle(300, 75, 35, 38));
+            interfaceSprites[(int)InterfaceSpriteName.HALFMAN] = new SpriteData(LOCATIONINTERFACE, new Rectangle(300, 75, 17, 38));
+            //35x38
 
             interfaceSprites[(int)InterfaceSpriteName.DEAD] = new SpriteData(@"Graphics/Interface/death", null);
         }
+
 
         public static SpriteData GetSprite(GlobalSpriteName name)
         {

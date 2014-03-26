@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using DRObjects.Graphics;
 using Microsoft.Xna.Framework.Graphics;
 using DRObjects.Enums;
+using Divine_Right.HelperFunctions;
 
 namespace Divine_Right.InterfaceComponents.Components
 {
@@ -21,6 +22,7 @@ namespace Divine_Right.InterfaceComponents.Components
         private Actor actor;
 
         private Rectangle rect;
+        private Rectangle borderRect;
 
         private SpriteFont font;
 
@@ -49,6 +51,10 @@ namespace Divine_Right.InterfaceComponents.Components
                 //Load the font
                 font = content.Load<SpriteFont>(@"Fonts/TextFeedbackFont");
             }
+
+            var white = SpriteManager.GetSprite(ColourSpriteName.WHITE);
+
+            batch.Draw(content, white, borderRect, Color.DarkGray);
 
             //Draw the background
             var scrollBackground = SpriteManager.GetSprite(InterfaceSpriteName.PAPER_TEXTURE);
@@ -156,6 +162,7 @@ namespace Divine_Right.InterfaceComponents.Components
             this.locationY += y;
 
             rect = new Rectangle(locationX, locationY, 210, 170);
+            this.borderRect = new Rectangle(rect.X - 2, rect.Y - 2, rect.Width + 4, rect.Height + 4);
         }
     }
 }

@@ -56,12 +56,12 @@ namespace DRObjects.Settlements.Districts
                    return SpriteManager.GetSprite(InterfaceSpriteName.LIBRARY);
                case DistrictType.PALACE:
                    return SpriteManager.GetSprite(InterfaceSpriteName.PALACE);
-               case DistrictType.PLEB_HOUSING:
-                   return SpriteManager.GetSprite(InterfaceSpriteName.POOR_HOUSING);
-               case DistrictType.RICH_HOUSING:
-                   return SpriteManager.GetSprite(InterfaceSpriteName.RICH_HOUSING);
-               case DistrictType.SLUM_HOUSING:
-                   return SpriteManager.GetSprite(InterfaceSpriteName.SLUM_HOUSING);
+               //case DistrictType.PLEB_HOUSING:
+               //    return SpriteManager.GetSprite(InterfaceSpriteName.POOR_HOUSING);
+               //case DistrictType.RICH_HOUSING:
+               //    return SpriteManager.GetSprite(InterfaceSpriteName.RICH_HOUSING);
+               //case DistrictType.SLUM_HOUSING:
+               //    return SpriteManager.GetSprite(InterfaceSpriteName.SLUM_HOUSING);
                case DistrictType.STONE_WORKS:
                    return SpriteManager.GetSprite(InterfaceSpriteName.STONEWORKER);
                case DistrictType.TEMPLE:
@@ -83,9 +83,9 @@ namespace DRObjects.Settlements.Districts
            //This is sadly hardcoded :(
            descriptions = new string[,]
            {
-               {"Shacks","Slums","Shanty Town"},
-               {"Cottages","Hovels","Insulae"},
-               {"Domi","Villas","Palaces"},
+               //{"Shacks","Slums","Shanty Town"},
+               //{"Cottages","Hovels","Insulae"},
+               //{"Domi","Villas","Palaces"},
                {"Governor's Villa","Governor's Mansion","Governor's Palace"},
                {"Library","Grand Library","Great Library"},
                {"Shrine","Temple","High Temple"},

@@ -24,6 +24,7 @@ namespace Divine_Right.InterfaceComponents.Components
         public Actor TargetActor { get; set; }
 
         private Rectangle rect;
+        private Rectangle borderRect;
 
         //Drawing stuff
         private Rectangle headRect;
@@ -87,6 +88,11 @@ namespace Divine_Right.InterfaceComponents.Components
                 //Load the font
                 font = content.Load<SpriteFont>(@"Fonts/TextFeedbackFont");
             }
+
+            var white = SpriteManager.GetSprite(ColourSpriteName.WHITE);
+
+            batch.Draw(content, white, borderRect, Color.DarkGray);
+
 
             //Draw the background
             var scrollBackground = SpriteManager.GetSprite(InterfaceSpriteName.PAPER_TEXTURE);
@@ -354,6 +360,7 @@ namespace Divine_Right.InterfaceComponents.Components
 
             //Create the rectangle
             this.rect = new Rectangle(locationX, locationY, 300, 200);
+            this.borderRect = new Rectangle(rect.X - 2, rect.Y - 2, rect.Width + 4, rect.Height + 4);
 
             //Divide everything by 2.5
             headRect = new Rectangle(locationX + 220, locationY, 43, 38);

@@ -29,3 +29,8 @@ town
 pass
 spires
 spire
+lake
+lakes
+ridge
+river
+rivers

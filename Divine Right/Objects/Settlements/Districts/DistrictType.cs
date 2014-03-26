@@ -7,9 +7,9 @@ namespace DRObjects.Settlements.Districts
 {
     public enum DistrictType
     {
-        SLUM_HOUSING,
-        PLEB_HOUSING,
-        RICH_HOUSING,
+        //SLUM_HOUSING,
+        //PLEB_HOUSING,
+        //RICH_HOUSING,
         PALACE,
         LIBRARY,
         TEMPLE,
