@@ -10,6 +10,8 @@ namespace DRObjects.Settlements.Districts
         //SLUM_HOUSING,
         //PLEB_HOUSING,
         //RICH_HOUSING,
+        GENERAL_STORE,
+        INN,
         PALACE,
         LIBRARY,
         TEMPLE,

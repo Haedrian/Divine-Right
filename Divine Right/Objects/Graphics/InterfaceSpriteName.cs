@@ -53,6 +53,8 @@ namespace DRObjects.Graphics
         STONEWORKER,
         BARRACKS,
         MAN,
-        HALFMAN
+        HALFMAN,
+        GENERAL_STORE,
+        INN
     }
 }

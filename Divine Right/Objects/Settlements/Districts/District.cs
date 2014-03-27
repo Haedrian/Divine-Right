@@ -14,8 +14,6 @@ namespace DRObjects.Settlements.Districts
        public DistrictType Type { get; set; }
        public int Level { get; set; }
 
-       private static string[,] descriptions;
-
        /// <summary>
        /// Returns the maplet tag for this particular district and level
        /// </summary>
@@ -23,15 +21,6 @@ namespace DRObjects.Settlements.Districts
        public string GetDistrictMapletTag()
        {
            return Type.ToString() + Level;
-       }
-
-       /// <summary>
-       /// Returns a description of the District
-       /// </summary>
-       /// <returns></returns>
-       public string GetDistrictDescription()
-       {
-           return descriptions[(int)this.Type, this.Level];
        }
 
        public District(DistrictType type, int level)
@@ -56,6 +45,10 @@ namespace DRObjects.Settlements.Districts
                    return SpriteManager.GetSprite(InterfaceSpriteName.LIBRARY);
                case DistrictType.PALACE:
                    return SpriteManager.GetSprite(InterfaceSpriteName.PALACE);
+               case DistrictType.GENERAL_STORE:
+                   return SpriteManager.GetSprite(InterfaceSpriteName.GENERAL_STORE);
+               case DistrictType.INN:
+                   return SpriteManager.GetSprite(InterfaceSpriteName.INN);
                //case DistrictType.PLEB_HOUSING:
                //    return SpriteManager.GetSprite(InterfaceSpriteName.POOR_HOUSING);
                //case DistrictType.RICH_HOUSING:
@@ -80,21 +73,7 @@ namespace DRObjects.Settlements.Districts
        /// </summary>
        static District()
        {
-           //This is sadly hardcoded :(
-           descriptions = new string[,]
-           {
-               //{"Shacks","Slums","Shanty Town"},
-               //{"Cottages","Hovels","Insulae"},
-               //{"Domi","Villas","Palaces"},
-               {"Governor's Villa","Governor's Mansion","Governor's Palace"},
-               {"Library","Grand Library","Great Library"},
-               {"Shrine","Temple","High Temple"},
-               {"Smithy","Foundry","Steelworks"},
-               {"Carpenter's House","Carpentry Workshop","Woodworks"},
-               {"Mason's House","Stoneworker's Shop","Stoneworks"},
-               {"Town Watch","Militia Barracks","Barracks"},
-               {"Marketplace","Warehouses","Trading Port"},
-           };
+          
        }
     }
 }

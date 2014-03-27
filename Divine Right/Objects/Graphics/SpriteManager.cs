@@ -447,6 +447,9 @@ namespace DRObjects.Graphics
             interfaceSprites[(int)InterfaceSpriteName.STONEWORKER] = new SpriteData(LOCATIONINTERFACE, new Rectangle(75, 75, 75, 75));
             interfaceSprites[(int)InterfaceSpriteName.BARRACKS] = new SpriteData(LOCATIONINTERFACE, new Rectangle(150, 75, 75, 75));
             interfaceSprites[(int)InterfaceSpriteName.PALACE] = new SpriteData(LOCATIONINTERFACE, new Rectangle(225, 75, 75, 75));
+            interfaceSprites[(int)InterfaceSpriteName.GENERAL_STORE] = new SpriteData(LOCATIONINTERFACE, new Rectangle(375, 75, 75, 75));
+            interfaceSprites[(int)InterfaceSpriteName.INN] = new SpriteData(LOCATIONINTERFACE, new Rectangle(450, 75, 75, 75));
+            
 
             interfaceSprites[(int)InterfaceSpriteName.MAN] = new SpriteData(LOCATIONINTERFACE, new Rectangle(300, 75, 35, 38));
             interfaceSprites[(int)InterfaceSpriteName.HALFMAN] = new SpriteData(LOCATIONINTERFACE, new Rectangle(300, 75, 17, 38));
