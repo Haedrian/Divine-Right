@@ -48,6 +48,11 @@ namespace Divine_Right.InterfaceComponents.Components
 
         public void Draw(Microsoft.Xna.Framework.Content.ContentManager content, Microsoft.Xna.Framework.Graphics.SpriteBatch batch)
         {
+            if (!Visible)
+            {
+                return; //Draw nothing
+            }
+
             var banner = SpriteManager.GetSprite(InterfaceSpriteName.BANNER_GREEN);
             var wood = SpriteManager.GetSprite(InterfaceSpriteName.WOOD_TEXTURE);
             var font = content.Load<SpriteFont>("fonts/h1");

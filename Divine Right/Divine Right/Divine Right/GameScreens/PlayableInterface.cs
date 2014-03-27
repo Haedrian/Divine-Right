@@ -153,8 +153,8 @@ namespace Divine_Right.GameScreens
             tlc.Visible = true;
             interfaceComponents.Add(tlc);
 
-            LocationDetailsComponent ldc = new LocationDetailsComponent(SettlementGenerator.GenerateSettlement(new MapCoordinate(10,10,0,MapTypeEnum.GLOBAL),10), 100, 100);
-            ldc.Visible = true;
+            LocationDetailsComponent ldc = new LocationDetailsComponent(SettlementGenerator.GenerateSettlement(new MapCoordinate(10,10,0,MapTypeEnum.GLOBAL),10), PlayableWidth-170, 0);
+            ldc.Visible = false;
             interfaceComponents.Add(ldc);
 
             log = tlc;
@@ -164,6 +164,7 @@ namespace Divine_Right.GameScreens
             //Create the menu buttons
             menuButtons.Add(new AutoSizeGameButton("  Health  ", this.game.Content, InternalActionEnum.OPEN_HEALTH, new object[] { }, 50, GraphicsDevice.Viewport.Height -35));
             menuButtons.Add(new AutoSizeGameButton(" Attributes ", this.game.Content, InternalActionEnum.OPEN_ATTRIBUTES, new object[] { }, 150, GraphicsDevice.Viewport.Height -35));
+            menuButtons.Add(new AutoSizeGameButton(" Settlement ", this.game.Content, InternalActionEnum.TOGGLE_SETTLEMENT, new object[] { }, 250, GraphicsDevice.Viewport.Height - 35));
 
             //Invoke a size change
             Window_ClientSizeChanged(null, null);
@@ -493,6 +494,13 @@ namespace Divine_Right.GameScreens
                             //Toggle the attributes
                             var att = this.interfaceComponents.Where(ic => ic.GetType().Equals(typeof(CharacterSheetComponent))).FirstOrDefault();
                             att.Visible = !att.Visible;
+
+                            break;
+
+                        case InternalActionEnum.TOGGLE_SETTLEMENT:
+                            //Toggle the settlements
+                            var loc = this.interfaceComponents.Where(ic => ic.GetType().Equals(typeof(LocationDetailsComponent))).FirstOrDefault();
+                            loc.Visible = !loc.Visible;
 
                             break;
 
