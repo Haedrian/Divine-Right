@@ -26,7 +26,10 @@ namespace Divine_Right.InterfaceComponents.Components
         private Rectangle middleRect;
         private Rectangle richRect;
 
-        List<Rectangle> districtRectangles;
+        /// <summary>
+        /// The location of each building rectangle by it's position number
+        /// </summary>
+        private Dictionary<int,Rectangle> buildingRectangles;
 
         private int x;
         private int y;
@@ -52,6 +55,7 @@ namespace Divine_Right.InterfaceComponents.Components
             var white = SpriteManager.GetSprite(ColourSpriteName.WHITE);
             var person = SpriteManager.GetSprite(InterfaceSpriteName.MAN);
             var halfPerson = SpriteManager.GetSprite(InterfaceSpriteName.HALFMAN);
+            var paper = SpriteManager.GetSprite(InterfaceSpriteName.PAPER_TEXTURE);
 
             batch.Draw(content, white, borderRect , Color.DarkGray);
             batch.Draw(content, wood, rect, Color.White);
@@ -113,37 +117,48 @@ namespace Divine_Right.InterfaceComponents.Components
             var box = SpriteManager.GetSprite(InterfaceSpriteName.DISTRICT_BOX);
             var star = SpriteManager.GetSprite(InterfaceSpriteName.DISTRICT_STAR);
 
-            //Let's draw the districts
-            for (int i = 0; i < settlement.Districts.Count; i++)
-            {
-                //Put a box in the rectangle
-                //batch.Draw(content, box, districtRectangles[i], Color.Black);
+            //draw the plazas
+           // batch.Draw(content, box, buildingRectangles[-1], Color.Black);
 
-                //Draw the icon inside it
-                batch.Draw(content, settlement.Districts[i].GetInterfaceSprite(), new Rectangle(districtRectangles[i].X + 5, districtRectangles[i].Y, 40, 40), Color.Black);
+            batch.Draw(content, paper, new Rectangle(x + 10, 210 + y, 150, 250),Color.White);
+
+
+            foreach (var value in buildingRectangles.Values)
+            {
+                batch.Draw(content, box, value, Color.Black);
+            }
+
+            //Let's draw the districts
+            foreach (SettlementBuilding building in settlement.Districts)
+            {
+                batch.Draw(content, box, buildingRectangles[building.LocationNumber], Color.Black);
+
+                batch.Draw(content, building.District.GetInterfaceSprite(), new Rectangle(buildingRectangles[building.LocationNumber].X + 5, buildingRectangles[building.LocationNumber].Y, 40, 40), Color.Black);
 
                 //10x10 stars!
                 //10x10 with a 7 gap
 
                 //What level is it?
-                int level = settlement.Districts[i].Level;
+                int level = building.District.Level;
 
                 if (level >= 1)
                 {
-                    batch.Draw(content, star, new Rectangle(districtRectangles[i].X+3, districtRectangles[i].Y + 37, 10, 10),Color.Black);
+                    batch.Draw(content, star, new Rectangle(buildingRectangles[building.LocationNumber].X + 3, buildingRectangles[building.LocationNumber].Y + 37, 10, 10), Color.Black);
                 }
 
                 if (level >= 2)
                 {
-                    batch.Draw(content, star, new Rectangle(districtRectangles[i].X + 20, districtRectangles[i].Y + 37, 10, 10), Color.Black);
+                    batch.Draw(content, star, new Rectangle(buildingRectangles[building.LocationNumber].X + 20, buildingRectangles[building.LocationNumber].Y + 37, 10, 10), Color.Black);
                 }
 
                 if (level >= 3)
                 {
-                    batch.Draw(content, star, new Rectangle(districtRectangles[i].X + 37, districtRectangles[i].Y + 37, 10, 10), Color.Black);
+                    batch.Draw(content, star, new Rectangle(buildingRectangles[building.LocationNumber].X + 37, buildingRectangles[building.LocationNumber].Y + 37, 10, 10), Color.Black);
                 }
-
+            
             }
+
+            
         }
 
         public bool HandleClick(int x, int y, Objects.Enums.MouseActionEnum mouseAction, out DRObjects.Enums.ActionTypeEnum? actionType, out InternalActionEnum? internalActionType, out object[] args, out DRObjects.MapCoordinate coord, out bool destroy)
@@ -180,7 +195,7 @@ namespace Divine_Right.InterfaceComponents.Components
             x+=deltaX;
             y+=deltaY;
 
-            this.rect = new Rectangle(x, y, 170, 450);
+            this.rect = new Rectangle(x, y, 170, 480);
 
             this.bannerRect = new Rectangle(x, y, 170, 100);
             this.titleRect = new Rectangle(x, y+10, 170, 25);
@@ -192,24 +207,29 @@ namespace Divine_Right.InterfaceComponents.Components
             middleRect = new Rectangle(x+10, y + 130, 30, 30);
             richRect = new Rectangle(x+10,y+160,30,30);
 
-            this.districtRectangles = new List<Rectangle>();
+            this.buildingRectangles = new Dictionary<int, Rectangle>();
 
-            int districtX= 0;
-            int districtY = 210; 
+            int districtX= 0 + x;
+            int districtY = 210 + y;
 
-            foreach (District district in settlement.Districts)
-            {
-                //Create the boxes
-                districtRectangles.Add(new Rectangle(districtX+x+10, districtY+y, 50, 50));
+            //Add the rectangles
+            //-1 - -3 are the plaza ones
+           // this.buildingRectangles.Add(-1, new Rectangle(districtX + 10 + 50,districtY + 50,50,150));
+            //this.buildingRectangles.Add(-2, new Rectangle(districtX + 10 + 50, districtY + 100, 50, 50));
+            //this.buildingRectangles.Add(-3, new Rectangle(districtX + 10 + 50, districtY + 150, 50, 50));
+            this.buildingRectangles.Add(0, new Rectangle(districtX + 10, districtY, 50, 50));
+            this.buildingRectangles.Add(1, new Rectangle(districtX + 60, districtY, 50, 50));
+            this.buildingRectangles.Add(2, new Rectangle(districtX + 110, districtY, 50, 50));
+            this.buildingRectangles.Add(3, new Rectangle(districtX + 110, districtY + 50, 50, 50));
+            this.buildingRectangles.Add(4, new Rectangle(districtX + 110, districtY + 100, 50, 50));
+            this.buildingRectangles.Add(5, new Rectangle(districtX + 110, districtY + 150, 50, 50));
+            this.buildingRectangles.Add(6, new Rectangle(districtX + 110, districtY + 200, 50, 50));
+            this.buildingRectangles.Add(7, new Rectangle(districtX + 60, districtY + 200, 50,50));
+            this.buildingRectangles.Add(8, new Rectangle(districtX + 10, districtY + 200, 50,50));
+            this.buildingRectangles.Add(9, new Rectangle(districtX + 10, districtY + 150, 50, 50));
+            this.buildingRectangles.Add(10, new Rectangle(districtX + 10, districtY + 100, 50, 50));
+            this.buildingRectangles.Add(11, new Rectangle(districtX + 10, districtY + 50, 50, 50));
 
-                districtX += 50;
-
-                if (districtX >= 150) //edge of screen
-                {
-                    districtX = 0;
-                    districtY += 60;
-                }
-            }
         }
 
         public bool IsModal()

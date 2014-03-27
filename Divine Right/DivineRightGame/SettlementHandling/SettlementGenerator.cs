@@ -15,6 +15,7 @@ namespace DivineRightGame.SettlementHandling
     public static class SettlementGenerator
     {
         private static Random random = new Random();
+        private const int MAXLOCATION = 11;
 
         /// <summary>
         /// Generates a completly random settlement with completly random statistics at a particular location having a particular size
@@ -55,7 +56,7 @@ namespace DivineRightGame.SettlementHandling
         /// </summary>
         /// <param name="size"></param>
         /// <returns></returns>
-        public static List<District> GenerateDistricts(int size)
+        public static List<SettlementBuilding> GenerateDistricts(int size)
         {
             List<District> districts = new List<District>(size);
 
@@ -91,7 +92,25 @@ namespace DivineRightGame.SettlementHandling
                 }
             }
 
-            return districts;
+            //Now go through the districts and create SettlementBuildings for all of them
+
+            List<SettlementBuilding> buildings = new List<SettlementBuilding>();
+
+            foreach (District district in districts)
+            {
+                int position = random.Next(MAXLOCATION);
+
+                //Is the slot empty?
+                while (buildings.Any(b => b.LocationNumber.Equals(position)))
+                {
+                    position = random.Next(MAXLOCATION);
+                }
+
+                //Found a clear one. Plop it there
+                buildings.Add(new SettlementBuilding() { District = district, LocationNumber = position });
+            }
+
+            return buildings;
         }
     }
 }

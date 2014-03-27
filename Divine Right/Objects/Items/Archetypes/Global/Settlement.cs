@@ -35,7 +35,7 @@ namespace DRObjects.Items.Archetypes.Global
             }
         }
         public int SettlementSize { get; set; }
-        public List<District> Districts { get; set; }
+        public List<SettlementBuilding> Districts { get; set; }
         public int RichPercentage { get; set; }
         public int MiddlePercentage { get; set; }
         public int PoorPercentage { get; set; }

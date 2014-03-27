@@ -5,15 +5,14 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using DRObjects.Settlements.Districts;
 
-namespace DivineRightGame.LocalMapGenerator.SettlementGenerator.Objects
+namespace DRObjects.Settlements.Districts
 {
     /// <summary>
     /// Stores information about a particular Settlement Building located in a particular Settlement
     /// </summary>
     public class SettlementBuilding
     {
-        private const int MAXLOCATION = 11;
-
+      
         /// <summary>
         /// The location Number
         /// XX00XX01XX02XX
