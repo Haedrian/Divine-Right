@@ -50,7 +50,7 @@ namespace Divine_Right.InterfaceComponents.Components
         {
             if (!Visible)
             {
-                return; //Draw nothing
+                return; //Draw nothing 
             }
 
             var banner = SpriteManager.GetSprite(InterfaceSpriteName.BANNER_GREEN);
