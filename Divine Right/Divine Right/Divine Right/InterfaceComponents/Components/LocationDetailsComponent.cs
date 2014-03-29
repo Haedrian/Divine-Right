@@ -79,7 +79,7 @@ namespace Divine_Right.InterfaceComponents.Components
 
             for (int i = 0; i < settlement.PoorPercentage/10; i += 1)
             {
-                batch.Draw(content,person,new Rectangle(x+60+(10*i),poorRect.Y+10,10,10),Color.Black);
+                batch.Draw(content,person,new Rectangle(x+60+(10*i),poorRect.Y+10,10,10),Color.White);
                 lastI = i;
             }
 
@@ -136,9 +136,9 @@ namespace Divine_Right.InterfaceComponents.Components
             //Let's draw the districts
             foreach (SettlementBuilding building in settlement.Districts)
             {
-                batch.Draw(content, box, buildingRectangles[building.LocationNumber], Color.Black);
+                batch.Draw(content, box, buildingRectangles[building.LocationNumber], Color.White);
 
-                batch.Draw(content, building.District.GetInterfaceSprite(), new Rectangle(buildingRectangles[building.LocationNumber].X + 5, buildingRectangles[building.LocationNumber].Y, 40, 40), Color.Black);
+                batch.Draw(content, building.District.GetInterfaceSprite(), new Rectangle(buildingRectangles[building.LocationNumber].X + 5, buildingRectangles[building.LocationNumber].Y, 40, 40), Color.White);
 
                 //10x10 stars!
                 //10x10 with a 7 gap
