@@ -6,6 +6,7 @@ using DRObjects;
 using DRObjects.Enums;
 using DRObjects.GraphicsEngineObjects.Abstract;
 using DRObjects.GraphicsEngineObjects;
+using DRObjects.Items.Archetypes.Global;
 
 namespace DivineRightGame
 {

@@ -133,7 +133,8 @@ namespace Divine_Right.GameScreens
             }
             else if (parameters[0].ToString().Equals("Village"))
             {
-                TestFunctions.ParseXML();
+                //TestFunctions.ParseXML();
+                TestFunctions.GenerateSettlement();
             }
             else
             {
@@ -153,7 +154,7 @@ namespace Divine_Right.GameScreens
             tlc.Visible = true;
             interfaceComponents.Add(tlc);
 
-            LocationDetailsComponent ldc = new LocationDetailsComponent(SettlementGenerator.GenerateSettlement(new MapCoordinate(10,10,0,MapTypeEnum.GLOBAL),10), PlayableWidth-170, 0);
+            LocationDetailsComponent ldc = new LocationDetailsComponent(GameState.LocalMap.Settlement, PlayableWidth-170, 0);
             ldc.Visible = false;
             interfaceComponents.Add(ldc);
 

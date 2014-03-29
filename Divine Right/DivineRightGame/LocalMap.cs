@@ -13,6 +13,7 @@ using DivineRightGame.CombatHandling;
 using DRObjects.GraphicsEngineObjects;
 using DRObjects.GraphicsEngineObjects.Abstract;
 using DivineRightGame.ActorHandling;
+using DRObjects.Items.Archetypes.Global;
 
 namespace DivineRightGame
 {
@@ -40,6 +41,12 @@ namespace DivineRightGame
         }
         public List<PointOfInterest> PointsOfInterest { get; set; }
         public Byte[,] PathfindingMap { get; set; }
+
+        /// <summary>
+        /// Represents the settlement the player is currently at
+        /// </summary>
+        public Settlement Settlement { get; set; }
+
         #endregion
 
         #region Constructors

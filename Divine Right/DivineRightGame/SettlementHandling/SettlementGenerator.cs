@@ -6,6 +6,9 @@ using DRObjects.Settlements;
 using DRObjects.Items.Archetypes.Global;
 using DRObjects;
 using DRObjects.Settlements.Districts;
+using DRObjects.Enums;
+using DivineRightGame.SettlementHandling.Objects;
+using DivineRightGame.LocalMapGenerator;
 
 namespace DivineRightGame.SettlementHandling
 {
@@ -49,6 +52,97 @@ namespace DivineRightGame.SettlementHandling
 
 
             return settlement;
+        }
+
+        /// <summary>
+        /// Generates a Map from a Settlement
+        /// </summary>
+        /// <param name="settlement"></param>
+        /// <returns></returns>
+        public static MapBlock[,] GenerateMap(Settlement settlement)
+        {
+            //Create the Main empty map - 150x 150
+            MapBlock[,] mainMap = new MapBlock[150, 150];
+
+            ItemFactory.ItemFactory factory = new ItemFactory.ItemFactory();
+
+            int grassTileID = 0;
+
+            factory.CreateItem(Archetype.TILES, "grass",out grassTileID);
+
+            //Go through each square and create a grass tile
+            for (int x = 0; x < mainMap.GetLength(0); x++)
+            {
+                for (int y = 0; y < mainMap.GetLength(1); y++)
+                {
+                    MapItem tile = factory.CreateItem("tile", grassTileID);
+                    tile.Coordinate = new MapCoordinate(x, y, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+
+                    MapBlock block = new MapBlock();
+                    block.Tile = tile;
+
+                    mainMap[x, y] = block;
+                }
+            }
+
+            //Now we need to see where everything goes
+            LocalMapGenerator.LocalMapGenerator gen = new LocalMapGenerator.LocalMapGenerator();
+            LocalMapXMLParser parser = new LocalMapXMLParser();
+            ////List<SettlementBuildingMap> maps = new List<SettlementBuildingMap>();
+
+            foreach (SettlementBuilding district in settlement.Districts)
+            {
+                //For reach settlement building, create the appropriate map
+                SettlementBuildingMap map = new SettlementBuildingMap();
+
+                int x = 0;
+                int y = 0;
+
+                GetMapletLocation(out x, out y, district.LocationNumber);
+
+                map.X = x;
+                map.Y = y;
+                map.District = district.District;
+
+                //maps.Add(map);
+
+                //Generate it
+                var gennedMap = gen.GenerateMap(grassTileID, null, parser.ParseMapletFromTag(("House")), true);
+            
+                //And join them into one map
+                gen.JoinMaps(mainMap, gennedMap, x, y);
+
+            }
+
+            //Let's put the plaza in
+
+            int plazaTile = 0;
+
+            factory.CreateItem(Archetype.TILES, "Pavement", out plazaTile);
+
+            for (int x = 45; x <= 70+45; x++)
+            {
+                for (int y = 45; y < 70+45; y++)
+                {
+                    MapItem tile = factory.CreateItem("tile", plazaTile);
+                    tile.Coordinate = new MapCoordinate(x, y, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+
+                    MapBlock block = new MapBlock();
+                    block.Tile = tile;
+
+                    mainMap[x, y] = block;
+                }
+            }
+
+
+            //TODO: PEOPLE
+
+            
+
+            //TODO: DECOR
+            
+
+            return mainMap;
         }
 
         /// <summary>
@@ -111,6 +205,71 @@ namespace DivineRightGame.SettlementHandling
             }
 
             return buildings;
+        }
+
+        /// <summary>
+        /// Gets the X and Y coordinate for a particular Maplet to be located at a particular location
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="locationID"></param>
+        private static void GetMapletLocation(out int x, out int y, int locationID)
+        {
+            //These are hard coded, nothing to do :(
+
+            switch(locationID)
+            {
+                case 0:
+                    x = 45;
+                    y = 135;
+                    break;
+                case 1:
+                    x = 70;
+                    y = 135;
+                    break;
+                case 2:
+                    x = 95;
+                    y = 135;
+                    break;
+                case 3:
+                    x = 115;
+                    y = 115;
+                    break;
+                case 4:
+                    x = 115;
+                    y = 95;
+                    break;
+                case 5:
+                    x = 115;
+                    y = 70;
+                    break;
+                case 6:
+                    x = 95;
+                    y = 45;
+                    break;
+                case 7:
+                    x = 70;
+                    y = 45;
+                    break;
+                case 8:
+                    x = 45;
+                    y = 45;
+                    break;
+                case 9:
+                    x = 25;
+                    y = 70;
+                    break;
+                case 10:
+                    x = 25;
+                    y = 95;
+                    break;
+                case 11:
+                    x = 25;
+                    y = 115;
+                    break;
+                default:
+                    throw new NotImplementedException("No idea where " + locationID + " fits");
+            }
         }
     }
 }

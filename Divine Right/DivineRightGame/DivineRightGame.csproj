@@ -112,6 +112,7 @@
     <Compile Include="Managers\UserInterfaceManager.cs" />
     <Compile Include="Managers\WorldGenerationManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SettlementHandling\Objects\SettlementBuildingMap.cs" />
     <Compile Include="SettlementHandling\SettlementGenerator.cs" />
     <Compile Include="SettlementHandling\SettlementNameGenerator.cs" />
   </ItemGroup>

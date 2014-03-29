@@ -55,12 +55,6 @@ namespace Divine_Right.HelperFunctions
 
             MapBlock[,] generatedMap = gen.GenerateDungeon(5, 2, 2, 2,getOwner,75,2,7,out start,out actors,out pointsOfInterest);
 
-            //Generate 100 random names
-            for (int i = 0; i < 100; i++)
-            {
-                Console.WriteLine(SettlementNameGenerator.GenerateName());
-            }
-
                 GameState.LocalMap = new LocalMap(500, 500, 1, 0);
             GameState.LocalMap.PointsOfInterest = pointsOfInterest;
 
@@ -83,6 +77,47 @@ namespace Divine_Right.HelperFunctions
             player.Name = "Player";
 
             MapBlock playerBlock = GameState.LocalMap.GetBlockAtCoordinate(start);
+            playerBlock.PutItemOnBlock(player);
+
+            GameState.PlayerCharacter = new Actor();
+            GameState.PlayerCharacter.MapCharacter = player;
+            GameState.PlayerCharacter.IsPlayerCharacter = true;
+
+            GameState.PlayerCharacter.Attributes = ActorGeneration.GenerateAttributes("human", DRObjects.ActorHandling.CharacterSheet.Enums.ActorProfession.WARRIOR, 10);
+            GameState.PlayerCharacter.Anatomy = ActorGeneration.GenerateAnatomy("human");
+
+            GameState.PlayerCharacter.Attributes.Health = GameState.PlayerCharacter.Anatomy;
+
+            GameState.LocalMap.Actors.Add(GameState.PlayerCharacter);
+
+        }
+
+        public static void GenerateSettlement()
+        {
+            var settlement = SettlementGenerator.GenerateSettlement(new MapCoordinate(50, 50, 0, DRObjects.Enums.MapTypeEnum.GLOBAL), 7);
+
+            GameState.LocalMap = new LocalMap(250, 250, 1, 0);
+            GameState.LocalMap.Settlement = settlement;
+            var gennedMap = SettlementGenerator.GenerateMap(settlement);
+
+            List<MapBlock> collapsedMap = new List<MapBlock>();
+
+            foreach (MapBlock block in gennedMap)
+            {
+                collapsedMap.Add(block);
+            }
+
+            GameState.LocalMap.AddToLocalMap(collapsedMap.ToArray());
+
+            MapItem player = new MapItem();
+            player.Coordinate = new MapCoordinate(50,50,0,DRObjects.Enums.MapTypeEnum.LOCAL);
+            player.Description = "The player character";
+            player.Graphic = SpriteManager.GetSprite(LocalSpriteName.PLAYERCHAR);
+            player.InternalName = "Player Char";
+            player.MayContainItems = false;
+            player.Name = "Player";
+
+            MapBlock playerBlock = GameState.LocalMap.GetBlockAtCoordinate(player.Coordinate);
             playerBlock.PutItemOnBlock(player);
 
             GameState.PlayerCharacter = new Actor();
