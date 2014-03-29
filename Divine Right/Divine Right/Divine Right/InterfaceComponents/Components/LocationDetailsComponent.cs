@@ -225,15 +225,13 @@ namespace Divine_Right.InterfaceComponents.Components
             this.buildingRectangles.Add(0, new Rectangle(districtX + 10, districtY, 50, 50));
             this.buildingRectangles.Add(1, new Rectangle(districtX + 60, districtY, 50, 50));
             this.buildingRectangles.Add(2, new Rectangle(districtX + 110, districtY, 50, 50));
-            this.buildingRectangles.Add(3, new Rectangle(districtX + 110, districtY + 50, 50, 50));
-            this.buildingRectangles.Add(4, new Rectangle(districtX + 110, districtY + 100, 50, 50));
-            this.buildingRectangles.Add(5, new Rectangle(districtX + 110, districtY + 150, 50, 50));
-            this.buildingRectangles.Add(6, new Rectangle(districtX + 110, districtY + 200, 50, 50));
-            this.buildingRectangles.Add(7, new Rectangle(districtX + 60, districtY + 200, 50,50));
-            this.buildingRectangles.Add(8, new Rectangle(districtX + 10, districtY + 200, 50,50));
-            this.buildingRectangles.Add(9, new Rectangle(districtX + 10, districtY + 150, 50, 50));
-            this.buildingRectangles.Add(10, new Rectangle(districtX + 10, districtY + 100, 50, 50));
-            this.buildingRectangles.Add(11, new Rectangle(districtX + 10, districtY + 50, 50, 50));
+            this.buildingRectangles.Add(3, new Rectangle(districtX + 10, districtY + 50, 50, 50));
+            this.buildingRectangles.Add(4, new Rectangle(districtX + 110, districtY + 50, 50, 50));
+            this.buildingRectangles.Add(5, new Rectangle(districtX + 10, districtY + 100, 50, 50));
+            this.buildingRectangles.Add(6, new Rectangle(districtX + 110, districtY + 100, 50,50));
+            this.buildingRectangles.Add(7, new Rectangle(districtX + 10, districtY + 150, 50,50));
+            this.buildingRectangles.Add(8, new Rectangle(districtX + 60, districtY + 150, 50, 50));
+            this.buildingRectangles.Add(9, new Rectangle(districtX + 110, districtY + 150, 50, 50));
 
         }
 

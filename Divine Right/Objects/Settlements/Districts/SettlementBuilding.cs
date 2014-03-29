@@ -15,11 +15,9 @@ namespace DRObjects.Settlements.Districts
       
         /// <summary>
         /// The location Number
-        /// XX00XX01XX02XX
-        /// 11XXIPLAZAXX03
-        /// 10XXIPLAZAXX04
-        /// 09XXIPLAZAXX05
-        /// XX08XX07XX06XX
+        /// 00,01,02
+        /// 03,PL,04
+        /// 05,06,07
         /// </summary>
         public int LocationNumber { get; set; }
         /// <summary>

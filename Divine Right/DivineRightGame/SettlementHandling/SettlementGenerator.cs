@@ -18,7 +18,7 @@ namespace DivineRightGame.SettlementHandling
     public static class SettlementGenerator
     {
         private static Random random = new Random();
-        private const int MAXLOCATION = 11;
+        private const int MAXLOCATION = 9;
 
         /// <summary>
         /// Generates a completly random settlement with completly random statistics at a particular location having a particular size
@@ -62,7 +62,7 @@ namespace DivineRightGame.SettlementHandling
         public static MapBlock[,] GenerateMap(Settlement settlement)
         {
             //Create the Main empty map - 150x 150
-            MapBlock[,] mainMap = new MapBlock[150, 150];
+            MapBlock[,] mainMap = new MapBlock[60, 80];
 
             ItemFactory.ItemFactory factory = new ItemFactory.ItemFactory();
 
@@ -107,7 +107,7 @@ namespace DivineRightGame.SettlementHandling
                 //maps.Add(map);
 
                 //Generate it
-                var gennedMap = gen.GenerateMap(grassTileID, null, parser.ParseMapletFromTag(("House")), true);
+                var gennedMap = gen.GenerateMap(grassTileID, null, parser.ParseMapletFromTag(("Tavern")), true);
             
                 //And join them into one map
                 gen.JoinMaps(mainMap, gennedMap, x, y);
@@ -120,9 +120,9 @@ namespace DivineRightGame.SettlementHandling
 
             factory.CreateItem(Archetype.TILES, "Pavement", out plazaTile);
 
-            for (int x = 45; x <= 70+45; x++)
+            for (int x = 15; x < 15+21; x++)
             {
-                for (int y = 45; y < 70+45; y++)
+                for (int y = 15; y < 18+36; y++)
                 {
                     MapItem tile = factory.CreateItem("tile", plazaTile);
                     tile.Coordinate = new MapCoordinate(x, y, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
@@ -219,53 +219,45 @@ namespace DivineRightGame.SettlementHandling
 
             switch(locationID)
             {
-                case 0:
-                    x = 45;
-                    y = 135;
-                    break;
-                case 1:
-                    x = 70;
-                    y = 135;
-                    break;
-                case 2:
-                    x = 95;
-                    y = 135;
-                    break;
-                case 3:
-                    x = 115;
-                    y = 115;
-                    break;
-                case 4:
-                    x = 115;
-                    y = 95;
-                    break;
-                case 5:
-                    x = 115;
-                    y = 70;
-                    break;
-                case 6:
-                    x = 95;
-                    y = 45;
-                    break;
                 case 7:
-                    x = 70;
-                    y = 45;
+                    x = 0;
+                    y = 0;
                     break;
                 case 8:
-                    x = 45;
-                    y = 45;
+                    x = 18;
+                    y = 0;
                     break;
                 case 9:
-                    x = 25;
-                    y = 70;
+                    x = 36;
+                    y = 0;
                     break;
-                case 10:
-                    x = 25;
-                    y = 95;
+                case 5:
+                    x = 0;
+                    y = 18;
                     break;
-                case 11:
-                    x = 25;
-                    y = 115;
+                case 6:
+                    x = 36;
+                    y = 18;
+                    break;
+                case 3:
+                    x = 0;
+                    y = 36;
+                    break;
+                case 4:
+                    x = 36;
+                    y = 36;
+                    break;
+                case 0:
+                    x = 0;
+                    y = 54;
+                    break;
+                case 1:
+                    x = 18;
+                    y = 54;
+                    break;
+                case 2:
+                    x = 18;
+                    y = 54;
                     break;
                 default:
                     throw new NotImplementedException("No idea where " + locationID + " fits");
