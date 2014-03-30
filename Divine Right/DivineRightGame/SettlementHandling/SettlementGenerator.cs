@@ -256,7 +256,7 @@ namespace DivineRightGame.SettlementHandling
                     y = 54;
                     break;
                 case 2:
-                    x = 18;
+                    x = 36;
                     y = 54;
                     break;
                 default:
