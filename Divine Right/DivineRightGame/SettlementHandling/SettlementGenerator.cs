@@ -9,6 +9,8 @@ using DRObjects.Settlements.Districts;
 using DRObjects.Enums;
 using DivineRightGame.SettlementHandling.Objects;
 using DivineRightGame.LocalMapGenerator;
+using DRObjects.LocalMapGeneratorObjects;
+using DRObjects.LocalMapGeneratorObjects.Enums;
 
 namespace DivineRightGame.SettlementHandling
 {
@@ -108,7 +110,29 @@ namespace DivineRightGame.SettlementHandling
                 //maps.Add(map);
 
                 //Generate it
-                var gennedMap = gen.GenerateMap(grassTileID, null, parser.ParseMapletFromTag(("Tavern")), true);
+                Maplet borderMaplet = new Maplet()
+                {
+                    SizeX = 17,
+                    SizeY = 17,
+                    Walled = false,
+                    Tiled = false,
+                    TileTag= "Pavement",
+                    MapletContents = new List<MapletContents>() 
+                    {
+                        new MapletContentsMaplet()
+                        {
+                            FirstFit = true,
+                            Position = PositionAffinity.FIXED,
+                            x = 1,
+                            y = 1,
+                            ProbabilityPercentage = 100,
+                            Maplet = parser.ParseMapletFromTag(("Tavern")),
+                            MaxAmount = 1
+                        }
+                    }
+                };
+
+                var gennedMap = gen.GenerateMap(grassTileID, null, borderMaplet , true);
             
                 //And join them into one map
                 gen.JoinMaps(mainMap, gennedMap, x, y);
@@ -134,9 +158,9 @@ namespace DivineRightGame.SettlementHandling
                 yShift = 21;
             }
 
-            for (int x = 15; x < 15+21; x++)
+            for (int x = 17; x < 15 + 21; x++)
             {
-                for (int y = 15 + yShift; y < 18+36; y++)
+                for (int y = 17 + yShift; y < 18 + 36; y++)
                 {
                     MapItem tile = factory.CreateItem("tile", plazaTile);
                     tile.Coordinate = new MapCoordinate(x, y, 0, DRObjects.Enums.MapTypeEnum.LOCAL);

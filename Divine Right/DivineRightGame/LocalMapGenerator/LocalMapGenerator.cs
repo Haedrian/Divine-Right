@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework;
 using DRObjects.ActorHandling;
 using DivineRightGame.ActorHandling;
 using DRObjects.ActorHandling.CharacterSheet.Enums;
+using DRObjects.LocalMapGeneratorObjects.Enums;
 
 namespace DivineRightGame.LocalMapGenerator
 {
@@ -157,13 +158,27 @@ namespace DivineRightGame.LocalMapGenerator
                         PlanningMapItemType[,] childMapletBlueprint = this.CreateBlueprint(childMaplet.Maplet);
                         //mark the areas covered by the blueprint as being held by that blueprint
 
-                        if (Fits(planningMap, childMapletBlueprint, childMaplet.Position == DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES,childMaplet.FirstFit, childMaplet.Padding, out x, out y, out newMap))
+                        if (childMaplet.Position == PositionAffinity.FIXED)
                         {
-                            //it fits, generate it - <3 Recursion
-                            MapBlock[,] childMap = this.GenerateMap(tileID, wallID.Value, childMaplet.Maplet, childMaplet.Position == DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES);
+                            if (Fits(planningMap, childMapletBlueprint, childMaplet.x.Value, childMaplet.y.Value, out newMap))
+                            {
+                                //it fits, generate it - <3 Recursion
+                                MapBlock[,] childMap = this.GenerateMap(tileID, wallID.Value, childMaplet.Maplet, childMaplet.Position == DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES);
 
-                            //Join the two maps together
-                            generatedMap = this.JoinMaps(generatedMap, childMap, x, y);
+                                //Join the two maps together
+                                generatedMap = this.JoinMaps(generatedMap, childMap, childMaplet.x.Value, childMaplet.y.Value);
+                            }
+                        }
+                        else
+                        {
+                            if (Fits(planningMap, childMapletBlueprint, childMaplet.Position == DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES, childMaplet.FirstFit, childMaplet.Padding, out x, out y, out newMap))
+                            {
+                                //it fits, generate it - <3 Recursion
+                                MapBlock[,] childMap = this.GenerateMap(tileID, wallID.Value, childMaplet.Maplet, childMaplet.Position == DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES);
+
+                                //Join the two maps together
+                                generatedMap = this.JoinMaps(generatedMap, childMap, x, y);
+                            }
                         }
                     }
                 }
@@ -976,6 +991,23 @@ namespace DivineRightGame.LocalMapGenerator
             startY = -1;
             newMap = map;
             return false;
+        }
+
+        /// <summary>
+        /// Determines whether a particular maplet with a fixed x and y coordiate will fit, and places it on the updated planning map if it does
+        /// ONLY USE FOR ABSOLUTE POSITIONING
+        /// </summary>
+        /// <param name="map"></param>
+        /// <param name="maplet"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="newMap"></param>
+        /// <returns></returns>
+        public bool Fits(PlanningMapItemType[,]map, PlanningMapItemType[,] maplet, int x, int y, out PlanningMapItemType[,] newMap)
+        {
+            newMap = FuseMaps(map, maplet, x, y);
+
+            return true;
         }
 
         /// <summary>
