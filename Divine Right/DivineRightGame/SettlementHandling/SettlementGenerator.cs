@@ -19,6 +19,7 @@ namespace DivineRightGame.SettlementHandling
     {
         private static Random random = new Random();
         private const int MAXLOCATION = 9;
+        private const int MAX_SMALL_LOCATION = 4;
 
         /// <summary>
         /// Generates a completly random settlement with completly random statistics at a particular location having a particular size
@@ -61,7 +62,7 @@ namespace DivineRightGame.SettlementHandling
         /// <returns></returns>
         public static MapBlock[,] GenerateMap(Settlement settlement)
         {
-            //Create the Main empty map - 150x 150
+            //Create the Main empty map - 60x80
             MapBlock[,] mainMap = new MapBlock[60, 80];
 
             ItemFactory.ItemFactory factory = new ItemFactory.ItemFactory();
@@ -120,9 +121,22 @@ namespace DivineRightGame.SettlementHandling
 
             factory.CreateItem(Archetype.TILES, "Pavement", out plazaTile);
 
+            int yShift = 0;
+
+            if (settlement.Districts.Any(d => d.LocationNumber >= MAX_SMALL_LOCATION))
+            {
+                //Big plaza
+                yShift = 0;
+            }
+            else
+            {
+                //Small plaza
+                yShift = 21;
+            }
+
             for (int x = 15; x < 15+21; x++)
             {
-                for (int y = 15; y < 18+36; y++)
+                for (int y = 15 + yShift; y < 18+36; y++)
                 {
                     MapItem tile = factory.CreateItem("tile", plazaTile);
                     tile.Coordinate = new MapCoordinate(x, y, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
@@ -141,6 +155,24 @@ namespace DivineRightGame.SettlementHandling
 
             //TODO: DECOR
             
+            //Trimming
+            if (yShift > 0)
+            {
+                //We can split the map into an even smaller size
+                ShrinkArray<MapBlock>(ref mainMap, 60, 0,50,30);
+
+                //Fix the coordinates
+                foreach (var blocks in mainMap)
+                {
+                    foreach (var item in blocks.GetItems())
+                    {
+                        item.Coordinate.Y -= 30;
+                    }
+
+                    blocks.Tile.Coordinate.Y -= 30;
+                }
+            }
+
 
             return mainMap;
         }
@@ -188,16 +220,24 @@ namespace DivineRightGame.SettlementHandling
 
             //Now go through the districts and create SettlementBuildings for all of them
 
+            int maxPosition = MAXLOCATION;
+
+            //Do we have less than, or equal to 4 buildings?
+            if (districts.Count <= 4)
+            {
+                maxPosition = MAX_SMALL_LOCATION; //its a small one
+            }
+
             List<SettlementBuilding> buildings = new List<SettlementBuilding>();
 
             foreach (District district in districts)
             {
-                int position = random.Next(MAXLOCATION);
+                int position = random.Next(maxPosition);
 
                 //Is the slot empty?
                 while (buildings.Any(b => b.LocationNumber.Equals(position)))
                 {
-                    position = random.Next(MAXLOCATION);
+                    position = random.Next(maxPosition);
                 }
 
                 //Found a clear one. Plop it there
@@ -263,5 +303,24 @@ namespace DivineRightGame.SettlementHandling
                     throw new NotImplementedException("No idea where " + locationID + " fits");
             }
         }
+
+        #region Helpers
+        private static void ShrinkArray<T>(ref T[,] original, int newCoNum, int coOffset, int newRoNum, int roOffset)
+        {
+            var newArray = new T[newCoNum, newRoNum];
+            int columnCount = original.GetLength(1);
+            int columnCount2 = newRoNum;
+            int columns = original.GetUpperBound(0);
+            for (int co = 0; co < newCoNum; co++)
+            {
+                for (int row = 0; row < newRoNum; row++ )
+                {
+                    newArray[co, row] = original[co+coOffset, row+roOffset];
+                }
+            }
+                
+            original = newArray;
+        }
+        #endregion
     }
 }

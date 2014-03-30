@@ -94,7 +94,7 @@ namespace Divine_Right.HelperFunctions
 
         public static void GenerateSettlement()
         {
-            var settlement = SettlementGenerator.GenerateSettlement(new MapCoordinate(50, 50, 0, DRObjects.Enums.MapTypeEnum.GLOBAL), 7);
+            var settlement = SettlementGenerator.GenerateSettlement(new MapCoordinate(50, 50, 0, DRObjects.Enums.MapTypeEnum.GLOBAL), GameState.Random.Next(10) + 2);
 
             GameState.LocalMap = new LocalMap(250, 250, 1, 0);
             GameState.LocalMap.Settlement = settlement;
@@ -110,7 +110,7 @@ namespace Divine_Right.HelperFunctions
             GameState.LocalMap.AddToLocalMap(collapsedMap.ToArray());
 
             MapItem player = new MapItem();
-            player.Coordinate = new MapCoordinate(50,50,0,DRObjects.Enums.MapTypeEnum.LOCAL);
+            player.Coordinate = new MapCoordinate(10,10,0,DRObjects.Enums.MapTypeEnum.LOCAL);
             player.Description = "The player character";
             player.Graphic = SpriteManager.GetSprite(LocalSpriteName.PLAYERCHAR);
             player.InternalName = "Player Char";

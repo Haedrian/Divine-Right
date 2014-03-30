@@ -37,6 +37,7 @@ namespace Divine_Right.HelperFunctions
        {
             batch.Draw(content.Load<Texture2D>(data.path),drawRect,data.sourceRectangle,colour);
        }
+
            
     }
 }
