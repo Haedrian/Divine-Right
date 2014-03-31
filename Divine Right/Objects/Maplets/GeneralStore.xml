@@ -1,0 +1,35 @@
+﻿<Maplet name="General Store" Tiled="true" TileTag="wood" SizeX ="10" SizeY="10" Walled="true" WindowProbability="15">
+  <MapletContents>
+    <MapletContentsMaplet Position="Anywhere" MaxAmount="1" ProbabilityPercentage="100" >
+      <Maplet Tiled="false" SizeX="3" SizeY="3" Walled="false" TileID="1">
+        <MapletContents>
+          <!-- Tools -->
+        <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="4" ProbabilityPercentage="80" Tag="tool" />
+        </MapletContents>
+      </Maplet>
+    </MapletContentsMaplet>
+
+    <MapletContentsMaplet Position="Anywhere" MaxAmount="1" ProbabilityPercentage="50" >
+      <Maplet Tiled="false" SizeX="3" SizeY="3" Walled="false" TileID="1">
+        <MapletContents>
+          <!-- Meat -->
+          <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="4" ProbabilityPercentage="40" Tag="meat" />
+          <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="4" ProbabilityPercentage="40" Tag="fish" />
+        </MapletContents>
+      </Maplet>
+    </MapletContentsMaplet>
+
+    <MapletContentsMaplet Position="Anywhere" MaxAmount="1" ProbabilityPercentage="100" >
+      <Maplet Tiled="false" SizeX="3" SizeY="3" Walled="false" TileID="1">
+        <MapletContents>
+          <!-- Farm -->
+          <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="8" ProbabilityPercentage="80" Tag="farm produce" />
+        </MapletContents>
+      </Maplet>
+    </MapletContentsMaplet>
+
+    <MapletContentsItemTag Position="Sides" Category="mundaneitems" MaxAmount="20" ProbabilityPercentage="60" Tag="stall"/>
+    <MapletContentsItemTag Position="Middle" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="table"/>
+
+  </MapletContents>
+</Maplet>

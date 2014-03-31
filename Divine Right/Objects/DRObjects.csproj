@@ -170,6 +170,9 @@
     <Content Include="Maplets\Dungeons\TreasureRoom.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Maplets\GeneralStore.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Maplets\MediumHouse.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
