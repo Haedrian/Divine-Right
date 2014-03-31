@@ -263,7 +263,6 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.FURNACE] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(300, 250, 50, 50));
             localSprites[(int)LocalSpriteName.IRON_BARS_1] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(350, 250, 50, 50));
             localSprites[(int)LocalSpriteName.IRON_BARS_2] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(400, 250, 50, 50));
-
             
             localSprites[(int)LocalSpriteName.TOMATO_PLANT] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(0, 300, 50, 50));
             localSprites[(int)LocalSpriteName.POTATO_PLANT] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(50, 300, 50, 50));
@@ -280,6 +279,36 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.COURGETTE] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(250, 350, 50, 50));
             localSprites[(int)LocalSpriteName.CORN] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(300, 350, 50, 50));
 
+            AddLocalSprite(LocalSpriteName.PEEL_1, RESOURCES_AND_TOOLS, 0, 8);
+            AddLocalSprite(LocalSpriteName.PEEL_2, RESOURCES_AND_TOOLS, 1, 8);
+            AddLocalSprite(LocalSpriteName.FURNACE_LARGE_TOP, RESOURCES_AND_TOOLS, 2, 8);
+            AddLocalSprite(LocalSpriteName.ROLLING_PIN, RESOURCES_AND_TOOLS, 3, 8);
+            AddLocalSprite(LocalSpriteName.BREAD, RESOURCES_AND_TOOLS, 4, 8);
+            AddLocalSprite(LocalSpriteName.CHEESE, RESOURCES_AND_TOOLS, 5, 8);
+            AddLocalSprite(LocalSpriteName.BASKET_1, RESOURCES_AND_TOOLS, 6, 8);
+            AddLocalSprite(LocalSpriteName.BASKET_2, RESOURCES_AND_TOOLS, 7, 8);
+            AddLocalSprite(LocalSpriteName.MILK, RESOURCES_AND_TOOLS, 8, 8);
+            AddLocalSprite(LocalSpriteName.SUGAR, RESOURCES_AND_TOOLS, 9, 8);
+            AddLocalSprite(LocalSpriteName.FLOUR, RESOURCES_AND_TOOLS, 10, 8);
+            AddLocalSprite(LocalSpriteName.GRAIN_OPEN_2, RESOURCES_AND_TOOLS, 11, 8);
+            AddLocalSprite(LocalSpriteName.GRAIN_OPEN_SMALL, RESOURCES_AND_TOOLS, 12, 8);
+            AddLocalSprite(LocalSpriteName.FOOD_SHELF_1, RESOURCES_AND_TOOLS, 13, 8);
+            AddLocalSprite(LocalSpriteName.FOOD_SHELF_2, RESOURCES_AND_TOOLS, 14, 8);
+            AddLocalSprite(LocalSpriteName.FOOD_SHELF_3, RESOURCES_AND_TOOLS, 15, 8);
+            AddLocalSprite(LocalSpriteName.FOOD_SHELF_4, RESOURCES_AND_TOOLS, 16, 8);
+            AddLocalSprite(LocalSpriteName.FOOD_SHELF_5, RESOURCES_AND_TOOLS, 17, 8);
+            AddLocalSprite(LocalSpriteName.FOOD_SHELF_6, RESOURCES_AND_TOOLS, 18, 8);
+            AddLocalSprite(LocalSpriteName.FOOD_PRODUCE, RESOURCES_AND_TOOLS, 19, 8);
+
+            AddLocalSprite(LocalSpriteName.FOOD_SHELF_7, RESOURCES_AND_TOOLS, 0, 9);
+            AddLocalSprite(LocalSpriteName.FOOD_SHELF_8, RESOURCES_AND_TOOLS, 1, 9);
+            AddLocalSprite(LocalSpriteName.FURNACE_LARGE_BOTTOM, RESOURCES_AND_TOOLS, 2, 9);
+            AddLocalSprite(LocalSpriteName.BREAD_BASKET, RESOURCES_AND_TOOLS, 3, 9);
+            AddLocalSprite(LocalSpriteName.CHEESE_BASKET, RESOURCES_AND_TOOLS, 4, 9);
+            AddLocalSprite(LocalSpriteName.BREAD_BASKET_2, RESOURCES_AND_TOOLS, 5, 9);
+            AddLocalSprite(LocalSpriteName.FOOD_SHELF_9, RESOURCES_AND_TOOLS, 6, 9);
+            AddLocalSprite(LocalSpriteName.FOOD_SHELF_10, RESOURCES_AND_TOOLS, 7, 9);
+            
             localSprites[(int)LocalSpriteName.TREE_1] = new SpriteData(FORESTS_AND_MINES, new Rectangle(0, 0, 50, 50));
             localSprites[(int)LocalSpriteName.DEAD_TREE] = new SpriteData(FORESTS_AND_MINES, new Rectangle(50, 0, 50, 50));
             localSprites[(int)LocalSpriteName.TREE_2] = new SpriteData(FORESTS_AND_MINES, new Rectangle(100, 0, 50, 50));
@@ -477,6 +506,20 @@ namespace DRObjects.Graphics
         public static SpriteData GetSprite(InterfaceSpriteName name)
         {
             return interfaceSprites[(int)name];
+        }
+
+        /// <summary>
+        /// Adds a local sprite to the lists, provided they are in a 50x50 grid
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        private static void AddLocalSprite(LocalSpriteName name, string filePath, int x, int y)
+        {
+            const int GRIDSIZE = 50;
+
+            localSprites[(int)name] = new SpriteData(filePath, new Rectangle(x*GRIDSIZE, y *GRIDSIZE, GRIDSIZE, GRIDSIZE));
+
         }
     }
 }

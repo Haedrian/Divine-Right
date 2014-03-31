@@ -257,6 +257,41 @@ namespace DRObjects.Graphics
         COURGETTE,
         CORN,
 
+        //General store stuff
+        PEEL_1,
+        PEEL_2,
+        FURNACE_LARGE_TOP,
+        FURNACE_LARGE_BOTTOM,
+        ROLLING_PIN,
+        BREAD,
+        CHEESE,
+        BASKET_1,
+        BASKET_2,
+        MILK,
+        SUGAR,
+        FLOUR,
+        GRAIN_OPEN_2,
+        GRAIN_OPEN_SMALL,
+
+        FOOD_SHELF_1,
+        FOOD_SHELF_2,
+        FOOD_SHELF_3,
+        FOOD_SHELF_4,
+        FOOD_SHELF_5,
+        FOOD_SHELF_6,
+        FOOD_SHELF_7,
+        FOOD_SHELF_8,
+        FOOD_SHELF_9,
+        FOOD_SHELF_10,
+
+        BREAD_BASKET,
+        CHEESE_BASKET,
+        BREAD_BASKET_2,
+        SUGAR_BASKET,
+
+        FOOD_PRODUCE,
+
+
         //Forests and Mines and stuff
         TREE_1,
         TREE_2,
