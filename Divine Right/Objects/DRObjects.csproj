@@ -146,6 +146,9 @@
     <Content Include="Maplets\Components\Plazas\StatuePlaza.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Maplets\Components\SmallBedroom.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Maplets\Dungeons\Components\Erosion.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -172,6 +175,7 @@
     </Content>
     <Content Include="Maplets\GeneralStore.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Maplets\MediumHouse.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -236,6 +240,9 @@
     <Content Include="Maplets\Tavern.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Maplets\TavernLevel1.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Maplets\Temple.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

@@ -57,6 +57,7 @@ Maplets.sdf
 Items.sdf
 Maplets\Components\Plazas\FountainPlaza.xml
 Maplets\Components\Plazas\StatuePlaza.xml
+Maplets\Components\SmallBedroom.xml
 Maplets\Dungeons\Components\Erosion.xml
 Maplets\Dungeons\Components\Pit.xml
 Maplets\Dungeons\Components\LavaPit.xml
@@ -83,6 +84,7 @@ Maplets\Smithy.xml
 Maplets\Rooms\Study.xml
 Maplets\Components\Tables\TableSet.xml
 Maplets\Tavern.xml
+Maplets\TavernLevel1.xml
 Maplets\Temple.xml
 Maplets\Village.xml
 Resources\SettlementNames\Prefix.txt
