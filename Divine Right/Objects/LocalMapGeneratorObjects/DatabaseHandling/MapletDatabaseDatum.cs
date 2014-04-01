@@ -14,6 +14,9 @@ namespace DRObjects.LocalMapGeneratorObjects.DatabaseHandling
         public string MapletName { get; set; }
         public string MapletPath { get; set; }
         public string Tags { get; set; }
+        public bool? Level1 { get; set; }
+        public bool? Level2 { get; set; }
+        public bool? Level3 { get; set; }
 
         public override string ToString()
         {

@@ -20,7 +20,7 @@ namespace DRObjects.Settlements.Districts
        /// <returns></returns>
        public string GetDistrictMapletTag()
        {
-           return Type.ToString() + Level;
+           return Type.ToString().Replace("_","").ToLower();
        }
 
        public District(DistrictType type, int level)

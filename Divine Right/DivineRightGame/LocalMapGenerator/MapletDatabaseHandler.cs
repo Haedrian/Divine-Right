@@ -52,6 +52,37 @@ namespace DivineRightGame.LocalMapGenerator
         }
 
         /// <summary>
+        /// Gets a particular Maplet by its tag and level
+        /// </summary>
+        /// <param name="tag"></param>
+        /// <param name="level"></param>
+        /// <returns></returns>
+        public static XElement GetMapletByTagAndLevel(string tag, int level)
+        {
+            if (databaseData == null)
+            {
+                ReadData();
+            }
+
+            IEnumerable<MapletDatabaseDatum> maplets = databaseData.Values.Where(v => v.Tags.Split(',').Contains(tag));
+            //Search for it
+            switch(level)
+            {
+                case 1:
+                    maplets = maplets.Where(m => m.Level1 ?? false);
+                    break;
+                case 2: maplets = maplets.Where(m => m.Level2 ?? false);
+                    break;
+                case 3: maplets = maplets.Where(m => m.Level3 ?? false);
+                    break;
+                default:
+                    throw new NotImplementedException("No code for tag " + tag + " for level " + level);
+            }
+
+            return LoadFile(maplets.Select(d => d.MapletPath).ToArray()[_random.Next(maplets.Count())]);
+        }
+
+        /// <summary>
         /// Reads the data into the dictionary
         /// </summary>
         private static void ReadData()
@@ -74,6 +105,9 @@ namespace DivineRightGame.LocalMapGenerator
                     datum.MapletName = reader[1].ToString();
                     datum.MapletPath = reader[2].ToString();
                     datum.Tags = reader[3].ToString();
+                    datum.Level1 = (bool?)reader[4];
+                    datum.Level2 = (bool?)reader[5];
+                    datum.Level3 = (bool?)reader[6];
 
                     databaseData.Add(datum.MapletID,datum);
                 }

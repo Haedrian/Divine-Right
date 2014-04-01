@@ -126,7 +126,7 @@ namespace DivineRightGame.SettlementHandling
                             x = 1,
                             y = 1,
                             ProbabilityPercentage = 100,
-                            Maplet = parser.ParseMapletFromTag(("General Store")),
+                            Maplet = parser.ParseMaplet(MapletDatabaseHandler.GetMapletByTagAndLevel(district.District.GetDistrictMapletTag(),district.District.Level)),
                             MaxAmount = 1
                         }
                     }
