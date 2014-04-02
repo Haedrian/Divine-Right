@@ -1,7 +1,11 @@
 Items.sdf
+Maplets\Components\LargeBedroom.xml
+Maplets\Components\MediumBedroom.xml
 Maplets\Components\Plazas\FountainPlaza.xml
 Maplets\Components\Plazas\StatuePlaza.xml
 Maplets\Components\SmallBedroom.xml
+Maplets\TavernLevel3.xml
+Maplets\TavernLevel2.xml
 Maplets\Dungeons\Components\Erosion.xml
 Maplets\Dungeons\Components\Pit.xml
 Maplets\Dungeons\Components\LavaPit.xml

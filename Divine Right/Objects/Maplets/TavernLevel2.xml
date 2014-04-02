@@ -1,0 +1,45 @@
+﻿<Maplet name="smithy" Tiled="false" SizeX ="15" SizeY="15" Walled="false">
+  <MapletContents>
+    <MapletContentsMaplet Position="Sides" MaxAmount="1" ProbabilityPercentage="100" >
+      <Maplet Tiled="true" SizeX="4" SizeY="12" Walled="true" TileTag="wood">
+        <MapletContents>
+          <MapletContentsMaplet Position="Fixed" x="0" y="0" MaxAmount="1" ProbabilityPercentage="100" >
+            <MapletTag Tag="Medium Bedroom"/>
+          </MapletContentsMaplet>
+          <MapletContentsMaplet Position="Fixed" x="0" y="4" MaxAmount="1" ProbabilityPercentage="100" >
+            <MapletTag Tag="Medium Bedroom"/>
+          </MapletContentsMaplet>
+          <MapletContentsMaplet Position="Fixed" x="0" y="8" MaxAmount="1" ProbabilityPercentage="100" >
+            <MapletTag Tag="Small Bedroom"/>
+          </MapletContentsMaplet>
+        </MapletContents>
+      </Maplet>
+    </MapletContentsMaplet>
+
+    <!-- Tavern Part-->
+    <MapletContentsMaplet Position="Sides" MaxAmount="1" ProbabilityPercentage="101">
+      <Maplet Tiled="true" SizeX="12" SizeY="12" Walled="true" TileTag="wood" WindowProbability="20">
+        <MapletContents>
+          <MapletContentsMaplet Position="Anywhere" MaxAmount="1" ProbabilityPercentage="102" >
+            <MapletTag Tag="Bar" />
+          </MapletContentsMaplet>
+          <!-- Main Floor-->
+          <MapletContentsMaplet Position="Anywhere" MaxAmount="4" ProbabilityPercentage="100" >
+            <MapletTag Tag="TableSet" />
+          </MapletContentsMaplet>
+          <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="5" ProbabilityPercentage="80" Tag="decoration"/>
+        </MapletContents>
+      </Maplet>
+    </MapletContentsMaplet>
+    
+    <!-- Something for horsies-->
+    <MapletContentsMaplet Position="Sides" MaxAmount="1" ProbabilityPercentage="101">
+      <Maplet Tiled="false" SizeX="2" SizeY="1" Walled="false" >
+        <MapletContents>
+          <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="80" Tag="water trough"/>
+          <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="80" Tag="hay"/>
+        </MapletContents>
+      </Maplet>
+    </MapletContentsMaplet>
+  </MapletContents>
+</Maplet>

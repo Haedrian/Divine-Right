@@ -381,6 +381,9 @@ namespace DRObjects.Graphics
         ENEMY_THOUGHT_WAIT,
         ENEMY_THOUGHT_ATTACK,
         ENEMY_THOUGH_CONFUSED,
+        WATER_TROUGH,
+        FOOD_TROUGH,
+        HAY_BALE,
 
     }
 }

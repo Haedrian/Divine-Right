@@ -204,6 +204,9 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.LARGE_TABLE_TEA_BL] = new SpriteData(HOUSEITEM, new Rectangle(0, 550, 50, 50));
             localSprites[(int)LocalSpriteName.LARGE_TABLE_TEA_BR] = new SpriteData(HOUSEITEM, new Rectangle(50, 550, 50, 50));
 
+            AddLocalSprite(LocalSpriteName.WATER_TROUGH, HOUSEITEM, 2, 10);
+            AddLocalSprite(LocalSpriteName.FOOD_TROUGH, HOUSEITEM, 3, 10);
+            AddLocalSprite(LocalSpriteName.HAY_BALE, HOUSEITEM, 4, 10);
 
             localSprites[(int)LocalSpriteName.WOOD_LOGS] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(0, 0, 50, 50));
             localSprites[(int)LocalSpriteName.WOOD_LOGS_THREE] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(50, 0, 50, 50));
