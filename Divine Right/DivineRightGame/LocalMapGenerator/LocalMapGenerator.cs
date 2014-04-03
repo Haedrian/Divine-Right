@@ -553,7 +553,7 @@ namespace DivineRightGame.LocalMapGenerator
                     }
                     else
                     {
-                        //nothing to do - take the smallest one
+                        //nothing to do - take smallest
                         block = generatedMap[segment.Start.X, segment.Start.Y + 1];
                     }
                 }
@@ -589,9 +589,12 @@ namespace DivineRightGame.LocalMapGenerator
 
                 try
                 {
-                    block.RemoveTopItem();
-                    int doorID = -1;
-                    block.PutItemOnBlock(factory.CreateItem(DRObjects.Enums.Archetype.TOGGLEITEMS, "door", out doorID));
+                    if (block != null)
+                    {
+                        block.RemoveTopItem();
+                        int doorID = -1;
+                        block.PutItemOnBlock(factory.CreateItem(DRObjects.Enums.Archetype.TOGGLEITEMS, "door", out doorID));
+                    }
                 }
                 catch { }
             }
