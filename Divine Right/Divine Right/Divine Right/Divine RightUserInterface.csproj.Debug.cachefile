@@ -60,10 +60,15 @@ Maplets\Components\MediumBedroom.xml
 Maplets\Components\Plazas\FountainPlaza.xml
 Maplets\Components\Plazas\StatuePlaza.xml
 Maplets\Components\SmallBedroom.xml
+Maplets\LibraryLevel3.xml
+Maplets\LibraryLevel2.xml
+Maplets\LibraryLevel1.xml
 Maplets\PalaceLevel3.xml
 Maplets\PalaceLevel2.xml
 Maplets\PalaceLevel1.xml
 Maplets\Rooms\Ballroom.xml
+Maplets\Components\LibraryShelfing.xml
+Maplets\Rooms\LibraryRoom.xml
 Maplets\TavernLevel3.xml
 Maplets\TavernLevel2.xml
 Maplets\Dungeons\Components\Erosion.xml

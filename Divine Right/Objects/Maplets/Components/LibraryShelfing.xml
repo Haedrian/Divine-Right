@@ -1,0 +1,7 @@
+﻿<Maplet name="libraryshelfing" Tiled="false" TileTag="marble" SizeX ="3" SizeY="2" Walled="false">
+  <MapletContents>
+    <MapletContentsItemTag Position="Fixed" x="0" y="1" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="reading"/>
+    <MapletContentsItemTag Position="Fixed" x="1" y="1" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="reading"/>
+    <MapletContentsItemTag Position="Fixed" x="2" y="1" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="reading"/>
+  </MapletContents>
+</Maplet>

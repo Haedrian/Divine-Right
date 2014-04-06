@@ -1,0 +1,16 @@
+﻿<Maplet MapletName="Market" SizeX="10" SizeY="10" Walled="true" Tiled="true" TileTag="Pavement">
+  <MapletContents>
+    <MapletContentsMaplet Position="sides" FirstFit="true" MaxAmount="1" ProbabilityPercentage="103" >
+      <Maplet MapletName="library" SizeX="8" SizeY="7" Walled="false" Tiled="false">
+        <MapletContents>
+          <MapletContentsMaplet Position="Anywhere" MaxAmount="8" ProbabilityPercentage="100">
+            <MapletTag Tag="LibraryRoom" />
+          </MapletContentsMaplet>
+        </MapletContents>
+      </Maplet>
+    </MapletContentsMaplet>
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="3" ProbabilityPercentage="70" Tag="desk"/>
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="desk"/>
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="3" ProbabilityPercentage="70" Tag="decoration"/>
+  </MapletContents>
+</Maplet>

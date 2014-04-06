@@ -1,0 +1,7 @@
+﻿<Maplet name="LibraryRoom" Tiled="false" SizeX ="3" SizeY="3" Walled="false">
+  <MapletContents>
+    <MapletContentsMaplet Position="sides" MaxAmount="1" ProbabilityPercentage="100" >
+      <MapletTag Tag="LibraryShelfing" />
+    </MapletContentsMaplet>
+  </MapletContents>
+</Maplet>

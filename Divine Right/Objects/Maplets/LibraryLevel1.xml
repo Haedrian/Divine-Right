@@ -1,0 +1,8 @@
+﻿<Maplet MapletName="Market" SizeX="7" SizeY="7" Walled="true" Tiled="true" TileTag="Pavement">
+  <MapletContents>
+    <MapletContentsMaplet Position="Anywhere" MaxAmount="1" ProbabilityPercentage="100">
+      <MapletTag Tag="LibraryRoom" />
+    </MapletContentsMaplet>
+    <MapletContentsItemTag Position="sides" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="70" Tag="desk"/>
+  </MapletContents>
+</Maplet>
