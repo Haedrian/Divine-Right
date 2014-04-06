@@ -1,0 +1,5 @@
+﻿<Maplet name="ballroom" Tiled="true" TileTag="marble" SizeX ="5" SizeY="5" Walled="true">
+  <MapletContents>
+    <MapletContentsItemTag Position="Sides" Category="mundaneitems" MaxAmount="7" ProbabilityPercentage="66" Tag="decoration" />
+  </MapletContents>
+</Maplet>

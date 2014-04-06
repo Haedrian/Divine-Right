@@ -1,8 +1,9 @@
-﻿<Maplet name="study" Tiled="false" SizeX ="5" SizeY="5" Walled="true">
+﻿<Maplet name="study" Tiled="true" TileTag="marble" SizeX ="9" SizeY="7" Walled="true">
   <MapletContents>
-    <MapletContentsItemTag Position="Middle" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="80" Tag="desk"/>
-    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="80" Tag="reading"/>
-    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="50" Tag="decoration"/>
-    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="50" Tag="carpet"/>
+    <MapletContentsItemTag Position="Middle" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="desk"/>
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="3" ProbabilityPercentage="80" Tag="reading"/>
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="3" ProbabilityPercentage="50" Tag="decoration"/>
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="3" ProbabilityPercentage="50" Tag="carpet"/>
+    <MapletContentsItemTag Position="Sides" Category="mundaneitems" MaxAmount="3" ProbabilityPercentage="50" Tag="container"/>
   </MapletContents>
 </Maplet>

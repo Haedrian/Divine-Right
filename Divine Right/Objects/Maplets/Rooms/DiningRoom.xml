@@ -1,4 +1,4 @@
-﻿<Maplet name="Dining Room" Tiled="false" SizeX ="7" SizeY="7" Walled="true">
+﻿<Maplet name="Dining Room" Tiled="false" SizeX ="7" SizeY="5" Walled="true">
   <MapletContents>
     <MapletContentsMaplet Position="Middle" MaxAmount="1" ProbabilityPercentage="100" >
       <MapletTag Tag="LargeTable" />

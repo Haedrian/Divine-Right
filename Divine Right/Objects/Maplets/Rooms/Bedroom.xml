@@ -1,9 +1,6 @@
-﻿<Maplet name="bedroom" Tiled="false" SizeX ="7" SizeY="7" Walled="true">
+﻿<Maplet name="bedroom" Tiled="true" TileTag="wood" SizeX ="7" SizeY="5" Walled="true">
   <MapletContents>
-    <!--<MapletContentsItemTag Position="Sides" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="bed"/> -->
-    <MapletContentsMaplet Position="Sides" MaxAmount="1" ProbabilityPercentage="100">
-      <MapletTag Tag="Bed" />
-    </MapletContentsMaplet>
+    <MapletContentsItemTag Position="Sides" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="bed"/>
     <MapletContentsItemTag Position="Sides" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="80" Tag="bedroom furniture"/>
     <MapletContentsItemTag Position="Sides" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="1" Tag="container"/>
     <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="3" ProbabilityPercentage="80" Tag="decoration"/>

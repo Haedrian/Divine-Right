@@ -1,0 +1,23 @@
+﻿<Maplet name="Palace Large" Tiled="true" SizeX ="15" TileTag="wood" SizeY="15" Walled="true">
+  <MapletContents>
+    <MapletContentsMaplet Position="Sides" FirstFit="true" MaxAmount="1" ProbabilityPercentage="100">
+      <MapletTag Tag="Bedroom" />
+    </MapletContentsMaplet>
+    <MapletContentsMaplet Position="Sides" FirstFit="true" MaxAmount="1" ProbabilityPercentage="100">
+      <MapletTag Tag="Bedroom" />
+    </MapletContentsMaplet>
+    <MapletContentsMaplet Position="Sides" FirstFit="true" MaxAmount="1" ProbabilityPercentage="100">
+      <MapletTag Tag="Study" />
+    </MapletContentsMaplet>
+    <MapletContentsMaplet Position="Sides" FirstFit="true" MaxAmount="1" ProbabilityPercentage="100">
+      <MapletTag Tag="DiningRoom" />
+    </MapletContentsMaplet>
+    <MapletContentsMaplet Position="Sides" FirstFit="true" MaxAmount="1" ProbabilityPercentage="100">
+      <MapletTag Tag="Bathroom" />
+    </MapletContentsMaplet>
+    <MapletContentsMaplet Position="Sides" FirstFit="true" MaxAmount="1" ProbabilityPercentage="100">
+      <MapletTag Tag="Ballroom" />
+    </MapletContentsMaplet>
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="7" ProbabilityPercentage="80" Tag="decoration"/>
+  </MapletContents>
+</Maplet>
