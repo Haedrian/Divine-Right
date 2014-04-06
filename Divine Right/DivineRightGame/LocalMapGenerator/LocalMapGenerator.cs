@@ -811,10 +811,10 @@ namespace DivineRightGame.LocalMapGenerator
             }
             else if (!edge)
             {
-                //Lets try for a maximum 50 times
+                //Lets try for a maximum 150 times
                 int attemptCount = 0;
 
-                while (attemptCount < 50)
+                while (attemptCount < 150)
                 {
                     attemptCount++;
 
@@ -903,10 +903,10 @@ namespace DivineRightGame.LocalMapGenerator
                 }
 
                 //Okay, now we randomly choose a block and see if it fits
-                //Lets try for a maximum 50 times
+                //Lets try for a maximum 150 times
                 int attemptCount = 0;
 
-                while (attemptCount < 50)
+                while (attemptCount < 150)
                 {
                     if (edgeBlocks.Count == 0)
                     {

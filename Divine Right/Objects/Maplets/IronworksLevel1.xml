@@ -1,0 +1,10 @@
+﻿<Maplet name="ironworks1" Tiled="true" TileTag="pavement" SizeX ="7" SizeY="7" Walled="true" WindowProbability="20">
+  <MapletContents>
+    <MapletContentsItemTag Position="Middle" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="anvil"/>
+    <MapletContentsItemTag Position="Middle" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="bucket"/>
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="75" Tag="smith tool"/>
+    <MapletContentsItemTag Position="Sides" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="weapon decoration"/>
+    <MapletContentsItemTag Position="Sides" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="container"/>
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="3" ProbabilityPercentage="50" Tag="metal"/>
+  </MapletContents>
+</Maplet>

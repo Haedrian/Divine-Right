@@ -155,6 +155,18 @@
     <Content Include="Maplets\Components\SmallBedroom.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Maplets\IronworksLevel3.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Maplets\IronworksLevel2.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Maplets\IronworksLevel1.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Maplets\TempleLevel3.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

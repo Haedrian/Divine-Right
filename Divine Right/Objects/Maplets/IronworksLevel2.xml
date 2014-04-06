@@ -1,0 +1,28 @@
+﻿<Maplet name="ironworks2" Tiled="false" SizeX ="13" SizeY="15" Walled="false">
+  <MapletContents>
+    <MapletContentsMaplet Position="Sides" MaxAmount="1" ProbabilityPercentage="100" >
+      <Maplet Tiled="true" SizeX="7" SizeY="7" Walled="true" TileTag="pavement">
+        <MapletContents>
+          <!-- Furnace and storeroom -->
+          <MapletContentsItemTag Position="Sides" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="85" Tag="furnace"/>
+          <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="15" ProbabilityPercentage="50" Tag="metal"/>
+          <MapletContentsItemTag Position="Sides" Category="mundaneitems" MaxAmount="3" ProbabilityPercentage="100" Tag="container"/>
+        </MapletContents>
+      </Maplet>
+    </MapletContentsMaplet>
+
+    <MapletContentsMaplet Position="Sides" MaxAmount="1"  ProbabilityPercentage="101">
+      <Maplet Tiled="true" SizeX="7" SizeY="10" Walled="true" TileTag="pavement" WindowProbability="20">
+        <MapletContents>
+          <MapletContentsItemTag Position="Middle" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="80" Tag="anvil"/>
+
+          <MapletContentsItemTag Position="Middle" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="bucket"/>
+          <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="3" ProbabilityPercentage="75" Tag="smith tool"/>
+          <MapletContentsItemTag Position="Sides" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="container"/>
+          <MapletContentsItemTag Position="Sides" Category="mundaneitems" MaxAmount="3" ProbabilityPercentage="100" Tag="weapon decoration"/>
+        </MapletContents>
+      </Maplet>
+    </MapletContentsMaplet>
+
+  </MapletContents>
+</Maplet>
