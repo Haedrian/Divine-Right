@@ -1,0 +1,17 @@
+﻿<Maplet name="church" Tiled="true" TileTag="marble" SizeX ="9" SizeY="13" Walled="true">
+  <MapletContents>
+
+    <MapletContentsItemTag Position="Fixed" x="3" y="2" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="110" Tag="angel statue top"/>
+    <MapletContentsItemTag Position="Fixed" x="3" y="1" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="110" Tag="angel statue bottom"/>
+
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="18" ProbabilityPercentage="90" Tag="flower"/>
+    
+    <MapletContentsMaplet Position="Fixed" x="1" y="1" MaxAmount="1" ProbabilityPercentage="107">
+      <Maplet Name="Bottom Chairs" Tiled="false" SizeX="7" SizeY="7" Walled="false">
+        <MapletContents>
+          <MapletContentsItemTag Position="Middle" Category="mundaneitems" MaxAmount="35" ProbabilityPercentage="100" Tag="chair top"/>
+        </MapletContents>
+      </Maplet>
+    </MapletContentsMaplet>
+  </MapletContents>
+</Maplet>

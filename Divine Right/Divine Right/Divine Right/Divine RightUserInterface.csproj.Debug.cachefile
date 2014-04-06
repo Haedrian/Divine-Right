@@ -60,6 +60,9 @@ Maplets\Components\MediumBedroom.xml
 Maplets\Components\Plazas\FountainPlaza.xml
 Maplets\Components\Plazas\StatuePlaza.xml
 Maplets\Components\SmallBedroom.xml
+Maplets\TempleLevel3.xml
+Maplets\TempleLevel2.xml
+Maplets\TempleLevel1.xml
 Maplets\LibraryLevel3.xml
 Maplets\LibraryLevel2.xml
 Maplets\LibraryLevel1.xml
