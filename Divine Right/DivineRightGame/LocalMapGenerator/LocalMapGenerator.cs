@@ -612,7 +612,7 @@ namespace DivineRightGame.LocalMapGenerator
         /// <param name="enemyCount"></param>
         /// <param name="enemyType"></param>
         /// <returns></returns>
-        public MapBlock[,] GenerateEnemies(MapBlock[,] blocks,int enemyCount,string enemyType,out DRObjects.Actor[] actors)
+        public MapBlock[,] GenerateEnemies(MapBlock[,] blocks, int enemyCount, string enemyType, out DRObjects.Actor[] actors)
         {
             ItemFactory.ItemFactory fact = new ItemFactory.ItemFactory();
             List<Actor> actorList = new List<Actor>();
@@ -642,7 +642,7 @@ namespace DivineRightGame.LocalMapGenerator
                     //int handToHand = GameState.LocalMap.Actors.Where(a => a.IsPlayerCharacter).Select(a => a.Attributes.HandToHand).FirstOrDefault();
                     int handToHand = 10;
 
-                    int randomLevel = (int) (handToHand + handToHand*random.NextDouble()/2 - handToHand*random.NextDouble());
+                    int randomLevel = (int)(handToHand + handToHand * random.NextDouble() / 2 - handToHand * random.NextDouble());
 
                     if (randomLevel < 0)
                     {
@@ -651,7 +651,7 @@ namespace DivineRightGame.LocalMapGenerator
 
                     Console.WriteLine("Level : " + randomLevel);
 
-                    Actor actor = ActorGeneration.CreateEnemy(enemyType, null, null, randomLevel , out returnedID);
+                    Actor actor = ActorGeneration.CreateEnemy(enemyType, null, null, randomLevel, out returnedID);
 
 
                     var mapObject = fact.CreateItem("enemies", returnedID);
@@ -663,9 +663,9 @@ namespace DivineRightGame.LocalMapGenerator
 
                     actorList.Add(actor);
 
-                    blocks[x,y].ForcePutItemOnBlock(mapObject);
+                    blocks[x, y].ForcePutItemOnBlock(mapObject);
 
-                    int missionType = random.Next(3); 
+                    int missionType = random.Next(3);
 
                     if (missionType == 0)
                     {
@@ -690,8 +690,8 @@ namespace DivineRightGame.LocalMapGenerator
                         actor.MissionStack.Push(mission);
                     }
 
-                    
-                    
+
+
                     failureCount = 0;//reset
                 }
                 else
@@ -720,7 +720,7 @@ namespace DivineRightGame.LocalMapGenerator
         /// <param name="startY">Where the map will fit on the Y coordinate</param>
         /// <param name="newMap">What the map will look like with the maplet inside it. Will be equivalent to map if there is no fit</param>
         /// <returns></returns>
-        public bool Fits(PlanningMapItemType[,] map, PlanningMapItemType[,] maplet, bool edge,bool firstFit, int? padding, out int startX, out int startY, out PlanningMapItemType[,] newMap)
+        public bool Fits(PlanningMapItemType[,] map, PlanningMapItemType[,] maplet, bool edge, bool firstFit, int? padding, out int startX, out int startY, out PlanningMapItemType[,] newMap)
         {
             if (!padding.HasValue)
             {
@@ -791,6 +791,11 @@ namespace DivineRightGame.LocalMapGenerator
                                     }
 
                                 }
+                            }
+
+                            if (fits && maplet[0, 0] == PlanningMapItemType.WALL && !NoDoubleWall(map, maplet, mapX, mapY))
+                            {
+                                fits = false;
                             }
 
                             if (fits)
@@ -866,6 +871,11 @@ namespace DivineRightGame.LocalMapGenerator
                                 }
 
                             }
+                        }
+
+                        if (fits && maplet[0, 0] == PlanningMapItemType.WALL && !NoDoubleWall(map, maplet, mapX, mapY))
+                        {
+                            fits = false;
                         }
 
                         if (fits)
@@ -970,6 +980,11 @@ namespace DivineRightGame.LocalMapGenerator
                             }
                         }
 
+                        if (fits && maplet[0, 0] == PlanningMapItemType.WALL && !NoDoubleWall(map, maplet, mapX, mapY))
+                        {
+                            fits = false;
+                        }
+
                         if (fits)
                         {
                             //it fits, yaay
@@ -997,6 +1012,72 @@ namespace DivineRightGame.LocalMapGenerator
         }
 
         /// <summary>
+        /// Checks whether this positioning would create a double wall
+        /// </summary>
+        /// <param name="map"></param>
+        /// <param name="maplet"></param>
+        /// <param name="mapX"></param>
+        /// <param name="mapY"></param>
+        /// <returns></returns>
+        private bool NoDoubleWall(PlanningMapItemType[,] map, PlanningMapItemType[,] maplet, int mapX, int mapY)
+        {
+            if (maplet[0, 0] != PlanningMapItemType.WALL)
+            {
+                return true; //No Wall. So no double wall
+            }
+
+            //Otherwise, lets ensure that its never the case that for any X & Y (which are not the corners) - there are no double walls ever
+
+            //Don't underflow
+            for (int y = 1; y < maplet.GetLength(1) - 1; y++)
+            {
+                //Start with Left line
+                if (mapX != 0)
+                {
+                    if (map[mapX-1, mapY + y] == PlanningMapItemType.WALL)
+                    {
+                        return false; //Double wall
+                    }
+                }
+
+                //Also check the right line
+                if (mapX + maplet.GetLength(0) + 1 < map.GetLength(0))
+                {
+                    if (map[mapX + maplet.GetLength(0),mapY + y] == PlanningMapItemType.WALL)
+                    {
+                        return false;
+                    }
+                }
+
+            }
+
+            //Still here? Lets try the top and bottom
+                for (int x = 1; x < maplet.GetLength(0) - 1; x++)
+                {
+                    if (mapY != 0)
+                    {
+                    //Top line
+                    if (map[mapX +x, mapY-1] == PlanningMapItemType.WALL)
+                    {
+                        return false;
+                    }
+                    }
+
+                    //Bottom line
+                    if (mapY + maplet.GetLength(1) + 1 < map.GetLength(1))
+                    {
+                        if (map[mapX + x, mapY + maplet.GetLength(1)] == PlanningMapItemType.WALL)
+                        {
+                            return false;
+                        }
+                    }
+                
+            }
+
+            return true;
+        }
+
+        /// <summary>
         /// Determines whether a particular maplet with a fixed x and y coordiate will fit, and places it on the updated planning map if it does
         /// ONLY USE FOR ABSOLUTE POSITIONING
         /// </summary>
@@ -1006,7 +1087,7 @@ namespace DivineRightGame.LocalMapGenerator
         /// <param name="y"></param>
         /// <param name="newMap"></param>
         /// <returns></returns>
-        public bool Fits(PlanningMapItemType[,]map, PlanningMapItemType[,] maplet, int x, int y, out PlanningMapItemType[,] newMap)
+        public bool Fits(PlanningMapItemType[,] map, PlanningMapItemType[,] maplet, int x, int y, out PlanningMapItemType[,] newMap)
         {
             newMap = FuseMaps(map, maplet, x, y);
 
