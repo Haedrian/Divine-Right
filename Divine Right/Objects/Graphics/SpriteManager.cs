@@ -312,6 +312,28 @@ namespace DRObjects.Graphics
             AddLocalSprite(LocalSpriteName.FOOD_SHELF_9, RESOURCES_AND_TOOLS, 6, 9);
             AddLocalSprite(LocalSpriteName.FOOD_SHELF_10, RESOURCES_AND_TOOLS, 7, 9);
             
+            AddLocalSprite(LocalSpriteName.CARPENTRY_HAMMER_1, RESOURCES_AND_TOOLS, 11, 0);
+            AddLocalSprite(LocalSpriteName.CARPENTRY_HAMMER_2, RESOURCES_AND_TOOLS, 12, 0);
+            AddLocalSprite(LocalSpriteName.HATCHET, RESOURCES_AND_TOOLS, 13, 0);
+            AddLocalSprite(LocalSpriteName.SAW, RESOURCES_AND_TOOLS, 14, 0);
+            AddLocalSprite(LocalSpriteName.CARPENTRY_HAMMER_3, RESOURCES_AND_TOOLS, 15, 0);
+            AddLocalSprite(LocalSpriteName.BOW_SAW_1, RESOURCES_AND_TOOLS, 16, 0);
+            AddLocalSprite(LocalSpriteName.BOW_SAW_2, RESOURCES_AND_TOOLS, 17, 0);
+            AddLocalSprite(LocalSpriteName.CARPENTRY_WORKBENCH, RESOURCES_AND_TOOLS, 11, 1);
+            AddLocalSprite(LocalSpriteName.LOG_PILE, RESOURCES_AND_TOOLS, 12, 0);
+            AddLocalSprite(LocalSpriteName.CARPENTRY_WORKBENCH_2, RESOURCES_AND_TOOLS, 13, 1);
+            AddLocalSprite(LocalSpriteName.CARPENTRY_WORKBENCH_3, RESOURCES_AND_TOOLS, 14, 1);
+            AddLocalSprite(LocalSpriteName.CARPENTRY_WORKBENCH_4, RESOURCES_AND_TOOLS, 15, 1);
+            AddLocalSprite(LocalSpriteName.CARPENTRY_WORKBENCH_5, RESOURCES_AND_TOOLS, 16, 1);
+            AddLocalSprite(LocalSpriteName.WOOD_LOGS_2, RESOURCES_AND_TOOLS, 17, 1);
+            AddLocalSprite(LocalSpriteName.CRATE_EMPTY, RESOURCES_AND_TOOLS, 11, 2);
+            AddLocalSprite(LocalSpriteName.CRATE_1, RESOURCES_AND_TOOLS, 12, 2);
+            AddLocalSprite(LocalSpriteName.CRATE_2, RESOURCES_AND_TOOLS, 13, 2);
+            AddLocalSprite(LocalSpriteName.SAWHORSE_1, RESOURCES_AND_TOOLS, 14, 2);
+            AddLocalSprite(LocalSpriteName.SAWHORSE_2, RESOURCES_AND_TOOLS, 15, 2);
+            AddLocalSprite(LocalSpriteName.PLANKS_1, RESOURCES_AND_TOOLS, 16, 2);
+            AddLocalSprite(LocalSpriteName.PLANKS_2, RESOURCES_AND_TOOLS, 17, 2);
+
             localSprites[(int)LocalSpriteName.TREE_1] = new SpriteData(FORESTS_AND_MINES, new Rectangle(0, 0, 50, 50));
             localSprites[(int)LocalSpriteName.DEAD_TREE] = new SpriteData(FORESTS_AND_MINES, new Rectangle(50, 0, 50, 50));
             localSprites[(int)LocalSpriteName.TREE_2] = new SpriteData(FORESTS_AND_MINES, new Rectangle(100, 0, 50, 50));
