@@ -60,6 +60,9 @@ Maplets\Components\MediumBedroom.xml
 Maplets\Components\Plazas\FountainPlaza.xml
 Maplets\Components\Plazas\StatuePlaza.xml
 Maplets\Components\SmallBedroom.xml
+Maplets\CarpentryLevel1.xml
+Maplets\CarpentryLevel2.xml
+Maplets\CarpentryLevel3.xml
 Maplets\IronworksLevel3.xml
 Maplets\IronworksLevel2.xml
 Maplets\IronworksLevel1.xml

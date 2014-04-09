@@ -55,8 +55,6 @@ namespace DRObjects.Settlements.Districts
                //    return SpriteManager.GetSprite(InterfaceSpriteName.RICH_HOUSING);
                //case DistrictType.SLUM_HOUSING:
                //    return SpriteManager.GetSprite(InterfaceSpriteName.SLUM_HOUSING);
-               case DistrictType.STONE_WORKS:
-                   return SpriteManager.GetSprite(InterfaceSpriteName.STONEWORKER);
                case DistrictType.TEMPLE:
                    return SpriteManager.GetSprite(InterfaceSpriteName.TEMPLE);
                case DistrictType.TRADING:
