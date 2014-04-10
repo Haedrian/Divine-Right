@@ -207,6 +207,13 @@ namespace DRObjects.Graphics
             AddLocalSprite(LocalSpriteName.WATER_TROUGH, HOUSEITEM, 2, 10);
             AddLocalSprite(LocalSpriteName.FOOD_TROUGH, HOUSEITEM, 3, 10);
             AddLocalSprite(LocalSpriteName.HAY_BALE, HOUSEITEM, 4, 10);
+            AddLocalSprite(LocalSpriteName.WEAPON_RACK_3, HOUSEITEM, 5, 10);
+            AddLocalSprite(LocalSpriteName.MANICLES_1, HOUSEITEM, 6, 10);
+            AddLocalSprite(LocalSpriteName.MANICLES_2, HOUSEITEM, 7, 10);
+            AddLocalSprite(LocalSpriteName.MANICLES_3, HOUSEITEM, 2, 11);
+            AddLocalSprite(LocalSpriteName.MANICLES_4, HOUSEITEM, 3, 11);
+            AddLocalSprite(LocalSpriteName.STOCKS_1, HOUSEITEM, 4, 11);
+            AddLocalSprite(LocalSpriteName.STOCKS_2, HOUSEITEM, 5, 11);
 
             localSprites[(int)LocalSpriteName.WOOD_LOGS] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(0, 0, 50, 50));
             localSprites[(int)LocalSpriteName.WOOD_LOGS_THREE] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(50, 0, 50, 50));

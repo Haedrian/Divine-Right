@@ -405,6 +405,13 @@ namespace DRObjects.Graphics
         SAWHORSE_2,
         PLANKS_1,
         PLANKS_2,
+        WEAPON_RACK_3,
+        MANICLES_1,
+        MANICLES_2,
+        MANICLES_3,
+        MANICLES_4,
+        STOCKS_1,
+        STOCKS_2,
 
     }
 }
