@@ -1,0 +1,39 @@
+﻿<Maplet name="barracks2" Tiled="true" TileTag="pavement"  SizeX ="15" SizeY ="15" Walled="true">
+  <MapletContents>
+    
+    <MapletContentsMaplet Position="Anywhere" MaxAmount="2" ProbabilityPercentage="100" >
+      <MapletTag Tag="TableSet" />
+    </MapletContentsMaplet>
+
+    <MapletContentsItemTag Position="Sides" Category="mundaneitems" MaxAmount="4" ProbabilityPercentage="75" Tag="weapon decoration"/>
+
+    <MapletContentsMaplet Position="Sides" FirstFit="true" MaxAmount="1" ProbabilityPercentage="101" >
+      <Maplet name="Bedding Area" SizeX ="15" SizeY="4" Walled="true" WindowProbability="20">
+        <MapletContents>
+          <MapletContentsMaplet Position="Sides" MaxAmount="4" ProbabilityPercentage="100" >
+            <MapletTag Tag="Small Bedroom"/>
+          </MapletContentsMaplet>
+        </MapletContents>
+      </Maplet>
+    </MapletContentsMaplet>
+    
+    
+
+    <MapletContentsMaplet Position="Middle" FirstFit="false" MaxAmount="1" ProbabilityPercentage="100" >
+      <Maplet name="Training Field" Tiled="true" TileTag="pavement" SizeX ="11" SizeY="4" Walled="false" WindowProbability="20">
+        <MapletContents>
+        </MapletContents>
+      </Maplet>
+    </MapletContentsMaplet>
+
+
+    <MapletContentsMaplet Position="Sides" FirstFit="false" MaxAmount="1" ProbabilityPercentage="100" >
+      <Maplet name="Armory" Tiled="true" TileTag="pavement" SizeX ="7" SizeY="4" Walled="true" WindowProbability="20">
+        <MapletContents>
+          <MapletContentsItemTag Position="Sides" Category="mundaneitems" MaxAmount="4" ProbabilityPercentage="75" Tag="weapon decoration"/>
+        </MapletContents>
+      </Maplet>
+    </MapletContentsMaplet>
+
+  </MapletContents>
+</Maplet>
