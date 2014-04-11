@@ -127,7 +127,7 @@ namespace DivineRightGame.SettlementHandling
                             y = 1,
                             ProbabilityPercentage = 100,
                             //Maplet = parser.ParseMaplet(MapletDatabaseHandler.GetMapletByTagAndLevel(district.District.GetDistrictMapletTag(),district.District.Level)),
-                            Maplet = district.District.Level == 1 ? parser.ParseMaplet(MapletDatabaseHandler.GetMapletByTagAndLevel("Carpentry",3)) : parser.ParseMaplet(MapletDatabaseHandler.GetMapletByTagAndLevel("General Store",1)),
+                            Maplet = district.District.Level == 1 ? parser.ParseMaplet(MapletDatabaseHandler.GetMapletByTagAndLevel("Barracks",2)) : parser.ParseMaplet(MapletDatabaseHandler.GetMapletByTagAndLevel("General Store",1)),
                             MaxAmount = 1
                         }
                     }

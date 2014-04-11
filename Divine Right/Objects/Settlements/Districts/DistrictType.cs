@@ -15,8 +15,8 @@ namespace DRObjects.Settlements.Districts
         PALACE,
         LIBRARY,
         TEMPLE,
-        IRON_WORKS,
-        WOOD_WORKS,
+        IRONWORKS,
+        CARPENTRY,
         BARRACKS,
         TRADING,
     }

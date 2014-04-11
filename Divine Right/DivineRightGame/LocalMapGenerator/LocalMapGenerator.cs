@@ -1041,7 +1041,7 @@ namespace DivineRightGame.LocalMapGenerator
                 }
 
                 //Also check the right line
-                if (mapX + maplet.GetLength(0) + 1 < map.GetLength(0))
+                if (mapX + maplet.GetLength(0) < map.GetLength(0))
                 {
                     if (map[mapX + maplet.GetLength(0),mapY + y] == PlanningMapItemType.WALL)
                     {
@@ -1064,7 +1064,7 @@ namespace DivineRightGame.LocalMapGenerator
                     }
 
                     //Bottom line
-                    if (mapY + maplet.GetLength(1) + 1 < map.GetLength(1))
+                    if (mapY + maplet.GetLength(1) < map.GetLength(1))
                     {
                         if (map[mapX + x, mapY + maplet.GetLength(1)] == PlanningMapItemType.WALL)
                         {

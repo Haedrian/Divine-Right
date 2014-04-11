@@ -39,7 +39,7 @@ namespace DRObjects.Settlements.Districts
            {
                case DistrictType.BARRACKS:
                    return SpriteManager.GetSprite(InterfaceSpriteName.BARRACKS);
-               case DistrictType.IRON_WORKS:
+               case DistrictType.IRONWORKS:
                    return SpriteManager.GetSprite(InterfaceSpriteName.SMITH);
                case DistrictType.LIBRARY:
                    return SpriteManager.GetSprite(InterfaceSpriteName.LIBRARY);
@@ -59,7 +59,7 @@ namespace DRObjects.Settlements.Districts
                    return SpriteManager.GetSprite(InterfaceSpriteName.TEMPLE);
                case DistrictType.TRADING:
                    return SpriteManager.GetSprite(InterfaceSpriteName.MARKET);
-               case DistrictType.WOOD_WORKS:
+               case DistrictType.CARPENTRY:
                    return SpriteManager.GetSprite(InterfaceSpriteName.CARPENTER);
                default:
                    throw new NotImplementedException("No Sprite for type " + this.Type);
