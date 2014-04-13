@@ -1,0 +1,21 @@
+﻿<Maplet name="commerce1" Tiled="false" TileTag="pavement" SizeX ="15" SizeY="15" Walled="false" WindowProbability="20">
+  <MapletContents>
+    <MapletContentsMaplet Position="Sides" Padding="1" MaxAmount="1" ProbabilityPercentage="100">
+      <Maplet name="warehouses" Tiled="true" TileTag="pavement" SizeX ="8" SizeY="15" Walled="true" WindowProbability="0">
+        <MapletContents>
+          <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="20" ProbabilityPercentage="75" Tag="crate"/>
+          <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="10" ProbabilityPercentage="75" Tag="resource"/>
+        </MapletContents>
+      </Maplet>
+    </MapletContentsMaplet>
+    <MapletContentsMaplet Position="Sides" MaxAmount="1" ProbabilityPercentage="98">
+      <Maplet name="headOffice" Tiled="true" TileTag="wood" SizeX ="6" SizeY="7" Walled="true" WindowProbability="30">
+        <MapletContents>
+          <MapletContentsItemTag Position="Middle" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="desk"/>
+          <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="75" Tag="container"/>
+          <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="3" ProbabilityPercentage="75" Tag="decoration"/>
+        </MapletContents>
+      </Maplet>
+    </MapletContentsMaplet>
+  </MapletContents>
+</Maplet>

@@ -1,0 +1,7 @@
+﻿<Maplet name="commerce1" Tiled="true" TileTag="pavement" SizeX ="15" SizeY="10" Walled="false" WindowProbability="20">
+  <MapletContents>
+    <MapletContentsMaplet Position="Anywhere" MaxAmount="4" ProbabilityPercentage="75">
+      <MapletTag Tag="MarketStallLine" />
+    </MapletContentsMaplet>
+  </MapletContents>
+</Maplet>
