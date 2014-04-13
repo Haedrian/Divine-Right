@@ -127,13 +127,41 @@ namespace DivineRightGame.SettlementHandling
                             y = 1,
                             ProbabilityPercentage = 100,
                             //Maplet = parser.ParseMaplet(MapletDatabaseHandler.GetMapletByTagAndLevel(district.District.GetDistrictMapletTag(),district.District.Level)),
-                            Maplet = district.District.Level == 1 ? parser.ParseMaplet(MapletDatabaseHandler.GetMapletByTagAndLevel("Commerce",3)) : parser.ParseMaplet(MapletDatabaseHandler.GetMapletByTagAndLevel("General Store",1)),
+                            Maplet = parser.ParseMaplet(MapletDatabaseHandler.GetMapletByTagAndLevel(district.District.GetDistrictMapletTag(),district.District.Level)),
                             MaxAmount = 1
                         }
-                    }
 
-
+                    }                   
+                    
                 };
+
+                //Fix the x and y of the contents so they're in the center 
+                int mapletSizeX = (borderMaplet.MapletContents[0] as MapletContentsMaplet).Maplet.SizeX;
+                int mapletSizeY = (borderMaplet.MapletContents[0] as MapletContentsMaplet).Maplet.SizeY;
+
+                MapletContentsMaplet subMapletWrapper = (borderMaplet.MapletContents[0] as MapletContentsMaplet);
+
+                subMapletWrapper.x = (17 - mapletSizeX) / 2;
+                subMapletWrapper.y = (17 - mapletSizeY) / 2;
+
+                //Depending on the location, we'll need to position them to touch the plaza
+
+                if (district.LocationNumber == 0 || district.LocationNumber == 1 || district.LocationNumber == 2)
+                {
+                    subMapletWrapper.y = 1;
+                }
+                if (district.LocationNumber == 0 || district.LocationNumber == 3 || district.LocationNumber == 5)
+                {
+                    subMapletWrapper.x = (17 - mapletSizeX) -1;
+                }
+                if (district.LocationNumber == 5 || district.LocationNumber == 6 || district.LocationNumber == 7)
+                {
+                    subMapletWrapper.y = (17 - mapletSizeY) -1 ;
+                }
+                if (district.LocationNumber == 2 || district.LocationNumber == 4 || district.LocationNumber == 7)
+                {
+                    subMapletWrapper.x = 1;
+                }
 
                 var gennedMap = gen.GenerateMap(grassTileID, null, borderMaplet , true);
             

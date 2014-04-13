@@ -7,9 +7,7 @@ namespace DRObjects.Settlements.Districts
 {
     public enum DistrictType
     {
-        //SLUM_HOUSING,
-        //PLEB_HOUSING,
-        //RICH_HOUSING,
+
         GENERAL_STORE,
         INN,
         PALACE,
@@ -18,6 +16,6 @@ namespace DRObjects.Settlements.Districts
         IRONWORKS,
         CARPENTRY,
         BARRACKS,
-        TRADING,
+        COMMERCE,
     }
 }
