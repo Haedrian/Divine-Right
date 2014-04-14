@@ -19,7 +19,7 @@ namespace DRObjects.Items.Archetypes.Local
         /// <summary>
         /// The state the item is in
         /// </summary>
-        private bool stateA = true;
+        protected bool stateA = true;
 
         /// <summary>
         /// The Graphic to show when State A is the state

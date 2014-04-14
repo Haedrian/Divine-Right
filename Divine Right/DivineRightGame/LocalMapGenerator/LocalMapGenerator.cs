@@ -593,7 +593,7 @@ namespace DivineRightGame.LocalMapGenerator
                     {
                         block.RemoveTopItem();
                         int doorID = -1;
-                        block.PutItemOnBlock(factory.CreateItem(DRObjects.Enums.Archetype.TOGGLEITEMS, "door", out doorID));
+                        block.PutItemOnBlock(factory.CreateItem(DRObjects.Enums.Archetype.MUNDANEITEMS, "door", out doorID));
                     }
                 }
                 catch { }
