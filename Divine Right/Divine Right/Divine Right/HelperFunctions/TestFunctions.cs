@@ -98,7 +98,10 @@ namespace Divine_Right.HelperFunctions
 
             GameState.LocalMap = new LocalMap(250, 250, 1, 0);
             GameState.LocalMap.Settlement = settlement;
-            var gennedMap = SettlementGenerator.GenerateMap(settlement);
+
+            List<Actor> actors = null;
+
+            var gennedMap = SettlementGenerator.GenerateMap(settlement, out actors);
 
             List<MapBlock> collapsedMap = new List<MapBlock>();
 
@@ -130,6 +133,7 @@ namespace Divine_Right.HelperFunctions
             GameState.PlayerCharacter.Attributes.Health = GameState.PlayerCharacter.Anatomy;
 
             GameState.LocalMap.Actors.Add(GameState.PlayerCharacter);
+            GameState.LocalMap.Actors.AddRange(actors);
 
         }
 

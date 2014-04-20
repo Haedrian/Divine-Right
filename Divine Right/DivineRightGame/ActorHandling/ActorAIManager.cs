@@ -56,7 +56,7 @@ namespace DivineRightGame.ActorHandling
 
             if (actor.CurrentMission.MissionType == DRObjects.ActorHandling.ActorMissionType.IDLE)
             {
-                if (Math.Abs(actor.MapCharacter.Coordinate - playerLocation) < actor.LineOfSight)
+                if (actor.IsAggressive && Math.Abs(actor.MapCharacter.Coordinate - playerLocation) < actor.LineOfSight)
                 {
                     //He's there. Push the current mission into the stack and follow him
                     actor.MissionStack.Push(actor.CurrentMission);
@@ -86,14 +86,14 @@ namespace DivineRightGame.ActorHandling
                 WanderMission mission = actor.CurrentMission as WanderMission;
 
                 //Is he seeing the player character?
-                if (Math.Abs(actor.MapCharacter.Coordinate - playerLocation) <= 1)
+                if (actor.IsAggressive && Math.Abs(actor.MapCharacter.Coordinate - playerLocation) <= 1)
                 {
                     //He's there. Push the current mission into the stack and go on the attack
                     actor.MissionStack.Push(actor.CurrentMission);
                     actor.CurrentMission = new AttackMission(actors.Where(a => a.IsPlayerCharacter).FirstOrDefault());
                     return new PlayerFeedback[] { };
                 }
-                else if (Math.Abs(actor.MapCharacter.Coordinate - playerLocation) < actor.LineOfSight)
+                else if (actor.IsAggressive && Math.Abs(actor.MapCharacter.Coordinate - playerLocation) < actor.LineOfSight)
                 {
                     //He's there. Push the current mission into the stack and follow him
                     actor.MissionStack.Push(actor.CurrentMission);
@@ -156,7 +156,7 @@ namespace DivineRightGame.ActorHandling
                     //Otherwise do nothing. Stay there
                 }
             }
-            else if (actor.CurrentMission.MissionType == DRObjects.ActorHandling.ActorMissionType.ATTACK)
+            else if (actor.IsAggressive && actor.CurrentMission.MissionType == DRObjects.ActorHandling.ActorMissionType.ATTACK)
             {
                 //Do they still see the character?
                 AttackMission mission = (actor.CurrentMission as AttackMission);
@@ -177,7 +177,7 @@ namespace DivineRightGame.ActorHandling
                 }
                 else
                 {
-                    if (CombatManager.GetRandomAttackLocation(actor, mission.AttackTarget).HasValue) //we can hit them
+                    if (actor.IsAggressive && CombatManager.GetRandomAttackLocation(actor, mission.AttackTarget).HasValue) //we can hit them
                     {
                         //Attack!
                         var logMessages = CombatManager.Attack(actor, mission.AttackTarget, CombatManager.GetRandomAttackLocation(actor, mission.AttackTarget).Value);
@@ -192,7 +192,7 @@ namespace DivineRightGame.ActorHandling
 
                 }
             }
-            else if (actor.CurrentMission.MissionType == DRObjects.ActorHandling.ActorMissionType.HUNTDOWN)
+            else if (actor.IsAggressive && actor.CurrentMission.MissionType == DRObjects.ActorHandling.ActorMissionType.HUNTDOWN)
             {
                 HuntDownMission mission = (actor.CurrentMission as HuntDownMission);
 
@@ -242,7 +242,7 @@ namespace DivineRightGame.ActorHandling
             {
                 WalkToMission mission = actor.CurrentMission as WalkToMission;
 
-                if (Math.Abs(actor.MapCharacter.Coordinate - playerLocation) < actor.LineOfSight)
+                if (actor.IsAggressive && Math.Abs(actor.MapCharacter.Coordinate - playerLocation) < actor.LineOfSight)
                 {
                     //Can we see the character?
                     //He's there. Push the current mission into the stack and follow him

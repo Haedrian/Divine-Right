@@ -103,6 +103,8 @@ namespace DivineRightGame.ActorHandling
             //Pick one at random
             var selected = possibleMatches.ToArray()[random.Next(possibleMatches.Count())];
 
+            int aggressivity = Int32.Parse(selected[10]);
+
             //Create the details
             enemyID = Int32.Parse(selected[0]);
             EnemyData data = GetEnemyData(enemyID);
@@ -112,6 +114,7 @@ namespace DivineRightGame.ActorHandling
             actor.IsPlayerCharacter = false;
             actor.LineOfSight = data.EnemyLineOfSight;
             actor.UniqueId = Guid.NewGuid();
+            actor.IsAggressive = aggressivity > 0;
 
             //Give him attributes 
             actor.Attributes = GenerateAttributes(data.EnemyType, data.Profession, level);

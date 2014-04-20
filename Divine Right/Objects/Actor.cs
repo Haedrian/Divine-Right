@@ -69,6 +69,11 @@ namespace DRObjects
         public HumanoidAnatomy Anatomy { get; set; }
 
         /// <summary>
+        /// Whether this actor is aggressive or not. Later we'll change this to some other measure - like a list of who they're aggressive towards.
+        /// </summary>
+        public bool IsAggressive { get; set; }
+
+        /// <summary>
         /// Attributes pertaining to the actor
         /// </summary>
         public ActorAttributes Attributes { get; set; }

@@ -465,6 +465,34 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.ENEMY_THOUGHT_ATTACK] = new SpriteData(ENEMIES, new Rectangle(100, 50, 50, 50));
             localSprites[(int)LocalSpriteName.ENEMY_THOUGH_CONFUSED] = new SpriteData(ENEMIES, new Rectangle(150, 50, 50, 50));
 
+            AddLocalSprite(LocalSpriteName.HUMANGUARD1, ENEMIES, 0, 2);
+            AddLocalSprite(LocalSpriteName.HUMANGUARD2, ENEMIES, 1, 2);
+            AddLocalSprite(LocalSpriteName.HUMANGUARD3, ENEMIES, 2, 2);
+            AddLocalSprite(LocalSpriteName.HUMANGUARD4, ENEMIES, 3, 2);
+            AddLocalSprite(LocalSpriteName.HUMANGUARD5, ENEMIES, 4, 2);
+            AddLocalSprite(LocalSpriteName.HUMANGUARD6, ENEMIES, 5, 2);
+            AddLocalSprite(LocalSpriteName.HUMANGUARD7, ENEMIES, 6, 2);
+
+            AddLocalSprite(LocalSpriteName.HUMANMERCHANT1, ENEMIES, 0, 3);
+            AddLocalSprite(LocalSpriteName.HUMANMERCHANT2, ENEMIES, 1, 3);
+            AddLocalSprite(LocalSpriteName.HUMANMERCHANT3, ENEMIES, 2, 3);
+            AddLocalSprite(LocalSpriteName.HUMANMERCHANT4, ENEMIES, 3, 3);
+            AddLocalSprite(LocalSpriteName.HUMANMERCHANT5, ENEMIES, 4, 3);
+
+            AddLocalSprite(LocalSpriteName.HUMANPOOR1, ENEMIES, 0, 4);
+            AddLocalSprite(LocalSpriteName.HUMANPOOR2, ENEMIES, 1, 4);
+            AddLocalSprite(LocalSpriteName.HUMANPOOR3, ENEMIES, 2, 4);
+            AddLocalSprite(LocalSpriteName.HUMANPOOR4, ENEMIES, 3, 4);
+            AddLocalSprite(LocalSpriteName.HUMANPOOR5, ENEMIES, 4, 4);
+            AddLocalSprite(LocalSpriteName.HUMANPOOR6, ENEMIES, 5, 4);
+
+            AddLocalSprite(LocalSpriteName.HUMANRICH1, ENEMIES, 0, 5);
+            AddLocalSprite(LocalSpriteName.HUMANRICH2, ENEMIES, 1, 5);
+            AddLocalSprite(LocalSpriteName.HUMANRICH3, ENEMIES, 2, 5);
+            AddLocalSprite(LocalSpriteName.HUMANRICH4, ENEMIES, 3, 5);
+            AddLocalSprite(LocalSpriteName.HUMANRICH5, ENEMIES, 4, 5);
+            AddLocalSprite(LocalSpriteName.HUMANRICH6, ENEMIES, 5, 5);
+
             interfaceSprites[(int)InterfaceSpriteName.SCROLL] = new SpriteData(@"Graphics/Interface/scrollsandblocks", new Rectangle(224, 190, 96, 34));
             interfaceSprites[(int)InterfaceSpriteName.PAPER_TEXTURE] = new SpriteData(@"Graphics/Interface/paperTexture");
             interfaceSprites[(int)InterfaceSpriteName.WOOD_TEXTURE] = new SpriteData(@"Graphics/Interface/woodTexture");

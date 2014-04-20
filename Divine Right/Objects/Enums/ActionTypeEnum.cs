@@ -14,7 +14,5 @@ namespace DRObjects.Enums
         MOVE = 4,
         PREPARE_ATTACK = 5,
         ATTACK = 6,
-        STEP_ON = 7,
-        STEP_OFF = 8,
     }
 }

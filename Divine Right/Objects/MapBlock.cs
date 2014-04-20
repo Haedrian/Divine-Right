@@ -87,7 +87,7 @@ namespace DRObjects
         /// <param name="item"></param>
         public void ForcePutItemOnBlock(MapItem item)
         {
-            item.Coordinate = Tile.Coordinate;
+            item.Coordinate = new MapCoordinate(Tile.Coordinate);
             this.mapItems.Add(item);
         }
 

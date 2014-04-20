@@ -119,6 +119,12 @@ namespace DRObjects
 
         }
 
+        public MapCoordinate(MapCoordinate coordinate)
+           : this (coordinate.X,coordinate.Y,coordinate.Z,coordinate.MapType)
+        {
+
+        }
+
         public MapCoordinate(int x, int y, int z, MapTypeEnum mapType)
         {
             this.MapType = mapType;

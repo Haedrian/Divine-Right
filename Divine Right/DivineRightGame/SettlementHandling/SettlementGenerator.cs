@@ -11,6 +11,9 @@ using DivineRightGame.SettlementHandling.Objects;
 using DivineRightGame.LocalMapGenerator;
 using DRObjects.LocalMapGeneratorObjects;
 using DRObjects.LocalMapGeneratorObjects.Enums;
+using DivineRightGame.ActorHandling;
+using DRObjects.ActorHandling.ActorMissions;
+using Microsoft.Xna.Framework;
 
 namespace DivineRightGame.SettlementHandling
 {
@@ -62,7 +65,7 @@ namespace DivineRightGame.SettlementHandling
         /// </summary>
         /// <param name="settlement"></param>
         /// <returns></returns>
-        public static MapBlock[,] GenerateMap(Settlement settlement)
+        public static MapBlock[,] GenerateMap(Settlement settlement,out List<Actor> actors)
         {
             //Create the Main empty map - 60x80
             MapBlock[,] mainMap = new MapBlock[60, 80];
@@ -203,13 +206,49 @@ namespace DivineRightGame.SettlementHandling
                 }
             }
 
+              //TODO: DECOR
 
-            //TODO: PEOPLE
 
+            //Now we put some people in
+            actors = GenerateTownsfolk(settlement);
             
+            //Go through them one at a time and position them on the plaza
+            Rectangle plazaRect = new Rectangle(18, 18 + yShift, 18, 35 - yShift);
 
-            //TODO: DECOR
-            
+            foreach (Actor actor in actors)
+            {
+                var actorMapItem = actor.MapCharacter;
+
+                //Drop them in a random location in the plaza
+                int tries = 0;
+
+                while (tries < 50)
+                {
+                    //If we do this more than 50 times, stop
+                    int randomX = random.Next(35-18) + 18;
+                    int randomY = random.Next(36-yShift) + 18 + yShift;
+
+                    //Can we put the character there ?
+                    if (mainMap[randomX, randomY].MayContainItems)
+                    {
+                        //break
+                        actorMapItem.Coordinate = new MapCoordinate(randomX, randomY, 0, MapTypeEnum.LOCAL);
+
+                        //Put the item in
+                        mainMap[randomX, randomY].ForcePutItemOnBlock(actorMapItem);
+
+                        //Give him a mission
+                        actor.MissionStack.Push(new WanderMission() { WanderPoint = new MapCoordinate(randomX, randomY, 0, MapTypeEnum.LOCAL), WanderRectangle = plazaRect });
+
+                        break;
+                    }
+
+                    tries++;
+                }
+
+            }
+
+
             //Trimming
             if (yShift > 0)
             {
@@ -226,9 +265,17 @@ namespace DivineRightGame.SettlementHandling
 
                     blocks.Tile.Coordinate.Y -= 30;
                 }
+
+                foreach (Actor actor in actors)
+                {
+                    //Update the rectangle
+                    WanderMission miss = actor.MissionStack.Peek() as WanderMission;
+
+                    miss.WanderRectangle = new Rectangle(miss.WanderRectangle.X, miss.WanderRectangle.Y - 30, miss.WanderRectangle.Width, miss.WanderRectangle.Height);
+                }
             }
 
-
+          
             return mainMap;
         }
 
@@ -377,5 +424,103 @@ namespace DivineRightGame.SettlementHandling
             original = newArray;
         }
         #endregion
+
+        /// <summary>
+        /// Generates an amount of actors to populate the settlement. Does not put them on the map
+        /// </summary>
+        /// <param name="settlement"></param>
+        /// <returns></returns>
+        private static List<Actor> GenerateTownsfolk(Settlement settlement)
+        {
+            ItemFactory.ItemFactory fact = new ItemFactory.ItemFactory();
+
+            //We'll create a population depending on the ratio of population, whether a barracks is built or not et cetera.
+
+            int populationAmount = 0;
+
+            if (settlement.SettlementSize > 5)
+            {
+                populationAmount = 10;
+            }
+            else
+            {
+                populationAmount = 5;
+            }
+
+            //Lets create population as per the ratio - then we add 1,2,3,4 population of guards
+
+            List<Actor> actors = new List<Actor>();
+
+            for (int i = 0; i < populationAmount; i++)
+            {
+                string socialClass = String.Empty;
+
+                //Lets see what social class w'ere going to put them in 
+                if (random.Next(100) < settlement.RichPercentage)
+                {
+                    //Rich
+                    socialClass = "rich";
+                }
+                else if (random.Next(100) < settlement.MiddlePercentage)
+                {
+                    //Merchant caste
+                    socialClass = "merchant";
+                }
+                else
+                {
+                    //Poor
+                    socialClass = "poor";
+                }
+
+                //Create a new actor
+                int actorID = 0;
+                Actor act = ActorGeneration.CreateEnemy("human", socialClass, true, 5, out actorID);
+
+                act.MapCharacter = fact.CreateItem("enemies", actorID);
+
+                actors.Add(act);
+            }
+
+            //Now lets add some guards. Just how many?
+
+            var barracks = settlement.Districts.Where(d => d.District.Type == DistrictType.BARRACKS).FirstOrDefault();
+
+            int guardCount = 0;
+
+            if (barracks == null)
+            {
+                //Just one
+                guardCount = 1;
+            }
+            else
+            {
+                switch(barracks.District.Level)
+                {
+                    case 1:
+                        guardCount = 2;
+                        break;
+                    case 2:
+                        guardCount = 3;
+                        break;
+                    case 3:
+                        guardCount = 4;
+                        break;
+                }
+            }
+
+            //Create them
+            for (int i = 0; i <= guardCount; i++)
+            {
+                int actorID = 0;
+
+                Actor actor = ActorGeneration.CreateEnemy("human", "guard", true, 10, out actorID);
+
+                actor.MapCharacter = fact.CreateItem("enemies", actorID);
+
+                actors.Add(actor);
+            }
+
+            return actors;
+        }
     }
 }
