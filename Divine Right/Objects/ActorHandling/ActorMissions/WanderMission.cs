@@ -29,6 +29,14 @@ namespace DRObjects.ActorHandling.ActorMissions
         /// </summary>
         public Rectangle WanderRectangle { get; set; }
 
-        
+        /// <summary>
+        /// The percentage chance that the character loiters instead of taking a step
+        /// </summary>
+        public int LoiterPercentage { get; set; }
+
+        public WanderMission()
+        {
+            LoiterPercentage = 0;
+        }
     }
 }

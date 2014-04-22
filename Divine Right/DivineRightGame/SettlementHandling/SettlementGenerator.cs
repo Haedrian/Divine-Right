@@ -238,7 +238,7 @@ namespace DivineRightGame.SettlementHandling
                         mainMap[randomX, randomY].ForcePutItemOnBlock(actorMapItem);
 
                         //Give him a mission
-                        actor.MissionStack.Push(new WanderMission() { WanderPoint = new MapCoordinate(randomX, randomY, 0, MapTypeEnum.LOCAL), WanderRectangle = plazaRect });
+                        actor.MissionStack.Push(new WanderMission() { WanderPoint = new MapCoordinate(randomX, randomY, 0, MapTypeEnum.LOCAL), WanderRectangle = plazaRect, LoiterPercentage = random.Next(40) + 50 });
 
                         break;
                     }

@@ -120,38 +120,46 @@ namespace DivineRightGame.ActorHandling
                 }
                 else
                 {
-
-                    //Walk somewhere randomly
-                    int direction = GameState.Random.Next(4);
-
-                    MapCoordinate coord = actor.MapCharacter.Coordinate;
-                    //Copy it
-                    MapCoordinate newCoord = new MapCoordinate(coord.X, coord.Y, coord.Z, coord.MapType);
-
-                    switch (direction)
+                    int randomNumber = GameState.Random.Next(100);
+                    //Do we wander?
+                    if (mission.LoiterPercentage != 0 && randomNumber < mission.LoiterPercentage)
                     {
-                        case 0: //Top
-                            newCoord.Y++;
-                            break;
-                        case 1: //Bottom
-                            newCoord.Y--;
-                            break;
-                        case 2: //Right
-                            newCoord.X++;
-                            break;
-                        case 3: //Left
-                            newCoord.X--;
-                            break;
+                        //Nope, we loiter
                     }
-
-                    //Can we go there?
-                    if (GameState.LocalMap.GetBlockAtCoordinate(newCoord).MayContainItems && mission.WanderRectangle.Contains(newCoord.X, newCoord.Y))
+                    else
                     {
-                        //Do it
-                        GameState.LocalMap.GetBlockAtCoordinate(newCoord).PutItemOnBlock(actor.MapCharacter);
-                        actor.MapCharacter.Coordinate = newCoord;
+                        //Walk somewhere randomly
+                        int direction = GameState.Random.Next(4);
 
-                        //And that's done
+                        MapCoordinate coord = actor.MapCharacter.Coordinate;
+                        //Copy it
+                        MapCoordinate newCoord = new MapCoordinate(coord.X, coord.Y, coord.Z, coord.MapType);
+
+                        switch (direction)
+                        {
+                            case 0: //Top
+                                newCoord.Y++;
+                                break;
+                            case 1: //Bottom
+                                newCoord.Y--;
+                                break;
+                            case 2: //Right
+                                newCoord.X++;
+                                break;
+                            case 3: //Left
+                                newCoord.X--;
+                                break;
+                        }
+
+                        //Can we go there?
+                        if (GameState.LocalMap.GetBlockAtCoordinate(newCoord).MayContainItems && mission.WanderRectangle.Contains(newCoord.X, newCoord.Y))
+                        {
+                            //Do it
+                            GameState.LocalMap.GetBlockAtCoordinate(newCoord).PutItemOnBlock(actor.MapCharacter);
+                            actor.MapCharacter.Coordinate = newCoord;
+
+                            //And that's done
+                        }
                     }
                     //Otherwise do nothing. Stay there
                 }
