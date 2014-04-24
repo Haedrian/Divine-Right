@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DRObjects.ActorHandling;
 
 namespace DRObjects.LocalMapGeneratorObjects
 {
@@ -20,5 +21,7 @@ namespace DRObjects.LocalMapGeneratorObjects
         /// Ie - for a human town, use humans.
         /// </summary>
         public bool UseLocalType { get; set; }
+
+        public ActorMissionType EnemyMission { get; set; }
     }
 }

@@ -173,6 +173,19 @@ namespace DivineRightGame.SettlementHandling
 
                 actors.AddRange(localAct);
 
+                foreach (var actor in localAct)
+                {
+                    if (actor.MissionStack.Count() > 0)
+                    {
+                        WanderMission miss = actor.MissionStack.Peek() as WanderMission;
+
+                        miss.WanderPoint.X += x;
+                        miss.WanderPoint.Y += y;
+
+                        miss.WanderRectangle = new Rectangle(miss.WanderRectangle.X + x, miss.WanderRectangle.Y + y, miss.WanderRectangle.Width, miss.WanderRectangle.Height);
+                    }
+                }
+
                 //And join them into one map
                 gen.JoinMaps(mainMap, gennedMap, x, y);
 
@@ -218,7 +231,7 @@ namespace DivineRightGame.SettlementHandling
             var plazaActors = GenerateTownsfolk(settlement);
 
             actors.AddRange(plazaActors);
-            
+
             //Go through them one at a time and position them on the plaza
             Rectangle plazaRect = new Rectangle(18, 18 + yShift, 18, 35 - yShift);
 
@@ -232,8 +245,8 @@ namespace DivineRightGame.SettlementHandling
                 while (tries < 50)
                 {
                     //If we do this more than 50 times, stop
-                    int randomX = random.Next(35-18) + 18;
-                    int randomY = random.Next(36-yShift) + 18 + yShift;
+                    int randomX = random.Next(35 - 18) + 18;
+                    int randomY = random.Next(36 - yShift) + 18 + yShift;
 
                     //Can we put the character there ?
                     if (mainMap[randomX, randomY].MayContainItems)
@@ -273,11 +286,12 @@ namespace DivineRightGame.SettlementHandling
                     blocks.Tile.Coordinate.Y -= 30;
                 }
 
-                foreach (Actor actor in plazaActors)
+                foreach (Actor actor in actors)
                 {
                     //Update the rectangle
                     WanderMission miss = actor.MissionStack.Peek() as WanderMission;
 
+                    miss.WanderPoint.Y -= 30;
                     miss.WanderRectangle = new Rectangle(miss.WanderRectangle.X, miss.WanderRectangle.Y - 30, miss.WanderRectangle.Width, miss.WanderRectangle.Height);
                 }
             }

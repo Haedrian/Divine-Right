@@ -5,6 +5,7 @@ using System.Text;
 using DRObjects.LocalMapGeneratorObjects;
 using System.Xml.Linq;
 using DRObjects.LocalMapGeneratorObjects.Enums;
+using DRObjects.ActorHandling;
 
 namespace DivineRightGame.LocalMapGenerator
 {
@@ -97,6 +98,7 @@ namespace DivineRightGame.LocalMapGenerator
                         case "EnemyType": ((MapletActor)content).EnemyType = value; break;
                         case "EnemyTag": ((MapletActor)content).EnemyTag = value; break;
                         case "UseLocalType": ((MapletActor)content).UseLocalType = bool.Parse(value); break;
+                        case "EnemyMission": ((MapletActor)content).EnemyMission = (ActorMissionType)Enum.Parse(typeof(ActorMissionType), value.ToUpper()); break;
                     }
                 }
 

@@ -173,6 +173,22 @@ namespace DivineRightGame.LocalMapGenerator
                                 //Add the child actors
                                 actorList.AddRange(childActors);
 
+                                //Update any actors's locations should they have any
+                                foreach (var actor in childActors)
+                                {
+                                    if (actor.MissionStack.Count() > 0)
+                                    {
+                                        var wander = actor.MissionStack.Peek() as WanderMission;
+
+                                        wander.WanderPoint.X += childMaplet.x.Value;
+                                        wander.WanderPoint.Y += childMaplet.y.Value;
+
+                                        wander.WanderRectangle = new Rectangle(wander.WanderRectangle.X + childMaplet.x.Value, wander.WanderRectangle.Y + childMaplet.y.Value, wander.WanderRectangle.Width, wander.WanderRectangle.Height);
+
+
+                                    }
+                                }
+
                                 //Join the two maps together
                                 generatedMap = this.JoinMaps(generatedMap, childMap, childMaplet.x.Value, childMaplet.y.Value);
                             }
@@ -643,12 +659,24 @@ namespace DivineRightGame.LocalMapGenerator
                             int x = random.Next(maplet.SizeX);
                             int y = random.Next(maplet.SizeY);
 
-                            if (generatedMap[x, y].Tile.MayContainItems)
+                            if (generatedMap[x, y].MayContainItems)
                             {
                                 //Put it there
                                 mapCharacter.Coordinate = new MapCoordinate(x, y, 0, MapTypeEnum.LOCAL);
                                 generatedMap[x, y].ForcePutItemOnBlock(mapCharacter);
                                 actorList.Add(newActor);
+
+                                //What mission does he have?
+                                if (actor.EnemyMission == ActorMissionType.WANDER)
+                                {
+                                    newActor.MissionStack.Push(new WanderMission()
+                                        {
+                                            LoiterPercentage = 80,
+                                            WanderPoint = new MapCoordinate(mapCharacter.Coordinate),
+                                            WanderRectangle = new Rectangle(0,0,generatedMap.GetLength(0),generatedMap.GetLength(1))
+                                        });
+                                }
+
                                 break;
                             }
                         }
