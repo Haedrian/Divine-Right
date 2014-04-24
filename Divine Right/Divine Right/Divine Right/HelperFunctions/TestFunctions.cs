@@ -146,7 +146,9 @@ namespace Divine_Right.HelperFunctions
             //Generate it
             LocalMapGenerator gen = new LocalMapGenerator();
 
-            MapBlock[,] generatedMap = gen.GenerateMap(0, null, maplet, true);
+            Actor[] tempy = null;
+
+            MapBlock[,] generatedMap = gen.GenerateMap(0, null, maplet, true,"human",out tempy);
 
             //put in the map
 
@@ -333,7 +335,9 @@ namespace Divine_Right.HelperFunctions
             //Now Generate it
             LocalMapGenerator gen = new LocalMapGenerator();
 
-            MapBlock[,] generatedMap = gen.GenerateMap(1, null, farmArea, true);
+            Actor[] temp = null;
+
+            MapBlock[,] generatedMap = gen.GenerateMap(1, null, farmArea, true,"",out temp);
 
             //put in the map
 
@@ -515,7 +519,9 @@ namespace Divine_Right.HelperFunctions
             //Now Generate it
             LocalMapGenerator gen = new LocalMapGenerator();
 
-            MapBlock[,] generatedMap = gen.GenerateMap(1,null, house,true);
+            Actor[] temp = null;
+
+            MapBlock[,] generatedMap = gen.GenerateMap(1,null, house,true,"",out temp);
 
             //put in the map
 

@@ -30,7 +30,7 @@ namespace DivineRightGame.ActorHandling
             if (actor.CurrentMission == null)
             {
                 //Try to pop a new one 
-                if (actor.MissionStack.Peek() == null)
+                if (actor.MissionStack.Count() == 0)
                 {
                     //no mission. ah well
                     return new PlayerFeedback[] { };

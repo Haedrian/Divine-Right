@@ -26,9 +26,13 @@ namespace DivineRightGame.LocalMapGenerator
         /// <param name="maplet">The maplet to generate</param>
         /// <param name="parentWallID">The wall that the parent has</param>
         /// <param name="parentTileID">The ID of the tiles used in the parent maplet item</param>
+        /// <param name="enemyType">The type of actor which is dominant in this map</param>
+        /// <param name="actors">The actors which we have generated</param>
         /// <returns></returns>
-        public MapBlock[,] GenerateMap(int parentTileID, int? parentWallID, Maplet maplet, bool preferSides)
+        public MapBlock[,] GenerateMap(int parentTileID, int? parentWallID, Maplet maplet, bool preferSides,string actorType, out Actor[] actors)
         {
+            List<Actor> actorList = new List<Actor>();
+
             PlanningMapItemType[,] planningMap = new PlanningMapItemType[maplet.SizeX, maplet.SizeY];
 
             //Step 1: Plan how the map will look
@@ -163,7 +167,11 @@ namespace DivineRightGame.LocalMapGenerator
                             if (Fits(planningMap, childMapletBlueprint, childMaplet.x.Value, childMaplet.y.Value, out newMap))
                             {
                                 //it fits, generate it - <3 Recursion
-                                MapBlock[,] childMap = this.GenerateMap(tileID, wallID.Value, childMaplet.Maplet, childMaplet.Position == DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES);
+                                Actor[] childActors = null;
+                                MapBlock[,] childMap = this.GenerateMap(tileID, wallID.Value, childMaplet.Maplet, childMaplet.Position == DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES, actorType, out childActors);
+
+                                //Add the child actors
+                                actorList.AddRange(childActors);
 
                                 //Join the two maps together
                                 generatedMap = this.JoinMaps(generatedMap, childMap, childMaplet.x.Value, childMaplet.y.Value);
@@ -174,7 +182,11 @@ namespace DivineRightGame.LocalMapGenerator
                             if (Fits(planningMap, childMapletBlueprint, childMaplet.Position == DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES, childMaplet.FirstFit, childMaplet.Padding, out x, out y, out newMap))
                             {
                                 //it fits, generate it - <3 Recursion
-                                MapBlock[,] childMap = this.GenerateMap(tileID, wallID.Value, childMaplet.Maplet, childMaplet.Position == DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES);
+                                Actor[] childActors = null;
+                                MapBlock[,] childMap = this.GenerateMap(tileID, wallID.Value, childMaplet.Maplet, childMaplet.Position == DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES,actorType,out childActors);
+
+                                //Add the child actors
+                                actorList.AddRange(childActors);
 
                                 //Join the two maps together
                                 generatedMap = this.JoinMaps(generatedMap, childMap, x, y);
@@ -601,7 +613,52 @@ namespace DivineRightGame.LocalMapGenerator
 
             #endregion
 
+            #region Enemies
 
+            //Now lets create enemies :)
+            foreach (var mc in maplet.MapletContents.Where(mc => mc.GetType().Equals(typeof(MapletActor))).OrderByDescending(o => o.ProbabilityPercentage))
+            {
+                var actor = mc as MapletActor;
+
+                for (int i = 0; i < actor.MaxAmount; i++)
+                {
+                    //Check the random
+                    if (random.Next(100) < actor.ProbabilityPercentage)
+                    {
+                        int actorID = 0;
+
+                        string enemyType = actor.UseLocalType ? actorType : actor.EnemyType;
+
+                        Actor newActor = ActorGeneration.CreateEnemy(enemyType, actor.EnemyTag, null, 10, out actorID);
+
+                        //Generate the map character
+                        var mapCharacter = factory.CreateItem("enemies", actorID);
+
+                        newActor.MapCharacter = mapCharacter;
+
+                        //Lets position them randomly
+                        for (int attempt = 0; attempt < 150; attempt++)
+                        {
+                            //Try 150 times
+                            int x = random.Next(maplet.SizeX);
+                            int y = random.Next(maplet.SizeY);
+
+                            if (generatedMap[x, y].Tile.MayContainItems)
+                            {
+                                //Put it there
+                                mapCharacter.Coordinate = new MapCoordinate(x, y, 0, MapTypeEnum.LOCAL);
+                                generatedMap[x, y].ForcePutItemOnBlock(mapCharacter);
+                                actorList.Add(newActor);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            #endregion
+
+            actors = actorList.ToArray();
             //we're done
             return generatedMap;
         }

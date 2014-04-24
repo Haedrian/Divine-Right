@@ -71,6 +71,7 @@ namespace DivineRightGame.LocalMapGenerator
                     case "MapletContentsItem": content = new MapletContentsItem(); break;
                     case "MapletContentsItemTag": content = new MapletContentsItemTag(); break;
                     case "MapletContentsMaplet": content = new MapletContentsMaplet(); break;
+                    case "MapletActor": content = new MapletActor(); break;
                 }
 
                 //Get the attributes
@@ -92,6 +93,10 @@ namespace DivineRightGame.LocalMapGenerator
                         case "Category": ((MapletContentsItemTag)content).Category = value; break;
                         case "Tag": ((MapletContentsItemTag)content).Tag = value; break;
                         case "FirstFit": ((MapletContentsMaplet)content).FirstFit = bool.Parse(value); break;
+                        case "EnemyID": ((MapletActor)content).EnemyID = Int32.Parse(value); break;
+                        case "EnemyType": ((MapletActor)content).EnemyType = value; break;
+                        case "EnemyTag": ((MapletActor)content).EnemyTag = value; break;
+                        case "UseLocalType": ((MapletActor)content).UseLocalType = bool.Parse(value); break;
                     }
                 }
 

@@ -67,6 +67,8 @@ namespace DivineRightGame.SettlementHandling
         /// <returns></returns>
         public static MapBlock[,] GenerateMap(Settlement settlement,out List<Actor> actors)
         {
+            actors = new List<Actor>();
+
             //Create the Main empty map - 60x80
             MapBlock[,] mainMap = new MapBlock[60, 80];
 
@@ -94,8 +96,7 @@ namespace DivineRightGame.SettlementHandling
             //Now we need to see where everything goes
             LocalMapGenerator.LocalMapGenerator gen = new LocalMapGenerator.LocalMapGenerator();
             LocalMapXMLParser parser = new LocalMapXMLParser();
-            ////List<SettlementBuildingMap> maps = new List<SettlementBuildingMap>();
-
+         
             foreach (SettlementBuilding district in settlement.Districts)
             {
                 //For reach settlement building, create the appropriate map
@@ -166,8 +167,12 @@ namespace DivineRightGame.SettlementHandling
                     subMapletWrapper.x = 1;
                 }
 
-                var gennedMap = gen.GenerateMap(grassTileID, null, borderMaplet , true);
-            
+                Actor[] localAct = null;
+
+                var gennedMap = gen.GenerateMap(grassTileID, null, borderMaplet , true,"human",out localAct);
+
+                actors.AddRange(localAct);
+
                 //And join them into one map
                 gen.JoinMaps(mainMap, gennedMap, x, y);
 
@@ -210,12 +215,14 @@ namespace DivineRightGame.SettlementHandling
 
 
             //Now we put some people in
-            actors = GenerateTownsfolk(settlement);
+            var plazaActors = GenerateTownsfolk(settlement);
+
+            actors.AddRange(plazaActors);
             
             //Go through them one at a time and position them on the plaza
             Rectangle plazaRect = new Rectangle(18, 18 + yShift, 18, 35 - yShift);
 
-            foreach (Actor actor in actors)
+            foreach (Actor actor in plazaActors)
             {
                 var actorMapItem = actor.MapCharacter;
 
@@ -266,7 +273,7 @@ namespace DivineRightGame.SettlementHandling
                     blocks.Tile.Coordinate.Y -= 30;
                 }
 
-                foreach (Actor actor in actors)
+                foreach (Actor actor in plazaActors)
                 {
                     //Update the rectangle
                     WanderMission miss = actor.MissionStack.Peek() as WanderMission;

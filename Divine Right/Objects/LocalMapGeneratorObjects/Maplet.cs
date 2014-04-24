@@ -87,6 +87,8 @@ namespace DRObjects.LocalMapGeneratorObjects
         /// </summary>
         public List<MapletContents> MapletContents {get;set;}
 
+        public List<MapletActor> MapletActors { get; set; }
+
         private bool sizeBitAdded = false;
 
         /// <summary>
@@ -100,6 +102,12 @@ namespace DRObjects.LocalMapGeneratorObjects
                 this.sizeY += random.Next(SizeRange);
                 this.sizeBitAdded = true;
             }
+        }
+
+        public Maplet()
+        {
+            this.MapletActors = new List<MapletActor>();
+            this.MapletContents = new List<MapletContents>();
         }
     }
 }

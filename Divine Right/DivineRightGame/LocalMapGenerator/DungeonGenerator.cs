@@ -254,7 +254,9 @@ namespace DivineRightGame.LocalMapGenerator
                 //Generate it :)
                 Maplet maplet = xmlGen.ParseMapletFromTag(tag);
 
-                gennedMap = gen.GenerateMap(25, null, maplet, true);
+                Actor[] dummyAct = null;
+
+                gennedMap = gen.GenerateMap(25, null, maplet, true,"",out dummyAct);
 
                 PointOfInterest mapletInterest = null;
 
