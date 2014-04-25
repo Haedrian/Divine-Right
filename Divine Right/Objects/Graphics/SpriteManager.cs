@@ -25,6 +25,8 @@ namespace DRObjects.Graphics
         private static string BANNERS = @"Graphics/Interface/Banners";
         private static string LOCATIONINTERFACE = @"Graphics/Interface/locationInterface";
 
+        private static string MERCHANT = @"Graphics/Local/merchant";
+
         #endregion
 
         private static SpriteData[] localSprites;
@@ -492,6 +494,10 @@ namespace DRObjects.Graphics
             AddLocalSprite(LocalSpriteName.HUMANRICH4, ENEMIES, 3, 5);
             AddLocalSprite(LocalSpriteName.HUMANRICH5, ENEMIES, 4, 5);
             AddLocalSprite(LocalSpriteName.HUMANRICH6, ENEMIES, 5, 5);
+
+            AddLocalSprite(LocalSpriteName.HUMANMERCHANT_HAIR, MERCHANT, 0, 0);
+            AddLocalSprite(LocalSpriteName.HUMANMERCHANT_HEAD, MERCHANT, 1, 0);
+            AddLocalSprite(LocalSpriteName.HUMANMERCHANT_BODY, MERCHANT, 2, 0);
 
             interfaceSprites[(int)InterfaceSpriteName.SCROLL] = new SpriteData(@"Graphics/Interface/scrollsandblocks", new Rectangle(224, 190, 96, 34));
             interfaceSprites[(int)InterfaceSpriteName.PAPER_TEXTURE] = new SpriteData(@"Graphics/Interface/paperTexture");

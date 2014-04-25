@@ -607,14 +607,6 @@ namespace Divine_Right.GameScreens
 
             this.DrawGrid(iBlocks);
 
-            //any interface components to draw?
-
-            //var grey = SpriteManager.GetSprite(ColourSpriteName.WHITE);
-
-            ////Background
-            //spriteBatch.Draw(game.Content.Load<Texture2D>(grey.path), new Rectangle(0, 0, 5000, 5000), Color.Black* 0.55f);
-
-
             foreach (AutoSizeGameButton button in menuButtons)
             {
                 button.Draw(this.game.Content, this.spriteBatch);
@@ -730,11 +722,11 @@ namespace Divine_Right.GameScreens
                         {
                             if (tileGraphic.sourceRectangle == null)
                             {
-                                spriteBatch.Draw(this.game.Content.Load<Texture2D>(tileGraphic.path), rec, Color.White);
+                                spriteBatch.Draw(this.game.Content.Load<Texture2D>(tileGraphic.path), rec, tileGraphic.ColorFilter.HasValue ? tileGraphic.ColorFilter.Value  :Color.White);
                             }
                             else
                             { //part of a tileset
-                                spriteBatch.Draw(this.game.Content.Load<Texture2D>(tileGraphic.path), rec, tileGraphic.sourceRectangle, Color.White);
+                                spriteBatch.Draw(this.game.Content.Load<Texture2D>(tileGraphic.path), rec, tileGraphic.sourceRectangle, tileGraphic.ColorFilter.HasValue ? tileGraphic.ColorFilter.Value : Color.White);
                             }
                         }
                     }
@@ -758,11 +750,11 @@ namespace Divine_Right.GameScreens
                             {
                                 if (itemGraphic.sourceRectangle == null)
                                 {
-                                    spriteBatch.Draw(this.game.Content.Load<Texture2D>(itemGraphic.path), rec, Color.White);
+                                    spriteBatch.Draw(this.game.Content.Load<Texture2D>(itemGraphic.path), rec, itemGraphic.ColorFilter.HasValue ? itemGraphic.ColorFilter.Value : Color.White);
                                 }
                                 else
                                 { //part of a tileset
-                                    spriteBatch.Draw(this.game.Content.Load<Texture2D>(itemGraphic.path), rec, itemGraphic.sourceRectangle, Color.White);
+                                    spriteBatch.Draw(this.game.Content.Load<Texture2D>(itemGraphic.path), rec, itemGraphic.sourceRectangle, itemGraphic.ColorFilter.HasValue ? itemGraphic.ColorFilter.Value : Color.White);
                                 }
                             }
                         }

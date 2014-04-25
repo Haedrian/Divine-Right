@@ -10,6 +10,8 @@ namespace DRObjects.Items.Archetypes.Local
 {
     public class LocalCharacter: MapItem
     {
+        private List<SpriteData> graphics = null;
+
         private static SpriteData WalkSprite
         {
             get
@@ -62,8 +64,18 @@ namespace DRObjects.Items.Archetypes.Local
         {
             get
             {
-                //The bottom one will always be the base sprite
-                List<SpriteData> sprites = new List<SpriteData> { this.Graphic };
+                List<SpriteData> sprites = new List<SpriteData>();
+
+                if (graphics == null || graphics.Count == 0)
+                {
+                    //The bottom one will always be the base sprite
+                    sprites.Add(this.Graphic);
+                }
+                else
+                {
+                    sprites.AddRange(graphics);
+                }
+                
 
                 if (IsStunned)
                 {
@@ -91,7 +103,7 @@ namespace DRObjects.Items.Archetypes.Local
             }
             set
             {
-                //dummy :)
+                graphics = value;
             }
         }
 

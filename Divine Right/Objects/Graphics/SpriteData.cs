@@ -13,6 +13,10 @@ namespace DRObjects.Graphics
     {
         public string path;
         public Rectangle? sourceRectangle;
+        /// <summary>
+        /// The colour filter to apply, if any
+        /// </summary>
+        public Color? ColorFilter { get; set; }
 
         /// <summary>
         /// A new SpriteData which points to a particular path within a rectangle
@@ -25,6 +29,17 @@ namespace DRObjects.Graphics
             this.sourceRectangle = rect;
         }
     
+        /// <summary>
+        /// Clones the Sprite Data
+        /// </summary>
+        /// <param name="clone"></param>
+        public SpriteData(SpriteData clone)
+        {
+            this.path = clone.path;
+            this.sourceRectangle = clone.sourceRectangle;
+            this.ColorFilter = clone.ColorFilter;
+        }
+
     }
 
 

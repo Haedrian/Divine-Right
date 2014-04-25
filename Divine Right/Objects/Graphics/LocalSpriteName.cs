@@ -436,6 +436,9 @@ namespace DRObjects.Graphics
         HUMANRICH1,
         HUMANRICH2,
         HUMANRICH3,
+        HUMANMERCHANT_HAIR,
+        HUMANMERCHANT_HEAD,
+        HUMANMERCHANT_BODY,
 
     }
 }

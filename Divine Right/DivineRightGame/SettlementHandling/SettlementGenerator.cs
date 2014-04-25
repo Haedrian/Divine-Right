@@ -14,6 +14,9 @@ using DRObjects.LocalMapGeneratorObjects.Enums;
 using DivineRightGame.ActorHandling;
 using DRObjects.ActorHandling.ActorMissions;
 using Microsoft.Xna.Framework;
+using DRObjects.Graphics;
+using System.Reflection;
+using System.Threading;
 
 namespace DivineRightGame.SettlementHandling
 {
@@ -50,7 +53,7 @@ namespace DivineRightGame.SettlementHandling
             {
                 settlement.MiddlePercentage += random.Next(6);
             }
-                
+
             settlement.PoorPercentage = 100 - settlement.RichPercentage - settlement.MiddlePercentage;
 
             //Generate the districts
@@ -65,7 +68,7 @@ namespace DivineRightGame.SettlementHandling
         /// </summary>
         /// <param name="settlement"></param>
         /// <returns></returns>
-        public static MapBlock[,] GenerateMap(Settlement settlement,out List<Actor> actors)
+        public static MapBlock[,] GenerateMap(Settlement settlement, out List<Actor> actors)
         {
             actors = new List<Actor>();
 
@@ -296,6 +299,44 @@ namespace DivineRightGame.SettlementHandling
                 }
             }
 
+            List<Color> predefinedColors = new List<Color>();
+
+            // Get all of the public static properties
+            PropertyInfo[] properties = typeof(Color).GetProperties(BindingFlags.Public|BindingFlags.Static);
+
+            foreach(PropertyInfo propertyInfo in properties)
+            {
+                // Check to make sure the property has a get method, and returns type "Color"
+                if (propertyInfo.GetGetMethod() != null && propertyInfo.PropertyType == typeof(Color))
+                { 
+                    // Get the color returned by the property by invoking it
+                    Color color = (Color)propertyInfo.GetValue(null, null);
+                    predefinedColors.Add(color);
+                }
+            }
+
+            List<Color> hairColor = new List<Color>() { Color.Black, Color.Gray, Color.Brown, Color.Yellow, Color.OrangeRed, Color.Gray, Color.SlateGray };
+
+
+            //Make all the actors use our awesome new thingy
+            foreach (Actor actor in actors)
+            {
+                actor.MapCharacter.Graphics.Clear();
+
+                List<SpriteData> sprites = new List<SpriteData>();
+
+                Color randomColour =predefinedColors[random.Next(predefinedColors.Count)];
+
+                sprites.Add(new SpriteData(SpriteManager.GetSprite(LocalSpriteName.HUMANMERCHANT_BODY)));
+                sprites.Add(SpriteManager.GetSprite(LocalSpriteName.HUMANMERCHANT_HEAD));
+                sprites.Add(new SpriteData(SpriteManager.GetSprite(LocalSpriteName.HUMANMERCHANT_HAIR)));
+
+                sprites[0].ColorFilter = randomColour;
+                sprites[2].ColorFilter = hairColor[random.Next(hairColor.Count)];
+
+                actor.MapCharacter.Graphics = sprites;
+            }
+
           
             return mainMap;
         }
@@ -313,7 +354,7 @@ namespace DivineRightGame.SettlementHandling
             districts.Add(new District(DistrictType.INN, 1));
             districts.Add(new District(DistrictType.GENERAL_STORE, 1));
 
-            var districtTypes = (DistrictType[]) Enum.GetValues(typeof(DistrictType));
+            var districtTypes = (DistrictType[])Enum.GetValues(typeof(DistrictType));
 
             //Generate the rest of it
             for (int i = 0; i < size - 2; i++)
@@ -380,7 +421,7 @@ namespace DivineRightGame.SettlementHandling
         {
             //These are hard coded, nothing to do :(
 
-            switch(locationID)
+            switch (locationID)
             {
                 case 7:
                     x = 0;
@@ -436,12 +477,12 @@ namespace DivineRightGame.SettlementHandling
             int columns = original.GetUpperBound(0);
             for (int co = 0; co < newCoNum; co++)
             {
-                for (int row = 0; row < newRoNum; row++ )
+                for (int row = 0; row < newRoNum; row++)
                 {
-                    newArray[co, row] = original[co+coOffset, row+roOffset];
+                    newArray[co, row] = original[co + coOffset, row + roOffset];
                 }
             }
-                
+
             original = newArray;
         }
         #endregion
@@ -515,7 +556,7 @@ namespace DivineRightGame.SettlementHandling
             }
             else
             {
-                switch(barracks.District.Level)
+                switch (barracks.District.Level)
                 {
                     case 1:
                         guardCount = 2;
