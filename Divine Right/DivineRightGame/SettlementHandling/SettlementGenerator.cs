@@ -315,7 +315,7 @@ namespace DivineRightGame.SettlementHandling
                 }
             }
 
-            List<Color> hairColor = new List<Color>() { Color.Black, Color.Gray, Color.Brown, Color.Yellow, Color.OrangeRed, Color.Gray, Color.SlateGray };
+            List<Color> hairColor = new List<Color>() { Color.DarkGray, Color.SaddleBrown,Color.SandyBrown, Color.Brown, Color.LightYellow, Color.Silver, Color.OrangeRed, Color.Gray, Color.SlateGray };
 
 
             //Make all the actors use our awesome new thingy
