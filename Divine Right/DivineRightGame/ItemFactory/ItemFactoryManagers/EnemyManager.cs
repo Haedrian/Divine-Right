@@ -17,7 +17,7 @@ namespace DivineRightGame.ItemFactory.ItemFactoryManagers
 
         public DRObjects.MapItem CreateItem(List<string> parameters)
         {
-            return CreateItem(parameters[1], parameters[2], parameters[3],Int32.Parse(parameters[6]));
+            return CreateItem(parameters[1], parameters[2], parameters[3],Int32.Parse(parameters[6]),parameters[11]);
         }
 
         public DRObjects.MapItem CreateItem(int internalID)
@@ -35,7 +35,7 @@ namespace DivineRightGame.ItemFactory.ItemFactoryManagers
             return CreateItem(parameters);
         }
 
-        public LocalCharacter CreateItem(string enemyName,string enemyDescription,string graphic,int lineOfSight)
+        public LocalCharacter CreateItem(string enemyName,string enemyDescription,string graphic,int lineOfSight,string graphicSet)
         {
             LocalCharacter enemy = new LocalCharacter();
             enemy.Description = enemyDescription;
@@ -43,23 +43,30 @@ namespace DivineRightGame.ItemFactory.ItemFactoryManagers
 
             string chosenGraphic = String.Empty;
 
-            //Does graphic contain multiple choices?
-            if (graphic.Contains(","))
+            if (!String.IsNullOrEmpty(graphicSet))
             {
-                //yes, lets split it
-                var graphics = graphic.Split(',');
-
-                //use random to determine which one we want
-                chosenGraphic = graphics[_random.Next(graphics.Length)];
-
-                enemy.Graphic = SpriteManager.GetSprite((LocalSpriteName)Enum.Parse(typeof(LocalSpriteName), chosenGraphic));
+                //Instead of a single graphic, use a graphical set
+                enemy.Graphics = GraphicSetManager.GetSprites((GraphicSetName) Enum.Parse(typeof(GraphicSetName),graphicSet.ToUpper()));
             }
             else
             {
-                //nope
-                enemy.Graphic = SpriteManager.GetSprite((LocalSpriteName)Enum.Parse(typeof(LocalSpriteName), graphic));
-            }
+                //Does graphic contain multiple choices?
+                if (graphic.Contains(","))
+                {
+                    //yes, lets split it
+                    var graphics = graphic.Split(',');
 
+                    //use random to determine which one we want
+                    chosenGraphic = graphics[_random.Next(graphics.Length)];
+
+                    enemy.Graphic = SpriteManager.GetSprite((LocalSpriteName)Enum.Parse(typeof(LocalSpriteName), chosenGraphic));
+                }
+                else
+                {
+                    //nope
+                    enemy.Graphic = SpriteManager.GetSprite((LocalSpriteName)Enum.Parse(typeof(LocalSpriteName), graphic));
+                }
+            }
             enemy.LineOfSightRange = lineOfSight;
             enemy.InternalName = enemyName;
             enemy.MayContainItems = false;

@@ -298,46 +298,7 @@ namespace DivineRightGame.SettlementHandling
                     miss.WanderRectangle = new Rectangle(miss.WanderRectangle.X, miss.WanderRectangle.Y - 30, miss.WanderRectangle.Width, miss.WanderRectangle.Height);
                 }
             }
-
-            List<Color> predefinedColors = new List<Color>();
-
-            // Get all of the public static properties
-            PropertyInfo[] properties = typeof(Color).GetProperties(BindingFlags.Public|BindingFlags.Static);
-
-            foreach(PropertyInfo propertyInfo in properties)
-            {
-                // Check to make sure the property has a get method, and returns type "Color"
-                if (propertyInfo.GetGetMethod() != null && propertyInfo.PropertyType == typeof(Color))
-                { 
-                    // Get the color returned by the property by invoking it
-                    Color color = (Color)propertyInfo.GetValue(null, null);
-                    predefinedColors.Add(color);
-                }
-            }
-
-            List<Color> hairColor = new List<Color>() { Color.DarkGray, Color.SaddleBrown,Color.SandyBrown, Color.Brown, Color.LightYellow, Color.Silver, Color.OrangeRed, Color.Gray, Color.SlateGray };
-
-
-            //Make all the actors use our awesome new thingy
-            foreach (Actor actor in actors)
-            {
-                actor.MapCharacter.Graphics.Clear();
-
-                List<SpriteData> sprites = new List<SpriteData>();
-
-                Color randomColour =predefinedColors[random.Next(predefinedColors.Count)];
-
-                sprites.Add(new SpriteData(SpriteManager.GetSprite(LocalSpriteName.HUMANMERCHANT_BODY)));
-                sprites.Add(SpriteManager.GetSprite(LocalSpriteName.HUMANMERCHANT_HEAD));
-                sprites.Add(new SpriteData(SpriteManager.GetSprite(LocalSpriteName.HUMANMERCHANT_HAIR)));
-
-                sprites[0].ColorFilter = randomColour;
-                sprites[2].ColorFilter = hairColor[random.Next(hairColor.Count)];
-
-                actor.MapCharacter.Graphics = sprites;
-            }
-
-          
+                      
             return mainMap;
         }
 

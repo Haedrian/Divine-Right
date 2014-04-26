@@ -53,8 +53,6 @@ Content\Fonts\h1.xnb
 Content\Graphics\Interface\locationInterface.xnb
 Content\Graphics\Local\merchant.xnb
 Content\Fonts\TextFeedbackFont.spritefont
-App.config
-Maplets.sdf
 Items.sdf
 Maplets\Components\LargeBedroom.xml
 Maplets\Components\MediumBedroom.xml
@@ -118,4 +116,6 @@ Maplets\Temple.xml
 Maplets\Village.xml
 Resources\SettlementNames\Prefix.txt
 Resources\SettlementNames\Suffix.txt
+App.config
+Maplets.sdf
 Maplets\GeneralStore.xml
