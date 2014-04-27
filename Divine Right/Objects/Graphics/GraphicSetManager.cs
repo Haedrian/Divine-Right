@@ -49,6 +49,17 @@ namespace DRObjects.Graphics
 
                 return sprites;
             }
+            else if (name == GraphicSetName.HUMANGUARD)
+            {
+                List<SpriteData> sprites = new List<SpriteData>();
+
+                sprites.Add(new SpriteData(SpriteManager.GetSprite(LocalSpriteName.HUMANGUARD_HAIR)));
+                sprites.Add(new SpriteData(SpriteManager.GetSprite(LocalSpriteName.HUMANGUARD_BODY)));
+
+                sprites[0].ColorFilter = hairColours[random.Next(hairColours.Count)];
+
+                return sprites;
+            }
 
             throw new NotImplementedException("No code for the " + name + " was found");
         }

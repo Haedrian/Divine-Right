@@ -86,13 +86,16 @@ namespace DRObjects.Items.Archetypes.Local
                     switch (EnemyThought)
                     {
                         case Enums.EnemyThought.ATTACK:
-                            sprites.Insert(0, AttackSprite);
+                            //sprites.Insert(0, AttackSprite);
+                            sprites.Add(AttackSprite);
                             break;
                         case Enums.EnemyThought.WAIT:
-                            sprites.Insert(0, WaitSprite);
+                            //sprites.Insert(0, WaitSprite);
+                            sprites.Add(WaitSprite);
                             break;
                         case Enums.EnemyThought.WALK:
-                            sprites.Insert(0, WalkSprite);
+                            //sprites.Insert(0, WalkSprite);
+                            sprites.Add(WalkSprite);
                             break;
                         default:
                             throw new NotImplementedException("There is no graphic for the thought " + EnemyThought);

@@ -26,6 +26,7 @@ namespace DRObjects.Graphics
         private static string LOCATIONINTERFACE = @"Graphics/Interface/locationInterface";
 
         private static string MERCHANT = @"Graphics/Local/merchant";
+        private static string GUARD = @"Graphics/Local/humanguard";
 
         #endregion
 
@@ -498,6 +499,9 @@ namespace DRObjects.Graphics
             AddLocalSprite(LocalSpriteName.HUMANMERCHANT_HAIR, MERCHANT, 0, 0);
             AddLocalSprite(LocalSpriteName.HUMANMERCHANT_HEAD, MERCHANT, 1, 0);
             AddLocalSprite(LocalSpriteName.HUMANMERCHANT_BODY, MERCHANT, 2, 0);
+
+            AddLocalSprite(LocalSpriteName.HUMANGUARD_HAIR, GUARD, 0, 0);
+            AddLocalSprite(LocalSpriteName.HUMANGUARD_BODY, GUARD, 1, 0);
 
             interfaceSprites[(int)InterfaceSpriteName.SCROLL] = new SpriteData(@"Graphics/Interface/scrollsandblocks", new Rectangle(224, 190, 96, 34));
             interfaceSprites[(int)InterfaceSpriteName.PAPER_TEXTURE] = new SpriteData(@"Graphics/Interface/paperTexture");
