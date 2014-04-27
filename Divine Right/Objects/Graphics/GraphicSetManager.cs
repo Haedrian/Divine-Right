@@ -60,6 +60,37 @@ namespace DRObjects.Graphics
 
                 return sprites;
             }
+            else if (name == GraphicSetName.HUMANPEASANTFEMALE)
+            {
+                List<SpriteData> sprites = new List<SpriteData>();
+
+                sprites.Add(new SpriteData(SpriteManager.GetSprite(LocalSpriteName.HUMANPEASANTGIRL_HAIR)));
+                sprites.Add(new SpriteData(SpriteManager.GetSprite(LocalSpriteName.HUMANPEASANTGIRL_FACE)));
+                sprites.Add(new SpriteData(SpriteManager.GetSprite(LocalSpriteName.HUMANPEASANTGIRL_DRESS1)));
+                sprites.Add(new SpriteData(SpriteManager.GetSprite(LocalSpriteName.HUMANPEASANTGIRL_DRESS2)));
+
+                sprites[0].ColorFilter = hairColours[random.Next(hairColours.Count)];
+                sprites[2].ColorFilter = clothingColours[random.Next(clothingColours.Count)];
+                sprites[3].ColorFilter = clothingColours[random.Next(clothingColours.Count)];
+
+                return sprites;
+            }
+            else if (name == GraphicSetName.HUMANPEASANTMALE)
+            {
+                List<SpriteData> sprites = new List<SpriteData>();
+
+                sprites.Add(new SpriteData(SpriteManager.GetSprite(LocalSpriteName.HUMANPEASANTMALE_HAIR)));
+                sprites.Add(new SpriteData(SpriteManager.GetSprite(LocalSpriteName.HUMANPEASANTMALE_FACE)));
+                sprites.Add(new SpriteData(SpriteManager.GetSprite(LocalSpriteName.HUMANPEASANTMALE_TOP)));
+                sprites.Add(new SpriteData(SpriteManager.GetSprite(LocalSpriteName.HUMANPEASANTMALE_PANTS)));
+
+                sprites[0].ColorFilter = hairColours[random.Next(hairColours.Count)];
+                sprites[2].ColorFilter = clothingColours[random.Next(clothingColours.Count)];
+                sprites[3].ColorFilter = clothingColours[random.Next(clothingColours.Count)];
+
+                return sprites;
+
+            }
 
             throw new NotImplementedException("No code for the " + name + " was found");
         }

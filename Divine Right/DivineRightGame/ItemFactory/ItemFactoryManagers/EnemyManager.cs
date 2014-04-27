@@ -10,14 +10,14 @@ using DRObjects.Database;
 
 namespace DivineRightGame.ItemFactory.ItemFactoryManagers
 {
-    class EnemyManager: IItemFactoryManager
+    class EnemyManager : IItemFactoryManager
     {
         private const Archetype ARCHETYPE = Archetype.ENEMIES;
         private static Random _random = new Random();
 
         public DRObjects.MapItem CreateItem(List<string> parameters)
         {
-            return CreateItem(parameters[1], parameters[2], parameters[3],Int32.Parse(parameters[6]),parameters[11]);
+            return CreateItem(parameters[1], parameters[2], parameters[3], Int32.Parse(parameters[6]), parameters[11]);
         }
 
         public DRObjects.MapItem CreateItem(int internalID)
@@ -35,7 +35,7 @@ namespace DivineRightGame.ItemFactory.ItemFactoryManagers
             return CreateItem(parameters);
         }
 
-        public LocalCharacter CreateItem(string enemyName,string enemyDescription,string graphic,int lineOfSight,string graphicSet)
+        public LocalCharacter CreateItem(string enemyName, string enemyDescription, string graphic, int lineOfSight, string graphicSet)
         {
             LocalCharacter enemy = new LocalCharacter();
             enemy.Description = enemyDescription;
@@ -45,8 +45,23 @@ namespace DivineRightGame.ItemFactory.ItemFactoryManagers
 
             if (!String.IsNullOrEmpty(graphicSet))
             {
+                string setChoice = String.Empty;
+                //Does graphicset contain multiple choices?
+                if (graphicSet.Contains(","))
+                {
+                    //Yes, lets split it
+                    var possibleSets = graphicSet.Split(',');
+
+                    setChoice = possibleSets[_random.Next(possibleSets.Length)];
+                }
+                else
+                {
+                    setChoice = graphicSet;
+                }
+
                 //Instead of a single graphic, use a graphical set
-                enemy.Graphics = GraphicSetManager.GetSprites((GraphicSetName) Enum.Parse(typeof(GraphicSetName),graphicSet.ToUpper()));
+                enemy.Graphics = GraphicSetManager.GetSprites((GraphicSetName)Enum.Parse(typeof(GraphicSetName), setChoice.ToUpper()));
+
             }
             else
             {

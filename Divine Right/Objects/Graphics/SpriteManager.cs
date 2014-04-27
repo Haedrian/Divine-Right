@@ -27,6 +27,8 @@ namespace DRObjects.Graphics
 
         private static string MERCHANT = @"Graphics/Local/merchant";
         private static string GUARD = @"Graphics/Local/humanguard";
+        private static string PEASANTWOMAN = @"Graphics/Local/peasantfemale";
+        private static string PEASANTMALE = @"Graphics/Local/peasantmale";
 
         #endregion
 
@@ -502,6 +504,16 @@ namespace DRObjects.Graphics
 
             AddLocalSprite(LocalSpriteName.HUMANGUARD_HAIR, GUARD, 0, 0);
             AddLocalSprite(LocalSpriteName.HUMANGUARD_BODY, GUARD, 1, 0);
+
+            AddLocalSprite(LocalSpriteName.HUMANPEASANTGIRL_HAIR, PEASANTWOMAN, 0, 0);
+            AddLocalSprite(LocalSpriteName.HUMANPEASANTGIRL_FACE, PEASANTWOMAN, 1, 0);
+            AddLocalSprite(LocalSpriteName.HUMANPEASANTGIRL_DRESS1, PEASANTWOMAN, 2, 0);
+            AddLocalSprite(LocalSpriteName.HUMANPEASANTGIRL_DRESS2, PEASANTWOMAN, 3, 0);
+
+            AddLocalSprite(LocalSpriteName.HUMANPEASANTMALE_HAIR, PEASANTMALE, 0, 0);
+            AddLocalSprite(LocalSpriteName.HUMANPEASANTMALE_FACE, PEASANTMALE, 1, 0);
+            AddLocalSprite(LocalSpriteName.HUMANPEASANTMALE_TOP, PEASANTMALE, 2, 0);
+            AddLocalSprite(LocalSpriteName.HUMANPEASANTMALE_PANTS, PEASANTMALE, 3, 0);
 
             interfaceSprites[(int)InterfaceSpriteName.SCROLL] = new SpriteData(@"Graphics/Interface/scrollsandblocks", new Rectangle(224, 190, 96, 34));
             interfaceSprites[(int)InterfaceSpriteName.PAPER_TEXTURE] = new SpriteData(@"Graphics/Interface/paperTexture");

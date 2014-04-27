@@ -53,6 +53,8 @@ Content\Fonts\h1.xnb
 Content\Graphics\Interface\locationInterface.xnb
 Content\Graphics\Local\merchant.xnb
 Content\Graphics\Local\humanguard.xnb
+Content\Graphics\Local\peasantfemale.xnb
+Content\Graphics\Local\peasantmale.xnb
 Content\Fonts\TextFeedbackFont.spritefont
 App.config
 Maplets.sdf

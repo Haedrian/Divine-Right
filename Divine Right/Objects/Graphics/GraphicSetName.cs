@@ -11,6 +11,8 @@ namespace DRObjects.Graphics
     public enum GraphicSetName
     {
         HUMANMERCHANT,
-        HUMANGUARD
+        HUMANGUARD,
+        HUMANPEASANTFEMALE,
+        HUMANPEASANTMALE,
     }
 }
