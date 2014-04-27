@@ -89,7 +89,19 @@ namespace DRObjects.Graphics
                 sprites[3].ColorFilter = clothingColours[random.Next(clothingColours.Count)];
 
                 return sprites;
+            }
+            else if (name == GraphicSetName.HUMANRICHMALE)
+            {
+                List<SpriteData> sprites = new List<SpriteData>();
 
+                sprites.Add(new SpriteData(SpriteManager.GetSprite(LocalSpriteName.RICHMALE_HAIR)));
+                sprites.Add(new SpriteData(SpriteManager.GetSprite(LocalSpriteName.RICHMALE_FACE)));
+                sprites.Add(new SpriteData(SpriteManager.GetSprite(LocalSpriteName.RICHMALE_CLOTHES)));
+
+                sprites[0].ColorFilter = hairColours[random.Next(hairColours.Count)];
+                sprites[2].ColorFilter = clothingColours[random.Next(clothingColours.Count)];
+
+                return sprites;
             }
 
             throw new NotImplementedException("No code for the " + name + " was found");

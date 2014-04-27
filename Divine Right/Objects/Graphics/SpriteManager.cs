@@ -29,6 +29,8 @@ namespace DRObjects.Graphics
         private static string GUARD = @"Graphics/Local/humanguard";
         private static string PEASANTWOMAN = @"Graphics/Local/peasantfemale";
         private static string PEASANTMALE = @"Graphics/Local/peasantmale";
+        private static string RICHMAN = @"Graphics/Local/richmale";
+        private static string RICHFEMALE = @"Graphics/Local/richwoman";
 
         #endregion
 
@@ -514,6 +516,14 @@ namespace DRObjects.Graphics
             AddLocalSprite(LocalSpriteName.HUMANPEASANTMALE_FACE, PEASANTMALE, 1, 0);
             AddLocalSprite(LocalSpriteName.HUMANPEASANTMALE_TOP, PEASANTMALE, 2, 0);
             AddLocalSprite(LocalSpriteName.HUMANPEASANTMALE_PANTS, PEASANTMALE, 3, 0);
+
+            AddLocalSprite(LocalSpriteName.RICHMALE_HAIR, RICHMAN, 0, 0);
+            AddLocalSprite(LocalSpriteName.RICHMALE_FACE, RICHMAN, 1, 0);
+            AddLocalSprite(LocalSpriteName.RICHMALE_CLOTHES, RICHMAN, 2, 0);
+
+            AddLocalSprite(LocalSpriteName.RICHFEMALE_HAIR, RICHFEMALE, 0, 0);
+            AddLocalSprite(LocalSpriteName.RICHFEMALE_FACE, RICHFEMALE, 0, 0);
+            AddLocalSprite(LocalSpriteName.RICHFEMALE_CLOTHES, RICHFEMALE, 0, 0);
 
             interfaceSprites[(int)InterfaceSpriteName.SCROLL] = new SpriteData(@"Graphics/Interface/scrollsandblocks", new Rectangle(224, 190, 96, 34));
             interfaceSprites[(int)InterfaceSpriteName.PAPER_TEXTURE] = new SpriteData(@"Graphics/Interface/paperTexture");

@@ -449,6 +449,12 @@ namespace DRObjects.Graphics
         HUMANPEASANTMALE_FACE,
         HUMANPEASANTMALE_TOP,
         HUMANPEASANTMALE_PANTS,
+        RICHMALE_HAIR,
+        RICHMALE_FACE,
+        RICHMALE_CLOTHES,
+        RICHFEMALE_HAIR,
+        RICHFEMALE_FACE,
+        RICHFEMALE_CLOTHES,
 
     }
 }

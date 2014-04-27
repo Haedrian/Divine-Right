@@ -14,5 +14,6 @@ namespace DRObjects.Graphics
         HUMANGUARD,
         HUMANPEASANTFEMALE,
         HUMANPEASANTMALE,
+        HUMANRICHMALE,
     }
 }
