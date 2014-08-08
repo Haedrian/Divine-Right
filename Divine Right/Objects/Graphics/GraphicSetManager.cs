@@ -103,6 +103,19 @@ namespace DRObjects.Graphics
 
                 return sprites;
             }
+            else if (name == GraphicSetName.HUMANRICHFEMALE)
+            {
+                List<SpriteData> sprites = new List<SpriteData>();
+
+                sprites.Add(new SpriteData(SpriteManager.GetSprite(LocalSpriteName.RICHFEMALE_HAIR)));
+                sprites.Add(new SpriteData(SpriteManager.GetSprite(LocalSpriteName.RICHFEMALE_FACE)));
+                sprites.Add(new SpriteData(SpriteManager.GetSprite(LocalSpriteName.RICHFEMALE_CLOTHES)));
+
+                sprites[0].ColorFilter = hairColours[random.Next(hairColours.Count)];
+                sprites[2].ColorFilter = clothingColours[random.Next(clothingColours.Count)];
+
+                return sprites;
+            }
 
             throw new NotImplementedException("No code for the " + name + " was found");
         }
