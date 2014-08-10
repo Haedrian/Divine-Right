@@ -31,6 +31,7 @@ namespace DRObjects.Graphics
         private static string PEASANTMALE = @"Graphics/Local/peasantmale";
         private static string RICHMAN = @"Graphics/Local/richmale";
         private static string RICHFEMALE = @"Graphics/Local/richwoman";
+        private static string PRIEST = @"Graphics/Local/priest";
 
         #endregion
 
@@ -41,7 +42,7 @@ namespace DRObjects.Graphics
 
         static SpriteManager()
         {
-            localSprites = new SpriteData[400]; //TODO: INCREASE WHEN YOU HAVE MORE
+            localSprites = new SpriteData[800]; //TODO: INCREASE WHEN YOU HAVE MORE
             globalSprites = new SpriteData[100];
             colourSprites = new SpriteData[100];
             interfaceSprites = new SpriteData[100];
@@ -524,6 +525,9 @@ namespace DRObjects.Graphics
             AddLocalSprite(LocalSpriteName.RICHFEMALE_HAIR, RICHFEMALE, 0, 0);
             AddLocalSprite(LocalSpriteName.RICHFEMALE_FACE, RICHFEMALE, 1, 0);
             AddLocalSprite(LocalSpriteName.RICHFEMALE_CLOTHES, RICHFEMALE, 2, 0);
+
+            AddLocalSprite(LocalSpriteName.PRIEST_BODY, PRIEST, 0, 0);
+            AddLocalSprite(LocalSpriteName.PRIEST_CLOTHES, PRIEST, 1, 0);
 
             interfaceSprites[(int)InterfaceSpriteName.SCROLL] = new SpriteData(@"Graphics/Interface/scrollsandblocks", new Rectangle(224, 190, 96, 34));
             interfaceSprites[(int)InterfaceSpriteName.PAPER_TEXTURE] = new SpriteData(@"Graphics/Interface/paperTexture");

@@ -1,6 +1,7 @@
 ﻿<Maplet name="church" Tiled="true" TileTag="marble" SizeX ="15" SizeY="15" Walled="true">
   <MapletContents>
 
+    <MapletActor MaxAmount="3" ProbabilityPercentage="100" UseLocalType="true" EnemyTag="priest" EnemyMission="wander"  />
     <MapletContentsItemTag Position="Fixed" x="6" y="11" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="110" Tag="angel statue top"/>
     <MapletContentsItemTag Position="Fixed" x="6" y="10" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="110" Tag="angel statue bottom"/>
 

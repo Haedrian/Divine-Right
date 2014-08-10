@@ -16,5 +16,6 @@ namespace DRObjects.Graphics
         HUMANPEASANTMALE,
         HUMANRICHMALE,
         HUMANRICHFEMALE,
+        HUMANPRIEST,
     }
 }

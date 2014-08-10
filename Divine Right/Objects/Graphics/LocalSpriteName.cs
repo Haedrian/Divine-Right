@@ -455,6 +455,8 @@ namespace DRObjects.Graphics
         RICHFEMALE_HAIR,
         RICHFEMALE_FACE,
         RICHFEMALE_CLOTHES,
+        PRIEST_BODY,
+        PRIEST_CLOTHES,
 
     }
 }

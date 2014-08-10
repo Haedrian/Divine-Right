@@ -1,5 +1,6 @@
 ﻿<Maplet name="shrine" Tiled="true" TileTag="marble" SizeX ="5" SizeY="6" Walled="false">
   <MapletContents>
+    <MapletActor MaxAmount="3" ProbabilityPercentage="100" UseLocalType="true" EnemyTag="priest" EnemyMission="wander"  />
     <MapletContentsItemTag Position="Fixed" x="2" y="3" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="angel statue top"/>
     <MapletContentsItemTag Position="Fixed" x="2" y="2" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="angel statue bottom"/>
     <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="18" ProbabilityPercentage="90" Tag="flower"/>

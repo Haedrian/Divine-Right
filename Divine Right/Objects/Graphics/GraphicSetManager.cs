@@ -13,6 +13,7 @@ namespace DRObjects.Graphics
     {
         private static List<Color> hairColours;
         private static List<Color> clothingColours;
+        private static List<Color> priestClothingColours;
 
         private static Random random = new Random();
 
@@ -31,6 +32,15 @@ namespace DRObjects.Graphics
                 Color.AliceBlue,
                 Color.Purple,
                 Color.MediumPurple
+            };
+
+            priestClothingColours = new List<Color>()
+            {
+                Color.White,
+                Color.Brown,
+                Color.RosyBrown,
+                Color.SandyBrown,
+                Color.DarkGray
             };
         }
 
@@ -113,6 +123,17 @@ namespace DRObjects.Graphics
 
                 sprites[0].ColorFilter = hairColours[random.Next(hairColours.Count)];
                 sprites[2].ColorFilter = clothingColours[random.Next(clothingColours.Count)];
+
+                return sprites;
+            }
+            else if (name == GraphicSetName.HUMANPRIEST)
+            {
+                List<SpriteData> sprites = new List<SpriteData>();
+
+                sprites.Add(new SpriteData(SpriteManager.GetSprite(LocalSpriteName.PRIEST_BODY)));
+                sprites.Add(new SpriteData(SpriteManager.GetSprite(LocalSpriteName.PRIEST_CLOTHES)));
+
+                sprites[1].ColorFilter = priestClothingColours[random.Next(priestClothingColours.Count)];
 
                 return sprites;
             }
