@@ -522,8 +522,8 @@ namespace DRObjects.Graphics
             AddLocalSprite(LocalSpriteName.RICHMALE_CLOTHES, RICHMAN, 2, 0);
 
             AddLocalSprite(LocalSpriteName.RICHFEMALE_HAIR, RICHFEMALE, 0, 0);
-            AddLocalSprite(LocalSpriteName.RICHFEMALE_FACE, RICHFEMALE, 0, 0);
-            AddLocalSprite(LocalSpriteName.RICHFEMALE_CLOTHES, RICHFEMALE, 0, 0);
+            AddLocalSprite(LocalSpriteName.RICHFEMALE_FACE, RICHFEMALE, 1, 0);
+            AddLocalSprite(LocalSpriteName.RICHFEMALE_CLOTHES, RICHFEMALE, 2, 0);
 
             interfaceSprites[(int)InterfaceSpriteName.SCROLL] = new SpriteData(@"Graphics/Interface/scrollsandblocks", new Rectangle(224, 190, 96, 34));
             interfaceSprites[(int)InterfaceSpriteName.PAPER_TEXTURE] = new SpriteData(@"Graphics/Interface/paperTexture");

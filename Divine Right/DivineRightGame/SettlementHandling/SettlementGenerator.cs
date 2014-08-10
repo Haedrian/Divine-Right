@@ -45,7 +45,8 @@ namespace DivineRightGame.SettlementHandling
             settlement.MayContainItems = false;
             settlement.SettlementSize = size;
 
-            settlement.RichPercentage = random.Next(6) + random.Next(6) + random.Next(6);
+            //settlement.RichPercentage = random.Next(6) + random.Next(6) + random.Next(6);
+            settlement.RichPercentage = 50;
 
             settlement.MiddlePercentage = 0;
 
