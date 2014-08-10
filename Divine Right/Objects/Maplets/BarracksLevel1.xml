@@ -1,5 +1,6 @@
 ﻿<Maplet name="barracks1" Tiled="true" TileTag="wood" SizeX ="10" SizeY="7" Walled="true" WindowProbability="20">
   <MapletContents>
+    <MapletActor MaxAmount="1" ProbabilityPercentage="100" UseLocalType="true" EnemyTag="guard" EnemyMission="Wander"  />
     <MapletContentsItemTag Position="Middle" Category="mundaneitems" MaxAmount="5" ProbabilityPercentage="75" Tag="weapon decoration"/>
     <MapletContentsItemTag Position="Middle" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="75" Tag="restraints"/>
     <MapletContentsMaplet Position="Fixed" x="0" y="0" MaxAmount="1" ProbabilityPercentage="100" >
