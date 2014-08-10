@@ -1,4 +1,4 @@
-﻿<Maplet MapletName="Statue Plaza" SizeX="9" SizeY="9" Walled="false" Tiled="true" TileTag="Pavement">
+﻿<Maplet MapletName="Statue Plaza" SizeX="9" SizeY="9" Walled="false" Tiled="false" TileTag="Pavement">
   <MapletContents>
     <MapletContentsItemTag Position="Fixed" x="4" y="4" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="statue"/>
 

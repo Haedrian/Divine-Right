@@ -17,6 +17,7 @@ using Microsoft.Xna.Framework;
 using DRObjects.Graphics;
 using System.Reflection;
 using System.Threading;
+using DivineRightGame.Managers.HelperObjects.HelperEnums;
 
 namespace DivineRightGame.SettlementHandling
 {
@@ -227,17 +228,24 @@ namespace DivineRightGame.SettlementHandling
                     mainMap[x, y] = block;
                 }
             }
+            Rectangle plazaRect = new Rectangle(18, 18 + yShift, 18, 35 - yShift);
+          
+           //Generate decor - put a plaza in the middle
+           Maplet plazaMaplet = parser.ParseMaplet(MapletDatabaseHandler.GetMapletByTag("plaza"));
 
-              //TODO: DECOR
+            Actor[] tempAct = null;
 
-
+            gen.JoinMaps(mainMap,
+                gen.GenerateMap(plazaTile, null, plazaMaplet, true, "", out tempAct),
+                (plazaRect.X -1 + plazaRect.Width / 2) - plazaMaplet.SizeX / 2,
+                (plazaRect.Y -1 + plazaRect.Height / 2) - plazaMaplet.SizeY / 2);
+           
             //Now we put some people in
             var plazaActors = GenerateTownsfolk(settlement);
 
             actors.AddRange(plazaActors);
 
             //Go through them one at a time and position them on the plaza
-            Rectangle plazaRect = new Rectangle(18, 18 + yShift, 18, 35 - yShift);
 
             foreach (Actor actor in plazaActors)
             {
