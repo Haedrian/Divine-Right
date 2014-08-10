@@ -4,6 +4,7 @@
       <Maplet Tiled="true" SizeX="7" SizeY="7" Walled="true" TileTag="pavement">
         <MapletContents>
           <!-- Furnace and storeroom -->
+          <MapletActor MaxAmount="4" ProbabilityPercentage="75" UseLocalType="true" EnemyTag="poor" EnemyMission="wander"  />
           <MapletContentsItemTag Position="Sides" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="85" Tag="furnace"/>
           <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="15" ProbabilityPercentage="50" Tag="metal"/>
           <MapletContentsItemTag Position="Sides" Category="mundaneitems" MaxAmount="3" ProbabilityPercentage="100" Tag="container"/>
@@ -14,6 +15,7 @@
     <MapletContentsMaplet Position="Sides" MaxAmount="2"  ProbabilityPercentage="101">
       <Maplet Tiled="true" SizeX="5" SizeY="5" Walled="true" TileTag="pavement" WindowProbability="20">
         <MapletContents>
+          <MapletActor MaxAmount="2" ProbabilityPercentage="100" UseLocalType="true" EnemyTag="merchant" EnemyMission="Idle"  />
           <MapletContentsItemTag Position="Middle" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="80" Tag="anvil"/>
 
           <MapletContentsItemTag Position="Middle" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="bucket"/>

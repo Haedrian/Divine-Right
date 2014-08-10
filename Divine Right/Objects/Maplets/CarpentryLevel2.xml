@@ -3,6 +3,8 @@
     <MapletContentsMaplet Position="Sides" MaxAmount="1" ProbabilityPercentage="100" >
       <Maplet name="carpentry1" Tiled="true" TileTag="wood" SizeX ="7" SizeY="7" Walled="true" WindowProbability="20">
         <MapletContents>
+          <MapletActor MaxAmount="1" ProbabilityPercentage="100" UseLocalType="true" EnemyTag="merchant" EnemyMission="Wander"  />
+          <MapletActor MaxAmount="1" ProbabilityPercentage="65" UseLocalType="true" EnemyTag="poor" EnemyMission="Wander"  />
           <MapletContentsItemTag Position="Middle" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="75" Tag="carpentry static tool"/>
           <MapletContentsItemTag Position="Middle" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="75" Tag="carpentry workbench"/>
           <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="75" Tag="carpentry tool"/>
@@ -16,6 +18,7 @@
     <MapletContentsMaplet Position="Sides" FirstFit="true" MaxAmount="1"  ProbabilityPercentage="101">
       <Maplet Tiled="true" SizeX="7" SizeY="7" Walled="true" TileTag="wood" WindowProbability="40">
         <MapletContents>
+          <MapletActor MaxAmount="1" ProbabilityPercentage="100" UseLocalType="true" EnemyTag="rich" EnemyMission="Wander"  />
           <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="10" ProbabilityPercentage="50" Tag="wood"/>
           <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="95" Tag="desk"/>
           <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="4" ProbabilityPercentage="50" Tag="furniture"/>

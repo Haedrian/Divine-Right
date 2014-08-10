@@ -1,5 +1,6 @@
 ﻿<Maplet name="carpentry1" Tiled="true" TileTag="wood" SizeX ="7" SizeY="9" Walled="true" WindowProbability="20">
   <MapletContents>
+    <MapletActor MaxAmount="1" ProbabilityPercentage="100" UseLocalType="true" EnemyTag="merchant" EnemyMission="Wander"  />
     <MapletContentsItemTag Position="Middle" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="75" Tag="carpentry static tool"/>
     <MapletContentsItemTag Position="Middle" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="75" Tag="carpentry workbench"/>
     <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="75" Tag="carpentry tool"/>

@@ -301,10 +301,17 @@ namespace DivineRightGame.SettlementHandling
                 foreach (Actor actor in actors)
                 {
                     //Update the rectangle
-                    WanderMission miss = actor.MissionStack.Peek() as WanderMission;
 
-                    miss.WanderPoint.Y -= 30;
-                    miss.WanderRectangle = new Rectangle(miss.WanderRectangle.X, miss.WanderRectangle.Y - 30, miss.WanderRectangle.Width, miss.WanderRectangle.Height);
+                    if (actor.MissionStack.Count > 0)
+                    {
+                        WanderMission miss = actor.MissionStack.Peek() as WanderMission;
+
+                        if (miss != null)
+                        {
+                            miss.WanderPoint.Y -= 30;
+                            miss.WanderRectangle = new Rectangle(miss.WanderRectangle.X, miss.WanderRectangle.Y - 30, miss.WanderRectangle.Width, miss.WanderRectangle.Height);
+                        }
+                    }
                 }
             }
                       

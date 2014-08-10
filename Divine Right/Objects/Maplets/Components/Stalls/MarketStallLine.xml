@@ -1,5 +1,6 @@
 ﻿<Maplet SizeX="5" SizeY="4" Walled="false" Tiled="false">
   <MapletContents>
+    <MapletActor MaxAmount="1" ProbabilityPercentage="100" UseLocalType="true" EnemyTag="poor" EnemyMission="Idle"  />
     <MapletContentsItemTag Position="Fixed" x="0" y="3" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="stall"/>
     <MapletContentsItemTag Position="Fixed" x="1" y="3" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="stall"/>
     <MapletContentsItemTag Position="Fixed" x="2" y="3" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="stall"/>

@@ -3,6 +3,8 @@
     <MapletContentsMaplet Position="Sides" Padding="1" MaxAmount="1" ProbabilityPercentage="100">
       <Maplet name="warehouses" Tiled="true" TileTag="pavement" SizeX ="8" SizeY="15" Walled="true" WindowProbability="0">
         <MapletContents>
+          <MapletActor MaxAmount="1" ProbabilityPercentage="100" UseLocalType="true" EnemyTag="poor" EnemyMission="Idle"  />
+          <MapletActor MaxAmount="1" ProbabilityPercentage="100" UseLocalType="true" EnemyTag="guard" EnemyMission="Idle"  />
           <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="20" ProbabilityPercentage="75" Tag="crate"/>
           <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="10" ProbabilityPercentage="75" Tag="resource"/>
         </MapletContents>
@@ -11,6 +13,7 @@
     <MapletContentsMaplet Position="Sides" MaxAmount="1" ProbabilityPercentage="98">
       <Maplet name="headOffice" Tiled="true" TileTag="wood" SizeX ="6" SizeY="7" Walled="true" WindowProbability="30">
         <MapletContents>
+          <MapletActor MaxAmount="1" ProbabilityPercentage="100" UseLocalType="true" EnemyTag="rich" EnemyMission="Idle"  />
           <MapletContentsItemTag Position="Middle" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="desk"/>
           <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="75" Tag="container"/>
           <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="3" ProbabilityPercentage="75" Tag="decoration"/>

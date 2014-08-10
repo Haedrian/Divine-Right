@@ -3,6 +3,8 @@
     <MapletContentsMaplet Position="Sides" Padding="1" MaxAmount="2" ProbabilityPercentage="75">
       <Maplet name="warehouses" Tiled="true" TileTag="pavement" SizeX ="5" SizeY="10" Walled="true" WindowProbability="0">
         <MapletContents>
+          <MapletActor MaxAmount="1" ProbabilityPercentage="100" UseLocalType="true" EnemyTag="poor" EnemyMission="Idle"  />
+          <MapletActor MaxAmount="1" ProbabilityPercentage="100" UseLocalType="true" EnemyTag="guard" EnemyMission="Idle"  />
           <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="10" ProbabilityPercentage="75" Tag="crate"/>
           <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="7" ProbabilityPercentage="75" Tag="resource"/>
         </MapletContents>

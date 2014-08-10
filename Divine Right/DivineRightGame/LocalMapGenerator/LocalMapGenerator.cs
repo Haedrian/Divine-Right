@@ -180,11 +180,13 @@ namespace DivineRightGame.LocalMapGenerator
                                     {
                                         var wander = actor.MissionStack.Peek() as WanderMission;
 
-                                        wander.WanderPoint.X += childMaplet.x.Value;
-                                        wander.WanderPoint.Y += childMaplet.y.Value;
+                                        if (wander != null)
+                                        {
+                                            wander.WanderPoint.X += childMaplet.x.Value;
+                                            wander.WanderPoint.Y += childMaplet.y.Value;
 
-                                        wander.WanderRectangle = new Rectangle(wander.WanderRectangle.X + childMaplet.x.Value, wander.WanderRectangle.Y + childMaplet.y.Value, wander.WanderRectangle.Width, wander.WanderRectangle.Height);
-
+                                            wander.WanderRectangle = new Rectangle(wander.WanderRectangle.X + childMaplet.x.Value, wander.WanderRectangle.Y + childMaplet.y.Value, wander.WanderRectangle.Width, wander.WanderRectangle.Height);
+                                        }
 
                                     }
                                 }

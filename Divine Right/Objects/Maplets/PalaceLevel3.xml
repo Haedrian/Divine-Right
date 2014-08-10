@@ -1,5 +1,7 @@
 ﻿<Maplet name="Palace Large" Tiled="true" SizeX ="15" TileTag="wood" SizeY="15" Walled="true">
   <MapletContents>
+    <MapletActor MaxAmount="1" ProbabilityPercentage="100" UseLocalType="true" EnemyTag="rich" EnemyMission="wander"  />
+    <MapletActor MaxAmount="4" ProbabilityPercentage="50" UseLocalType="true" EnemyTag="guard" EnemyMission="wander"  />
     <MapletContentsMaplet Position="Sides" FirstFit="true" MaxAmount="1" ProbabilityPercentage="100">
       <MapletTag Tag="Bedroom" />
     </MapletContentsMaplet>
