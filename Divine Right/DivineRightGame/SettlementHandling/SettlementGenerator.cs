@@ -314,7 +314,28 @@ namespace DivineRightGame.SettlementHandling
                     }
                 }
             }
-                      
+
+            //Let's add some trees and stuff
+            int decorCount = (int) (mainMap.GetLength(1)*1.5);
+
+            //Just find as many random points and if it happens to be grass, drop them
+            int itemID = 0;
+
+            for (int i = 0; i < decorCount; i++)
+            {
+                //More trees than flowers
+                MapItem decorItem = factory.CreateItem(Archetype.MUNDANEITEMS, i%5 == 0 ? "outdoor flower" : "tree" , out itemID);
+
+                //Pick a random point
+                MapBlock randomBlock = mainMap[random.Next(mainMap.GetLength(0)), random.Next(mainMap.GetLength(1))];
+
+                if (randomBlock.MayContainItems && randomBlock.Tile.Name == "Grass")
+                {
+                    //Yes, can support it
+                    randomBlock.ForcePutItemOnBlock(decorItem);
+                }
+                //Otherwise forget all about it
+            }        
             return mainMap;
         }
 
