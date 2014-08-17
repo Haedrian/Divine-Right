@@ -42,6 +42,18 @@ namespace DRObjects.Items.Archetypes.Global
 
         #endregion
 
+        public override List<SpriteData> Graphics
+        {
+            get
+            {
+                return new List<SpriteData>(){Graphic};
+            }
+            set
+            {
+                base.Graphics = value;
+            }
+        }
+
         public override SpriteData Graphic
         {
             get
@@ -51,7 +63,7 @@ namespace DRObjects.Items.Archetypes.Global
                     case SettlementType.HAMLET:
                         return SpriteManager.GetSprite(GlobalSpriteName.HAMLET);
                     case SettlementType.TOWN:
-                        return SpriteManager.GetSprite(GlobalSpriteName.TOWN);
+                        return SpriteManager.GetSprite(GlobalSpriteName.CAPITAL);
                     case SettlementType.VILLAGE:
                         return SpriteManager.GetSprite(GlobalSpriteName.VILLAGE);
                 }

@@ -26,7 +26,7 @@ namespace DRObjects.Graphics
         MOUNTAIN,
 
         HAMLET,
-        TOWN,
+        CAPITAL,
         VILLAGE,
     }
 }

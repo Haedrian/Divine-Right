@@ -13,6 +13,7 @@ namespace DRObjects.Graphics
     {
         #region Constants
 
+        private static string WORLDITEMS = @"Graphics/World/WorldItems";
         private static string HOUSEITEM = @"Graphics/Local/HouseItems";
         private static string RESOURCES_AND_TOOLS = @"Graphics/Local/ResourcesAndTools";
         private static string TILES = @"Graphics/Local/TilesCropped";
@@ -47,23 +48,23 @@ namespace DRObjects.Graphics
             colourSprites = new SpriteData[100];
             interfaceSprites = new SpriteData[100];
 
-            globalSprites[(int)GlobalSpriteName.BIGTREE] = new SpriteData( @"Graphics/World/BigTree");
-            globalSprites[(int)GlobalSpriteName.DEADTREE] = new SpriteData(@"Graphics/World/DeadTree");
+            globalSprites[(int)GlobalSpriteName.BIGTREE] = new SpriteData(WORLDITEMS,new Rectangle(650,100,50,50));
+            globalSprites[(int)GlobalSpriteName.DEADTREE] = new SpriteData(WORLDITEMS, new Rectangle(250, 50, 50, 50));
             globalSprites[(int)GlobalSpriteName.DESERTTILE] = new SpriteData( @"Graphics/World/Tiles/DesertTile");
             globalSprites[(int)GlobalSpriteName.FORESTTILE] = new SpriteData(@"Graphics/World/Tiles/ForestTile");
             globalSprites[(int)GlobalSpriteName.GARIGUETILE] = new SpriteData(@"Graphics/World/Tiles/GarigueTile");
             globalSprites[(int)GlobalSpriteName.GRASSTILE] = new SpriteData(@"Graphics/World/Tiles/GrassTile");
-            globalSprites[(int)GlobalSpriteName.HILLSLOPE] = new SpriteData(@"Graphics/World/Hill");
-            globalSprites[(int)GlobalSpriteName.MOUNTAIN] = new SpriteData(@"Graphics/World/Mountain");
+            globalSprites[(int)GlobalSpriteName.HILLSLOPE] = new SpriteData(WORLDITEMS,new Rectangle(150,0,50,50));
+            globalSprites[(int)GlobalSpriteName.MOUNTAIN] = new SpriteData(WORLDITEMS, new Rectangle(200, 50, 50, 50));
             globalSprites[(int)GlobalSpriteName.RIVER] = new SpriteData(@"Graphics/World/River");
             globalSprites[(int)GlobalSpriteName.SNOWTILE] = new SpriteData(@"Graphics/World/Tiles/SnowTile");
             globalSprites[(int)GlobalSpriteName.SWAMPTILE] = new SpriteData(@"Graphics/World/Tiles/SwampTile");
-            globalSprites[(int)GlobalSpriteName.TREE] = new SpriteData(@"Graphics/World/Tree");
-            globalSprites[(int)GlobalSpriteName.TROPICALTREE] = new SpriteData(@"Graphics/World/TropicalTree");
+            globalSprites[(int)GlobalSpriteName.TREE] = new SpriteData(WORLDITEMS, new Rectangle(250, 100, 50, 50));
+            globalSprites[(int)GlobalSpriteName.TROPICALTREE] = new SpriteData(WORLDITEMS, new Rectangle(650, 50, 50, 50));
             globalSprites[(int)GlobalSpriteName.WATERTILE] = new SpriteData(@"Graphics/World/Tiles/WaterTile");
-            globalSprites[(int)GlobalSpriteName.HAMLET] = new SpriteData(@"Graphics/World/Settlements/SmallSettlement");
-            globalSprites[(int)GlobalSpriteName.VILLAGE] = new SpriteData(@"Graphics/World/Settlements/MediumSettlement");
-            globalSprites[(int) GlobalSpriteName.TOWN] = new SpriteData(@"Graphics/World/Settlements/LargeSettlement");
+            globalSprites[(int)GlobalSpriteName.HAMLET] = new SpriteData(WORLDITEMS, new Rectangle(600, 50, 50, 50));
+            globalSprites[(int)GlobalSpriteName.VILLAGE] = new SpriteData(WORLDITEMS, new Rectangle(600, 0, 50, 50));
+            globalSprites[(int)GlobalSpriteName.CAPITAL] = new SpriteData(WORLDITEMS, new Rectangle(600, 100, 50, 50));
 
             colourSprites[(int)ColourSpriteName.BROWN] = new SpriteData(@"Graphics/World/Overlay/Regions/Brown");
             colourSprites[(int)ColourSpriteName.GREEN] = new SpriteData(@"Graphics/World/Overlay/Regions/Green");
