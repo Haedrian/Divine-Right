@@ -23,6 +23,7 @@ namespace DivineRightGame.Managers
         public const int RAINCENTERCOUNT = 6;
         public const int HUMANSETTLEMENTCOUNT = 50;
         public const int HUMANSETTLEMENTSEARCHRADIUS = 25;
+        public const int DUNGEONS_PER_HUMAN_SETTLEMENT = 5;
 
         public const int REGIONSIZE = WORLDSIZE*2;
 
@@ -75,7 +76,7 @@ namespace DivineRightGame.Managers
             
             CurrentStep = "And the rains began, and the rivers formed";
             GenerateRivers();
-            
+
             CurrentStep = "And the sun shone upon the world, and it saw heat";
             GenerateTemperatures();
 
@@ -88,7 +89,7 @@ namespace DivineRightGame.Managers
             CurrentStep = "And then he looked upon the land and determined the desires of man";
             DetermineDesirability();
 
-            CurrentStep = "And the humans came and they colonised the land";
+            CurrentStep = "And the humans came and they colonised the land. And monsters and beasts came with them.";
             ColoniseWorld();
 
             CurrentStep = "And thus the world was done";
@@ -744,9 +745,9 @@ namespace DivineRightGame.Managers
         /// </summary>
         public static void DetermineDesirability()
         {
-            for (int x = 0; x > WORLDSIZE; x++)
+            for (int x = 0; x < WORLDSIZE; x++)
             {
-                for (int y = 0; y > WORLDSIZE; y++)
+                for (int y = 0; y < WORLDSIZE; y++)
                 {
                     MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapTypeEnum.GLOBAL));
 

@@ -9,6 +9,7 @@ using DRObjects.Enums;
 
 namespace DivineRightGame
 {
+    [Serializable]
     /// <summary>
     /// Represents a Global Map and the items it contains
     /// </summary>

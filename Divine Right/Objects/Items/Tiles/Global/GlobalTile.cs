@@ -341,7 +341,7 @@ namespace DRObjects.Items.Tiles.Global
                 {
                     return ORANGE;
                 }
-                else if (BaseDesirability < 0)
+                else if (BaseDesirability <= 0)
                 {
                     return RED;
                 }
