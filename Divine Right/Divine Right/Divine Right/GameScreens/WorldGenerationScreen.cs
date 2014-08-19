@@ -179,6 +179,10 @@ namespace Divine_Right.GameScreens
             {
                 OVERLAY = GlobalOverlay.DESIRABILITY;
             }
+            else if (keyboardState.IsKeyDown(Keys.O))
+            {
+                OVERLAY = GlobalOverlay.OWNER;
+            }
         }
 
         public override void Draw(GameTime gameTime)

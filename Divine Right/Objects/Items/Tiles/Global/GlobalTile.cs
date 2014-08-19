@@ -88,16 +88,21 @@ namespace DRObjects.Items.Tiles.Global
         /// </summary>
         public int BaseDesirability { get; set; }
 
+        /// <summary>
+        /// If set to true, it will not be possible to colonise on this tile
+        /// </summary>
+        public bool IsBlockedForColonisation { get; set; }
+
+        /// <summary>
+        /// Which civilisation owns the tile - if any. Other civilisations will not colonise this tile.
+        /// </summary>
+        public int? Owner { get; set; }
+
         #endregion
 
         #region Properties
 
-        public GlobalTile()
-        {
-            Elevation = 0;
-            Region = -1;
-            base.MayContainItems = true;
-        }
+       
 
         public override List<SpriteData> Graphics
         {
@@ -347,12 +352,42 @@ namespace DRObjects.Items.Tiles.Global
                 }
             }
             #endregion
-
+            #region Owner
+            else if (overlay == GlobalOverlay.OWNER)
+            {
+                if (Owner == null)
+                {
+                    return null;
+                }
+                
+                switch (Owner.Value)
+                {
+                    case 0: return BROWN;
+                    case 1: return GREEN;
+                    case 2: return ORANGE;
+                    case 3: return PINK;
+                    case 4: return PURPLE;
+                    case 5: return RED;
+                    case 6: return YELLOW;
+                }
+            }
+            #endregion
             return null;
 
         }
 
         #endregion
 
+        #region Constructor
+
+        public GlobalTile()
+        {
+            Elevation = 0;
+            Region = -1;
+            base.MayContainItems = true;
+            IsBlockedForColonisation = false;
+        }
+
+        #endregion
     }
 }

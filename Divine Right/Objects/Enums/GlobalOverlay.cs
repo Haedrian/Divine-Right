@@ -13,5 +13,6 @@ namespace DRObjects.Enums
         RAINFALL,
         ELEVATION,
         DESIRABILITY,
+        OWNER,
     }
 }

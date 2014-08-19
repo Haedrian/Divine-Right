@@ -21,8 +21,14 @@ namespace DivineRightGame.Managers
         public const int EXPONENTWEIGHT = 2;
         public const int RIVERCOUNT = 50;
         public const int RAINCENTERCOUNT = 6;
-        public const int HUMANSETTLEMENTCOUNT = 50;
-        public const int HUMANSETTLEMENTSEARCHRADIUS = 25;
+        
+        public const int HUMAN_CAPITAL_COUNT = 4;
+        public const int HUMAN_SETTLEMENTS_PER_CIVILIZATION = 7;
+        public const int HUMAN_CAPITAL_SEARCH_RADIUS = 150;
+        public const int HUMAN_COLONY_SEARCH_RADIUS = 20;
+        public const int HUMAN_COLONY_BLOCKING_RADIUS = 5;
+        public const int HUMAN_COLONY_CLAIMING_RADIUS = 10;
+
         public const int DUNGEONS_PER_HUMAN_SETTLEMENT = 5;
 
         public const int REGIONSIZE = WORLDSIZE*2;
@@ -770,20 +776,24 @@ namespace DivineRightGame.Managers
 
             Random random = new Random();
 
-            for (int i = 0; i < HUMANSETTLEMENTCOUNT; i++)
+            for (int i = 0; i < HUMAN_CAPITAL_COUNT; i++)
             {
+                List<Settlement> ownedSettlements = new List<Settlement>();
+
                 //choose a random x and y
 
                 MapBlock centreBlock = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(random.Next(WORLDSIZE), random.Next(WORLDSIZE), 0, MapTypeEnum.GLOBAL));
 
                 //Get all tiles in the 'region'
-                MapBlock[] regionalBlocks = GetBlocksAroundPoint(centreBlock.Tile.Coordinate, HUMANSETTLEMENTSEARCHRADIUS);
+                MapBlock[] regionalBlocks = GetBlocksAroundPoint(centreBlock.Tile.Coordinate, HUMAN_CAPITAL_SEARCH_RADIUS);
 
                 //order them by the sum of the desirabilty
 
                 //We only need to consider tiles which have no river, and actual land which isn't a mountain
-
-                var candidateBlocks = regionalBlocks.Where(rb => !(rb.Tile as GlobalTile).HasRiver && (rb.Tile as GlobalTile).Elevation > 0 && (rb.Tile as GlobalTile).Elevation < 250 && !(rb.GetTopItem() is Settlement))
+                //Also consider those which aren't blocked and which aren't claimed
+                var candidateBlocks = regionalBlocks.Where(rb => !(rb.Tile as GlobalTile).HasRiver && (rb.Tile as GlobalTile).Elevation > 0 && (rb.Tile as GlobalTile).Elevation < 250 
+                    && !(rb.Tile as GlobalTile).IsBlockedForColonisation
+                    && ((rb.Tile as GlobalTile).Owner == null || (rb.Tile as GlobalTile).Owner == i))
                     .OrderByDescending(rb => (rb.Tile as GlobalTile).BaseDesirability + (GetBlocksAroundPoint(rb.Tile.Coordinate, 1).Sum(rba => (rba.Tile as GlobalTile).BaseDesirability)));
 
                 if (candidateBlocks.ToArray().Length == 0)
@@ -797,65 +807,46 @@ namespace DivineRightGame.Managers
 
                 //TODO: ADD TO THE GLOBAL MAP'S COLONY LIST EVENTUALLY
                 MapBlock block = candidateBlocks.First();
-                GlobalTile blockTile = (block.Tile as GlobalTile);
 
-                //if it has a forest on it, cut it down
-                switch (blockTile.Biome)
+                Settlement settlement = SettlementGenerator.GenerateSettlement(block.Tile.Coordinate, random.Next(5)+10);
+
+                CreateSettlement(true, settlement, block,i);
+
+                ownedSettlements.Add(settlement);
+
+                //That's the capital done, now let's put in some more colonies for each civilisation
+
+                for (int j = 0; j < HUMAN_SETTLEMENTS_PER_CIVILIZATION; j++)
                 {
-                    case GlobalBiome.DENSE_FOREST:
-                        blockTile.Biome = GlobalBiome.GRASSLAND;
-                        break;
-                    case GlobalBiome.WOODLAND:
-                        blockTile.Biome = GlobalBiome.GRASSLAND;
-                        break;
-                    case GlobalBiome.POLAR_FOREST:
-                        blockTile.Biome = GlobalBiome.POLAR_DESERT;
-                        break;
-                }
-                Settlement settlement = SettlementGenerator.GenerateSettlement(block.Tile.Coordinate, random.Next(10) + 3);
+                    //Collect all the possible locations around all the settlements owned by that civilisation
+                    List<MapBlock> possibleLocations = new List<MapBlock>();
 
-                //Put an entire group of SettlementItems on it
-                MapCoordinate[] settlementCoordinates = new MapCoordinate[10];
-                
-                settlementCoordinates[7] = new MapCoordinate(block.Tile.Coordinate.X - 1, block.Tile.Coordinate.Y - 1, 0, MapTypeEnum.GLOBAL);
-                settlementCoordinates[8] = new MapCoordinate(block.Tile.Coordinate.X, block.Tile.Coordinate.Y - 1, 0, MapTypeEnum.GLOBAL);
-                settlementCoordinates[9] = new MapCoordinate(block.Tile.Coordinate.X + 1, block.Tile.Coordinate.Y - 1, 0, MapTypeEnum.GLOBAL);
-                settlementCoordinates[4] = new MapCoordinate(block.Tile.Coordinate.X - 1, block.Tile.Coordinate.Y, 0, MapTypeEnum.GLOBAL);
-                settlementCoordinates[5] = new MapCoordinate(block.Tile.Coordinate.X, block.Tile.Coordinate.Y, 0, MapTypeEnum.GLOBAL);
-                settlementCoordinates[6] = new MapCoordinate(block.Tile.Coordinate.X + 1, block.Tile.Coordinate.Y, 0, MapTypeEnum.GLOBAL);
-                settlementCoordinates[1] = new MapCoordinate(block.Tile.Coordinate.X - 1, block.Tile.Coordinate.Y +1, 0, MapTypeEnum.GLOBAL);
-                settlementCoordinates[2] = new MapCoordinate(block.Tile.Coordinate.X, block.Tile.Coordinate.Y + 1, 0, MapTypeEnum.GLOBAL);
-                settlementCoordinates[3] = new MapCoordinate(block.Tile.Coordinate.X + 1, block.Tile.Coordinate.Y + 1, 0, MapTypeEnum.GLOBAL);
-
-                for(int corner=1; corner < 10; corner++)
-                {
-                    var cornerBlock = GameState.GlobalMap.GetBlockAtCoordinate(settlementCoordinates[corner]);
-
-                    //Cut any forests down
-                    switch ((cornerBlock.Tile as GlobalTile).Biome)
+                    foreach (Settlement settle in ownedSettlements)
                     {
-                        case GlobalBiome.DENSE_FOREST:
-                            (cornerBlock.Tile as GlobalTile).Biome = GlobalBiome.GRASSLAND;
-                            break;
-                        case GlobalBiome.WOODLAND:
-                            (cornerBlock.Tile as GlobalTile).Biome = GlobalBiome.GRASSLAND;
-                            break;
-                        case GlobalBiome.POLAR_FOREST:
-                            (cornerBlock.Tile as GlobalTile).Biome = GlobalBiome.POLAR_DESERT;
-                            break;
+                        possibleLocations.AddRange(GetBlocksAroundPoint(settle.Coordinate, HUMAN_COLONY_SEARCH_RADIUS));
                     }
 
-                    GameState.GlobalMap.GetBlockAtCoordinate(settlementCoordinates[corner])
-                    .ForcePutItemOnBlock(new SettlementItem() 
+                    candidateBlocks = possibleLocations.Where(rb => !(rb.Tile as GlobalTile).HasRiver && (rb.Tile as GlobalTile).Elevation > 0 && (rb.Tile as GlobalTile).Elevation < 250
+                    && !(rb.Tile as GlobalTile).IsBlockedForColonisation
+                    && ((rb.Tile as GlobalTile).Owner == null || (rb.Tile as GlobalTile).Owner.Value == i))
+                    .OrderByDescending(rb => (rb.Tile as GlobalTile).BaseDesirability + (GetBlocksAroundPoint(rb.Tile.Coordinate, 1).Sum(rba => (rba.Tile as GlobalTile).BaseDesirability)));
+
+                    if (candidateBlocks.Count() == 0)
                     {
-                        Coordinate = settlementCoordinates[corner],
-                        IsCapital = settlement.SettlementSize%2 == 0,
-                        MayContainItems = true,
-                        SettlementCorner = corner,
-                        SettlementSize = settlement.SettlementSize,
-                    });
+                        //No more - stop colonising
+                        break;
+                    }
+
+                    block = candidateBlocks.First();
+
+                    settlement = SettlementGenerator.GenerateSettlement(block.Tile.Coordinate, random.Next(7) + 1);
+
+                    CreateSettlement(false, settlement, block, i);
+
+                    ownedSettlements.Add(settlement);
+
                 }
-                
+
             }
 
         }
@@ -863,6 +854,81 @@ namespace DivineRightGame.Managers
         #endregion World Generation Functions
 
         #region Helper Functions
+
+        /// <summary>
+        /// Puts settlement items on a particular location pertianing to a particular settlement.
+        /// </summary>
+        /// <param name="capital">Whether it's the capital or not</param>
+        /// <param name="settlement">The settlement which it represents</param>
+        /// <param name="block">The block making up the center</param>
+        private static void CreateSettlement(bool capital,Settlement settlement,MapBlock block,int owner)
+        {
+            //Put an entire group of SettlementItems on it
+            MapCoordinate[] settlementCoordinates = new MapCoordinate[10];
+
+            settlementCoordinates[7] = new MapCoordinate(block.Tile.Coordinate.X - 1, block.Tile.Coordinate.Y - 1, 0, MapTypeEnum.GLOBAL);
+            settlementCoordinates[8] = new MapCoordinate(block.Tile.Coordinate.X, block.Tile.Coordinate.Y - 1, 0, MapTypeEnum.GLOBAL);
+            settlementCoordinates[9] = new MapCoordinate(block.Tile.Coordinate.X + 1, block.Tile.Coordinate.Y - 1, 0, MapTypeEnum.GLOBAL);
+            settlementCoordinates[4] = new MapCoordinate(block.Tile.Coordinate.X - 1, block.Tile.Coordinate.Y, 0, MapTypeEnum.GLOBAL);
+            settlementCoordinates[5] = new MapCoordinate(block.Tile.Coordinate.X, block.Tile.Coordinate.Y, 0, MapTypeEnum.GLOBAL);
+            settlementCoordinates[6] = new MapCoordinate(block.Tile.Coordinate.X + 1, block.Tile.Coordinate.Y, 0, MapTypeEnum.GLOBAL);
+            settlementCoordinates[1] = new MapCoordinate(block.Tile.Coordinate.X - 1, block.Tile.Coordinate.Y + 1, 0, MapTypeEnum.GLOBAL);
+            settlementCoordinates[2] = new MapCoordinate(block.Tile.Coordinate.X, block.Tile.Coordinate.Y + 1, 0, MapTypeEnum.GLOBAL);
+            settlementCoordinates[3] = new MapCoordinate(block.Tile.Coordinate.X + 1, block.Tile.Coordinate.Y + 1, 0, MapTypeEnum.GLOBAL);
+
+            //Block the radius around it from colonising
+            MapBlock[] regionalBlocks = GetBlocksAroundPoint(block.Tile.Coordinate, HUMAN_COLONY_BLOCKING_RADIUS);
+
+            foreach (MapBlock rblock in regionalBlocks)
+            {
+                (rblock.Tile as GlobalTile).IsBlockedForColonisation = true;
+            }
+
+            //Claim the land around it
+            MapBlock[] claimedBlocks = GetBlocksAroundPoint(block.Tile.Coordinate, HUMAN_COLONY_CLAIMING_RADIUS);
+
+            foreach (MapBlock rblock in claimedBlocks)
+            {
+                //This is a disputed region. For now let's not allow creep.
+                //Later this might be cause for war
+                if (!(rblock.Tile as GlobalTile).Owner.HasValue)
+                {
+                    (rblock.Tile as GlobalTile).Owner = owner;
+                }
+            }
+
+            for (int corner = 1; corner < 10; corner++)
+            {
+                var cornerBlock = GameState.GlobalMap.GetBlockAtCoordinate(settlementCoordinates[corner]);
+
+                //Cut any forests down
+                switch ((cornerBlock.Tile as GlobalTile).Biome)
+                {
+                    case GlobalBiome.DENSE_FOREST:
+                        (cornerBlock.Tile as GlobalTile).Biome = GlobalBiome.GRASSLAND;
+                        break;
+                    case GlobalBiome.WOODLAND:
+                        (cornerBlock.Tile as GlobalTile).Biome = GlobalBiome.GRASSLAND;
+                        break;
+                    case GlobalBiome.POLAR_FOREST:
+                        (cornerBlock.Tile as GlobalTile).Biome = GlobalBiome.POLAR_DESERT;
+                        break;
+                }
+
+                GameState.GlobalMap.GetBlockAtCoordinate(settlementCoordinates[corner])
+                .ForcePutItemOnBlock(new SettlementItem()
+                {
+                    Coordinate = settlementCoordinates[corner],
+                    IsCapital = capital,
+                    MayContainItems = true,
+                    SettlementCorner = corner,
+                    SettlementSize = settlement.SettlementSize,
+                    Description = settlement.Description,
+                    InternalName = settlement.InternalName,
+                    Name = settlement.Name,
+                });
+            }
+        }
 
         /// <summary>
         /// Determines the Desirability of a particular global tile
