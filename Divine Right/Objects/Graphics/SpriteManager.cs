@@ -66,6 +66,36 @@ namespace DRObjects.Graphics
             globalSprites[(int)GlobalSpriteName.VILLAGE] = new SpriteData(WORLDITEMS, new Rectangle(600, 0, 50, 50));
             globalSprites[(int)GlobalSpriteName.CAPITAL] = new SpriteData(WORLDITEMS, new Rectangle(600, 100, 50, 50));
 
+            globalSprites[(int)GlobalSpriteName.CAPITAL_1] = new SpriteData(WORLDITEMS, new Rectangle(0, 0, 50, 50));
+            globalSprites[(int)GlobalSpriteName.CAPITAL_2] = new SpriteData(WORLDITEMS, new Rectangle(50, 0, 50, 50));
+            globalSprites[(int)GlobalSpriteName.CAPITAL_3] = new SpriteData(WORLDITEMS, new Rectangle(100, 0, 50, 50));
+            globalSprites[(int)GlobalSpriteName.CAPITAL_4] = new SpriteData(WORLDITEMS, new Rectangle(0, 50, 50, 50));
+            globalSprites[(int)GlobalSpriteName.CAPITAL_5] = new SpriteData(WORLDITEMS, new Rectangle(50, 50, 50, 50));
+            globalSprites[(int)GlobalSpriteName.CAPITAL_6] = new SpriteData(WORLDITEMS, new Rectangle(100, 50, 50, 50));
+            globalSprites[(int)GlobalSpriteName.CAPITAL_7] = new SpriteData(WORLDITEMS, new Rectangle(0, 100, 50, 50));
+            globalSprites[(int)GlobalSpriteName.CAPITAL_8] = new SpriteData(WORLDITEMS, new Rectangle(50, 100, 50, 50));
+            globalSprites[(int)GlobalSpriteName.CAPITAL_9] = new SpriteData(WORLDITEMS, new Rectangle(100, 100, 50, 50));
+
+            globalSprites[(int)GlobalSpriteName.HAMLET_1] = new SpriteData(WORLDITEMS, new Rectangle(300, 0, 50, 50));
+            globalSprites[(int)GlobalSpriteName.HAMLET_2] = new SpriteData(WORLDITEMS, new Rectangle(350, 0, 50, 50));
+            globalSprites[(int)GlobalSpriteName.HAMLET_3] = new SpriteData(WORLDITEMS, new Rectangle(400, 0, 50, 50));
+            globalSprites[(int)GlobalSpriteName.HAMLET_4] = new SpriteData(WORLDITEMS, new Rectangle(300, 100, 50, 50));
+            globalSprites[(int)GlobalSpriteName.HAMLET_5] = new SpriteData(WORLDITEMS, new Rectangle(350, 100, 50, 50));
+            globalSprites[(int)GlobalSpriteName.HAMLET_6] = new SpriteData(WORLDITEMS, new Rectangle(400, 100, 50, 50));
+            globalSprites[(int)GlobalSpriteName.HAMLET_7] = new SpriteData(WORLDITEMS, new Rectangle(300, 150, 50, 50));
+            globalSprites[(int)GlobalSpriteName.HAMLET_8] = new SpriteData(WORLDITEMS, new Rectangle(350, 150, 50, 50));
+            globalSprites[(int)GlobalSpriteName.HAMLET_9] = new SpriteData(WORLDITEMS, new Rectangle(400, 150, 50, 50));
+
+            globalSprites[(int)GlobalSpriteName.VILLAGE_1] = new SpriteData(WORLDITEMS, new Rectangle(450, 0, 50, 50));
+            globalSprites[(int)GlobalSpriteName.VILLAGE_2] = new SpriteData(WORLDITEMS, new Rectangle(500, 0, 50, 50));
+            globalSprites[(int)GlobalSpriteName.VILLAGE_3] = new SpriteData(WORLDITEMS, new Rectangle(550, 0, 50, 50));
+            globalSprites[(int)GlobalSpriteName.VILLAGE_4] = new SpriteData(WORLDITEMS, new Rectangle(450, 100, 50, 50));
+            globalSprites[(int)GlobalSpriteName.VILLAGE_5] = new SpriteData(WORLDITEMS, new Rectangle(500, 100, 50, 50));
+            globalSprites[(int)GlobalSpriteName.VILLAGE_6] = new SpriteData(WORLDITEMS, new Rectangle(550, 100, 50, 50));
+            globalSprites[(int)GlobalSpriteName.VILLAGE_7] = new SpriteData(WORLDITEMS, new Rectangle(450, 150, 50, 50));
+            globalSprites[(int)GlobalSpriteName.VILLAGE_8] = new SpriteData(WORLDITEMS, new Rectangle(500, 150, 50, 50));
+            globalSprites[(int)GlobalSpriteName.VILLAGE_9] = new SpriteData(WORLDITEMS, new Rectangle(550, 150, 50, 50));
+
             colourSprites[(int)ColourSpriteName.BROWN] = new SpriteData(@"Graphics/World/Overlay/Regions/Brown");
             colourSprites[(int)ColourSpriteName.GREEN] = new SpriteData(@"Graphics/World/Overlay/Regions/Green");
             colourSprites[(int)ColourSpriteName.INDIGO] = new SpriteData(@"Graphics/World/Overlay/Regions/Indigo");

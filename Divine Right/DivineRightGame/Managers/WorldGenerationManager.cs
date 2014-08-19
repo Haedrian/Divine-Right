@@ -814,7 +814,47 @@ namespace DivineRightGame.Managers
                 }
                 Settlement settlement = SettlementGenerator.GenerateSettlement(block.Tile.Coordinate, random.Next(10) + 3);
 
-                block.PutItemOnBlock(settlement);
+                //Put an entire group of SettlementItems on it
+                MapCoordinate[] settlementCoordinates = new MapCoordinate[10];
+                
+                settlementCoordinates[7] = new MapCoordinate(block.Tile.Coordinate.X - 1, block.Tile.Coordinate.Y - 1, 0, MapTypeEnum.GLOBAL);
+                settlementCoordinates[8] = new MapCoordinate(block.Tile.Coordinate.X, block.Tile.Coordinate.Y - 1, 0, MapTypeEnum.GLOBAL);
+                settlementCoordinates[9] = new MapCoordinate(block.Tile.Coordinate.X + 1, block.Tile.Coordinate.Y - 1, 0, MapTypeEnum.GLOBAL);
+                settlementCoordinates[4] = new MapCoordinate(block.Tile.Coordinate.X - 1, block.Tile.Coordinate.Y, 0, MapTypeEnum.GLOBAL);
+                settlementCoordinates[5] = new MapCoordinate(block.Tile.Coordinate.X, block.Tile.Coordinate.Y, 0, MapTypeEnum.GLOBAL);
+                settlementCoordinates[6] = new MapCoordinate(block.Tile.Coordinate.X + 1, block.Tile.Coordinate.Y, 0, MapTypeEnum.GLOBAL);
+                settlementCoordinates[1] = new MapCoordinate(block.Tile.Coordinate.X - 1, block.Tile.Coordinate.Y +1, 0, MapTypeEnum.GLOBAL);
+                settlementCoordinates[2] = new MapCoordinate(block.Tile.Coordinate.X, block.Tile.Coordinate.Y + 1, 0, MapTypeEnum.GLOBAL);
+                settlementCoordinates[3] = new MapCoordinate(block.Tile.Coordinate.X + 1, block.Tile.Coordinate.Y + 1, 0, MapTypeEnum.GLOBAL);
+
+                for(int corner=1; corner < 10; corner++)
+                {
+                    var cornerBlock = GameState.GlobalMap.GetBlockAtCoordinate(settlementCoordinates[corner]);
+
+                    //Cut any forests down
+                    switch ((cornerBlock.Tile as GlobalTile).Biome)
+                    {
+                        case GlobalBiome.DENSE_FOREST:
+                            (cornerBlock.Tile as GlobalTile).Biome = GlobalBiome.GRASSLAND;
+                            break;
+                        case GlobalBiome.WOODLAND:
+                            (cornerBlock.Tile as GlobalTile).Biome = GlobalBiome.GRASSLAND;
+                            break;
+                        case GlobalBiome.POLAR_FOREST:
+                            (cornerBlock.Tile as GlobalTile).Biome = GlobalBiome.POLAR_DESERT;
+                            break;
+                    }
+
+                    GameState.GlobalMap.GetBlockAtCoordinate(settlementCoordinates[corner])
+                    .ForcePutItemOnBlock(new SettlementItem() 
+                    {
+                        Coordinate = settlementCoordinates[corner],
+                        IsCapital = settlement.SettlementSize%2 == 0,
+                        MayContainItems = true,
+                        SettlementCorner = corner,
+                        SettlementSize = settlement.SettlementSize,
+                    });
+                }
                 
             }
 

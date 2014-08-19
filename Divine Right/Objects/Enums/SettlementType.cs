@@ -12,6 +12,6 @@ namespace DRObjects.Enums
     {
         HAMLET,
         VILLAGE,
-        TOWN
+        CAPITAL
     }
 }

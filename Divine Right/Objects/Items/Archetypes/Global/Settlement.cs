@@ -30,7 +30,7 @@ namespace DRObjects.Items.Archetypes.Global
                 }
                 else
                 {
-                    return SettlementType.TOWN;
+                    return SettlementType.CAPITAL;
                 }
             }
         }
@@ -62,7 +62,7 @@ namespace DRObjects.Items.Archetypes.Global
                 {
                     case SettlementType.HAMLET:
                         return SpriteManager.GetSprite(GlobalSpriteName.HAMLET);
-                    case SettlementType.TOWN:
+                    case SettlementType.CAPITAL:
                         return SpriteManager.GetSprite(GlobalSpriteName.CAPITAL);
                     case SettlementType.VILLAGE:
                         return SpriteManager.GetSprite(GlobalSpriteName.VILLAGE);
