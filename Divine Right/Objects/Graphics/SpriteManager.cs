@@ -79,12 +79,12 @@ namespace DRObjects.Graphics
             globalSprites[(int)GlobalSpriteName.HAMLET_1] = new SpriteData(WORLDITEMS, new Rectangle(300, 0, 50, 50));
             globalSprites[(int)GlobalSpriteName.HAMLET_2] = new SpriteData(WORLDITEMS, new Rectangle(350, 0, 50, 50));
             globalSprites[(int)GlobalSpriteName.HAMLET_3] = new SpriteData(WORLDITEMS, new Rectangle(400, 0, 50, 50));
-            globalSprites[(int)GlobalSpriteName.HAMLET_4] = new SpriteData(WORLDITEMS, new Rectangle(300, 100, 50, 50));
-            globalSprites[(int)GlobalSpriteName.HAMLET_5] = new SpriteData(WORLDITEMS, new Rectangle(350, 100, 50, 50));
-            globalSprites[(int)GlobalSpriteName.HAMLET_6] = new SpriteData(WORLDITEMS, new Rectangle(400, 100, 50, 50));
-            globalSprites[(int)GlobalSpriteName.HAMLET_7] = new SpriteData(WORLDITEMS, new Rectangle(300, 150, 50, 50));
-            globalSprites[(int)GlobalSpriteName.HAMLET_8] = new SpriteData(WORLDITEMS, new Rectangle(350, 150, 50, 50));
-            globalSprites[(int)GlobalSpriteName.HAMLET_9] = new SpriteData(WORLDITEMS, new Rectangle(400, 150, 50, 50));
+            globalSprites[(int)GlobalSpriteName.HAMLET_4] = new SpriteData(WORLDITEMS, new Rectangle(300, 50, 50, 50));
+            globalSprites[(int)GlobalSpriteName.HAMLET_5] = new SpriteData(WORLDITEMS, new Rectangle(350, 50, 50, 50));
+            globalSprites[(int)GlobalSpriteName.HAMLET_6] = new SpriteData(WORLDITEMS, new Rectangle(400, 50, 50, 50));
+            globalSprites[(int)GlobalSpriteName.HAMLET_7] = new SpriteData(WORLDITEMS, new Rectangle(300, 100, 50, 50));
+            globalSprites[(int)GlobalSpriteName.HAMLET_8] = new SpriteData(WORLDITEMS, new Rectangle(350, 100, 50, 50));
+            globalSprites[(int)GlobalSpriteName.HAMLET_9] = new SpriteData(WORLDITEMS, new Rectangle(400, 100, 50, 50));
 
             globalSprites[(int)GlobalSpriteName.VILLAGE_1] = new SpriteData(WORLDITEMS, new Rectangle(450, 0, 50, 50));
             globalSprites[(int)GlobalSpriteName.VILLAGE_2] = new SpriteData(WORLDITEMS, new Rectangle(500, 0, 50, 50));
