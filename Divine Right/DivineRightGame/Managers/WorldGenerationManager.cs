@@ -21,7 +21,7 @@ namespace DivineRightGame.Managers
         public const int EXPONENTWEIGHT = 2;
         public const int RIVERCOUNT = 50;
         public const int RAINCENTERCOUNT = 6;
-        
+
         public const int HUMAN_CAPITAL_COUNT = 4;
         public const int HUMAN_SETTLEMENTS_PER_CIVILIZATION = 7;
         public const int HUMAN_CAPITAL_SEARCH_RADIUS = 150;
@@ -31,7 +31,7 @@ namespace DivineRightGame.Managers
 
         public const int DUNGEONS_PER_HUMAN_SETTLEMENT = 5;
 
-        public const int REGIONSIZE = WORLDSIZE*2;
+        public const int REGIONSIZE = WORLDSIZE * 2;
 
         protected static Region[] regions;
 
@@ -73,13 +73,13 @@ namespace DivineRightGame.Managers
             AssignRegionSizes();
 
             CurrentStep = "And the earthquakes came, and the earth shifted";
-            RoughSmooth();          
-            
+            RoughSmooth();
+
             CurrentStep = "And then the winds came, and the world was eroded";
             ErodeWorld();
 
             MarkHillSlopes();
-            
+
             CurrentStep = "And the rains began, and the rivers formed";
             GenerateRivers();
 
@@ -88,7 +88,7 @@ namespace DivineRightGame.Managers
 
             CurrentStep = "With a single word, the storms came, bringing water to the lands...";
             GenerateRains();
-            
+
             CurrentStep = "And then came life";
             DetermineBiomes();
 
@@ -206,7 +206,7 @@ namespace DivineRightGame.Managers
 
             lock (GlobalMap.lockMe)
             {
-                
+
                 //setting the region centres - 0 doesn't count
                 for (int i = 1; i < regions.Length; i++)
                 {
@@ -227,7 +227,7 @@ namespace DivineRightGame.Managers
                         i--; //try again
                     }
 
-                 }
+                }
             }
 
             for (int x = 0; x < WORLDSIZE; x++)
@@ -330,7 +330,7 @@ namespace DivineRightGame.Managers
                         (block.Tile as GlobalTile).Elevation = Interpolation.InverseDistanceWeighting(block, EXPONENTWEIGHT, WORLDSIZE);
                     }
                 }
-            }      
+            }
         }
         /// <summary>
         /// Erodes the world's elevation
@@ -457,7 +457,7 @@ namespace DivineRightGame.Managers
                         break;
                     }
 
-                    nextTile = surroundingTiles.Where(st => !st.HasRiver).OrderBy(st => st.Elevation).FirstOrDefault();
+                    nextTile = surroundingTiles.Where(st => !st.HasRiver).OrderBy(st => st.Elevation).ThenBy(st => Math.Abs(st.Coordinate.X - currentTile.Coordinate.X) + Math.Abs(st.Coordinate.Y - currentTile.Coordinate.Y)).FirstOrDefault();
 
                     //check whether this tile has a river, or is water
 
@@ -498,42 +498,53 @@ namespace DivineRightGame.Managers
         {
             //we need to go through them one at a time
 
-                for (int x = 0; x < WORLDSIZE; x++)
+            for (int x = 0; x < WORLDSIZE; x++)
+            {
+                for (int y = 0; y < WORLDSIZE; y++)
                 {
-                    for (int y = 0; y < WORLDSIZE; y++)
+                    MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapTypeEnum.GLOBAL));
+
+                    List<GlobalTile> surroundingTiles = new List<GlobalTile>();
+                    //is the block underwater?
+
+                    if ((block.Tile as GlobalTile).Elevation > 0)
                     {
-                        MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x,y,0,MapTypeEnum.GLOBAL));
-
-                        List<GlobalTile> surroundingTiles = new List<GlobalTile>();
-                        //is the block underwater?
-
-                        if ((block.Tile as GlobalTile).Elevation > 0)
+                        //no, we can contour it
+                        //look around this block, are there any other blocks which have an elevation +ve difference of 50 or more?
+                        for (int x2 = -1; x2 <= 1; x2++)
                         {
-                            //no, we can contour it
-                            //look around this block, are there any other blocks which have an elevation +ve difference of 50 or more?
-                            for (int x2 = -1; x2 <= 1; x2++)
+                            for (int y2 = -1; y2 <= 1; y2++)
                             {
-                                for (int y2 = -1; y2 <= 1; y2++)
-                                {
-                                    surroundingTiles.Add((GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(block.Tile.Coordinate.X + x2, block.Tile.Coordinate.Y + y2, 0, MapTypeEnum.GLOBAL)).Tile as GlobalTile));
-                                }
+                                surroundingTiles.Add((GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(block.Tile.Coordinate.X + x2, block.Tile.Coordinate.Y + y2, 0, MapTypeEnum.GLOBAL)).Tile as GlobalTile));
                             }
-
-                            if (surroundingTiles.Count == 0)
-                            {
-                                continue;
-                            }
-
-                            //now we check the top one
-                            if (surroundingTiles.OrderByDescending(st => st.Elevation).FirstOrDefault().Elevation > (block.Tile as GlobalTile).Elevation +50)
-                            {
-                                //it is - mark this tile as a contour
-                                (block.Tile as GlobalTile).HasHillSlope = true;
-                            }
-
                         }
+
+                        //Some surrounding tiles appear to be null. Let's remove them before they cause problems
+                        for (int i = 0; i < surroundingTiles.Count; i++)
+                        {
+                            if (surroundingTiles[i] == null)
+                            {
+                                surroundingTiles.RemoveAt(i);
+                                i--;
+                            }
+                        }
+
+
+                        if (surroundingTiles.Count == 0)
+                        {
+                            continue;
+                        }
+
+                        //now we check the top one
+                        if (surroundingTiles.OrderByDescending(st => st.Elevation).FirstOrDefault().Elevation > (block.Tile as GlobalTile).Elevation + 50)
+                        {
+                            //it is - mark this tile as a contour
+                            (block.Tile as GlobalTile).HasHillSlope = true;
+                        }
+
                     }
                 }
+            }
         }
 
         /// <summary>
@@ -594,7 +605,7 @@ namespace DivineRightGame.Managers
                 int xRain = random.Next(WORLDSIZE);
                 int yRain = random.Next(WORLDSIZE);
 
-                MapBlock targetBlock = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(xRain, yRain, 0, MapTypeEnum.GLOBAL));                
+                MapBlock targetBlock = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(xRain, yRain, 0, MapTypeEnum.GLOBAL));
 
                 if (failureCount > 100)
                 {
@@ -791,7 +802,7 @@ namespace DivineRightGame.Managers
 
                 //We only need to consider tiles which have no river, and actual land which isn't a mountain
                 //Also consider those which aren't blocked and which aren't claimed
-                var candidateBlocks = regionalBlocks.Where(rb => !(rb.Tile as GlobalTile).HasRiver && (rb.Tile as GlobalTile).Elevation > 0 && (rb.Tile as GlobalTile).Elevation < 250 
+                var candidateBlocks = regionalBlocks.Where(rb => !(rb.Tile as GlobalTile).HasRiver && (rb.Tile as GlobalTile).Elevation > 0 && (rb.Tile as GlobalTile).Elevation < 250
                     && !(rb.Tile as GlobalTile).IsBlockedForColonisation
                     && ((rb.Tile as GlobalTile).Owner == null || (rb.Tile as GlobalTile).Owner == i))
                     .OrderByDescending(rb => (rb.Tile as GlobalTile).BaseDesirability + (GetBlocksAroundPoint(rb.Tile.Coordinate, 1).Sum(rba => (rba.Tile as GlobalTile).BaseDesirability)));
@@ -808,9 +819,9 @@ namespace DivineRightGame.Managers
                 //TODO: ADD TO THE GLOBAL MAP'S COLONY LIST EVENTUALLY
                 MapBlock block = candidateBlocks.First();
 
-                Settlement settlement = SettlementGenerator.GenerateSettlement(block.Tile.Coordinate, random.Next(5)+10);
+                Settlement settlement = SettlementGenerator.GenerateSettlement(block.Tile.Coordinate, random.Next(5) + 10);
 
-                CreateSettlement(true, settlement, block,i);
+                CreateSettlement(true, settlement, block, i);
 
                 ownedSettlements.Add(settlement);
 
@@ -861,7 +872,7 @@ namespace DivineRightGame.Managers
         /// <param name="capital">Whether it's the capital or not</param>
         /// <param name="settlement">The settlement which it represents</param>
         /// <param name="block">The block making up the center</param>
-        private static void CreateSettlement(bool capital,Settlement settlement,MapBlock block,int owner)
+        private static void CreateSettlement(bool capital, Settlement settlement, MapBlock block, int owner)
         {
             //Put an entire group of SettlementItems on it
             MapCoordinate[] settlementCoordinates = new MapCoordinate[10];
@@ -946,11 +957,11 @@ namespace DivineRightGame.Managers
                 //very hot
                 desirability -= 2;
             }
-            
+
             if (tile.ClimateTemperature < 30 && tile.ClimateTemperature > 15)
             {
                 //nice temperature
-                desirability+=2;
+                desirability += 2;
             }
             if (tile.ClimateTemperature > 5)
             {
@@ -1040,7 +1051,7 @@ namespace DivineRightGame.Managers
             double randStdNormal = Math.Sqrt(-2.0 * Math.Log(u1)) *
                          Math.Sin(2.0 * Math.PI * u2); //random normal(0,1)
             double randNormal =
-                         0 + 1* randStdNormal; //random normal(mean,stdDev^2)
+                         0 + 1 * randStdNormal; //random normal(mean,stdDev^2)
 
             return randNormal;
 
@@ -1063,20 +1074,20 @@ namespace DivineRightGame.Managers
 
             //go through all of them
 
-                for (int yLoop = maxY; yLoop >= minY; yLoop--)
+            for (int yLoop = maxY; yLoop >= minY; yLoop--)
+            {
+                for (int xLoop = minX; xLoop <= maxX; xLoop++)
                 {
-                    for (int xLoop = minX; xLoop <= maxX; xLoop++)
-                    {
-                        MapCoordinate coord = new MapCoordinate(xLoop, yLoop, 0,MapTypeEnum.GLOBAL);
+                    MapCoordinate coord = new MapCoordinate(xLoop, yLoop, 0, MapTypeEnum.GLOBAL);
 
-                        if (xLoop >= 0 && xLoop < WORLDSIZE && yLoop >= 0 && yLoop < WORLDSIZE)
-                        { //make sure they're in the map
-                            returnList.Add(GameState.GlobalMap.GetBlockAtCoordinate(coord));
-                        }
+                    if (xLoop >= 0 && xLoop < WORLDSIZE && yLoop >= 0 && yLoop < WORLDSIZE)
+                    { //make sure they're in the map
+                        returnList.Add(GameState.GlobalMap.GetBlockAtCoordinate(coord));
                     }
                 }
+            }
 
-                return returnList.Where(r => r.Tile.Coordinate.X.Equals(minX) || r.Tile.Coordinate.X.Equals(maxX) || r.Tile.Coordinate.Y.Equals(minY) || r.Tile.Coordinate.Y.Equals(maxY)).ToArray();
+            return returnList.Where(r => r.Tile.Coordinate.X.Equals(minX) || r.Tile.Coordinate.X.Equals(maxX) || r.Tile.Coordinate.Y.Equals(minY) || r.Tile.Coordinate.Y.Equals(maxY)).ToArray();
         }
 
         /// <summary>
@@ -1121,14 +1132,14 @@ namespace DivineRightGame.Managers
         /// <param name="width"></param>
         /// <param name="x"></param>
         /// <returns></returns>
-        public static double GetPointOnGaussianCurve(double peak, double centre, double width,double x)
+        public static double GetPointOnGaussianCurve(double peak, double centre, double width, double x)
         {
             return peak * Math.Pow(Math.E, -(Math.Pow((x - centre), 2) / Math.Pow(2 * width, 2)));
 
 
         }
 
-#endregion
+        #endregion
 
     }
 }

@@ -89,12 +89,12 @@ namespace DRObjects.Graphics
             globalSprites[(int)GlobalSpriteName.VILLAGE_1] = new SpriteData(WORLDITEMS, new Rectangle(450, 0, 50, 50));
             globalSprites[(int)GlobalSpriteName.VILLAGE_2] = new SpriteData(WORLDITEMS, new Rectangle(500, 0, 50, 50));
             globalSprites[(int)GlobalSpriteName.VILLAGE_3] = new SpriteData(WORLDITEMS, new Rectangle(550, 0, 50, 50));
-            globalSprites[(int)GlobalSpriteName.VILLAGE_4] = new SpriteData(WORLDITEMS, new Rectangle(450, 100, 50, 50));
-            globalSprites[(int)GlobalSpriteName.VILLAGE_5] = new SpriteData(WORLDITEMS, new Rectangle(500, 100, 50, 50));
-            globalSprites[(int)GlobalSpriteName.VILLAGE_6] = new SpriteData(WORLDITEMS, new Rectangle(550, 100, 50, 50));
-            globalSprites[(int)GlobalSpriteName.VILLAGE_7] = new SpriteData(WORLDITEMS, new Rectangle(450, 150, 50, 50));
-            globalSprites[(int)GlobalSpriteName.VILLAGE_8] = new SpriteData(WORLDITEMS, new Rectangle(500, 150, 50, 50));
-            globalSprites[(int)GlobalSpriteName.VILLAGE_9] = new SpriteData(WORLDITEMS, new Rectangle(550, 150, 50, 50));
+            globalSprites[(int)GlobalSpriteName.VILLAGE_4] = new SpriteData(WORLDITEMS, new Rectangle(450, 50, 50, 50));
+            globalSprites[(int)GlobalSpriteName.VILLAGE_5] = new SpriteData(WORLDITEMS, new Rectangle(500, 50, 50, 50));
+            globalSprites[(int)GlobalSpriteName.VILLAGE_6] = new SpriteData(WORLDITEMS, new Rectangle(550, 50, 50, 50));
+            globalSprites[(int)GlobalSpriteName.VILLAGE_7] = new SpriteData(WORLDITEMS, new Rectangle(450, 100, 50, 50));
+            globalSprites[(int)GlobalSpriteName.VILLAGE_8] = new SpriteData(WORLDITEMS, new Rectangle(500, 100, 50, 50));
+            globalSprites[(int)GlobalSpriteName.VILLAGE_9] = new SpriteData(WORLDITEMS, new Rectangle(550, 100, 50, 50));
 
             colourSprites[(int)ColourSpriteName.BROWN] = new SpriteData(@"Graphics/World/Overlay/Regions/Brown");
             colourSprites[(int)ColourSpriteName.GREEN] = new SpriteData(@"Graphics/World/Overlay/Regions/Green");

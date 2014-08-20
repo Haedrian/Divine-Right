@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using DRObjects.Enums;
 using DRObjects.Graphics;
+using Microsoft.Xna.Framework;
 
 namespace DRObjects.Items.Archetypes.Global
 {
@@ -16,6 +17,7 @@ namespace DRObjects.Items.Archetypes.Global
         #region Members
         public int SettlementSize { get; set; }
         public bool IsCapital { get; set; }
+        public int OwnerID { get; set; }
         /// <summary>
         /// The Corner of the settlement - determines which graphic to draw
         /// </summary>
@@ -55,6 +57,22 @@ namespace DRObjects.Items.Archetypes.Global
                     //Create it
                     sprites = new List<SpriteData>();
                     sprites.Add(SpriteManager.GetSprite((GlobalSpriteName)Enum.Parse(typeof(GlobalSpriteName),this.SettlementType.ToString() + "_" + SettlementCorner)));
+                    
+                    //Apply colour filter
+                    Color col = Color.Transparent;
+
+                    switch (OwnerID)
+                    {
+                        case 0: col = Color.Brown; break;
+                        case 1: col = Color.Green; break;
+                        case 2: col = Color.Orange; break;
+                        case 3: col = Color.Pink; break;
+                        case 4: col = Color.Purple; break;
+                        case 5: col = Color.Red; break;
+                        case 6: col = Color.Yellow; break;
+                    }
+
+                    sprites[0].ColorFilter = col;
                 }
                 
                 return sprites;
