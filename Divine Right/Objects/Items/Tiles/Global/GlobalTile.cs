@@ -98,6 +98,11 @@ namespace DRObjects.Items.Tiles.Global
         /// </summary>
         public int? Owner { get; set; }
 
+        /// <summary>
+        /// Whether it contains a resource (to save us time looking)
+        /// </summary>
+        public bool HasResource { get; set; }
+
         #endregion
 
         #region Properties
@@ -386,6 +391,7 @@ namespace DRObjects.Items.Tiles.Global
             Region = -1;
             base.MayContainItems = true;
             IsBlockedForColonisation = false;
+            HasResource = false;
         }
 
         #endregion

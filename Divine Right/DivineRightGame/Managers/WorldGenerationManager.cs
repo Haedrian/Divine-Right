@@ -22,6 +22,8 @@ namespace DivineRightGame.Managers
         public const int RIVERCOUNT = 50;
         public const int RAINCENTERCOUNT = 6;
 
+        public const int RESOURCES_PER_TYPE = 5;
+
         public const int HUMAN_CAPITAL_COUNT = 4;
         public const int HUMAN_SETTLEMENTS_PER_CIVILIZATION = 7;
         public const int HUMAN_CAPITAL_SEARCH_RADIUS = 150;
@@ -91,6 +93,9 @@ namespace DivineRightGame.Managers
 
             CurrentStep = "And then came life";
             DetermineBiomes();
+
+            CurrentStep = "And some resources came to light";
+            GenerateResources();
 
             CurrentStep = "And then he looked upon the land and determined the desires of man";
             DetermineDesirability();
@@ -758,6 +763,91 @@ namespace DivineRightGame.Managers
         }
 
         /// <summary>
+        /// Generates a number of resources on the map
+        /// </summary>
+        public static void GenerateResources()
+        {
+            //First lets put all the blocks into one collection
+
+            List<MapBlock> allBlocks = new List<MapBlock>();
+
+            for (int x = 0; x < WORLDSIZE; x++)
+            {
+                for (int y = 0; y < WORLDSIZE; y++)
+                {
+                    allBlocks.Add(GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapTypeEnum.GLOBAL)));
+                }
+            }
+
+            //Prepare stuff we might need
+            var grassLandBlocks = allBlocks.Where(ab => (ab.Tile as GlobalTile).Biome == GlobalBiome.GRASSLAND && (ab.Tile as GlobalTile).Elevation > 0 && !(ab.Tile as GlobalTile).HasResource && !(ab.Tile as GlobalTile).HasRiver).OrderBy(ab => GameState.Random.Next(1000));
+            var waterBlocks = allBlocks.Where(ab => (ab.Tile as GlobalTile).Elevation <= 0 && !(ab.Tile as GlobalTile).HasResource && !(ab.Tile as GlobalTile).HasRiver).OrderBy(ab => GameState.Random.Next(1000));
+            var denseForestBlocks = allBlocks.Where(ab => (ab.Tile as GlobalTile).Biome == GlobalBiome.DENSE_FOREST && !(ab.Tile as GlobalTile).HasResource && !(ab.Tile as GlobalTile).HasRiver).OrderBy(ab => GameState.Random.Next(1000));
+            var forestBlocks = allBlocks.Where(ab => (ab.Tile as GlobalTile).Biome == GlobalBiome.WOODLAND && !(ab.Tile as GlobalTile).HasResource && !(ab.Tile as GlobalTile).HasRiver).OrderBy(ab => GameState.Random.Next(1000));
+            var hillyLocations = allBlocks.Where(ab => (ab.Tile as GlobalTile).Elevation > 80 && !(ab.Tile as GlobalTile).HasResource && !(ab.Tile as GlobalTile).HasRiver).OrderBy(ab => GameState.Random.Next(1000));
+
+            foreach (GlobalResourceType resource in Enum.GetValues(typeof(GlobalResourceType)))
+            {
+                List<MapBlock> candidateBlocks = new List<MapBlock>();
+
+                switch (resource)
+                {
+                    case GlobalResourceType.FARMLAND:
+                        //Farmland only is possible on grassland
+                        candidateBlocks.AddRange(grassLandBlocks);
+                        break;
+                    case GlobalResourceType.FISH:
+                        //Fish is only possible in water
+                        candidateBlocks.AddRange(waterBlocks);
+                        break;
+                    case GlobalResourceType.GAME:
+                        //Game is found in dense forests, woodland and rarely grasslands
+                        candidateBlocks.AddRange(denseForestBlocks.Take(150));
+                        candidateBlocks.AddRange(forestBlocks.Take(100));
+                        candidateBlocks.AddRange(grassLandBlocks.Take(50));
+                        break;
+                    case GlobalResourceType.GOLD:
+                        //Gold is found in hilly locations
+                        candidateBlocks.AddRange(hillyLocations);
+                        break;
+                    case GlobalResourceType.HORSE:
+                        //Horses are found in grassland and forests
+                        candidateBlocks.AddRange(grassLandBlocks.Take(150));
+                        candidateBlocks.AddRange(forestBlocks.Take(50));
+                        break;
+                    case GlobalResourceType.IRON:
+                        //Iron is found in hills
+                        candidateBlocks.AddRange(hillyLocations);
+                        break;
+                    case GlobalResourceType.STONE:
+                        //Stone is found in hills
+                        candidateBlocks.AddRange(hillyLocations);
+                        break;
+                    case GlobalResourceType.WOOD:
+                        //Wood is found in dense forests and woodland
+                        candidateBlocks.AddRange(denseForestBlocks.Take(150));
+                        candidateBlocks.AddRange(forestBlocks.Take(100));
+                        break;
+                }
+
+                //Shuffle the candidates, and take the first few blocks
+                candidateBlocks = candidateBlocks.Where(cb => !(cb.Tile as GlobalTile).HasResource).OrderBy(ab => GameState.Random.Next(1000)).ToList();
+
+                foreach (var chosenBlock in candidateBlocks.Take(RESOURCES_PER_TYPE))
+                {
+                    //Mark the tile
+                    (chosenBlock.Tile as GlobalTile).HasResource = true;
+
+                    //Create the resource item
+                    MapResource resourceItem = new MapResource(resource);
+                    resourceItem.Coordinate = chosenBlock.Tile.Coordinate;
+
+                    chosenBlock.ForcePutItemOnBlock(resourceItem);
+                }
+            }
+        }
+
+        /// <summary>
         /// This determines the base desirability for all tile by examining the tile itself
         /// </summary>
         public static void DetermineDesirability()
@@ -771,7 +861,7 @@ namespace DivineRightGame.Managers
                     GlobalTile tile = (block.Tile as GlobalTile);
 
                     //calculate the desirability for the tile
-                    tile.BaseDesirability = DetermineDesirability(tile);
+                    tile.BaseDesirability = DetermineDesirability(block);
                 }
             }
         }
@@ -802,10 +892,10 @@ namespace DivineRightGame.Managers
 
                 //We only need to consider tiles which have no river, and actual land which isn't a mountain
                 //Also consider those which aren't blocked and which aren't claimed
-                var candidateBlocks = regionalBlocks.Where(rb => !(rb.Tile as GlobalTile).HasRiver && (rb.Tile as GlobalTile).Elevation > 0 && (rb.Tile as GlobalTile).Elevation < 250
+                var candidateBlocks = regionalBlocks.Where(rb => !(rb.Tile as GlobalTile).HasRiver && !(rb.Tile as GlobalTile).HasResource && (rb.Tile as GlobalTile).Elevation > 0 && (rb.Tile as GlobalTile).Elevation < 250
                     && !(rb.Tile as GlobalTile).IsBlockedForColonisation
                     && ((rb.Tile as GlobalTile).Owner == null || (rb.Tile as GlobalTile).Owner == i))
-                    .OrderByDescending(rb => (rb.Tile as GlobalTile).BaseDesirability + (GetBlocksAroundPoint(rb.Tile.Coordinate, 1).Sum(rba => (rba.Tile as GlobalTile).BaseDesirability)));
+                    .OrderByDescending(rb => (rb.Tile as GlobalTile).BaseDesirability + (GetBlocksAroundPoint(rb.Tile.Coordinate, 2).Sum(rba => (rba.Tile as GlobalTile).BaseDesirability)));
 
                 if (candidateBlocks.ToArray().Length == 0)
                 {
@@ -946,8 +1036,9 @@ namespace DivineRightGame.Managers
         /// </summary>
         /// <param name="tile"></param>
         /// <returns></returns>
-        public static int DetermineDesirability(GlobalTile tile)
+        public static int DetermineDesirability(MapBlock block)
         {
+            GlobalTile tile = block.Tile as GlobalTile; //Get the tile
             int desirability = 0;
 
             #region Temperature
@@ -1034,7 +1125,15 @@ namespace DivineRightGame.Managers
 
             #endregion
 
-            //TODO - EVENTUALLY WE'LL HAVE RESOURCES TOO
+            //Any resources?
+            if (tile.HasResource)
+            {
+                //Find it
+                MapResource resource = block.GetItems().Where(gi => gi.GetType().Equals(typeof(MapResource))).FirstOrDefault() as MapResource;
+
+                desirability += resource.Desirability;
+
+            }
 
             return desirability;
         }

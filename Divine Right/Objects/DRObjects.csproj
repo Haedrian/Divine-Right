@@ -91,6 +91,7 @@
     <Compile Include="Enums\EnemyThought.cs" />
     <Compile Include="Enums\GlobalBiome.cs" />
     <Compile Include="Enums\GlobalOverlay.cs" />
+    <Compile Include="Enums\GlobalResource.cs" />
     <Compile Include="Enums\InternalActionEnum.cs" />
     <Compile Include="Enums\MapType.cs" />
     <Compile Include="Enums\PointOfInterestType.cs" />
@@ -113,6 +114,7 @@
     <Compile Include="Graphics\SpriteData.cs" />
     <Compile Include="Graphics\SpriteManager.cs" />
     <Compile Include="Graphics\GlobalSpriteName.cs" />
+    <Compile Include="Items\Archetypes\Global\MapResource.cs" />
     <Compile Include="Items\Archetypes\Global\Settlement.cs" />
     <Compile Include="Items\Archetypes\Global\SettlementItem.cs" />
     <Compile Include="Items\Archetypes\Local\LocalCharacter.cs" />

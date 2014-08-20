@@ -55,5 +55,9 @@ namespace DRObjects.Graphics
         VILLAGE_7,
         VILLAGE_8,
         VILLAGE_9,
+        HORSES,
+        GAME,
+        FARMLAND,
+        STONES,
     }
 }

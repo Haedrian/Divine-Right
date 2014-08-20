@@ -65,6 +65,10 @@ namespace DRObjects.Graphics
             globalSprites[(int)GlobalSpriteName.HAMLET] = new SpriteData(WORLDITEMS, new Rectangle(600, 50, 50, 50));
             globalSprites[(int)GlobalSpriteName.VILLAGE] = new SpriteData(WORLDITEMS, new Rectangle(600, 0, 50, 50));
             globalSprites[(int)GlobalSpriteName.CAPITAL] = new SpriteData(WORLDITEMS, new Rectangle(600, 100, 50, 50));
+            globalSprites[(int)GlobalSpriteName.HORSES] = new SpriteData(WORLDITEMS, new Rectangle(700, 0, 50, 50));
+            globalSprites[(int)GlobalSpriteName.GAME] = new SpriteData(WORLDITEMS, new Rectangle(750, 0, 50, 50));
+            globalSprites[(int)GlobalSpriteName.FARMLAND] = new SpriteData(WORLDITEMS, new Rectangle(800, 0, 50, 50));
+            globalSprites[(int)GlobalSpriteName.STONES] = new SpriteData(WORLDITEMS, new Rectangle(850, 0, 50, 50));
 
             globalSprites[(int)GlobalSpriteName.CAPITAL_1] = new SpriteData(WORLDITEMS, new Rectangle(0, 0, 50, 50));
             globalSprites[(int)GlobalSpriteName.CAPITAL_2] = new SpriteData(WORLDITEMS, new Rectangle(50, 0, 50, 50));
