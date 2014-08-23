@@ -59,5 +59,15 @@ namespace DRObjects.Graphics
         GAME,
         FARMLAND,
         STONES,
+        DUNGEON,
+        DUNGEON_1,
+        DUNGEON_2,
+        DUNGEON_3,
+        DUNGEON_4,
+        DUNGEON_5,
+        DUNGEON_6,
+        DUNGEON_7,
+        DUNGEON_8,
+        DUNGEON_9,
     }
 }

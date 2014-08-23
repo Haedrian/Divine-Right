@@ -31,7 +31,7 @@ namespace DivineRightGame.Managers
         public const int HUMAN_COLONY_BLOCKING_RADIUS = 5;
         public const int HUMAN_COLONY_CLAIMING_RADIUS = 10;
 
-        public const int DUNGEONS_PER_HUMAN_SETTLEMENT = 5;
+        public const int DUNGEON_TOTAL = 20;
 
         public const int REGIONSIZE = WORLDSIZE * 2;
 
@@ -100,8 +100,11 @@ namespace DivineRightGame.Managers
             CurrentStep = "And then he looked upon the land and determined the desires of man";
             DetermineDesirability();
 
-            CurrentStep = "And the humans came and they colonised the land. And monsters and beasts came with them.";
+            CurrentStep = "And the humans came and they colonised the land";
             ColoniseWorld();
+
+            CurrentStep = "And the humans awoke the beasts and monsters of the land";
+            CreateDungeons();
 
             CurrentStep = "And thus the world was done";
             isGenerating = false;
@@ -950,6 +953,86 @@ namespace DivineRightGame.Managers
 
             }
 
+        }
+
+        /// <summary>
+        /// Creates Dungeons on the Map.
+        /// Will colonise areas not claimed by humans.
+        /// Later on we'll create ruins which will appear in areas claimed by humans
+        /// </summary>
+        public static void CreateDungeons()
+        {
+            List<MapBlock> blocks = new List<MapBlock>();
+
+            //Collect all the points which aren't claimed
+            for (int x = 0; x < WORLDSIZE; x++)
+            {
+                for (int y = 0; y < WORLDSIZE; y++)
+                {
+                    MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapTypeEnum.GLOBAL));
+
+                    var tile = block.Tile as GlobalTile;
+
+                    if (!tile.HasRiver && !tile.IsBlockedForColonisation && !tile.Owner.HasValue && !tile.HasResource && tile.Elevation > 0 && tile.Elevation < 250)
+                    {
+                        blocks.Add(block);
+                    }
+                }
+            }
+
+            for (int i = 0; i < DUNGEON_TOTAL; i++)
+            {
+                MapBlock block = blocks[GameState.Random.Next(blocks.Count)];
+
+                //Put an entire group of SettlementItems on it
+                MapCoordinate[] dungeonCoordinates = new MapCoordinate[10];
+
+                dungeonCoordinates[7] = new MapCoordinate(block.Tile.Coordinate.X - 1, block.Tile.Coordinate.Y - 1, 0, MapTypeEnum.GLOBAL);
+                dungeonCoordinates[8] = new MapCoordinate(block.Tile.Coordinate.X, block.Tile.Coordinate.Y - 1, 0, MapTypeEnum.GLOBAL);
+                dungeonCoordinates[9] = new MapCoordinate(block.Tile.Coordinate.X + 1, block.Tile.Coordinate.Y - 1, 0, MapTypeEnum.GLOBAL);
+                dungeonCoordinates[4] = new MapCoordinate(block.Tile.Coordinate.X - 1, block.Tile.Coordinate.Y, 0, MapTypeEnum.GLOBAL);
+                dungeonCoordinates[5] = new MapCoordinate(block.Tile.Coordinate.X, block.Tile.Coordinate.Y, 0, MapTypeEnum.GLOBAL);
+                dungeonCoordinates[6] = new MapCoordinate(block.Tile.Coordinate.X + 1, block.Tile.Coordinate.Y, 0, MapTypeEnum.GLOBAL);
+                dungeonCoordinates[1] = new MapCoordinate(block.Tile.Coordinate.X - 1, block.Tile.Coordinate.Y + 1, 0, MapTypeEnum.GLOBAL);
+                dungeonCoordinates[2] = new MapCoordinate(block.Tile.Coordinate.X, block.Tile.Coordinate.Y + 1, 0, MapTypeEnum.GLOBAL);
+                dungeonCoordinates[3] = new MapCoordinate(block.Tile.Coordinate.X + 1, block.Tile.Coordinate.Y + 1, 0, MapTypeEnum.GLOBAL);
+
+                //Block surrounding tiles
+                MapBlock[] regionalBlocks = GetBlocksAroundPoint(block.Tile.Coordinate, 1);
+
+                foreach (MapBlock rblock in regionalBlocks)
+                {
+                    (rblock.Tile as GlobalTile).IsBlockedForColonisation = true;
+                }
+
+                for (int corner = 1; corner < 10; corner++)
+                {
+                    var cornerBlock = GameState.GlobalMap.GetBlockAtCoordinate(dungeonCoordinates[corner]);
+
+                    //Cut any forests down
+                    switch ((cornerBlock.Tile as GlobalTile).Biome)
+                    {
+                        case GlobalBiome.DENSE_FOREST:
+                            (cornerBlock.Tile as GlobalTile).Biome = GlobalBiome.GRASSLAND;
+                            break;
+                        case GlobalBiome.WOODLAND:
+                            (cornerBlock.Tile as GlobalTile).Biome = GlobalBiome.GRASSLAND;
+                            break;
+                        case GlobalBiome.POLAR_FOREST:
+                            (cornerBlock.Tile as GlobalTile).Biome = GlobalBiome.POLAR_DESERT;
+                            break;
+                    }
+
+
+                    //Create a new dungeon
+                    DungeonItem item = new DungeonItem(corner);
+                    item.Coordinate = new MapCoordinate(cornerBlock.Tile.Coordinate);
+
+                    cornerBlock.ForcePutItemOnBlock(item);
+
+                    blocks.Remove(block);
+                }
+            }
         }
 
         #endregion World Generation Functions

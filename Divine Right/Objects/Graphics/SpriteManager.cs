@@ -69,6 +69,17 @@ namespace DRObjects.Graphics
             globalSprites[(int)GlobalSpriteName.GAME] = new SpriteData(WORLDITEMS, new Rectangle(750, 0, 50, 50));
             globalSprites[(int)GlobalSpriteName.FARMLAND] = new SpriteData(WORLDITEMS, new Rectangle(800, 0, 50, 50));
             globalSprites[(int)GlobalSpriteName.STONES] = new SpriteData(WORLDITEMS, new Rectangle(850, 0, 50, 50));
+            globalSprites[(int)GlobalSpriteName.DUNGEON] = new SpriteData(WORLDITEMS, new Rectangle(150, 50, 50, 50));
+
+            globalSprites[(int)GlobalSpriteName.DUNGEON_1] = new SpriteData(WORLDITEMS, new Rectangle(900, 0, 50, 50));
+            globalSprites[(int)GlobalSpriteName.DUNGEON_2] = new SpriteData(WORLDITEMS, new Rectangle(950, 0, 50, 50));
+            globalSprites[(int)GlobalSpriteName.DUNGEON_3] = new SpriteData(WORLDITEMS, new Rectangle(1000, 0, 50, 50));
+            globalSprites[(int)GlobalSpriteName.DUNGEON_4] = new SpriteData(WORLDITEMS, new Rectangle(900, 50, 50, 50));
+            globalSprites[(int)GlobalSpriteName.DUNGEON_5] = new SpriteData(WORLDITEMS, new Rectangle(950, 50, 50, 50));
+            globalSprites[(int)GlobalSpriteName.DUNGEON_6] = new SpriteData(WORLDITEMS, new Rectangle(1000, 50, 50, 50));
+            globalSprites[(int)GlobalSpriteName.DUNGEON_7] = new SpriteData(WORLDITEMS, new Rectangle(900, 100, 50, 50));
+            globalSprites[(int)GlobalSpriteName.DUNGEON_8] = new SpriteData(WORLDITEMS, new Rectangle(950, 100, 50, 50));
+            globalSprites[(int)GlobalSpriteName.DUNGEON_9] = new SpriteData(WORLDITEMS, new Rectangle(1000, 100, 50, 50));
 
             globalSprites[(int)GlobalSpriteName.CAPITAL_1] = new SpriteData(WORLDITEMS, new Rectangle(0, 0, 50, 50));
             globalSprites[(int)GlobalSpriteName.CAPITAL_2] = new SpriteData(WORLDITEMS, new Rectangle(50, 0, 50, 50));
