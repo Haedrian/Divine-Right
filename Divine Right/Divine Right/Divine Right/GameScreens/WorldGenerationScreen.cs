@@ -183,6 +183,14 @@ namespace Divine_Right.GameScreens
             {
                 OVERLAY = GlobalOverlay.OWNER;
             }
+
+            if (keyboardState.IsKeyDown(Keys.Enter) && !WorldGenerationManager.IsGenerating)
+            {
+                //Put it on the local map
+                var blocks = GameState.GlobalMap.globalGameMap;
+                BaseGame.requestedInternalAction = InternalActionEnum.LOAD;
+                BaseGame.requestedArgs = new Object[1]{ "WorldMap"};
+            }
         }
 
         public override void Draw(GameTime gameTime)

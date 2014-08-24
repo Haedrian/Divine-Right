@@ -80,21 +80,16 @@ namespace DRObjects
         /// <returns></returns>
         public static int operator -(MapCoordinate c1, MapCoordinate c2)
         {
-            //First check whether the types are the same
-            if (c1.MapType.Equals(c2.MapType))
-            {
-                int dx = c1.X - c2.X;
-                int dy = c1.Y - c2.Y;
-                int dz = c1.Z - c2.Z;
 
-                int distance = (int)Math.Round(Math.Sqrt(Math.Pow(dx, 2) + Math.Pow(dy, 2) + Math.Pow(dx, 2)));
+            int dx = c1.X - c2.X;
+            int dy = c1.Y - c2.Y;
+            int dz = c1.Z - c2.Z;
 
-                return distance;
-            }
-            else
-            {
-                throw new Exception("The maptypes for the two coordinates don't match");
-            }
+            int distance = (int)Math.Round(Math.Sqrt(Math.Pow(dx, 2) + Math.Pow(dy, 2) + Math.Pow(dx, 2)));
+
+            return distance;
+
+
         }
 
         /// <summary>
@@ -107,7 +102,7 @@ namespace DRObjects
         {
             return new MapCoordinate(c1.X + c2.X, c1.Y + c2.Y, c1.Z + c2.Z, c1.MapType);
         }
-        
+
         public override string ToString()
         {
             return "(" + X + "," + Y + "," + Z + ")";
@@ -120,7 +115,7 @@ namespace DRObjects
         }
 
         public MapCoordinate(MapCoordinate coordinate)
-           : this (coordinate.X,coordinate.Y,coordinate.Z,coordinate.MapType)
+            : this(coordinate.X, coordinate.Y, coordinate.Z, coordinate.MapType)
         {
 
         }

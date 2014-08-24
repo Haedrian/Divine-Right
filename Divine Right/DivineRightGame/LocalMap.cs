@@ -75,34 +75,26 @@ namespace DivineRightGame
             //Does it belong on the local map?
             MapCoordinate coord = block.Tile.Coordinate;
 
-            if (coord.MapType != DRObjects.Enums.MapTypeEnum.LOCAL)
+            try
             {
-                //Error
-                throw new Exception("The map block is not for a local map");
-            }
-            else
-            {
-                try
-                {
-                    //Check whether the block is within the bounds of the map
+                //Check whether the block is within the bounds of the map
 
-                    if (block.Tile.Coordinate.X < this.localGameMap.GetLength(0) && block.Tile.Coordinate.X >= 0)
+                if (block.Tile.Coordinate.X < this.localGameMap.GetLength(0) && block.Tile.Coordinate.X >= 0)
+                {
+                    if (block.Tile.Coordinate.Y < this.localGameMap.GetLength(1) && block.Tile.Coordinate.Y >= 0)
                     {
-                        if (block.Tile.Coordinate.Y < this.localGameMap.GetLength(1) && block.Tile.Coordinate.Y >= 0)
+                        if (block.Tile.Coordinate.Z < this.localGameMap.GetLength(2) && block.Tile.Coordinate.Z >= 0)
                         {
-                            if (block.Tile.Coordinate.Z < this.localGameMap.GetLength(2) && block.Tile.Coordinate.Z >= 0)
-                            {
-                                //write it
-                                localGameMap[block.Tile.Coordinate.X, block.Tile.Coordinate.Y, block.Tile.Coordinate.Z] = block;
-                            }
+                            //write it
+                            localGameMap[block.Tile.Coordinate.X, block.Tile.Coordinate.Y, block.Tile.Coordinate.Z] = block;
                         }
                     }
                 }
-                catch
-                {
-                    //Error
-                    throw new Exception("The map already has data at the coordinate " + block.Tile.Coordinate);
-                }
+            }
+            catch
+            {
+                //Error
+                throw new Exception("The map already has data at the coordinate " + block.Tile.Coordinate);
             }
 
         }
@@ -150,7 +142,7 @@ namespace DivineRightGame
         /// <summary>
         /// Loads a local map and clears actors
         /// </summary>
-        /// <param name="map"></param>
+        /// <param name="map"></param>x`
         public void LoadLocalMap(MapBlock[, ,] map, int groundLevel)
         {
             this.localGameMap = map;

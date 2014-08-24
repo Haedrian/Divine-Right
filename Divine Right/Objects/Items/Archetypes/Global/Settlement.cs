@@ -39,7 +39,6 @@ namespace DRObjects.Items.Archetypes.Global
         public int RichPercentage { get; set; }
         public int MiddlePercentage { get; set; }
         public int PoorPercentage { get; set; }
-
         #endregion
 
         public override List<SpriteData> Graphics

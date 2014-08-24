@@ -23,6 +23,7 @@ using DivineRightGame;
 using DRObjects.Items.Archetypes.Local;
 using DivineRightGame.EventHandling;
 using DivineRightGame.SettlementHandling;
+using DivineRightGame.ActorHandling;
 
 namespace Divine_Right.GameScreens
 {
@@ -135,6 +136,47 @@ namespace Divine_Right.GameScreens
             {
                 //TestFunctions.ParseXML();
                 TestFunctions.GenerateSettlement();
+            }
+            else if (parameters[0].ToString().Equals("WorldMap"))
+            {
+                //Load from the world map
+                var worldMap = GameState.GlobalMap.globalGameMap;
+
+                List<MapBlock> collapsedMap = new List<MapBlock>();
+
+                foreach (var block in worldMap)
+                {
+                    collapsedMap.Add(block);
+                }
+
+                GameState.LocalMap = new LocalMap(GameState.GlobalMap.globalGameMap.GetLength(0), GameState.GlobalMap.globalGameMap.GetLength(1), 1, 0);
+
+                //Go through each of them, add them to the local map
+                GameState.LocalMap.AddToLocalMap(collapsedMap.ToArray());
+
+                //Create the player character. For now randomly. Later we'll start at a capital
+                MapItem player = new MapItem();
+                player.Coordinate = new MapCoordinate(100, 100, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+                player.Description = "The player character";
+                player.Graphic = SpriteManager.GetSprite(LocalSpriteName.PLAYERCHAR);
+                player.InternalName = "Player Char";
+                player.MayContainItems = false;
+                player.Name = "Player";
+
+                MapBlock playerBlock = GameState.LocalMap.GetBlockAtCoordinate(player.Coordinate);
+                playerBlock.PutItemOnBlock(player);
+
+                GameState.PlayerCharacter = new Actor();
+                GameState.PlayerCharacter.MapCharacter = player;
+                GameState.PlayerCharacter.IsPlayerCharacter = true;
+
+                GameState.PlayerCharacter.Attributes = ActorGeneration.GenerateAttributes("human", DRObjects.ActorHandling.CharacterSheet.Enums.ActorProfession.WARRIOR, 10);
+                GameState.PlayerCharacter.Anatomy = ActorGeneration.GenerateAnatomy("human");
+
+                GameState.PlayerCharacter.Attributes.Health = GameState.PlayerCharacter.Anatomy;
+
+                GameState.LocalMap.Actors.Add(GameState.PlayerCharacter);
+
             }
             else
             {
@@ -716,7 +758,7 @@ namespace Divine_Right.GameScreens
                 //Start with the tile
                 try
                 {
-                    foreach (SpriteData tileGraphic in block.TileGraphics)
+                    foreach (SpriteData tileGraphic in block.TileGraphics.Reverse())
                     {
                         if (tileGraphic != null)
                         {

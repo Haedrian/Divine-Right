@@ -16,7 +16,7 @@ namespace DivineRightGame
     public class GlobalMap
     {
         #region Members
-        private MapBlock[,] globalGameMap;
+        public MapBlock[,] globalGameMap;
         private List<Actor> parties;
         private int worldSize;
         /// <summary>
