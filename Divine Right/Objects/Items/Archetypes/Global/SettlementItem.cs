@@ -5,6 +5,7 @@ using System.Text;
 using DRObjects.Enums;
 using DRObjects.Graphics;
 using Microsoft.Xna.Framework;
+using DRObjects.GraphicsEngineObjects;
 
 namespace DRObjects.Items.Archetypes.Global
 {
@@ -18,6 +19,10 @@ namespace DRObjects.Items.Archetypes.Global
         public int SettlementSize { get; set; }
         public bool IsCapital { get; set; }
         public int OwnerID { get; set; }
+        /// <summary>
+        /// A reference to the settlement to be visited when used
+        /// </summary>
+        public Settlement Settlement { get; set; }
         /// <summary>
         /// The Corner of the settlement - determines which graphic to draw
         /// </summary>
@@ -48,6 +53,38 @@ namespace DRObjects.Items.Archetypes.Global
         #endregion
 
         #region Overridden functions
+        public override ActionTypeEnum[] GetPossibleActions(Actor actor)
+        {
+            List<ActionTypeEnum> actions = new List<ActionTypeEnum>();
+
+            actions.AddRange(base.GetPossibleActions(actor));
+
+            if (actor.MapCharacter.Coordinate - this.Coordinate < 2)
+            {
+                actions.Add(ActionTypeEnum.VISIT);
+            }
+
+            return actions.ToArray();
+        }
+
+        public override GraphicsEngineObjects.Abstract.PlayerFeedback[] PerformAction(ActionTypeEnum actionType, Actor actor, object[] args)
+        {
+            //Use base for everything that's not visit
+            if (actionType != ActionTypeEnum.VISIT)
+            {
+                return base.PerformAction(actionType, actor, args);
+            }
+
+            if (actor.IsPlayerCharacter && (actor.MapCharacter.Coordinate - this.Coordinate < 2))
+            {
+                return new DRObjects.GraphicsEngineObjects.Abstract.PlayerFeedback[1] { new LocationChangeFeedback() { VisitSettlement = Settlement } };
+            }
+            else
+            {
+                return new GraphicsEngineObjects.Abstract.PlayerFeedback[0] { };
+            }
+        }
+
         public override List<Graphics.SpriteData> Graphics
         {
             get

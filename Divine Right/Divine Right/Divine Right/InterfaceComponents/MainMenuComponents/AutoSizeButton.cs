@@ -21,9 +21,19 @@ namespace Divine_Right.InterfaceComponents.MainMenuComponents
 
         #endregion
 
-        #region Constructor
+       #region Propeties
 
-        /// <summary>
+        public InternalActionEnum Action 
+        {get
+            {
+                return action;
+            }
+        }
+       #endregion
+
+       #region Constructor
+
+       /// <summary>
         /// Creats a Main Menu Button
         /// </summary>
         /// <param name="text">The text to show</param>

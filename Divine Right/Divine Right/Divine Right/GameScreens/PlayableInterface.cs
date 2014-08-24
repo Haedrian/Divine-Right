@@ -24,6 +24,8 @@ using DRObjects.Items.Archetypes.Local;
 using DivineRightGame.EventHandling;
 using DivineRightGame.SettlementHandling;
 using DivineRightGame.ActorHandling;
+using DRObjects.LocalMapGeneratorObjects;
+using DRObjects.Items.Archetypes.Global;
 
 namespace Divine_Right.GameScreens
 {
@@ -196,10 +198,6 @@ namespace Divine_Right.GameScreens
             tlc.Visible = true;
             interfaceComponents.Add(tlc);
 
-            LocationDetailsComponent ldc = new LocationDetailsComponent(GameState.LocalMap.Settlement, PlayableWidth-170, 0);
-            ldc.Visible = false;
-            interfaceComponents.Add(ldc);
-
             log = tlc;
 
             var cemetry = SpriteManager.GetSprite(InterfaceSpriteName.DEAD);
@@ -207,7 +205,7 @@ namespace Divine_Right.GameScreens
             //Create the menu buttons
             menuButtons.Add(new AutoSizeGameButton("  Health  ", this.game.Content, InternalActionEnum.OPEN_HEALTH, new object[] { }, 50, GraphicsDevice.Viewport.Height -35));
             menuButtons.Add(new AutoSizeGameButton(" Attributes ", this.game.Content, InternalActionEnum.OPEN_ATTRIBUTES, new object[] { }, 150, GraphicsDevice.Viewport.Height -35));
-            menuButtons.Add(new AutoSizeGameButton(" Settlement ", this.game.Content, InternalActionEnum.TOGGLE_SETTLEMENT, new object[] { }, 270, GraphicsDevice.Viewport.Height - 35));
+            //menuButtons.Add(new AutoSizeGameButton(" Settlement ", this.game.Content, InternalActionEnum.TOGGLE_SETTLEMENT, new object[] { }, 270, GraphicsDevice.Viewport.Height - 35));
             menuButtons.Add(new AutoSizeGameButton(" Log ", this.game.Content, InternalActionEnum.OPEN_LOG, new object[] { }, 350, GraphicsDevice.Viewport.Height - 35));
 
             //Invoke a size change
@@ -917,6 +915,42 @@ namespace Divine_Right.GameScreens
                     interfaceComponents.Add(new DecisionPopupComponent(PlayableWidth / 2 - 150, PlayableHeight / 2 - 150, gameEvent));
 
                 }
+                else if (feedback.GetType().Equals(typeof(LocationChangeFeedback)))
+                {
+                   //Remove settlement button and interface
+                    var locDetails = this.interfaceComponents.Where(ic => ic.GetType().Equals(typeof(LocationDetailsComponent))).FirstOrDefault();
+
+                    if (locDetails != null)
+                    {
+                        this.interfaceComponents.Remove(locDetails);
+                    }
+
+                    var button = this.menuButtons.Where(mb => (mb as AutoSizeGameButton).Action == InternalActionEnum.TOGGLE_SETTLEMENT).FirstOrDefault();
+
+                    if (button != null)
+                    {
+                        this.menuButtons.Remove(button);
+                    }
+                        
+                    LocationChangeFeedback lce = feedback as LocationChangeFeedback;
+
+                    if (lce.VisitSettlement != null)
+                    {
+                        LoadSettlement(lce.VisitSettlement);
+
+                        //Makde the components visible
+                        LocationDetailsComponent ldc = new LocationDetailsComponent(GameState.LocalMap.Settlement, PlayableWidth - 170, 0);
+                        ldc.Visible = false;
+                        interfaceComponents.Add(ldc);
+                        menuButtons.Add(new AutoSizeGameButton(" Settlement ", this.game.Content, InternalActionEnum.TOGGLE_SETTLEMENT, new object[] { }, 270, GraphicsDevice.Viewport.Height - 35));
+                        Window_ClientSizeChanged(null, null); //button is in the wrong position for some reason
+                    }
+                    else if (lce.VisitMainMap)
+                    {
+                        //Go to the global map
+                        LoadGlobalMap(GameState.LocalMap.Settlement.Coordinate);
+                    }
+                }
                 //TODO: THE REST
             }
 
@@ -924,6 +958,7 @@ namespace Divine_Right.GameScreens
             log.UpdateLog();
 
         }
+
         /// <summary>
         /// Translate the state of the mouse and the last actions to determine what the mouse is doing
         /// </summary>
@@ -955,5 +990,67 @@ namespace Divine_Right.GameScreens
 
         #endregion
 
+        #region Helper Functions
+
+        /// <summary>
+        /// Loads the Global Map, and drops the player at a particular coordinate
+        /// </summary>
+        private void LoadGlobalMap(MapCoordinate coordinate)
+        {
+            //Load from the world map
+            var worldMap = GameState.GlobalMap.globalGameMap;
+
+            List<MapBlock> collapsedMap = new List<MapBlock>();
+
+            foreach (var block in worldMap)
+            {
+                collapsedMap.Add(block);
+            }
+
+            GameState.LocalMap = new LocalMap(GameState.GlobalMap.globalGameMap.GetLength(0), GameState.GlobalMap.globalGameMap.GetLength(1), 1, 0);
+
+            //Go through each of them, add them to the local map
+            GameState.LocalMap.AddToLocalMap(collapsedMap.ToArray());
+
+            //Create the player character. For now randomly. Later we'll start at a capital
+            GameState.PlayerCharacter.MapCharacter.Coordinate = coordinate;
+
+            MapBlock playerBlock = GameState.LocalMap.GetBlockAtCoordinate(coordinate);
+            playerBlock.PutItemOnBlock(GameState.PlayerCharacter.MapCharacter);
+
+            GameState.LocalMap.Actors.Add(GameState.PlayerCharacter);
+        }
+        private void LoadSettlement(Settlement settlement)
+        {
+            //Load that
+            //TODO: SERIALISE/DESERIALSE
+            List<Actor> actors = null;
+            PointOfInterest startPoint = null;
+
+            var gennedMap = SettlementGenerator.GenerateMap(settlement, out actors, out startPoint);
+
+            //Wipe the old map
+            GameState.LocalMap = new LocalMap(gennedMap.GetLength(0), gennedMap.GetLength(1), 1, 0);
+            GameState.LocalMap.Actors = new List<Actor>();
+
+            List<MapBlock> collapsedMap = new List<MapBlock>();
+
+            foreach (MapBlock block in gennedMap)
+            {
+                collapsedMap.Add(block);
+            }
+
+            GameState.LocalMap.AddToLocalMap(collapsedMap.ToArray());
+
+            GameState.PlayerCharacter.MapCharacter.Coordinate = startPoint.Coordinate;
+
+            MapBlock playerBlock = GameState.LocalMap.GetBlockAtCoordinate(startPoint.Coordinate);
+            playerBlock.PutItemOnBlock(GameState.PlayerCharacter.MapCharacter);
+            GameState.LocalMap.Actors.AddRange(actors);
+            GameState.LocalMap.Actors.Add(GameState.PlayerCharacter);
+
+            GameState.LocalMap.Settlement = settlement;
+        }
+        #endregion
     }
 }

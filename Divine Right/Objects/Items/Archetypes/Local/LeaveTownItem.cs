@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DRObjects.Graphics;
+using DRObjects.Enums;
+using DRObjects.GraphicsEngineObjects;
 
 namespace DRObjects.Items.Archetypes.Local
 {
@@ -23,6 +25,37 @@ namespace DRObjects.Items.Archetypes.Local
             set
             {
                 base.Graphics = value;
+            }
+        }
+
+        public override Enums.ActionTypeEnum[] GetPossibleActions(Actor actor)
+        {
+            List<ActionTypeEnum> actions = new List<ActionTypeEnum>();
+            actions.AddRange(base.GetPossibleActions(actor));
+
+            if (actor.MapCharacter.Coordinate - this.Coordinate < 2)
+            {
+                actions.Add(ActionTypeEnum.LEAVE);
+            }
+            return actions.ToArray();
+        }
+
+        public override GraphicsEngineObjects.Abstract.PlayerFeedback[] PerformAction(ActionTypeEnum actionType, Actor actor, object[] args)
+        {
+            if (actionType != ActionTypeEnum.LEAVE)
+            {
+                return base.PerformAction(actionType, actor, args);
+            }
+            else
+            {
+                if (actor.IsPlayerCharacter && (actor.MapCharacter.Coordinate - this.Coordinate < 2))
+                {
+                    return new DRObjects.GraphicsEngineObjects.Abstract.PlayerFeedback[1] { new LocationChangeFeedback() { VisitMainMap = true  } };
+                }
+                else
+                {
+                    return new GraphicsEngineObjects.Abstract.PlayerFeedback[0] { };
+                }
             }
         }
 

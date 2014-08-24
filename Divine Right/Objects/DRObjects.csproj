@@ -103,6 +103,7 @@
     <Compile Include="GraphicsEngineObjects\CurrentLogFeedback.cs" />
     <Compile Include="GraphicsEngineObjects\GraphicalBlock.cs" />
     <Compile Include="GraphicsEngineObjects\InterfaceToggleFeedback.cs" />
+    <Compile Include="GraphicsEngineObjects\LocationChangeFeedback.cs" />
     <Compile Include="GraphicsEngineObjects\TextFeedback.cs" />
     <Compile Include="Actor.cs" />
     <Compile Include="Enums\ActionTypeEnum.cs" />

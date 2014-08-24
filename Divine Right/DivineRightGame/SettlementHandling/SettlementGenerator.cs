@@ -232,24 +232,6 @@ namespace DivineRightGame.SettlementHandling
             }
             Rectangle plazaRect = new Rectangle(18, 18 + yShift, 18, 35 - yShift);
 
-            //Create a path to the bottom of the map - if there isn't a building in the way
-            if (!settlement.Districts.Any(d => d.LocationNumber == 6))
-            {
-            for (int y = 0; y < 17 + yShift; y++)
-            {
-                for (int x = mainMap.GetLength(0)/2 -1; x < mainMap.GetLength(0)/2 + 2; x++)
-                {
-                    MapItem tile = factory.CreateItem("tile", plazaTile);
-                    tile.Coordinate = new MapCoordinate(x, y, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
-
-                    MapBlock block = new MapBlock();
-                    block.Tile = tile;
-
-                    mainMap[x, y] = block;
-                }
-            }
-            }
-
             //Generate decor - put a plaza in the middle
             Maplet plazaMaplet = parser.ParseMaplet(MapletDatabaseHandler.GetMapletByTag("plaza"));
 
