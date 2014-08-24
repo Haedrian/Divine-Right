@@ -35,14 +35,15 @@ namespace DivineRightGame.SettlementHandling
         /// </summary>
         /// <param name="globalCoordinates"></param>
         /// <param name="size"></param>
+        /// <param name="capital">Whether the settlement is a capital or not</param>
         /// <returns></returns>
-        public static Settlement GenerateSettlement(MapCoordinate globalCoordinates, int size)
+        public static Settlement GenerateSettlement(MapCoordinate globalCoordinates, int size,bool capital=false)
         {
             Settlement settlement = new Settlement();
 
             settlement.Coordinate = globalCoordinates.Clone();
             settlement.Name = SettlementNameGenerator.GenerateName();
-            settlement.Description = "the settlement of " + settlement.Name;
+            settlement.Description = capital? "the capital of " + settlement.Name  : "the settlement of " + settlement.Name;
             settlement.MayContainItems = false;
             settlement.SettlementSize = size;
 

@@ -106,7 +106,7 @@ namespace DivineRightGame.Managers
             CurrentStep = "And the humans awoke the beasts and monsters of the land";
             CreateDungeons();
 
-            CurrentStep = "And thus the world was done";
+            CurrentStep = "And thus the world was done. [Enter] to continue";
             isGenerating = false;
         }
 
@@ -912,7 +912,7 @@ namespace DivineRightGame.Managers
                 //TODO: ADD TO THE GLOBAL MAP'S COLONY LIST EVENTUALLY
                 MapBlock block = candidateBlocks.First();
 
-                Settlement settlement = SettlementGenerator.GenerateSettlement(block.Tile.Coordinate, random.Next(5) + 10);
+                Settlement settlement = SettlementGenerator.GenerateSettlement(block.Tile.Coordinate, random.Next(5) + 10,true);
 
                 CreateSettlement(true, settlement, block, i);
 
@@ -1027,6 +1027,8 @@ namespace DivineRightGame.Managers
                     //Create a new dungeon
                     DungeonItem item = new DungeonItem(corner);
                     item.Coordinate = new MapCoordinate(cornerBlock.Tile.Coordinate);
+                    item.Name = "Dungeon";
+                    item.Description = "a monster infested maze";
 
                     cornerBlock.ForcePutItemOnBlock(item);
 

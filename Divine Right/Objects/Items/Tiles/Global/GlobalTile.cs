@@ -107,7 +107,91 @@ namespace DRObjects.Items.Tiles.Global
 
         #region Properties
 
-       
+        public override bool MayContainItems
+        {
+            get
+            {
+                //Is it underwater? or a mountain?
+                if (this.Elevation < 0 || this.Elevation > 250)
+                {
+                    //Nope
+                    return false;
+                }
+
+                //Is there a river?
+                if (this.HasRiver)
+                {
+                    return false;
+                }
+
+                return true; //Yeah we can move
+
+            }
+            set
+            {
+                base.MayContainItems = value;
+            }
+        }
+
+        public override string Name
+        {
+            get
+            {
+                if (HasRiver)
+                {
+                    return "River";
+                }
+                else if (this.Elevation > 250)
+                {
+                    return "Mountain";
+                }
+                else if (this.Elevation < 0)
+                {
+                    return "Sea";
+                }
+                else if (!this.Biome.HasValue)
+                {
+                    return "??";
+                }
+                else
+                { //the name of the biome
+                    string text = this.Biome.Value.ToString().ToLower().Replace("_", " ");
+
+                    return char.ToUpper(text[0]) + text.Substring(1);
+                }
+
+            }
+            set
+            {
+                base.Name = value;
+            }
+        }
+
+        public override string Description
+        {
+            get
+            {
+
+                if (HasRiver)
+                {
+                    return "a river";
+                }
+                else if (this.Elevation < 0)
+                {
+                    return "the sea";
+                }
+                else if (this.Elevation > 250)
+                {
+                    return "a mountain";
+                }
+
+                return "a " + (this.Biome.HasValue ? this.Biome.Value.ToString().ToLower().Replace("_", " ") : "?") + " with an elevation of " + this.Elevation;
+            }
+            set
+            {
+                base.Description = value;
+            }
+        }
 
         public override List<SpriteData> Graphics
         {

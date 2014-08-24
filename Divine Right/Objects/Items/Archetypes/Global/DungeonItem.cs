@@ -32,7 +32,7 @@ namespace DRObjects.Items.Archetypes.Global
         public DungeonItem(int corner)
         {
             DungeonCorner = corner;
-
+            this.MayContainItems = true;
             sprites = new List<SpriteData>();
 
             sprites.Add(SpriteManager.GetSprite((GlobalSpriteName)Enum.Parse(typeof(GlobalSpriteName), "DUNGEON" + "_" + DungeonCorner)));
