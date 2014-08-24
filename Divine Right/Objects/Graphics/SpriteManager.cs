@@ -25,6 +25,7 @@ namespace DRObjects.Graphics
         private static string CHARACTER_SHEET = @"Graphics/Interface/CharacterSheetIcons";
         private static string BANNERS = @"Graphics/Interface/Banners";
         private static string LOCATIONINTERFACE = @"Graphics/Interface/locationInterface";
+        private static string GOTOWORLDMAP = @"Graphics/Interface/gotoWorldMap";
 
         private static string MERCHANT = @"Graphics/Local/merchant";
         private static string GUARD = @"Graphics/Local/humanguard";
@@ -621,10 +622,10 @@ namespace DRObjects.Graphics
             interfaceSprites[(int)InterfaceSpriteName.GENERAL_STORE] = new SpriteData(LOCATIONINTERFACE, new Rectangle(375, 75, 75, 75));
             interfaceSprites[(int)InterfaceSpriteName.INN] = new SpriteData(LOCATIONINTERFACE, new Rectangle(450, 75, 75, 75));
             
-
             interfaceSprites[(int)InterfaceSpriteName.MAN] = new SpriteData(LOCATIONINTERFACE, new Rectangle(300, 75, 35, 38));
             interfaceSprites[(int)InterfaceSpriteName.HALFMAN] = new SpriteData(LOCATIONINTERFACE, new Rectangle(300, 75, 17, 38));
-            //35x38
+            
+            interfaceSprites[(int)InterfaceSpriteName.GOTO_WORLD_MAP] = new SpriteData(GOTOWORLDMAP);
 
             interfaceSprites[(int)InterfaceSpriteName.DEAD] = new SpriteData(@"Graphics/Interface/death", null);
         }

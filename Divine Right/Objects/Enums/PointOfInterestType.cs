@@ -12,5 +12,6 @@ namespace DRObjects.Enums
     {
         GUARD_ROOM,
         TREASURE,
+        ENTRANCE,
     }
 }

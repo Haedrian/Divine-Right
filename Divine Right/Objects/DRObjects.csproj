@@ -118,6 +118,7 @@
     <Compile Include="Items\Archetypes\Global\MapResource.cs" />
     <Compile Include="Items\Archetypes\Global\Settlement.cs" />
     <Compile Include="Items\Archetypes\Global\SettlementItem.cs" />
+    <Compile Include="Items\Archetypes\Local\LeaveTownItem.cs" />
     <Compile Include="Items\Archetypes\Local\LocalCharacter.cs" />
     <Compile Include="Items\Archetypes\Local\ToggleItem.cs" />
     <Compile Include="Items\Tiles\Air.cs" />

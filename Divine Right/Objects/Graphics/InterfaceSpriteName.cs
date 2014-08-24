@@ -55,6 +55,7 @@ namespace DRObjects.Graphics
         MAN,
         HALFMAN,
         GENERAL_STORE,
-        INN
+        INN,
+        GOTO_WORLD_MAP
     }
 }

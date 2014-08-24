@@ -59,6 +59,7 @@ Content\Graphics\Local\richmale.xnb
 Content\Graphics\Local\richwoman.xnb
 Content\Graphics\Local\priest.xnb
 Content\Graphics\World\WorldItems.xnb
+Content\Graphics\Interface\gotoWorldMap.xnb
 Content\Fonts\TextFeedbackFont.spritefont
 App.config
 Maplets.sdf

@@ -18,6 +18,7 @@ using DRObjects.Graphics;
 using System.Reflection;
 using System.Threading;
 using DivineRightGame.Managers.HelperObjects.HelperEnums;
+using DRObjects.Items.Archetypes.Local;
 
 namespace DivineRightGame.SettlementHandling
 {
@@ -37,13 +38,13 @@ namespace DivineRightGame.SettlementHandling
         /// <param name="size"></param>
         /// <param name="capital">Whether the settlement is a capital or not</param>
         /// <returns></returns>
-        public static Settlement GenerateSettlement(MapCoordinate globalCoordinates, int size,bool capital=false)
+        public static Settlement GenerateSettlement(MapCoordinate globalCoordinates, int size, bool capital = false)
         {
             Settlement settlement = new Settlement();
 
             settlement.Coordinate = globalCoordinates.Clone();
             settlement.Name = SettlementNameGenerator.GenerateName();
-            settlement.Description = capital? "the capital of " + settlement.Name  : "the settlement of " + settlement.Name;
+            settlement.Description = capital ? "the capital of " + settlement.Name : "the settlement of " + settlement.Name;
             settlement.MayContainItems = false;
             settlement.SettlementSize = size;
 
@@ -71,18 +72,18 @@ namespace DivineRightGame.SettlementHandling
         /// </summary>
         /// <param name="settlement"></param>
         /// <returns></returns>
-        public static MapBlock[,] GenerateMap(Settlement settlement, out List<Actor> actors)
+        public static MapBlock[,] GenerateMap(Settlement settlement, out List<Actor> actors, out PointOfInterest startPoint)
         {
             actors = new List<Actor>();
 
             //Create the Main empty map - 60x80
-            MapBlock[,] mainMap = new MapBlock[60, 80];
+            MapBlock[,] mainMap = new MapBlock[53, 80];
 
             ItemFactory.ItemFactory factory = new ItemFactory.ItemFactory();
 
             int grassTileID = 0;
 
-            factory.CreateItem(Archetype.TILES, "grass",out grassTileID);
+            factory.CreateItem(Archetype.TILES, "grass", out grassTileID);
 
             //Go through each square and create a grass tile
             for (int x = 0; x < mainMap.GetLength(0); x++)
@@ -102,7 +103,7 @@ namespace DivineRightGame.SettlementHandling
             //Now we need to see where everything goes
             LocalMapGenerator.LocalMapGenerator gen = new LocalMapGenerator.LocalMapGenerator();
             LocalMapXMLParser parser = new LocalMapXMLParser();
-         
+
             foreach (SettlementBuilding district in settlement.Districts)
             {
                 //For reach settlement building, create the appropriate map
@@ -126,7 +127,7 @@ namespace DivineRightGame.SettlementHandling
                     SizeY = 17,
                     Walled = false,
                     Tiled = false,
-                    TileTag= "Pavement",
+                    TileTag = "Pavement",
                     MapletContents = new List<MapletContents>() 
                     {
                         new MapletContentsMaplet()
@@ -141,8 +142,8 @@ namespace DivineRightGame.SettlementHandling
                             MaxAmount = 1
                         }
 
-                    }                   
-                    
+                    }
+
                 };
 
                 //Fix the x and y of the contents so they're in the center 
@@ -162,11 +163,11 @@ namespace DivineRightGame.SettlementHandling
                 }
                 if (district.LocationNumber == 0 || district.LocationNumber == 3 || district.LocationNumber == 5)
                 {
-                    subMapletWrapper.x = (17 - mapletSizeX) -1;
+                    subMapletWrapper.x = (17 - mapletSizeX) - 1;
                 }
                 if (district.LocationNumber == 5 || district.LocationNumber == 6 || district.LocationNumber == 7)
                 {
-                    subMapletWrapper.y = (17 - mapletSizeY) -1 ;
+                    subMapletWrapper.y = (17 - mapletSizeY) - 1;
                 }
                 if (district.LocationNumber == 2 || district.LocationNumber == 4 || district.LocationNumber == 7)
                 {
@@ -175,7 +176,7 @@ namespace DivineRightGame.SettlementHandling
 
                 Actor[] localAct = null;
 
-                var gennedMap = gen.GenerateMap(grassTileID, null, borderMaplet , true,"human",out localAct);
+                var gennedMap = gen.GenerateMap(grassTileID, null, borderMaplet, true, "human", out localAct);
 
                 actors.AddRange(localAct);
 
@@ -230,17 +231,35 @@ namespace DivineRightGame.SettlementHandling
                 }
             }
             Rectangle plazaRect = new Rectangle(18, 18 + yShift, 18, 35 - yShift);
-          
-           //Generate decor - put a plaza in the middle
-           Maplet plazaMaplet = parser.ParseMaplet(MapletDatabaseHandler.GetMapletByTag("plaza"));
+
+            //Create a path to the bottom of the map - if there isn't a building in the way
+            if (!settlement.Districts.Any(d => d.LocationNumber == 6))
+            {
+            for (int y = 0; y < 17 + yShift; y++)
+            {
+                for (int x = mainMap.GetLength(0)/2 -1; x < mainMap.GetLength(0)/2 + 2; x++)
+                {
+                    MapItem tile = factory.CreateItem("tile", plazaTile);
+                    tile.Coordinate = new MapCoordinate(x, y, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+
+                    MapBlock block = new MapBlock();
+                    block.Tile = tile;
+
+                    mainMap[x, y] = block;
+                }
+            }
+            }
+
+            //Generate decor - put a plaza in the middle
+            Maplet plazaMaplet = parser.ParseMaplet(MapletDatabaseHandler.GetMapletByTag("plaza"));
 
             Actor[] tempAct = null;
 
             gen.JoinMaps(mainMap,
                 gen.GenerateMap(plazaTile, null, plazaMaplet, true, "", out tempAct),
-                (plazaRect.X -1 + plazaRect.Width / 2) - plazaMaplet.SizeX / 2,
-                (plazaRect.Y -1 + plazaRect.Height / 2) - plazaMaplet.SizeY / 2);
-           
+                (plazaRect.X - 1 + plazaRect.Width / 2) - plazaMaplet.SizeX / 2,
+                (plazaRect.Y - 1 + plazaRect.Height / 2) - plazaMaplet.SizeY / 2);
+
             //Now we put some people in
             var plazaActors = GenerateTownsfolk(settlement);
 
@@ -286,7 +305,7 @@ namespace DivineRightGame.SettlementHandling
             if (yShift > 0)
             {
                 //We can split the map into an even smaller size
-                ShrinkArray<MapBlock>(ref mainMap, 60, 0,50,30);
+                ShrinkArray<MapBlock>(ref mainMap, mainMap.GetLength(0), 0, 50, 30);
 
                 //Fix the coordinates
                 foreach (var blocks in mainMap)
@@ -317,7 +336,7 @@ namespace DivineRightGame.SettlementHandling
             }
 
             //Let's add some trees and stuff
-            int decorCount = (int) (mainMap.GetLength(1)*1.5);
+            int decorCount = (int)(mainMap.GetLength(1) * 1.5);
 
             //Just find as many random points and if it happens to be grass, drop them
             int itemID = 0;
@@ -325,7 +344,7 @@ namespace DivineRightGame.SettlementHandling
             for (int i = 0; i < decorCount; i++)
             {
                 //More trees than flowers
-                MapItem decorItem = factory.CreateItem(Archetype.MUNDANEITEMS, i%5 == 0 ? "outdoor flower" : "tree" , out itemID);
+                MapItem decorItem = factory.CreateItem(Archetype.MUNDANEITEMS, i % 5 == 0 ? "outdoor flower" : "tree", out itemID);
 
                 //Pick a random point
                 MapBlock randomBlock = mainMap[random.Next(mainMap.GetLength(0)), random.Next(mainMap.GetLength(1))];
@@ -336,7 +355,69 @@ namespace DivineRightGame.SettlementHandling
                     randomBlock.ForcePutItemOnBlock(decorItem);
                 }
                 //Otherwise forget all about it
-            }        
+            }
+
+
+            //Now select all the border tiles and put in a "Exit here" border
+            for (int x = 0; x < mainMap.GetLength(0); x++)
+            {
+                MapCoordinate coo = new MapCoordinate(x,0,0,MapTypeEnum.LOCAL);
+
+                LeaveTownItem lti = new LeaveTownItem();
+                lti.Coordinate = coo;
+                lti.Description = "path outside the town";
+                lti.Name = "Leave Town";
+
+                lti.Coordinate = coo;
+
+                mainMap[x, 0].ForcePutItemOnBlock(lti);
+
+                coo = new MapCoordinate(x, mainMap.GetLength(1)-1, 0, MapTypeEnum.LOCAL);
+
+                lti = new LeaveTownItem();
+                lti.Coordinate = coo;
+                lti.Description = "path outside the town";
+                lti.Name = "Leave Town";
+
+                lti.Coordinate = coo;
+
+                mainMap[x, mainMap.GetLength(1)-1].ForcePutItemOnBlock(lti);
+
+            }
+
+            for (int y = 0; y < mainMap.GetLength(1); y++)
+            {
+                MapCoordinate coo = new MapCoordinate(0, y, 0, MapTypeEnum.LOCAL);
+
+                LeaveTownItem lti = new LeaveTownItem();
+                lti.Coordinate = coo;
+                lti.Description = "path outside the town";
+                lti.Name = "Leave Town";
+
+                lti.Coordinate = coo;
+
+                mainMap[0, y].ForcePutItemOnBlock(lti);
+
+                coo = new MapCoordinate(mainMap.GetLength(0) - 1, y , 0, MapTypeEnum.LOCAL);
+
+                lti = new LeaveTownItem();
+                lti.Coordinate = coo;
+                lti.Description = "path outside the town";
+                lti.Name = "Town Borders";
+
+                lti.Coordinate = coo;
+
+                mainMap[mainMap.GetLength(0)-1, y].ForcePutItemOnBlock(lti);
+            }
+
+            PointOfInterest poi = new PointOfInterest();
+            poi.Type = PointOfInterestType.ENTRANCE;
+
+            //Put the entrance at the bottom in the middle of x
+            poi.Coordinate = new MapCoordinate(mainMap.GetLength(0) / 2, 1, 0, MapTypeEnum.LOCAL);
+
+            startPoint = poi;
+
             return mainMap;
         }
 

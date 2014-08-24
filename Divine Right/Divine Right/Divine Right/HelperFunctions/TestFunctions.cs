@@ -101,7 +101,9 @@ namespace Divine_Right.HelperFunctions
 
             List<Actor> actors = null;
 
-            var gennedMap = SettlementGenerator.GenerateMap(settlement, out actors);
+            PointOfInterest startPoint = null;
+
+            var gennedMap = SettlementGenerator.GenerateMap(settlement, out actors,out startPoint);
 
             List<MapBlock> collapsedMap = new List<MapBlock>();
 
@@ -113,7 +115,7 @@ namespace Divine_Right.HelperFunctions
             GameState.LocalMap.AddToLocalMap(collapsedMap.ToArray());
 
             MapItem player = new MapItem();
-            player.Coordinate = new MapCoordinate(10,10,0,DRObjects.Enums.MapTypeEnum.LOCAL);
+            player.Coordinate = startPoint.Coordinate;
             player.Description = "The player character";
             player.Graphic = SpriteManager.GetSprite(LocalSpriteName.PLAYERCHAR);
             player.InternalName = "Player Char";
