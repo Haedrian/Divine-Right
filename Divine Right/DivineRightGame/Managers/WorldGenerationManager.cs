@@ -9,6 +9,8 @@ using DRObjects.Enums;
 using DivineRightGame.Managers.HelperFunctions;
 using DRObjects.Items.Archetypes.Global;
 using DivineRightGame.SettlementHandling;
+using DivineRightGame.LocalMapGenerator;
+using DivineRightGame.ActorHandling;
 
 namespace DivineRightGame.Managers
 {
@@ -982,9 +984,23 @@ namespace DivineRightGame.Managers
 
             for (int i = 0; i < DUNGEON_TOTAL; i++)
             {
+                //Create the actual item - Completly Randomly for now
+                var enemyRace = ActorGeneration.GetEnemyType(true);
+
                 MapBlock block = blocks[GameState.Random.Next(blocks.Count)];
 
-                //Put an entire group of SettlementItems on it
+                Dungeon dungeon = new Dungeon();
+                dungeon.Coordinate = new MapCoordinate(block.Tile.Coordinate);
+                dungeon.GuardRooms = GameState.Random.Next(2) +1;
+                dungeon.MaxOwnedPopulation = GameState.Random.Next(10) + 2;
+                dungeon.MaxWildPopulation = GameState.Random.Next(4);
+                dungeon.OwnerCreatureType = enemyRace;
+                dungeon.PercentageOwned = GameState.Random.Next(50) + 50;
+                dungeon.TierCount = GameState.Random.Next(4) + 2;
+                dungeon.TrapRooms = 2;
+                dungeon.TreasureRoom = GameState.Random.Next(5);
+
+                //Put an entire group of Dungeon Items on it
                 MapCoordinate[] dungeonCoordinates = new MapCoordinate[10];
 
                 dungeonCoordinates[7] = new MapCoordinate(block.Tile.Coordinate.X - 1, block.Tile.Coordinate.Y - 1, 0, MapTypeEnum.GLOBAL);
@@ -1029,6 +1045,7 @@ namespace DivineRightGame.Managers
                     item.Coordinate = new MapCoordinate(cornerBlock.Tile.Coordinate);
                     item.Name = "Dungeon";
                     item.Description = "a monster infested maze";
+                    item.Dungeon = dungeon;
 
                     cornerBlock.ForcePutItemOnBlock(item);
 

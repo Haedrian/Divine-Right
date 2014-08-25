@@ -26,6 +26,8 @@ namespace DRObjects.Items.Archetypes.Global
         /// </summary>
         public int DungeonCorner { get; set; }
 
+        public Dungeon Dungeon { get; set; }
+
         /// <summary>
         /// Creates a dungeon item. For now we only support mazes, not ruins
         /// </summary>
