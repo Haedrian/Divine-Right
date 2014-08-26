@@ -10,6 +10,7 @@ using DRObjects.ActorHandling.ActorMissions;
 using Microsoft.Xna.Framework;
 using DRObjects.ActorHandling;
 using DivineRightGame.ActorHandling;
+using DRObjects.Items.Archetypes.Local;
 
 namespace DivineRightGame.LocalMapGenerator
 {
@@ -382,6 +383,9 @@ namespace DivineRightGame.LocalMapGenerator
 
                         //Set the start point
                         startPoint = new MapCoordinate(xStart+1, topEdgeY-2, 0, MapTypeEnum.LOCAL);
+                        //Put the 'leave town' item on it
+
+                        map[startPoint.X, startPoint.Y].ForcePutItemOnBlock(new LeaveTownItem());
 
                         int x = xStart;
                         int y = topEdgeY;

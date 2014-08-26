@@ -61,7 +61,7 @@ namespace DRObjects.Items.Archetypes.Global
 
             if (actor.MapCharacter.Coordinate - this.Coordinate < 2)
             {
-                actions.Add(ActionTypeEnum.VISIT);
+                actions.Add(ActionTypeEnum.EXPLORE);
             }
 
             return actions.ToArray();
@@ -70,7 +70,7 @@ namespace DRObjects.Items.Archetypes.Global
         public override GraphicsEngineObjects.Abstract.PlayerFeedback[] PerformAction(ActionTypeEnum actionType, Actor actor, object[] args)
         {
             //Use base for everything that's not visit
-            if (actionType != ActionTypeEnum.VISIT)
+            if (actionType != ActionTypeEnum.EXPLORE)
             {
                 return base.PerformAction(actionType, actor, args);
             }

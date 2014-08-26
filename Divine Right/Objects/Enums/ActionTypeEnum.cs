@@ -14,7 +14,7 @@ namespace DRObjects.Enums
         MOVE = 4,
         PREPARE_ATTACK = 5,
         ATTACK = 6,
-        VISIT,
+        EXPLORE,
         LEAVE,
     }
 }

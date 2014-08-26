@@ -945,10 +945,23 @@ namespace Divine_Right.GameScreens
                         menuButtons.Add(new AutoSizeGameButton(" Settlement ", this.game.Content, InternalActionEnum.TOGGLE_SETTLEMENT, new object[] { }, 270, GraphicsDevice.Viewport.Height - 35));
                         Window_ClientSizeChanged(null, null); //button is in the wrong position for some reason
                     }
+                    else if (lce.VisitDungeon != null)
+                    {
+                        LoadDungeon(lce.VisitDungeon);
+                    }
                     else if (lce.VisitMainMap)
                     {
-                        //Go to the global map
-                        LoadGlobalMap(GameState.LocalMap.Settlement.Coordinate);
+
+                        if (GameState.LocalMap.Settlement == null)
+                        {
+                            //Dungeon
+                            LoadGlobalMap(GameState.LocalMap.Dungeon.Coordinate);
+                        }
+                        else
+                        {
+                            //Go to the global map
+                            LoadGlobalMap(GameState.LocalMap.Settlement.Coordinate);
+                        }
                     }
                 }
                 //TODO: THE REST
@@ -1020,6 +1033,41 @@ namespace Divine_Right.GameScreens
 
             GameState.LocalMap.Actors.Add(GameState.PlayerCharacter);
         }
+
+        private void LoadDungeon(Dungeon dungeon)
+        {
+            //TODO: Serialise/Deserialise
+            Actor[] actors = null;
+            
+            DungeonGenerator gen = new DungeonGenerator();
+            MapCoordinate startPoint = null;
+            List<PointOfInterest> pointsOfInterest = null;
+
+            var gennedDungeon = gen.GenerateDungeon(dungeon.TierCount,dungeon.TrapRooms,dungeon.GuardRooms,dungeon.TreasureRoom,dungeon.OwnerCreatureType,(decimal) dungeon.PercentageOwned,dungeon.MaxWildPopulation,dungeon.MaxOwnedPopulation,out startPoint,out actors,out pointsOfInterest);
+
+            GameState.LocalMap = new LocalMap(gennedDungeon.GetLength(0), gennedDungeon.GetLength(1), 1, 0);
+            GameState.LocalMap.Actors = new List<Actor>();
+
+            List<MapBlock> collapsedMap = new List<MapBlock>();
+
+            foreach (MapBlock block in gennedDungeon)
+            {
+                collapsedMap.Add(block);
+            }
+
+            GameState.LocalMap.AddToLocalMap(collapsedMap.ToArray());
+
+            GameState.PlayerCharacter.MapCharacter.Coordinate = startPoint;
+
+            MapBlock playerBlock = GameState.LocalMap.GetBlockAtCoordinate(startPoint);
+            playerBlock.PutItemOnBlock(GameState.PlayerCharacter.MapCharacter);
+            GameState.LocalMap.Actors.AddRange(actors);
+            GameState.LocalMap.Actors.Add(GameState.PlayerCharacter);
+            GameState.LocalMap.PointsOfInterest = pointsOfInterest;
+            GameState.LocalMap.Dungeon = dungeon;
+
+        }
+
         private void LoadSettlement(Settlement settlement)
         {
             //Load that

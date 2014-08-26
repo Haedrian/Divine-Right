@@ -47,6 +47,11 @@ namespace DivineRightGame
         /// </summary>
         public Settlement Settlement { get; set; }
 
+        /// <summary>
+        /// Represents the dungeon the player is currently at
+        /// </summary>
+        public Dungeon Dungeon { get; set; }
+
         #endregion
 
         #region Constructors

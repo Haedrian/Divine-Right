@@ -15,12 +15,13 @@ namespace DRObjects.GraphicsEngineObjects
     {
         public Settlement VisitSettlement { get; set; }
         public bool VisitMainMap { get; set; }
-        //TODO: DUNGEONS
+        public Dungeon VisitDungeon { get; set; }
 
         public LocationChangeFeedback()
         {
             VisitSettlement = null;
             VisitMainMap = false;
+            VisitDungeon = null;
         }
 
     }

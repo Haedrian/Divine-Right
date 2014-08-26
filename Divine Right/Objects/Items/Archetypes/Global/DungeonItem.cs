@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DRObjects.Graphics;
+using DRObjects.Enums;
+using DRObjects.GraphicsEngineObjects;
 
 namespace DRObjects.Items.Archetypes.Global
 {
@@ -38,6 +40,37 @@ namespace DRObjects.Items.Archetypes.Global
             sprites = new List<SpriteData>();
 
             sprites.Add(SpriteManager.GetSprite((GlobalSpriteName)Enum.Parse(typeof(GlobalSpriteName), "DUNGEON" + "_" + DungeonCorner)));
+        }
+
+        public override Enums.ActionTypeEnum[] GetPossibleActions(Actor actor)
+        {
+            List<ActionTypeEnum> actionTypes = new List<ActionTypeEnum>();
+            actionTypes.AddRange(base.GetPossibleActions(actor));
+
+            if (Math.Abs(this.Coordinate - actor.MapCharacter.Coordinate) < 2)
+            {
+                actionTypes.Add(ActionTypeEnum.EXPLORE);
+            }
+
+            return actionTypes.ToArray();
+        }
+
+        public override GraphicsEngineObjects.Abstract.PlayerFeedback[] PerformAction(ActionTypeEnum actionType, Actor actor, object[] args)
+        {
+            if (actionType != ActionTypeEnum.EXPLORE)
+            {
+                return base.PerformAction(actionType, actor, args);
+            }
+
+            //Otherwise, visit the dungeon
+
+            return new GraphicsEngineObjects.Abstract.PlayerFeedback[1] {
+                new LocationChangeFeedback()
+                {
+                    VisitMainMap = false,
+                    VisitDungeon = Dungeon
+                }
+            };
         }
 
         public override List<SpriteData> Graphics
