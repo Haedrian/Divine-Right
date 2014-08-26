@@ -626,6 +626,7 @@ namespace DRObjects.Graphics
             interfaceSprites[(int)InterfaceSpriteName.HALFMAN] = new SpriteData(LOCATIONINTERFACE, new Rectangle(300, 75, 17, 38));
             
             interfaceSprites[(int)InterfaceSpriteName.GOTO_WORLD_MAP] = new SpriteData(GOTOWORLDMAP);
+            interfaceSprites[(int)InterfaceSpriteName.GOTO_WORLD_MAP_DUNGEON] = new SpriteData(GOTOWORLDMAP + "2");
 
             interfaceSprites[(int)InterfaceSpriteName.DEAD] = new SpriteData(@"Graphics/Interface/death", null);
         }
