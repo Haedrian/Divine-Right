@@ -951,6 +951,8 @@ namespace Divine_Right.GameScreens
                     }
                     else if (lce.VisitMainMap)
                     {
+                        //Serialise the old map
+                        GameState.LocalMap.SerialiseLocalMap();
 
                         if (GameState.LocalMap.Settlement == null)
                         {
@@ -962,6 +964,8 @@ namespace Divine_Right.GameScreens
                             //Go to the global map
                             LoadGlobalMap(GameState.LocalMap.Settlement.Coordinate);
                         }
+
+
                     }
                 }
                 //TODO: THE REST
@@ -1070,34 +1074,42 @@ namespace Divine_Right.GameScreens
 
         private void LoadSettlement(Settlement settlement)
         {
-            //Load that
-            //TODO: SERIALISE/DESERIALSE
-            List<Actor> actors = null;
-            PointOfInterest startPoint = null;
+            //Do we already have the map generated ?
 
-            var gennedMap = SettlementGenerator.GenerateMap(settlement, out actors, out startPoint);
-
-            //Wipe the old map
-            GameState.LocalMap = new LocalMap(gennedMap.GetLength(0), gennedMap.GetLength(1), 1, 0);
-            GameState.LocalMap.Actors = new List<Actor>();
-
-            List<MapBlock> collapsedMap = new List<MapBlock>();
-
-            foreach (MapBlock block in gennedMap)
+            if (LocalMap.MapGenerated(settlement.UniqueGUID))
             {
-                collapsedMap.Add(block);
+                //Reload the map
+                GameState.LocalMap = LocalMap.DeserialiseLocalMap(settlement.UniqueGUID);
             }
+            else
+            {
+                List<Actor> actors = null;
+                PointOfInterest startPoint = null;
 
-            GameState.LocalMap.AddToLocalMap(collapsedMap.ToArray());
+                var gennedMap = SettlementGenerator.GenerateMap(settlement, out actors, out startPoint);
 
-            GameState.PlayerCharacter.MapCharacter.Coordinate = startPoint.Coordinate;
+                //Wipe the old map
+                GameState.LocalMap = new LocalMap(gennedMap.GetLength(0), gennedMap.GetLength(1), 1, 0);
+                GameState.LocalMap.Actors = new List<Actor>();
 
-            MapBlock playerBlock = GameState.LocalMap.GetBlockAtCoordinate(startPoint.Coordinate);
-            playerBlock.PutItemOnBlock(GameState.PlayerCharacter.MapCharacter);
-            GameState.LocalMap.Actors.AddRange(actors);
-            GameState.LocalMap.Actors.Add(GameState.PlayerCharacter);
+                List<MapBlock> collapsedMap = new List<MapBlock>();
 
-            GameState.LocalMap.Settlement = settlement;
+                foreach (MapBlock block in gennedMap)
+                {
+                    collapsedMap.Add(block);
+                }
+
+                GameState.LocalMap.AddToLocalMap(collapsedMap.ToArray());
+
+                GameState.PlayerCharacter.MapCharacter.Coordinate = startPoint.Coordinate;
+
+                MapBlock playerBlock = GameState.LocalMap.GetBlockAtCoordinate(startPoint.Coordinate);
+                playerBlock.PutItemOnBlock(GameState.PlayerCharacter.MapCharacter);
+                GameState.LocalMap.Actors.AddRange(actors);
+                GameState.LocalMap.Actors.Add(GameState.PlayerCharacter);
+
+                GameState.LocalMap.Settlement = settlement;
+            }
         }
         #endregion
     }

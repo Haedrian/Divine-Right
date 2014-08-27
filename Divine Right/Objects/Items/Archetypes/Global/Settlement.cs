@@ -5,6 +5,7 @@ using System.Text;
 using DRObjects.Enums;
 using DRObjects.Graphics;
 using DRObjects.Settlements.Districts;
+using System.IO;
 
 namespace DRObjects.Items.Archetypes.Global
 {
@@ -14,6 +15,8 @@ namespace DRObjects.Items.Archetypes.Global
     public class Settlement:
         MapItem
     {
+        private Guid _uniqueGUID;
+
         #region Members
 
         public SettlementType SettlementType
@@ -39,6 +42,7 @@ namespace DRObjects.Items.Archetypes.Global
         public int RichPercentage { get; set; }
         public int MiddlePercentage { get; set; }
         public int PoorPercentage { get; set; }
+        public Guid UniqueGUID { get { return _uniqueGUID; } }
         #endregion
 
         public override List<SpriteData> Graphics
@@ -75,5 +79,12 @@ namespace DRObjects.Items.Archetypes.Global
                 return; //dummy
             }
         }
+
+        public Settlement()
+        {
+            //Generate the GUID
+            this._uniqueGUID = Guid.NewGuid();
+        }
+
     }
 }

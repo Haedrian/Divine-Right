@@ -15,6 +15,7 @@ namespace DivineRightGame
     /// </summary>
     public static class GameState
     {
+        public static readonly string SAVEPATH =  Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/DivineRight/";
         /// <summary>
         /// The state of the global map
         /// </summary>

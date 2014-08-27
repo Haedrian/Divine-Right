@@ -14,6 +14,8 @@ using DRObjects.GraphicsEngineObjects;
 using DRObjects.GraphicsEngineObjects.Abstract;
 using DivineRightGame.ActorHandling;
 using DRObjects.Items.Archetypes.Global;
+using Newtonsoft.Json;
+using System.IO;
 
 namespace DivineRightGame
 {
@@ -23,9 +25,14 @@ namespace DivineRightGame
     public class LocalMap
     {
         #region Members
-        private MapBlock[, ,] localGameMap;
+        public MapBlock[, ,] localGameMap;
         private List<Actor> actors;
         private Random random = new Random();
+
+        /// <summary>
+        /// Only used for serialisation and deserialisation
+        /// </summary>
+        private List<MapBlock> collapsedMap = new List<MapBlock>();
 
         private int groundLevel;
         #endregion
@@ -233,6 +240,63 @@ namespace DivineRightGame
             }
 
             return feedback.ToArray();
+        }
+
+        /// <summary>
+        /// Saves the Local Map into the folder as per its guid
+        /// </summary>
+        public void SerialiseLocalMap()
+        {
+            string serialised = JsonConvert.SerializeObject(this);
+
+            //Grab the unique id of the settlement or dungeon
+
+            Guid uniqueGuid = Guid.Empty;
+
+            if (this.Settlement != null)
+            {
+                uniqueGuid = this.Settlement.UniqueGUID;
+            }
+            else if (this.Dungeon != null)
+            {
+                uniqueGuid = this.Dungeon.UniqueGUID;
+            }
+
+            //Now save the serialised file in the folder named after the guid
+            using (TextWriter writer = new StreamWriter(GameState.SAVEPATH+ uniqueGuid + ".txt",false))
+            {
+                writer.Write(serialised);
+            }
+        }
+
+        /// <summary>
+        /// Loads a local map from the file it was saved in. Will not load it into the gamestate thoughs
+        /// </summary>
+        /// <param name="uniqueGuid"></param>
+        /// <returns></returns>
+        public static LocalMap DeserialiseLocalMap(Guid uniqueGuid)
+        {
+            using (TextReader reader = new StreamReader(GameState.SAVEPATH + uniqueGuid + ".txt"))
+            {
+                string text = reader.ReadToEnd();
+
+                JsonSerializerSettings settings = new JsonSerializerSettings();
+                settings.ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor;
+
+                LocalMap map = JsonConvert.DeserializeObject<LocalMap>(text,settings);
+
+                return map;
+            }
+        }
+
+        /// <summary>
+        /// Determines whether a map has been generated already or not
+        /// </summary>
+        /// <param name="uniqueGuid"></param>
+        /// <returns></returns>
+        public static bool MapGenerated(Guid uniqueGuid)
+        {
+            return File.Exists(GameState.SAVEPATH + uniqueGuid +".txt");
         }
 
     }

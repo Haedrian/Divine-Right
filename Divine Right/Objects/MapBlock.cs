@@ -10,6 +10,7 @@ using DRObjects.Graphics;
 
 namespace DRObjects
 {
+    [Serializable]
     /// <summary>
     /// Represents a block on the map. A tile and a number of Map items upon it.
     /// </summary>
