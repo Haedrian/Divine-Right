@@ -16,9 +16,12 @@ using DivineRightGame.ActorHandling;
 using DRObjects.Items.Archetypes.Global;
 using Newtonsoft.Json;
 using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace DivineRightGame
 {
+    [Serializable]
     /// <summary>
     /// Represents a local map and the items it contains
     /// </summary>
@@ -247,8 +250,6 @@ namespace DivineRightGame
         /// </summary>
         public void SerialiseLocalMap()
         {
-            string serialised = JsonConvert.SerializeObject(this);
-
             //Grab the unique id of the settlement or dungeon
 
             Guid uniqueGuid = Guid.Empty;
@@ -262,11 +263,10 @@ namespace DivineRightGame
                 uniqueGuid = this.Dungeon.UniqueGUID;
             }
 
-            //Now save the serialised file in the folder named after the guid
-            using (TextWriter writer = new StreamWriter(GameState.SAVEPATH+ uniqueGuid + ".txt",false))
-            {
-                writer.Write(serialised);
-            }
+            IFormatter formatter = new BinaryFormatter();
+            Stream stream = new FileStream(GameState.SAVEPATH + uniqueGuid + ".txt", FileMode.Create, FileAccess.Write, FileShare.None);
+            formatter.Serialize(stream, this);
+            stream.Close();
         }
 
         /// <summary>
@@ -276,17 +276,12 @@ namespace DivineRightGame
         /// <returns></returns>
         public static LocalMap DeserialiseLocalMap(Guid uniqueGuid)
         {
-            using (TextReader reader = new StreamReader(GameState.SAVEPATH + uniqueGuid + ".txt"))
-            {
-                string text = reader.ReadToEnd();
+            IFormatter formatter = new BinaryFormatter();
+            Stream stream = new FileStream(GameState.SAVEPATH + uniqueGuid + ".txt", FileMode.Open, FileAccess.Read, FileShare.Read);
+            LocalMap obj = (LocalMap)formatter.Deserialize(stream);
+            stream.Close();
 
-                JsonSerializerSettings settings = new JsonSerializerSettings();
-                settings.ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor;
-
-                LocalMap map = JsonConvert.DeserializeObject<LocalMap>(text,settings);
-
-                return map;
-            }
+            return obj;
         }
 
         /// <summary>

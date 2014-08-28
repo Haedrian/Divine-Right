@@ -5,6 +5,7 @@ using System.Text;
 
 namespace DRObjects.ActorHandling
 {
+    [Serializable]
     /// <summary>
     /// Represents an Actor's Health and anything that can go wrong with them
     /// </summary>

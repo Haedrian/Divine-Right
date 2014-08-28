@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace DRObjects.ActorHandling.ActorMissions
 {
+    [Serializable]
     public class WanderMission:
         ActorMission
     {
@@ -38,5 +39,7 @@ namespace DRObjects.ActorHandling.ActorMissions
         {
             LoiterPercentage = 0;
         }
+
+        
     }
 }

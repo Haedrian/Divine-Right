@@ -5,6 +5,7 @@ using System.Text;
 
 namespace DRObjects.ActorHandling
 {
+    [Serializable]
     /// <summary>
     /// Holds 
     /// </summary>

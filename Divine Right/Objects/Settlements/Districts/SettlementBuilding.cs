@@ -7,6 +7,7 @@ using DRObjects.Settlements.Districts;
 
 namespace DRObjects.Settlements.Districts
 {
+    [Serializable]
     /// <summary>
     /// Stores information about a particular Settlement Building located in a particular Settlement
     /// </summary>

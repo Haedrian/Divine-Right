@@ -6,6 +6,7 @@ using DRObjects.LocalMapGeneratorObjects;
 
 namespace DRObjects.ActorHandling.ActorMissions
 {
+    [Serializable]
     /// <summary>
     /// A mission where we walk to a target point. This is a dummy mission of sorts. It has no data.
     /// </summary>

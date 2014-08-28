@@ -6,6 +6,7 @@ using DRObjects.Graphics;
 
 namespace DRObjects.Settlements.Districts
 {
+    [Serializable]
     /// <summary>
     /// A district belonging in a city
     /// </summary>

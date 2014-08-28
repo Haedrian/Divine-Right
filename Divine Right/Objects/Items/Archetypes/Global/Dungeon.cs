@@ -5,6 +5,7 @@ using System.Text;
 
 namespace DRObjects.Items.Archetypes.Global
 {
+    [Serializable]
     /// <summary>
     /// A Dungeon on the map. A maze full of mean creatures
     /// </summary>

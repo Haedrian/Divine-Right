@@ -8,6 +8,7 @@ using DRObjects.GraphicsEngineObjects;
 
 namespace DRObjects.Items.Archetypes.Local
 {
+    [Serializable]
     public class LocalCharacter: MapItem
     {
         private List<SpriteData> graphics = null;

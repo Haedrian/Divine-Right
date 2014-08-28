@@ -1079,7 +1079,30 @@ namespace Divine_Right.GameScreens
             if (LocalMap.MapGenerated(settlement.UniqueGUID))
             {
                 //Reload the map
-                GameState.LocalMap = LocalMap.DeserialiseLocalMap(settlement.UniqueGUID);
+                var savedMap = LocalMap.DeserialiseLocalMap(settlement.UniqueGUID);
+
+                GameState.LocalMap = new LocalMap(savedMap.localGameMap.GetLength(0),savedMap.localGameMap.GetLength(1),1,0);
+
+                GameState.LocalMap.Actors = new List<Actor>();
+
+                List<MapBlock> collapsedMap = new List<MapBlock>();
+
+                foreach (MapBlock block in savedMap.localGameMap)
+                {
+                    collapsedMap.Add(block);
+                }
+
+                GameState.LocalMap.AddToLocalMap(collapsedMap.ToArray());
+
+                GameState.LocalMap.Actors = savedMap.Actors;
+
+                //Find the player character item
+                var playerActor = GameState.LocalMap.Actors.Where(a => a.IsPlayerCharacter).FirstOrDefault();
+
+                GameState.PlayerCharacter.MapCharacter.Coordinate = playerActor.MapCharacter.Coordinate;
+                GameState.PlayerCharacter.MapCharacter = playerActor.MapCharacter;
+
+                GameState.LocalMap.Settlement = settlement;
             }
             else
             {

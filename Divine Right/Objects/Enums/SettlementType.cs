@@ -5,6 +5,7 @@ using System.Text;
 
 namespace DRObjects.Enums
 {
+    [Serializable]
     /// <summary>
     /// The type of settlement present
     /// </summary>

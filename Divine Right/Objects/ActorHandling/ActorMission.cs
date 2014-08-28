@@ -6,6 +6,7 @@ using DRObjects.Enums;
 
 namespace DRObjects.ActorHandling
 {
+    [Serializable]
     public abstract class ActorMission
     {
         public abstract ActorMissionType MissionType {get;}

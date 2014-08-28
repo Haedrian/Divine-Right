@@ -5,6 +5,7 @@ using System.Text;
 
 namespace DRObjects.ActorHandling
 {
+    [Serializable]
     /// <summary>
     /// The attributes and skills of the particular actor
     /// </summary>

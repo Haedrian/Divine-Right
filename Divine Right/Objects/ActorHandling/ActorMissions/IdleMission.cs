@@ -5,6 +5,7 @@ using System.Text;
 
 namespace DRObjects.ActorHandling.ActorMissions
 {
+    [Serializable]
     /// <summary>
     /// For this mission, do nothing
     /// </summary>

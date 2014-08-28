@@ -5,6 +5,7 @@ using System.Text;
 
 namespace DRObjects.ActorHandling.ActorMissions
 {
+    [Serializable]
     public class HuntDownMission:ActorMission
     {
         public override ActorMissionType MissionType

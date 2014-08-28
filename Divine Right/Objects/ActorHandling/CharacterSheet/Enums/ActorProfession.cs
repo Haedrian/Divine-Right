@@ -5,6 +5,7 @@ using System.Text;
 
 namespace DRObjects.ActorHandling.CharacterSheet.Enums
 {
+    [Serializable]
     /// <summary>
     /// The Profession of the Actor
     /// </summary>

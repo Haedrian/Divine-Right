@@ -6,6 +6,7 @@ using DRObjects.Enums;
 
 namespace DRObjects
 {
+    [Serializable]
     /// <summary>
     /// Represents a coordinate on an xyz plane upon a map.
     /// </summary>

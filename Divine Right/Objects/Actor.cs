@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using DRObjects.Enums;
 using DRObjects.ActorHandling;
+using Newtonsoft.Json;
 
 namespace DRObjects
 {
+    [Serializable]
     /// <summary>
     /// Represents an Actor on a map which can take certain actions.
     /// This is additional data which is stored seperatly

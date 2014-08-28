@@ -9,6 +9,7 @@ using System.IO;
 
 namespace DRObjects.Items.Archetypes.Global
 {
+    [Serializable]
     /// <summary>
     /// This item repesents a settlement of some sort, be it a human settlement, a dungeon or whatever
     /// </summary>

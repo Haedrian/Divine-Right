@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework;
 
 namespace DRObjects
 {
+    [Serializable]
     /// <summary>
     /// Represents a tile, or an item on a map
     /// </summary>

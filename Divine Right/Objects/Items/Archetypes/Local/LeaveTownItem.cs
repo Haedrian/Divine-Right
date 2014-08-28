@@ -8,6 +8,7 @@ using DRObjects.GraphicsEngineObjects;
 
 namespace DRObjects.Items.Archetypes.Local
 {
+    [Serializable]
     /// <summary>
     /// This item will allow the user to leave town when used
     /// </summary>
