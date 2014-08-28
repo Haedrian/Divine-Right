@@ -6,6 +6,7 @@ using DRObjects.Enums;
 
 namespace DRObjects.LocalMapGeneratorObjects
 {
+    [Serializable]
     /// <summary>
     /// Describes a point of interest on the local map
     /// </summary>

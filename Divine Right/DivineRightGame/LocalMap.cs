@@ -264,7 +264,7 @@ namespace DivineRightGame
             }
 
             IFormatter formatter = new BinaryFormatter();
-            Stream stream = new FileStream(GameState.SAVEPATH + uniqueGuid + ".txt", FileMode.Create, FileAccess.Write, FileShare.None);
+            Stream stream = new FileStream(GameState.SAVEPATH + uniqueGuid + ".dvd", FileMode.Create, FileAccess.Write, FileShare.None);
             formatter.Serialize(stream, this);
             stream.Close();
         }
@@ -277,7 +277,7 @@ namespace DivineRightGame
         public static LocalMap DeserialiseLocalMap(Guid uniqueGuid)
         {
             IFormatter formatter = new BinaryFormatter();
-            Stream stream = new FileStream(GameState.SAVEPATH + uniqueGuid + ".txt", FileMode.Open, FileAccess.Read, FileShare.Read);
+            Stream stream = new FileStream(GameState.SAVEPATH + uniqueGuid + ".dvd", FileMode.Open, FileAccess.Read, FileShare.Read);
             LocalMap obj = (LocalMap)formatter.Deserialize(stream);
             stream.Close();
 
@@ -291,7 +291,7 @@ namespace DivineRightGame
         /// <returns></returns>
         public static bool MapGenerated(Guid uniqueGuid)
         {
-            return File.Exists(GameState.SAVEPATH + uniqueGuid +".txt");
+            return File.Exists(GameState.SAVEPATH + uniqueGuid +".dvd");
         }
 
     }

@@ -1040,36 +1040,68 @@ namespace Divine_Right.GameScreens
 
         private void LoadDungeon(Dungeon dungeon)
         {
-            //TODO: Serialise/Deserialise
-            Actor[] actors = null;
-            
-            DungeonGenerator gen = new DungeonGenerator();
-            MapCoordinate startPoint = null;
-            List<PointOfInterest> pointsOfInterest = null;
 
-            var gennedDungeon = gen.GenerateDungeon(dungeon.TierCount,dungeon.TrapRooms,dungeon.GuardRooms,dungeon.TreasureRoom,dungeon.OwnerCreatureType,(decimal) dungeon.PercentageOwned,dungeon.MaxWildPopulation,dungeon.MaxOwnedPopulation,out startPoint,out actors,out pointsOfInterest);
-
-            GameState.LocalMap = new LocalMap(gennedDungeon.GetLength(0), gennedDungeon.GetLength(1), 1, 0);
-            GameState.LocalMap.Actors = new List<Actor>();
-
-            List<MapBlock> collapsedMap = new List<MapBlock>();
-
-            foreach (MapBlock block in gennedDungeon)
+            if (LocalMap.MapGenerated(dungeon.UniqueGUID))
             {
-                collapsedMap.Add(block);
+                //Reload the map
+                var savedMap = LocalMap.DeserialiseLocalMap(dungeon.UniqueGUID);
+
+                GameState.LocalMap = new LocalMap(savedMap.localGameMap.GetLength(0), savedMap.localGameMap.GetLength(1), 1, 0);
+
+                GameState.LocalMap.Actors = new List<Actor>();
+
+                List<MapBlock> collapsedMap = new List<MapBlock>();
+
+                foreach (MapBlock block in savedMap.localGameMap)
+                {
+                    collapsedMap.Add(block);
+                }
+
+                GameState.LocalMap.AddToLocalMap(collapsedMap.ToArray());
+                GameState.LocalMap.PathfindingMap = savedMap.PathfindingMap;
+                GameState.LocalMap.PointsOfInterest = savedMap.PointsOfInterest;
+
+                GameState.LocalMap.Actors = savedMap.Actors;
+
+                //Find the player character item
+                var playerActor = GameState.LocalMap.Actors.Where(a => a.IsPlayerCharacter).FirstOrDefault();
+
+                GameState.PlayerCharacter.MapCharacter.Coordinate = playerActor.MapCharacter.Coordinate;
+                GameState.PlayerCharacter.MapCharacter = playerActor.MapCharacter;
+
+                GameState.LocalMap.Dungeon = dungeon;
             }
+            else
+            {
+                Actor[] actors = null;
 
-            GameState.LocalMap.AddToLocalMap(collapsedMap.ToArray());
+                DungeonGenerator gen = new DungeonGenerator();
+                MapCoordinate startPoint = null;
+                List<PointOfInterest> pointsOfInterest = null;
 
-            GameState.PlayerCharacter.MapCharacter.Coordinate = startPoint;
+                var gennedDungeon = gen.GenerateDungeon(dungeon.TierCount, dungeon.TrapRooms, dungeon.GuardRooms, dungeon.TreasureRoom, dungeon.OwnerCreatureType, (decimal)dungeon.PercentageOwned, dungeon.MaxWildPopulation, dungeon.MaxOwnedPopulation, out startPoint, out actors, out pointsOfInterest);
 
-            MapBlock playerBlock = GameState.LocalMap.GetBlockAtCoordinate(startPoint);
-            playerBlock.PutItemOnBlock(GameState.PlayerCharacter.MapCharacter);
-            GameState.LocalMap.Actors.AddRange(actors);
-            GameState.LocalMap.Actors.Add(GameState.PlayerCharacter);
-            GameState.LocalMap.PointsOfInterest = pointsOfInterest;
-            GameState.LocalMap.Dungeon = dungeon;
+                GameState.LocalMap = new LocalMap(gennedDungeon.GetLength(0), gennedDungeon.GetLength(1), 1, 0);
+                GameState.LocalMap.Actors = new List<Actor>();
 
+                List<MapBlock> collapsedMap = new List<MapBlock>();
+
+                foreach (MapBlock block in gennedDungeon)
+                {
+                    collapsedMap.Add(block);
+                }
+
+                GameState.LocalMap.AddToLocalMap(collapsedMap.ToArray());
+
+                GameState.PlayerCharacter.MapCharacter.Coordinate = startPoint;
+
+                MapBlock playerBlock = GameState.LocalMap.GetBlockAtCoordinate(startPoint);
+                playerBlock.PutItemOnBlock(GameState.PlayerCharacter.MapCharacter);
+                GameState.LocalMap.Actors.AddRange(actors);
+                GameState.LocalMap.Actors.Add(GameState.PlayerCharacter);
+                GameState.LocalMap.PointsOfInterest = pointsOfInterest;
+                GameState.LocalMap.Dungeon = dungeon;
+            }
         }
 
         private void LoadSettlement(Settlement settlement)
