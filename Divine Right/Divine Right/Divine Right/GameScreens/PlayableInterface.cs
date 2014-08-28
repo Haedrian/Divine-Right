@@ -368,7 +368,6 @@ namespace Divine_Right.GameScreens
                         difference = new MapCoordinate(1, 0, 0, coord.MapType);
                     }
 
-
                     //The fact that they'er not the same means the user pressed a key, lets move
                     if (!difference.Equals(new MapCoordinate(0, 0, 0, coord.MapType)))
                     {
@@ -383,6 +382,18 @@ namespace Divine_Right.GameScreens
                 }
                 //mark the current time
                 previousGameTime = (int)gameTime.TotalGameTime.TotalMilliseconds;
+
+                if (keyboardState.IsKeyDown(Keys.LeftControl) && keyboardState.IsKeyDown(Keys.S))
+                {
+                    //Save
+                    GameState.SaveGame();
+                }
+
+                if (keyboardState.IsKeyDown(Keys.LeftControl) && keyboardState.IsKeyDown(Keys.L))
+                {
+                    //Load
+                    GameState.LoadGame();
+                }
             }
 
             #region Mouse Handling

@@ -7,6 +7,7 @@ using DRObjects.Graphics;
 
 namespace DRObjects.Items.Archetypes.Global
 {
+    [Serializable]
     /// <summary>
     /// A resource which is positioned on the map
     /// </summary>

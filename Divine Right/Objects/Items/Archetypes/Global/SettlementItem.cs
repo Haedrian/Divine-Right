@@ -9,6 +9,7 @@ using DRObjects.GraphicsEngineObjects;
 
 namespace DRObjects.Items.Archetypes.Global
 {
+    [Serializable]
     /// <summary>
     /// This represents an item which is part of a settlement
     /// </summary>

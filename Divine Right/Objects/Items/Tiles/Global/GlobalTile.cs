@@ -7,6 +7,7 @@ using DRObjects.Graphics;
 
 namespace DRObjects.Items.Tiles.Global
 {
+    [Serializable]
     /// <summary>
     /// This is a special kind of map item tile which can be used for all global tiles.
     /// </summary>

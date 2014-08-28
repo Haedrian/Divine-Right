@@ -8,6 +8,7 @@ using DRObjects.GraphicsEngineObjects;
 
 namespace DRObjects.Items.Archetypes.Global
 {
+    [Serializable]
     /// <summary>
     /// A map item representing a dungeon on the map.
     /// </summary>
