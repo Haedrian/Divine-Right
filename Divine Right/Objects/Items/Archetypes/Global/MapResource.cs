@@ -83,6 +83,18 @@ namespace DRObjects.Items.Archetypes.Global
             }
         }
 
+        public override bool MayContainItems
+        {
+            get
+            {
+                return true;
+            }
+            set
+            {
+                base.MayContainItems = value;
+            }
+        }
+
         public override List<SpriteData> Graphics
         {
             get
