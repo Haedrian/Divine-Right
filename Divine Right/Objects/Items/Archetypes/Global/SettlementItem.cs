@@ -60,7 +60,7 @@ namespace DRObjects.Items.Archetypes.Global
 
             actions.AddRange(base.GetPossibleActions(actor));
 
-            if (actor.MapCharacter.Coordinate - this.Coordinate < 2)
+            if (Math.Abs(actor.MapCharacter.Coordinate - this.Coordinate) < 2)
             {
                 actions.Add(ActionTypeEnum.EXPLORE);
             }
@@ -76,7 +76,7 @@ namespace DRObjects.Items.Archetypes.Global
                 return base.PerformAction(actionType, actor, args);
             }
 
-            if (actor.IsPlayerCharacter && (actor.MapCharacter.Coordinate - this.Coordinate < 2))
+            if (actor.IsPlayerCharacter && Math.Abs(actor.MapCharacter.Coordinate - this.Coordinate) < 2)
             {
                 return new DRObjects.GraphicsEngineObjects.Abstract.PlayerFeedback[1] { new LocationChangeFeedback() { VisitSettlement = Settlement } };
             }
