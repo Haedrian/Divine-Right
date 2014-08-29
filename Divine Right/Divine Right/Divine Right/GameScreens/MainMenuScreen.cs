@@ -81,7 +81,7 @@ namespace Divine_Right.GameScreens
             components.Add(new AutoSizeButton("Start New Game",game.Content,InternalActionEnum.GENERATE, new object[0], (GraphicsDevice.Viewport.Width/2),150));
             if (GameState.SaveFileExists())
             {
-                components.Add(new AutoSizeButton("Continue Game", game.Content, InternalActionEnum.LOAD, new object[1] { "Continue" }, (GraphicsDevice.Viewport.Width / 2), 200));
+                components.Add(new AutoSizeButton("Continue Game", game.Content, InternalActionEnum.CONTINUE, new object[1] { "Continue" }, (GraphicsDevice.Viewport.Width / 2), 200));
             }
 
             components.Add(new AutoSizeButton("Credits",game.Content,InternalActionEnum.CREDITS,new object[0],(GraphicsDevice.Viewport.Width/2),250));

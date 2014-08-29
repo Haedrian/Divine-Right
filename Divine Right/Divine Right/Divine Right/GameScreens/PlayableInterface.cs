@@ -92,6 +92,11 @@ namespace Divine_Right.GameScreens
 
         #region Members
 
+        /// <summary>
+        /// This is a dirty hack to allow the draw to run at least once before it blocks for saving
+        /// </summary>
+        private bool saveAndQuit = false;
+        
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         List<InterfaceBlock> blocks = new List<InterfaceBlock>();
@@ -252,6 +257,19 @@ namespace Divine_Right.GameScreens
 
         public override void Update(GameTime gameTime)
         {
+            //Is the user asking to quit?
+            if (saveAndQuit)
+            {
+                //Save the game
+                GameState.SaveGame();
+
+                //Go back to the main menu for now
+                BaseGame.requestedInternalAction = InternalActionEnum.EXIT;
+                BaseGame.requestedArgs = new object[0];
+
+                saveAndQuit = false;
+            }
+
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 game.Exit();
@@ -271,12 +289,9 @@ namespace Divine_Right.GameScreens
             //Has the user pressed esc?
             if (keyboardState.IsKeyDown(Keys.Escape))
             {
-                //Save the game
-                GameState.SaveGame();
+                GameState.NewLog.Add(new CurrentLogFeedback(InterfaceSpriteName.BANNER_GREEN, Color.White, "Saving Game Please Wait..."));
 
-                //Go back to the main menu for now
-                BaseGame.requestedInternalAction = InternalActionEnum.EXIT;
-                BaseGame.requestedArgs = new object[0];
+                saveAndQuit = true;
             }
 
             bool shiftHeld = keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift);

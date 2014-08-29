@@ -1,6 +1,7 @@
 Content\Fonts\TextFeedbackFont.xnb
 Content\Fonts\ButtonTextFont.xnb
 Content\Fonts\TitleFont.xnb
+Content\Fonts\h1.xnb
 Content\Graphics\World\Mountain.xnb
 Content\Graphics\World\Tiles\GrassTile.xnb
 Content\Graphics\World\Tiles\WaterTile.xnb
@@ -49,7 +50,6 @@ Content\Graphics\Interface\death.xnb
 Content\Graphics\Interface\epicLlama.xnb
 Content\Graphics\Interface\banners.xnb
 Content\Graphics\Interface\woodTexture.xnb
-Content\Fonts\h1.xnb
 Content\Graphics\Interface\locationInterface.xnb
 Content\Graphics\Local\merchant.xnb
 Content\Graphics\Local\humanguard.xnb
@@ -62,6 +62,7 @@ Content\Graphics\World\WorldItems.xnb
 Content\Graphics\Interface\gotoWorldMap.xnb
 Content\Graphics\Interface\gotoWorldMap2.xnb
 Content\Graphics\Interface\creditsPage.xnb
+Content\Graphics\Interface\loadingImage.xnb
 Content\Fonts\TextFeedbackFont.spritefont
 App.config
 Maplets.sdf

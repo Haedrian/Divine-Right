@@ -98,6 +98,12 @@ namespace Divine_Right
                     this.Components.Clear();
                     this.Components.Add(new CreditsScreen(this, graphics));
                 }
+                else if (requestedInternalAction.Value == InternalActionEnum.CONTINUE)
+                {
+                    //Load loading
+                    this.Components.Clear();
+                    this.Components.Add(new LoadingScreen(this, graphics));
+                }
 
                 requestedInternalAction = null; //set it back to 
             }

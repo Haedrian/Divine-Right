@@ -104,6 +104,7 @@
     <Compile Include="GameScreens\Components\FPSCounter.cs" />
     <Compile Include="GameScreens\CreditsScreen.cs" />
     <Compile Include="GameScreens\DeathScreen.cs" />
+    <Compile Include="GameScreens\LoadingScreen.cs" />
     <Compile Include="GameScreens\MainMenuScreen.cs" />
     <Compile Include="GameScreens\PlayableInterface.cs" />
     <Compile Include="GameScreens\WorldGenerationScreen.cs" />

@@ -25,6 +25,7 @@ namespace DRObjects.Enums
         LOSE,
         TOGGLE_SETTLEMENT,
         CREDITS,
+        CONTINUE,
 
     }
 }
