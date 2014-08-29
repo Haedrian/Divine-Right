@@ -52,13 +52,11 @@ namespace Divine_Right.GameScreens
 
        public override void Update(GameTime gameTime)
        {
-           MouseState mouse = Mouse.GetState();
+           KeyboardState key = Keyboard.GetState();
 
-           if (mouse.LeftButton == ButtonState.Pressed)
+           if (key.IsKeyDown(Keys.Space))
            {
-               //Go back
                BaseGame.requestedInternalAction = InternalActionEnum.EXIT;
-               BaseGame.requestedArgs = new object[0];
            }
        }
     }
