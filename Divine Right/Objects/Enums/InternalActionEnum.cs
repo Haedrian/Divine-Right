@@ -24,6 +24,7 @@ namespace DRObjects.Enums
         OPEN_ATTACK,
         LOSE,
         TOGGLE_SETTLEMENT,
+        CREDITS,
 
     }
 }

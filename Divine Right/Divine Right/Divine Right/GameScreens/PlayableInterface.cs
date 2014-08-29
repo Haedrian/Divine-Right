@@ -139,6 +139,10 @@ namespace Divine_Right.GameScreens
                 //TestFunctions.ParseXML();
                 TestFunctions.GenerateSettlement();
             }
+            else if (parameters[0].ToString().Equals("Continue"))
+            {
+                GameState.LoadGame();
+            }
             else if (parameters[0].ToString().Equals("WorldMap"))
             {
                 //Load from the world map
@@ -267,6 +271,9 @@ namespace Divine_Right.GameScreens
             //Has the user pressed esc?
             if (keyboardState.IsKeyDown(Keys.Escape))
             {
+                //Save the game
+                GameState.SaveGame();
+
                 //Go back to the main menu for now
                 BaseGame.requestedInternalAction = InternalActionEnum.EXIT;
                 BaseGame.requestedArgs = new object[0];
@@ -385,18 +392,6 @@ namespace Divine_Right.GameScreens
                 }
                 //mark the current time
                 previousGameTime = (int)gameTime.TotalGameTime.TotalMilliseconds;
-
-                if (keyboardState.IsKeyDown(Keys.LeftControl) && keyboardState.IsKeyDown(Keys.S))
-                {
-                    //Save
-                    GameState.SaveGame();
-                }
-
-                if (keyboardState.IsKeyDown(Keys.LeftControl) && keyboardState.IsKeyDown(Keys.L))
-                {
-                    //Load
-                    GameState.LoadGame();
-                }
             }
 
             #region Mouse Handling
