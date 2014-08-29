@@ -8,6 +8,7 @@ using Divine_Right.InterfaceComponents.MainMenuComponents;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using DRObjects.Enums;
+using DivineRightGame;
 
 namespace Divine_Right.GameScreens
 {
@@ -78,7 +79,11 @@ namespace Divine_Right.GameScreens
             */
 
             components.Add(new AutoSizeButton("Start New Game",game.Content,InternalActionEnum.GENERATE, new object[0], (GraphicsDevice.Viewport.Width/2),150));
-            components.Add(new AutoSizeButton("Continue Game",game.Content,InternalActionEnum.LOAD,new object[1]{"Continue"},(GraphicsDevice.Viewport.Width / 2), 200));
+            if (GameState.SaveFileExists())
+            {
+                components.Add(new AutoSizeButton("Continue Game", game.Content, InternalActionEnum.LOAD, new object[1] { "Continue" }, (GraphicsDevice.Viewport.Width / 2), 200));
+            }
+
             components.Add(new AutoSizeButton("Credits",game.Content,InternalActionEnum.CREDITS,new object[0],(GraphicsDevice.Viewport.Width/2),250));
 
             foreach (ISystemInterfaceComponent component in components)

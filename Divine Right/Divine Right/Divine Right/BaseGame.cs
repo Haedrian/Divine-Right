@@ -7,6 +7,7 @@ using Divine_Right.GameScreens;
 using DRObjects.Enums;
 using Microsoft.Xna.Framework.Graphics;
 using DivineRightGame;
+using System.IO;
 
 namespace Divine_Right
 {
@@ -31,7 +32,7 @@ namespace Divine_Right
 
         public BaseGame()
         {
-            this.Window.Title = "Divine Right Milestone 7 Version 0";
+            this.Window.Title = "Divine Right Milestone 8 Version 0";
             graphics = new GraphicsDeviceManager(this);
 
             graphics.PreferredBackBufferWidth = WINDOWWIDTH;
@@ -47,8 +48,14 @@ namespace Divine_Right
             this.Components.Add(mI);
 
             GameState.NewLog = new List<DRObjects.GraphicsEngineObjects.CurrentLogFeedback>();
-        }
 
+            if (!Directory.Exists(GameState.SAVEPATH))
+            {
+                //Create the folder to save items in
+                Directory.CreateDirectory(GameState.SAVEPATH);
+            }
+        }
+        
         protected override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
@@ -84,6 +91,12 @@ namespace Divine_Right
                     //Load the death
                     this.Components.Clear();
                     this.Components.Add(new DeathScreen(this, graphics));
+                }
+                else if (requestedInternalAction.Value == InternalActionEnum.CREDITS)
+                {
+                    //Load credits
+                    this.Components.Clear();
+                    this.Components.Add(new CreditsScreen(this, graphics));
                 }
 
                 requestedInternalAction = null; //set it back to 

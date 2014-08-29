@@ -85,7 +85,14 @@ namespace DivineRightGame
             GameState.PlayerCharacter = obj.PlayerCharacter;
         }
 
-        
+        /// <summary>
+        /// Returns true if the save file exists
+        /// </summary>
+        /// <returns></returns>
+        public static bool SaveFileExists()
+        {
+            return File.Exists(GameState.SAVEPATH + "GameState.dvg");
+        }
 
     }
 }
