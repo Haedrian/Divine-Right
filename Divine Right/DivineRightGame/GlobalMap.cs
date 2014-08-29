@@ -6,6 +6,7 @@ using DRObjects;
 using DRObjects.Compare;
 using DRObjects.Items.Tiles.Global;
 using DRObjects.Enums;
+using DRObjects.Items.Archetypes.Global;
 
 namespace DivineRightGame
 {
@@ -19,6 +20,7 @@ namespace DivineRightGame
         public MapBlock[,] globalGameMap;
         private List<Actor> parties;
         private int worldSize;
+        public List<Settlement> WorldSettlements { get; set; }
         /// <summary>
         /// This lock is to be used during world generation to prevent race conditions
         /// </summary>

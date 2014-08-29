@@ -44,6 +44,7 @@ namespace DRObjects.Items.Archetypes.Global
         public int MiddlePercentage { get; set; }
         public int PoorPercentage { get; set; }
         public Guid UniqueGUID { get { return _uniqueGUID; } }
+        public bool IsCapital { get; set; }
         #endregion
 
         public override List<SpriteData> Graphics
@@ -85,6 +86,7 @@ namespace DRObjects.Items.Archetypes.Global
         {
             //Generate the GUID
             this._uniqueGUID = Guid.NewGuid();
+            IsCapital = false;
         }
 
     }

@@ -156,9 +156,12 @@ namespace Divine_Right.GameScreens
                 //Go through each of them, add them to the local map
                 GameState.LocalMap.AddToLocalMap(collapsedMap.ToArray());
 
+                //Let's start the player off at the first capital
+                var coordinate = GameState.GlobalMap.WorldSettlements.Where(w => w.IsCapital).Select(w => w.Coordinate).FirstOrDefault();
+
                 //Create the player character. For now randomly. Later we'll start at a capital
                 MapItem player = new MapItem();
-                player.Coordinate = new MapCoordinate(100, 100, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+                player.Coordinate = new MapCoordinate(coordinate);
                 player.Description = "The player character";
                 player.Graphic = SpriteManager.GetSprite(LocalSpriteName.PLAYERCHAR);
                 player.InternalName = "Player Char";

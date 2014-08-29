@@ -880,6 +880,8 @@ namespace DivineRightGame.Managers
             //We will then calculate the desirability of each tile, sum it with the deseribility of each tile bordering it
             //The most desirable tile in the region will be colonised
 
+            GameState.GlobalMap.WorldSettlements = new List<Settlement>();
+
             Random random = new Random();
 
             for (int i = 0; i < HUMAN_CAPITAL_COUNT; i++)
@@ -911,10 +913,12 @@ namespace DivineRightGame.Managers
 
                 //colonise
 
-                //TODO: ADD TO THE GLOBAL MAP'S COLONY LIST EVENTUALLY
                 MapBlock block = candidateBlocks.First();
 
                 Settlement settlement = SettlementGenerator.GenerateSettlement(block.Tile.Coordinate, random.Next(5) + 10,true);
+                settlement.IsCapital = true;
+
+                GameState.GlobalMap.WorldSettlements.Add(settlement);
 
                 CreateSettlement(true, settlement, block, i);
 
@@ -946,6 +950,8 @@ namespace DivineRightGame.Managers
                     block = candidateBlocks.First();
 
                     settlement = SettlementGenerator.GenerateSettlement(block.Tile.Coordinate, random.Next(7) + 1);
+
+                    GameState.GlobalMap.WorldSettlements.Add(settlement);
 
                     CreateSettlement(false, settlement, block, i);
 
