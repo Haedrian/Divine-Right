@@ -63,6 +63,7 @@ Content\Graphics\Interface\gotoWorldMap.xnb
 Content\Graphics\Interface\gotoWorldMap2.xnb
 Content\Graphics\Interface\creditsPage.xnb
 Content\Graphics\Interface\loadingImage.xnb
+Content\Graphics\Interface\savingImage.xnb
 Content\Fonts\TextFeedbackFont.spritefont
 App.config
 Maplets.sdf

@@ -102,7 +102,7 @@ namespace Divine_Right
                 {
                     //Load loading
                     this.Components.Clear();
-                    this.Components.Add(new LoadingScreen(this, graphics));
+                    this.Components.Add(new LoadingScreen(this, graphics,requestedArgs));
                 }
 
                 requestedInternalAction = null; //set it back to 

@@ -260,12 +260,9 @@ namespace Divine_Right.GameScreens
             //Is the user asking to quit?
             if (saveAndQuit)
             {
-                //Save the game
-                GameState.SaveGame();
-
-                //Go back to the main menu for now
-                BaseGame.requestedInternalAction = InternalActionEnum.EXIT;
-                BaseGame.requestedArgs = new object[0];
+                //Go to loading. It'll open the main menu when it's done
+                BaseGame.requestedInternalAction = InternalActionEnum.CONTINUE;
+                BaseGame.requestedArgs = new object[1]{"Save"};
 
                 saveAndQuit = false;
             }
