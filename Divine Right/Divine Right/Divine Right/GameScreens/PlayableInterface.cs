@@ -848,11 +848,11 @@ namespace Divine_Right.GameScreens
                 }
             }
 
-            PlayerFeedback[] fb = UserInterfaceManager.PerformAction(coord, actionType, args);
+            ActionFeedback[] fb = UserInterfaceManager.PerformAction(coord, actionType, args);
 
             //go through all the feedback
 
-            foreach (PlayerFeedback feedback in fb)
+            foreach (ActionFeedback feedback in fb)
             {
                 if (feedback == null)
                 {

@@ -127,7 +127,7 @@ namespace DRObjects.Items.Archetypes.Local
             return actions.ToArray();
         }
 
-        public override GraphicsEngineObjects.Abstract.PlayerFeedback[] PerformAction(ActionTypeEnum actionType, Actor actor, object[] args)
+        public override GraphicsEngineObjects.Abstract.ActionFeedback[] PerformAction(ActionTypeEnum actionType, Actor actor, object[] args)
         {
             if (actionType == ActionTypeEnum.PREPARE_ATTACK)
             {

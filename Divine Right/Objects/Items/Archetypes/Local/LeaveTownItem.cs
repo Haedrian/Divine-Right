@@ -41,7 +41,7 @@ namespace DRObjects.Items.Archetypes.Local
             return actions.ToArray();
         }
 
-        public override GraphicsEngineObjects.Abstract.PlayerFeedback[] PerformAction(ActionTypeEnum actionType, Actor actor, object[] args)
+        public override GraphicsEngineObjects.Abstract.ActionFeedback[] PerformAction(ActionTypeEnum actionType, Actor actor, object[] args)
         {
             if (actionType != ActionTypeEnum.LEAVE)
             {
@@ -51,11 +51,11 @@ namespace DRObjects.Items.Archetypes.Local
             {
                 if (actor.IsPlayerCharacter && (actor.MapCharacter.Coordinate - this.Coordinate < 2))
                 {
-                    return new DRObjects.GraphicsEngineObjects.Abstract.PlayerFeedback[1] { new LocationChangeFeedback() { VisitMainMap = true  } };
+                    return new DRObjects.GraphicsEngineObjects.Abstract.ActionFeedback[1] { new LocationChangeFeedback() { VisitMainMap = true  } };
                 }
                 else
                 {
-                    return new GraphicsEngineObjects.Abstract.PlayerFeedback[0] { };
+                    return new GraphicsEngineObjects.Abstract.ActionFeedback[0] { };
                 }
             }
         }

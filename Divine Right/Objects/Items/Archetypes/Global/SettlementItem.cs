@@ -68,7 +68,7 @@ namespace DRObjects.Items.Archetypes.Global
             return actions.ToArray();
         }
 
-        public override GraphicsEngineObjects.Abstract.PlayerFeedback[] PerformAction(ActionTypeEnum actionType, Actor actor, object[] args)
+        public override GraphicsEngineObjects.Abstract.ActionFeedback[] PerformAction(ActionTypeEnum actionType, Actor actor, object[] args)
         {
             //Use base for everything that's not visit
             if (actionType != ActionTypeEnum.EXPLORE)
@@ -78,11 +78,11 @@ namespace DRObjects.Items.Archetypes.Global
 
             if (actor.IsPlayerCharacter && Math.Abs(actor.MapCharacter.Coordinate - this.Coordinate) < 2)
             {
-                return new DRObjects.GraphicsEngineObjects.Abstract.PlayerFeedback[1] { new LocationChangeFeedback() { VisitSettlement = Settlement } };
+                return new DRObjects.GraphicsEngineObjects.Abstract.ActionFeedback[1] { new LocationChangeFeedback() { VisitSettlement = Settlement } };
             }
             else
             {
-                return new GraphicsEngineObjects.Abstract.PlayerFeedback[0] { };
+                return new GraphicsEngineObjects.Abstract.ActionFeedback[0] { };
             }
         }
 

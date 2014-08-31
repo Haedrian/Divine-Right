@@ -27,12 +27,12 @@ namespace DivineRightGame.CombatHandling
         /// </summary>
         /// <param name="actor"></param>
         /// <returns></returns>
-        public static PlayerFeedback[] CheckHealth(Actor actor)
+        public static ActionFeedback[] CheckHealth(Actor actor)
         {
             if (!actor.IsAlive)
             {
                 //Nothing we can do here
-                return new PlayerFeedback[] { };
+                return new ActionFeedback[] { };
             }
 
             //Check for body part damage
@@ -43,7 +43,7 @@ namespace DivineRightGame.CombatHandling
                 if (actor.IsPlayerCharacter)
                 {
                     //Inform the character
-                    return new PlayerFeedback[] { new CreateEventFeedback("DEATH") };
+                    return new ActionFeedback[] { new CreateEventFeedback("DEATH") };
                 }
             }
 
@@ -54,7 +54,7 @@ namespace DivineRightGame.CombatHandling
                 if (actor.IsPlayerCharacter)
                 {
                     //Inform the character
-                    return new PlayerFeedback[] { new CreateEventFeedback("DEATH") };
+                    return new ActionFeedback[] { new CreateEventFeedback("DEATH") };
                 }
             }
 
@@ -96,7 +96,7 @@ namespace DivineRightGame.CombatHandling
                 actor.IsAlive = false;
                 if (actor.IsPlayerCharacter)
                 {
-                    return new PlayerFeedback[] { new CurrentLogFeedback(InterfaceSpriteName.BLEEDING, Color.Red, "You bleed to death"), new CreateEventFeedback("DEATH") };
+                    return new ActionFeedback[] { new CurrentLogFeedback(InterfaceSpriteName.BLEEDING, Color.Red, "You bleed to death"), new CreateEventFeedback("DEATH") };
                 }
             }
 
@@ -135,12 +135,12 @@ namespace DivineRightGame.CombatHandling
 
                     if (actor.IsPlayerCharacter)
                     {
-                        return new PlayerFeedback[] { new CurrentLogFeedback(InterfaceSpriteName.SPIRAL, Color.Red, "You black out") };
+                        return new ActionFeedback[] { new CurrentLogFeedback(InterfaceSpriteName.SPIRAL, Color.Red, "You black out") };
                     }
                 }
             }
 
-            return new PlayerFeedback[] { };
+            return new ActionFeedback[] { };
 
         }
     }

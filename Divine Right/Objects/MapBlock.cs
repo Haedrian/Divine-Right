@@ -60,7 +60,7 @@ namespace DRObjects
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
-        public PlayerFeedback[] PutItemOnBlock(MapItem item)
+        public ActionFeedback[] PutItemOnBlock(MapItem item)
         {
             //First check whether the top item in question allows items to be placed upon it
 
@@ -69,7 +69,7 @@ namespace DRObjects
             if (top == null || !top.MayContainItems)
             {
                 //can't do it
-                return new PlayerFeedback[] { new TextFeedback("Can't do that") };
+                return new ActionFeedback[] { new TextFeedback("Can't do that") };
             }
             else
             {
@@ -77,7 +77,7 @@ namespace DRObjects
                 item.Coordinate = Tile.Coordinate;
                 this.mapItems.Add(item);
 
-                return new PlayerFeedback[0];
+                return new ActionFeedback[0];
             }
 
         }
@@ -185,7 +185,7 @@ namespace DRObjects
             }
         }
 
-        public PlayerFeedback[] PerformAction(ActionTypeEnum actionType, Actor actor, object[] args)
+        public ActionFeedback[] PerformAction(ActionTypeEnum actionType, Actor actor, object[] args)
         {
             if (actionType == ActionTypeEnum.MOVE)
             {
@@ -202,17 +202,17 @@ namespace DRObjects
 
                     if (distance > 1)
                     {
-                        return new PlayerFeedback[] { new TextFeedback("Can't move there") };
+                        return new ActionFeedback[] { new TextFeedback("Can't move there") };
                     }
 
                     actor.MapCharacter.Coordinate = this.Tile.Coordinate;
                     this.mapItems.Add(actor.MapCharacter);
-                    return new PlayerFeedback[0];
+                    return new ActionFeedback[0];
                 }
                 else
                 {
                     //not possible
-                    return new PlayerFeedback[] { new TextFeedback("Not possible to move there") };
+                    return new ActionFeedback[] { new TextFeedback("Not possible to move there") };
                 }
             }
 

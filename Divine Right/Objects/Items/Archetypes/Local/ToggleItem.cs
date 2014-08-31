@@ -127,7 +127,7 @@ namespace DRObjects.Items.Archetypes.Local
             return enums.ToArray();
         }
 
-        public override GraphicsEngineObjects.Abstract.PlayerFeedback[]  PerformAction(Enums.ActionTypeEnum actionType, Actor actor, object[] args)
+        public override GraphicsEngineObjects.Abstract.ActionFeedback[]  PerformAction(Enums.ActionTypeEnum actionType, Actor actor, object[] args)
         {
             if (actionType == Enums.ActionTypeEnum.USE)
             {
@@ -138,17 +138,17 @@ namespace DRObjects.Items.Archetypes.Local
 
                     if (stateA)
                     {
-                        return new PlayerFeedback[] { new TextFeedback(MessageToStateA)};
+                        return new ActionFeedback[] { new TextFeedback(MessageToStateA)};
                     }
                     else 
                     {
-                        return new PlayerFeedback[] { new TextFeedback(MessageToStateB)};
+                        return new ActionFeedback[] { new TextFeedback(MessageToStateB)};
                     }
 
                 }
                 else 
                 {
-                    return new PlayerFeedback[] { new TextFeedback("Too far away")};
+                    return new ActionFeedback[] { new TextFeedback("Too far away")};
                 }
             }
             else 

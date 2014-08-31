@@ -159,9 +159,9 @@ namespace DivineRightGame.CombatHandling
         /// <param name="defender"></param>
         /// <param name="location"></param>
         /// <returns></returns>
-        public static PlayerFeedback[] Attack(Actor attacker, Actor defender, AttackLocation location)
+        public static ActionFeedback[] Attack(Actor attacker, Actor defender, AttackLocation location)
         {
-            List<PlayerFeedback> feedback = new List<PlayerFeedback>();
+            List<ActionFeedback> feedback = new List<ActionFeedback>();
 
             //Do we succeed in the attack?
             int atk = 0;
@@ -392,11 +392,11 @@ namespace DivineRightGame.CombatHandling
         /// Returns a particular logged action.
         /// </summary>
         /// <returns></returns>
-        private static PlayerFeedback LogAction(Actor attacker, Actor defender, AttackLocation loc, DamageType type, LogMessageStatus status, int diceroll)
+        private static ActionFeedback LogAction(Actor attacker, Actor defender, AttackLocation loc, DamageType type, LogMessageStatus status, int diceroll)
         {
             //Later we'll expand this and put in some randomisation and stuff
 
-            PlayerFeedback log = null;
+            ActionFeedback log = null;
 
             if (status == LogMessageStatus.BOUNCE)
             {

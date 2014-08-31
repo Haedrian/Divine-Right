@@ -15,6 +15,7 @@ namespace DRObjects.Enums
         TOGGLEITEMS,
         ENEMIES,
         RACE,
+        INVENTORYITEMS,
 
     }
 }

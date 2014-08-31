@@ -23,9 +23,9 @@ namespace DivineRightGame.Managers
         /// <param name="coordinate"></param>
         /// <param name="actionType"></param>
         /// <param name="args"></param>
-        public static PlayerFeedback[] PerformAction(MapCoordinate coordinate, ActionTypeEnum actionType, object[] args)
+        public static ActionFeedback[] PerformAction(MapCoordinate coordinate, ActionTypeEnum actionType, object[] args)
         {
-            List<PlayerFeedback> feedback = new List<PlayerFeedback>();
+            List<ActionFeedback> feedback = new List<ActionFeedback>();
 
             bool validAttack = false;
 
@@ -50,7 +50,7 @@ namespace DivineRightGame.Managers
                 else
                 {
                     //Invalid - no tick
-                    return new PlayerFeedback[] { new CurrentLogFeedback(null,Color.Black,"You are too far away to hit your target")};
+                    return new ActionFeedback[] { new CurrentLogFeedback(null,Color.Black,"You are too far away to hit your target")};
                 }
             }
             else if (actionType == ActionTypeEnum.IDLE)
@@ -92,7 +92,7 @@ namespace DivineRightGame.Managers
         /// <summary>
         /// Performs a local map tick
         /// </summary>
-        public static PlayerFeedback[] PerformLocalTick()
+        public static ActionFeedback[] PerformLocalTick()
         {
             Stopwatch sWatch = new Stopwatch();
             sWatch.Start();

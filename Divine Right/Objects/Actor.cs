@@ -5,6 +5,7 @@ using System.Text;
 using DRObjects.Enums;
 using DRObjects.ActorHandling;
 using Newtonsoft.Json;
+using DRObjects.Items.Archetypes.Local;
 
 namespace DRObjects
 {
@@ -15,6 +16,10 @@ namespace DRObjects
     /// </summary>
     public class Actor
     {
+        /// <summary>
+        /// The List of items that this actor is holding
+        /// </summary>
+        public List<InventoryItem> Inventory { get; set; }
         /// <summary>
         /// If its an enemy, holds some auxillary data
         /// </summary>

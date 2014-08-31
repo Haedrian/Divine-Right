@@ -65,6 +65,10 @@ namespace DRObjects.Database
             {
                 items = dictionary[archetype].Values.Where(v => v[5].ToLower().Split(',').Contains(tag.ToLower())).Select(v => Int32.Parse(v[0])).ToArray();
             }
+            else if (archetype == Archetype.INVENTORYITEMS)
+            {
+                items = dictionary[archetype].Values.Where(v => v[9].ToLower().Split(',').Contains(tag.ToLower())).Select(v => Int32.Parse(v[0])).ToArray();
+            }
             else
             {
                 items = dictionary[archetype].Values.Where(v => v[v.Count - 1].ToLower().Split(',').Contains(tag.ToLower())).Select(v => Int32.Parse(v[0])).ToArray();

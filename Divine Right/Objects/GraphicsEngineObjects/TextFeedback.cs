@@ -9,7 +9,7 @@ namespace DRObjects.GraphicsEngineObjects
     /// Represents text shown temporarily upon the player's screen
     /// </summary>
     public class TextFeedback:
-        Abstract.PlayerFeedback
+        Abstract.ActionFeedback
     {
         /// <summary>
         /// The text to show

@@ -216,9 +216,9 @@ namespace DivineRightGame
         /// <summary>
         /// Perform a tick. Checks all actors and allow them an action
         /// </summary>
-        public PlayerFeedback[] Tick()
+        public ActionFeedback[] Tick()
         {
-            List<PlayerFeedback> feedback = new List<PlayerFeedback>();
+            List<ActionFeedback> feedback = new List<ActionFeedback>();
 
             MapCoordinate playerLocation = actors.Where(a => a.IsPlayerCharacter).FirstOrDefault().MapCharacter.Coordinate;
 

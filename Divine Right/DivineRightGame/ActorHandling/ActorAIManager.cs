@@ -17,14 +17,14 @@ namespace DivineRightGame.ActorHandling
     /// </summary>
     public static class ActorAIManager
     {
-        public static IEnumerable<PlayerFeedback> PerformActions(Actor actor, IEnumerable<Actor> actors, MapCoordinate playerLocation)
+        public static IEnumerable<ActionFeedback> PerformActions(Actor actor, IEnumerable<Actor> actors, MapCoordinate playerLocation)
         {
             if (GameState.LocalMap.PathfindingMap == null)
             {
                 GameState.LocalMap.GeneratePathfindingMap();
             }
 
-            List<PlayerFeedback> feedback = new List<PlayerFeedback>();
+            List<ActionFeedback> feedback = new List<ActionFeedback>();
 
             //First check whether they have a mission
             if (actor.CurrentMission == null)
@@ -33,7 +33,7 @@ namespace DivineRightGame.ActorHandling
                 if (actor.MissionStack.Count() == 0)
                 {
                     //no mission. ah well
-                    return new PlayerFeedback[] { };
+                    return new ActionFeedback[] { };
                 }
 
                 actor.CurrentMission = actor.MissionStack.Pop();
@@ -51,7 +51,7 @@ namespace DivineRightGame.ActorHandling
 
             if (actor.IsStunned) //Do nothing
             {
-                return new PlayerFeedback[] { };
+                return new ActionFeedback[] { };
             }
 
             if (actor.CurrentMission.MissionType == DRObjects.ActorHandling.ActorMissionType.IDLE)
@@ -66,7 +66,7 @@ namespace DivineRightGame.ActorHandling
                         TargetCoordinate = actors.Where(a => a.IsPlayerCharacter).FirstOrDefault().MapCharacter.Coordinate
                     };
 
-                    return new PlayerFeedback[] { };
+                    return new ActionFeedback[] { };
                 }
             }
             else if (actor.CurrentMission.MissionType == DRObjects.ActorHandling.ActorMissionType.WAIT)
@@ -91,7 +91,7 @@ namespace DivineRightGame.ActorHandling
                     //He's there. Push the current mission into the stack and go on the attack
                     actor.MissionStack.Push(actor.CurrentMission);
                     actor.CurrentMission = new AttackMission(actors.Where(a => a.IsPlayerCharacter).FirstOrDefault());
-                    return new PlayerFeedback[] { };
+                    return new ActionFeedback[] { };
                 }
                 else if (actor.IsAggressive && Math.Abs(actor.MapCharacter.Coordinate - playerLocation) < actor.LineOfSight)
                 {
@@ -103,7 +103,7 @@ namespace DivineRightGame.ActorHandling
                         TargetCoordinate = actors.Where(a => a.IsPlayerCharacter).FirstOrDefault().MapCharacter.Coordinate
                     };
 
-                    return new PlayerFeedback[] { };
+                    return new ActionFeedback[] { };
                 }
 
                 //Perform an action accordingly

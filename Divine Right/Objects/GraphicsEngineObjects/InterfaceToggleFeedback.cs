@@ -8,7 +8,7 @@ using DRObjects.Enums;
 namespace DRObjects.GraphicsEngineObjects
 {
     public class InterfaceToggleFeedback :
-        PlayerFeedback
+        ActionFeedback
     {
         public InternalActionEnum InterfaceComponent { get; set; }
         public object Argument { get; set; }

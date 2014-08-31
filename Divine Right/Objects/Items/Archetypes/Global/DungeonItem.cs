@@ -56,7 +56,7 @@ namespace DRObjects.Items.Archetypes.Global
             return actionTypes.ToArray();
         }
 
-        public override GraphicsEngineObjects.Abstract.PlayerFeedback[] PerformAction(ActionTypeEnum actionType, Actor actor, object[] args)
+        public override GraphicsEngineObjects.Abstract.ActionFeedback[] PerformAction(ActionTypeEnum actionType, Actor actor, object[] args)
         {
             if (actionType != ActionTypeEnum.EXPLORE)
             {
@@ -65,7 +65,7 @@ namespace DRObjects.Items.Archetypes.Global
 
             //Otherwise, visit the dungeon
 
-            return new GraphicsEngineObjects.Abstract.PlayerFeedback[1] {
+            return new GraphicsEngineObjects.Abstract.ActionFeedback[1] {
                 new LocationChangeFeedback()
                 {
                     VisitMainMap = false,

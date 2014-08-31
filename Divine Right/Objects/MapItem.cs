@@ -88,7 +88,7 @@ namespace DRObjects
         /// <summary>
         /// Defines what happens when an action is performed upon the tile or item. These are the default values. 
         /// </summary>
-        public virtual PlayerFeedback[] PerformAction(ActionTypeEnum actionType, Actor actor, object[] args)
+        public virtual ActionFeedback[] PerformAction(ActionTypeEnum actionType, Actor actor, object[] args)
         {
 
             if (GetPossibleActions(actor).Contains(actionType))
@@ -96,9 +96,9 @@ namespace DRObjects
                 switch (actionType)
                 {
                     case ActionTypeEnum.EXAMINE :
-                        return new PlayerFeedback[] { new CurrentLogFeedback(InterfaceSpriteName.PERC,Color.Black,"You see " + this.Description) };
+                        return new ActionFeedback[] { new CurrentLogFeedback(InterfaceSpriteName.PERC,Color.Black,"You see " + this.Description) };
                     case ActionTypeEnum.LOOK:
-                        return new PlayerFeedback[] { new TextFeedback(this.Name) };
+                        return new ActionFeedback[] { new TextFeedback(this.Name) };
                     default:
                         //TODO: ERROR HANDLING
                         throw new NotImplementedException("The following action : " + actionType + " has no code");
@@ -107,7 +107,7 @@ namespace DRObjects
             else
             {
                 //TODO: ERROR HANDLING
-                return new PlayerFeedback[0];
+                return new ActionFeedback[0];
             }
 
         }

@@ -53,10 +53,10 @@ namespace DRObjects.Items.Tiles
             return new ActionTypeEnum[] { };
         }
 
-        public override PlayerFeedback[] PerformAction(ActionTypeEnum actionType, Actor actor, object[] args)
+        public override ActionFeedback[] PerformAction(ActionTypeEnum actionType, Actor actor, object[] args)
         {
             //none of the actions are valid for this tile
-            return new PlayerFeedback[] { };
+            return new ActionFeedback[] { };
         }
 
         #endregion

@@ -10,7 +10,7 @@ namespace DRObjects.GraphicsEngineObjects
     /// Feedback to create an event
     /// </summary>
     public class CreateEventFeedback:
-        PlayerFeedback
+        ActionFeedback
     {
         public string EventName { get; set; }
 

@@ -11,7 +11,7 @@ namespace DRObjects.GraphicsEngineObjects
     /// Asks for a location change
     /// </summary>
     public class LocationChangeFeedback:
-        PlayerFeedback
+        ActionFeedback
     {
         public Settlement VisitSettlement { get; set; }
         public bool VisitMainMap { get; set; }

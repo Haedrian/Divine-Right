@@ -35,6 +35,8 @@ namespace DRObjects.Graphics
         private static string RICHFEMALE = @"Graphics/Local/richwoman";
         private static string PRIEST = @"Graphics/Local/priest";
 
+        private static string INVENTORYITEMS = "@Graphics/Local/inventoryItems";
+
         #endregion
 
         private static SpriteData[] localSprites;
@@ -344,6 +346,8 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.COURGETTE] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(250, 350, 50, 50));
             localSprites[(int)LocalSpriteName.CORN] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(300, 350, 50, 50));
 
+
+
             AddLocalSprite(LocalSpriteName.PEEL_1, RESOURCES_AND_TOOLS, 0, 8);
             AddLocalSprite(LocalSpriteName.PEEL_2, RESOURCES_AND_TOOLS, 1, 8);
             AddLocalSprite(LocalSpriteName.FURNACE_LARGE_TOP, RESOURCES_AND_TOOLS, 2, 8);
@@ -575,6 +579,35 @@ namespace DRObjects.Graphics
 
             AddLocalSprite(LocalSpriteName.PRIEST_BODY, PRIEST, 0, 0);
             AddLocalSprite(LocalSpriteName.PRIEST_CLOTHES, PRIEST, 1, 0);
+
+            AddLocalSprite(LocalSpriteName.GREY_GEM, INVENTORYITEMS, 0, 0);
+            AddLocalSprite(LocalSpriteName.BROWN_GEM, INVENTORYITEMS, 1, 0);
+            AddLocalSprite(LocalSpriteName.GREEN_GEM, INVENTORYITEMS, 2, 0);
+            AddLocalSprite(LocalSpriteName.BLUE_GEM, INVENTORYITEMS, 3, 0);
+            AddLocalSprite(LocalSpriteName.RED_GEM, INVENTORYITEMS, 4, 0);
+
+            AddLocalSprite(LocalSpriteName.GREY_GEM_RING, INVENTORYITEMS, 0, 1);
+            AddLocalSprite(LocalSpriteName.BROWN_GEM_RING, INVENTORYITEMS, 1, 1);
+            AddLocalSprite(LocalSpriteName.GREEN_GEM_RING, INVENTORYITEMS, 2, 1);
+            AddLocalSprite(LocalSpriteName.BLUE_GEM_RING, INVENTORYITEMS, 3, 1);
+            AddLocalSprite(LocalSpriteName.RED_GEM_RING, INVENTORYITEMS, 4, 1);
+
+            AddLocalSprite(LocalSpriteName.GREY_GEM_PENDANT, INVENTORYITEMS, 0, 2);
+            AddLocalSprite(LocalSpriteName.BROWN_GEM_PENDANT, INVENTORYITEMS, 1, 2);
+            AddLocalSprite(LocalSpriteName.GREEN_GEM_PENDANT, INVENTORYITEMS, 2, 2);
+            AddLocalSprite(LocalSpriteName.BLUE_GEM_PENDANT, INVENTORYITEMS, 3, 2);
+            AddLocalSprite(LocalSpriteName.RED_GEM_PENDANT, INVENTORYITEMS, 4, 2);
+
+            AddLocalSprite(LocalSpriteName.CLOTH_ARMOUR, INVENTORYITEMS, 0, 3);
+            AddLocalSprite(LocalSpriteName.LEATHER_ARMOUR, INVENTORYITEMS, 1, 3);
+            AddLocalSprite(LocalSpriteName.CHAIN_ARMOUR, INVENTORYITEMS, 2, 3);
+            AddLocalSprite(LocalSpriteName.LIGHT_BREASTPLATE, INVENTORYITEMS, 3, 3);
+            AddLocalSprite(LocalSpriteName.HEAVY_BREASTPLATE, INVENTORYITEMS, 4, 3);
+            AddLocalSprite(LocalSpriteName.HEAVY_ARMOUR, INVENTORYITEMS, 5, 3);
+            AddLocalSprite(LocalSpriteName.ELITE_ARMOUR, INVENTORYITEMS, 6, 3);
+            AddLocalSprite(LocalSpriteName.LEGENDARY_ARMOUR, INVENTORYITEMS, 7, 3);
+
+            AddLocalSprite(LocalSpriteName.COINS, INVENTORYITEMS, 0, 4);
 
             interfaceSprites[(int)InterfaceSpriteName.SCROLL] = new SpriteData(@"Graphics/Interface/scrollsandblocks", new Rectangle(224, 190, 96, 34));
             interfaceSprites[(int)InterfaceSpriteName.PAPER_TEXTURE] = new SpriteData(@"Graphics/Interface/paperTexture");

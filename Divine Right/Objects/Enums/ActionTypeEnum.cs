@@ -16,5 +16,7 @@ namespace DRObjects.Enums
         ATTACK = 6,
         EXPLORE,
         LEAVE,
+        TAKE,
+        EQUIP,
     }
 }
