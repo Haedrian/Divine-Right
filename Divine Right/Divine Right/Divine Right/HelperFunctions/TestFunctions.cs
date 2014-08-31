@@ -94,7 +94,7 @@ namespace Divine_Right.HelperFunctions
 
         public static void GenerateSettlement()
         {
-            var settlement = SettlementGenerator.GenerateSettlement(new MapCoordinate(50, 50, 0, DRObjects.Enums.MapTypeEnum.GLOBAL), GameState.Random.Next(10) + 2);
+            var settlement = SettlementGenerator.GenerateSettlement(new MapCoordinate(50, 50, 0, DRObjects.Enums.MapTypeEnum.GLOBAL), GameState.Random.Next(10) + 2, new List<DRObjects.Enums.GlobalResourceType>());
 
             GameState.LocalMap = new LocalMap(250, 250, 1, 0);
             GameState.LocalMap.Settlement = settlement;

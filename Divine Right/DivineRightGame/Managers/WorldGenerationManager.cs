@@ -915,7 +915,20 @@ namespace DivineRightGame.Managers
 
                 MapBlock block = candidateBlocks.First();
 
-                Settlement settlement = SettlementGenerator.GenerateSettlement(block.Tile.Coordinate, random.Next(5) + 10,true);
+                //Look around in the 3x3 block and see if we have any resources which we are consuming
+                var surroundingBlocks = GetBlocksAroundPoint(block.Tile.Coordinate, 1);
+
+                List<GlobalResourceType> resources = new List<GlobalResourceType>();
+
+                foreach (var sblock in surroundingBlocks)
+                {
+                    if (sblock.GetTopMapItem() != null && sblock.GetTopMapItem().GetType() == typeof(MapResource))
+                    {
+                        resources.Add((sblock.GetTopMapItem() as MapResource).ResourceType);
+                    }
+                }
+
+                Settlement settlement = SettlementGenerator.GenerateSettlement(block.Tile.Coordinate, random.Next(5) + 10,resources,true);
                 settlement.IsCapital = true;
 
                 GameState.GlobalMap.WorldSettlements.Add(settlement);
@@ -949,7 +962,20 @@ namespace DivineRightGame.Managers
 
                     block = candidateBlocks.First();
 
-                    settlement = SettlementGenerator.GenerateSettlement(block.Tile.Coordinate, random.Next(7) + 1);
+                    //Look around in the 3x3 block and see if we have any resources which we are consuming
+                    surroundingBlocks = GetBlocksAroundPoint(block.Tile.Coordinate, 1);
+
+                    resources = new List<GlobalResourceType>();
+
+                    foreach (var sblock in surroundingBlocks)
+                    {
+                        if (sblock.GetTopMapItem() != null && sblock.GetTopMapItem().GetType() == typeof(MapResource))
+                        {
+                            resources.Add((sblock.GetTopMapItem() as MapResource).ResourceType);
+                        }
+                    }
+
+                    settlement = SettlementGenerator.GenerateSettlement(block.Tile.Coordinate, random.Next(7) + 1,resources);
 
                     GameState.GlobalMap.WorldSettlements.Add(settlement);
 

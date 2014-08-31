@@ -36,9 +36,10 @@ namespace DivineRightGame.SettlementHandling
         /// </summary>
         /// <param name="globalCoordinates"></param>
         /// <param name="size"></param>
+        /// <param name="resources">The resources which are available. We will make use of them if there are any</param>
         /// <param name="capital">Whether the settlement is a capital or not</param>
         /// <returns></returns>
-        public static Settlement GenerateSettlement(MapCoordinate globalCoordinates, int size, bool capital = false)
+        public static Settlement GenerateSettlement(MapCoordinate globalCoordinates, int size, List<GlobalResourceType> resources, bool capital = false)
         {
             Settlement settlement = new Settlement();
 
@@ -48,21 +49,51 @@ namespace DivineRightGame.SettlementHandling
             settlement.MayContainItems = false;
             settlement.SettlementSize = size;
 
-            settlement.RichPercentage = random.Next(6) + random.Next(6) + random.Next(6);
-            //settlement.RichPercentage = 50;
+            //Generate the districts
+            settlement.Districts = GenerateDistricts(size, resources);
+
+            //The number of d6 to roll for rich and middle class
+            int richDice = 1;
+            int middleDice = 5;
+
+            //Districts will effect the percentages.
+            foreach (var district in settlement.Districts)
+            {
+                switch(district.District.Type)
+                {
+                    case DistrictType.CARPENTRY:
+                        middleDice += district.District.Level;
+                        break;
+                    case DistrictType.COMMERCE:
+                        richDice += district.District.Level;
+                        break;
+                    case DistrictType.IRONWORKS:
+                        middleDice += district.District.Level;
+                        break;
+                    case DistrictType.LIBRARY:
+                        richDice += district.District.Level;
+                        break;
+                    case DistrictType.PALACE:
+                        richDice += district.District.Level;
+                        break;
+                }
+            }
+
+            settlement.RichPercentage = 0;
+
+            for (int i = 0; i < richDice; i++)
+            {
+                settlement.RichPercentage += random.Next(6);
+            }
 
             settlement.MiddlePercentage = 0;
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < middleDice; i++)
             {
                 settlement.MiddlePercentage += random.Next(6);
             }
 
             settlement.PoorPercentage = 100 - settlement.RichPercentage - settlement.MiddlePercentage;
-
-            //Generate the districts
-            settlement.Districts = GenerateDistricts(size);
-
 
             return settlement;
         }
@@ -404,11 +435,11 @@ namespace DivineRightGame.SettlementHandling
         }
 
         /// <summary>
-        /// Generates the districts. For now just do this randomly. Later we'll want to know the resources and set a theme for each settlement
+        /// Generates the districts. We'll take the resources into consideration
         /// </summary>
         /// <param name="size"></param>
         /// <returns></returns>
-        public static List<SettlementBuilding> GenerateDistricts(int size)
+        public static List<SettlementBuilding> GenerateDistricts(int size,List<GlobalResourceType> resources)
         {
             List<District> districts = new List<District>(size);
 
@@ -417,6 +448,47 @@ namespace DivineRightGame.SettlementHandling
             districts.Add(new District(DistrictType.GENERAL_STORE, 1));
 
             var districtTypes = (DistrictType[])Enum.GetValues(typeof(DistrictType));
+
+            //Before we pick the random ones, we must pick some 'forced' ones due to the resources available
+            foreach (var resource in resources.Distinct())
+            {
+                switch(resource)
+                {
+                    case GlobalResourceType.FARMLAND:
+                       //Increase the size by 2
+                        size += 2;
+                        break;
+                    case GlobalResourceType.FISH:
+                        //Increase the size by 2
+                        size += 2;
+                        break;
+                    case GlobalResourceType.GAME:
+                        //Increase the size by 1
+                        size += 1;
+                        break;
+                    case GlobalResourceType.GOLD:
+                        //The commerce will like this
+                        districts.Add(new District(DistrictType.COMMERCE, 2));
+                        break;
+                    case GlobalResourceType.HORSE:
+                        //Create a commerce district
+                        districts.Add(new District(DistrictType.COMMERCE, 1));
+                        break;
+                    case GlobalResourceType.IRON:
+                        //Create an ironworking district
+                        districts.Add(new District(DistrictType.IRONWORKS, 2));
+                        break;
+                    case GlobalResourceType.STONE:
+                        //No idea what to represent with this. Let's put it as barracks for now
+                        districts.Add(new District(DistrictType.BARRACKS, 1));
+                        break;
+                    case GlobalResourceType.WOOD:
+                        //Create woodworking district
+                        districts.Add(new District(DistrictType.CARPENTRY, 2));
+                        break;
+
+                }
+            }
 
             //Generate the rest of it
             for (int i = 0; i < size - 2; i++)
