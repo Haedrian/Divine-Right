@@ -6,6 +6,7 @@ using DRObjects.Enums;
 using DRObjects.ActorHandling;
 using Newtonsoft.Json;
 using DRObjects.Items.Archetypes.Local;
+using DRObjects.DataStructures;
 
 namespace DRObjects
 {
@@ -19,7 +20,7 @@ namespace DRObjects
         /// <summary>
         /// The List of items that this actor is holding
         /// </summary>
-        public List<InventoryItem> Inventory { get; set; }
+        public GroupedList<InventoryItem> Inventory { get; set; }
         /// <summary>
         /// If its an enemy, holds some auxillary data
         /// </summary>
@@ -122,6 +123,7 @@ namespace DRObjects
             this.MissionStack = new Stack<ActorMission>();
             this.CombatStance = ActorStance.NEUTRAL;
             this.IsAlive = true;
+            this.Inventory = new GroupedList<InventoryItem>();
         }
 
     }
