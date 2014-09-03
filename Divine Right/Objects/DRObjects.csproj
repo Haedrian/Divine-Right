@@ -91,12 +91,14 @@
     <Compile Include="ActorHandling\RaceData.cs" />
     <Compile Include="Compare\MapCoordinateCompare.cs" />
     <Compile Include="Database\DatabaseHandling.cs" />
+    <Compile Include="DataStructures\GroupedList.cs" />
     <Compile Include="Enums\Archetype.cs" />
     <Compile Include="Enums\EnemyThought.cs" />
     <Compile Include="Enums\GlobalBiome.cs" />
     <Compile Include="Enums\GlobalOverlay.cs" />
     <Compile Include="Enums\GlobalResource.cs" />
     <Compile Include="Enums\InternalActionEnum.cs" />
+    <Compile Include="Enums\InventoryCategory.cs" />
     <Compile Include="Enums\MapType.cs" />
     <Compile Include="Enums\PointOfInterestType.cs" />
     <Compile Include="Enums\SettlementType.cs" />
@@ -124,6 +126,7 @@
     <Compile Include="Items\Archetypes\Global\MapResource.cs" />
     <Compile Include="Items\Archetypes\Global\Settlement.cs" />
     <Compile Include="Items\Archetypes\Global\SettlementItem.cs" />
+    <Compile Include="Items\Archetypes\Local\InventoryItem.cs" />
     <Compile Include="Items\Archetypes\Local\LeaveTownItem.cs" />
     <Compile Include="Items\Archetypes\Local\LocalCharacter.cs" />
     <Compile Include="Items\Archetypes\Local\ToggleItem.cs" />
