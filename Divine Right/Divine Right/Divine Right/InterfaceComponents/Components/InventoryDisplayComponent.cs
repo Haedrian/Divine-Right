@@ -59,7 +59,6 @@ namespace Divine_Right.InterfaceComponents.Components
             batch.Draw(content, SpriteManager.GetSprite(ColourSpriteName.WHITE), borderRect, Color.DarkGray);
 
             batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.PAPER_TEXTURE), rect, Color.White);
-            batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.WOOD_TEXTURE), categoryBackground, Color.White);
 
             for (int i = 0; i < enums.Length; i++)
             {
@@ -92,6 +91,8 @@ namespace Divine_Right.InterfaceComponents.Components
                     batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.WOOD_TEXTURE), categoryBackgrounds[i], Color.RosyBrown);
                 }
                 batch.Draw(content, sprite, categories[i], Color.Black);
+
+                batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.WOOD_TEXTURE), categoryBackground, Color.White);
             }
 
             //Now draw the items
@@ -119,7 +120,31 @@ namespace Divine_Right.InterfaceComponents.Components
 
         public bool HandleClick(int x, int y, Objects.Enums.MouseActionEnum mouseAction, out DRObjects.Enums.ActionTypeEnum? actionType, out DRObjects.Enums.InternalActionEnum? internalActionType, out object[] args, out DRObjects.MapCoordinate coord, out bool destroy)
         {
-            throw new NotImplementedException();
+            for (int i=0; i < categories.Count; i++)
+            {
+                if (categories[i].Contains(x, y))
+                {
+                    //Change category!
+                    this.ChosenCategory = i;
+
+                    //Handled. Naught else
+                    actionType = null;
+                    internalActionType = null;
+                    args = null;
+                    coord = null;
+                    destroy = false;
+
+                    return true;
+                }
+            }
+
+            actionType = null;
+            internalActionType = null;
+            args = null;
+            coord = null;
+            destroy = false;
+
+            return true;
         }
 
         public bool HandleKeyboard(Microsoft.Xna.Framework.Input.KeyboardState keyboard, out DRObjects.Enums.ActionTypeEnum? actionType, out object[] args, out DRObjects.MapCoordinate coord, out bool destroy)
@@ -138,18 +163,22 @@ namespace Divine_Right.InterfaceComponents.Components
 
         public void PerformDrag(int deltaX, int deltaY)
         {
-            rect = new Rectangle(deltaX, deltaY, 360, 170);
-            borderRect = new Rectangle(deltaX - 2, deltaY - 2, rect.Width + 4, rect.Height + 4);
+            //Update locationX and Y
+            locationX += deltaX;
+            locationY += deltaY;
 
-            categoryBackground = new Rectangle(deltaX, deltaY+25, rect.Width, 15);
+            rect = new Rectangle(locationX, locationY, 360, 170);
+            borderRect = new Rectangle(locationX - 2, locationY - 2, rect.Width + 4, rect.Height + 4);
+
+            categoryBackground = new Rectangle(locationX, locationY + 50, rect.Width, 5);
 
             categoryBackgrounds = new List<Rectangle>();
             categories = new List<Rectangle>();
 
             for (int i = 0; i < enums.Length; i++)
             {
-                categoryBackgrounds.Add(new Rectangle(deltaX + (50 * i), deltaY, 50, 50));
-                categories.Add(new Rectangle(deltaX + (50 * i), deltaY, 50, 50));
+                categoryBackgrounds.Add(new Rectangle(locationX + (50 * i), locationY, 50, 50));
+                categories.Add(new Rectangle(locationX + (50 * i), locationY, 50, 50));
             }
 
             row1Items = new List<Rectangle>();
@@ -158,9 +187,9 @@ namespace Divine_Right.InterfaceComponents.Components
 
             for (int i = 0; i < ROW_TOTAL; i++)
             {
-                row1Items.Add(new Rectangle((deltaX + (30 * i)), deltaY + 50, 30, 30));
-                row2Items.Add(new Rectangle((deltaX + (30 * i)), deltaY + 80, 30, 30));
-                row3Items.Add(new Rectangle((deltaX + (30 * i)), deltaY + 110, 30, 30));
+                row1Items.Add(new Rectangle((locationX + (30 * i)), locationY + 50, 30, 30));
+                row2Items.Add(new Rectangle((locationX + (30 * i)), locationY + 80, 30, 30));
+                row3Items.Add(new Rectangle((locationX + (30 * i)), locationY + 110, 30, 30));
             }
         }
 
