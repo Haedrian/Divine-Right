@@ -26,6 +26,8 @@ using DivineRightGame.SettlementHandling;
 using DivineRightGame.ActorHandling;
 using DRObjects.LocalMapGeneratorObjects;
 using DRObjects.Items.Archetypes.Global;
+using DRObjects.Database;
+using DivineRightGame.ItemFactory.ItemFactoryManagers;
 
 namespace Divine_Right.GameScreens
 {
@@ -143,6 +145,16 @@ namespace Divine_Right.GameScreens
             {
                 //TestFunctions.ParseXML();
                 TestFunctions.GenerateSettlement();
+
+                InventoryItemManager mgr = new InventoryItemManager();
+
+                //Create a bunch of inventory items yaay
+                for (int i=0; i < 15; i++)
+                {
+                    var item = mgr.CreateItem(DatabaseHandling.GetItemIdFromTag(Archetype.INVENTORYITEMS,"loot")) as InventoryItem;
+                    GameState.PlayerCharacter.Inventory.Add(item.Category, item);    
+                }
+                
             }
             else if (parameters[0].ToString().Equals("Continue"))
             {
@@ -205,6 +217,10 @@ namespace Divine_Right.GameScreens
             CharacterSheetComponent csc = new CharacterSheetComponent(50, 50, GameState.LocalMap.Actors.Where(a => a.IsPlayerCharacter).FirstOrDefault());
             csc.Visible = false;
             interfaceComponents.Add(csc);
+
+            InventoryDisplayComponent ivt = new InventoryDisplayComponent(50,50,GameState.LocalMap.Actors.Where(a => a.IsPlayerCharacter).FirstOrDefault());
+            ivt.Visible = true;
+            interfaceComponents.Add(ivt);
 
             TextLogComponent tlc = new TextLogComponent(10, GraphicsDevice.Viewport.Height - 150, GameState.NewLog);
             tlc.Visible = true;

@@ -28,6 +28,8 @@ namespace DRObjects.Items.Archetypes.Local
         /// </summary>
         public bool IsEquippable { get; set; }
 
+        public InventoryCategory Category { get; set; }
+
         public override Enums.ActionTypeEnum[] GetPossibleActions(Actor actor)
         {
             List<ActionTypeEnum> actions = base.GetPossibleActions(actor).ToList() ;
@@ -60,7 +62,7 @@ namespace DRObjects.Items.Archetypes.Local
                     {
                         //take it
                         this.Coordinate = new MapCoordinate(999, 999, 0, MapTypeEnum.CONTAINER); //Dummy - this will cause the block to reject and delete it
-                        actor.Inventory.Add(this);
+                        actor.Inventory.Add("",this); //TODO - CATEGORY!
                         this.InInventory = true;
                     }
                     //TODO: EQUIP 

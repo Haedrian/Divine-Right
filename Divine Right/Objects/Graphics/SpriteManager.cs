@@ -35,7 +35,7 @@ namespace DRObjects.Graphics
         private static string RICHFEMALE = @"Graphics/Local/richwoman";
         private static string PRIEST = @"Graphics/Local/priest";
 
-        private static string INVENTORYITEMS = "@Graphics/Local/inventoryItems";
+        private static string INVENTORYITEMS = @"Graphics/Local/inventoryItems";
 
         #endregion
 
