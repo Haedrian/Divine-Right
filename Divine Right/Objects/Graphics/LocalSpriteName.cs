@@ -497,6 +497,22 @@ namespace DRObjects.Graphics
         SHIELD_6,
         SHIELD_7,
         SHIELD_8,
+        SWORD_1,
+        SWORD_2,
+        SWORD_3,
+        SWORD_4,
+        SWORD_5,
+        SWORD_6,
+        SWORD_7,
+        SWORD_8,
+        AXE_1,
+        AXE_2,
+        AXE_3,
+        AXE_4,
+        AXE_5,
+        AXE_6,
+        AXE_7,
+        AXE_8,
 
     }
 }

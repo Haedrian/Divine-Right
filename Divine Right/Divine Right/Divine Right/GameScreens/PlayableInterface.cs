@@ -155,6 +155,8 @@ namespace Divine_Right.GameScreens
                     GameState.PlayerCharacter.Inventory.Add(item.Category, item);
                     item = mgr.CreateItem(DatabaseHandling.GetItemIdFromTag(Archetype.INVENTORYITEMS, "armour")) as InventoryItem;
                     GameState.PlayerCharacter.Inventory.Add(item.Category, item);
+                    item = mgr.CreateItem(DatabaseHandling.GetItemIdFromTag(Archetype.INVENTORYITEMS, "weapon")) as InventoryItem;
+                    GameState.PlayerCharacter.Inventory.Add(item.Category, item);
                 }
                 
             }
