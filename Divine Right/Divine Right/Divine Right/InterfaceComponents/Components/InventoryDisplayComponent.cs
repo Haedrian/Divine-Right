@@ -167,7 +167,7 @@ namespace Divine_Right.InterfaceComponents.Components
             locationX += deltaX;
             locationY += deltaY;
 
-            rect = new Rectangle(locationX, locationY, 360, 170);
+            rect = new Rectangle(locationX, locationY, 360, 180);
             borderRect = new Rectangle(locationX - 2, locationY - 2, rect.Width + 4, rect.Height + 4);
 
             categoryBackground = new Rectangle(locationX, locationY + 50, rect.Width, 5);
@@ -187,9 +187,9 @@ namespace Divine_Right.InterfaceComponents.Components
 
             for (int i = 0; i < ROW_TOTAL; i++)
             {
-                row1Items.Add(new Rectangle((locationX + (30 * i)), locationY + 50, 30, 30));
-                row2Items.Add(new Rectangle((locationX + (30 * i)), locationY + 80, 30, 30));
-                row3Items.Add(new Rectangle((locationX + (30 * i)), locationY + 110, 30, 30));
+                row1Items.Add(new Rectangle((locationX + (30 * i)), locationY +10 + 50, 30, 30));
+                row2Items.Add(new Rectangle((locationX + (30 * i)), locationY +10 + 80, 30, 30));
+                row3Items.Add(new Rectangle((locationX + (30 * i)), locationY +10 + 110, 30, 30));
             }
         }
 

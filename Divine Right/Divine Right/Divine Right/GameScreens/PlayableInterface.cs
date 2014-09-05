@@ -152,7 +152,9 @@ namespace Divine_Right.GameScreens
                 for (int i=0; i < 15; i++)
                 {
                     var item = mgr.CreateItem(DatabaseHandling.GetItemIdFromTag(Archetype.INVENTORYITEMS,"loot")) as InventoryItem;
-                    GameState.PlayerCharacter.Inventory.Add(item.Category, item);    
+                    GameState.PlayerCharacter.Inventory.Add(item.Category, item);
+                    item = mgr.CreateItem(DatabaseHandling.GetItemIdFromTag(Archetype.INVENTORYITEMS, "armour")) as InventoryItem;
+                    GameState.PlayerCharacter.Inventory.Add(item.Category, item);
                 }
                 
             }
