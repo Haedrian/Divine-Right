@@ -149,7 +149,7 @@ namespace Divine_Right.GameScreens
                 InventoryItemManager mgr = new InventoryItemManager();
 
                 //Create a bunch of inventory items yaay
-                for (int i=0; i < 15; i++)
+                for (int i=0; i < 25; i++)
                 {
                     var item = mgr.CreateItem(DatabaseHandling.GetItemIdFromTag(Archetype.INVENTORYITEMS,"loot")) as InventoryItem;
                     GameState.PlayerCharacter.Inventory.Add(item.Category, item);

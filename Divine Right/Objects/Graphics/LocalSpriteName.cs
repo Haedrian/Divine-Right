@@ -481,6 +481,22 @@ namespace DRObjects.Graphics
         ELITE_ARMOUR,
         LEGENDARY_ARMOUR,
         COINS,
+        HELM_1,
+        HELM_2,
+        HELM_3,
+        HELM_4,
+        HELM_5,
+        HELM_6,
+        HELM_7,
+        HELM_8,
+        SHIELD_1,
+        SHIELD_2,
+        SHIELD_3,
+        SHIELD_4,
+        SHIELD_5,
+        SHIELD_6,
+        SHIELD_7,
+        SHIELD_8,
 
     }
 }

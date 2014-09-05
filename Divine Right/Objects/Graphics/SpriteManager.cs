@@ -607,6 +607,24 @@ namespace DRObjects.Graphics
             AddLocalSprite(LocalSpriteName.ELITE_ARMOUR, INVENTORYITEMS, 6, 3);
             AddLocalSprite(LocalSpriteName.LEGENDARY_ARMOUR, INVENTORYITEMS, 7, 3);
 
+            AddLocalSprite(LocalSpriteName.HELM_1, INVENTORYITEMS, 0, 5);
+            AddLocalSprite(LocalSpriteName.HELM_2, INVENTORYITEMS, 1, 5);
+            AddLocalSprite(LocalSpriteName.HELM_3, INVENTORYITEMS, 2, 5);
+            AddLocalSprite(LocalSpriteName.HELM_4, INVENTORYITEMS, 3, 5);
+            AddLocalSprite(LocalSpriteName.HELM_5, INVENTORYITEMS, 4, 5);
+            AddLocalSprite(LocalSpriteName.HELM_6, INVENTORYITEMS, 5, 5);
+            AddLocalSprite(LocalSpriteName.HELM_7, INVENTORYITEMS, 6, 5);
+            AddLocalSprite(LocalSpriteName.HELM_8, INVENTORYITEMS, 7, 5);
+
+            AddLocalSprite(LocalSpriteName.SHIELD_1, INVENTORYITEMS, 0, 6);
+            AddLocalSprite(LocalSpriteName.SHIELD_2, INVENTORYITEMS, 1, 6);
+            AddLocalSprite(LocalSpriteName.SHIELD_3, INVENTORYITEMS, 2, 6);
+            AddLocalSprite(LocalSpriteName.SHIELD_4, INVENTORYITEMS, 3, 6);
+            AddLocalSprite(LocalSpriteName.SHIELD_5, INVENTORYITEMS, 4, 6);
+            AddLocalSprite(LocalSpriteName.SHIELD_6, INVENTORYITEMS, 5, 6);
+            AddLocalSprite(LocalSpriteName.SHIELD_7, INVENTORYITEMS, 6, 6);
+            AddLocalSprite(LocalSpriteName.SHIELD_8, INVENTORYITEMS, 7, 6);
+
             AddLocalSprite(LocalSpriteName.COINS, INVENTORYITEMS, 0, 4);
 
             interfaceSprites[(int)InterfaceSpriteName.SCROLL] = new SpriteData(@"Graphics/Interface/scrollsandblocks", new Rectangle(224, 190, 96, 34));
