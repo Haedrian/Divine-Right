@@ -49,7 +49,7 @@ namespace Divine_Right.InterfaceComponents.Components
             this.locationX = locationX;
             this.locationY = locationY;
             this.CurrentActor = currentActor;
-            ChosenCategory = 2;
+            ChosenCategory = 0;
 
             PerformDrag(locationX, locationY);
         }

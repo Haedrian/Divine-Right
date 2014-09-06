@@ -151,14 +151,26 @@ namespace Divine_Right.GameScreens
                 //Create a bunch of inventory items yaay
                 for (int i=0; i < 25; i++)
                 {
-                    var item = mgr.CreateItem(DatabaseHandling.GetItemIdFromTag(Archetype.INVENTORYITEMS,"loot")) as InventoryItem;
-                    GameState.PlayerCharacter.Inventory.Add(item.Category, item);
-                    item = mgr.CreateItem(DatabaseHandling.GetItemIdFromTag(Archetype.INVENTORYITEMS, "armour")) as InventoryItem;
-                    GameState.PlayerCharacter.Inventory.Add(item.Category, item);
-                    item = mgr.CreateItem(DatabaseHandling.GetItemIdFromTag(Archetype.INVENTORYITEMS, "weapon")) as InventoryItem;
-                    GameState.PlayerCharacter.Inventory.Add(item.Category, item);
+                    //var item = mgr.CreateItem(DatabaseHandling.GetItemIdFromTag(Archetype.INVENTORYITEMS,"loot")) as InventoryItem;
+                    //GameState.PlayerCharacter.Inventory.Add(item.Category, item);
+                    //item = mgr.CreateItem(DatabaseHandling.GetItemIdFromTag(Archetype.INVENTORYITEMS, "armour")) as InventoryItem;
+                    //GameState.PlayerCharacter.Inventory.Add(item.Category, item);
+                    //item = mgr.CreateItem(DatabaseHandling.GetItemIdFromTag(Archetype.INVENTORYITEMS, "weapon")) as InventoryItem;
+                    //GameState.PlayerCharacter.Inventory.Add(item.Category, item);
                 }
-                
+
+                for (int i=0; i < 100; i++)
+                {
+                    var block = GameState.LocalMap.GetBlockAtCoordinate(new MapCoordinate(GameState.Random.Next(GameState.LocalMap.localGameMap.GetLength(0)), GameState.Random.Next(GameState.LocalMap.localGameMap.GetLength(1)), 0, MapTypeEnum.LOCAL));
+
+                    if (block.MayContainItems)
+                    {
+                        var item = mgr.CreateItem(DatabaseHandling.GetItemIdFromTag(Archetype.INVENTORYITEMS, "loot")) as InventoryItem;
+                        item.Coordinate = new MapCoordinate(block.Tile.Coordinate);
+                        block.ForcePutItemOnBlock(item);
+                    }
+                }
+
             }
             else if (parameters[0].ToString().Equals("Continue"))
             {

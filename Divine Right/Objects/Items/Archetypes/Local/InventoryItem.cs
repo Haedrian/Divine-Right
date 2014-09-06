@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using DRObjects.Enums;
 using DRObjects.GraphicsEngineObjects.Abstract;
+using DRObjects.GraphicsEngineObjects;
+using DRObjects.Graphics;
+using Microsoft.Xna.Framework;
 
 namespace DRObjects.Items.Archetypes.Local
 {
@@ -49,21 +52,28 @@ namespace DRObjects.Items.Archetypes.Local
         {
             get
             {
-                string desc = base.Description;
-
-                //Add the value and armour/damage rating
-                desc += "\nBaseVal " + BaseValue;
-
-                if (ArmourRating > 0)
+                if (InInventory)
                 {
-                    desc += " Armr " + ArmourRating;
-                }
-                if (DamageRating > 0)
-                {
-                    desc += " Dmg " + DamageRating;
-                }
+                    string desc = base.Description;
 
-                return desc;
+                    //Add the value and armour/damage rating
+                    desc += "\nBaseVal " + BaseValue;
+
+                    if (ArmourRating > 0)
+                    {
+                        desc += " Armr " + ArmourRating;
+                    }
+                    if (DamageRating > 0)
+                    {
+                        desc += " Dmg " + DamageRating;
+                    }
+
+                    return desc;
+                }
+                else
+                {
+                    return base.Description;
+                }
             }
             set
             {
@@ -82,10 +92,12 @@ namespace DRObjects.Items.Archetypes.Local
                 {
                     actions.Add(ActionTypeEnum.EQUIP);
                 }
+
+                actions.Add(ActionTypeEnum.DROP);
             }
             else 
             {
-                if (Math.Abs(actor.GlobalCoordinates - this.Coordinate) < 2)
+                if (Math.Abs(actor.MapCharacter.Coordinate - this.Coordinate) < 2)
                 {
                     actions.Add(ActionTypeEnum.TAKE);
                 }
@@ -98,17 +110,27 @@ namespace DRObjects.Items.Archetypes.Local
         {
             if (actionType == ActionTypeEnum.EQUIP || actionType == ActionTypeEnum.TAKE)
             {
-                if (Math.Abs(actor.GlobalCoordinates - this.Coordinate) < 2)
+                if (Math.Abs(actor.MapCharacter.Coordinate - this.Coordinate) < 2)
                 {
                     if (actionType == ActionTypeEnum.TAKE)
                     {
                         //take it
                         this.Coordinate = new MapCoordinate(999, 999, 0, MapTypeEnum.CONTAINER); //Dummy - this will cause the block to reject and delete it
-                        actor.Inventory.Add("",this); //TODO - CATEGORY!
+                        actor.Inventory.Add(this.Category,this);
                         this.InInventory = true;
+
+                        return new ActionFeedback[1] { new CurrentLogFeedback(InterfaceSpriteName.MAN,Color.Black,"You pick up the " + this.Name) };
+                        
                     }
                     //TODO: EQUIP 
                 }
+            }
+            else if (actionType == ActionTypeEnum.DROP)
+            {
+                //TODO: DROPPING
+                //drop it
+             //   this.Coordinate = actor.MapCharacter.Coordinate;
+                
             }
             else
             {
