@@ -73,13 +73,13 @@ namespace Divine_Right.InterfaceComponents.Components
                 switch ((InventoryCategory)enums.GetValue(i))
                 {
                     case InventoryCategory.ARMOUR:
-                        sprite = SpriteManager.GetSprite(LocalSpriteName.HEAVY_ARMOUR);
+                        sprite = SpriteManager.GetSprite(LocalSpriteName.LIGHT_BREASTPLATE);
                         break;
                     case InventoryCategory.LOOT:
                         sprite = SpriteManager.GetSprite(LocalSpriteName.GREY_GEM_RING);
                         break;
                     case InventoryCategory.WEAPON:
-                        sprite = SpriteManager.GetSprite(InterfaceSpriteName.SWORD);
+                        sprite = SpriteManager.GetSprite(LocalSpriteName.SWORD_3);
                         break;
                     default:
                         throw new NotImplementedException("No code for that particular inventory category");

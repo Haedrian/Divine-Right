@@ -26,6 +26,7 @@ namespace DRObjects.Enums
         TOGGLE_SETTLEMENT,
         CREDITS,
         CONTINUE,
+        OPEN_INVENTORY,
 
     }
 }

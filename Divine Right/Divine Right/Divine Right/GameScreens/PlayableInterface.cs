@@ -223,7 +223,7 @@ namespace Divine_Right.GameScreens
             interfaceComponents.Add(csc);
 
             InventoryDisplayComponent ivt = new InventoryDisplayComponent(50,50,GameState.LocalMap.Actors.Where(a => a.IsPlayerCharacter).FirstOrDefault());
-            ivt.Visible = true;
+            ivt.Visible = false;
             interfaceComponents.Add(ivt);
 
             TextLogComponent tlc = new TextLogComponent(10, GraphicsDevice.Viewport.Height - 150, GameState.NewLog);
@@ -239,6 +239,7 @@ namespace Divine_Right.GameScreens
             menuButtons.Add(new AutoSizeGameButton(" Attributes ", this.game.Content, InternalActionEnum.OPEN_ATTRIBUTES, new object[] { }, 150, GraphicsDevice.Viewport.Height -35));
             //menuButtons.Add(new AutoSizeGameButton(" Settlement ", this.game.Content, InternalActionEnum.TOGGLE_SETTLEMENT, new object[] { }, 270, GraphicsDevice.Viewport.Height - 35));
             menuButtons.Add(new AutoSizeGameButton(" Log ", this.game.Content, InternalActionEnum.OPEN_LOG, new object[] { }, 350, GraphicsDevice.Viewport.Height - 35));
+            menuButtons.Add(new AutoSizeGameButton(" Inventory ", this.game.Content, InternalActionEnum.OPEN_INVENTORY, new object[] { }, 425, GraphicsDevice.Viewport.Height - 35));
 
             //Invoke a size change
             Window_ClientSizeChanged(null, null);
@@ -602,6 +603,12 @@ namespace Divine_Right.GameScreens
                             //Toggle the log
                             var log = this.interfaceComponents.Where(ic => ic.GetType().Equals(typeof(TextLogComponent))).FirstOrDefault();
                             log.Visible = !log.Visible;
+                            break;
+
+                        case InternalActionEnum.OPEN_INVENTORY:
+                            //Toggle inventory
+                            var inv = this.interfaceComponents.Where(ic => ic.GetType().Equals(typeof(InventoryDisplayComponent))).FirstOrDefault();
+                            inv.Visible = !inv.Visible;
                             break;
 
                         case InternalActionEnum.LOSE:
