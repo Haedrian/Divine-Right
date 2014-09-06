@@ -68,6 +68,9 @@ namespace DivineRightGame.ItemFactory.ItemFactoryManagers
             item.MayContainItems = true;
             item.Name = name;
             item.Category = (InventoryCategory) Enum.Parse(typeof(InventoryCategory), category);
+            item.BaseValue = value;
+            item.ArmourRating = armourRating;
+            item.DamageRating = damageRating;
 
             return item;
         }

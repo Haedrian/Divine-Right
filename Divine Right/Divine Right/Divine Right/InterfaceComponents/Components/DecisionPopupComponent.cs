@@ -200,5 +200,11 @@ namespace Divine_Right.InterfaceComponents.Components
                 this.visible = value;
             }
         }
+
+
+        public void HandleMouseOver(int x, int y)
+        {
+          //TODO: ADD CONTEXTUAL INFORMATION
+        }
     }
 }

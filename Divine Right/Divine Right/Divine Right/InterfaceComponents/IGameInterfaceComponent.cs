@@ -37,6 +37,14 @@ namespace Divine_Right.InterfaceComponents
         /// <param name="destroy">Whether to destroy the component after we're done</param>
         /// <returns></returns>
         bool HandleClick(int x, int y, MouseActionEnum mouseAction, out ActionTypeEnum? actionType,out InternalActionEnum? internalActionType, out object[] args, out MapCoordinate coord, out bool destroy);
+
+        /// <summary>
+        /// Triggers when the mouse is over the component.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        void HandleMouseOver(int x, int y);
+
         /// <summary>
         /// Handle the keyboard being pressed
         /// Return true if it was handled, false if you want something else to handle it

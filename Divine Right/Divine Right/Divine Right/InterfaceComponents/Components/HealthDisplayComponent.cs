@@ -229,5 +229,11 @@ namespace Divine_Right.InterfaceComponents.Components
             stunnedRect = new Rectangle(locationX + 90, locationY + 5, 30, 30);
             bleedingRect = new Rectangle(locationX + 90, locationY + 45, 30, 30);
         }
+
+
+        public void HandleMouseOver(int x, int y)
+        {
+            return; //Do nothing
+        }
     }
 }

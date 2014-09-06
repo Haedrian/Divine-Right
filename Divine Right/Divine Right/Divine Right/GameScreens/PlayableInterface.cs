@@ -440,6 +440,17 @@ namespace Divine_Right.GameScreens
 
             //see if there is a component which will handle it instead
 
+            //Is the mouse over a particular component ?
+            foreach (var component in interfaceComponents.Where(ic => ic.Visible))
+            {
+                if (component.ReturnLocation().Contains(mouse.X, mouse.Y))
+                {
+                    //Mouse over trigger
+                    component.HandleMouseOver(mouse.X, mouse.Y);
+                }
+            }
+
+
             if (mouseAction != null)
             {
                 bool mouseHandled = false;

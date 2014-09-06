@@ -129,6 +129,7 @@
     <Compile Include="InterfaceComponents\Objects\Enums\MouseActionEnum.cs" />
     <Compile Include="InterfaceComponents\ISystemInterfaceComponent.cs" />
     <Compile Include="InterfaceComponents\Objects\DecisionPopupChoice.cs" />
+    <Compile Include="InterfaceComponents\Objects\InventoryItemRectangle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
   </ItemGroup>

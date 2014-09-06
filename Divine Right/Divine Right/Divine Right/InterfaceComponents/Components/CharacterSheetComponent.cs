@@ -164,5 +164,11 @@ namespace Divine_Right.InterfaceComponents.Components
             rect = new Rectangle(locationX, locationY, 210, 170);
             this.borderRect = new Rectangle(rect.X - 2, rect.Y - 2, rect.Width + 4, rect.Height + 4);
         }
+
+
+        public void HandleMouseOver(int x, int y)
+        {
+            //Do nothing
+        }
     }
 }

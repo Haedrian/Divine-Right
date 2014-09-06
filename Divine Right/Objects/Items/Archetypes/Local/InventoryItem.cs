@@ -28,7 +28,48 @@ namespace DRObjects.Items.Archetypes.Local
         /// </summary>
         public bool IsEquippable { get; set; }
 
+        /// <summary>
+        /// The base value of this item if it is sold
+        /// </summary>
+        public int BaseValue { get; set; }
+        
+        /// <summary>
+        /// How useful the device is as armour
+        /// </summary>
+        public int ArmourRating { get; set; }
+        /// <summary>
+        /// How much damage this item does
+        /// </summary>
+        public int DamageRating { get; set; }
+
         public InventoryCategory Category { get; set; }
+
+        public override string Description
+        {
+            get
+            {
+                string desc = base.Description;
+
+                //Add the value and armour/damage rating
+                desc += "\nBaseVal " + BaseValue;
+
+                if (ArmourRating > 0)
+                {
+                    desc += " Armr " + ArmourRating;
+                }
+                if (DamageRating > 0)
+                {
+                    desc += " Dmg " + DamageRating;
+                }
+
+                return desc;
+            }
+            set
+            {
+                base.Description = value;
+            }
+        }
+
 
         public override Enums.ActionTypeEnum[] GetPossibleActions(Actor actor)
         {

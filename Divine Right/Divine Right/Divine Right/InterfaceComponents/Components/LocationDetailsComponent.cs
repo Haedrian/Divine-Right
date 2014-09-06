@@ -13,7 +13,8 @@ using DRObjects.Settlements.Districts;
 
 namespace Divine_Right.InterfaceComponents.Components
 {
-    public class LocationDetailsComponent : IGameInterfaceComponent
+    public class LocationDetailsComponent : 
+        IGameInterfaceComponent
     {
         private Rectangle rect;
         private Rectangle bannerRect;
@@ -250,6 +251,12 @@ namespace Divine_Right.InterfaceComponents.Components
             {
                 this.visible = value;
             }
+        }
+
+
+        public void HandleMouseOver(int x, int y)
+        {
+            return; //Nothing
         }
     }
 }

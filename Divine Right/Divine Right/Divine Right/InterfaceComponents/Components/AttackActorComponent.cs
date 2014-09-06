@@ -462,5 +462,11 @@ namespace Divine_Right.InterfaceComponents.Components
             return currentColour;
 
         }
+
+
+        public void HandleMouseOver(int x, int y)
+        {
+            //Do nothing
+        }
     }
 }

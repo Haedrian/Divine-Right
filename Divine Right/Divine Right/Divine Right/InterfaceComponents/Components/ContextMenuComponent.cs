@@ -193,5 +193,11 @@ namespace Divine_Right.InterfaceComponents.Components
         {
             return; //Do nothing
         }
+
+
+        public void HandleMouseOver(int x, int y)
+        {
+            return; //Do nothing
+        }
     }
 }

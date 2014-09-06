@@ -8,6 +8,8 @@ using Divine_Right.HelperFunctions;
 using DRObjects.Graphics;
 using DivineRightGame.ItemFactory.Object;
 using DRObjects.Enums;
+using Microsoft.Xna.Framework.Graphics;
+using Divine_Right.InterfaceComponents.Objects;
 
 namespace Divine_Right.InterfaceComponents.Components
 {
@@ -33,9 +35,13 @@ namespace Divine_Right.InterfaceComponents.Components
         private List<Rectangle> categories;
         private List<Rectangle> categoryBackgrounds;
 
-        private List<Rectangle> row1Items;
-        private List<Rectangle> row2Items;
-        private List<Rectangle> row3Items;
+        private List<InventoryItemRectangle> row1Items;
+        private List<InventoryItemRectangle> row2Items;
+        private List<InventoryItemRectangle> row3Items;
+
+        private string detailsToShow = String.Empty;
+        private Rectangle detailsRect;
+        private SpriteFont font;
 
         //Drawing stuff
         public InventoryDisplayComponent(int locationX, int locationY, Actor currentActor)
@@ -98,6 +104,20 @@ namespace Divine_Right.InterfaceComponents.Components
             //Now draw the items
             var inventoryitems = this.CurrentActor.Inventory.GetObjectsByGroup(enums.GetValue(ChosenCategory)).ToArray();
 
+            //Clear all the items held in the boxes
+            foreach (var item in row1Items)
+            {
+                item.Item = null;
+            }
+            foreach (var item in row2Items)
+            {
+                item.Item = null;
+            }
+            foreach (var item in row3Items)
+            {
+                item.Item = null;
+            }
+
             for (int i = 0; i < inventoryitems.Count(); i++)
             {
                 int column = i % ROW_TOTAL;
@@ -105,17 +125,31 @@ namespace Divine_Right.InterfaceComponents.Components
 
                 if (row == 0)
                 {
-                    batch.Draw(content, inventoryitems[i].Graphic, row1Items[column], Color.White);
+                    //Also assign the item
+                    row1Items[column].Item = inventoryitems[i];
+                    batch.Draw(content, inventoryitems[i].Graphic, row1Items[column].Rect, Color.White);
                 }
                 else if (row == 1)
                 {
-                    batch.Draw(content, inventoryitems[i].Graphic, row2Items[column], Color.White);
+                    row2Items[column].Item = inventoryitems[i];
+                    batch.Draw(content, inventoryitems[i].Graphic, row2Items[column].Rect, Color.White);
                 }
                 else
                 {
-                    batch.Draw(content, inventoryitems[i].Graphic, row3Items[column], Color.White);
+                    row3Items[column].Item = inventoryitems[i];
+                    batch.Draw(content, inventoryitems[i].Graphic, row3Items[column].Rect, Color.White);
                 }
             }
+
+            //Draw any details 
+            if (font == null)
+            {
+                //Load the font
+                font = content.Load<SpriteFont>(@"Fonts/TextFeedbackFont");
+            }
+
+            batch.DrawString(font, detailsToShow, detailsRect, Alignment.Left, Color.Black);
+
         }
 
         public bool HandleClick(int x, int y, Objects.Enums.MouseActionEnum mouseAction, out DRObjects.Enums.ActionTypeEnum? actionType, out DRObjects.Enums.InternalActionEnum? internalActionType, out object[] args, out DRObjects.MapCoordinate coord, out bool destroy)
@@ -167,7 +201,7 @@ namespace Divine_Right.InterfaceComponents.Components
             locationX += deltaX;
             locationY += deltaY;
 
-            rect = new Rectangle(locationX, locationY, 360, 180);
+            rect = new Rectangle(locationX, locationY, 360, 190);
             borderRect = new Rectangle(locationX - 2, locationY - 2, rect.Width + 4, rect.Height + 4);
 
             categoryBackground = new Rectangle(locationX, locationY + 50, rect.Width, 5);
@@ -181,16 +215,18 @@ namespace Divine_Right.InterfaceComponents.Components
                 categories.Add(new Rectangle(locationX + (50 * i), locationY, 50, 50));
             }
 
-            row1Items = new List<Rectangle>();
-            row2Items = new List<Rectangle>();
-            row3Items = new List<Rectangle>();
+            row1Items = new List<InventoryItemRectangle>();
+            row2Items = new List<InventoryItemRectangle>();
+            row3Items = new List<InventoryItemRectangle>();
 
             for (int i = 0; i < ROW_TOTAL; i++)
             {
-                row1Items.Add(new Rectangle((locationX + (30 * i)), locationY +10 + 50, 30, 30));
-                row2Items.Add(new Rectangle((locationX + (30 * i)), locationY +10 + 80, 30, 30));
-                row3Items.Add(new Rectangle((locationX + (30 * i)), locationY +10 + 110, 30, 30));
+                row1Items.Add(new InventoryItemRectangle{ Rect = new Rectangle((locationX + (30 * i)), locationY +10 + 50, 30, 30) });
+                row2Items.Add(new InventoryItemRectangle { Rect = new Rectangle((locationX + (30 * i)), locationY +10 + 80, 30, 30)});
+                row3Items.Add(new InventoryItemRectangle { Rect = new Rectangle((locationX + (30 * i)), locationY + 10 + 110, 30, 30) });
             }
+
+            detailsRect = new Rectangle(locationX, locationY + 150, rect.Width, 50);
         }
 
         public bool IsModal()
@@ -208,6 +244,41 @@ namespace Divine_Right.InterfaceComponents.Components
             {
                 this.visible = value;
             }
+        }
+
+
+        public void HandleMouseOver(int x, int y)
+        {
+            //Clear it
+            detailsToShow = String.Empty;
+
+            List<InventoryItemRectangle> allItemBoxes = new List<InventoryItemRectangle>();
+            allItemBoxes.AddRange(row1Items);
+            allItemBoxes.AddRange(row2Items);
+            allItemBoxes.AddRange(row3Items);
+
+            foreach(InventoryItemRectangle rect in allItemBoxes)
+            {
+                if (rect.Rect.Contains(x, y))
+                {
+                  
+                    //Does it contain an item?
+                    if (rect.Item != null)
+                    {
+                        //Yes
+                        detailsToShow = rect.Item.Description;
+                    }
+                    else
+                    {
+                        //User is mousing over an empty box
+                        detailsToShow = String.Empty;
+                    }
+
+                    return;
+                }
+            }
+
+
         }
     }
 }
