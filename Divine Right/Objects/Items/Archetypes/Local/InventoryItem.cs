@@ -7,6 +7,7 @@ using DRObjects.GraphicsEngineObjects.Abstract;
 
 namespace DRObjects.Items.Archetypes.Local
 {
+    [Serializable]
     /// <summary>
     /// An item which can be picked up, or can be carried in the inventory
     /// </summary>

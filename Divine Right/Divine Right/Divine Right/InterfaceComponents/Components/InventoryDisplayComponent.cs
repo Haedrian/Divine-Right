@@ -145,7 +145,7 @@ namespace Divine_Right.InterfaceComponents.Components
             if (font == null)
             {
                 //Load the font
-                font = content.Load<SpriteFont>(@"Fonts/TextFeedbackFont");
+                font = content.Load<SpriteFont>(@"Fonts/LightText");
             }
 
             batch.DrawString(font, detailsToShow, detailsRect, Alignment.Left, Color.Black);
