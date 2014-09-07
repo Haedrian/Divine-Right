@@ -18,12 +18,13 @@ namespace DivineRightGame.Managers
     public static class UserInterfaceManager
     {
         /// <summary>
-        /// Performs an action on a particular block
+        /// Performs an action on a particular or a particular item.
+        /// If item is not null, will use the item. Otherwise will use the coordinate
         /// </summary>
         /// <param name="coordinate"></param>
         /// <param name="actionType"></param>
         /// <param name="args"></param>
-        public static ActionFeedback[] PerformAction(MapCoordinate coordinate, ActionTypeEnum actionType, object[] args)
+        public static ActionFeedback[] PerformAction(MapCoordinate coordinate,MapItem item, ActionTypeEnum actionType, object[] args)
         {
             List<ActionFeedback> feedback = new List<ActionFeedback>();
 
@@ -59,16 +60,24 @@ namespace DivineRightGame.Managers
             }
             else
             {
-                switch (coordinate.MapType)
+                if (item == null)
                 {
-                    case MapTypeEnum.LOCAL:
-                        feedback.AddRange(GameState.LocalMap.GetBlockAtCoordinate(coordinate).PerformAction(actionType, GameState.PlayerCharacter, args));
-                        break;
-                    case MapTypeEnum.GLOBAL:
-                        feedback.AddRange(GameState.GlobalMap.GetBlockAtCoordinate(coordinate).PerformAction(actionType, GameState.PlayerCharacter, args));
-                        break;
-                    default:
-                        throw new NotImplementedException("There is no support for that particular maptype");
+                    switch (coordinate.MapType)
+                    {
+                        case MapTypeEnum.LOCAL:
+                            feedback.AddRange(GameState.LocalMap.GetBlockAtCoordinate(coordinate).PerformAction(actionType, GameState.PlayerCharacter, args));
+                            break;
+                        case MapTypeEnum.GLOBAL:
+                            feedback.AddRange(GameState.GlobalMap.GetBlockAtCoordinate(coordinate).PerformAction(actionType, GameState.PlayerCharacter, args));
+                            break;
+                        default:
+                            throw new NotImplementedException("There is no support for that particular maptype");
+                    }
+                }
+                else
+                {
+                    //Perform it on the item
+                    feedback.AddRange(item.PerformAction(actionType, GameState.PlayerCharacter, args));
                 }
             }
 

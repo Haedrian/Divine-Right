@@ -47,10 +47,5 @@ namespace Divine_Right.InterfaceComponents.Objects
         }
 
         #endregion Properties
-
-        #region Constructor
-
-        
-        #endregion
     }
 }

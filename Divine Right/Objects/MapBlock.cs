@@ -93,6 +93,24 @@ namespace DRObjects
         }
 
         /// <summary>
+        /// Puts a local map item in the current block. Whether the tile lets it or not.
+        /// Will put it in second place (underneath the top item)
+        /// </summary>
+        /// <param name="item"></param>
+        public void PutItemUnderneathOnBlock(MapItem item)
+        {
+            item.Coordinate = new MapCoordinate(Tile.Coordinate);
+            if (this.mapItems.Count > 0)
+            {
+                this.mapItems.Insert(0, item);
+            }
+            else
+            {
+                this.mapItems.Add(item);
+            }
+        }
+
+        /// <summary>
         /// Removes the Nth item in the block
         /// </summary>
         /// <param name="index"></param>

@@ -34,9 +34,10 @@ namespace Divine_Right.InterfaceComponents
         /// <param name="internalActionType">The type of internal action to perform</param>
         /// <param name="args">The arguments of the action to perform</param>
         /// <param name="coord">The map coordinate to perform the actions on</param>
+        /// <param name="item">If this is not null, coordinates will be ignored and mapitem will instead handle the object</param>
         /// <param name="destroy">Whether to destroy the component after we're done</param>
         /// <returns></returns>
-        bool HandleClick(int x, int y, MouseActionEnum mouseAction, out ActionTypeEnum? actionType,out InternalActionEnum? internalActionType, out object[] args, out MapCoordinate coord, out bool destroy);
+        bool HandleClick(int x, int y, MouseActionEnum mouseAction, out ActionTypeEnum? actionType,out InternalActionEnum? internalActionType, out object[] args, out MapItem item, out MapCoordinate coord, out bool destroy);
 
         /// <summary>
         /// Triggers when the mouse is over the component.

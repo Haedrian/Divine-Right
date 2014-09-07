@@ -107,6 +107,7 @@
     <Compile Include="GraphicsEngineObjects\Abstract\PlayerFeedback.cs" />
     <Compile Include="GraphicsEngineObjects\CreateEventFeedback.cs" />
     <Compile Include="GraphicsEngineObjects\CurrentLogFeedback.cs" />
+    <Compile Include="GraphicsEngineObjects\DropItemFeedback.cs" />
     <Compile Include="GraphicsEngineObjects\GraphicalBlock.cs" />
     <Compile Include="GraphicsEngineObjects\InterfaceToggleFeedback.cs" />
     <Compile Include="GraphicsEngineObjects\LocationChangeFeedback.cs" />

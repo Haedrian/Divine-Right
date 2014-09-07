@@ -149,14 +149,17 @@ namespace Divine_Right.GameScreens
                 InventoryItemManager mgr = new InventoryItemManager();
 
                 //Create a bunch of inventory items yaay
-                for (int i=0; i < 25; i++)
+                for (int i=0; i < 5; i++)
                 {
-                    //var item = mgr.CreateItem(DatabaseHandling.GetItemIdFromTag(Archetype.INVENTORYITEMS,"loot")) as InventoryItem;
-                    //GameState.PlayerCharacter.Inventory.Add(item.Category, item);
-                    //item = mgr.CreateItem(DatabaseHandling.GetItemIdFromTag(Archetype.INVENTORYITEMS, "armour")) as InventoryItem;
-                    //GameState.PlayerCharacter.Inventory.Add(item.Category, item);
-                    //item = mgr.CreateItem(DatabaseHandling.GetItemIdFromTag(Archetype.INVENTORYITEMS, "weapon")) as InventoryItem;
-                    //GameState.PlayerCharacter.Inventory.Add(item.Category, item);
+                    var item = mgr.CreateItem(DatabaseHandling.GetItemIdFromTag(Archetype.INVENTORYITEMS, "loot")) as InventoryItem;
+                    item.InInventory = true;
+                    GameState.PlayerCharacter.Inventory.Add(item.Category, item);
+                    item = mgr.CreateItem(DatabaseHandling.GetItemIdFromTag(Archetype.INVENTORYITEMS, "armour")) as InventoryItem;
+                    item.InInventory = true;
+                    GameState.PlayerCharacter.Inventory.Add(item.Category, item);
+                    item = mgr.CreateItem(DatabaseHandling.GetItemIdFromTag(Archetype.INVENTORYITEMS, "weapon")) as InventoryItem;
+                    item.InInventory = true;
+                    GameState.PlayerCharacter.Inventory.Add(item.Category, item);
                 }
 
                 for (int i=0; i < 100; i++)
@@ -304,14 +307,6 @@ namespace Divine_Right.GameScreens
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 game.Exit();
 
-            ////Is the player dead?
-            //if (!GameState.PlayerCharacter.IsAlive)
-            //{
-            //    //:(
-            //    BaseGame.requestedInternalAction = InternalActionEnum.DIE;
-            //    BaseGame.requestedArgs = new object[0];
-            //}
-
             //Lets see if there are any keyboard keys being pressed
 
             KeyboardState keyboardState = Keyboard.GetState();
@@ -368,7 +363,7 @@ namespace Divine_Right.GameScreens
 
                 if (kAction != null)
                 {
-                    this.PerformAction(kTargetCoord, kAction.Value, kArgs);
+                    this.PerformAction(kTargetCoord,null, kAction.Value, kArgs);
                 }
 
                 //did we do anything?
@@ -404,7 +399,7 @@ namespace Divine_Right.GameScreens
                     if (keyboardState.IsKeyDown(Keys.OemPeriod))
                     {
                         //Just waste time
-                        this.PerformAction(null, ActionTypeEnum.IDLE, null);
+                        this.PerformAction(null,null, ActionTypeEnum.IDLE, null);
                     }
                     else if (keyboardState.IsKeyDown(Keys.Up))
                     {
@@ -430,7 +425,7 @@ namespace Divine_Right.GameScreens
                         coord += difference;
 
                         //send a move message to that coordinate
-                        this.PerformAction(coord, DRObjects.Enums.ActionTypeEnum.MOVE, null);
+                        this.PerformAction(coord,null, DRObjects.Enums.ActionTypeEnum.MOVE, null);
 
                     }
 
@@ -450,6 +445,7 @@ namespace Divine_Right.GameScreens
             ActionTypeEnum? action = null;
             object[] args = null;
             MapCoordinate targetCoord = null;
+            MapItem item = null;
 
             //see if there is a component which will handle it instead
 
@@ -512,7 +508,7 @@ namespace Divine_Right.GameScreens
                     //Force it to handle it
                     bool destroy = false;
 
-                    modalComponent.HandleClick(mouse.X, mouse.Y, mouseAction.Value, out action,out internalAction, out args, out targetCoord, out destroy);
+                    modalComponent.HandleClick(mouse.X, mouse.Y, mouseAction.Value, out action,out internalAction, out args, out item, out targetCoord, out destroy);
 
                     if (destroy)
                     {
@@ -561,7 +557,7 @@ namespace Divine_Right.GameScreens
                         }
 
                         //see if the component can handle it
-                        mouseHandled = interfaceComponent.HandleClick(mouse.X, mouse.Y, mouseAction.Value, out action,out internalAction, out args, out targetCoord, out destroy);
+                        mouseHandled = interfaceComponent.HandleClick(mouse.X, mouse.Y, mouseAction.Value, out action,out internalAction, out args,out item, out targetCoord, out destroy);
 
                         if (destroy)
                         {
@@ -581,7 +577,7 @@ namespace Divine_Right.GameScreens
                 //dispatch the action, if any
                 if (action.HasValue)
                 {
-                    this.PerformAction(targetCoord, action.Value, args);
+                    this.PerformAction(targetCoord, item, action.Value, args);
                 }
 
                 //Dispatch the internal action, if any
@@ -657,7 +653,7 @@ namespace Divine_Right.GameScreens
                     {
                         if (iBlock != null)
                         {
-                            this.PerformAction(iBlock.MapCoordinate, DRObjects.Enums.ActionTypeEnum.LOOK, null);
+                            this.PerformAction(iBlock.MapCoordinate,null, DRObjects.Enums.ActionTypeEnum.LOOK, null);
                         }
                     }
                     else if (mouseAction.Value == MouseActionEnum.RIGHT_CLICK)
@@ -884,7 +880,7 @@ namespace Divine_Right.GameScreens
         /// Performs the action and handles feedback
         /// </summary>
         /// <param name="?"></param>
-        public void PerformAction(MapCoordinate coord, DRObjects.Enums.ActionTypeEnum actionType, object[] args)
+        public void PerformAction(MapCoordinate coord, MapItem item, DRObjects.Enums.ActionTypeEnum actionType, object[] args)
         {
             //remove any viewtiletext components or contextmenu components
             for (int i = 0; i < interfaceComponents.Count; i++)
@@ -898,7 +894,7 @@ namespace Divine_Right.GameScreens
                 }
             }
 
-            ActionFeedback[] fb = UserInterfaceManager.PerformAction(coord, actionType, args);
+            ActionFeedback[] fb = UserInterfaceManager.PerformAction(coord,item, actionType, args);
 
             //go through all the feedback
 
@@ -1039,7 +1035,19 @@ namespace Divine_Right.GameScreens
 
                     }
                 }
-                //TODO: THE REST
+                else if (feedback.GetType().Equals(typeof(DropItemFeedback)))
+                {
+                    DropItemFeedback dif = feedback as DropItemFeedback;
+
+                    //Drop the item underneath the player
+                    GameState.LocalMap.GetBlockAtCoordinate(dif.ItemToDrop.Coordinate).PutItemUnderneathOnBlock(dif.ItemToDrop);
+
+                    //Remove from inventory
+                    dif.ItemToDrop.InInventory = false;
+
+                    GameState.PlayerCharacter.Inventory.Remove(dif.ItemToDrop.Category, dif.ItemToDrop);
+                }
+       
             }
 
             //Update the log control

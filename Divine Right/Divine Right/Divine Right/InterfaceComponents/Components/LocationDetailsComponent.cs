@@ -10,6 +10,7 @@ using DRObjects.Enums;
 using Microsoft.Xna.Framework.Graphics;
 using DivineRightGame.SettlementHandling;
 using DRObjects.Settlements.Districts;
+using DRObjects;
 
 namespace Divine_Right.InterfaceComponents.Components
 {
@@ -167,10 +168,10 @@ namespace Divine_Right.InterfaceComponents.Components
             
         }
 
-        public bool HandleClick(int x, int y, Objects.Enums.MouseActionEnum mouseAction, out DRObjects.Enums.ActionTypeEnum? actionType, out InternalActionEnum? internalActionType, out object[] args, out DRObjects.MapCoordinate coord, out bool destroy)
+        public bool HandleClick(int x, int y, Objects.Enums.MouseActionEnum mouseAction, out DRObjects.Enums.ActionTypeEnum? actionType, out InternalActionEnum? internalActionType, out object[] args, out MapItem item, out DRObjects.MapCoordinate coord, out bool destroy)
         {
             //This does nothing
-
+            item = null;
             args = null;
             coord = null;
             destroy = false;

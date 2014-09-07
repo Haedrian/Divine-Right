@@ -10,6 +10,8 @@ using DivineRightGame.ItemFactory.Object;
 using DRObjects.Enums;
 using Microsoft.Xna.Framework.Graphics;
 using Divine_Right.InterfaceComponents.Objects;
+using DRObjects.Items.Archetypes.Local;
+using Microsoft.Xna.Framework.Content;
 
 namespace Divine_Right.InterfaceComponents.Components
 {
@@ -43,6 +45,11 @@ namespace Divine_Right.InterfaceComponents.Components
         private Rectangle detailsRect;
         private SpriteFont font;
 
+        private InventoryItem selectedItem;
+        private Rectangle contextMenu;
+        private List<ContextMenuItem> contextMenuChoices = new List<ContextMenuItem>();
+        private ContentManager content;
+
         //Drawing stuff
         public InventoryDisplayComponent(int locationX, int locationY, Actor currentActor)
         {
@@ -61,6 +68,8 @@ namespace Divine_Right.InterfaceComponents.Components
             {
                 return;
             }
+
+            this.content = content;
 
             batch.Draw(content, SpriteManager.GetSprite(ColourSpriteName.WHITE), borderRect, Color.DarkGray);
 
@@ -150,10 +159,50 @@ namespace Divine_Right.InterfaceComponents.Components
 
             batch.DrawString(font, detailsToShow, detailsRect, Alignment.Left, Color.Black);
 
+            if (this.contextMenu.Width > 0)
+            {
+                //Draw the context menu if present
+                SpriteData scroll = SpriteManager.GetSprite(InterfaceSpriteName.SCROLL);
+
+                Rectangle drawHere = new Rectangle(this.contextMenu.X - 10, this.contextMenu.Y - 25, this.contextMenu.Width + 20, this.contextMenu.Height + 40);
+
+                batch.Draw(content.Load<Texture2D>(scroll.path), drawHere, scroll.sourceRectangle, Color.White);
+
+                //now the items
+                foreach (ContextMenuItem item in contextMenuChoices)
+                {
+                    batch.DrawString(content.Load<SpriteFont>(@"Fonts/TextFeedbackFont"), item.Text, new Vector2(item.Rect.X, item.Rect.Y), Color.Black);
+                }
+            }
         }
 
-        public bool HandleClick(int x, int y, Objects.Enums.MouseActionEnum mouseAction, out DRObjects.Enums.ActionTypeEnum? actionType, out DRObjects.Enums.InternalActionEnum? internalActionType, out object[] args, out DRObjects.MapCoordinate coord, out bool destroy)
+        public bool HandleClick(int x, int y, Objects.Enums.MouseActionEnum mouseAction, out DRObjects.Enums.ActionTypeEnum? actionType, out DRObjects.Enums.InternalActionEnum? internalActionType, out object[] args, out MapItem itm, out DRObjects.MapCoordinate coord, out bool destroy)
         {
+            actionType = null;
+            internalActionType = null;
+            args = null;
+            coord = null;
+            destroy = false;
+            itm = null;
+
+            //Clicked on a context menu item?
+            foreach (var contextMenu in contextMenuChoices)
+            {
+                if (contextMenu.Rect.Contains(x, y))
+                {
+                    //Yes. Perform the action
+                    //this.selectedItem.PerformAction(contextMenu.Action, this.CurrentActor, contextMenu.Args);
+                    actionType = contextMenu.Action;
+                    args = contextMenu.Args;
+                    itm = selectedItem;
+                }
+            }
+
+            //remove the contextual menu
+            this.contextMenu = new Rectangle(0, 0, 0, 0);
+            contextMenuChoices = new List<ContextMenuItem>();
+            selectedItem = null;
+
             for (int i=0; i < categories.Count; i++)
             {
                 if (categories[i].Contains(x, y))
@@ -161,22 +210,53 @@ namespace Divine_Right.InterfaceComponents.Components
                     //Change category!
                     this.ChosenCategory = i;
 
-                    //Handled. Naught else
-                    actionType = null;
-                    internalActionType = null;
-                    args = null;
-                    coord = null;
-                    destroy = false;
+                    //remove the contextual menu
+                    contextMenu = new Rectangle(0, 0, 0, 0);
+                    contextMenuChoices = new List<ContextMenuItem>();
+                    selectedItem = null;
 
+                    //Handled. Naught else
                     return true;
                 }
             }
 
-            actionType = null;
-            internalActionType = null;
-            args = null;
-            coord = null;
-            destroy = false;
+            //Have we clicked on an item ?
+            List<InventoryItemRectangle> allItemBoxes = new List<InventoryItemRectangle>();
+            allItemBoxes.AddRange(row1Items);
+            allItemBoxes.AddRange(row2Items);
+            allItemBoxes.AddRange(row3Items);
+
+            foreach (InventoryItemRectangle rect in allItemBoxes)
+            {
+                if (rect.Rect.Contains(x, y))
+                {
+                    //remove the contextual menu
+                    contextMenu = new Rectangle(0, 0, 0, 0);
+                    contextMenuChoices = new List<ContextMenuItem>();
+                    selectedItem = null;
+
+                    //Does it contain an item?
+                    if (rect.Item != null)
+                    {
+                        //Yes - open contextual menu
+                        contextMenu = new Rectangle(x, y, 0, 0);
+                        selectedItem = rect.Item;
+
+                        foreach (var action in rect.Item.GetPossibleActions(this.CurrentActor))
+                        {
+                            AddContextMenuItem(action, new object[0] { }, content);
+                        }
+
+                        //done
+                        return true;
+                    }
+                    else
+                    {
+                        return true; //Empty box
+                    }
+
+                }
+            }
 
             return true;
         }
@@ -280,5 +360,54 @@ namespace Divine_Right.InterfaceComponents.Components
 
 
         }
+
+        #region Helper Functions
+        public void AddContextMenuItem(ActionTypeEnum action, object[] args, ContentManager content)
+        {
+            ContextMenuItem item = new ContextMenuItem();
+            item.Action = action;
+            item.Args = args;
+
+            Rectangle itemRect = new Rectangle();
+
+            //where will this rectangle start?
+            if (contextMenuChoices.Count == 0)
+            {
+                itemRect.X = contextMenu.X;
+                itemRect.Y = contextMenu.Y;
+
+            }
+            else
+            {
+                ContextMenuItem prev = this.contextMenuChoices[contextMenuChoices.Count - 1];
+                //below the previous one
+                itemRect.X = prev.Rect.X;
+                itemRect.Y = prev.Rect.Y + prev.Rect.Height;
+            }
+
+            //determine the size of the text
+            Vector2 fontVector = content.Load<SpriteFont>(@"Fonts/TextFeedbackFont").MeasureString(item.Text);
+
+            itemRect.Width = (int)fontVector.X;
+            itemRect.Height = (int)fontVector.Y;
+
+            //assign the rectangle
+            item.Rect = itemRect;
+
+            //add to the list
+            contextMenuChoices.Add(item);
+
+            //update the draw rectangle
+
+            if (contextMenu.Width < itemRect.Width)
+            {
+                contextMenu.Width = itemRect.Width;
+            }
+
+            //update the height
+            contextMenu.Height += itemRect.Height;
+
+        }
+        #endregion
     }
 }

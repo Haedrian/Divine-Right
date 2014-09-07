@@ -125,8 +125,9 @@ namespace Divine_Right.InterfaceComponents.Components
             }
         }
 
-        public bool HandleClick(int x, int y, MouseActionEnum mouseAction, out ActionTypeEnum? actionType, out InternalActionEnum? internalActionType, out object[] args, out MapCoordinate coord, out bool destroy)
+        public bool HandleClick(int x, int y, MouseActionEnum mouseAction, out ActionTypeEnum? actionType, out InternalActionEnum? internalActionType, out object[] args, out MapItem itm, out MapCoordinate coord, out bool destroy)
         {
+            itm = null;
             internalActionType = null;
 
             //We only handle left clicks properly

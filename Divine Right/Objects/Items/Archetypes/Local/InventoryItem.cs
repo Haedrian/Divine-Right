@@ -88,6 +88,7 @@ namespace DRObjects.Items.Archetypes.Local
 
             if (InInventory)
             {
+                actions = new List<ActionTypeEnum>(); //Clear them
                 if (IsEquippable)
                 {
                     actions.Add(ActionTypeEnum.EQUIP);
@@ -127,10 +128,11 @@ namespace DRObjects.Items.Archetypes.Local
             }
             else if (actionType == ActionTypeEnum.DROP)
             {
-                //TODO: DROPPING
-                //drop it
-             //   this.Coordinate = actor.MapCharacter.Coordinate;
-                
+                //Drop it.
+                //Since we can't access GameState from out here, we'll need to use an ActionFeedback
+                this.Coordinate = actor.MapCharacter.Coordinate;
+                this.InInventory = false;
+                return new ActionFeedback[1] { new DropItemFeedback() { ItemToDrop = this } };
             }
             else
             {
