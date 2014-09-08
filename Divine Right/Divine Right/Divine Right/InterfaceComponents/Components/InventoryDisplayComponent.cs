@@ -30,6 +30,11 @@ namespace Divine_Right.InterfaceComponents.Components
         public Actor CurrentActor { get; set; }
 
         private Rectangle rect;
+        private Rectangle inventoryBackgroundRect;
+        private Rectangle equippedBackgroundRect;
+
+        private List<EquippedItemRectangle> equipmentRectangles;
+
         private Rectangle borderRect;
 
         private Rectangle categoryBackground;
@@ -73,7 +78,7 @@ namespace Divine_Right.InterfaceComponents.Components
 
             batch.Draw(content, SpriteManager.GetSprite(ColourSpriteName.WHITE), borderRect, Color.DarkGray);
 
-            batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.PAPER_TEXTURE), rect, Color.White);
+            batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.PAPER_TEXTURE), inventoryBackgroundRect, Color.White);
 
             for (int i = 0; i < enums.Length; i++)
             {
@@ -158,6 +163,50 @@ namespace Divine_Right.InterfaceComponents.Components
             }
 
             batch.DrawString(font, detailsToShow, detailsRect, Alignment.Left, Color.Black);
+
+            //Draw the equipped items
+            batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.WOOD_TEXTURE), equippedBackgroundRect, Color.White);
+
+            //Loop through them
+            foreach (var equippedItem in equipmentRectangles)
+            {
+                //Put a coloured box around them
+                batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.PAPER_TEXTURE), equippedItem.Rect, Color.White);
+
+                SpriteData backgroundItem = null;
+
+                //Draw the background item
+                switch(equippedItem.Location)
+                {
+                    case EquipmentLocation.BODY: backgroundItem = SpriteManager.GetSprite(LocalSpriteName.CHAIN_ARMOUR); break;
+                    case EquipmentLocation.HEAD: backgroundItem = SpriteManager.GetSprite(LocalSpriteName.HELM_1); break;
+                    case EquipmentLocation.MONEY: backgroundItem = SpriteManager.GetSprite(LocalSpriteName.COINS); break;
+                    case EquipmentLocation.NECK: backgroundItem = SpriteManager.GetSprite(LocalSpriteName.GREY_GEM_PENDANT); break;
+                    case EquipmentLocation.RING1: backgroundItem = SpriteManager.GetSprite(LocalSpriteName.GREY_GEM_RING); break;
+                    case EquipmentLocation.RING2: backgroundItem = SpriteManager.GetSprite(LocalSpriteName.GREY_GEM_RING); break;
+                    case EquipmentLocation.SHIELD: backgroundItem = SpriteManager.GetSprite(LocalSpriteName.SHIELD_8); break;
+                    case EquipmentLocation.WEAPON: backgroundItem = SpriteManager.GetSprite(LocalSpriteName.SWORD_1); break;
+                    default: throw new NotImplementedException("No background for " + equippedItem.Location);
+                }
+
+                //If there's an item, draw it
+                if (equippedItem.InventoryItem != null)
+                {
+                    batch.Draw(content, equippedItem.InventoryItem.Graphic, equippedItem.Rect, Color.White);
+                }
+                else
+                { //otherwise draw the background
+                    batch.Draw(content, backgroundItem, equippedItem.Rect, equippedItem.Location == EquipmentLocation.MONEY ? Color.White: Color.Black);
+                }
+
+                if (equippedItem.Location == EquipmentLocation.MONEY)
+                {
+                    //If it's money, put in the total. For now just put in 100
+                    batch.DrawString(font, "10000", equippedItem.Rect, Alignment.Bottom, Color.Black);
+                
+                }
+            }
+
 
             if (this.contextMenu.Width > 0)
             {
@@ -281,7 +330,8 @@ namespace Divine_Right.InterfaceComponents.Components
             locationX += deltaX;
             locationY += deltaY;
 
-            rect = new Rectangle(locationX, locationY, 360, 190);
+            rect = new Rectangle(locationX, locationY, 450, 190);
+            inventoryBackgroundRect = new Rectangle(locationX, locationY, 360, 190);
             borderRect = new Rectangle(locationX - 2, locationY - 2, rect.Width + 4, rect.Height + 4);
 
             categoryBackground = new Rectangle(locationX, locationY + 50, rect.Width, 5);
@@ -307,6 +357,20 @@ namespace Divine_Right.InterfaceComponents.Components
             }
 
             detailsRect = new Rectangle(locationX, locationY + 150, rect.Width, 50);
+
+            equippedBackgroundRect = new Rectangle(locationX + 360, locationY + 0, rect.Width - inventoryBackgroundRect.Width, rect.Height);
+
+            equipmentRectangles = new List<EquippedItemRectangle>();
+            equipmentRectangles.Add(new EquippedItemRectangle { Location = EquipmentLocation.HEAD, Rect = new Rectangle(locationX + 365, locationY + 0 + 9, 40, 40) });
+            equipmentRectangles.Add(new EquippedItemRectangle { Location = EquipmentLocation.BODY, Rect = new Rectangle(locationX + 365, locationY + 45 + 9, 40, 40) });
+            equipmentRectangles.Add(new EquippedItemRectangle { Location = EquipmentLocation.WEAPON, Rect = new Rectangle(locationX + 365, locationY + 90 + 9, 40, 40) });
+            equipmentRectangles.Add(new EquippedItemRectangle { Location = EquipmentLocation.SHIELD, Rect = new Rectangle(locationX + 365, locationY + 135 + 9, 40, 40) });
+
+            equipmentRectangles.Add(new EquippedItemRectangle { Location = EquipmentLocation.NECK, Rect = new Rectangle(locationX + 410, locationY + 0 + 9, 40, 40) });
+            equipmentRectangles.Add(new EquippedItemRectangle { Location = EquipmentLocation.RING1, Rect = new Rectangle(locationX + 410, locationY + 45 + 9, 40, 40) });
+            equipmentRectangles.Add(new EquippedItemRectangle { Location = EquipmentLocation.RING2, Rect = new Rectangle(locationX + 410, locationY + 90 + 9, 40, 40) });
+            equipmentRectangles.Add(new EquippedItemRectangle { Location = EquipmentLocation.MONEY, Rect = new Rectangle(locationX + 410, locationY + 135 + 9, 40, 40) });
+
         }
 
         public bool IsModal()

@@ -714,6 +714,8 @@ namespace Divine_Right.GameScreens
 
             this.DrawGrid(iBlocks);
 
+           // nighttime spriteBatch.Draw(this.game.Content, SpriteManager.GetSprite(ColourSpriteName.MARBLEBLUE), new Rectangle(0, 0, 10000, 10000), new Color(0, 0, 0, 150));
+
             foreach (AutoSizeGameButton button in menuButtons)
             {
                 button.Draw(this.game.Content, this.spriteBatch);
@@ -723,7 +725,6 @@ namespace Divine_Right.GameScreens
             {
                 interfaceComponent.Draw(this.game.Content, this.spriteBatch);
             }
-
 
             spriteBatch.End();
 
