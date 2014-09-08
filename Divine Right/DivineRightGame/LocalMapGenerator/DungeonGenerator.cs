@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework;
 using DRObjects.ActorHandling;
 using DivineRightGame.ActorHandling;
 using DRObjects.Items.Archetypes.Local;
+using DivineRightGame.ItemFactory.ItemFactoryManagers;
 
 namespace DivineRightGame.LocalMapGenerator
 {
@@ -23,8 +24,13 @@ namespace DivineRightGame.LocalMapGenerator
         //private const int PROB_4 = 30;
 
         private const int PROB_2 = 95;
-        private const int PROB_3 = 96;
-        private const int PROB_4 = 96;
+        private const int PROB_3 = 85;
+        private const int PROB_4 = 75;
+
+        /// <summary>
+        /// How much loot (multiplied per tier) to generate
+        /// </summary>
+        private const int LOOT_MULTIPLIER = 100;
 
         /// <summary>
         /// Generates a dungeon having a particular amount of tiers, trap rooms, guard rooms and treasure rooms
@@ -258,6 +264,13 @@ namespace DivineRightGame.LocalMapGenerator
                 Actor[] dummyAct = null;
 
                 gennedMap = gen.GenerateMap(25, null, maplet, true,"",out dummyAct);
+
+                //Is it a treasure room?
+                if (room.DungeonRoomType == DungeonRoomType.TREASURE_ROOM)
+                {
+                    //Generate some loot
+                    GenerateLoot(gennedMap, room.TierNumber);
+                }
 
                 PointOfInterest mapletInterest = null;
 
@@ -671,6 +684,36 @@ namespace DivineRightGame.LocalMapGenerator
 
         }
 
+        /// <summary>
+        /// Generates loot for treasure rooms. We will have LOOT_MULTIPLIER of loot multiplied by tierNumber
+        /// </summary>
+        public void GenerateLoot(MapBlock[,] blocks, int tierNumber)
+        {
+            //Determine the maximum total value we want to generate
+            int totalValue = tierNumber * LOOT_MULTIPLIER;
+
+            InventoryItemManager mgr = new InventoryItemManager();
+            var items = mgr.GetItemsWithAMaxValue(null, totalValue);
+
+            //Put the items on the map
+            foreach (var item in items)
+            {
+                //Find a random point. Try 50 times
+                for (int attempts = 0; attempts < 50; attempts++)
+                {
+                    var chosenBlock = blocks[GameState.Random.Next(blocks.GetLength(0)), GameState.Random.Next(blocks.GetLength(1))];
+
+                    if (chosenBlock.MayContainItems)
+                    {
+                        //Put it in
+                        chosenBlock.ForcePutItemOnBlock(item);
+                        break;
+                    }
+                }
+            }
+
+        }
+
         private DungeonRoom[] GetPathableRooms(List<DungeonRoom> sourceList, int tier, int square)
         {
             return sourceList.Where
@@ -680,5 +723,7 @@ namespace DivineRightGame.LocalMapGenerator
                 
                     || (sl.TierNumber.Equals(tier) && (sl.SquareNumber.Equals(square+1) || sl.SquareNumber.Equals(square-1 ) ))).ToArray();
         }
+
+
     }
 }

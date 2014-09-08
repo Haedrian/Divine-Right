@@ -5,6 +5,7 @@ using System.Text;
 
 namespace DRObjects.DataStructures
 {
+    [Serializable]
     /// <summary>
     /// A List of components grouped together by a particular type
     /// </summary>

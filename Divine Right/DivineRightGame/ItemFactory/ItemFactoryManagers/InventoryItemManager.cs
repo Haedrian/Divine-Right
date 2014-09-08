@@ -36,6 +36,57 @@ namespace DivineRightGame.ItemFactory.ItemFactoryManagers
             return CreateItem(parameters);
         }
 
+        /// <summary>
+        /// Creates an item with an optional category costing between a minimum and maximum price
+        /// </summary>
+        /// <param name="category"></param>
+        /// <param name="minimum"></param>
+        /// <param name="maximum"></param>
+        /// <returns></returns>
+        public InventoryItem GetItemWithinPriceRange(string category,int minimum, int maximum)
+        {
+            //Get the entire database
+            var database = DatabaseHandling.GetDatabase(Archetype.INVENTORYITEMS);
+
+            var chosenValue = database.Where(d => category == null || category.Equals(d.Value[10]) && Int32.Parse(d.Value[4]) >= minimum && Int32.Parse(d.Value[4]) <= maximum).OrderBy(d => GameState.Random.Next(1000)).Select(d => d.Key).FirstOrDefault();
+
+            if (chosenValue == 0)
+            {
+                return null;
+            }
+
+            //Otherwise create the item
+            return CreateItem(chosenValue) as InventoryItem;
+        }
+
+        /// <summary>
+        /// Creates a number of items having a total maximum value (or as close as possible to) the assigned value.
+        /// </summary>
+        /// <param name="category"></param>
+        /// <param name="maximum"></param>
+        /// <returns></returns>
+        public List<MapItem> GetItemsWithAMaxValue(string category, int maximum)
+        {
+            int value = 0;
+            List<MapItem> items = new List<MapItem>();
+
+            while (value < maximum)
+            {
+                InventoryItem newItem = GetItemWithinPriceRange(category, 0, maximum - value);
+
+                if (newItem == null)
+                {
+                    //No more items
+                    break;
+                }
+
+                items.Add(newItem);
+                value += newItem.BaseValue; 
+            }
+
+            return items;
+        }
+
         public MapItem CreateItem(int itemID,string name,string description, string graphic, int value  
             ,bool equippable,int armourRating, int damageRating, string damageType,string category)
         {
