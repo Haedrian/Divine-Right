@@ -72,7 +72,7 @@ namespace Divine_Right.GameScreens
 
             //add the buttons
 
-            components.Add(new AutoSizeButton("Generate Test Local Map", game.Content, InternalActionEnum.LOAD, new object[1] { "Village" }, (GraphicsDevice.Viewport.Width / 2), 200));
+            components.Add(new AutoSizeButton("Generate Test Local Map", game.Content, InternalActionEnum.LOAD, new object[1] { "Village" }, (GraphicsDevice.Viewport.Width / 2), 400));
 
             /* These are the old buttons
             components.Add(new AutoSizeButton("Generate Test World", game.Content, DRObjects.Enums.InternalActionEnum.GENERATE, new object[0], (GraphicsDevice.Viewport.Width / 2), 150));

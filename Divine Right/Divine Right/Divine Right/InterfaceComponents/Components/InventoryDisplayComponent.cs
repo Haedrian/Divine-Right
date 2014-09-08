@@ -239,7 +239,7 @@ namespace Divine_Right.InterfaceComponents.Components
                     if (rect.Item != null)
                     {
                         //Yes - open contextual menu
-                        contextMenu = new Rectangle(x, y, 0, 0);
+                        contextMenu = new Rectangle(x+15, y+15, 0, 0);
                         selectedItem = rect.Item;
 
                         foreach (var action in rect.Item.GetPossibleActions(this.CurrentActor))
