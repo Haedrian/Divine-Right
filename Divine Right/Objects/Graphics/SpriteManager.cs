@@ -616,6 +616,11 @@ namespace DRObjects.Graphics
             AddLocalSprite(LocalSpriteName.HELM_7, INVENTORYITEMS, 6, 5);
             AddLocalSprite(LocalSpriteName.HELM_8, INVENTORYITEMS, 7, 5);
 
+            AddLocalSprite(LocalSpriteName.PADDED_LEGGINGS, INVENTORYITEMS, 1, 4);
+            AddLocalSprite(LocalSpriteName.LEATHER_LEGGINGS,INVENTORYITEMS,2,4);
+            AddLocalSprite(LocalSpriteName.CHAIN_LEGGINGS, INVENTORYITEMS, 3, 4);
+            AddLocalSprite(LocalSpriteName.PLATE_LEGGINGS, INVENTORYITEMS, 4, 4);
+
             AddLocalSprite(LocalSpriteName.SHIELD_1, INVENTORYITEMS, 0, 6);
             AddLocalSprite(LocalSpriteName.SHIELD_2, INVENTORYITEMS, 1, 6);
             AddLocalSprite(LocalSpriteName.SHIELD_3, INVENTORYITEMS, 2, 6);

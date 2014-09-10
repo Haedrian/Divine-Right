@@ -513,6 +513,10 @@ namespace DRObjects.Graphics
         AXE_6,
         AXE_7,
         AXE_8,
+        PLATE_LEGGINGS,
+        CHAIN_LEGGINGS,
+        LEATHER_LEGGINGS,
+        PADDED_LEGGINGS,
 
     }
 }

@@ -73,6 +73,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActorHandling\ActorInventory.cs" />
     <Compile Include="ActorHandling\ActorMissions\WaitMission.cs" />
     <Compile Include="ActorHandling\ActorStance.cs" />
     <Compile Include="ActorHandling\CharacterSheet\ActorAttributes.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="ActorHandling\CharacterSheet\Enums\ActorProfession.cs" />
     <Compile Include="ActorHandling\CharacterSheet\Enums\AnatomyEnum.cs" />
     <Compile Include="ActorHandling\EnemyData.cs" />
+    <Compile Include="ActorHandling\EquippedItem.cs" />
     <Compile Include="ActorHandling\RaceData.cs" />
     <Compile Include="Compare\MapCoordinateCompare.cs" />
     <Compile Include="Database\DatabaseHandling.cs" />

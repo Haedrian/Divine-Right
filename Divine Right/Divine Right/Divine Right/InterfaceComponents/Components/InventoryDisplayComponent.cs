@@ -119,7 +119,7 @@ namespace Divine_Right.InterfaceComponents.Components
             }
 
             //Now draw the items
-            var inventoryitems = this.CurrentActor.Inventory.GetObjectsByGroup(enums.GetValue(ChosenCategory)).ToArray();
+            var inventoryitems = this.CurrentActor.Inventory.Inventory.GetObjectsByGroup(enums.GetValue(ChosenCategory)).Where(i => !i.IsEquipped).ToArray();
 
             //Clear all the items held in the boxes
             foreach (var item in row1Items)
@@ -184,7 +184,7 @@ namespace Divine_Right.InterfaceComponents.Components
                     case EquipmentLocation.BODY: backgroundItem = SpriteManager.GetSprite(LocalSpriteName.CHAIN_ARMOUR); break;
                     case EquipmentLocation.HEAD: backgroundItem = SpriteManager.GetSprite(LocalSpriteName.HELM_1); break;
                     case EquipmentLocation.MONEY: backgroundItem = SpriteManager.GetSprite(LocalSpriteName.COINS); break;
-                    case EquipmentLocation.NECK: backgroundItem = SpriteManager.GetSprite(LocalSpriteName.GREY_GEM_PENDANT); break;
+                    case EquipmentLocation.LEGS: backgroundItem = SpriteManager.GetSprite(LocalSpriteName.PLATE_LEGGINGS); break;
                     case EquipmentLocation.RING1: backgroundItem = SpriteManager.GetSprite(LocalSpriteName.GREY_GEM_RING); break;
                     case EquipmentLocation.RING2: backgroundItem = SpriteManager.GetSprite(LocalSpriteName.GREY_GEM_RING); break;
                     case EquipmentLocation.SHIELD: backgroundItem = SpriteManager.GetSprite(LocalSpriteName.SHIELD_8); break;
@@ -370,10 +370,10 @@ namespace Divine_Right.InterfaceComponents.Components
             int right = locationX + 455;
 
             equipmentRectangles.Add(new EquippedItemRectangle { Location = EquipmentLocation.HEAD, Rect = new Rectangle(middle, locationY + 0, 40, 40) });
-          //  equipmentRectangles.Add(new EquippedItemRectangle { Location = EquipmentLocation.NECK, Rect = new Rectangle(middle, locationY + 45, 40, 40) });
             equipmentRectangles.Add(new EquippedItemRectangle { Location = EquipmentLocation.BODY, Rect = new Rectangle(middle, locationY + 45, 40, 40) });
             equipmentRectangles.Add(new EquippedItemRectangle { Location = EquipmentLocation.WEAPON, Rect = new Rectangle(left, locationY + 45, 40, 40) });
-            equipmentRectangles.Add(new EquippedItemRectangle { Location = EquipmentLocation.SHIELD, Rect = new Rectangle(right, locationY + 45, 40, 40) });           
+            equipmentRectangles.Add(new EquippedItemRectangle { Location = EquipmentLocation.SHIELD, Rect = new Rectangle(right, locationY + 45, 40, 40) });
+            equipmentRectangles.Add(new EquippedItemRectangle { Location = EquipmentLocation.LEGS, Rect = new Rectangle(middle, locationY + 90, 40, 40) });
             equipmentRectangles.Add(new EquippedItemRectangle { Location = EquipmentLocation.RING1, Rect = new Rectangle(left, locationY + 90, 40, 40) });
             equipmentRectangles.Add(new EquippedItemRectangle { Location = EquipmentLocation.RING2, Rect = new Rectangle(right, locationY + 90, 40, 40) });
 

@@ -17,10 +17,7 @@ namespace DRObjects
     /// </summary>
     public class Actor
     {
-        /// <summary>
-        /// The List of items that this actor is holding
-        /// </summary>
-        public GroupedList<InventoryItem> Inventory { get; set; }
+        public ActorInventory Inventory { get; set; }
         /// <summary>
         /// If its an enemy, holds some auxillary data
         /// </summary>
@@ -123,7 +120,7 @@ namespace DRObjects
             this.MissionStack = new Stack<ActorMission>();
             this.CombatStance = ActorStance.NEUTRAL;
             this.IsAlive = true;
-            this.Inventory = new GroupedList<InventoryItem>();
+            this.Inventory = new ActorInventory();
         }
 
     }

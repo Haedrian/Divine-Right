@@ -117,7 +117,7 @@ namespace DRObjects.Items.Archetypes.Local
                     {
                         //take it
                         this.Coordinate = new MapCoordinate(999, 999, 0, MapTypeEnum.CONTAINER); //Dummy - this will cause the block to reject and delete it
-                        actor.Inventory.Add(this.Category,this);
+                        actor.Inventory.Inventory.Add(this.Category,this);
                         this.InInventory = true;
 
                         return new ActionFeedback[1] { new CurrentLogFeedback(InterfaceSpriteName.MAN,Color.Black,"You pick up the " + this.Name) };
