@@ -153,13 +153,13 @@ namespace Divine_Right.GameScreens
                 {
                     var item = mgr.CreateItem(DatabaseHandling.GetItemIdFromTag(Archetype.INVENTORYITEMS, "loot")) as InventoryItem;
                     item.InInventory = true;
-                    GameState.PlayerCharacter.Inventory.Add(item.Category, item);
+                    GameState.PlayerCharacter.Inventory.Inventory.Add(item.Category, item);
                     item = mgr.CreateItem(DatabaseHandling.GetItemIdFromTag(Archetype.INVENTORYITEMS, "armour")) as InventoryItem;
                     item.InInventory = true;
-                    GameState.PlayerCharacter.Inventory.Add(item.Category, item);
+                    GameState.PlayerCharacter.Inventory.Inventory.Add(item.Category, item);
                     item = mgr.CreateItem(DatabaseHandling.GetItemIdFromTag(Archetype.INVENTORYITEMS, "weapon")) as InventoryItem;
                     item.InInventory = true;
-                    GameState.PlayerCharacter.Inventory.Add(item.Category, item);
+                    GameState.PlayerCharacter.Inventory.Inventory.Add(item.Category, item);
                 }
 
                 for (int i=0; i < 100; i++)
@@ -1046,7 +1046,7 @@ namespace Divine_Right.GameScreens
                     //Remove from inventory
                     dif.ItemToDrop.InInventory = false;
 
-                    GameState.PlayerCharacter.Inventory.Remove(dif.ItemToDrop.Category, dif.ItemToDrop);
+                    GameState.PlayerCharacter.Inventory.Inventory.Remove(dif.ItemToDrop.Category, dif.ItemToDrop);
                 }
        
             }
