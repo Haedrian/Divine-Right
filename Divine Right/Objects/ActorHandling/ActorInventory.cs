@@ -24,13 +24,13 @@ namespace DRObjects.ActorHandling
         /// </summary>
         public int TotalMoney { get; set; }
 
-        public Dictionary<EquipmentLocation,EquippedItem> EquippedItems { get; set; }
+        public Dictionary<EquipmentLocation,InventoryItem> EquippedItems { get; set; }
 
         public ActorInventory()
         {
             Inventory = new GroupedList<InventoryItem>();
             TotalMoney = 0;
-            EquippedItems = new Dictionary<EquipmentLocation, EquippedItem>();
+            EquippedItems = new Dictionary<EquipmentLocation, InventoryItem>();
         }
 
     }

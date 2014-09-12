@@ -114,7 +114,7 @@ namespace DRObjects.Items.Archetypes.Local
 
         public override GraphicsEngineObjects.Abstract.ActionFeedback[] PerformAction(ActionTypeEnum actionType, Actor actor, object[] args)
         {
-            if (actionType == ActionTypeEnum.EQUIP || actionType == ActionTypeEnum.TAKE)
+            if (actionType == ActionTypeEnum.TAKE)
             {
                 if (Math.Abs(actor.MapCharacter.Coordinate - this.Coordinate) < 2)
                 {
@@ -128,7 +128,6 @@ namespace DRObjects.Items.Archetypes.Local
                         return new ActionFeedback[1] { new CurrentLogFeedback(InterfaceSpriteName.MAN,Color.Black,"You pick up the " + this.Name) };
                         
                     }
-                    //TODO: EQUIP 
                 }
             }
             else if (actionType == ActionTypeEnum.DROP)
@@ -138,6 +137,52 @@ namespace DRObjects.Items.Archetypes.Local
                 this.Coordinate = actor.MapCharacter.Coordinate;
                 this.InInventory = false;
                 return new ActionFeedback[1] { new DropItemFeedback() { ItemToDrop = this } };
+            }
+            else if (actionType == ActionTypeEnum.EQUIP && this.IsEquippable && this.EquippableLocation.HasValue)
+            {
+                //Equip it
+                this.IsEquipped = true;
+                
+                //Equip the item
+                List<EquipmentLocation> possibleLocation = new List<EquipmentLocation>();
+
+                 //Is this a ring ? - they have two places where they can fit
+                if (this.EquippableLocation == EquipmentLocation.RING)
+                {
+                    possibleLocation.Add(EquipmentLocation.RING1);
+                    possibleLocation.Add(EquipmentLocation.RING2);
+                }
+                else 
+                {
+                    possibleLocation.Add(this.EquippableLocation.Value);
+                }
+
+                EquipmentLocation? clearLocation = null;
+
+                //So, do we have a clear area?
+                foreach(var possible in possibleLocation)
+                {
+                    if (!actor.Inventory.EquippedItems.ContainsKey(possible))
+                    {
+                        clearLocation = possible;
+                        break;
+                    }
+                }
+
+                if (!clearLocation.HasValue)
+                {
+                    //We need to move the existing item
+                    actor.Inventory.EquippedItems[possibleLocation[0]].IsEquipped = false;
+                    actor.Inventory.EquippedItems.Remove(possibleLocation[0]);
+
+                    clearLocation = possibleLocation[0];
+                }
+
+                //And put the item there
+                this.IsEquipped = true;
+
+                actor.Inventory.EquippedItems.Add(clearLocation.Value, this);
+
             }
             else
             {

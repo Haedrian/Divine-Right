@@ -170,6 +170,19 @@ namespace Divine_Right.InterfaceComponents.Components
             //Draw the equipped items
             batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.WOOD_TEXTURE), equippedBackgroundRect, Color.White);
 
+            //Go through the inventory
+            foreach (var equippedRect in equipmentRectangles)
+            {
+                if (this.CurrentActor.Inventory.EquippedItems.ContainsKey(equippedRect.Location))
+                {
+                    equippedRect.InventoryItem = this.CurrentActor.Inventory.EquippedItems[equippedRect.Location];
+                }
+                else
+                {
+                    equippedRect.InventoryItem = null;
+                }
+            }
+
             //Loop through them
             foreach (var equippedItem in equipmentRectangles)
             {
