@@ -14,6 +14,7 @@ namespace DRObjects.Enums
         BODY,
         WEAPON,
         SHIELD,
+        RING,
         LEGS,
         RING1,
         RING2,

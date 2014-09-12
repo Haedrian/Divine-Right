@@ -18,7 +18,7 @@ namespace DivineRightGame.ItemFactory.ItemFactoryManagers
         public DRObjects.MapItem CreateItem(List<string> parameters)
         {
             return CreateItem(Int32.Parse(parameters[0]), parameters[1], parameters[2], parameters[3], Int32.Parse(parameters[4]), Boolean.Parse(parameters[5]), Int32.Parse(parameters[6])
-                , Int32.Parse(parameters[7]), parameters[8],parameters[10]);
+                , Int32.Parse(parameters[7]), parameters[8],parameters[10],parameters[11]);
         }
 
         public DRObjects.MapItem CreateItem(int internalID)
@@ -88,7 +88,7 @@ namespace DivineRightGame.ItemFactory.ItemFactoryManagers
         }
 
         public MapItem CreateItem(int itemID,string name,string description, string graphic, int value  
-            ,bool equippable,int armourRating, int damageRating, string damageType,string category)
+            ,bool equippable,int armourRating, int damageRating, string damageType,string category,string equippableLocation)
         {
             InventoryItem item = new InventoryItem();
             item.Description = description;
@@ -122,6 +122,11 @@ namespace DivineRightGame.ItemFactory.ItemFactoryManagers
             item.BaseValue = value;
             item.ArmourRating = armourRating;
             item.DamageRating = damageRating;
+
+            if (!String.IsNullOrEmpty(equippableLocation))
+            {
+                item.EquippableLocation = (EquipmentLocation)Enum.Parse(typeof(EquipmentLocation), equippableLocation);
+            }
 
             return item;
         }

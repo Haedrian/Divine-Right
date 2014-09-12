@@ -46,6 +46,11 @@ namespace DRObjects.Items.Archetypes.Local
         /// </summary>
         public int DamageRating { get; set; }
 
+        /// <summary>
+        /// Defines where exactly this item may be equipped. If any
+        /// </summary>
+        public EquipmentLocation? EquippableLocation { get; set; }
+
         public InventoryCategory Category { get; set; }
 
         public override string Description
