@@ -452,11 +452,11 @@ namespace Divine_Right.InterfaceComponents.Components
             allItemBoxes.AddRange(row2Items);
             allItemBoxes.AddRange(row3Items);
 
+            //Inventory item?
             foreach(InventoryItemRectangle rect in allItemBoxes)
             {
                 if (rect.Rect.Contains(x, y))
-                {
-                  
+                {     
                     //Does it contain an item?
                     if (rect.Item != null)
                     {
@@ -465,14 +465,32 @@ namespace Divine_Right.InterfaceComponents.Components
                     }
                     else
                     {
-                        //User is mousing over an empty box
-                        detailsToShow = String.Empty;
+                        break;
                     }
 
                     return;
                 }
             }
 
+            //Equipped item?
+            foreach (EquippedItemRectangle rect in equipmentRectangles)
+            {
+                if (rect.Rect.Contains(x, y))
+                {
+                    //Does it contain an item?
+                    if (rect.InventoryItem != null)
+                    {
+                        //Yes
+                        detailsToShow = rect.InventoryItem.Description;
+                    }
+                    else
+                    {
+                        break;
+                    }
+
+                    return;
+                }
+            }
 
         }
 
