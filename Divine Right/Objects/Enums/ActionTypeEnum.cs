@@ -19,5 +19,6 @@ namespace DRObjects.Enums
         TAKE,
         EQUIP,
         DROP,
+        UNEQUIP,
     }
 }

@@ -215,13 +215,10 @@ namespace Divine_Right.InterfaceComponents.Components
                     batch.Draw(content, backgroundItem, equippedItem.Rect, equippedItem.Location == EquipmentLocation.MONEY ? Color.White: Color.Black);
                 }
             }
-
-            //batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.PAPER_TEXTURE), moneyTextRect, Color.White);
-
             //Create the money thing
             batch.Draw(content, SpriteManager.GetSprite(LocalSpriteName.COINS), moneyRect, Color.White);
-            //And the total money - for now hard code
-            batch.DrawString(font, "10000", moneyTextRect, Alignment.Left & Alignment.Top, Color.Black);           
+            //And the total money
+            batch.DrawString(font, this.CurrentActor.Inventory.TotalMoney.ToString(), moneyTextRect, Alignment.Left & Alignment.Top, Color.Black);           
 
 
             if (this.contextMenu.Width > 0)
@@ -320,6 +317,38 @@ namespace Divine_Right.InterfaceComponents.Components
                         return true; //Empty box
                     }
 
+                }
+            }
+
+            //Have we clicked on an equipped item?
+            foreach (EquippedItemRectangle rect in equipmentRectangles)
+            {
+                if (rect.Rect.Contains(x, y))
+                {
+                    //remove the contextual menu
+                    contextMenu = new Rectangle(0, 0, 0, 0);
+                    contextMenuChoices = new List<ContextMenuItem>();
+                    selectedItem = null;
+
+                    //Does it contain an item?
+                    if (rect.InventoryItem != null)
+                    {
+                        //Yes - open contextual menu
+                        contextMenu = new Rectangle(x + 15, y + 15, 0, 0);
+                        selectedItem = rect.InventoryItem;
+
+                        foreach (var action in rect.InventoryItem.GetPossibleActions(this.CurrentActor))
+                        {
+                            AddContextMenuItem(action, new object[0] { }, content);
+                        }
+
+                        //done
+                        return true;
+                    }
+                    else
+                    {
+                        return true; //Empty box
+                    }
                 }
             }
 

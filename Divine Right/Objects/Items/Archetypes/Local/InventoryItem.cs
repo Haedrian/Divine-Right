@@ -14,7 +14,7 @@ namespace DRObjects.Items.Archetypes.Local
     /// <summary>
     /// An item which can be picked up, or can be carried in the inventory
     /// </summary>
-    public class InventoryItem:
+    public class InventoryItem :
         MapItem
     {
         /// <summary>
@@ -36,7 +36,7 @@ namespace DRObjects.Items.Archetypes.Local
         /// The base value of this item if it is sold
         /// </summary>
         public int BaseValue { get; set; }
-        
+
         /// <summary>
         /// How useful the device is as armour
         /// </summary>
@@ -89,19 +89,28 @@ namespace DRObjects.Items.Archetypes.Local
 
         public override Enums.ActionTypeEnum[] GetPossibleActions(Actor actor)
         {
-            List<ActionTypeEnum> actions = base.GetPossibleActions(actor).ToList() ;
+            List<ActionTypeEnum> actions = base.GetPossibleActions(actor).ToList();
 
             if (InInventory)
             {
                 actions = new List<ActionTypeEnum>(); //Clear them
+                if (IsEquipped)
+                {
+                    actions.Add(ActionTypeEnum.UNEQUIP);
+                }
+                else
                 if (IsEquippable)
                 {
                     actions.Add(ActionTypeEnum.EQUIP);
+                    actions.Add(ActionTypeEnum.DROP);
+                }
+                else
+                {
+                    actions.Add(ActionTypeEnum.DROP);
                 }
 
-                actions.Add(ActionTypeEnum.DROP);
             }
-            else 
+            else
             {
                 if (Math.Abs(actor.MapCharacter.Coordinate - this.Coordinate) < 2)
                 {
@@ -122,11 +131,11 @@ namespace DRObjects.Items.Archetypes.Local
                     {
                         //take it
                         this.Coordinate = new MapCoordinate(999, 999, 0, MapTypeEnum.CONTAINER); //Dummy - this will cause the block to reject and delete it
-                        actor.Inventory.Inventory.Add(this.Category,this);
+                        actor.Inventory.Inventory.Add(this.Category, this);
                         this.InInventory = true;
 
-                        return new ActionFeedback[1] { new CurrentLogFeedback(InterfaceSpriteName.MAN,Color.Black,"You pick up the " + this.Name) };
-                        
+                        return new ActionFeedback[1] { new CurrentLogFeedback(InterfaceSpriteName.MAN, Color.Black, "You pick up the " + this.Name) };
+
                     }
                 }
             }
@@ -142,17 +151,17 @@ namespace DRObjects.Items.Archetypes.Local
             {
                 //Equip it
                 this.IsEquipped = true;
-                
+
                 //Equip the item
                 List<EquipmentLocation> possibleLocation = new List<EquipmentLocation>();
 
-                 //Is this a ring ? - they have two places where they can fit
+                //Is this a ring ? - they have two places where they can fit
                 if (this.EquippableLocation == EquipmentLocation.RING)
                 {
                     possibleLocation.Add(EquipmentLocation.RING1);
                     possibleLocation.Add(EquipmentLocation.RING2);
                 }
-                else 
+                else
                 {
                     possibleLocation.Add(this.EquippableLocation.Value);
                 }
@@ -160,7 +169,7 @@ namespace DRObjects.Items.Archetypes.Local
                 EquipmentLocation? clearLocation = null;
 
                 //So, do we have a clear area?
-                foreach(var possible in possibleLocation)
+                foreach (var possible in possibleLocation)
                 {
                     if (!actor.Inventory.EquippedItems.ContainsKey(possible))
                     {
@@ -183,6 +192,15 @@ namespace DRObjects.Items.Archetypes.Local
 
                 actor.Inventory.EquippedItems.Add(clearLocation.Value, this);
 
+            }
+            else if (actionType == ActionTypeEnum.UNEQUIP && this.IsEquipped)
+            {
+                this.IsEquipped = false;
+
+                //Find the item and remove it from the inventory
+                var item = actor.Inventory.EquippedItems.First(kvp => kvp.Value == this);
+
+                actor.Inventory.EquippedItems.Remove(item.Key);
             }
             else
             {
