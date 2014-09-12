@@ -18,6 +18,8 @@ namespace Divine_Right.InterfaceComponents.Components
         #region Properties
         private bool visible;
 
+        private AttackLocation currentAttackLocation = AttackLocation.CHEST;
+
         protected int locationX;
         protected int locationY;
         private Actor attacker;
@@ -70,6 +72,7 @@ namespace Divine_Right.InterfaceComponents.Components
             this.locationY = locationY;
             this.attacker = attacker;
             this.TargetActor = target;
+            this.currentAttackLocation = AttackLocation.CHEST;
 
             //Force a move
             this.PerformDrag(locationX, locationY);
@@ -176,6 +179,36 @@ namespace Divine_Right.InterfaceComponents.Components
 
             batch.Draw(content, close, closeRect, Color.White);
 
+            //What have we targetted?
+
+            //-- Is it still a valid target?
+            if (CombatManager.CalculateHitPercentage(attacker, TargetActor, currentAttackLocation) == -1)
+            {
+                //Set it to chest
+                this.currentAttackLocation = AttackLocation.CHEST;
+            }
+
+            //Draw an icon on the targetted location
+            Rectangle targetRect = new Rectangle();
+
+            switch(this.currentAttackLocation)
+            {
+                case AttackLocation.CHEST:
+                    targetRect = chestPercentageRect; break;
+                case AttackLocation.HEAD:
+                    targetRect = headPercentageRect; break;
+                case AttackLocation.LEFT_ARM:
+                    targetRect = leftArmPercentageRect; break;
+                case AttackLocation.LEGS:
+                    targetRect = legsPercentageRect; break;
+                case AttackLocation.RIGHT_ARM:
+                    targetRect = rightArmPercentageRect; break;
+            }
+
+            //Draw a sword
+            batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.SWORD),targetRect, Color.Red);
+            batch.Draw(content.Load<Texture2D>(sword.path), targetRect, sword.sourceRectangle, Color.Red, 0, new Vector2(0, 0), SpriteEffects.FlipHorizontally, 0);
+
             if (CombatManager.CalculateHitPercentage(attacker, TargetActor, AttackLocation.HEAD) != -1) //not present
             {
                 batch.DrawString(font, CombatManager.CalculateHitPercentage(attacker, TargetActor, AttackLocation.HEAD) + "%", headPercentageRect, Alignment.Center, Color.Red);
@@ -246,85 +279,43 @@ namespace Divine_Right.InterfaceComponents.Components
                 List<object> argumentList = new List<object>();
                 argumentList.Add(this.attacker);
                 argumentList.Add(this.TargetActor);
-                argumentList.Add(CombatManager.GetRandomAttackLocation(this.attacker, this.TargetActor));
+                argumentList.Add(currentAttackLocation);
 
                 args = argumentList.ToArray();
 
                 return true;
             }
 
-            //Did they click on something
+            //Did they click on something? Change the target
             if (headRect.Contains(point))
             {
-                //Then attack
-                actionType = ActionTypeEnum.ATTACK;
-                List<object> argumentList = new List<object>();
-                argumentList.Add(this.attacker);
-                argumentList.Add(this.TargetActor);
-                argumentList.Add(AttackLocation.HEAD);
-
-                args = argumentList.ToArray();
-
+                this.currentAttackLocation = AttackLocation.HEAD;
                 return true;
             }
 
             if (leftArmRect.Contains(point))
             {
-                //Then attack
-                actionType = ActionTypeEnum.ATTACK;
-                List<object> argumentList = new List<object>();
-                argumentList.Add(this.attacker);
-                argumentList.Add(this.TargetActor);
-                argumentList.Add(AttackLocation.LEFT_ARM);
-
-                args = argumentList.ToArray();
-
+                this.currentAttackLocation = AttackLocation.LEFT_ARM;
                 return true;
             }
 
             if (chestRect.Contains(point))
             {
-                //Then attack
-                actionType = ActionTypeEnum.ATTACK;
-                List<object> argumentList = new List<object>();
-                argumentList.Add(this.attacker);
-                argumentList.Add(this.TargetActor);
-                argumentList.Add(AttackLocation.CHEST);
-
-                args = argumentList.ToArray();
-
+                this.currentAttackLocation = AttackLocation.CHEST;
                 return true;
 
             }
 
             if (rightArmRect.Contains(point))
             {
-                //Then attack
-                actionType = ActionTypeEnum.ATTACK;
-                List<object> argumentList = new List<object>();
-                argumentList.Add(this.attacker);
-                argumentList.Add(this.TargetActor);
-                argumentList.Add(AttackLocation.RIGHT_ARM);
-
-                args = argumentList.ToArray();
-
+                this.currentAttackLocation = AttackLocation.RIGHT_ARM;
                 return true;
-
             }
 
             if (legRect.Contains(point))
             {
-                //Then attack
-                actionType = ActionTypeEnum.ATTACK;
-                List<object> argumentList = new List<object>();
-                argumentList.Add(this.attacker);
-                argumentList.Add(this.TargetActor);
-                argumentList.Add(AttackLocation.LEGS);
-
-                args = argumentList.ToArray();
-
+                this.currentAttackLocation = AttackLocation.LEGS;
                 return true;
-
             }
 
             if (closeRect.Contains(point))
