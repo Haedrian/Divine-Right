@@ -169,20 +169,37 @@ namespace DivineRightGame.CombatHandling
 
             //int weaponDamage = 3;
             //The type of dice we roll 3 of to determine weapon damage
-            int weaponDiceRolls = 2;
-            int weaponWoundPotential = 3;
-            int weaponStunAmount = 3;
+            int weaponDiceRolls = 1; //Default damage
+            int weaponWoundPotential = 0;
+            int weaponStunAmount = 0;
+
+            if (attacker.Inventory.EquippedItems.ContainsKey(EquipmentLocation.WEAPON) && attacker.Anatomy.RightArm != 0)
+            {
+                //Do we have a weapon and an arm to use it?
+                weaponDiceRolls = attacker.Inventory.EquippedItems[EquipmentLocation.WEAPON].DamageDice;
+                weaponWoundPotential = attacker.Inventory.EquippedItems[EquipmentLocation.WEAPON].WoundPotential;
+                weaponStunAmount = attacker.Inventory.EquippedItems[EquipmentLocation.WEAPON].StunAmount;
+            }
+
             DamageType damageType = DamageType.SLASH;
 
             GetStanceEffect(out atk, out def, attacker.CombatStance);
 
+            //Does the defender have a shield?
+            int shieldBonus = 0;
+
+            if (defender.Inventory.EquippedItems.ContainsKey(EquipmentLocation.SHIELD) && defender.Anatomy.LeftArm != 0)
+            {
+                shieldBonus = attacker.Inventory.EquippedItems[EquipmentLocation.SHIELD].ArmourRating;
+            }
+
             //Chance to hit -
-            // Attacker Skill + Brawn - 5 + location penalty + stance effect  VS Defender Skill + Agil + stance effect
+            // Attacker Skill + Brawn - 5 + location penalty + stance effect  VS Defender Skill + Agil + stance effect + shield bonus
             int hitChance = attacker.Attributes.HandToHand + attacker.TotalBrawn - 5 + penaltyDict[location] + atk;
 
             GetStanceEffect(out atk, out def, defender.CombatStance);
 
-            int defendChance = defender.Attributes.Dodge + def;
+            int defendChance = defender.Attributes.Dodge + def + shieldBonus;
 
             //See what the difference is
             int difference = hitChance - defendChance;
@@ -207,8 +224,34 @@ namespace DivineRightGame.CombatHandling
                 int damage = weaponDamage;
 
                 //Apply the damage
+                //Is the user wearing any armour?
+                if (location == AttackLocation.CHEST || location == AttackLocation.LEFT_ARM || location == AttackLocation.RIGHT_ARM)
+                {
+                    //Use the chest armour
+                    if (defender.Inventory.EquippedItems.ContainsKey(EquipmentLocation.BODY))
+                    {
+                        damage -= defender.Inventory.EquippedItems[EquipmentLocation.BODY].ArmourRating;
+                    }
+                }
+                
+                //Other location ?
+                if (location == AttackLocation.HEAD)
+                {
+                    //Use the head armour
+                    if (defender.Inventory.EquippedItems.ContainsKey(EquipmentLocation.HEAD))
+                    {
+                        damage -= defender.Inventory.EquippedItems[EquipmentLocation.HEAD].ArmourRating;
+                    }
+                }
 
-                //TODO: ARMOUR
+                if (location == AttackLocation.LEGS)
+                {
+                    //Use the head armour
+                    if (defender.Inventory.EquippedItems.ContainsKey(EquipmentLocation.LEGS))
+                    {
+                        damage -= defender.Inventory.EquippedItems[EquipmentLocation.LEGS].ArmourRating;
+                    }
+                }
 
                 if (damage <= 0)
                 {
