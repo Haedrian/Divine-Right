@@ -44,7 +44,17 @@ namespace DRObjects.Items.Archetypes.Local
         /// <summary>
         /// How much damage this item does
         /// </summary>
-        public int DamageRating { get; set; }
+        public int DamageDice { get; set; }
+
+        /// <summary>
+        /// The chance of stunning your opponent
+        /// </summary>
+        public int StunAmount { get; set; }
+
+        /// <summary>
+        /// The chance of wounding your opponent
+        /// </summary>
+        public int WoundPotential { get; set; }
 
         /// <summary>
         /// Defines where exactly this item may be equipped. If any
@@ -62,15 +72,15 @@ namespace DRObjects.Items.Archetypes.Local
                     string desc = base.Description;
 
                     //Add the value and armour/damage rating
-                    desc += "\nBaseVal " + BaseValue;
+                    desc += "\nValue " + BaseValue;
 
                     if (ArmourRating > 0)
                     {
                         desc += " Armr " + ArmourRating;
                     }
-                    if (DamageRating > 0)
+                    if (DamageDice > 0)
                     {
-                        desc += " Dmg " + DamageRating;
+                        desc += " Dmg: 3d" + DamageDice + " WP :" + WoundPotential + " Stun: " + StunAmount;
                     }
 
                     return desc;
