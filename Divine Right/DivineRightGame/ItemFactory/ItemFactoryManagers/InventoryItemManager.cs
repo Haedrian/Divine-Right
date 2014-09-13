@@ -60,6 +60,28 @@ namespace DivineRightGame.ItemFactory.ItemFactoryManagers
         }
 
         /// <summary>
+        /// Returns the most expensive item of that particular tag which still costs less or equal to the maximum
+        /// </summary>
+        /// <param name="category"></param>
+        /// <param name="maximum"></param>
+        /// <returns></returns>
+        public InventoryItem GetBestCanAfford(string tag, int maximum)
+        {
+            //Get the entire database
+            var database = DatabaseHandling.GetDatabase(Archetype.INVENTORYITEMS);
+
+            //The reason there are two orders is that two items might have the same cost, in that case we'll want to pick one at random
+            var chosenValue = database.Where(d => tag == null || d.Value[9].ToLower().Split(',').Contains(tag.ToLower().Trim()) && Int32.Parse(d.Value[4]) <= maximum).OrderByDescending(d => Int32.Parse(d.Value[4])).ThenBy(d => GameState.Random.Next(10)).Select(d => d.Key).FirstOrDefault();
+
+            if (chosenValue == 0)
+            {
+                return null;
+            }
+
+            return CreateItem(chosenValue) as InventoryItem;
+        }
+
+        /// <summary>
         /// Creates a number of items having a total maximum value (or as close as possible to) the assigned value.
         /// </summary>
         /// <param name="category"></param>

@@ -670,7 +670,7 @@ namespace DivineRightGame.SettlementHandling
 
                 //Create a new actor
                 int actorID = 0;
-                Actor act = ActorGeneration.CreateEnemy("human", socialClass, true, 5, out actorID);
+                Actor act = ActorGeneration.CreateEnemy("human", socialClass, true, 5,0, out actorID);
 
                 act.MapCharacter = fact.CreateItem("enemies", actorID);
 
@@ -709,7 +709,8 @@ namespace DivineRightGame.SettlementHandling
             {
                 int actorID = 0;
 
-                Actor actor = ActorGeneration.CreateEnemy("human", "guard", true, 10, out actorID);
+                //Late we'll want to change the gear total
+                Actor actor = ActorGeneration.CreateEnemy("human", "guard", true, 10,300, out actorID);
 
                 actor.MapCharacter = fact.CreateItem("enemies", actorID);
 

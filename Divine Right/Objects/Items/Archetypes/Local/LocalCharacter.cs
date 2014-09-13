@@ -117,8 +117,8 @@ namespace DRObjects.Items.Archetypes.Local
 
             actions.AddRange(base.GetPossibleActions(actor));
 
-            //Are we next to the target?
-            if (this.Coordinate - actor.MapCharacter.Coordinate < 2)
+            //Are we next to the target? Is the actor aggressive
+            if (actor.IsAggressive && this.Coordinate - actor.MapCharacter.Coordinate < 2)
             {
                 //Add the attack one too
                 actions.Add(ActionTypeEnum.PREPARE_ATTACK);

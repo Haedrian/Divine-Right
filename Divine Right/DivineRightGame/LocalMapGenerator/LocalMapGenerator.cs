@@ -647,7 +647,8 @@ namespace DivineRightGame.LocalMapGenerator
 
                         string enemyType = actor.UseLocalType ? actorType : actor.EnemyType;
 
-                        Actor newActor = ActorGeneration.CreateEnemy(enemyType, actor.EnemyTag, null, 10, out actorID);
+                        //For now set gear cost to 0
+                        Actor newActor = ActorGeneration.CreateEnemy(enemyType, actor.EnemyTag, null, 10,0, out actorID);
 
                         //Generate the map character
                         var mapCharacter = factory.CreateItem("enemies", actorID);
@@ -726,20 +727,26 @@ namespace DivineRightGame.LocalMapGenerator
                     //Get the basic Actor object
 
                     //What level is the player character?
-                    //int handToHand = GameState.LocalMap.Actors.Where(a => a.IsPlayerCharacter).Select(a => a.Attributes.HandToHand).FirstOrDefault();
+                    //This is just the test data - when we generate a test map we'll use this. Otherwise use actual data
                     int handToHand = 10;
+                    int totalCostOfStuff = 500;
 
-                    int randomLevel = (int)(handToHand + handToHand * random.NextDouble() / 2 - handToHand * random.NextDouble());
+                    double multiplier = GameState.Random.Next(75, 125);
 
-                    if (randomLevel < 0)
+                    multiplier /= 100; //So we get a number between 0.75 and 1.25
+
+                    if (GameState.PlayerCharacter != null)
                     {
-                        randomLevel = 0;
+                        handToHand = GameState.PlayerCharacter.Attributes.HandToHand;
+
+                        //How much stuff does he have ?
+                        totalCostOfStuff = GameState.PlayerCharacter.Inventory.EquippedItems.Values.Sum(ei => ei.BaseValue);
+    
                     }
 
-                    Console.WriteLine("Level : " + randomLevel);
+                    Console.WriteLine("Level : " + handToHand*multiplier + " Gear : " + totalCostOfStuff*multiplier);
 
-                    Actor actor = ActorGeneration.CreateEnemy(enemyType, null, null, randomLevel, out returnedID);
-
+                    Actor actor = ActorGeneration.CreateEnemy(enemyType, null, null, (int) (handToHand * multiplier),(int)(totalCostOfStuff * multiplier), out returnedID);
 
                     var mapObject = fact.CreateItem("enemies", returnedID);
 

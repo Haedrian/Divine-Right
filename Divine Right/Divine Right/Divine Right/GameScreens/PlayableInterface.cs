@@ -220,6 +220,8 @@ namespace Divine_Right.GameScreens
 
                 GameState.PlayerCharacter.Attributes.Health = GameState.PlayerCharacter.Anatomy;
 
+                GameState.PlayerCharacter.Inventory.EquippedItems = ActorGeneration.GenerateEquippedItems(250); //give him 250 worth of stuff
+
                 GameState.LocalMap.Actors.Add(GameState.PlayerCharacter);
 
             }

@@ -6,6 +6,8 @@ using DRObjects.ActorHandling;
 using DRObjects.ActorHandling.CharacterSheet.Enums;
 using DRObjects.Database;
 using DRObjects.Enums;
+using DRObjects.Items.Archetypes.Local;
+using DivineRightGame.ItemFactory.ItemFactoryManagers;
 
 namespace DivineRightGame.ActorHandling
 {
@@ -69,9 +71,11 @@ namespace DivineRightGame.ActorHandling
         /// <param name="enemyType"></param>
         /// <param name="enemyTag"></param>
         /// <param name="intelligent"></param>
+        /// <param name="level">The skill level of this enemy</param>
+        /// <param name="gearCost">The total cost of this unit's equipped items</param>
         /// <param name="?"></param>
         /// <returns></returns>
-        public static DRObjects.Actor CreateEnemy(string enemyType, string enemyTag, bool? intelligent,int level, out int enemyID)
+        public static DRObjects.Actor CreateEnemy(string enemyType, string enemyTag, bool? intelligent,int level, int gearCost, out int enemyID)
         {
             //Get all the data from the database and we'll make our own filtering
             var dictionary = DatabaseHandling.GetDatabase(Archetype.ENEMIES);
@@ -124,6 +128,9 @@ namespace DivineRightGame.ActorHandling
 
             //link one to another
             actor.Attributes.Health = actor.Anatomy;
+
+            //Create the equipped item inventory
+            actor.Inventory.EquippedItems = GenerateEquippedItems(gearCost);
 
             return actor;
         }
@@ -222,6 +229,132 @@ namespace DivineRightGame.ActorHandling
 
 
             return att;
+        }
+
+        /// <summary>
+        /// Generates a set of equipped items, not exceeding the total cost. For now will only work on warriors
+        /// </summary>
+        /// <returns></returns>
+        public static Dictionary<EquipmentLocation,InventoryItem> GenerateEquippedItems(int totalCost)
+        {
+            Dictionary<EquipmentLocation, InventoryItem> equipped = new Dictionary<EquipmentLocation, InventoryItem>();
+
+            //Decide what percentage to spend on the weapon, the rest will be armour
+            int weaponPercentage = 3 + GameState.Random.Next(8);
+
+            InventoryItemManager mgr = new InventoryItemManager();
+
+            int moneyLeft = totalCost;
+
+            int moneyForWeapon = moneyLeft * weaponPercentage / 10;
+
+            //Buy the weapon
+            var weapon = mgr.GetBestCanAfford("WEAPON", moneyForWeapon);
+
+            if (weapon != null)
+            {
+                //Equip it
+                equipped.Add(EquipmentLocation.WEAPON, weapon);
+                //And reduce the value
+                moneyLeft -= weapon.BaseValue;
+            }
+
+            //Now let's buy the rest of the items. For now let's divide everything equally and try to get everyything at least
+            int moneyForEachPiece = moneyLeft / 4;
+
+            //Try to buy an armour piece for each part
+            //Shield
+            var shield = mgr.GetBestCanAfford("SHIELD", moneyForEachPiece);
+
+            if (shield != null)
+            {
+                //Equip it
+                equipped.Add(EquipmentLocation.SHIELD, shield);
+                //And reduce the value
+                moneyLeft -= shield.BaseValue;
+            }
+
+            //Helm
+            var helm = mgr.GetBestCanAfford("HELM", moneyForEachPiece);
+
+            if (helm != null)
+            {
+                equipped.Add(EquipmentLocation.HEAD, helm);
+
+                moneyLeft -= helm.BaseValue;
+            }
+
+            var bodyArmour = mgr.GetBestCanAfford("BODY ARMOUR", moneyForEachPiece);
+
+            if (bodyArmour != null)
+            {
+                equipped.Add(EquipmentLocation.BODY, bodyArmour);
+                moneyLeft -= bodyArmour.BaseValue;
+            }
+
+            var legs = mgr.GetBestCanAfford("LEGS", moneyForEachPiece);
+
+            if (legs != null)
+            {
+                equipped.Add(EquipmentLocation.LEGS, legs);
+                moneyLeft -= legs.BaseValue;
+            }
+
+            //Now that we presumably have one of each, let's buy something better
+
+            //To do this, let's start with a divisor of 3.
+            //We see if we can buy three better items.
+            //Then we look at what we can do with the rest divided by 2
+            //Then we look at what we can do with the rest divided by 1
+            //And if that doesn't work, we 'lose' the rest
+
+            for (int divisor = 3; divisor > 0; divisor--)
+            {
+                int moneyToSpend = moneyLeft / divisor;
+
+                for (int i = 0; i < divisor; i++)
+                {
+                    var item = mgr.GetBestCanAfford("Armour", moneyToSpend);
+
+                    if (item == null)
+                    {
+                        continue;
+                    }
+
+                    InventoryItem previousItem = null;
+
+                    //Do we have something else already?
+                    if (equipped.ContainsKey(item.EquippableLocation.Value))
+                    {
+                        previousItem = equipped[item.EquippableLocation.Value];
+
+                        //Does one cost more than the other ?
+                        if (item.BaseValue >= previousItem.BaseValue)
+                        {
+                            //Swap them
+                            equipped.Remove(item.EquippableLocation.Value);
+                            equipped.Add(item.EquippableLocation.Value, item);
+
+                            //And fix the total amount of money
+                            moneyLeft += previousItem.BaseValue;
+                            moneyLeft -= item.BaseValue;
+
+                            moneyToSpend = moneyLeft / divisor;
+                        }
+                    }
+                    else
+                    {
+                        equipped.Add(item.EquippableLocation.Value, item);
+                        moneyLeft -= item.BaseValue;
+
+                        moneyToSpend = moneyLeft / divisor;
+                    }
+
+                }
+            }
+
+            return equipped;
+
         }
 
         public static HumanoidAnatomy GenerateAnatomy(string race)
