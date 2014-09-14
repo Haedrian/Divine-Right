@@ -71,6 +71,7 @@ namespace Divine_Right.GameScreens
             components.Clear();
 
             //add the buttons
+#if DEBUG
 
             components.Add(new AutoSizeButton("Generate Test Local Map", game.Content, InternalActionEnum.LOAD, new object[1] { "Village" }, (GraphicsDevice.Viewport.Width / 2), 400));
 
@@ -78,7 +79,7 @@ namespace Divine_Right.GameScreens
             components.Add(new AutoSizeButton("Generate Test World", game.Content, DRObjects.Enums.InternalActionEnum.GENERATE, new object[0], (GraphicsDevice.Viewport.Width / 2), 150));
             */
             components.Add(new AutoSizeButton("Generate Test Dungeon", game.Content, InternalActionEnum.LOAD, new object[1] { "Dungeon" }, (GraphicsDevice.Viewport.Width / 2), 350));
-            
+#endif
 
             components.Add(new AutoSizeButton("Start New Game",game.Content,InternalActionEnum.GENERATE, new object[0], (GraphicsDevice.Viewport.Width/2),150));
             if (GameState.SaveFileExists())
