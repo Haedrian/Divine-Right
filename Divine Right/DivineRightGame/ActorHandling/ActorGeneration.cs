@@ -132,6 +132,12 @@ namespace DivineRightGame.ActorHandling
             //Create the equipped item inventory
             actor.Inventory.EquippedItems = GenerateEquippedItems(gearCost);
 
+            //And create the inventory
+            foreach (var item in actor.Inventory.EquippedItems.Values)
+            {
+                actor.Inventory.Inventory.Add(item.Category, item);
+            }
+
             return actor;
         }
 
@@ -351,6 +357,13 @@ namespace DivineRightGame.ActorHandling
                     }
 
                 }
+            }
+
+            //Equip them
+            foreach (var value in equipped.Values)
+            {
+                value.IsEquipped = true;
+                value.InInventory = true;
             }
 
             return equipped;

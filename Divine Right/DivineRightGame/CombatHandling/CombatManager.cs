@@ -9,6 +9,7 @@ using DRObjects.Graphics;
 using Microsoft.Xna.Framework;
 using DRObjects.GraphicsEngineObjects.Abstract;
 using DRObjects.Enums;
+using DRObjects.Items.Archetypes.Local;
 
 namespace DivineRightGame.CombatHandling
 {
@@ -429,6 +430,17 @@ namespace DivineRightGame.CombatHandling
         private static void KillCharacter(Actor actor)
         {
             actor.IsAlive = false;
+
+            //Drop any stuff they have
+            foreach (InventoryItem item in actor.Inventory.Inventory.GetAllObjects())
+            {
+                //Drop them
+                item.InInventory = false;
+                item.IsEquipped = false;
+                GameState.LocalMap.GetBlockAtCoordinate(actor.MapCharacter.Coordinate).PutItemUnderneathOnBlock(item);
+            }
+
+            
         }
 
         /// <summary>

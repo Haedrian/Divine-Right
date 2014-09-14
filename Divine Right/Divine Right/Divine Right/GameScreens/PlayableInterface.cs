@@ -222,6 +222,11 @@ namespace Divine_Right.GameScreens
 
                 GameState.PlayerCharacter.Inventory.EquippedItems = ActorGeneration.GenerateEquippedItems(250); //give him 250 worth of stuff
 
+                foreach (var item in GameState.PlayerCharacter.Inventory.EquippedItems.Values)
+                {
+                    GameState.PlayerCharacter.Inventory.Inventory.Add(item.Category, item);
+                }
+
                 GameState.LocalMap.Actors.Add(GameState.PlayerCharacter);
 
             }
