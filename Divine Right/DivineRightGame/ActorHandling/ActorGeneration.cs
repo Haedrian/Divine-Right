@@ -359,6 +359,19 @@ namespace DivineRightGame.ActorHandling
                 }
             }
 
+            //Do we still have any cash?
+            if (moneyLeft > 0)
+            {
+                //Pick up some form of jewelry
+                var item = mgr.GetBestCanAfford("ring", moneyLeft);
+
+                if (item != null)
+                {
+                    equipped.Add(EquipmentLocation.RING1, item);
+                }
+
+            }
+
             //Equip them
             foreach (var value in equipped.Values)
             {
