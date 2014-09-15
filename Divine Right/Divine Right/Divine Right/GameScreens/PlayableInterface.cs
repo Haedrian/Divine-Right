@@ -254,6 +254,9 @@ namespace Divine_Right.GameScreens
 
             log = tlc;
 
+            TimeDisplayComponent tdc = new TimeDisplayComponent(GraphicsDevice.Viewport.Width / 2 - 100, 0);
+            interfaceComponents.Add(tdc);
+
             var cemetry = SpriteManager.GetSprite(InterfaceSpriteName.DEAD);
 
             //Create the menu buttons

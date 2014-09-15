@@ -55,7 +55,7 @@ namespace DivineRightGame
         }
         private static Random _random = new Random();
 
-        public static GameState()
+        static GameState()
         {
             //Start off at the 1/1/210
             UniverseTime = new DivineRightDateTime(210, 1, 1);

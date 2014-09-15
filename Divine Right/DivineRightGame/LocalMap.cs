@@ -18,6 +18,7 @@ using Newtonsoft.Json;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using DRObjects.DataStructures.Enum;
 
 namespace DivineRightGame
 {
@@ -227,7 +228,6 @@ namespace DivineRightGame
             {
                 this.GetBlockAtCoordinate(deadActor.MapCharacter.Coordinate).RemoveTopItem(); //remove the character
 
-                //TODO: PUT A CORPSE OF SOME SORT
                 deadActor.MapCharacter = null; //detatch it
             }
 
@@ -241,6 +241,9 @@ namespace DivineRightGame
             {
                 feedback.AddRange(HealthCheckManager.CheckHealth(actor));
             }
+
+            //Make time pass - 10 seconds for a tick
+            GameState.UniverseTime.Add(DRTimeComponent.SECOND, 10);
 
             return feedback.ToArray();
         }

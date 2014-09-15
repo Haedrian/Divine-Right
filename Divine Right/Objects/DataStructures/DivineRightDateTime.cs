@@ -19,7 +19,7 @@ namespace DRObjects.DataStructures
         /// </summary>
         private readonly string[] MONTHS = new string[11] { "", "Ew", "Tin", "Tie", "Rab", "Ham", "Sit", "Seb", "Tmin", "Dis", "Ash" };
 
-        private readonly int[] MULTIPLIERS = new int[6] { 0, 100, 100000, 1000000, 10000000, 100000000 };
+        private readonly long[] MULTIPLIERS = new long[6] { 1, 100, 100000, 1000000, 10000000, 100000000 };
 
         /// <summary>
         /// Hooray for decimal time. We only need to store the total seconds in here and then just read different multiples of 100 to read the different times
@@ -54,6 +54,37 @@ namespace DRObjects.DataStructures
         }
 
         /// <summary>
+        /// Expresses the Date in [Dayth of Month, year]
+        /// </summary>
+        /// <returns></returns>
+        public string GetDateString()
+        {
+            string dateString = String.Empty;
+
+            //Get the day part
+            int day = GetTimeComponent(DRTimeComponent.DAY);
+
+            dateString += day;
+
+            switch(day)
+            {
+                case 1:
+                    dateString += "st of"; break;
+                case 2:
+                    dateString += "nd of"; break;
+                case 3: dateString += "rd of"; break;
+                default:
+                    dateString += "th of"; break;
+            } 
+
+            dateString += GetMonthName() + ",";
+
+            dateString += this.GetTimeComponent(DRTimeComponent.YEAR);
+
+            return dateString;
+        }
+
+        /// <summary>
         /// Gets some part of the time component based on the multiplier
         /// </summary>
         /// <param name="multiplier"></param>
@@ -66,13 +97,13 @@ namespace DRObjects.DataStructures
             int returnValue = 0;
 
             //Then, except for years, remainder divide with the multiplier after it
-            if ((int)component >= MULTIPLIERS.Length)
+            if ((int)component >= MULTIPLIERS.Length -1)
             {
                 return (int)dividedTime;
             }
             else
             {
-                returnValue = (int) dividedTime % MULTIPLIERS[(int)component + 1];
+                returnValue = (int) (dividedTime % (MULTIPLIERS[(int)component + 1] / MULTIPLIERS[(int)component]));
             }
 
             if (component == DRTimeComponent.DAY || component == DRTimeComponent.MONTH)
@@ -124,11 +155,21 @@ namespace DRObjects.DataStructures
         /// <param name="value"></param>
         public void Add(DRTimeComponent component, int value)
         {
+            if (component == DRTimeComponent.MONTH || component == DRTimeComponent.DAY)
+            {
+                value--;
+            }
+
             time += MULTIPLIERS[(int)component] * value;
         }
 
         public void Subtract(DRTimeComponent component, int value)
         {
+            if (component == DRTimeComponent.MONTH || component == DRTimeComponent.DAY)
+            {
+                value--;
+            }
+
             time -= MULTIPLIERS[(int)component] * value;
         }
 

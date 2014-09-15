@@ -122,6 +122,7 @@
     <Compile Include="InterfaceComponents\Components\LocationDetailsComponent.cs" />
     <Compile Include="InterfaceComponents\Components\Map.cs" />
     <Compile Include="InterfaceComponents\Components\TextLogComponent.cs" />
+    <Compile Include="InterfaceComponents\Components\TimeDisplay.cs" />
     <Compile Include="InterfaceComponents\Components\ViewTileTextComponent.cs" />
     <Compile Include="InterfaceComponents\IGameInterfaceComponent.cs" />
     <Compile Include="InterfaceComponents\MainMenuComponents\AutoSizeButton.cs" />
