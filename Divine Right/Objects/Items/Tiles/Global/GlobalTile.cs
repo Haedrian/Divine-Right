@@ -119,38 +119,38 @@ namespace DRObjects.Items.Tiles.Global
 
                 if (this.Elevation > 250)
                 {
-                    totalTime += 500; //Yes, take half a day
+                    totalTime += 250;
                 }
 
                 //What biome do we have?
                 switch(this.Biome.Value)
                 {
                     case GlobalBiome.ARID_DESERT:
-                        totalTime += 200;
-                        break;
-                    case GlobalBiome.DENSE_FOREST:
-                        totalTime += 400;
-                        break;
-                    case GlobalBiome.GARIGUE:
-                        totalTime += 150;
-                        break;
-                    case GlobalBiome.GRASSLAND:
                         totalTime += 100;
                         break;
-                    case GlobalBiome.POLAR_DESERT:
+                    case GlobalBiome.DENSE_FOREST:
                         totalTime += 200;
+                        break;
+                    case GlobalBiome.GARIGUE:
+                        totalTime += 75;
+                        break;
+                    case GlobalBiome.GRASSLAND:
+                        totalTime += 50;
+                        break;
+                    case GlobalBiome.POLAR_DESERT:
+                        totalTime += 100;
                         break;
                     case GlobalBiome.POLAR_FOREST:
-                        totalTime += 300;
+                        totalTime += 150;
                         break;
                     case GlobalBiome.RAINFOREST:
-                        totalTime += 400;
+                        totalTime += 200;
                         break;
                     case GlobalBiome.WETLAND:
-                        totalTime += 200;
+                        totalTime += 100;
                         break;
                     case GlobalBiome.WOODLAND:
-                        totalTime += 200;
+                        totalTime += 100;
                         break;
                 }
 

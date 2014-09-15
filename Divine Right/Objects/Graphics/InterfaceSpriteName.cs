@@ -57,6 +57,8 @@ namespace DRObjects.Graphics
         GENERAL_STORE,
         INN,
         GOTO_WORLD_MAP,
-        GOTO_WORLD_MAP_DUNGEON
+        GOTO_WORLD_MAP_DUNGEON,
+        MOON,
+        SUN
     }
 }

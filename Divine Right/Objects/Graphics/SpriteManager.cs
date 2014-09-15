@@ -26,6 +26,7 @@ namespace DRObjects.Graphics
         private static string BANNERS = @"Graphics/Interface/Banners";
         private static string LOCATIONINTERFACE = @"Graphics/Interface/locationInterface";
         private static string GOTOWORLDMAP = @"Graphics/Interface/gotoWorldMap";
+        private static string TIMEICONS = @"Graphics/Interface/timeIcons";
 
         private static string MERCHANT = @"Graphics/Local/merchant";
         private static string GUARD = @"Graphics/Local/humanguard";
@@ -703,6 +704,9 @@ namespace DRObjects.Graphics
             interfaceSprites[(int)InterfaceSpriteName.GOTO_WORLD_MAP_DUNGEON] = new SpriteData(GOTOWORLDMAP + "2");
 
             interfaceSprites[(int)InterfaceSpriteName.DEAD] = new SpriteData(@"Graphics/Interface/death", null);
+
+            interfaceSprites[(int)InterfaceSpriteName.SUN] = new SpriteData(TIMEICONS, new Rectangle(0, 0, 50, 50));
+            interfaceSprites[(int)InterfaceSpriteName.MOON] = new SpriteData(TIMEICONS, new Rectangle(50, 0, 50, 50));
         }
 
 

@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using DRObjects.Graphics;
 using Divine_Right.HelperFunctions;
 using DivineRightGame;
+using DRObjects.DataStructures.Enum;
 
 namespace Divine_Right.InterfaceComponents.Components
 {
@@ -23,6 +24,8 @@ namespace Divine_Right.InterfaceComponents.Components
         private Rectangle rect;
         private Rectangle dateRect;
         private Rectangle timeRect;
+
+        private Rectangle[] timePositionRects;
 
         public TimeDisplayComponent(int x, int y)
         {
@@ -46,10 +49,26 @@ namespace Divine_Right.InterfaceComponents.Components
             //Draw the text
             batch.DrawString(font, GameState.UniverseTime.GetDateString(), dateRect, Alignment.Center, Color.Black);
 
-            string timeString = GameState.UniverseTime.GetTimeComponent(DRObjects.DataStructures.Enum.DRTimeComponent.HOUR) + "." + GameState.UniverseTime.GetTimeComponent(DRObjects.DataStructures.Enum.DRTimeComponent.MINUTE) + "." + GameState.UniverseTime.GetTimeComponent(DRObjects.DataStructures.Enum.DRTimeComponent.SECOND);
+            //Day or night? And put in right position
 
-            batch.DrawString(font, timeString, timeRect, Alignment.Center, Color.Black);
+            if (GameState.UniverseTime.GetTimeComponent(DRTimeComponent.HOUR) >= 5)
+            {
+                //Night
+                batch.Draw(content, SpriteManager.GetSprite(ColourSpriteName.MARBLEBLUE), timeRect, Color.DarkBlue);
+                batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.MOON), timePositionRects[GameState.UniverseTime.GetTimeComponent(DRTimeComponent.HOUR) - 5], Color.White);
+            }
+            else
+            {
+                //Day
+                batch.Draw(content, SpriteManager.GetSprite(ColourSpriteName.MARBLEBLUE), timeRect, Color.LightSkyBlue);
+                batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.SUN), timePositionRects[GameState.UniverseTime.GetTimeComponent(DRTimeComponent.HOUR)], Color.White);
+            }
 
+            //Put the sun in the right position
+            //foreach(var r in timePositionRects)
+            //{
+            //    batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.MOON), r, Color.White);
+            //}
         }
 
         public bool HandleClick(int x, int y, Objects.Enums.MouseActionEnum mouseAction, out DRObjects.Enums.ActionTypeEnum? actionType, out DRObjects.Enums.InternalActionEnum? internalActionType, out object[] args, out DRObjects.MapItem item, out DRObjects.MapCoordinate coord, out bool destroy)
@@ -87,9 +106,18 @@ namespace Divine_Right.InterfaceComponents.Components
             this.locationX += deltaX;
             this.locationY += deltaY;
 
-            this.rect = new Rectangle(locationX, locationY, 200, 60);
-            this.dateRect = new Rectangle(locationX, locationY, 200, 30);
-            this.timeRect = new Rectangle(locationX, locationY + 30, 200, 30);
+            this.rect = new Rectangle(locationX, locationY, 200, 100);
+            this.dateRect = new Rectangle(locationX, locationY+70, 200, 30);
+            this.timeRect = new Rectangle(locationX, locationY, 200, 70);
+
+            this.timePositionRects = new Rectangle[5] 
+            {
+                new Rectangle(locationX +0,locationY + 40,30,30),
+                new Rectangle(locationX +43,locationY + 20,30,30),
+                new Rectangle(locationX + 86, locationY,30,30),
+                new Rectangle(locationX + 129,locationY + 20, 30,30),
+                new Rectangle(locationX + 170,locationY + 40,30,30)
+            };
         }
 
         public bool IsModal()
