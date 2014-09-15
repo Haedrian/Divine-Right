@@ -10,6 +10,7 @@ using DRObjects.Items.Archetypes.Global;
 using System.Runtime.Serialization;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using DRObjects.DataStructures;
 
 namespace DivineRightGame
 {
@@ -34,6 +35,8 @@ namespace DivineRightGame
         /// </summary>
         public static Actor PlayerCharacter { get; set; }
 
+        public static DivineRightDateTime UniverseTime { get; set; }
+
         /// <summary>
         /// A log for storing feedback. Only holds one tick's worth.
         /// </summary>
@@ -51,6 +54,12 @@ namespace DivineRightGame
             }
         }
         private static Random _random = new Random();
+
+        public static GameState()
+        {
+            //Start off at the 1/1/210
+            UniverseTime = new DivineRightDateTime(210, 1, 1);
+        }
 
         /// <summary>
         /// Saves the Game into the folder. There will only be one such savegame at a time.

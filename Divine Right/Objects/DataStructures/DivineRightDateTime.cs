@@ -34,6 +34,7 @@ namespace DRObjects.DataStructures
         /// <param name="day"></param>
         public DivineRightDateTime(int year, int month, int day)
         {
+            //Month and year are subtracted by 1 because people tend to start months and days at 1
             time = 0;
             Add(DRTimeComponent.YEAR, year);
             Add(DRTimeComponent.MONTH, month);
@@ -42,6 +43,7 @@ namespace DRObjects.DataStructures
 
         public DivineRightDateTime(int year, int month, int day, int hour, int minute, int seconds)
         {
+            //Month and year are subtracted by 1 because people tend to start months and days at 1
             time = 0;
             Add(DRTimeComponent.YEAR, year);
             Add(DRTimeComponent.MONTH, month);
@@ -61,6 +63,8 @@ namespace DRObjects.DataStructures
             //First we divide time by the multiplier
             long dividedTime = time / MULTIPLIERS[(int) component];
 
+            int returnValue = 0;
+
             //Then, except for years, remainder divide with the multiplier after it
             if ((int)component >= MULTIPLIERS.Length)
             {
@@ -68,8 +72,16 @@ namespace DRObjects.DataStructures
             }
             else
             {
-                return (int) dividedTime % MULTIPLIERS[(int)component + 1];
+                returnValue = (int) dividedTime % MULTIPLIERS[(int)component + 1];
             }
+
+            if (component == DRTimeComponent.DAY || component == DRTimeComponent.MONTH)
+            {
+                //Increment by 1
+                return returnValue + 1;
+            }
+
+            return returnValue;
         }
 
         /// <summary>
@@ -79,6 +91,11 @@ namespace DRObjects.DataStructures
         /// <param name="component"></param>
         public void SetTimeComponent(DRTimeComponent component, int value)
         {
+            if (component == DRTimeComponent.DAY || component == DRTimeComponent.MONTH)
+            {
+                value--; //Because people start days and months at 1
+            }
+
             //First determine the current value
             long currentValue = GetTimeComponent(component);
 
@@ -89,6 +106,15 @@ namespace DRObjects.DataStructures
 
             //And replace it with our new value
             time += MULTIPLIERS[(int)component] * value;
+        }
+
+        /// <summary>
+        /// Returns the name of the current month
+        /// </summary>
+        /// <returns></returns>
+        public string GetMonthName()
+        {
+            return MONTHS[GetTimeComponent(DRTimeComponent.MONTH)];
         }
 
         /// <summary>
