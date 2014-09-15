@@ -148,5 +148,10 @@ namespace DRObjects.Items.Archetypes.Local
         /// The actor being linked to
         /// </summary>
         public bool IsStunned { get; set; }
+
+        /// <summary>
+        /// The actor this character is linked to
+        /// </summary>
+        public Actor Actor { get; set; }
     }
 }

@@ -674,6 +674,8 @@ namespace DivineRightGame.SettlementHandling
 
                 act.MapCharacter = fact.CreateItem("enemies", actorID);
 
+                (act.MapCharacter as LocalCharacter).Actor = act;
+
                 actors.Add(act);
             }
 
@@ -713,6 +715,8 @@ namespace DivineRightGame.SettlementHandling
                 Actor actor = ActorGeneration.CreateEnemy("human", "guard", true, 10,300, out actorID);
 
                 actor.MapCharacter = fact.CreateItem("enemies", actorID);
+
+                (actor.MapCharacter as LocalCharacter).Actor = actor;
 
                 actors.Add(actor);
             }

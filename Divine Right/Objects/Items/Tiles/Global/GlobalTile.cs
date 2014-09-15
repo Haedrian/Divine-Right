@@ -108,6 +108,56 @@ namespace DRObjects.Items.Tiles.Global
 
         #region Properties
 
+        /// <summary>
+        /// Returns the total amount of time needed to traverse into this tile
+        /// </summary>
+        public int TraverseTimeInMinutes
+        {
+            get
+            {
+                int totalTime = 0;
+
+                if (this.Elevation > 250)
+                {
+                    totalTime += 500; //Yes, take half a day
+                }
+
+                //What biome do we have?
+                switch(this.Biome.Value)
+                {
+                    case GlobalBiome.ARID_DESERT:
+                        totalTime += 200;
+                        break;
+                    case GlobalBiome.DENSE_FOREST:
+                        totalTime += 400;
+                        break;
+                    case GlobalBiome.GARIGUE:
+                        totalTime += 150;
+                        break;
+                    case GlobalBiome.GRASSLAND:
+                        totalTime += 100;
+                        break;
+                    case GlobalBiome.POLAR_DESERT:
+                        totalTime += 200;
+                        break;
+                    case GlobalBiome.POLAR_FOREST:
+                        totalTime += 300;
+                        break;
+                    case GlobalBiome.RAINFOREST:
+                        totalTime += 400;
+                        break;
+                    case GlobalBiome.WETLAND:
+                        totalTime += 200;
+                        break;
+                    case GlobalBiome.WOODLAND:
+                        totalTime += 200;
+                        break;
+                }
+
+                return totalTime;
+            }
+        }
+
         public override bool MayContainItems
         {
             get

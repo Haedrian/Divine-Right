@@ -19,7 +19,7 @@ namespace DRObjects.DataStructures
         /// </summary>
         private readonly string[] MONTHS = new string[11] { "", "Ew", "Tin", "Tie", "Rab", "Ham", "Sit", "Seb", "Tmin", "Dis", "Ash" };
 
-        private readonly long[] MULTIPLIERS = new long[6] { 1, 100, 100000, 1000000, 10000000, 100000000 };
+        private readonly long[] MULTIPLIERS = new long[6] { 1, 100, 10000, 100000, 1000000, 10000000 };
 
         /// <summary>
         /// Hooray for decimal time. We only need to store the total seconds in here and then just read different multiples of 100 to read the different times

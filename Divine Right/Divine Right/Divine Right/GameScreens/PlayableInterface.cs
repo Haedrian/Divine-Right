@@ -28,6 +28,7 @@ using DRObjects.LocalMapGeneratorObjects;
 using DRObjects.Items.Archetypes.Global;
 using DRObjects.Database;
 using DivineRightGame.ItemFactory.ItemFactoryManagers;
+using DRObjects.DataStructures.Enum;
 
 namespace Divine_Right.GameScreens
 {
@@ -1057,6 +1058,13 @@ namespace Divine_Right.GameScreens
                     dif.ItemToDrop.InInventory = false;
 
                     GameState.PlayerCharacter.Inventory.Inventory.Remove(dif.ItemToDrop.Category, dif.ItemToDrop);
+                }
+                else if (feedback.GetType().Equals(typeof(TimePassFeedback)))
+                {
+                    TimePassFeedback tpf = feedback as TimePassFeedback;
+
+                    //Move time forth
+                    GameState.UniverseTime.Add(DRTimeComponent.MINUTE, tpf.TimePassInMinutes);
                 }
        
             }

@@ -13,6 +13,7 @@ using DRObjects.ActorHandling;
 using DivineRightGame.ActorHandling;
 using DRObjects.ActorHandling.CharacterSheet.Enums;
 using DRObjects.LocalMapGeneratorObjects.Enums;
+using DRObjects.Items.Archetypes.Local;
 
 namespace DivineRightGame.LocalMapGenerator
 {
@@ -654,6 +655,7 @@ namespace DivineRightGame.LocalMapGenerator
                         var mapCharacter = factory.CreateItem("enemies", actorID);
 
                         newActor.MapCharacter = mapCharacter;
+                        (mapCharacter as LocalCharacter).Actor = newActor;
 
                         //Lets position them randomly
                         for (int attempt = 0; attempt < 150; attempt++)
@@ -749,6 +751,8 @@ namespace DivineRightGame.LocalMapGenerator
                     Actor actor = ActorGeneration.CreateEnemy(enemyType, null, null, (int) (handToHand * multiplier),(int)(totalCostOfStuff * multiplier), out returnedID);
 
                     var mapObject = fact.CreateItem("enemies", returnedID);
+
+                    (mapObject as LocalCharacter).Actor = actor;
 
                     //Create the Actor
                     actor.GlobalCoordinates = null; //useless for now

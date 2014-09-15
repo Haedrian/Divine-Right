@@ -225,6 +225,14 @@ namespace DRObjects
 
                     actor.MapCharacter.Coordinate = this.Tile.Coordinate;
                     this.mapItems.Add(actor.MapCharacter);
+
+                    //Are we moving the player character on the world map?
+                    if (actor.IsPlayerCharacter && this.Tile.GetType() == typeof(GlobalTile))
+                    {
+                        //Make some time pass
+                        return new ActionFeedback[1] { new TimePassFeedback() { TimePassInMinutes = (this.Tile as GlobalTile).TraverseTimeInMinutes } };
+                    }
+
                     return new ActionFeedback[0];
                 }
                 else
