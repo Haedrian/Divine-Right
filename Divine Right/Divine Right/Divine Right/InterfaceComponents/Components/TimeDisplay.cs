@@ -20,8 +20,10 @@ namespace Divine_Right.InterfaceComponents.Components
         protected int locationX;
         protected int locationY;
 
+        private Rectangle borderRect;
+
         private SpriteFont font;
-        private Rectangle rect;
+        private Rectangle drawRect;
         private Rectangle dateRect;
         private Rectangle timeRect;
 
@@ -37,9 +39,13 @@ namespace Divine_Right.InterfaceComponents.Components
 
         public void Draw(Microsoft.Xna.Framework.Content.ContentManager content, Microsoft.Xna.Framework.Graphics.SpriteBatch batch)
         {
+            var white = SpriteManager.GetSprite(ColourSpriteName.WHITE);
+
+            batch.Draw(content, white, borderRect, Color.DarkGray);
+
             var woodBackground = SpriteManager.GetSprite(InterfaceSpriteName.WOOD_TEXTURE);
 
-            batch.Draw(content, woodBackground, rect, Color.White);
+            batch.Draw(content, woodBackground, drawRect, Color.White);
 
             if (font == null)
             {
@@ -64,11 +70,6 @@ namespace Divine_Right.InterfaceComponents.Components
                 batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.SUN), timePositionRects[GameState.UniverseTime.GetTimeComponent(DRTimeComponent.HOUR)], Color.White);
             }
 
-            //Put the sun in the right position
-            //foreach(var r in timePositionRects)
-            //{
-            //    batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.MOON), r, Color.White);
-            //}
         }
 
         public bool HandleClick(int x, int y, Objects.Enums.MouseActionEnum mouseAction, out DRObjects.Enums.ActionTypeEnum? actionType, out DRObjects.Enums.InternalActionEnum? internalActionType, out object[] args, out DRObjects.MapItem item, out DRObjects.MapCoordinate coord, out bool destroy)
@@ -98,7 +99,7 @@ namespace Divine_Right.InterfaceComponents.Components
 
         public Microsoft.Xna.Framework.Rectangle ReturnLocation()
         {
-            return rect;
+            return drawRect;
         }
 
         public void PerformDrag(int deltaX, int deltaY)
@@ -106,17 +107,18 @@ namespace Divine_Right.InterfaceComponents.Components
             this.locationX += deltaX;
             this.locationY += deltaY;
 
-            this.rect = new Rectangle(locationX, locationY, 200, 100);
-            this.dateRect = new Rectangle(locationX, locationY+70, 200, 30);
-            this.timeRect = new Rectangle(locationX, locationY, 200, 70);
+            this.borderRect = new Rectangle(locationX - 2, locationY - 2, 154, 74);
+            this.drawRect = new Rectangle(locationX, locationY, 150, 70);
+            this.dateRect = new Rectangle(locationX, locationY+40, 150, 30);
+            this.timeRect = new Rectangle(locationX, locationY, 150, 40);
 
             this.timePositionRects = new Rectangle[5] 
             {
-                new Rectangle(locationX +0,locationY + 40,30,30),
-                new Rectangle(locationX +43,locationY + 20,30,30),
-                new Rectangle(locationX + 86, locationY,30,30),
-                new Rectangle(locationX + 129,locationY + 20, 30,30),
-                new Rectangle(locationX + 170,locationY + 40,30,30)
+                new Rectangle(locationX +0,locationY + 20,20,20),
+                new Rectangle(locationX +30,locationY + 10,20,20),
+                new Rectangle(locationX + 60, locationY,20,20),
+                new Rectangle(locationX + 90,locationY + 10, 20,20),
+                new Rectangle(locationX + 120,locationY + 20,20,20)
             };
         }
 

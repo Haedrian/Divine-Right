@@ -122,6 +122,11 @@ namespace DRObjects.Items.Tiles.Global
                     totalTime += 250;
                 }
 
+                if (!this.Biome.HasValue)
+                {
+                    return 100;
+                }
+
                 //What biome do we have?
                 switch(this.Biome.Value)
                 {
