@@ -725,7 +725,11 @@ namespace Divine_Right.GameScreens
 
             this.DrawGrid(iBlocks);
 
-           // nighttime spriteBatch.Draw(this.game.Content, SpriteManager.GetSprite(ColourSpriteName.MARBLEBLUE), new Rectangle(0, 0, 10000, 10000), new Color(0, 0, 0, 150));
+           // nighttime 
+            if (GameState.UniverseTime.GetTimeComponent(DRTimeComponent.HOUR) >= 5)
+            {
+                spriteBatch.Draw(this.game.Content, SpriteManager.GetSprite(ColourSpriteName.MARBLEBLUE), new Rectangle(0, 0, 10000, 10000), new Color(0, 0, 0, 150));
+            }
 
             foreach (AutoSizeGameButton button in menuButtons)
             {
