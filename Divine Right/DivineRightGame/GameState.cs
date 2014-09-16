@@ -71,6 +71,7 @@ namespace DivineRightGame
             saveFile.GlobalMap = GameState.GlobalMap;
             saveFile.LocalMap = GameState.LocalMap;
             saveFile.PlayerCharacter = GameState.PlayerCharacter;
+            saveFile.UniverseTime = GameState.UniverseTime;
 
             IFormatter formatter = new BinaryFormatter();
             Stream stream = new FileStream(GameState.SAVEPATH + "GameState.dvg", FileMode.Create, FileAccess.Write, FileShare.None);
@@ -92,6 +93,7 @@ namespace DivineRightGame
             GameState.LocalMap = obj.LocalMap;
             GameState.GlobalMap = obj.GlobalMap;
             GameState.PlayerCharacter = obj.PlayerCharacter;
+            GameState.UniverseTime = obj.UniverseTime;
         }
 
         /// <summary>
