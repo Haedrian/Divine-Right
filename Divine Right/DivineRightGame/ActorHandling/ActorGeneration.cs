@@ -8,6 +8,7 @@ using DRObjects.Database;
 using DRObjects.Enums;
 using DRObjects.Items.Archetypes.Local;
 using DivineRightGame.ItemFactory.ItemFactoryManagers;
+using DRObjects.ActorHandling.Enums;
 
 namespace DivineRightGame.ActorHandling
 {
@@ -75,7 +76,7 @@ namespace DivineRightGame.ActorHandling
         /// <param name="gearCost">The total cost of this unit's equipped items</param>
         /// <param name="?"></param>
         /// <returns></returns>
-        public static DRObjects.Actor CreateEnemy(string enemyType, string enemyTag, bool? intelligent,int level, int gearCost, out int enemyID)
+        public static DRObjects.Actor CreateActor(string enemyType, string enemyTag, bool? intelligent, int level, int gearCost, Gender? gender, out int enemyID, ActorProfession? profession = null)
         {
             //Get all the data from the database and we'll make our own filtering
             var dictionary = DatabaseHandling.GetDatabase(Archetype.ENEMIES);
@@ -95,6 +96,11 @@ namespace DivineRightGame.ActorHandling
             if (intelligent.HasValue)
             {
                 possibleMatches = possibleMatches.Where(v => Boolean.Parse(v[7]).Equals(intelligent.Value));
+            }
+
+            if (gender.HasValue)
+            {
+                possibleMatches = possibleMatches.Where(v =>(v[12]).Equals(gender.Value.ToString()));
             }
 
             //Put the possible matches and pick one at random

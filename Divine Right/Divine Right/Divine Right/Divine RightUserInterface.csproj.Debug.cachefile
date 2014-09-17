@@ -68,8 +68,6 @@ Content\Graphics\Local\inventoryItems.xnb
 Content\Fonts\LightText.xnb
 Content\Graphics\Interface\timeIcons.xnb
 Content\Fonts\TextFeedbackFont.spritefont
-App.config
-Maplets.sdf
 Items.sdf
 Maplets\Components\LargeBedroom.xml
 Maplets\Components\MediumBedroom.xml
@@ -133,4 +131,6 @@ Maplets\Temple.xml
 Maplets\Village.xml
 Resources\SettlementNames\Prefix.txt
 Resources\SettlementNames\Suffix.txt
+App.config
+Maplets.sdf
 Maplets\GeneralStore.xml

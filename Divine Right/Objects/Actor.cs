@@ -7,6 +7,7 @@ using DRObjects.ActorHandling;
 using Newtonsoft.Json;
 using DRObjects.Items.Archetypes.Local;
 using DRObjects.DataStructures;
+using DRObjects.ActorHandling.Enums;
 
 namespace DRObjects
 {
@@ -17,6 +18,16 @@ namespace DRObjects
     /// </summary>
     public class Actor
     {
+        /// <summary>
+        /// The name of the actor
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Gender
+        /// </summary>
+        public Gender Gender { get; set; }
+
         public ActorInventory Inventory { get; set; }
         /// <summary>
         /// If its an enemy, holds some auxillary data

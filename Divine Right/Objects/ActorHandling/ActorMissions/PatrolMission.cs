@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DRObjects.LocalMapGeneratorObjects;
+using DRObjects.Enums;
 
 namespace DRObjects.ActorHandling.ActorMissions
 {
@@ -17,9 +18,9 @@ namespace DRObjects.ActorHandling.ActorMissions
             get { return ActorMissionType.PATROL; }
         }
 
-        public override Enums.EnemyThought EnemyThought
+        public override EnemyThought EnemyThought
         {
-            get { return Enums.EnemyThought.WALK; }
+            get { return EnemyThought.WALK; }
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DRObjects.Enums;
 
 namespace DRObjects.ActorHandling.ActorMissions
 {
@@ -28,9 +29,9 @@ namespace DRObjects.ActorHandling.ActorMissions
             get { return ActorMissionType.WAIT; }
         }
 
-        public override Enums.EnemyThought EnemyThought
+        public override EnemyThought EnemyThought
         {
-            get { return Enums.EnemyThought.WAIT; }
+            get { return EnemyThought.WAIT; }
         }
     }
 }

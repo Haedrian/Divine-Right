@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using DRObjects.Items.Archetypes.Local;
 using DRObjects;
-using DRObjects.Enums;
 using DRObjects.Graphics;
 using DRObjects.Database;
+using DRObjects.Enums;
 
 namespace DivineRightGame.ItemFactory.ItemFactoryManagers
 {
@@ -39,7 +39,7 @@ namespace DivineRightGame.ItemFactory.ItemFactoryManagers
         {
             LocalCharacter enemy = new LocalCharacter();
             enemy.Description = enemyDescription;
-            enemy.EnemyThought = DRObjects.Enums.EnemyThought.WAIT;
+            enemy.EnemyThought = EnemyThought.WAIT;
 
             string chosenGraphic = String.Empty;
 

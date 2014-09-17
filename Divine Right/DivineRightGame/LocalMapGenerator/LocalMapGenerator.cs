@@ -649,7 +649,7 @@ namespace DivineRightGame.LocalMapGenerator
                         string enemyType = actor.UseLocalType ? actorType : actor.EnemyType;
 
                         //For now set gear cost to 0
-                        Actor newActor = ActorGeneration.CreateEnemy(enemyType, actor.EnemyTag, null, 10,0, out actorID);
+                        Actor newActor = ActorGeneration.CreateActor(enemyType, actor.EnemyTag, null, 10,0,null, out actorID);
 
                         //Generate the map character
                         var mapCharacter = factory.CreateItem("enemies", actorID);
@@ -748,7 +748,7 @@ namespace DivineRightGame.LocalMapGenerator
 
                     Console.WriteLine("Level : " + handToHand*multiplier + " Gear : " + totalCostOfStuff*multiplier);
 
-                    Actor actor = ActorGeneration.CreateEnemy(enemyType, null, null, (int) (handToHand * multiplier),(int)(totalCostOfStuff * multiplier), out returnedID);
+                    Actor actor = ActorGeneration.CreateActor(enemyType, null, null, (int) (handToHand * multiplier),(int)(totalCostOfStuff * multiplier),null, out returnedID);
 
                     var mapObject = fact.CreateItem("enemies", returnedID);
 

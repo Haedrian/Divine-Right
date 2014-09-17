@@ -19,6 +19,7 @@ using System.Reflection;
 using System.Threading;
 using DivineRightGame.Managers.HelperObjects.HelperEnums;
 using DRObjects.Items.Archetypes.Local;
+using DRObjects.ActorHandling.Enums;
 
 namespace DivineRightGame.SettlementHandling
 {
@@ -668,9 +669,20 @@ namespace DivineRightGame.SettlementHandling
                     socialClass = "poor";
                 }
 
+                Gender? gender = null;
+
+                if (random.Next(2) == 1)
+                {
+                    gender = Gender.M;
+                }
+                else
+                {
+                    gender = Gender.F;
+                }
+
                 //Create a new actor
                 int actorID = 0;
-                Actor act = ActorGeneration.CreateEnemy("human", socialClass, true, 5,0, out actorID);
+                Actor act = ActorGeneration.CreateActor("human", socialClass, true, 5,0,gender, out actorID);
 
                 act.MapCharacter = fact.CreateItem("enemies", actorID);
 
@@ -712,7 +724,7 @@ namespace DivineRightGame.SettlementHandling
                 int actorID = 0;
 
                 //Late we'll want to change the gear total
-                Actor actor = ActorGeneration.CreateEnemy("human", "guard", true, 10,300, out actorID);
+                Actor actor = ActorGeneration.CreateActor("human", "guard", true, 10,300,null, out actorID);
 
                 actor.MapCharacter = fact.CreateItem("enemies", actorID);
 

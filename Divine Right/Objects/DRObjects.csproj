@@ -89,6 +89,7 @@
     <Compile Include="ActorHandling\CharacterSheet\Enums\ActorProfession.cs" />
     <Compile Include="ActorHandling\CharacterSheet\Enums\AnatomyEnum.cs" />
     <Compile Include="ActorHandling\EnemyData.cs" />
+    <Compile Include="ActorHandling\Enums\Gender.cs" />
     <Compile Include="ActorHandling\EquippedItem.cs" />
     <Compile Include="ActorHandling\RaceData.cs" />
     <Compile Include="Compare\MapCoordinateCompare.cs" />
