@@ -1,0 +1,17 @@
+﻿Blood
+Widow
+Skull
+Flesh
+Life
+Strenght
+Force
+Brave
+Fire
+Axe
+Mace
+Sword
+Power
+Death
+Rage
+Ruin
+Loot

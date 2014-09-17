@@ -389,6 +389,15 @@
     <Content Include="Resources\HumanNames\Surnames.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\OrcNames\FirstName.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\OrcNames\SurnameAft.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\OrcNames\SurnameFore.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\SettlementNames\Prefix.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

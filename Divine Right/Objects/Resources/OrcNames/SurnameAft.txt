@@ -1,0 +1,10 @@
+﻿drinker
+eater
+bane
+crusher
+hearted
+mount
+basher
+striker
+flame
+legend

@@ -62,6 +62,9 @@ Maplets\Village.xml
 Resources\HumanNames\FemaleNames.txt
 Resources\HumanNames\MaleNames.txt
 Resources\HumanNames\Surnames.txt
+Resources\OrcNames\FirstName.txt
+Resources\OrcNames\SurnameAft.txt
+Resources\OrcNames\SurnameFore.txt
 Resources\SettlementNames\Prefix.txt
 Resources\SettlementNames\Suffix.txt
 App.config

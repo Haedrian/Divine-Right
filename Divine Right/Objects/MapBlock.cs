@@ -243,6 +243,12 @@ namespace DRObjects
             }
 
             MapItem item = GetTopItem();
+
+            if (item == null)
+            {
+                return new ActionFeedback[0] { };
+            }
+
             return item.PerformAction(actionType, actor, args);
         }
 

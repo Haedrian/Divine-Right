@@ -19,6 +19,10 @@ namespace DRObjects.ActorHandling
         private static readonly List<string> femaleHuman = new List<string>();
         private static readonly List<string> humanSurname = new List<string>();
 
+        private static readonly List<string> orcName = new List<string>();
+        private static readonly List<string> orcSurnameFore = new List<string>();
+        private static readonly List<string> orcSurnameAft = new List<string>();
+
         private static Random random;
 
         static ActorNameGenerator()
@@ -41,6 +45,21 @@ namespace DRObjects.ActorHandling
                 humanSurname.AddRange(reader.ReadToEnd().ToLower().Replace("\r", "").Split('\n').Where(r => !String.IsNullOrEmpty(r)));
             }
 
+            using (TextReader reader = new StreamReader(folderPath + Path.DirectorySeparatorChar + "OrcNames" + Path.DirectorySeparatorChar + "FirstName.txt"))
+            {
+                orcName.AddRange(reader.ReadToEnd().Replace("\r", "").Split('\n').Where(r => !String.IsNullOrEmpty(r)));
+            }
+
+            using (TextReader reader = new StreamReader(folderPath + Path.DirectorySeparatorChar + "OrcNames" + Path.DirectorySeparatorChar + "SurnameAft.txt"))
+            {
+                orcSurnameAft.AddRange(reader.ReadToEnd().Replace("\r", "").Split('\n').Where(r => !String.IsNullOrEmpty(r)));
+            }
+
+            using (TextReader reader = new StreamReader(folderPath + Path.DirectorySeparatorChar + "OrcNames" + Path.DirectorySeparatorChar + "SurnameFore.txt"))
+            {
+                orcSurnameFore.AddRange(reader.ReadToEnd().Replace("\r", "").Split('\n').Where(r => !String.IsNullOrEmpty(r)));
+            }
+
             //Title case all of them
             for (int i = 0; i < femaleHuman.Count; i++)
             {
@@ -60,7 +79,7 @@ namespace DRObjects.ActorHandling
             random = new Random();
         }
 
-        public static string GenerateHumanName(Gender gender)
+        private static string GenerateHumanName(Gender gender)
         {
             string name = String.Empty;
 
@@ -79,15 +98,24 @@ namespace DRObjects.ActorHandling
 
         }
 
+        private static string GenerateOrcName(Gender gender)
+        {
+            return orcName[random.Next(orcName.Count)] + " " + orcSurnameFore[random.Next(orcSurnameFore.Count)] + orcSurnameAft[random.Next(orcSurnameAft.Count)];
+        }
+
         public static string GenerateName(string race, Gender gender)
         {
             switch (race.ToLower())
             {
                 case "human":
                     return GenerateHumanName(gender);
+                case "orc":
+                    return GenerateOrcName(gender);
                 default:
                     return String.Empty;
             }
         }
+
+       
     }
 }
