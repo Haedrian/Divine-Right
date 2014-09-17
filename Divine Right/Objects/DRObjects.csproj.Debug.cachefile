@@ -59,6 +59,9 @@ Maplets\Tavern.xml
 Maplets\TavernLevel1.xml
 Maplets\Temple.xml
 Maplets\Village.xml
+Resources\HumanNames\FemaleNames.txt
+Resources\HumanNames\MaleNames.txt
+Resources\HumanNames\Surnames.txt
 Resources\SettlementNames\Prefix.txt
 Resources\SettlementNames\Suffix.txt
 Maplets\GeneralStore.xml

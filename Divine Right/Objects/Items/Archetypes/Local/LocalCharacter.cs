@@ -139,6 +139,25 @@ namespace DRObjects.Items.Archetypes.Local
             }
         }
 
+        public override string Name
+        {
+            get
+            {
+                if (Actor != null && !String.IsNullOrEmpty(Actor.Name))
+                {
+                    return Actor.Name;
+                }
+                else
+                {
+                    return base.Name;
+                }
+            }
+            set
+            {
+                base.Name = value;
+            }
+        }
+
         /// <summary>
         /// How far this enemy can see
         /// </summary>

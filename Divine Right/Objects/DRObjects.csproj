@@ -75,6 +75,7 @@
   <ItemGroup>
     <Compile Include="ActorHandling\ActorInventory.cs" />
     <Compile Include="ActorHandling\ActorMissions\WaitMission.cs" />
+    <Compile Include="ActorHandling\ActorNameGenerator.cs" />
     <Compile Include="ActorHandling\ActorStance.cs" />
     <Compile Include="ActorHandling\CharacterSheet\ActorAttributes.cs" />
     <Compile Include="ActorHandling\CharacterSheet\ActorHealth.cs" />
@@ -378,6 +379,15 @@
     <Content Include="Maplets\Village.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Resources\HumanNames\FemaleNames.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HumanNames\MaleNames.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\HumanNames\Surnames.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\SettlementNames\Prefix.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

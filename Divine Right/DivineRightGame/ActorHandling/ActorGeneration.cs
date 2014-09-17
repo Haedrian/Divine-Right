@@ -125,6 +125,9 @@ namespace DivineRightGame.ActorHandling
             actor.LineOfSight = data.EnemyLineOfSight;
             actor.UniqueId = Guid.NewGuid();
             actor.IsAggressive = aggressivity > 0;
+            actor.Gender = (Gender) Enum.Parse(typeof(Gender), selected[12]);
+
+            actor.Name = ActorNameGenerator.GenerateName(enemyType, actor.Gender);
 
             //Give him attributes 
             actor.Attributes = GenerateAttributes(data.EnemyType, data.Profession, level);

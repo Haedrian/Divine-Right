@@ -671,13 +671,16 @@ namespace DivineRightGame.SettlementHandling
 
                 Gender? gender = null;
 
-                if (random.Next(2) == 1)
+                if (socialClass.Equals("poor") || socialClass.Equals("rich"))
                 {
-                    gender = Gender.M;
-                }
-                else
-                {
-                    gender = Gender.F;
+                    if (random.Next(1) == 1)
+                    {
+                        gender = Gender.M;
+                    }
+                    else
+                    {
+                        gender = Gender.F;
+                    }
                 }
 
                 //Create a new actor
