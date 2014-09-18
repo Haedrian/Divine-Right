@@ -68,7 +68,11 @@ namespace Divine_Right.InterfaceComponents.Components
         private Rectangle closeButton;
 
         private Rectangle moneyTextRect;
-         
+
+        private Rectangle totalSectionRect;
+        private Rectangle totalTextRect;
+        private Rectangle confirmButton;
+
         //Drawing stuff
         public TradeDisplayComponent(int locationX, int locationY, Actor currentActor)
         {
@@ -93,12 +97,10 @@ namespace Divine_Right.InterfaceComponents.Components
             this.content = content;
 
             batch.Draw(content, SpriteManager.GetSprite(ColourSpriteName.WHITE), borderRect, Color.DarkGray);
-
             batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.PAPER_TEXTURE), inventoryBackgroundRect, Color.White);
-
             batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.WOOD_TEXTURE), detailsRect, Color.White);
-
-            batch.Draw(content,SpriteManager.GetSprite(InterfaceSpriteName.WOOD_TEXTURE),titleBackgroundRect,Color.White);
+            batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.WOOD_TEXTURE), titleBackgroundRect, Color.White);
+            batch.Draw(content,SpriteManager.GetSprite(InterfaceSpriteName.PAPER_TEXTURE),totalSectionRect,Color.White);
 
             for (int i = 0; i < enums.Length; i++)
             {
@@ -155,10 +157,15 @@ namespace Divine_Right.InterfaceComponents.Components
             for (int i = 0; i < inventoryitems.Count(); i++)
             {
                 int column = i % ROW_TOTAL;
-                int row = (int) Math.Floor((double) i / (double) ROW_TOTAL);
+                int row = (int)Math.Floor((double)i / (double)ROW_TOTAL);
 
                 if (row == 0)
                 {
+                    if (column == 2 || column == 4)
+                    {
+                        //Highlight it
+                        batch.Draw(content, SpriteManager.GetSprite(ColourSpriteName.WHITE), row1Items[column].Rect, Color.LightBlue);
+                    }
                     //Also assign the item
                     row1Items[column].Item = inventoryitems[i];
                     batch.Draw(content, inventoryitems[i].Graphic, row1Items[column].Rect, Color.White);
@@ -199,7 +206,7 @@ namespace Divine_Right.InterfaceComponents.Components
                 batch.DrawString(font, "Buying from Joseph Borg", titleRect, Alignment.Center, Color.Green);
                 batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.SELL), swapButton, Color.White);
             }
-            else 
+            else
             {
                 batch.DrawString(font, "Selling  to Joseph Borg", titleRect, Alignment.Center, Color.DarkGoldenrod);
                 batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.BUY), swapButton, Color.White);
@@ -207,8 +214,11 @@ namespace Divine_Right.InterfaceComponents.Components
 
             batch.DrawString(font, "You: 20523", playerFundsRect, Alignment.Left, Color.Green);
             batch.DrawString(font, "Vendor: 029123", vendorFundsRect, Alignment.Right, Color.DarkGoldenrod);
+            batch.DrawString(font,"Total:1023",totalTextRect,Alignment.Left, Color.Black);
 
-            
+            batch.Draw(content,SpriteManager.GetSprite(InterfaceSpriteName.WOOD_TEXTURE),confirmButton,Color.White);
+            batch.DrawString(font,"CONFIRM",confirmButton,Alignment.Center,Color.Black);
+
         }
 
         public bool HandleClick(int x, int y, Objects.Enums.MouseActionEnum mouseAction, out DRObjects.Enums.ActionTypeEnum? actionType, out DRObjects.Enums.InternalActionEnum? internalActionType, out object[] args, out MapItem itm, out DRObjects.MapCoordinate coord, out bool destroy)
@@ -226,7 +236,7 @@ namespace Divine_Right.InterfaceComponents.Components
                 Buy = !Buy;
             }
 
-            for (int i=0; i < categories.Count; i++)
+            for (int i = 0; i < categories.Count; i++)
             {
                 if (categories[i].Contains(x, y))
                 {
@@ -262,7 +272,7 @@ namespace Divine_Right.InterfaceComponents.Components
                     if (rect.Item != null)
                     {
                         //Yes - open contextual menu
-                        contextMenu = new Rectangle(x+15, y+15, 0, 0);
+                        contextMenu = new Rectangle(x + 15, y + 15, 0, 0);
                         selectedItem = rect.Item;
 
                         foreach (var action in rect.Item.GetPossibleActions(this.VendorActor))
@@ -304,8 +314,8 @@ namespace Divine_Right.InterfaceComponents.Components
             locationX += deltaX;
             locationY += deltaY;
 
-            rect = new Rectangle(locationX, locationY, 360, 280);
-            inventoryBackgroundRect = new Rectangle(locationX, locationY+50, 360, 190);
+            rect = new Rectangle(locationX, locationY, 360, 320);
+            inventoryBackgroundRect = new Rectangle(locationX, locationY + 50, 360, 190);
             borderRect = new Rectangle(locationX - 2, locationY - 2, rect.Width + 4, rect.Height + 4);
 
             categoryBackground = new Rectangle(locationX, locationY + 100, rect.Width, 5);
@@ -316,15 +326,15 @@ namespace Divine_Right.InterfaceComponents.Components
             playerFundsIconRect = new Rectangle(locationX, locationY + 25, 25, 25);
             vendorFundsIconRect = new Rectangle(locationX + rect.Width - 25, locationY + 25, 25, 25);
             playerFundsRect = new Rectangle(locationX + 25, locationY + 25, (rect.Width / 2) - 50, 25);
-            vendorFundsRect = new Rectangle(locationX + rect.Width/2, locationY + 25, (rect.Width / 2) - 25, 25);
+            vendorFundsRect = new Rectangle(locationX + rect.Width / 2, locationY + 25, (rect.Width / 2) - 25, 25);
 
             categoryBackgrounds = new List<Rectangle>();
             categories = new List<Rectangle>();
 
             for (int i = 0; i < enums.Length; i++)
             {
-                categoryBackgrounds.Add(new Rectangle(locationX + (50 * i), locationY+50, 50, 50));
-                categories.Add(new Rectangle(locationX + (50 * i), locationY +50, 50, 50));
+                categoryBackgrounds.Add(new Rectangle(locationX + (50 * i), locationY + 50, 50, 50));
+                categories.Add(new Rectangle(locationX + (50 * i), locationY + 50, 50, 50));
             }
 
             row1Items = new List<InventoryItemRectangle>();
@@ -333,17 +343,22 @@ namespace Divine_Right.InterfaceComponents.Components
 
             for (int i = 0; i < ROW_TOTAL; i++)
             {
-                row1Items.Add(new InventoryItemRectangle{ Rect = new Rectangle((locationX + (30 * i)), locationY +60 + 50, 30, 30) });
-                row2Items.Add(new InventoryItemRectangle { Rect = new Rectangle((locationX + (30 * i)), locationY +60 + 80, 30, 30)});
+                row1Items.Add(new InventoryItemRectangle { Rect = new Rectangle((locationX + (30 * i)), locationY + 60 + 50, 30, 30) });
+                row2Items.Add(new InventoryItemRectangle { Rect = new Rectangle((locationX + (30 * i)), locationY + 60 + 80, 30, 30) });
                 row3Items.Add(new InventoryItemRectangle { Rect = new Rectangle((locationX + (30 * i)), locationY + 60 + 110, 30, 30) });
             }
 
             detailsRect = new Rectangle(locationX, locationY + 240, rect.Width, 40);
 
-           moneyTextRect = new Rectangle(locationX + 390, locationY + 240 - 30, 100, 30);
+            moneyTextRect = new Rectangle(locationX + 390, locationY + 240 - 30, 100, 30);
 
-           swapButton = new Rectangle(locationX, locationY, 20, 20);
-           closeButton = new Rectangle(locationX - rect.Width + 30, locationY, 30, 30);
+            swapButton = new Rectangle(locationX, locationY, 20, 20);
+            closeButton = new Rectangle(locationX - rect.Width + 30, locationY, 30, 30);
+
+            totalSectionRect = new Rectangle(locationX, locationY + 280, rect.Width, 40);
+            totalTextRect = new Rectangle(locationX, locationY + 280, rect.Width, 20);
+            confirmButton = new Rectangle(locationX+100, locationY + 300, rect.Width-200, 20);
+
         }
 
         public bool IsModal()
@@ -375,10 +390,10 @@ namespace Divine_Right.InterfaceComponents.Components
             allItemBoxes.AddRange(row3Items);
 
             //Inventory item?
-            foreach(InventoryItemRectangle rect in allItemBoxes)
+            foreach (InventoryItemRectangle rect in allItemBoxes)
             {
                 if (rect.Rect.Contains(x, y))
-                {     
+                {
                     //Does it contain an item?
                     if (rect.Item != null)
                     {
