@@ -64,6 +64,9 @@ namespace Divine_Right.InterfaceComponents.Components
         private List<ContextMenuItem> contextMenuChoices = new List<ContextMenuItem>();
         private ContentManager content;
 
+        private Rectangle swapButton;
+        private Rectangle closeButton;
+
         private Rectangle moneyTextRect;
          
         //Drawing stuff
@@ -187,35 +190,25 @@ namespace Divine_Right.InterfaceComponents.Components
             //Create the money thing
             //batch.Draw(content, SpriteManager.GetSprite(LocalSpriteName.COINS), moneyRect, Color.White);
             //And the total money
-            batch.DrawString(font, this.VendorActor.Inventory.TotalMoney.ToString(), moneyTextRect, Alignment.Left & Alignment.Top, Color.Black);           
+            batch.DrawString(font, this.VendorActor.Inventory.TotalMoney.ToString(), moneyTextRect, Alignment.Left & Alignment.Top, Color.Black);
+
+            batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.PAPER_TEXTURE), swapButton, Color.White);
 
             if (Buy)
             {
                 batch.DrawString(font, "Buying from Joseph Borg", titleRect, Alignment.Center, Color.Green);
+                batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.SELL), swapButton, Color.White);
             }
             else 
             {
-                batch.DrawString(font, "Selling  to Joseph Borg", titleRect, Alignment.Center, Color.Gold);
+                batch.DrawString(font, "Selling  to Joseph Borg", titleRect, Alignment.Center, Color.DarkGoldenrod);
+                batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.BUY), swapButton, Color.White);
             }
 
             batch.DrawString(font, "You: 20523", playerFundsRect, Alignment.Left, Color.Green);
             batch.DrawString(font, "Vendor: 029123", vendorFundsRect, Alignment.Right, Color.DarkGoldenrod);
 
-            if (this.contextMenu.Width > 0)
-            {
-                //Draw the context menu if present
-                SpriteData scroll = SpriteManager.GetSprite(InterfaceSpriteName.SCROLL);
-
-                Rectangle drawHere = new Rectangle(this.contextMenu.X - 10, this.contextMenu.Y - 25, this.contextMenu.Width + 20, this.contextMenu.Height + 40);
-
-                batch.Draw(content.Load<Texture2D>(scroll.path), drawHere, scroll.sourceRectangle, Color.White);
-
-                //now the items
-                foreach (ContextMenuItem item in contextMenuChoices)
-                {
-                    batch.DrawString(content.Load<SpriteFont>(@"Fonts/TextFeedbackFont"), item.Text, new Vector2(item.Rect.X, item.Rect.Y), Color.Black);
-                }
-            }
+            
         }
 
         public bool HandleClick(int x, int y, Objects.Enums.MouseActionEnum mouseAction, out DRObjects.Enums.ActionTypeEnum? actionType, out DRObjects.Enums.InternalActionEnum? internalActionType, out object[] args, out MapItem itm, out DRObjects.MapCoordinate coord, out bool destroy)
@@ -227,23 +220,11 @@ namespace Divine_Right.InterfaceComponents.Components
             destroy = false;
             itm = null;
 
-            //Clicked on a context menu item?
-            foreach (var contextMenu in contextMenuChoices)
+            //Clicked on the button?
+            if (swapButton.Contains(x, y))
             {
-                if (contextMenu.Rect.Contains(x, y))
-                {
-                    //Yes. Perform the action
-                    //this.selectedItem.PerformAction(contextMenu.Action, this.CurrentActor, contextMenu.Args);
-                    actionType = contextMenu.Action;
-                    args = contextMenu.Args;
-                    itm = selectedItem;
-                }
+                Buy = !Buy;
             }
-
-            //remove the contextual menu
-            this.contextMenu = new Rectangle(0, 0, 0, 0);
-            contextMenuChoices = new List<ContextMenuItem>();
-            selectedItem = null;
 
             for (int i=0; i < categories.Count; i++)
             {
@@ -360,7 +341,9 @@ namespace Divine_Right.InterfaceComponents.Components
             detailsRect = new Rectangle(locationX, locationY + 240, rect.Width, 40);
 
            moneyTextRect = new Rectangle(locationX + 390, locationY + 240 - 30, 100, 30);
-            
+
+           swapButton = new Rectangle(locationX, locationY, 20, 20);
+           closeButton = new Rectangle(locationX - rect.Width + 30, locationY, 30, 30);
         }
 
         public bool IsModal()

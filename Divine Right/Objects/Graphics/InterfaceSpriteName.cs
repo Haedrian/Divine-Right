@@ -59,6 +59,8 @@ namespace DRObjects.Graphics
         GOTO_WORLD_MAP,
         GOTO_WORLD_MAP_DUNGEON,
         MOON,
-        SUN
+        SUN,
+        SELL,
+        BUY
     }
 }
