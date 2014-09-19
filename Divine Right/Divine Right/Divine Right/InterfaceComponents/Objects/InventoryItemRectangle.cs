@@ -14,5 +14,14 @@ namespace Divine_Right.InterfaceComponents.Objects
     {
         public Rectangle Rect { get; set; }
         public InventoryItem Item { get; set; }
+        /// <summary>
+        /// Used for trading. Whether it is selected or not
+        /// </summary>
+        public bool Selected { get; set; }
+
+        public InventoryItemRectangle()
+        {
+            Selected = false;
+        }
     }
 }

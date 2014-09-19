@@ -59,7 +59,6 @@ namespace Divine_Right.InterfaceComponents.Components
         private Rectangle detailsRect;
         private SpriteFont font;
 
-        private InventoryItem selectedItem;
         private Rectangle contextMenu;
         private List<ContextMenuItem> contextMenuChoices = new List<ContextMenuItem>();
         private ContentManager content;
@@ -70,6 +69,8 @@ namespace Divine_Right.InterfaceComponents.Components
         private Rectangle totalSectionRect;
         private Rectangle totalTextRect;
         private Rectangle confirmButton;
+
+        private int totalSelected = 0;
 
         //Drawing stuff
         public TradeDisplayComponent(int locationX, int locationY, Actor currentActor)
@@ -92,13 +93,12 @@ namespace Divine_Right.InterfaceComponents.Components
                 return;
             }
 
+            //Calculate the total - later we'll multiply it by what the vendor wants
+            totalSelected = this.GetSelected().Sum(t => t.Item.BaseValue);
+
             this.content = content;
 
             batch.Draw(content, SpriteManager.GetSprite(ColourSpriteName.WHITE), borderRect, Color.DarkGray);
-            //batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.PAPER_TEXTURE), inventoryBackgroundRect, Color.White);
-            //batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.WOOD_TEXTURE), detailsRect, Color.White);
-            //batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.WOOD_TEXTURE), titleBackgroundRect, Color.White);
-            //batch.Draw(content,SpriteManager.GetSprite(InterfaceSpriteName.PAPER_TEXTURE),totalSectionRect,Color.White);
             batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.PAPER_TEXTURE), rect, Color.White);
 
             for (int i = 0; i < enums.Length; i++)
@@ -160,22 +160,35 @@ namespace Divine_Right.InterfaceComponents.Components
 
                 if (row == 0)
                 {
-                    if (column == 2 || column == 4)
+                    if (row1Items[column].Selected)
                     {
                         //Highlight it
                         batch.Draw(content, SpriteManager.GetSprite(ColourSpriteName.WHITE), row1Items[column].Rect, Color.LightBlue);
                     }
+
                     //Also assign the item
                     row1Items[column].Item = inventoryitems[i];
                     batch.Draw(content, inventoryitems[i].Graphic, row1Items[column].Rect, Color.White);
                 }
                 else if (row == 1)
                 {
+                    if (row2Items[column].Selected)
+                    {
+                        //Highlight it
+                        batch.Draw(content, SpriteManager.GetSprite(ColourSpriteName.WHITE), row2Items[column].Rect, Color.LightBlue);
+                    }
+
                     row2Items[column].Item = inventoryitems[i];
                     batch.Draw(content, inventoryitems[i].Graphic, row2Items[column].Rect, Color.White);
                 }
                 else
                 {
+                    if (row3Items[column].Selected)
+                    {
+                        //Highlight it
+                        batch.Draw(content, SpriteManager.GetSprite(ColourSpriteName.WHITE), row3Items[column].Rect, Color.LightBlue);
+                    }
+
                     row3Items[column].Item = inventoryitems[i];
                     batch.Draw(content, inventoryitems[i].Graphic, row3Items[column].Rect, Color.White);
                 }
@@ -208,10 +221,10 @@ namespace Divine_Right.InterfaceComponents.Components
 
             batch.DrawString(font, "You: 20523", playerFundsRect, Alignment.Left, Color.Green);
             batch.DrawString(font, "Vendor: 029123", vendorFundsRect, Alignment.Right, Color.Blue);
-            batch.DrawString(font,"Total:1023",totalTextRect,Alignment.Left, Color.Black);
+            batch.DrawString(font, "Total:" + totalSelected, totalTextRect, Alignment.Left, Color.Black);
 
-            batch.Draw(content,SpriteManager.GetSprite(InterfaceSpriteName.WOOD_TEXTURE),confirmButton,Color.White);
-            batch.DrawString(font,"CONFIRM",confirmButton,Alignment.Center,Color.Black);
+            batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.WOOD_TEXTURE), confirmButton, Color.White);
+            batch.DrawString(font, "CONFIRM", confirmButton, Alignment.Center, Color.Black);
 
         }
 
@@ -237,10 +250,11 @@ namespace Divine_Right.InterfaceComponents.Components
                     //Change category!
                     this.ChosenCategory = i;
 
-                    //remove the contextual menu
-                    contextMenu = new Rectangle(0, 0, 0, 0);
-                    contextMenuChoices = new List<ContextMenuItem>();
-                    selectedItem = null;
+                    //Remove all selections
+                    foreach(var item in row1Items.Union(row2Items).Union(row3Items))
+                    {
+                        item.Selected = false;
+                    }
 
                     //Handled. Naught else
                     return true;
@@ -257,25 +271,11 @@ namespace Divine_Right.InterfaceComponents.Components
             {
                 if (rect.Rect.Contains(x, y))
                 {
-                    //remove the contextual menu
-                    contextMenu = new Rectangle(0, 0, 0, 0);
-                    contextMenuChoices = new List<ContextMenuItem>();
-                    selectedItem = null;
-
                     //Does it contain an item?
                     if (rect.Item != null)
                     {
-                        //Yes - open contextual menu
-                        contextMenu = new Rectangle(x + 15, y + 15, 0, 0);
-                        selectedItem = rect.Item;
-
-                        foreach (var action in rect.Item.GetPossibleActions(this.VendorActor))
-                        {
-                            AddContextMenuItem(action, new object[0] { }, content);
-                        }
-
-                        //done
-                        return true;
+                        //Toggle the selection
+                        rect.Selected = !rect.Selected;
                     }
                     else
                     {
@@ -331,15 +331,28 @@ namespace Divine_Right.InterfaceComponents.Components
                 categories.Add(new Rectangle(locationX + (50 * i), locationY + 50, 50, 50));
             }
 
-            row1Items = new List<InventoryItemRectangle>();
-            row2Items = new List<InventoryItemRectangle>();
-            row3Items = new List<InventoryItemRectangle>();
-
-            for (int i = 0; i < ROW_TOTAL; i++)
+            //Create new ones. Otherwise update existing ones
+            if (row1Items == null)
             {
-                row1Items.Add(new InventoryItemRectangle { Rect = new Rectangle((locationX + (30 * i)), locationY + 60 + 50, 30, 30) });
-                row2Items.Add(new InventoryItemRectangle { Rect = new Rectangle((locationX + (30 * i)), locationY + 60 + 80, 30, 30) });
-                row3Items.Add(new InventoryItemRectangle { Rect = new Rectangle((locationX + (30 * i)), locationY + 60 + 110, 30, 30) });
+                row1Items = new List<InventoryItemRectangle>();
+                row2Items = new List<InventoryItemRectangle>();
+                row3Items = new List<InventoryItemRectangle>();
+
+                for (int i = 0; i < ROW_TOTAL; i++)
+                {
+                    row1Items.Add(new InventoryItemRectangle { Rect = new Rectangle((locationX + (30 * i)), locationY + 60 + 50, 30, 30) });
+                    row2Items.Add(new InventoryItemRectangle { Rect = new Rectangle((locationX + (30 * i)), locationY + 60 + 80, 30, 30) });
+                    row3Items.Add(new InventoryItemRectangle { Rect = new Rectangle((locationX + (30 * i)), locationY + 60 + 110, 30, 30) });
+                }
+            }
+            else
+            {
+                for(int i = 0; i < ROW_TOTAL; i++)
+                {
+                    row1Items[i].Rect = new Rectangle((locationX + (30 * i)), locationY + 60 + 50, 30, 30);
+                    row2Items[i].Rect = new Rectangle((locationX + (30 * i)), locationY + 60 + 80, 30, 30);
+                    row3Items[i].Rect = new Rectangle((locationX + (30 * i)), locationY + 60 + 110, 30, 30);
+                }
             }
 
             detailsRect = new Rectangle(locationX, locationY + 240, rect.Width, 40);
@@ -349,7 +362,7 @@ namespace Divine_Right.InterfaceComponents.Components
 
             totalSectionRect = new Rectangle(locationX, locationY + 280, rect.Width, 40);
             totalTextRect = new Rectangle(locationX, locationY + 280, rect.Width, 20);
-            confirmButton = new Rectangle(locationX+100, locationY + 300, rect.Width-200, 20);
+            confirmButton = new Rectangle(locationX + 100, locationY + 300, rect.Width - 200, 20);
 
         }
 
@@ -404,6 +417,26 @@ namespace Divine_Right.InterfaceComponents.Components
         }
 
         #region Helper Functions
+
+        /// <summary>
+        /// Gets a list of all selected inventoryitems
+        /// </summary>
+        /// <returns></returns>
+        private List<InventoryItemRectangle> GetSelected()
+        {
+            List<InventoryItemRectangle> items = new List<InventoryItemRectangle>();
+
+            foreach (var item in row1Items.Union(row2Items).Union(row3Items))
+            {
+                if (item.Selected )
+                {
+                    items.Add(item);
+                }
+            }
+
+            return items;
+        }
+
         public void AddContextMenuItem(ActionTypeEnum action, object[] args, ContentManager content)
         {
             ContextMenuItem item = new ContextMenuItem();
