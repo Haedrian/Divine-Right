@@ -67,8 +67,6 @@ namespace Divine_Right.InterfaceComponents.Components
         private Rectangle swapButton;
         private Rectangle closeButton;
 
-        private Rectangle moneyTextRect;
-
         private Rectangle totalSectionRect;
         private Rectangle totalTextRect;
         private Rectangle confirmButton;
@@ -97,10 +95,11 @@ namespace Divine_Right.InterfaceComponents.Components
             this.content = content;
 
             batch.Draw(content, SpriteManager.GetSprite(ColourSpriteName.WHITE), borderRect, Color.DarkGray);
-            batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.PAPER_TEXTURE), inventoryBackgroundRect, Color.White);
-            batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.WOOD_TEXTURE), detailsRect, Color.White);
-            batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.WOOD_TEXTURE), titleBackgroundRect, Color.White);
-            batch.Draw(content,SpriteManager.GetSprite(InterfaceSpriteName.PAPER_TEXTURE),totalSectionRect,Color.White);
+            //batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.PAPER_TEXTURE), inventoryBackgroundRect, Color.White);
+            //batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.WOOD_TEXTURE), detailsRect, Color.White);
+            //batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.WOOD_TEXTURE), titleBackgroundRect, Color.White);
+            //batch.Draw(content,SpriteManager.GetSprite(InterfaceSpriteName.PAPER_TEXTURE),totalSectionRect,Color.White);
+            batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.PAPER_TEXTURE), rect, Color.White);
 
             for (int i = 0; i < enums.Length; i++)
             {
@@ -194,11 +193,6 @@ namespace Divine_Right.InterfaceComponents.Components
 
             batch.DrawString(font, detailsToShow, detailsRect, Alignment.Left, Color.Black);
 
-            //Create the money thing
-            //batch.Draw(content, SpriteManager.GetSprite(LocalSpriteName.COINS), moneyRect, Color.White);
-            //And the total money
-            batch.DrawString(font, this.VendorActor.Inventory.TotalMoney.ToString(), moneyTextRect, Alignment.Left & Alignment.Top, Color.Black);
-
             batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.PAPER_TEXTURE), swapButton, Color.White);
 
             if (Buy)
@@ -208,12 +202,12 @@ namespace Divine_Right.InterfaceComponents.Components
             }
             else
             {
-                batch.DrawString(font, "Selling  to Joseph Borg", titleRect, Alignment.Center, Color.DarkGoldenrod);
+                batch.DrawString(font, "Selling  to Joseph Borg", titleRect, Alignment.Center, Color.Blue);
                 batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.BUY), swapButton, Color.White);
             }
 
             batch.DrawString(font, "You: 20523", playerFundsRect, Alignment.Left, Color.Green);
-            batch.DrawString(font, "Vendor: 029123", vendorFundsRect, Alignment.Right, Color.DarkGoldenrod);
+            batch.DrawString(font, "Vendor: 029123", vendorFundsRect, Alignment.Right, Color.Blue);
             batch.DrawString(font,"Total:1023",totalTextRect,Alignment.Left, Color.Black);
 
             batch.Draw(content,SpriteManager.GetSprite(InterfaceSpriteName.WOOD_TEXTURE),confirmButton,Color.White);
@@ -349,8 +343,6 @@ namespace Divine_Right.InterfaceComponents.Components
             }
 
             detailsRect = new Rectangle(locationX, locationY + 240, rect.Width, 40);
-
-            moneyTextRect = new Rectangle(locationX + 390, locationY + 240 - 30, 100, 30);
 
             swapButton = new Rectangle(locationX, locationY, 20, 20);
             closeButton = new Rectangle(locationX - rect.Width + 30, locationY, 30, 30);
