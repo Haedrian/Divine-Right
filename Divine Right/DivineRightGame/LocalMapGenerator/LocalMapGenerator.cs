@@ -14,6 +14,8 @@ using DivineRightGame.ActorHandling;
 using DRObjects.ActorHandling.CharacterSheet.Enums;
 using DRObjects.LocalMapGeneratorObjects.Enums;
 using DRObjects.Items.Archetypes.Local;
+using DivineRightGame.ItemFactory.ItemFactoryManagers;
+using DRObjects.DataStructures;
 
 namespace DivineRightGame.LocalMapGenerator
 {
@@ -30,7 +32,7 @@ namespace DivineRightGame.LocalMapGenerator
         /// <param name="enemyType">The type of actor which is dominant in this map</param>
         /// <param name="actors">The actors which we have generated</param>
         /// <returns></returns>
-        public MapBlock[,] GenerateMap(int parentTileID, int? parentWallID, Maplet maplet, bool preferSides,string actorType, out Actor[] actors)
+        public MapBlock[,] GenerateMap(int parentTileID, int? parentWallID, Maplet maplet, bool preferSides, string actorType, out Actor[] actors)
         {
             List<Actor> actorList = new List<Actor>();
 
@@ -202,7 +204,7 @@ namespace DivineRightGame.LocalMapGenerator
                             {
                                 //it fits, generate it - <3 Recursion
                                 Actor[] childActors = null;
-                                MapBlock[,] childMap = this.GenerateMap(tileID, wallID.Value, childMaplet.Maplet, childMaplet.Position == DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES,actorType,out childActors);
+                                MapBlock[,] childMap = this.GenerateMap(tileID, wallID.Value, childMaplet.Maplet, childMaplet.Position == DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES, actorType, out childActors);
 
                                 //Add the child actors
                                 actorList.AddRange(childActors);
@@ -649,7 +651,58 @@ namespace DivineRightGame.LocalMapGenerator
                         string enemyType = actor.UseLocalType ? actorType : actor.EnemyType;
 
                         //For now set gear cost to 0
-                        Actor newActor = ActorGeneration.CreateActor(enemyType, actor.EnemyTag, null, 10,0,null, out actorID);
+                        Actor newActor = ActorGeneration.CreateActor(enemyType, actor.EnemyTag, null, 10, 0, null, out actorID);
+
+                        if (actor.VendorType.HasValue)
+                        {
+                            newActor.VendorDetails = new VendorDetails();
+                            newActor.VendorDetails.VendorType = actor.VendorType.Value;
+                            newActor.VendorDetails.VendorLevel = actor.VendorLevel ?? 1;
+
+                            //Generate the stuff
+                            InventoryItemManager iim = new InventoryItemManager();
+
+                            int maxCategorySize = 1000 * newActor.VendorDetails.VendorLevel;
+
+                            newActor.VendorDetails.Stock = new GroupedList<InventoryItem>();
+
+                            switch (newActor.VendorDetails.VendorType)
+                            {
+                                case VendorType.GENERAL:
+                                    foreach (InventoryItem inv in iim.GetItemsWithAMaxValue(InventoryCategory.ARMOUR.ToString(), maxCategorySize))
+                                    {
+                                        newActor.VendorDetails.Stock.Add(inv.Category, inv);
+                                    }
+                                    foreach (InventoryItem inv in iim.GetItemsWithAMaxValue(InventoryCategory.LOOT.ToString(), maxCategorySize))
+                                    {
+                                        newActor.VendorDetails.Stock.Add(inv.Category, inv);
+                                    }
+                                    foreach (InventoryItem inv in iim.GetItemsWithAMaxValue(InventoryCategory.WEAPON.ToString(), maxCategorySize))
+                                    {
+                                        newActor.VendorDetails.Stock.Add(inv.Category, inv);
+                                    }
+                                    break;
+                                case VendorType.SMITH:
+                                    foreach (InventoryItem inv in iim.GetItemsWithAMaxValue(InventoryCategory.ARMOUR.ToString(), (int)(maxCategorySize * 1.5)))
+                                    {
+                                        newActor.VendorDetails.Stock.Add(inv.Category, inv);
+                                    }
+                                    foreach (InventoryItem inv in iim.GetItemsWithAMaxValue(InventoryCategory.WEAPON.ToString(), (int)(maxCategorySize * 1.5)))
+                                    {
+                                        newActor.VendorDetails.Stock.Add(inv.Category, inv);
+                                    }
+                                    break;
+                                case VendorType.TRADER:
+                                    foreach (InventoryItem inv in iim.GetItemsWithAMaxValue(InventoryCategory.LOOT.ToString(), maxCategorySize * 3))
+                                    {
+                                        newActor.VendorDetails.Stock.Add(inv.Category, inv);
+                                    }
+                                    break;
+                            }
+
+                            newActor.VendorDetails.Money = maxCategorySize;
+
+                        }
 
                         //Generate the map character
                         var mapCharacter = factory.CreateItem("enemies", actorID);
@@ -678,7 +731,7 @@ namespace DivineRightGame.LocalMapGenerator
                                         {
                                             LoiterPercentage = 80,
                                             WanderPoint = new MapCoordinate(mapCharacter.Coordinate),
-                                            WanderRectangle = new Rectangle(0,0,generatedMap.GetLength(0),generatedMap.GetLength(1))
+                                            WanderRectangle = new Rectangle(0, 0, generatedMap.GetLength(0), generatedMap.GetLength(1))
                                         });
                                 }
 
@@ -743,12 +796,12 @@ namespace DivineRightGame.LocalMapGenerator
 
                         //How much stuff does he have ?
                         totalCostOfStuff = GameState.PlayerCharacter.Inventory.EquippedItems.Values.Sum(ei => ei.BaseValue);
-    
+
                     }
 
-                    Console.WriteLine("Level : " + handToHand*multiplier + " Gear : " + totalCostOfStuff*multiplier);
+                    Console.WriteLine("Level : " + handToHand * multiplier + " Gear : " + totalCostOfStuff * multiplier);
 
-                    Actor actor = ActorGeneration.CreateActor(enemyType, null, null, (int) (handToHand * multiplier),(int)(totalCostOfStuff * multiplier),null, out returnedID);
+                    Actor actor = ActorGeneration.CreateActor(enemyType, null, null, (int)(handToHand * multiplier), (int)(totalCostOfStuff * multiplier), null, out returnedID);
 
                     var mapObject = fact.CreateItem("enemies", returnedID);
 
@@ -1132,7 +1185,7 @@ namespace DivineRightGame.LocalMapGenerator
                 //Start with Left line
                 if (mapX != 0)
                 {
-                    if (map[mapX-1, mapY + y] == PlanningMapItemType.WALL)
+                    if (map[mapX - 1, mapY + y] == PlanningMapItemType.WALL)
                     {
                         return false; //Double wall
                     }
@@ -1141,7 +1194,7 @@ namespace DivineRightGame.LocalMapGenerator
                 //Also check the right line
                 if (mapX + maplet.GetLength(0) < map.GetLength(0))
                 {
-                    if (map[mapX + maplet.GetLength(0),mapY + y] == PlanningMapItemType.WALL)
+                    if (map[mapX + maplet.GetLength(0), mapY + y] == PlanningMapItemType.WALL)
                     {
                         return false;
                     }
@@ -1150,26 +1203,26 @@ namespace DivineRightGame.LocalMapGenerator
             }
 
             //Still here? Lets try the top and bottom
-                for (int x = 1; x < maplet.GetLength(0) - 1; x++)
+            for (int x = 1; x < maplet.GetLength(0) - 1; x++)
+            {
+                if (mapY != 0)
                 {
-                    if (mapY != 0)
-                    {
                     //Top line
-                    if (map[mapX +x, mapY-1] == PlanningMapItemType.WALL)
+                    if (map[mapX + x, mapY - 1] == PlanningMapItemType.WALL)
                     {
                         return false;
                     }
-                    }
+                }
 
-                    //Bottom line
-                    if (mapY + maplet.GetLength(1) < map.GetLength(1))
+                //Bottom line
+                if (mapY + maplet.GetLength(1) < map.GetLength(1))
+                {
+                    if (map[mapX + x, mapY + maplet.GetLength(1)] == PlanningMapItemType.WALL)
                     {
-                        if (map[mapX + x, mapY + maplet.GetLength(1)] == PlanningMapItemType.WALL)
-                        {
-                            return false;
-                        }
+                        return false;
                     }
-                
+                }
+
             }
 
             return true;

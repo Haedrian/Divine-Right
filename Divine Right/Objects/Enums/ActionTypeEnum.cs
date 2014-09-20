@@ -20,5 +20,6 @@ namespace DRObjects.Enums
         EQUIP,
         DROP,
         UNEQUIP,
+        TRADE,
     }
 }

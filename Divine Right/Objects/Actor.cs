@@ -90,6 +90,10 @@ namespace DRObjects
         public bool IsAggressive { get; set; }
 
         /// <summary>
+        /// Additional details if this actor is a vendor.
+        /// </summary>
+        public VendorDetails VendorDetails { get; set; }
+        /// <summary>
         /// Attributes pertaining to the actor
         /// </summary>
         public ActorAttributes Attributes { get; set; }

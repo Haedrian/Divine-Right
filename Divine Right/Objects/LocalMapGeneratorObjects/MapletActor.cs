@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DRObjects.ActorHandling;
+using DRObjects.Enums;
 
 namespace DRObjects.LocalMapGeneratorObjects
 {
@@ -15,6 +16,8 @@ namespace DRObjects.LocalMapGeneratorObjects
 
         public string EnemyType { get; set; }
         public string EnemyTag { get; set; }
+        public VendorType? VendorType { get; set; }
+        public int? VendorLevel { get; set; }
 
         /// <summary>
         /// Whether to use the type of enemy that dominates the area

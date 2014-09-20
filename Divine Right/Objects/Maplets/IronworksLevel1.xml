@@ -1,6 +1,6 @@
 ﻿<Maplet name="ironworks1" Tiled="true" TileTag="pavement" SizeX ="7" SizeY="7" Walled="true" WindowProbability="20">
   <MapletContents>
-    <MapletActor MaxAmount="1" ProbabilityPercentage="100" UseLocalType="true" EnemyTag="merchant" EnemyMission="Idle"  />
+    <MapletActor MaxAmount="1" ProbabilityPercentage="100" UseLocalType="true" EnemyTag="merchant" VendorType="Smith" VendorLevel="1" EnemyMission="Idle"  />
     <MapletContentsItemTag Position="Middle" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="anvil"/>
     <MapletContentsItemTag Position="Middle" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="bucket"/>
     <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="75" Tag="smith tool"/>

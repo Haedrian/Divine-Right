@@ -93,6 +93,7 @@
     <Compile Include="ActorHandling\Enums\Gender.cs" />
     <Compile Include="ActorHandling\EquippedItem.cs" />
     <Compile Include="ActorHandling\RaceData.cs" />
+    <Compile Include="ActorHandling\VendorDetails.cs" />
     <Compile Include="Compare\MapCoordinateCompare.cs" />
     <Compile Include="Database\DatabaseHandling.cs" />
     <Compile Include="DataStructures\DivineRightDateTime.cs" />
@@ -109,6 +110,7 @@
     <Compile Include="Enums\MapType.cs" />
     <Compile Include="Enums\PointOfInterestType.cs" />
     <Compile Include="Enums\SettlementType.cs" />
+    <Compile Include="Enums\VendorType.cs" />
     <Compile Include="EventHandling\Event.cs" />
     <Compile Include="EventHandling\EventChoice.cs" />
     <Compile Include="GraphicsEngineObjects\Abstract\PlayerFeedback.cs" />

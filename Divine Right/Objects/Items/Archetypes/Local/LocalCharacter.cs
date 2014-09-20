@@ -118,10 +118,16 @@ namespace DRObjects.Items.Archetypes.Local
             actions.AddRange(base.GetPossibleActions(actor));
 
             //Are we next to the target? Is the actor aggressive
-            if (this.Coordinate - actor.MapCharacter.Coordinate < 2)
+            if (this.Coordinate - actor.MapCharacter.Coordinate < 2 && this.Actor.IsAggressive)
             {
                 //Add the attack one too
                 actions.Add(ActionTypeEnum.PREPARE_ATTACK);
+            }
+
+            //Is he a vendor?
+            if (this.Coordinate - actor.MapCharacter.Coordinate < 2 && this.Actor.VendorDetails != null)
+            {
+                actions.Add(ActionTypeEnum.TRADE);
             }
 
             return actions.ToArray();

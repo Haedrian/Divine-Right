@@ -1,6 +1,6 @@
 ﻿<Maplet name="General Store" Tiled="true" TileTag="wood" SizeX ="10" SizeY="10" Walled="true" WindowProbability="15">
   <MapletContents>
-    <MapletActor MaxAmount="1" ProbabilityPercentage="100" UseLocalType="true" EnemyTag="merchant" EnemyMission="Wander"  />
+    <MapletActor MaxAmount="1" ProbabilityPercentage="100" UseLocalType="true" EnemyTag="merchant" VendorType="GENERAL" VendorLevel="1" EnemyMission="Wander"  />
     <MapletContentsMaplet Position="Anywhere" MaxAmount="1" ProbabilityPercentage="100" >
       <Maplet Tiled="false" SizeX="3" SizeY="3" Walled="false" TileID="1">
         <MapletContents>
