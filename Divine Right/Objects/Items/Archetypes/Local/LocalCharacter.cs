@@ -139,6 +139,10 @@ namespace DRObjects.Items.Archetypes.Local
             {
                 return new InterfaceToggleFeedback[] { new InterfaceToggleFeedback(InternalActionEnum.OPEN_ATTACK,true,this) };
             }
+            else if (actionType == ActionTypeEnum.TRADE)
+            {
+                return new InterfaceToggleFeedback[] { new InterfaceToggleFeedback(InternalActionEnum.OPEN_TRADE,true,new object[2] {this.Actor,Actor})};
+            }
             else
             {
                 return base.PerformAction(actionType, actor, args);

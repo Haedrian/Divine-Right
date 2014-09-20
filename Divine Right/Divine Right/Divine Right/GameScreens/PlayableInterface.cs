@@ -259,9 +259,6 @@ namespace Divine_Right.GameScreens
             TimeDisplayComponent tdc = new TimeDisplayComponent(GraphicsDevice.Viewport.Width / 2 - 100, 0);
             interfaceComponents.Add(tdc);
 
-            TradeDisplayComponent tdd = new TradeDisplayComponent(100, 100, GameState.PlayerCharacter);
-            interfaceComponents.Add(tdd);
-
             var cemetry = SpriteManager.GetSprite(InterfaceSpriteName.DEAD);
 
             //Create the menu buttons
@@ -990,6 +987,15 @@ namespace Divine_Right.GameScreens
                             interfaceComponents.Remove(component);
                         }
 
+                    }
+                    else if (iop.InterfaceComponent == InternalActionEnum.OPEN_TRADE && iop.Open)
+                    {
+                        //Open trade
+                        var arguments = iop.Argument as object[];
+
+                        TradeDisplayComponent tdc = new TradeDisplayComponent(100, 100, arguments[1] as Actor, arguments[0] as Actor);
+
+                        interfaceComponents.Add(tdc);
                     }
                 }
                 else if (feedback.GetType().Equals(typeof(CreateEventFeedback)))

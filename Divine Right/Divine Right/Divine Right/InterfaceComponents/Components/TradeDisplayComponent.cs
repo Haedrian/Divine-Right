@@ -73,16 +73,17 @@ namespace Divine_Right.InterfaceComponents.Components
         private int totalSelected = 0;
 
         //Drawing stuff
-        public TradeDisplayComponent(int locationX, int locationY, Actor currentActor)
+        public TradeDisplayComponent(int locationX, int locationY, Actor currentActor,Actor vendorActor)
         {
             this.locationX = locationX;
             this.locationY = locationY;
-            this.VendorActor = currentActor;
+            this.VendorActor = vendorActor;
+            this.PlayerActor = currentActor;
             ChosenCategory = 0;
 
             PerformDrag(locationX, locationY);
 
-            Buy = true; //TODO: REMOVE AFTER TESTING
+            Buy = true;
         }
 
 
@@ -136,8 +137,17 @@ namespace Divine_Right.InterfaceComponents.Components
                 batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.WOOD_TEXTURE), categoryBackground, Color.White);
             }
 
+            InventoryItem[] inventoryitems = null;
+
             //Now draw the items
-            var inventoryitems = this.VendorActor.Inventory.Inventory.GetObjectsByGroup(enums.GetValue(ChosenCategory)).Where(i => !i.IsEquipped).ToArray();
+            if (Buy)
+            {
+                inventoryitems = this.VendorActor.VendorDetails.Stock.GetObjectsByGroup(enums.GetValue(ChosenCategory)).Where(i => !i.IsEquipped).ToArray();
+            }
+            else
+            {
+                inventoryitems = this.PlayerActor.Inventory.Inventory.GetObjectsByGroup(enums.GetValue(ChosenCategory)).Where(i => !i.IsEquipped).ToArray();
+            }
 
             //Clear all the items held in the boxes
             foreach (var item in row1Items)
@@ -210,17 +220,17 @@ namespace Divine_Right.InterfaceComponents.Components
 
             if (Buy)
             {
-                batch.DrawString(font, "Buying from Joseph Borg", titleRect, Alignment.Center, Color.Green);
+                batch.DrawString(font, "Buying from " + VendorActor.Name, titleRect, Alignment.Center, Color.Green);
                 batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.SELL), swapButton, Color.White);
             }
             else
             {
-                batch.DrawString(font, "Selling  to Joseph Borg", titleRect, Alignment.Center, Color.Blue);
+                batch.DrawString(font, "Selling  to " + VendorActor.Name, titleRect, Alignment.Center, Color.Blue);
                 batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.BUY), swapButton, Color.White);
             }
 
-            batch.DrawString(font, "You: 20523", playerFundsRect, Alignment.Left, Color.Green);
-            batch.DrawString(font, "Vendor: 029123", vendorFundsRect, Alignment.Right, Color.Blue);
+            batch.DrawString(font, "You: " + PlayerActor.Inventory.TotalMoney, playerFundsRect, Alignment.Left, Color.Green);
+            batch.DrawString(font, "Vendor: " + VendorActor.VendorDetails.Money, vendorFundsRect, Alignment.Right, Color.Blue);
             batch.DrawString(font, "Total:" + totalSelected, totalTextRect, Alignment.Left, Color.Black);
 
             batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.WOOD_TEXTURE), confirmButton, Color.White);
@@ -241,6 +251,14 @@ namespace Divine_Right.InterfaceComponents.Components
             if (swapButton.Contains(x, y))
             {
                 Buy = !Buy;
+                
+                //Remove all selections
+                foreach (var item in row1Items.Union(row2Items).Union(row3Items))
+                {
+                    item.Selected = false;
+                }
+
+                return true;
             }
 
             for (int i = 0; i < categories.Count; i++)

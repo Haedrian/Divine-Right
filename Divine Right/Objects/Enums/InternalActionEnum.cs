@@ -27,6 +27,7 @@ namespace DRObjects.Enums
         CREDITS,
         CONTINUE,
         OPEN_INVENTORY,
+        OPEN_TRADE,
 
     }
 }
