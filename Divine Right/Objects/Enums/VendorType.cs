@@ -5,6 +5,7 @@ using System.Text;
 
 namespace DRObjects.Enums
 {
+    [Serializable]
     public enum VendorType
     {
         GENERAL,

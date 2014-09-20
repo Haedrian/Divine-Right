@@ -8,6 +8,7 @@ using DRObjects.DataStructures;
 
 namespace DRObjects.ActorHandling
 {
+    [Serializable]
     /// <summary>
     /// Details pertaining to a vendor such as his stock inventory and his money.
     /// </summary>

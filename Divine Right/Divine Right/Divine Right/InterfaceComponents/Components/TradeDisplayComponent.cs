@@ -121,6 +121,7 @@ namespace Divine_Right.InterfaceComponents.Components
                         throw new NotImplementedException("No code for that particular inventory category");
                 }
 
+                batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.CLOSE), closeButton, Color.White);
 
                 if (this.ChosenCategory != i)
                 {
@@ -136,6 +137,8 @@ namespace Divine_Right.InterfaceComponents.Components
 
                 batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.WOOD_TEXTURE), categoryBackground, Color.White);
             }
+
+            batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.CLOSE), closeButton, Color.White);
 
             InventoryItem[] inventoryitems = null;
 
@@ -261,6 +264,13 @@ namespace Divine_Right.InterfaceComponents.Components
                 return true;
             }
 
+            if (closeButton.Contains(x, y))
+            {
+                //Close it
+                destroy = true;
+                return true;
+            }
+
             for (int i = 0; i < categories.Count; i++)
             {
                 if (categories[i].Contains(x, y))
@@ -376,7 +386,7 @@ namespace Divine_Right.InterfaceComponents.Components
             detailsRect = new Rectangle(locationX, locationY + 240, rect.Width, 40);
 
             swapButton = new Rectangle(locationX, locationY, 20, 20);
-            closeButton = new Rectangle(locationX - rect.Width + 30, locationY, 30, 30);
+            closeButton = new Rectangle(locationX + rect.Width - 30, locationY, 30, 30);
 
             totalSectionRect = new Rectangle(locationX, locationY + 280, rect.Width, 40);
             totalTextRect = new Rectangle(locationX, locationY + 280, rect.Width, 20);
