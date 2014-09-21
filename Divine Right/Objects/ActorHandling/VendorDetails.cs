@@ -39,16 +39,16 @@ namespace DRObjects.ActorHandling
         /// Generally it's better to buy from specific big vendors and sell to specific small ones
         /// </summary>
         /// <param name="category"></param>
-        /// <param name="buyPrice"></param>
+        /// <param name="vendorIsBuying"></param>
         /// <returns></returns>
-        public double GetPriceMultiplier(InventoryCategory category, bool buyPrice)
+        public double GetPriceMultiplier(InventoryCategory category, bool vendorIsBuying)
         {
             if (this.VendorType == DRObjects.Enums.VendorType.GENERAL)
             {
                 //Everything is at a markup, regardless of the type. Later food won't be
                 double multiplier = 1;
 
-                if (buyPrice)
+                if (vendorIsBuying)
                 {
                     multiplier = 0.50;
                 }
@@ -74,7 +74,7 @@ namespace DRObjects.ActorHandling
                 //Will buy loot at best price
                 double multiplier = 1;
 
-                if (buyPrice)
+                if (vendorIsBuying)
                 {
                     if (category == InventoryCategory.LOOT)
                     {
@@ -124,7 +124,7 @@ namespace DRObjects.ActorHandling
                 //Will buy weapons and armour at best price
                 double multiplier = 1;
 
-                if (buyPrice)
+                if (vendorIsBuying)
                 {
                     if (category == InventoryCategory.WEAPON || category == InventoryCategory.ARMOUR)
                     {

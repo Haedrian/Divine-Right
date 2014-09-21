@@ -141,7 +141,7 @@ namespace DRObjects.Items.Archetypes.Local
             }
             else if (actionType == ActionTypeEnum.TRADE)
             {
-                return new InterfaceToggleFeedback[] { new InterfaceToggleFeedback(InternalActionEnum.OPEN_TRADE,true,new object[2] {this.Actor,Actor})};
+                return new InterfaceToggleFeedback[] { new InterfaceToggleFeedback(InternalActionEnum.OPEN_TRADE,true,new object[2] {this.Actor,actor})};
             }
             else
             {

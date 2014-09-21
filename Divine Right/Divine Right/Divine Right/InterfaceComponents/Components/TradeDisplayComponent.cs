@@ -73,7 +73,7 @@ namespace Divine_Right.InterfaceComponents.Components
         private int totalSelected = 0;
 
         //Drawing stuff
-        public TradeDisplayComponent(int locationX, int locationY, Actor currentActor,Actor vendorActor)
+        public TradeDisplayComponent(int locationX, int locationY, Actor currentActor, Actor vendorActor)
         {
             this.locationX = locationX;
             this.locationY = locationY;
@@ -95,7 +95,7 @@ namespace Divine_Right.InterfaceComponents.Components
             }
 
             //Calculate the total - later we'll multiply it by what the vendor wants
-            totalSelected = this.GetSelected().Sum(t => t.Item.BaseValue);
+            totalSelected = this.GetSelected().Sum(t => (int)(t.Item.BaseValue * this.VendorActor.VendorDetails.GetPriceMultiplier(t.Item.Category, !Buy)));
 
             this.content = content;
 
@@ -145,7 +145,7 @@ namespace Divine_Right.InterfaceComponents.Components
             //Now draw the items
             if (Buy)
             {
-                inventoryitems = this.VendorActor.VendorDetails.Stock.GetObjectsByGroup(enums.GetValue(ChosenCategory)).Where(i => !i.IsEquipped).ToArray();
+                inventoryitems = this.VendorActor.VendorDetails.Stock.GetObjectsByGroup(enums.GetValue(ChosenCategory)).Where(i => !i.IsEquipped).OrderByDescending(i => i.BaseValue).ToArray();
             }
             else
             {
@@ -234,7 +234,15 @@ namespace Divine_Right.InterfaceComponents.Components
 
             batch.DrawString(font, "You: " + PlayerActor.Inventory.TotalMoney, playerFundsRect, Alignment.Left, Color.Green);
             batch.DrawString(font, "Vendor: " + VendorActor.VendorDetails.Money, vendorFundsRect, Alignment.Right, Color.Blue);
-            batch.DrawString(font, "Total:" + totalSelected, totalTextRect, Alignment.Left, Color.Black);
+
+            if (Buy)
+            {
+                batch.DrawString(font, "Total:" + totalSelected, totalTextRect, Alignment.Left, this.PlayerActor.Inventory.TotalMoney >= totalSelected ? Color.Black : Color.Red);
+            }
+            else
+            {
+                batch.DrawString(font, "Total:" + totalSelected, totalTextRect, Alignment.Left, this.VendorActor.VendorDetails.Money >= totalSelected ? Color.Black : Color.Red);
+            }
 
             batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.WOOD_TEXTURE), confirmButton, Color.White);
             batch.DrawString(font, "CONFIRM", confirmButton, Alignment.Center, Color.Black);
@@ -254,7 +262,7 @@ namespace Divine_Right.InterfaceComponents.Components
             if (swapButton.Contains(x, y))
             {
                 Buy = !Buy;
-                
+
                 //Remove all selections
                 foreach (var item in row1Items.Union(row2Items).Union(row3Items))
                 {
@@ -271,6 +279,73 @@ namespace Divine_Right.InterfaceComponents.Components
                 return true;
             }
 
+            if (confirmButton.Contains(x, y))
+            {
+                //Are they next to each other?
+                if (this.VendorActor.MapCharacter.Coordinate - this.PlayerActor.MapCharacter.Coordinate > 2)
+                {
+                    return true; //invalid
+                }
+
+                //Valid ?
+                if (this.Buy)
+                {
+                    if (this.totalSelected > PlayerActor.Inventory.TotalMoney)
+                    {
+                        //Nope
+                        return true;
+                    }
+
+                    //Allright, lets do this
+
+                    //Take the items
+                    foreach (var item in GetSelected())
+                    {
+                        this.VendorActor.VendorDetails.Stock.Remove(item.Item.Category, item.Item);
+                        this.PlayerActor.Inventory.Inventory.Add(item.Item.Category, item.Item);
+                    }
+
+                    //Give him the money
+                    this.PlayerActor.Inventory.TotalMoney -= totalSelected;
+                    this.VendorActor.VendorDetails.Money += totalSelected;
+
+                    //Remove all selections
+                    foreach (var item in row1Items.Union(row2Items).Union(row3Items))
+                    {
+                        item.Selected = false;
+                    }
+
+                }
+                else
+                {
+                    if (this.totalSelected > this.VendorActor.VendorDetails.Money)
+                    {
+                        //Nope
+                        return true;
+                    }
+
+                    //Allright, lets do this
+
+                    //Take the items
+                    foreach (var item in GetSelected())
+                    {
+                        this.PlayerActor.Inventory.Inventory.Remove(item.Item.Category, item.Item);
+                        this.VendorActor.VendorDetails.Stock.Add(item.Item.Category, item.Item);
+                    }
+
+                    //Give him the money
+                    this.PlayerActor.Inventory.TotalMoney += totalSelected;
+                    this.VendorActor.VendorDetails.Money -= totalSelected;
+
+                    //Remove all selections
+                    foreach (var item in row1Items.Union(row2Items).Union(row3Items))
+                    {
+                        item.Selected = false;
+                    }
+                }
+
+            }
+
             for (int i = 0; i < categories.Count; i++)
             {
                 if (categories[i].Contains(x, y))
@@ -279,7 +354,7 @@ namespace Divine_Right.InterfaceComponents.Components
                     this.ChosenCategory = i;
 
                     //Remove all selections
-                    foreach(var item in row1Items.Union(row2Items).Union(row3Items))
+                    foreach (var item in row1Items.Union(row2Items).Union(row3Items))
                     {
                         item.Selected = false;
                     }
@@ -375,7 +450,7 @@ namespace Divine_Right.InterfaceComponents.Components
             }
             else
             {
-                for(int i = 0; i < ROW_TOTAL; i++)
+                for (int i = 0; i < ROW_TOTAL; i++)
                 {
                     row1Items[i].Rect = new Rectangle((locationX + (30 * i)), locationY + 60 + 50, 30, 30);
                     row2Items[i].Rect = new Rectangle((locationX + (30 * i)), locationY + 60 + 80, 30, 30);
@@ -431,7 +506,17 @@ namespace Divine_Right.InterfaceComponents.Components
                     if (rect.Item != null)
                     {
                         //Yes
-                        detailsToShow = rect.Item.Description;
+
+                        //We need to add the actual price. Are we buying or selling?
+                        if (Buy)
+                        {
+                            detailsToShow = rect.Item.Description + "\nVendor Price : " + rect.Item.BaseValue * this.VendorActor.VendorDetails.GetPriceMultiplier(rect.Item.Category, !Buy);
+                        }
+                        else
+                        {
+                            detailsToShow = rect.Item.Description + "\nVendor Will Pay : " + rect.Item.BaseValue * this.VendorActor.VendorDetails.GetPriceMultiplier(rect.Item.Category, !Buy);
+                        }
+
                     }
                     else
                     {
@@ -456,7 +541,7 @@ namespace Divine_Right.InterfaceComponents.Components
 
             foreach (var item in row1Items.Union(row2Items).Union(row3Items))
             {
-                if (item.Selected )
+                if (item.Selected)
                 {
                     items.Add(item);
                 }
