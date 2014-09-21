@@ -12,6 +12,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Divine_Right.InterfaceComponents.Objects;
 using DRObjects.Items.Archetypes.Local;
 using Microsoft.Xna.Framework.Content;
+using DivineRightGame;
+using DRObjects.GraphicsEngineObjects;
 
 namespace Divine_Right.InterfaceComponents.Components
 {
@@ -59,10 +61,12 @@ namespace Divine_Right.InterfaceComponents.Components
         private Rectangle detailsRect;
         private SpriteFont font;
 
-        private Rectangle contextMenu;
-        private List<ContextMenuItem> contextMenuChoices = new List<ContextMenuItem>();
         private ContentManager content;
 
+        private Rectangle feedback;
+        private string feedbackText = String.Empty;
+        private Color feedbackColour = Color.White;
+       
         private Rectangle swapButton;
         private Rectangle closeButton;
 
@@ -247,6 +251,7 @@ namespace Divine_Right.InterfaceComponents.Components
             batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.WOOD_TEXTURE), confirmButton, Color.White);
             batch.DrawString(font, "CONFIRM", confirmButton, Alignment.Center, Color.Black);
 
+            batch.DrawString(font, feedbackText, feedback, Alignment.Center, feedbackColour);
         }
 
         public bool HandleClick(int x, int y, Objects.Enums.MouseActionEnum mouseAction, out DRObjects.Enums.ActionTypeEnum? actionType, out DRObjects.Enums.InternalActionEnum? internalActionType, out object[] args, out MapItem itm, out DRObjects.MapCoordinate coord, out bool destroy)
@@ -257,6 +262,9 @@ namespace Divine_Right.InterfaceComponents.Components
             coord = null;
             destroy = false;
             itm = null;
+
+            feedbackText = String.Empty;
+            feedbackColour = Color.White;
 
             //Clicked on the button?
             if (swapButton.Contains(x, y))
@@ -284,6 +292,8 @@ namespace Divine_Right.InterfaceComponents.Components
                 //Are they next to each other?
                 if (this.VendorActor.MapCharacter.Coordinate - this.PlayerActor.MapCharacter.Coordinate > 2)
                 {
+                    feedbackText = "You're too far away";
+                    feedbackColour = Color.DarkRed;
                     return true; //invalid
                 }
 
@@ -292,6 +302,8 @@ namespace Divine_Right.InterfaceComponents.Components
                 {
                     if (this.totalSelected > PlayerActor.Inventory.TotalMoney)
                     {
+                        feedbackText = "You can't afford that";
+                        feedbackColour = Color.DarkRed;
                         //Nope
                         return true;
                     }
@@ -315,12 +327,16 @@ namespace Divine_Right.InterfaceComponents.Components
                         item.Selected = false;
                     }
 
+                    feedbackText = "You finalise your purchase";
+                    feedbackColour = Color.DarkGreen;
                 }
                 else
                 {
                     if (this.totalSelected > this.VendorActor.VendorDetails.Money)
                     {
                         //Nope
+                        feedbackText = "The Vendor hasn't got enough money to pay for those";
+                        feedbackColour = Color.DarkRed;
                         return true;
                     }
 
@@ -342,6 +358,9 @@ namespace Divine_Right.InterfaceComponents.Components
                     {
                         item.Selected = false;
                     }
+
+                    feedbackText = "You finalise your trade";
+                    feedbackColour = Color.DarkGreen;
                 }
 
             }
@@ -411,7 +430,7 @@ namespace Divine_Right.InterfaceComponents.Components
             locationX += deltaX;
             locationY += deltaY;
 
-            rect = new Rectangle(locationX, locationY, 360, 320);
+            rect = new Rectangle(locationX, locationY, 360, 335);
             inventoryBackgroundRect = new Rectangle(locationX, locationY + 50, 360, 190);
             borderRect = new Rectangle(locationX - 2, locationY - 2, rect.Width + 4, rect.Height + 4);
 
@@ -467,6 +486,7 @@ namespace Divine_Right.InterfaceComponents.Components
             totalTextRect = new Rectangle(locationX, locationY + 280, rect.Width, 20);
             confirmButton = new Rectangle(locationX + 100, locationY + 300, rect.Width - 200, 20);
 
+            feedback = new Rectangle(locationX, locationY + 320, rect.Width, 15);
         }
 
         public bool IsModal()
@@ -550,52 +570,6 @@ namespace Divine_Right.InterfaceComponents.Components
             return items;
         }
 
-        public void AddContextMenuItem(ActionTypeEnum action, object[] args, ContentManager content)
-        {
-            ContextMenuItem item = new ContextMenuItem();
-            item.Action = action;
-            item.Args = args;
-
-            Rectangle itemRect = new Rectangle();
-
-            //where will this rectangle start?
-            if (contextMenuChoices.Count == 0)
-            {
-                itemRect.X = contextMenu.X;
-                itemRect.Y = contextMenu.Y;
-
-            }
-            else
-            {
-                ContextMenuItem prev = this.contextMenuChoices[contextMenuChoices.Count - 1];
-                //below the previous one
-                itemRect.X = prev.Rect.X;
-                itemRect.Y = prev.Rect.Y + prev.Rect.Height;
-            }
-
-            //determine the size of the text
-            Vector2 fontVector = content.Load<SpriteFont>(@"Fonts/TextFeedbackFont").MeasureString(item.Text);
-
-            itemRect.Width = (int)fontVector.X;
-            itemRect.Height = (int)fontVector.Y;
-
-            //assign the rectangle
-            item.Rect = itemRect;
-
-            //add to the list
-            contextMenuChoices.Add(item);
-
-            //update the draw rectangle
-
-            if (contextMenu.Width < itemRect.Width)
-            {
-                contextMenu.Width = itemRect.Width;
-            }
-
-            //update the height
-            contextMenu.Height += itemRect.Height;
-
-        }
         #endregion
     }
 }
