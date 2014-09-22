@@ -34,6 +34,11 @@ namespace DRObjects.ActorHandling
         public int Money { get; set; }
 
         /// <summary>
+        /// The gametime when this was generated.
+        /// </summary>
+        public DivineRightDateTime GenerationTime { get; set; }
+
+        /// <summary>
         /// Gets the price multiplier for a particular category of item.
         /// The base price is multiplied by a value which depends on the category of the item (and whether the vendor would be interested), as well as the level of the vendor in question 
         /// Generally it's better to buy from specific big vendors and sell to specific small ones

@@ -27,6 +27,20 @@ namespace DRObjects.DataStructures
         private long time;
 
         /// <summary>
+        /// Creates a new DateTime having the same time as the passed one
+        /// </summary>
+        /// <param name="oldTime"></param>
+        public DivineRightDateTime(DivineRightDateTime oldTime)
+        {
+            this.time = oldTime.time;
+        }
+
+        public DivineRightDateTime(long time)
+        {
+            this.time = time;
+        }
+
+        /// <summary>
         /// Creates a new DRDateTime representing a particular year.
         /// </summary>
         /// <param name="year"></param>
@@ -173,5 +187,14 @@ namespace DRObjects.DataStructures
             time -= MULTIPLIERS[(int)component] * value;
         }
 
+        public static DivineRightDateTime operator+(DivineRightDateTime date1, DivineRightDateTime date2) 
+        {
+            return new DivineRightDateTime(date1.time + date2.time);
+        }
+
+        public static DivineRightDateTime operator-(DivineRightDateTime date1,DivineRightDateTime date2)
+        {
+            return new DivineRightDateTime(date1.time - date2.time);
+        }
     }
 }
