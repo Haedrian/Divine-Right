@@ -1240,6 +1240,23 @@ namespace Divine_Right.GameScreens
 
                 GameState.LocalMap.Actors = savedMap.Actors;
 
+                LocalMapGenerator lmg = new LocalMapGenerator();
+
+                //Go through the actors
+                foreach (var actor in GameState.LocalMap.Actors)
+                {
+                    //Do we have any vendors ?
+                    if (actor.VendorDetails != null)
+                    {
+                        if (Math.Abs((actor.VendorDetails.GenerationTime - GameState.UniverseTime).GetTimeComponent(DRTimeComponent.MONTH)) > 1)
+                        {
+                            //More than a month old
+                            //Regenerate it
+                            lmg.UpdateVendorStock(actor);
+                        }
+                    }
+                }
+
                 //Find the player character item
                 var playerActor = GameState.LocalMap.Actors.Where(a => a.IsPlayerCharacter).FirstOrDefault();
 

@@ -655,7 +655,7 @@ namespace DivineRightGame.LocalMapGenerator
 
                         if (actor.VendorType.HasValue)
                         {
-                            GenerateVendor(newActor,actor,null);    
+                            GenerateVendor(newActor,actor);    
                         }
 
                         //Generate the map character
@@ -708,7 +708,7 @@ namespace DivineRightGame.LocalMapGenerator
         /// </summary>
         /// <param name="newActor"></param>
         /// <param name="actor"></param>
-        public void GenerateVendor(Actor newActor,MapletActor actor,int? catSize)
+        public void GenerateVendor(Actor newActor,MapletActor actor)
         {
             newActor.VendorDetails = new VendorDetails();
             newActor.VendorDetails.VendorType = actor.VendorType.Value;
@@ -719,11 +719,6 @@ namespace DivineRightGame.LocalMapGenerator
             InventoryItemManager iim = new InventoryItemManager();
 
             int maxCategorySize = 1000 * newActor.VendorDetails.VendorLevel;
-
-            if (catSize.HasValue)
-            {
-                maxCategorySize = catSize.Value;
-            }
 
             newActor.VendorDetails.Stock = new GroupedList<InventoryItem>();
 
@@ -767,7 +762,68 @@ namespace DivineRightGame.LocalMapGenerator
                     break;
             }
 
-            newActor.VendorDetails.Money = maxCategorySize;
+            newActor.VendorDetails.Money = 1000;
+        }
+
+        /// <summary>
+        /// Updates the Vendor's stock to brand new stock
+        /// </summary>
+        /// <param name="actor"></param>
+        public void UpdateVendorStock(Actor actor)
+        {
+            //First see how much money they have to buy stuff with.
+            //Money to buy stuff = SUM (Base Values of old stock Inventory Items) + Money on Hand - 1000
+
+            int totalMoney = actor.VendorDetails.Stock.GetAllObjects().Sum(s => s.BaseValue) + actor.VendorDetails.Money - 1000;
+
+            //Generate the stuff
+            InventoryItemManager iim = new InventoryItemManager();
+
+            actor.VendorDetails.Stock = new GroupedList<InventoryItem>();
+            actor.VendorDetails.GenerationTime = new DivineRightDateTime(GameState.UniverseTime);
+
+            switch (actor.VendorDetails.VendorType)
+            {
+                case VendorType.GENERAL:
+                    foreach (InventoryItem inv in iim.GetItemsWithAMaxValue(InventoryCategory.ARMOUR.ToString(), totalMoney/3))
+                    {
+                        inv.InInventory = true;
+                        actor.VendorDetails.Stock.Add(inv.Category, inv);
+                    }
+                    foreach (InventoryItem inv in iim.GetItemsWithAMaxValue(InventoryCategory.LOOT.ToString(), totalMoney/3))
+                    {
+                        inv.InInventory = true;
+                        actor.VendorDetails.Stock.Add(inv.Category, inv);
+                    }
+                    foreach (InventoryItem inv in iim.GetItemsWithAMaxValue(InventoryCategory.WEAPON.ToString(), totalMoney/3))
+                    {
+                        inv.InInventory = true;
+                        actor.VendorDetails.Stock.Add(inv.Category, inv);
+                    }
+                    break;
+                case VendorType.SMITH:
+                    foreach (InventoryItem inv in iim.GetItemsWithAMaxValue(InventoryCategory.ARMOUR.ToString(), totalMoney/2))
+                    {
+                        inv.InInventory = true;
+                        actor.VendorDetails.Stock.Add(inv.Category, inv);
+                    }
+                    foreach (InventoryItem inv in iim.GetItemsWithAMaxValue(InventoryCategory.WEAPON.ToString(), totalMoney/2))
+                    {
+                        inv.InInventory = true;
+                        actor.VendorDetails.Stock.Add(inv.Category, inv);
+                    }
+                    break;
+                case VendorType.TRADER:
+                    foreach (InventoryItem inv in iim.GetItemsWithAMaxValue(InventoryCategory.LOOT.ToString(), totalMoney))
+                    {
+                        inv.InInventory = true;
+                        actor.VendorDetails.Stock.Add(inv.Category, inv);
+                    }
+                    break;
+            }
+
+            actor.VendorDetails.Money = 1000;
+
         }
 
         /// <summary>

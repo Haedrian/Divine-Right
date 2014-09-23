@@ -106,7 +106,7 @@ namespace DRObjects.DataStructures
         public int GetTimeComponent(DRTimeComponent component)
         {
             //First we divide time by the multiplier
-            long dividedTime = time / MULTIPLIERS[(int) component];
+            long dividedTime = Math.Abs( time / MULTIPLIERS[(int) component]);
 
             int returnValue = 0;
 
