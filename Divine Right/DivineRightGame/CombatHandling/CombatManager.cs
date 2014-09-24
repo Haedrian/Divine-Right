@@ -191,7 +191,7 @@ namespace DivineRightGame.CombatHandling
 
             if (defender.Inventory.EquippedItems.ContainsKey(EquipmentLocation.SHIELD) && defender.Anatomy.LeftArm != 0)
             {
-                shieldBonus = attacker.Inventory.EquippedItems[EquipmentLocation.SHIELD].ArmourRating;
+                shieldBonus = defender.Inventory.EquippedItems[EquipmentLocation.SHIELD].ArmourRating;
             }
 
             //Chance to hit -
