@@ -164,6 +164,8 @@ namespace DivineRightGame
             this.localGameMap = map;
             this.groundLevel = groundLevel;
             this.actors = new List<Actor>(); //clear actors
+
+            GeneratePathfindingMap(); //Generate the pathfinding map again
         }
 
         /// <summary>

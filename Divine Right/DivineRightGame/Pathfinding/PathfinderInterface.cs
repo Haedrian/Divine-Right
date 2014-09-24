@@ -42,6 +42,12 @@ namespace DivineRightGame.Pathfinding
         {
             if (pathFinder == null)
             {
+                if (nodes == null)
+                {
+                    GameState.LocalMap.GeneratePathfindingMap();
+                    nodes = GameState.LocalMap.PathfindingMap;
+                }
+
                 //Create the new pathfinder with the map - add the settings
                 pathFinder = new PathFinderFast(nodes);
 
