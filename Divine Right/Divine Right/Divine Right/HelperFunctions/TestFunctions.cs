@@ -12,6 +12,8 @@ using DivineRightGame.LocalMapGenerator;
 using DRObjects.ActorHandling;
 using DivineRightGame.ActorHandling;
 using DivineRightGame.SettlementHandling;
+using DRObjects.ActorHandling.CharacterSheet.Enums;
+using DRObjects.ActorHandling.CharacterSheet;
 
 namespace Divine_Right.HelperFunctions
 {
@@ -130,6 +132,14 @@ namespace Divine_Right.HelperFunctions
             GameState.PlayerCharacter.IsPlayerCharacter = true;
 
             GameState.PlayerCharacter.Attributes = ActorGeneration.GenerateAttributes("human", DRObjects.ActorHandling.CharacterSheet.Enums.ActorProfession.WARRIOR, 10,GameState.PlayerCharacter);
+
+            foreach (var e in Enum.GetValues(typeof(SkillName)))
+            {
+                var skill = (SkillName)e;
+
+                GameState.PlayerCharacter.Attributes.Skills.Add(skill, new ActorSkill(skill) { SkillLevel = GameState.Random.Next(20) });
+            }
+
             GameState.PlayerCharacter.Anatomy = ActorGeneration.GenerateAnatomy("human");
 
             GameState.PlayerCharacter.Attributes.Health = GameState.PlayerCharacter.Anatomy;

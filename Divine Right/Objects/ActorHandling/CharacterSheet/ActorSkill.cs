@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DRObjects.ActorHandling.CharacterSheet.Enums;
+using System.Globalization;
 
 namespace DRObjects.ActorHandling.CharacterSheet
 {
@@ -15,6 +16,8 @@ namespace DRObjects.ActorHandling.CharacterSheet
         private const int SECOND_FIVE_COST = 20;
         private const int THIRD_FIVE_COST = 40;
         private const int FOURTH_FIVE_COST = 80;
+
+        private static readonly TextInfo myTI = new CultureInfo("en-gb", false).TextInfo;
 
         /// <summary>
         /// The levels to display
@@ -39,7 +42,7 @@ namespace DRObjects.ActorHandling.CharacterSheet
 
         public override string ToString()
         {
-            return DisplayLevels[(int) Math.Floor(SkillLevel)] + " " + SkillName;
+            return DisplayLevels[(int)Math.Floor(SkillLevel)] + " " +  myTI.ToTitleCase(this.SkillName.ToString().Replace("_", " ").ToLower());
         }
 
         public ActorSkill(SkillName name)

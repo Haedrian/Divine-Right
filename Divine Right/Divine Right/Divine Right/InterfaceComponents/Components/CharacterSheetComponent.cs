@@ -34,7 +34,7 @@ namespace Divine_Right.InterfaceComponents.Components
             this.locationY = y;
             this.actor = actor;
 
-            rect = new Rectangle(x, y, 210, 170);
+            PerformDrag(0, 0);
         }
 
 
@@ -51,6 +51,13 @@ namespace Divine_Right.InterfaceComponents.Components
                 //Load the font
                 font = content.Load<SpriteFont>(@"Fonts/TextFeedbackFont");
             }
+
+            //Resize if new skills have popped up
+            var skillTotal = this.actor.Attributes.Skills.Values.Count;
+
+            rect = new Rectangle(locationX, locationY, 210, 200 + (skillTotal * 15));
+            this.borderRect = new Rectangle(rect.X - 2, rect.Y - 2, rect.Width + 4, rect.Height + 4);
+
 
             var white = SpriteManager.GetSprite(ColourSpriteName.WHITE);
 
@@ -79,36 +86,27 @@ namespace Divine_Right.InterfaceComponents.Components
             batch.Draw(content.Load<Texture2D>(SpriteManager.GetSprite(InterfaceSpriteName.INTEL).path), new Rectangle(locationX + 10, locationY + 130, 30, 30), SpriteManager.GetSprite(InterfaceSpriteName.INTEL).sourceRectangle, Color.White);
             batch.DrawString(font, attributes.Intel.ToString(), new Vector2(locationX + 50, locationY + 135), Color.Black);
 
-            //Weapon proficiencies
-
-            batch.Draw(content.Load<Texture2D>(SpriteManager.GetSprite(InterfaceSpriteName.SWORD).path), new Rectangle(locationX + 80, locationY + 10, 30, 30), SpriteManager.GetSprite(InterfaceSpriteName.SWORD).sourceRectangle, Color.White);
-            batch.DrawString(font, attributes.HandToHand.ToString(), new Vector2(locationX + 120, locationY + 15), Color.Gray);
-
-            batch.Draw(content.Load<Texture2D>(SpriteManager.GetSprite(InterfaceSpriteName.DEFENSE).path), new Rectangle(locationX + 80, locationY + 40, 30, 30), SpriteManager.GetSprite(InterfaceSpriteName.DEFENSE).sourceRectangle, Color.White);
-            batch.DrawString(font, attributes.Evasion.ToString(), new Vector2(locationX + 120, locationY + 45), Color.Gray);
-
-            /*
-            batch.Draw(content.Load<Texture2D>(SpriteManager.GetSprite(InterfaceSpriteName.AXE).path), new Rectangle(locationX + 80, locationY + 40, 30, 30), SpriteManager.GetSprite(InterfaceSpriteName.AXE).sourceRectangle, Color.White);
-            batch.DrawString(font, "2", new Vector2(locationX + 120, locationY + 45), Color.Black);
-
-            batch.Draw(content.Load<Texture2D>(SpriteManager.GetSprite(InterfaceSpriteName.SPEAR).path), new Rectangle(locationX + 80, locationY + 70, 30, 30), SpriteManager.GetSprite(InterfaceSpriteName.SPEAR).sourceRectangle, Color.White);
-            batch.DrawString(font, "2", new Vector2(locationX + 120, locationY + 75), Color.Black);
-
-            batch.Draw(content.Load<Texture2D>(SpriteManager.GetSprite(InterfaceSpriteName.MACE).path), new Rectangle(locationX + 80, locationY + 100, 30, 30), SpriteManager.GetSprite(InterfaceSpriteName.MACE).sourceRectangle, Color.White);
-            batch.DrawString(font, "0", new Vector2(locationX + 120, locationY + 105), Color.Black);
-            */
             //Totals
 
-            batch.Draw(content.Load<Texture2D>(SpriteManager.GetSprite(InterfaceSpriteName.SWORD).path), new Rectangle(locationX + 150, locationY + 10, 30, 30), SpriteManager.GetSprite(InterfaceSpriteName.SWORD).sourceRectangle, Color.White);
-            batch.DrawString(font, (attributes.HandToHand + attributes.Brawn - 5).ToString(), new Vector2(locationX + 190, locationY + 15), Color.Black);
+            batch.Draw(content.Load<Texture2D>(SpriteManager.GetSprite(InterfaceSpriteName.SWORD).path), new Rectangle(locationX + 120, locationY + 10, 30, 30), SpriteManager.GetSprite(InterfaceSpriteName.SWORD).sourceRectangle, Color.White);
+            batch.DrawString(font, (attributes.HandToHand).ToString(), new Vector2(locationX + 150, locationY + 15), Color.Black);
 
-            batch.Draw(content.Load<Texture2D>(SpriteManager.GetSprite(InterfaceSpriteName.DEFENSE).path), new Rectangle(locationX + 150, locationY + 40, 30, 30), SpriteManager.GetSprite(InterfaceSpriteName.DEFENSE).sourceRectangle, Color.White);
-            batch.DrawString(font, attributes.Dodge.ToString(), new Vector2(locationX + 190, locationY + 45), Color.Black);
+            batch.Draw(content.Load<Texture2D>(SpriteManager.GetSprite(InterfaceSpriteName.DEFENSE).path), new Rectangle(locationX + 120, locationY + 40, 30, 30), SpriteManager.GetSprite(InterfaceSpriteName.DEFENSE).sourceRectangle, Color.White);
+            batch.DrawString(font, attributes.Dodge.ToString(), new Vector2(locationX + 150, locationY + 45), Color.Black);
 
-            batch.Draw(content.Load<Texture2D>(SpriteManager.GetSprite(InterfaceSpriteName.BLOOD).path), new Rectangle(locationX + 150, locationY + 70, 30, 30), SpriteManager.GetSprite(InterfaceSpriteName.BLOOD).sourceRectangle, Color.White);
-            batch.DrawString(font,(attributes.Brawn - 5).ToString("+#;-#;0"), new Vector2(locationX + 190, locationY + 75), Color.Black);
+            batch.Draw(content.Load<Texture2D>(SpriteManager.GetSprite(InterfaceSpriteName.BLOOD).path), new Rectangle(locationX + 120, locationY + 70, 30, 30), SpriteManager.GetSprite(InterfaceSpriteName.BLOOD).sourceRectangle, Color.White);
+            batch.DrawString(font,(attributes.Brawn - 5).ToString("+#;-#;0"), new Vector2(locationX + 150, locationY + 75), Color.Black);
 
+            //Work on the skills
+            //batch.DrawString(font, "SKILLS", new Rectangle(locationX, locationY + 150, rect.Width, 30), Alignment.Center, Color.DarkBlue);
 
+            int multiplier = 0;
+
+            foreach (var skill in this.actor.Attributes.Skills.Values)
+            {
+                multiplier++;
+                batch.DrawString(font, skill.ToString(), new Rectangle(locationX, locationY + 170 + (multiplier * 15), rect.Width, 15), Alignment.Center, Color.Black);
+            }
         }
 
         public bool HandleClick(int x, int y, Objects.Enums.MouseActionEnum mouseAction, out DRObjects.Enums.ActionTypeEnum? actionType, out InternalActionEnum? internalActionType, out object[] args, out MapItem item, out DRObjects.MapCoordinate coord, out bool destroy)
@@ -162,7 +160,9 @@ namespace Divine_Right.InterfaceComponents.Components
             this.locationX += x;
             this.locationY += y;
 
-            rect = new Rectangle(locationX, locationY, 210, 170);
+            var skillTotal = this.actor.Attributes.Skills.Values.Count;
+
+            rect = new Rectangle(locationX, locationY, 210, 200 + (skillTotal*15));
             this.borderRect = new Rectangle(rect.X - 2, rect.Y - 2, rect.Width + 4, rect.Height + 4);
         }
 
