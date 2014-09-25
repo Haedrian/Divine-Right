@@ -70,7 +70,7 @@ namespace DRObjects.ActorHandling
             {
                 int totalH2H = 0;
 
-                if (!Actor.IsPlayerCharacter)
+                if (Actor.IsPlayerCharacter)
                 {
                     if (this.Skills.ContainsKey(SkillName.FIGHTER))
                     {
@@ -130,7 +130,7 @@ namespace DRObjects.ActorHandling
             }
             set
             {
-                if (!this.Actor.IsPlayerCharacter)
+                if (this.Actor == null || !this.Actor.IsPlayerCharacter)
                 {
                     this.enemyHandToHand = value;
                 }
@@ -177,7 +177,7 @@ namespace DRObjects.ActorHandling
             }
             set
             {
-                if (!this.Actor.IsPlayerCharacter)
+                if (this.Actor == null || !this.Actor.IsPlayerCharacter)
                 {
                     this.enemyEvasion = value;
                 }
