@@ -9,6 +9,7 @@ using DRObjects.Enums;
 using DRObjects.Items.Archetypes.Local;
 using DivineRightGame.ItemFactory.ItemFactoryManagers;
 using DRObjects.ActorHandling.Enums;
+using DRObjects;
 
 namespace DivineRightGame.ActorHandling
 {
@@ -130,7 +131,7 @@ namespace DivineRightGame.ActorHandling
             actor.Name = ActorNameGenerator.GenerateName(enemyType, actor.Gender);
 
             //Give him attributes 
-            actor.Attributes = GenerateAttributes(data.EnemyType, data.Profession, level);
+            actor.Attributes = GenerateAttributes(data.EnemyType, data.Profession, level,actor);
 
             //Set his anatomy too
             actor.Anatomy = GenerateAnatomy(data.EnemyType);
@@ -150,7 +151,7 @@ namespace DivineRightGame.ActorHandling
             return actor;
         }
 
-        public static ActorAttributes GenerateAttributes(string race, ActorProfession profession, int level)
+        public static SkillsAndAttributes GenerateAttributes(string race, ActorProfession profession, int level,Actor actor)
         {
             //Roll 6 3d3s and put the results in an array
             int[] results = new int[6];
@@ -166,7 +167,7 @@ namespace DivineRightGame.ActorHandling
             results = results.OrderByDescending(r => r).ToArray();
 
             //Create a new ActorAttribute
-            ActorAttributes att = new ActorAttributes();
+            SkillsAndAttributes att = new SkillsAndAttributes();
 
             if (profession == ActorProfession.WARRIOR)
             {
@@ -240,8 +241,7 @@ namespace DivineRightGame.ActorHandling
             att.Intel = att.BaseIntel > 0 ? att.BaseIntel : 0;
             att.Perc = att.BasePerc > 0 ? att.BasePerc : 0;
 
-            //TODO: actual skills
-
+            att.Actor = actor;
 
             return att;
         }

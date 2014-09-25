@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DRObjects.ActorHandling.CharacterSheet;
+using DRObjects.ActorHandling.CharacterSheet.Enums;
+using DRObjects.Enums;
 
 namespace DRObjects.ActorHandling
 {
@@ -9,7 +12,7 @@ namespace DRObjects.ActorHandling
     /// <summary>
     /// The attributes and skills of the particular actor
     /// </summary>
-    public class ActorAttributes
+    public class SkillsAndAttributes
     {
         #region Members
 
@@ -19,8 +22,19 @@ namespace DRObjects.ActorHandling
         private int perc;
         private int intel;
 
+        /// <summary>
+        /// For enemies, use this as hand to hand damage
+        /// </summary>
+        private int enemyHandToHand;
+        /// <summary>
+        /// For enemies, use this as evasion
+        /// </summary>
+        private int enemyEvasion;
+
         #region Links
         public HumanoidAnatomy Health { get; set; }
+
+        public Actor Actor { get; set; }
         #endregion
 
         #endregion
@@ -30,15 +44,17 @@ namespace DRObjects.ActorHandling
 
         #region Character Attributes
 
-        public int BaseBrawn{get{return this.brawn;}}
-        public int BaseDex{get{return this.dex;}}
-        public int BaseAgil { get { return this.agil ;} }
-        public int BasePerc{get{return this.perc;}}
-        public int BaseIntel{get{return this.intel;}}
+        public Dictionary<SkillName, ActorSkill> Skills = new Dictionary<SkillName, ActorSkill>();
 
-        public int Brawn { get { int total = TempBrawn?? 0 + (int)((double)brawn * Health.RightArm / Health.RightArmMax); return total > 1 ? total : 1; } set { brawn = value; } }
-        public int Dex { get { int total = TempDex??0 + (int)((double)dex * Health.RightArm / Health.RightArmMax); return total > 1 ? total : 1; } set { dex = value; } }
-        public int Agil { get { int total = TempAgil ?? 0 + (int)((double)brawn * Health.Legs/ Health.LegsMax); return total > 1 ? total : 1; } set { agil = value; } }
+        public int BaseBrawn { get { return this.brawn; } }
+        public int BaseDex { get { return this.dex; } }
+        public int BaseAgil { get { return this.agil; } }
+        public int BasePerc { get { return this.perc; } }
+        public int BaseIntel { get { return this.intel; } }
+
+        public int Brawn { get { int total = TempBrawn ?? 0 + (int)((double)brawn * Health.RightArm / Health.RightArmMax); return total > 1 ? total : 1; } set { brawn = value; } }
+        public int Dex { get { int total = TempDex ?? 0 + (int)((double)dex * Health.RightArm / Health.RightArmMax); return total > 1 ? total : 1; } set { dex = value; } }
+        public int Agil { get { int total = TempAgil ?? 0 + (int)((double)brawn * Health.Legs / Health.LegsMax); return total > 1 ? total : 1; } set { agil = value; } }
         public int Perc { get { int total = perc + (TempPerc ?? 0); return total > 1 ? total : 1; } set { perc = value; } }
         public int Intel { get { int total = intel + (TempIntel ?? 0); return total > 1 ? total : 1; } set { intel = value; } }
 
@@ -48,16 +64,127 @@ namespace DRObjects.ActorHandling
         public int? TempPerc { get; set; }
         public int? TempIntel { get; set; }
 
-        public int HandToHand { get; set; }
-        public int Ranged { get; set; }
-        public int Evasion { get; set; }
+        public int HandToHand
+        {
+            get
+            {
+                int totalH2H = 0;
+
+                if (!Actor.IsPlayerCharacter)
+                {
+                    if (this.Skills.ContainsKey(SkillName.FIGHTER))
+                    {
+                        totalH2H += (int)(this.Skills[SkillName.FIGHTER].SkillLevel);
+                    }
+
+                    //What weapon are we using?
+
+                    if (Actor.Inventory.EquippedItems.ContainsKey(EquipmentLocation.WEAPON))
+                    {
+                        var weapon = Actor.Inventory.EquippedItems[EquipmentLocation.WEAPON];
+
+                        if (weapon.WeaponType == "SWORD")
+                        {
+                            //Use sword damage
+                            if (this.Skills.ContainsKey(SkillName.SWORDFIGHTER))
+                            {
+                                totalH2H += (int)this.Skills[SkillName.SWORDFIGHTER].SkillLevel;
+                            }
+                        }
+                        else if (weapon.WeaponType == "AXE")
+                        {
+                            //Use axe damage
+                            if (this.Skills.ContainsKey(SkillName.AXEFIGHTER))
+                            {
+                                totalH2H += (int)this.Skills[SkillName.AXEFIGHTER].SkillLevel;
+                            }
+                        }
+                        else
+                        {
+                            throw new NotImplementedException("No code for weapon with damage type " + weapon.WeaponType);
+                        }
+                    }
+                    else
+                    {
+                        //Hand to hand
+                        //Use wrestling
+                        if (this.Skills.ContainsKey(SkillName.BRAWLER))
+                        {
+                            totalH2H += (int)this.Skills[SkillName.BRAWLER].SkillLevel;
+                        }
+                    }
+
+                    //Take the average
+                    totalH2H /= 2;
+
+                }
+                else
+                {
+                    totalH2H = enemyHandToHand;
+                }
+
+                //Don't forget to add the attribute stuff
+                totalH2H += Brawn - 5;
+
+                return totalH2H;
+            }
+            set
+            {
+                if (!this.Actor.IsPlayerCharacter)
+                {
+                    this.enemyHandToHand = value;
+                }
+                //otherwise do nothing
+            }
+        }
+        public int Evasion
+        {
+            get
+            {
+                if (this.Actor.IsPlayerCharacter)
+                {
+                    //If it's the player character, use his dodge skill
+                    int totalSkill = 0;
+                    int divAmount = 1;
+
+                    if (this.Skills.ContainsKey(SkillName.DODGER))
+                    {
+                        totalSkill += (int)this.Skills[SkillName.DODGER].SkillLevel;
+                    }
+
+                    //Is he wearing armour ?
+                    if (this.Actor.Inventory.EquippedItems.ContainsKey(EquipmentLocation.BODY))
+                    {
+                        //Add the armour skill
+                        totalSkill += (int)this.Skills[SkillName.ARMOUR_USER].SkillLevel;
+                        divAmount++;
+                    }
+
+                    //Is he using a shield ?
+                    if (this.Actor.Inventory.EquippedItems.ContainsKey(EquipmentLocation.SHIELD))
+                    {
+                        //Add the armour skill
+                        totalSkill += (int)this.Skills[SkillName.SHIELD_USER].SkillLevel;
+                        divAmount++;
+                    }
+
+                    return totalSkill / divAmount;
+                }
+                else
+                {
+                    return enemyHandToHand;
+                }
+            }
+            set;
+        }
+
         #endregion
 
         public int Dodge
         {
             get
             {
-                return Evasion + Agil+5;
+                return Evasion + Agil;
             }
         }
 

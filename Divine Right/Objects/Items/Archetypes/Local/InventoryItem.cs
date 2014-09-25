@@ -56,6 +56,8 @@ namespace DRObjects.Items.Archetypes.Local
         /// </summary>
         public int WoundPotential { get; set; }
 
+        public string WeaponType { get; set; }
+
         /// <summary>
         /// Defines where exactly this item may be equipped. If any
         /// </summary>

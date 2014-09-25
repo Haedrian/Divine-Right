@@ -96,7 +96,7 @@ namespace DRObjects
         /// <summary>
         /// Attributes pertaining to the actor
         /// </summary>
-        public ActorAttributes Attributes { get; set; }
+        public SkillsAndAttributes Attributes { get; set; }
 
         //These are the total effective points of attributes after temporary and equipment has been taken into consideration
         public int TotalBrawn { get { return Attributes.Brawn; } }
@@ -136,6 +136,8 @@ namespace DRObjects
             this.CombatStance = ActorStance.NEUTRAL;
             this.IsAlive = true;
             this.Inventory = new ActorInventory();
+            this.Attributes = new SkillsAndAttributes();
+            this.Attributes.Actor = this;
         }
 
     }

@@ -147,6 +147,7 @@ namespace DivineRightGame.ItemFactory.ItemFactoryManagers
             item.DamageDice = damageRating;
             item.StunAmount = stunAmount;
             item.WoundPotential = woundPotential;
+            item.WeaponType = damageType;
 
             if (!String.IsNullOrEmpty(equippableLocation))
             {

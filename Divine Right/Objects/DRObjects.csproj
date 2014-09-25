@@ -89,6 +89,8 @@
     <Compile Include="ActorHandling\ActorMissionType.cs" />
     <Compile Include="ActorHandling\CharacterSheet\Enums\ActorProfession.cs" />
     <Compile Include="ActorHandling\CharacterSheet\Enums\AnatomyEnum.cs" />
+    <Compile Include="ActorHandling\CharacterSheet\ActorSkill.cs" />
+    <Compile Include="ActorHandling\CharacterSheet\Enums\SkillType.cs" />
     <Compile Include="ActorHandling\EnemyData.cs" />
     <Compile Include="ActorHandling\Enums\Gender.cs" />
     <Compile Include="ActorHandling\EquippedItem.cs" />
