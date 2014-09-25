@@ -175,7 +175,13 @@ namespace DRObjects.ActorHandling
                     return enemyHandToHand;
                 }
             }
-            set;
+            set
+            {
+                if (!this.Actor.IsPlayerCharacter)
+                {
+                    this.enemyEvasion = value;
+                }
+            }
         }
 
         #endregion
