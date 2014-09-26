@@ -54,12 +54,6 @@ namespace Divine_Right.InterfaceComponents.Components
             this.feedback = new List<CurrentLogFeedback>();
             this.globalLog = globalLog;
 
-            ////test data
-            //feedback.Add(new CurrentLogFeedback(InterfaceSpriteName.SWORD, Color.Black, "Orc attacks your chest with his mace (7) and hits!"));
-            //feedback.Add(new CurrentLogFeedback(InterfaceSpriteName.BLOOD, Color.DarkRed, "You start bleeding. Oh dear."));
-            //feedback.Add(new CurrentLogFeedback(InterfaceSpriteName.HEAD, Color.ForestGreen, "Your skill in Being Awesome has increased."));
-            //feedback.Add(new CurrentLogFeedback(InterfaceSpriteName.DEFENSE, Color.Black, "The Orc swings at your chest (4), but you dodge away"));
-
             bigMode = false;
         }
 

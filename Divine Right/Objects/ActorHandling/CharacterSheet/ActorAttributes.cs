@@ -203,5 +203,25 @@ namespace DRObjects.ActorHandling
         }
 
         #endregion
+
+        #region Skills
+
+        /// <summary>
+        /// Increases skill in a particular skill, or creates a new one if there is no such skill
+        /// </summary>
+        /// <param name="name"></param>
+        public void IncreaseSkill(SkillName name)
+        {
+            if (this.Skills.ContainsKey(name))
+            {
+                this.Skills[name].LearnSkill();
+            }
+            else
+            {
+                this.Skills.Add(name, new ActorSkill(name));
+            }
+        }
+
+        #endregion
     }
 }

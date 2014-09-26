@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework;
 using DRObjects.GraphicsEngineObjects.Abstract;
 using DRObjects.Enums;
 using DRObjects.Items.Archetypes.Local;
+using DRObjects.ActorHandling.CharacterSheet.Enums;
 
 namespace DivineRightGame.CombatHandling
 {
@@ -168,7 +169,6 @@ namespace DivineRightGame.CombatHandling
             int atk = 0;
             int def = 0;
 
-            //int weaponDamage = 3;
             //The type of dice we roll 3 of to determine weapon damage
             int weaponDiceRolls = 1; //Default damage
             int weaponWoundPotential = 0;
@@ -208,11 +208,24 @@ namespace DivineRightGame.CombatHandling
             //Now roll a d20 and see whether we hit
             int diceRoll = random.Next(20) + 1;
 
-            //TODO: CRITICAL HANDLING
-
             if (difference + diceRoll > 0)
             {
                 //We have a hit
+
+                //The defender will learn something
+                defender.Attributes.IncreaseSkill(SkillName.DODGER);
+
+                //Are they wearing armour ?
+                if (defender.Inventory.EquippedItems.ContainsKey(EquipmentLocation.BODY))
+                {
+                    defender.Attributes.IncreaseSkill(SkillName.ARMOUR_USER);
+                }
+
+                //Are they using a shield?
+                if (defender.Inventory.EquippedItems.ContainsKey(EquipmentLocation.SHIELD))
+                {
+                    defender.Attributes.IncreaseSkill(SkillName.SHIELD_USER);
+                }
 
                 feedback.Add(LogAction(attacker, defender, location, damageType, LogMessageStatus.HIT, diceRoll));
 
@@ -312,7 +325,6 @@ namespace DivineRightGame.CombatHandling
                 }
 
                 //Damage assessment - Do this properly later
-                //TODO: ATTRIBUTE PENALTIES AND SUCH THINGS
                 switch (location)
                 {
                     case AttackLocation.HEAD:
@@ -415,6 +427,26 @@ namespace DivineRightGame.CombatHandling
             else
             {
                 //We have a miss
+
+                //The attacker learned something
+                attacker.Attributes.IncreaseSkill(SkillName.FIGHTER);
+
+                //Are they armed?
+                if (attacker.Inventory.EquippedItems.ContainsKey(EquipmentLocation.WEAPON))
+                {
+                    switch (attacker.Inventory.EquippedItems[EquipmentLocation.WEAPON].WeaponType.ToUpper())
+                    {
+                        case "SWORD": attacker.Attributes.IncreaseSkill(SkillName.SWORDFIGHTER); break;
+                        case "AXE": attacker.Attributes.IncreaseSkill(SkillName.AXEFIGHTER); break;
+                        default: throw new NotImplementedException("No skill pertains to the weapon type " + attacker.Inventory.EquippedItems[EquipmentLocation.WEAPON].WeaponType);
+                    }
+                }
+                else
+                {
+                    //Unarmed then
+                    attacker.Attributes.IncreaseSkill(SkillName.BRAWLER);
+                }
+
                 feedback.Add(LogAction(attacker, defender, location, damageType, LogMessageStatus.MISS, diceRoll));
             }
 
