@@ -16,11 +16,18 @@ namespace DRObjects.ActorHandling.CharacterSheet.Enums
         BRAWLER,
 
         ARMOUR_USER,
-        SHIELD_USER,
+        BLOCKER,
 
         DODGER,
 
         HEALER,
-        TRACKER
+        OUTDOORSMAN,
+        SCOUT,
+        PERSUADER,
+        LEADER,
+        HAGGLER,
+        ADMINISTRATOR,
+        TRAINER,
+        RITUALIST
     }
 }

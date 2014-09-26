@@ -164,7 +164,7 @@ namespace DRObjects.ActorHandling
                     if (this.Actor.Inventory.EquippedItems.ContainsKey(EquipmentLocation.SHIELD))
                     {
                         //Add the armour skill
-                        totalSkill += (int)this.Skills[SkillName.SHIELD_USER].SkillLevel;
+                        totalSkill += (int)this.Skills[SkillName.BLOCKER].SkillLevel;
                         divAmount++;
                     }
 

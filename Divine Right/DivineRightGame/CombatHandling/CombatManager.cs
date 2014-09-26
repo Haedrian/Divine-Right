@@ -224,7 +224,7 @@ namespace DivineRightGame.CombatHandling
                 //Are they using a shield?
                 if (defender.Inventory.EquippedItems.ContainsKey(EquipmentLocation.SHIELD))
                 {
-                    defender.Attributes.IncreaseSkill(SkillName.SHIELD_USER);
+                    defender.Attributes.IncreaseSkill(SkillName.BLOCKER);
                 }
 
                 feedback.Add(LogAction(attacker, defender, location, damageType, LogMessageStatus.HIT, diceRoll));
