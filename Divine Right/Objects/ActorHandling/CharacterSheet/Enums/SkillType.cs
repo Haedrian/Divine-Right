@@ -20,5 +20,7 @@ namespace DRObjects.ActorHandling.CharacterSheet.Enums
 
         DODGER,
 
+        HEALER,
+        TRACKER
     }
 }

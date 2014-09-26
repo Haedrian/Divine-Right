@@ -40,9 +40,26 @@ namespace DRObjects.ActorHandling.CharacterSheet
         /// </summary>
         public double SkillLevel { get; set; }
 
-        public override string ToString()
+        /// <summary>
+        /// A displayable representation of the skill name
+        /// </summary>
+        public string SkillNameString
         {
-            return DisplayLevels[(int)Math.Floor(SkillLevel)] + " " +  myTI.ToTitleCase(this.SkillName.ToString().Replace("_", " ").ToLower());
+            get
+            {
+              return   myTI.ToTitleCase(this.SkillName.ToString().Replace("_", " ").ToLower());
+            }
+        }
+
+        /// <summary>
+        /// A textual representation of the skill level
+        /// </summary>
+       public string SkillLevelString
+        {
+           get
+            {
+               return DisplayLevels[(int)Math.Floor(SkillLevel)];
+            }
         }
 
         public ActorSkill(SkillName name)

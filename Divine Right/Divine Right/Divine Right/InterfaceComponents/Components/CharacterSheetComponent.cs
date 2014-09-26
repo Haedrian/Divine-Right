@@ -55,7 +55,7 @@ namespace Divine_Right.InterfaceComponents.Components
             //Resize if new skills have popped up
             var skillTotal = this.actor.Attributes.Skills.Values.Count;
 
-            rect = new Rectangle(locationX, locationY, 210, 200 + (skillTotal * 15));
+            rect = new Rectangle(locationX, locationY, 250, 200 + (skillTotal * 15));
             this.borderRect = new Rectangle(rect.X - 2, rect.Y - 2, rect.Width + 4, rect.Height + 4);
 
 
@@ -86,26 +86,28 @@ namespace Divine_Right.InterfaceComponents.Components
             batch.Draw(content.Load<Texture2D>(SpriteManager.GetSprite(InterfaceSpriteName.INTEL).path), new Rectangle(locationX + 10, locationY + 130, 30, 30), SpriteManager.GetSprite(InterfaceSpriteName.INTEL).sourceRectangle, Color.White);
             batch.DrawString(font, attributes.Intel.ToString(), new Vector2(locationX + 50, locationY + 135), Color.Black);
 
-            //Totals
+            //Fighting stuff
 
-            batch.Draw(content.Load<Texture2D>(SpriteManager.GetSprite(InterfaceSpriteName.SWORD).path), new Rectangle(locationX + 120, locationY + 10, 30, 30), SpriteManager.GetSprite(InterfaceSpriteName.SWORD).sourceRectangle, Color.White);
-            batch.DrawString(font, (attributes.HandToHand).ToString(), new Vector2(locationX + 150, locationY + 15), Color.Black);
+            batch.Draw(content.Load<Texture2D>(SpriteManager.GetSprite(InterfaceSpriteName.SWORD).path), new Rectangle(locationX + 150, locationY + 10, 30, 30), SpriteManager.GetSprite(InterfaceSpriteName.SWORD).sourceRectangle, Color.White);
+            batch.DrawString(font, (attributes.HandToHand).ToString(), new Vector2(locationX + 190, locationY + 15), Color.Black);
 
-            batch.Draw(content.Load<Texture2D>(SpriteManager.GetSprite(InterfaceSpriteName.DEFENSE).path), new Rectangle(locationX + 120, locationY + 40, 30, 30), SpriteManager.GetSprite(InterfaceSpriteName.DEFENSE).sourceRectangle, Color.White);
-            batch.DrawString(font, attributes.Dodge.ToString(), new Vector2(locationX + 150, locationY + 45), Color.Black);
+            batch.Draw(content.Load<Texture2D>(SpriteManager.GetSprite(InterfaceSpriteName.DEFENSE).path), new Rectangle(locationX + 150, locationY + 40, 30, 30), SpriteManager.GetSprite(InterfaceSpriteName.DEFENSE).sourceRectangle, Color.White);
+            batch.DrawString(font, attributes.Dodge.ToString(), new Vector2(locationX + 190, locationY + 45), Color.Black);
 
-            batch.Draw(content.Load<Texture2D>(SpriteManager.GetSprite(InterfaceSpriteName.BLOOD).path), new Rectangle(locationX + 120, locationY + 70, 30, 30), SpriteManager.GetSprite(InterfaceSpriteName.BLOOD).sourceRectangle, Color.White);
-            batch.DrawString(font,(attributes.Brawn - 5).ToString("+#;-#;0"), new Vector2(locationX + 150, locationY + 75), Color.Black);
+            batch.Draw(content.Load<Texture2D>(SpriteManager.GetSprite(InterfaceSpriteName.BLOOD).path), new Rectangle(locationX + 150, locationY + 70, 30, 30), SpriteManager.GetSprite(InterfaceSpriteName.BLOOD).sourceRectangle, Color.White);
+            batch.DrawString(font,(attributes.Brawn - 5).ToString("+#;-#;0"), new Vector2(locationX + 190, locationY + 75), Color.Black);
 
             //Work on the skills
             //batch.DrawString(font, "SKILLS", new Rectangle(locationX, locationY + 150, rect.Width, 30), Alignment.Center, Color.DarkBlue);
 
             int multiplier = 0;
 
-            foreach (var skill in this.actor.Attributes.Skills.Values)
+            foreach (var skill in this.actor.Attributes.Skills.Values.OrderBy(sv => sv.SkillName.ToString()))
             {
                 multiplier++;
-                batch.DrawString(font, skill.ToString(), new Rectangle(locationX, locationY + 170 + (multiplier * 15), rect.Width, 15), Alignment.Center, Color.Black);
+
+                batch.DrawString(font, skill.SkillLevelString, new Rectangle(locationX, locationY + 170 + (multiplier * 15), (rect.Width/2) - 5, 15), Alignment.Right, Color.Black);
+                batch.DrawString(font, skill.SkillNameString, new Rectangle(locationX + rect.Width/2 + 5, locationY + 170 + (multiplier * 15), (rect.Width / 2) -5, 15), Alignment.Left, Color.Black);
             }
         }
 
