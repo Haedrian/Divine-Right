@@ -74,8 +74,8 @@ namespace Divine_Right.InterfaceComponents.Components
             batch.Draw(content.Load<Texture2D>(SpriteManager.GetSprite(InterfaceSpriteName.BRAWN).path), new Rectangle(locationX + 10, locationY + 10, 30, 30), SpriteManager.GetSprite(InterfaceSpriteName.BRAWN).sourceRectangle, Color.White);
             batch.DrawString(font, attributes.Brawn.ToString(), new Vector2(locationX + 50, locationY + 15), Color.Black);
 
-            batch.Draw(content.Load<Texture2D>(SpriteManager.GetSprite(InterfaceSpriteName.DEX).path), new Rectangle(locationX + 10, locationY + 40, 30, 30), SpriteManager.GetSprite(InterfaceSpriteName.DEX).sourceRectangle, Color.White);
-            batch.DrawString(font, attributes.Dex.ToString(), new Vector2(locationX + 50, locationY + 45), Color.Black);
+            batch.Draw(content.Load<Texture2D>(SpriteManager.GetSprite(InterfaceSpriteName.CHA).path), new Rectangle(locationX + 10, locationY + 40, 30, 30), SpriteManager.GetSprite(InterfaceSpriteName.CHA).sourceRectangle, Color.White);
+            batch.DrawString(font, attributes.Char.ToString(), new Vector2(locationX + 50, locationY + 45), Color.Black);
 
             batch.Draw(content.Load<Texture2D>(SpriteManager.GetSprite(InterfaceSpriteName.AGIL).path), new Rectangle(locationX + 10, locationY + 70, 30, 30), SpriteManager.GetSprite(InterfaceSpriteName.AGIL).sourceRectangle, Color.White);
             batch.DrawString(font, attributes.Agil.ToString(), new Vector2(locationX + 50, locationY + 75), Color.Black);

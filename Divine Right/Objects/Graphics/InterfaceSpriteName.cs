@@ -17,7 +17,7 @@ namespace DRObjects.Graphics
         LEGS,
 
         BRAWN,
-        DEX,
+        CHA,
         AGIL,
         PERC,
         INTEL,

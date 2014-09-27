@@ -101,7 +101,7 @@ namespace DRObjects
         //These are the total effective points of attributes after temporary and equipment has been taken into consideration
         public int TotalBrawn { get { return Attributes.Brawn; } }
         public int TotalAgil { get { return Attributes.Agil; } }
-        public int TotalDex { get { return Attributes.Dex; } }
+        public int TotalDex { get { return Attributes.Char; } }
         public int TotalPerc { get { return Attributes.Perc; } }
         public int TotalIntel { get { return Attributes.Intel; } }
 

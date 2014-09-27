@@ -69,6 +69,8 @@ Content\Fonts\LightText.xnb
 Content\Graphics\Interface\timeIcons.xnb
 Content\Graphics\Interface\buySellIcons.xnb
 Content\Fonts\TextFeedbackFont.spritefont
+App.config
+Maplets.sdf
 Items.sdf
 Maplets\Components\LargeBedroom.xml
 Maplets\Components\MediumBedroom.xml
@@ -138,6 +140,4 @@ Resources\OrcNames\SurnameAft.txt
 Resources\OrcNames\SurnameFore.txt
 Resources\SettlementNames\Prefix.txt
 Resources\SettlementNames\Suffix.txt
-App.config
-Maplets.sdf
 Maplets\GeneralStore.xml

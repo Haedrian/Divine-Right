@@ -663,7 +663,7 @@ namespace DRObjects.Graphics
             interfaceSprites[(int)InterfaceSpriteName.LEGS] = new SpriteData(HEALTH, new Rectangle(250, 275, 124, 248));
 
             interfaceSprites[(int)InterfaceSpriteName.BRAWN] = new SpriteData(CHARACTER_SHEET, new Rectangle(0, 0, 50, 50));
-            interfaceSprites[(int)InterfaceSpriteName.DEX] = new SpriteData(CHARACTER_SHEET, new Rectangle(50, 0, 50, 50));
+            interfaceSprites[(int)InterfaceSpriteName.CHA] = new SpriteData(CHARACTER_SHEET, new Rectangle(50, 0, 50, 50));
             interfaceSprites[(int)InterfaceSpriteName.AGIL] = new SpriteData(CHARACTER_SHEET, new Rectangle(100, 0, 50, 50));
             interfaceSprites[(int)InterfaceSpriteName.PERC] = new SpriteData(CHARACTER_SHEET, new Rectangle(150, 0, 50, 50));
             interfaceSprites[(int)InterfaceSpriteName.INTEL] = new SpriteData(CHARACTER_SHEET, new Rectangle(200, 0, 50, 50));

@@ -27,7 +27,7 @@ namespace DRObjects.ActorHandling.CharacterSheet.Enums
         LEADER,
         HAGGLER,
         ADMINISTRATOR,
-        TRAINER,
-        RITUALIST
+        RITUALIST,
+        THIEF,
     }
 }

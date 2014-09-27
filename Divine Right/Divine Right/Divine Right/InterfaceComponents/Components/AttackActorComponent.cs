@@ -122,7 +122,7 @@ namespace Divine_Right.InterfaceComponents.Components
             // batch.DrawString(font, "Attack", statusTitleRect, Alignment.Center, Color.GhostWhite);
 
             var shield = SpriteManager.GetSprite(InterfaceSpriteName.DEFENSE);
-            var balanced = SpriteManager.GetSprite(InterfaceSpriteName.DEX);
+            var balanced = SpriteManager.GetSprite(InterfaceSpriteName.CHA);
             var sword = SpriteManager.GetSprite(InterfaceSpriteName.SWORD);
             var agressive = SpriteManager.GetSprite(InterfaceSpriteName.MACE);
 

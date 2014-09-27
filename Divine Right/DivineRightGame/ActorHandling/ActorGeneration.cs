@@ -176,7 +176,7 @@ namespace DivineRightGame.ActorHandling
                 att.Agil = results[1];
                 att.Perc = results[2];
                 att.Intel = results[3];
-                att.Dex = results[4];
+                att.Char = results[4];
                 
                 //Combat skills - give him evasion and attack in an amount equal to level
                 att.Evasion = level;
@@ -192,14 +192,14 @@ namespace DivineRightGame.ActorHandling
                 att.Agil = results[1];
                 att.Perc = results[2];
                 att.Intel = results[3];
-                att.Dex = results[4];
+                att.Char = results[4];
 
                 //No combat skills
             }
             else if (profession == ActorProfession.CRAFTER)
             {
                 //Prefer Dex, Intel, Perc, Brawn, Agil
-                att.Dex = results[0];
+                att.Char = results[0];
                 att.Intel = results[1];
                 att.Perc = results[2];
                 att.Brawn = results[3];
@@ -212,7 +212,7 @@ namespace DivineRightGame.ActorHandling
                 //Prefer Brawn, Perc, Dex, Intel, Agil
                 att.Brawn = results[0];
                 att.Perc = results[1];
-                att.Dex = results[2];
+                att.Char = results[2];
                 att.Intel = results[3];
                 att.Agil = results[4];
 
@@ -230,14 +230,14 @@ namespace DivineRightGame.ActorHandling
 
             att.Agil = att.BaseAgil + data.AgilModifier;
             att.Brawn = att.BaseBrawn + data.BrawnModifier;
-            att.Dex = att.BaseDex + data.DexModifier;
+            att.Char = att.BaseChar + data.DexModifier;
             att.Intel = att.BaseIntel + data.IntelModifier;
             att.Perc = att.BasePerc + data.PercModifier;
 
             //Make sure all attributes are larger than 0
             att.Agil = att.BaseAgil > 0 ? att.BaseAgil : 0;
             att.Brawn = att.BaseBrawn > 0 ? att.BaseBrawn : 0;
-            att.Dex = att.BaseDex > 0 ? att.BaseDex : 0;
+            att.Char = att.BaseChar > 0 ? att.BaseChar : 0;
             att.Intel = att.BaseIntel > 0 ? att.BaseIntel : 0;
             att.Perc = att.BasePerc > 0 ? att.BasePerc : 0;
 
