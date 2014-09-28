@@ -238,6 +238,12 @@ namespace Divine_Right.GameScreens
 
                 GameState.LocalMap.Actors.Add(GameState.PlayerCharacter);
 
+                //What attributes do we want?
+                MultiDecisionComponent mdc = new MultiDecisionComponent(PlayableWidth / 2 - 250, 100, CharacterCreation.GenerateCharacterCreation());
+                mdc.Visible = true;
+
+                interfaceComponents.Add(mdc);
+
             }
             else
             {
