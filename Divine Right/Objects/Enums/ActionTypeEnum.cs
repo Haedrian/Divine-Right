@@ -21,5 +21,6 @@ namespace DRObjects.Enums
         DROP,
         UNEQUIP,
         TRADE,
+        MULTIDECISION,
     }
 }

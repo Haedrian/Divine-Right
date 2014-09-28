@@ -711,6 +711,8 @@ namespace DRObjects.Graphics
 
             interfaceSprites[(int)InterfaceSpriteName.SELL] = new SpriteData(BUYSELLICONS, new Rectangle(0, 0, 50, 50));
             interfaceSprites[(int)InterfaceSpriteName.BUY] = new SpriteData(BUYSELLICONS, new Rectangle(50, 0, 50, 50));
+
+            interfaceSprites[(int)InterfaceSpriteName.BOOK] = new SpriteData(@"Graphics/Interface/book", null);
         }
 
 

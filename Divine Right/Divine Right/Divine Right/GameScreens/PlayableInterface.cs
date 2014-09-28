@@ -30,6 +30,7 @@ using DRObjects.Database;
 using DivineRightGame.ItemFactory.ItemFactoryManagers;
 using DRObjects.DataStructures.Enum;
 using System.Threading;
+using DRObjects.MultiEvents;
 
 namespace Divine_Right.GameScreens
 {
@@ -175,6 +176,12 @@ namespace Divine_Right.GameScreens
                         block.ForcePutItemOnBlock(item);
                     }
                 }
+
+                //Create the new character stuff
+                MultiDecisionComponent mdc = new MultiDecisionComponent(PlayableWidth / 2 - 250, 100, CharacterCreation.GenerateCharacterCreation());
+                mdc.Visible = true;
+
+                interfaceComponents.Add(mdc);
 
             }
             else if (parameters[0].ToString().Equals("Continue"))

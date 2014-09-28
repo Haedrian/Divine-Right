@@ -61,6 +61,7 @@ namespace DRObjects.Graphics
         MOON,
         SUN,
         SELL,
-        BUY
+        BUY,
+        BOOK
     }
 }

@@ -115,6 +115,8 @@
     <Compile Include="Enums\VendorType.cs" />
     <Compile Include="EventHandling\Event.cs" />
     <Compile Include="EventHandling\EventChoice.cs" />
+    <Compile Include="EventHandling\MultiEvents\GameMultiEvent.cs" />
+    <Compile Include="EventHandling\MultiEvents\MultiEventChoice.cs" />
     <Compile Include="GraphicsEngineObjects\Abstract\PlayerFeedback.cs" />
     <Compile Include="GraphicsEngineObjects\CreateEventFeedback.cs" />
     <Compile Include="GraphicsEngineObjects\CurrentLogFeedback.cs" />
@@ -157,6 +159,7 @@
     <Compile Include="MapBlock.cs" />
     <Compile Include="MapCoordinates.cs" />
     <Compile Include="MapItem.cs" />
+    <Compile Include="MultiEvents\CharacterCreation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settlements\Districts\District.cs" />
     <Compile Include="Settlements\Districts\DistrictType.cs" />
