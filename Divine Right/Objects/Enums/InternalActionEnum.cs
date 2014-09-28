@@ -28,6 +28,7 @@ namespace DRObjects.Enums
         CONTINUE,
         OPEN_INVENTORY,
         OPEN_TRADE,
+        MULTIDECISION,
 
     }
 }

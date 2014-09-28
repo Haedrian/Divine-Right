@@ -84,7 +84,7 @@ namespace DRObjects.Graphics
         BARRELS,
         CHEST_CLOSED,
         CHEST_OPEN,
-        PLAYERCHAR,
+        PLAYERCHAR_MALE,
 
         BOOKCASE_1,
         BOOKCASE_2,
@@ -517,6 +517,7 @@ namespace DRObjects.Graphics
         CHAIN_LEGGINGS,
         LEATHER_LEGGINGS,
         PADDED_LEGGINGS,
+        PLAYERCHAR_FEMALE,
 
     }
 }

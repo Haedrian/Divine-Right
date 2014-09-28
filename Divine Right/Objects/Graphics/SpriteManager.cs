@@ -145,9 +145,9 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.WATER_TILE] = new SpriteData(TILES, new Rectangle(250, 50, 50, 50));
             localSprites[(int)LocalSpriteName.NONE] = new SpriteData(TILES, new Rectangle(450, 450, 1, 1));
 
-            //todo: dungeons
+            localSprites[(int)LocalSpriteName.PLAYERCHAR_MALE] = new SpriteData(@"Graphics/Local/Player");
+            localSprites[(int)LocalSpriteName.PLAYERCHAR_FEMALE] = new SpriteData(@"Graphics/Local/PlayerFemale");
 
-            localSprites[(int)LocalSpriteName.PLAYERCHAR] = new SpriteData(@"Graphics/Local/Player");
             localSprites[(int)LocalSpriteName.BLUE_BED] = new SpriteData(HOUSEITEM, new Rectangle(0, 0, 50, 50));
             localSprites[(int)LocalSpriteName.WOOD_CHAIR_LEFT] = new SpriteData(HOUSEITEM, new Rectangle(50, 0, 50, 50));
             localSprites[(int)LocalSpriteName.WOOD_CHAIR_RIGHT] = new SpriteData(HOUSEITEM, new Rectangle(100, 0, 50, 50));

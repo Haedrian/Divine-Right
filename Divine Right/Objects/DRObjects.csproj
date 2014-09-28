@@ -159,7 +159,6 @@
     <Compile Include="MapBlock.cs" />
     <Compile Include="MapCoordinates.cs" />
     <Compile Include="MapItem.cs" />
-    <Compile Include="MultiEvents\CharacterCreation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settlements\Districts\District.cs" />
     <Compile Include="Settlements\Districts\DistrictType.cs" />

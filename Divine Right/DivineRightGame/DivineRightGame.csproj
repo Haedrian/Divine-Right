@@ -76,6 +76,7 @@
   <ItemGroup>
     <Compile Include="ActorHandling\ActorAIManager.cs" />
     <Compile Include="ActorHandling\ActorGeneration.cs" />
+    <Compile Include="CharacterCreation\CharacterCreation.cs" />
     <Compile Include="CombatHandling\AttackLocation.cs" />
     <Compile Include="CombatHandling\CombatManager.cs" />
     <Compile Include="CombatHandling\DamageType.cs" />

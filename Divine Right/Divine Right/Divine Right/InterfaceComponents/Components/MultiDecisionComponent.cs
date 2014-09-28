@@ -135,7 +135,7 @@ namespace Divine_Right.InterfaceComponents.Components
                     else
                     {
                         //terminate! Send back that its a multidecision, and the event name and the choices made
-                        actionType = ActionTypeEnum.MULTIDECISION;
+                        internalActionType = InternalActionEnum.MULTIDECISION;
                         args = new object[] { this.currentEvent.EventName, this.choicesMade };
                         destroy = true;
                     }

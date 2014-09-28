@@ -21,7 +21,6 @@ namespace DRObjects.ActorHandling.CharacterSheet.Enums
         DODGER,
 
         HEALER,
-        OUTDOORSMAN,
         SCOUT,
         PERSUADER,
         LEADER,
@@ -29,5 +28,6 @@ namespace DRObjects.ActorHandling.CharacterSheet.Enums
         ADMINISTRATOR,
         RITUALIST,
         THIEF,
+        EXPLORER,
     }
 }

@@ -30,7 +30,7 @@ using DRObjects.Database;
 using DivineRightGame.ItemFactory.ItemFactoryManagers;
 using DRObjects.DataStructures.Enum;
 using System.Threading;
-using DRObjects.MultiEvents;
+using DivineRightGame.CharacterCreation;
 
 namespace Divine_Right.GameScreens
 {
@@ -151,19 +151,19 @@ namespace Divine_Right.GameScreens
 
                 InventoryItemManager mgr = new InventoryItemManager();
 
-                //Create a bunch of inventory items yaay
-                for (int i=0; i < 5; i++)
-                {
-                    var item = mgr.CreateItem(DatabaseHandling.GetItemIdFromTag(Archetype.INVENTORYITEMS, "loot")) as InventoryItem;
-                    item.InInventory = true;
-                    GameState.PlayerCharacter.Inventory.Inventory.Add(item.Category, item);
-                    item = mgr.CreateItem(DatabaseHandling.GetItemIdFromTag(Archetype.INVENTORYITEMS, "armour")) as InventoryItem;
-                    item.InInventory = true;
-                    GameState.PlayerCharacter.Inventory.Inventory.Add(item.Category, item);
-                    item = mgr.CreateItem(DatabaseHandling.GetItemIdFromTag(Archetype.INVENTORYITEMS, "weapon")) as InventoryItem;
-                    item.InInventory = true;
-                    GameState.PlayerCharacter.Inventory.Inventory.Add(item.Category, item);
-                }
+                ////Create a bunch of inventory items yaay
+                //for (int i=0; i < 5; i++)
+                //{
+                //    var item = mgr.CreateItem(DatabaseHandling.GetItemIdFromTag(Archetype.INVENTORYITEMS, "loot")) as InventoryItem;
+                //    item.InInventory = true;
+                //    GameState.PlayerCharacter.Inventory.Inventory.Add(item.Category, item);
+                //    item = mgr.CreateItem(DatabaseHandling.GetItemIdFromTag(Archetype.INVENTORYITEMS, "armour")) as InventoryItem;
+                //    item.InInventory = true;
+                //    GameState.PlayerCharacter.Inventory.Inventory.Add(item.Category, item);
+                //    item = mgr.CreateItem(DatabaseHandling.GetItemIdFromTag(Archetype.INVENTORYITEMS, "weapon")) as InventoryItem;
+                //    item.InInventory = true;
+                //    GameState.PlayerCharacter.Inventory.Inventory.Add(item.Category, item);
+                //}
 
                 for (int i=0; i < 100; i++)
                 {
@@ -212,7 +212,7 @@ namespace Divine_Right.GameScreens
                 MapItem player = new MapItem();
                 player.Coordinate = new MapCoordinate(coordinate);
                 player.Description = "The player character";
-                player.Graphic = SpriteManager.GetSprite(LocalSpriteName.PLAYERCHAR);
+                player.Graphic = SpriteManager.GetSprite(LocalSpriteName.PLAYERCHAR_MALE);
                 player.InternalName = "Player Char";
                 player.MayContainItems = false;
                 player.Name = "Player";
@@ -643,6 +643,12 @@ namespace Divine_Right.GameScreens
                              BaseGame.requestedInternalAction = InternalActionEnum.EXIT;
                              BaseGame.requestedArgs = new object[0];
                             break;
+                        case InternalActionEnum.MULTIDECISION:
+                            //The only thing that has multidecisions right now is char creation
+                            //So let's do it dirty for now
+                            CharacterCreation.ProcessParameters(args[1] as List<string>);
+                            break;
+
                         //TODO: THE REST
                     }
                 }

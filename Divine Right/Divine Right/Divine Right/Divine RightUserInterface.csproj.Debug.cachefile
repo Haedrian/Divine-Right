@@ -69,6 +69,7 @@ Content\Fonts\LightText.xnb
 Content\Graphics\Interface\timeIcons.xnb
 Content\Graphics\Interface\buySellIcons.xnb
 Content\Graphics\Interface\book.xnb
+Content\Graphics\Local\PlayerFemale.xnb
 Content\Fonts\TextFeedbackFont.spritefont
 App.config
 Maplets.sdf

@@ -36,7 +36,7 @@ namespace Divine_Right.HelperFunctions
             MapItem player = new MapItem();
             player.Coordinate = new MapCoordinate(5,5,0,DRObjects.Enums.MapTypeEnum.LOCAL);
             player.Description = "The player character";
-            player.Graphic = SpriteManager.GetSprite(LocalSpriteName.PLAYERCHAR);
+            player.Graphic = SpriteManager.GetSprite(LocalSpriteName.PLAYERCHAR_MALE);
             player.InternalName = "Player Char";
             player.MayContainItems = false;
             player.Name = "Player";
@@ -73,7 +73,7 @@ namespace Divine_Right.HelperFunctions
             MapItem player = new MapItem();
             player.Coordinate = start;
             player.Description = "The player character";
-            player.Graphic = SpriteManager.GetSprite(LocalSpriteName.PLAYERCHAR);
+            player.Graphic = SpriteManager.GetSprite(LocalSpriteName.PLAYERCHAR_MALE);
             player.InternalName = "Player Char";
             player.MayContainItems = false;
             player.Name = "Player";
@@ -119,7 +119,7 @@ namespace Divine_Right.HelperFunctions
             MapItem player = new MapItem();
             player.Coordinate = startPoint.Coordinate;
             player.Description = "The player character";
-            player.Graphic = SpriteManager.GetSprite(LocalSpriteName.PLAYERCHAR);
+            player.Graphic = SpriteManager.GetSprite(LocalSpriteName.PLAYERCHAR_MALE);
             player.InternalName = "Player Char";
             player.MayContainItems = false;
             player.Name = "Player";
@@ -132,13 +132,6 @@ namespace Divine_Right.HelperFunctions
             GameState.PlayerCharacter.IsPlayerCharacter = true;
 
             GameState.PlayerCharacter.Attributes = ActorGeneration.GenerateAttributes("human", DRObjects.ActorHandling.CharacterSheet.Enums.ActorProfession.WARRIOR, 10,GameState.PlayerCharacter);
-
-            foreach (var e in Enum.GetValues(typeof(SkillName)))
-            {
-                var skill = (SkillName)e;
-
-                GameState.PlayerCharacter.Attributes.Skills.Add(skill, new ActorSkill(skill) { SkillLevel = GameState.Random.Next(20) });
-            }
 
             GameState.PlayerCharacter.Anatomy = ActorGeneration.GenerateAnatomy("human");
 
@@ -178,7 +171,7 @@ namespace Divine_Right.HelperFunctions
             MapItem player = new MapItem();
             player.Coordinate = new MapCoordinate(10, 5, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
             player.Description = "The player character";
-            player.Graphic = SpriteManager.GetSprite(LocalSpriteName.PLAYERCHAR);
+            player.Graphic = SpriteManager.GetSprite(LocalSpriteName.PLAYERCHAR_MALE);
             player.InternalName = "Player Char";
             player.MayContainItems = false;
             player.Name = "Player";
@@ -367,7 +360,7 @@ namespace Divine_Right.HelperFunctions
             MapItem player = new MapItem();
             player.Coordinate = new MapCoordinate(10, 5, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
             player.Description = "The player character";
-            player.Graphic = SpriteManager.GetSprite(LocalSpriteName.PLAYERCHAR);
+            player.Graphic = SpriteManager.GetSprite(LocalSpriteName.PLAYERCHAR_MALE);
             player.InternalName = "Player Char";
             player.MayContainItems = false;
             player.Name = "Player";
@@ -551,7 +544,7 @@ namespace Divine_Right.HelperFunctions
             MapItem player = new MapItem();
             player.Coordinate = new MapCoordinate(10, 5, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
             player.Description = "The player character";
-            player.Graphic = SpriteManager.GetSprite(LocalSpriteName.PLAYERCHAR);
+            player.Graphic = SpriteManager.GetSprite(LocalSpriteName.PLAYERCHAR_MALE);
             player.InternalName = "Player Char";
             player.MayContainItems = false;
             player.Name = "Player";
