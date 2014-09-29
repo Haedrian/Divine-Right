@@ -827,7 +827,7 @@ namespace DivineRightGame.LocalMapGenerator
         }
 
         /// <summary>
-        /// Generates enemies on the map. Will later be expanded to support more customisation on the enemy types and will output the handles to the actual enemies for AI processing
+        /// Generates enemies on the map.
         /// </summary>
         /// <param name="enemyCount"></param>
         /// <param name="enemyType"></param>
@@ -879,6 +879,7 @@ namespace DivineRightGame.LocalMapGenerator
                     Console.WriteLine("Level : " + handToHand * multiplier + " Gear : " + totalCostOfStuff * multiplier);
 
                     Actor actor = ActorGeneration.CreateActor(enemyType, null, null, (int)(handToHand * multiplier), (int)(totalCostOfStuff * multiplier), null, out returnedID);
+
 
                     var mapObject = fact.CreateItem("enemies", returnedID);
 
