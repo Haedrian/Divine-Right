@@ -832,7 +832,7 @@ namespace DivineRightGame.LocalMapGenerator
         /// <param name="enemyCount"></param>
         /// <param name="enemyType"></param>
         /// <returns></returns>
-        public MapBlock[,] GenerateEnemies(MapBlock[,] blocks, int enemyCount, string enemyType, out DRObjects.Actor[] actors)
+        public MapBlock[,] GenerateEnemies(MapBlock[,] blocks, int enemyCount, string enemyType, out DRObjects.Actor[] actors,int level, int equipmentCost=0)
         {
             ItemFactory.ItemFactory fact = new ItemFactory.ItemFactory();
             List<Actor> actorList = new List<Actor>();
@@ -858,28 +858,11 @@ namespace DivineRightGame.LocalMapGenerator
 
                     //Get the basic Actor object
 
-                    //What level is the player character?
-                    //This is just the test data - when we generate a test map we'll use this. Otherwise use actual data
-                    int handToHand = 10;
-                    int totalCostOfStuff = 500;
-
                     double multiplier = GameState.Random.Next(75, 125);
 
                     multiplier /= 100; //So we get a number between 0.75 and 1.25
 
-                    if (GameState.PlayerCharacter != null)
-                    {
-                        handToHand = GameState.PlayerCharacter.Attributes.HandToHand;
-
-                        //How much stuff does he have ?
-                        totalCostOfStuff = GameState.PlayerCharacter.Inventory.EquippedItems.Values.Sum(ei => ei.BaseValue);
-
-                    }
-
-                    Console.WriteLine("Level : " + handToHand * multiplier + " Gear : " + totalCostOfStuff * multiplier);
-
-                    Actor actor = ActorGeneration.CreateActor(enemyType, null, null, (int)(handToHand * multiplier), (int)(totalCostOfStuff * multiplier), null, out returnedID);
-
+                    Actor actor = ActorGeneration.CreateActor(enemyType, null, null, (int)(level * multiplier), (int)(equipmentCost * multiplier), null, out returnedID);
 
                     var mapObject = fact.CreateItem("enemies", returnedID);
 

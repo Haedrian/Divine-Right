@@ -308,18 +308,18 @@ namespace DivineRightGame.LocalMapGenerator
                 DRObjects.Actor[] roomEnemies = new DRObjects.Actor[] { };
                 if (room.DungeonRoomType == DungeonRoomType.GUARD_ROOM || room.DungeonRoomType == DungeonRoomType.TREASURE_ROOM)
                 {
-                    //Create an amount of enemies
-                    gennedMap = gen.GenerateEnemies(gennedMap, random.Next(maxOwnedPopulation), ownerType,out roomEnemies);
+                    //Create an amount of enemies - level doesn't matter, we'll regen later
+                    gennedMap = gen.GenerateEnemies(gennedMap, random.Next(maxOwnedPopulation), ownerType,out roomEnemies,10);
 
                     enemies.AddRange(roomEnemies);
                 }
 
                 if (room.DungeonRoomType == DungeonRoomType.WILD_ROOM)
                 {
-                    //Create an amount of wild enemies - let's get a random type for this room
+                    //Create an amount of wild enemies - let's get a random type for this room. This will be of level 5. Later we'll have proper wildlife
                     string type = ActorGeneration.GetEnemyType(false);
 
-                    gennedMap = gen.GenerateEnemies(gennedMap, random.Next(maxWildPopulation), type, out roomEnemies);
+                    gennedMap = gen.GenerateEnemies(gennedMap, random.Next(maxWildPopulation), type, out roomEnemies,5);
 
                     //go through all of room enemies and set them to idle
                     foreach (var enemy in roomEnemies)
@@ -679,8 +679,70 @@ namespace DivineRightGame.LocalMapGenerator
                 }
             }
 
+            //We need to fix the enemies to conform to the standards
+            ConformEnemies(enemies);
+
             enemyArray = enemies.ToArray();
+
             return map;
+
+        }
+
+        private const int EASY_LEVEL = 5;
+        private const int EASY_MONEY = 500;
+        private const int MEDIUM_LEVEL = 10;
+        private const int MEDIUM_MONEY = 1000;
+        private const int HARD_LEVEL = 15;
+        private const int HARD_MONEY = 1500;
+
+        /// <summary>
+        /// Sets denizen-enemies to conform to the difficulty and equipment standard we want
+        /// </summary>
+        /// <param name="enemies"></param>
+        public void ConformEnemies(List<Actor> enemies)
+        {
+            Random random = new Random();
+
+            //Filter out the enemies which are the denizens of this dungeon
+            List<Actor> ens = enemies.Where(e => e.EnemyData.Intelligent).ToList();
+
+            //The rules for level are as follows
+            //For each 3 'easys' - put in a medium
+            //For each 3 mediums - put in a hard
+            //Later we might have an even harder, but leave it like that for now
+
+            int easyCount = 0;
+            int mediumCount = 0;
+
+            //Shuffle the ens - so we don't get hard batches. It'd be more logically to leave them unshuffled, but it'd be too hard.
+
+            ens = ens.OrderBy(r => random.Next(100)).ToList();
+
+            foreach (var enemy in enemies)
+            {
+                if (mediumCount == 3)
+                {
+                    //Generate a hard
+                    ActorGeneration.RegenerateOrc(enemy, HARD_LEVEL, HARD_MONEY);
+                    mediumCount = 0;
+                }
+                else if (easyCount == 3)
+                {
+                    //Generate a medium
+                    ActorGeneration.RegenerateOrc(enemy, MEDIUM_LEVEL, MEDIUM_MONEY);
+                    easyCount = 0;
+                    mediumCount++;
+                }
+                else
+                {
+                    //Generate an easy
+                    ActorGeneration.RegenerateOrc(enemy, EASY_LEVEL, EASY_MONEY);
+                    easyCount++;
+                }
+            }
+            
+            //Done
+            return;
 
         }
 

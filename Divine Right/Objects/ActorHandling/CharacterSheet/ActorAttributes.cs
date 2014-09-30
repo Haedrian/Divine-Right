@@ -35,6 +35,15 @@ namespace DRObjects.ActorHandling
         public HumanoidAnatomy Health { get; set; }
 
         public Actor Actor { get; set; }
+
+        public SkillsAndAttributes()
+        {
+            this.TempAgil = 0;
+            this.TempBrawn = 0;
+            this.TempChar = 0;
+            this.TempIntel = 0;
+            this.TempPerc = 0;
+        }
         #endregion
 
         #endregion
@@ -52,9 +61,9 @@ namespace DRObjects.ActorHandling
         public int BasePerc { get { return this.perc; } }
         public int BaseIntel { get { return this.intel; } }
 
-        public int Brawn { get { int total = TempBrawn ?? 0 + (int)((double)brawn * Health.RightArm / Health.RightArmMax); return total > 1 ? total : 1; } set { brawn = value; } }
-        public int Char { get { int total = TempChar ?? 0 + (int)((double)charisma * Health.RightArm / Health.RightArmMax); return total > 1 ? total : 1; } set { charisma = value; } }
-        public int Agil { get { int total = TempAgil ?? 0 + (int)((double)brawn * Health.Legs / Health.LegsMax); return total > 1 ? total : 1; } set { agil = value; } }
+        public int Brawn { get { int total = (TempBrawn ?? 0) + (int)((double)brawn * Health.RightArm / Health.RightArmMax); return total > 1 ? total : 1; } set { brawn = value; } }
+        public int Char { get { int total = (TempChar ?? 0) + (int)((double)charisma * Health.RightArm / Health.RightArmMax); return total > 1 ? total : 1; } set { charisma = value; } }
+        public int Agil { get { int total = (TempAgil ?? 0) + (int)((double)agil * Health.Legs / Health.LegsMax); return total > 1 ? total : 1; } set { agil = value; } }
         public int Perc { get { int total = perc + (TempPerc ?? 0); return total > 1 ? total : 1; } set { perc = value; } }
         public int Intel { get { int total = intel + (TempIntel ?? 0); return total > 1 ? total : 1; } set { intel = value; } }
 

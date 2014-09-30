@@ -10,6 +10,7 @@ using DRObjects.Items.Archetypes.Local;
 using DivineRightGame.ItemFactory.ItemFactoryManagers;
 using DRObjects.ActorHandling.Enums;
 using DRObjects;
+using DRObjects.Graphics;
 
 namespace DivineRightGame.ActorHandling
 {
@@ -242,6 +243,7 @@ namespace DivineRightGame.ActorHandling
             att.Perc = att.BasePerc > 0 ? att.BasePerc : 0;
 
             att.Actor = actor;
+            att.Health = actor.Anatomy;
 
             return att;
         }
@@ -453,7 +455,52 @@ namespace DivineRightGame.ActorHandling
             return database.Where(d => d.RaceName.Equals(race, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
         }
 
+        /// <summary>
+        /// Regenerates the stats of an orc such that it retains any missions it has, however will be of a particular level with a particular gear cost
+        /// Will also pick the correct orc icon depending on level
+        /// </summary>
+        /// <param name="level"></param>
+        /// <param name="gearCost"></param>
+        /// <param name="enemyID"></param>
+        /// <returns></returns>
+        public static void RegenerateOrc(Actor actor,int level, int gearCost)
+        {
+            Random random = new Random();
 
+            //This should give us a random from 0.75 to 1.25
+            double multiplier = (random.NextDouble()/2)-0.25 + 1;
+
+            //Start by regenerating the actor's stats and gear
+            actor.Attributes = GenerateAttributes("orc", level == 5 ? ActorProfession.CIVILIAN : ActorProfession.WARRIOR, (int)(level * multiplier), actor);
+
+            multiplier = (random.NextDouble()/2)-0.25 + 1;
+
+            //And the gear
+            actor.Inventory.EquippedItems = GenerateEquippedItems((int)(gearCost * multiplier));
+
+            foreach (var item in actor.Inventory.EquippedItems.Values)
+            {
+                actor.Inventory.Inventory.Add(item.Category, item);
+            }
+
+            //And finally, we need to pick the right graphic
+            string graphic = String.Empty;
+
+            if (level <= 5)
+            {
+                actor.MapCharacter.Graphic = SpriteManager.GetSprite(LocalSpriteName.ENEMY_ORC_CIV);
+            }
+            else if (level <= 10)
+            {
+                actor.MapCharacter.Graphic = SpriteManager.GetSprite(LocalSpriteName.ENEMY_ORC_LIGHT);
+            }
+            else
+            {
+                actor.MapCharacter.Graphic = SpriteManager.GetSprite(LocalSpriteName.ENEMY_ORC_HEAVY);
+            }
+
+            //Done
+        }
 
     }
 }
