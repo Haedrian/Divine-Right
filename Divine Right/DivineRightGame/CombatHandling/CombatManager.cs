@@ -88,7 +88,16 @@ namespace DivineRightGame.CombatHandling
 
             GetStanceEffect(out atk, out def, defender.CombatStance);
 
-            int defendChance = defender.Attributes.Dodge + def;
+            //Does the defender have a shield?
+            int shieldBonus = 0;
+
+            if (defender.Inventory.EquippedItems.ContainsKey(EquipmentLocation.SHIELD) && defender.Anatomy.LeftArm != 0)
+            {
+                shieldBonus = defender.Inventory.EquippedItems[EquipmentLocation.SHIELD].ArmourRating;
+            }
+
+            //Don't forget the shield if it's there
+            int defendChance = defender.Attributes.Dodge + def + shieldBonus;
 
             //See what the difference is
             int difference = 20 + (hitChance - defendChance);

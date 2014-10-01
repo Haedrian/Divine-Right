@@ -195,7 +195,8 @@ namespace DivineRightGame.ActorHandling
                 att.Intel = results[3];
                 att.Char = results[4];
 
-                //No combat skills
+                att.HandToHand = level;
+                att.Evasion = level;
             }
             else if (profession == ActorProfession.CRAFTER)
             {
@@ -206,7 +207,8 @@ namespace DivineRightGame.ActorHandling
                 att.Brawn = results[3];
                 att.Agil = results[4];
 
-                //No combat skills
+                att.HandToHand = level;
+                att.Evasion = level;
             }
             else if (profession == ActorProfession.HARVESTER)
             {
@@ -217,9 +219,9 @@ namespace DivineRightGame.ActorHandling
                 att.Intel = results[3];
                 att.Agil = results[4];
 
-                //Give some combat skills, a third of the level
-                att.HandToHand = level / 3;
-                att.Evasion = level / 3;
+                //Give some combat skills
+                att.HandToHand = level;
+                att.Evasion = level;
             }
             else
             {

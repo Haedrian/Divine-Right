@@ -171,8 +171,8 @@ namespace Divine_Right.InterfaceComponents.Components
             batch.Draw(content.Load<Texture2D>(shield.path), enemyArmourIconRect, shield.sourceRectangle, Color.White);
             batch.Draw(content.Load<Texture2D>(sword.path), enemyWeaponIconRect, sword.sourceRectangle, Color.White);
 
-            batch.DrawString(font, "("+ (TargetActor.Attributes.HandToHand + TargetActor.Attributes.Brawn - 5).ToString() +")", enemyWeaponRect, Alignment.Center, Color.Black);
-            batch.DrawString(font, "(" + (TargetActor.Attributes.Dodge).ToString()+ ")", enemyArmourRect, Alignment.Center, Color.Black);
+            batch.DrawString(font, "(" + (TargetActor.Attributes.HandToHand + TargetActor.Attributes.Brawn - 5).ToString() + ")", enemyWeaponRect, Alignment.Center, Color.Black);
+            batch.DrawString(font, "(" + (TargetActor.Attributes.Dodge).ToString() + ")", enemyArmourRect, Alignment.Center, Color.Black);
 
             batch.Draw(content.Load<Texture2D>(scrollBackground.path), attackButtonRectangle, scrollBackground.sourceRectangle, Color.DarkGray);
             batch.DrawString(font, "ATTACK", attackButtonRectangle, Alignment.Center, Color.White);
@@ -191,7 +191,7 @@ namespace Divine_Right.InterfaceComponents.Components
             //Draw an icon on the targetted location
             Rectangle targetRect = new Rectangle();
 
-            switch(this.currentAttackLocation)
+            switch (this.currentAttackLocation)
             {
                 case AttackLocation.CHEST:
                     targetRect = chestPercentageRect; break;
@@ -206,7 +206,7 @@ namespace Divine_Right.InterfaceComponents.Components
             }
 
             //Draw a sword
-            batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.SWORD),targetRect, Color.Red);
+            batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.SWORD), targetRect, Color.Red);
             batch.Draw(content.Load<Texture2D>(sword.path), targetRect, sword.sourceRectangle, Color.Red, 0, new Vector2(0, 0), SpriteEffects.FlipHorizontally, 0);
 
             if (CombatManager.CalculateHitPercentage(attacker, TargetActor, AttackLocation.HEAD) != -1) //not present
@@ -389,7 +389,7 @@ namespace Divine_Right.InterfaceComponents.Components
             rightArmPercentageRect = new Rectangle(locationX + 260, locationY + 35, 33, 85);
             legsPercentageRect = new Rectangle(locationX + 223, locationY + 108, 50, 87);
 
-            closeRect = new Rectangle(locationX +270,locationY+ 0, 30, 30);
+            closeRect = new Rectangle(locationX + 270, locationY + 0, 30, 30);
         }
 
         public bool IsModal()

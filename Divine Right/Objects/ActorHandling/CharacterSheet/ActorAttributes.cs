@@ -132,9 +132,6 @@ namespace DRObjects.ActorHandling
                     totalH2H = enemyHandToHand;
                 }
 
-                //Don't forget to add the attribute stuff
-                totalH2H += Brawn - 5;
-
                 return totalH2H;
             }
             set

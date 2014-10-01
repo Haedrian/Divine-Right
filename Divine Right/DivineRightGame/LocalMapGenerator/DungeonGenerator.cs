@@ -718,7 +718,7 @@ namespace DivineRightGame.LocalMapGenerator
 
             ens = ens.OrderBy(r => random.Next(100)).ToList();
 
-            foreach (var enemy in enemies)
+            foreach (var enemy in ens)
             {
                 if (mediumCount == 3)
                 {
