@@ -31,8 +31,8 @@ namespace DivineRightGame.Managers.HelperObjects
         /// <param name="endY"></param>
         public Line(int startX, int startY, int endX, int endY)
         {
-            this.Start = new MapCoordinate(startX, startY, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
-            this.End = new MapCoordinate(endX, endY, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+            this.Start = new MapCoordinate(startX, startY, 0, DRObjects.Enums.MapType.LOCAL);
+            this.End = new MapCoordinate(endX, endY, 0, DRObjects.Enums.MapType.LOCAL);
         }
 
         public Line()

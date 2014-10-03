@@ -51,7 +51,7 @@ namespace DivineRightGame.LocalMapGenerator
             decimal percentageOwned, int maxWildPopulation, int maxOwnedPopulation,
             out MapCoordinate startPoint,out DRObjects.Actor[] enemyArray,out List<PointOfInterest> pointsOfInterest)
         {
-            startPoint = new MapCoordinate(0, 0, 0, MapTypeEnum.LOCAL);
+            startPoint = new MapCoordinate(0, 0, 0, MapType.LOCAL);
             pointsOfInterest = new List<PointOfInterest>();
 
             List<DRObjects.Actor> enemies = new List<DRObjects.Actor>();
@@ -231,7 +231,7 @@ namespace DivineRightGame.LocalMapGenerator
                         {
                             Tile = new MapItem()
                             {
-                                Coordinate = new MapCoordinate(x,y,0,DRObjects.Enums.MapTypeEnum.LOCAL),
+                                Coordinate = new MapCoordinate(x,y,0,DRObjects.Enums.MapType.LOCAL),
                                 MayContainItems = false
                             }
                         };
@@ -287,7 +287,7 @@ namespace DivineRightGame.LocalMapGenerator
                         {
                             //Put this as the point
                             PointOfInterest interest = new PointOfInterest();
-                            interest.Coordinate = new MapCoordinate(x, y, 0, MapTypeEnum.LOCAL);
+                            interest.Coordinate = new MapCoordinate(x, y, 0, MapType.LOCAL);
 
                             if (room.DungeonRoomType == DungeonRoomType.GUARD_ROOM)
                             {
@@ -368,11 +368,11 @@ namespace DivineRightGame.LocalMapGenerator
                     for (int y = 0; y < gennedMap.GetLength(1); y++)
                     {
                         map[x + xIncreaser,y + yIncreaser] = gennedMap[x,y];
-                        map[x + xIncreaser, y + yIncreaser].Tile.Coordinate = new MapCoordinate(x + xIncreaser, y + yIncreaser, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+                        map[x + xIncreaser, y + yIncreaser].Tile.Coordinate = new MapCoordinate(x + xIncreaser, y + yIncreaser, 0, DRObjects.Enums.MapType.LOCAL);
 
                         foreach (var item in map[x + xIncreaser, y + yIncreaser].GetItems())
                         {
-                            item.Coordinate = new MapCoordinate(x + xIncreaser, y + yIncreaser, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+                            item.Coordinate = new MapCoordinate(x + xIncreaser, y + yIncreaser, 0, DRObjects.Enums.MapType.LOCAL);
                         }
                     }
                 }
@@ -395,7 +395,7 @@ namespace DivineRightGame.LocalMapGenerator
                         int xStart = (bottomEdgeXMax - bottomEdgeXMin)/2 + bottomEdgeXMin;
 
                         //Set the start point
-                        startPoint = new MapCoordinate(xStart+1, topEdgeY-2, 0, MapTypeEnum.LOCAL);
+                        startPoint = new MapCoordinate(xStart+1, topEdgeY-2, 0, MapType.LOCAL);
                         //Put the 'leave town' item on it
 
                         map[startPoint.X, startPoint.Y].ForcePutItemOnBlock(new LeaveTownItem());
@@ -410,7 +410,7 @@ namespace DivineRightGame.LocalMapGenerator
                             {
                                 //Draw!
                                 map[x + x1, y].Tile = factory.CreateItem("TILES", 25);
-                                map[x + x1, y].Tile.Coordinate = new MapCoordinate(x + x1, y, 0, MapTypeEnum.LOCAL);
+                                map[x + x1, y].Tile.Coordinate = new MapCoordinate(x + x1, y, 0, MapType.LOCAL);
                             }
 
                             y--; //move down
@@ -425,7 +425,7 @@ namespace DivineRightGame.LocalMapGenerator
                             {
                                 //Draw!
                                 map[x + x1, y].Tile = factory.CreateItem("TILES", 25);
-                                map[x + x1, y].Tile.Coordinate = new MapCoordinate(x + x1, y, 0, MapTypeEnum.LOCAL);
+                                map[x + x1, y].Tile.Coordinate = new MapCoordinate(x + x1, y, 0, MapType.LOCAL);
                             }
 
                             y++; //move up
@@ -479,7 +479,7 @@ namespace DivineRightGame.LocalMapGenerator
 
                                 //Draw!
                                 map[x, y + y1].Tile = factory.CreateItem("TILES",25);
-                                map[x,y+y1].Tile.Coordinate = new MapCoordinate(x,y+y1,0,MapTypeEnum.LOCAL);
+                                map[x,y+y1].Tile.Coordinate = new MapCoordinate(x,y+y1,0,MapType.LOCAL);
                             }
 
                             x++; //increment x
@@ -494,7 +494,7 @@ namespace DivineRightGame.LocalMapGenerator
                             {
                                 //Draw!
                                 map[x, y + y1].Tile = factory.CreateItem("TILES", 25);
-                                map[x, y + y1].Tile.Coordinate = new MapCoordinate(x, y + y1, 0, MapTypeEnum.LOCAL);
+                                map[x, y + y1].Tile.Coordinate = new MapCoordinate(x, y + y1, 0, MapType.LOCAL);
                             }
 
                             x--; //walk back
@@ -538,7 +538,7 @@ namespace DivineRightGame.LocalMapGenerator
 
                                 //Draw!
                                 map[x, y + y1].Tile = factory.CreateItem("TILES", 25);
-                                map[x, y + y1].Tile.Coordinate = new MapCoordinate(x, y + y1, 0, MapTypeEnum.LOCAL);
+                                map[x, y + y1].Tile.Coordinate = new MapCoordinate(x, y + y1, 0, MapType.LOCAL);
                             }
 
                             x--; //decrement x
@@ -552,7 +552,7 @@ namespace DivineRightGame.LocalMapGenerator
                             {
                                 //Draw!
                                 map[x, y + y1].Tile = factory.CreateItem("TILES", 25);
-                                map[x, y + y1].Tile.Coordinate = new MapCoordinate(x, y + y1, 0, MapTypeEnum.LOCAL);
+                                map[x, y + y1].Tile.Coordinate = new MapCoordinate(x, y + y1, 0, MapType.LOCAL);
                             }
 
                             x++; //walk back
@@ -597,7 +597,7 @@ namespace DivineRightGame.LocalMapGenerator
 
                                 //Draw!
                                 map[x+x1, y].Tile = factory.CreateItem("TILES", 25);
-                                map[x+x1, y].Tile.Coordinate = new MapCoordinate(x+x1, y, 0, MapTypeEnum.LOCAL);
+                                map[x+x1, y].Tile.Coordinate = new MapCoordinate(x+x1, y, 0, MapType.LOCAL);
                             }
 
                             y--; //decrement y
@@ -612,7 +612,7 @@ namespace DivineRightGame.LocalMapGenerator
                             {
                                 //Draw!
                                 map[x + x1, y].Tile = factory.CreateItem("TILES", 25);
-                                map[x + x1, y].Tile.Coordinate = new MapCoordinate(x + x1, y, 0, MapTypeEnum.LOCAL);
+                                map[x + x1, y].Tile.Coordinate = new MapCoordinate(x + x1, y, 0, MapType.LOCAL);
                             }
 
                             y++; //walk back
@@ -655,7 +655,7 @@ namespace DivineRightGame.LocalMapGenerator
 
                                 //Draw!
                                 map[x + x1, y].Tile = factory.CreateItem("TILES", 25);
-                                map[x + x1, y].Tile.Coordinate = new MapCoordinate(x + x1, y, 0, MapTypeEnum.LOCAL);
+                                map[x + x1, y].Tile.Coordinate = new MapCoordinate(x + x1, y, 0, MapType.LOCAL);
                             }
 
                             y++; //move up
@@ -670,7 +670,7 @@ namespace DivineRightGame.LocalMapGenerator
                             {
                                 //Draw!
                                 map[x + x1, y].Tile = factory.CreateItem("TILES", 25);
-                                map[x + x1, y].Tile.Coordinate = new MapCoordinate(x + x1, y, 0, MapTypeEnum.LOCAL);
+                                map[x + x1, y].Tile.Coordinate = new MapCoordinate(x + x1, y, 0, MapType.LOCAL);
                             }
 
                             y--; //move down

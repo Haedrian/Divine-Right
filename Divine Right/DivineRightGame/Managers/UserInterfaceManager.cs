@@ -64,10 +64,10 @@ namespace DivineRightGame.Managers
                 {
                     switch (coordinate.MapType)
                     {
-                        case MapTypeEnum.LOCAL:
+                        case MapType.LOCAL:
                             feedback.AddRange(GameState.LocalMap.GetBlockAtCoordinate(coordinate).PerformAction(actionType, GameState.PlayerCharacter, args));
                             break;
-                        case MapTypeEnum.GLOBAL:
+                        case MapType.GLOBAL:
                             feedback.AddRange(GameState.GlobalMap.GetBlockAtCoordinate(coordinate).PerformAction(actionType, GameState.PlayerCharacter, args));
                             break;
                         default:
@@ -121,9 +121,9 @@ namespace DivineRightGame.Managers
         {
             switch (coordinate.MapType)
             {
-                case MapTypeEnum.LOCAL:
+                case MapType.LOCAL:
                     return GameState.LocalMap.GetBlockAtCoordinate(coordinate).GetActions(GameState.PlayerCharacter);
-                case MapTypeEnum.GLOBAL:
+                case MapType.GLOBAL:
                     return GameState.GlobalMap.GetBlockAtCoordinate(coordinate).GetActions(GameState.PlayerCharacter);
                 default:
                     throw new NotImplementedException("There is no support for that particular maptype");
@@ -203,7 +203,7 @@ namespace DivineRightGame.Managers
         {
             switch (point.MapType)
             {
-                case (DRObjects.Enums.MapTypeEnum.GLOBAL)
+                case (DRObjects.Enums.MapType.GLOBAL)
                 :
                     try
                     {
@@ -215,7 +215,7 @@ namespace DivineRightGame.Managers
                         block.MapCoordinate = point;
                         return block;
                     }
-                case (DRObjects.Enums.MapTypeEnum.LOCAL)
+                case (DRObjects.Enums.MapType.LOCAL)
                 :
                         return GameState.LocalMap.GetBlockAtCoordinate(point).ConvertToGraphicalBlock();
                 default:
@@ -233,7 +233,7 @@ namespace DivineRightGame.Managers
         {
             switch (point.MapType)
             {
-                case (DRObjects.Enums.MapTypeEnum.GLOBAL)
+                case (DRObjects.Enums.MapType.GLOBAL)
                 :
                     try
                     {
@@ -245,7 +245,7 @@ namespace DivineRightGame.Managers
                         block.MapCoordinate = point;
                         return block;
                     }
-                case (DRObjects.Enums.MapTypeEnum.LOCAL)
+                case (DRObjects.Enums.MapType.LOCAL)
                 :
                     return GameState.LocalMap.GetBlockAtCoordinate(point).ConvertToGraphicalBlock();
                 default:

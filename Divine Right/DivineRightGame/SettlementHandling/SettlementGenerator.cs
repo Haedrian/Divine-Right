@@ -123,7 +123,7 @@ namespace DivineRightGame.SettlementHandling
                 for (int y = 0; y < mainMap.GetLength(1); y++)
                 {
                     MapItem tile = factory.CreateItem("tile", grassTileID);
-                    tile.Coordinate = new MapCoordinate(x, y, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+                    tile.Coordinate = new MapCoordinate(x, y, 0, DRObjects.Enums.MapType.LOCAL);
 
                     MapBlock block = new MapBlock();
                     block.Tile = tile;
@@ -254,7 +254,7 @@ namespace DivineRightGame.SettlementHandling
                 for (int y = 17 + yShift; y < 18 + 36; y++)
                 {
                     MapItem tile = factory.CreateItem("tile", plazaTile);
-                    tile.Coordinate = new MapCoordinate(x, y, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+                    tile.Coordinate = new MapCoordinate(x, y, 0, DRObjects.Enums.MapType.LOCAL);
 
                     MapBlock block = new MapBlock();
                     block.Tile = tile;
@@ -298,13 +298,13 @@ namespace DivineRightGame.SettlementHandling
                     if (mainMap[randomX, randomY].MayContainItems)
                     {
                         //break
-                        actorMapItem.Coordinate = new MapCoordinate(randomX, randomY, 0, MapTypeEnum.LOCAL);
+                        actorMapItem.Coordinate = new MapCoordinate(randomX, randomY, 0, MapType.LOCAL);
 
                         //Put the item in
                         mainMap[randomX, randomY].ForcePutItemOnBlock(actorMapItem);
 
                         //Give him a mission
-                        actor.MissionStack.Push(new WanderMission() { WanderPoint = new MapCoordinate(randomX, randomY, 0, MapTypeEnum.LOCAL), WanderRectangle = plazaRect, LoiterPercentage = random.Next(40) + 50 });
+                        actor.MissionStack.Push(new WanderMission() { WanderPoint = new MapCoordinate(randomX, randomY, 0, MapType.LOCAL), WanderRectangle = plazaRect, LoiterPercentage = random.Next(40) + 50 });
 
                         break;
                     }
@@ -375,7 +375,7 @@ namespace DivineRightGame.SettlementHandling
             //Now select all the border tiles and put in a "Exit here" border
             for (int x = 0; x < mainMap.GetLength(0); x++)
             {
-                MapCoordinate coo = new MapCoordinate(x,0,0,MapTypeEnum.LOCAL);
+                MapCoordinate coo = new MapCoordinate(x,0,0,MapType.LOCAL);
 
                 LeaveTownItem lti = new LeaveTownItem();
                 lti.Coordinate = coo;
@@ -386,7 +386,7 @@ namespace DivineRightGame.SettlementHandling
 
                 mainMap[x, 0].ForcePutItemOnBlock(lti);
 
-                coo = new MapCoordinate(x, mainMap.GetLength(1)-1, 0, MapTypeEnum.LOCAL);
+                coo = new MapCoordinate(x, mainMap.GetLength(1)-1, 0, MapType.LOCAL);
 
                 lti = new LeaveTownItem();
                 lti.Coordinate = coo;
@@ -401,7 +401,7 @@ namespace DivineRightGame.SettlementHandling
 
             for (int y = 0; y < mainMap.GetLength(1); y++)
             {
-                MapCoordinate coo = new MapCoordinate(0, y, 0, MapTypeEnum.LOCAL);
+                MapCoordinate coo = new MapCoordinate(0, y, 0, MapType.LOCAL);
 
                 LeaveTownItem lti = new LeaveTownItem();
                 lti.Coordinate = coo;
@@ -412,7 +412,7 @@ namespace DivineRightGame.SettlementHandling
 
                 mainMap[0, y].ForcePutItemOnBlock(lti);
 
-                coo = new MapCoordinate(mainMap.GetLength(0) - 1, y , 0, MapTypeEnum.LOCAL);
+                coo = new MapCoordinate(mainMap.GetLength(0) - 1, y , 0, MapType.LOCAL);
 
                 lti = new LeaveTownItem();
                 lti.Coordinate = coo;
@@ -428,7 +428,7 @@ namespace DivineRightGame.SettlementHandling
             poi.Type = PointOfInterestType.ENTRANCE;
 
             //Put the entrance at the bottom in the middle of x
-            poi.Coordinate = new MapCoordinate(mainMap.GetLength(0) / 2, 1, 0, MapTypeEnum.LOCAL);
+            poi.Coordinate = new MapCoordinate(mainMap.GetLength(0) / 2, 1, 0, MapType.LOCAL);
 
             startPoint = poi;
 

@@ -31,10 +31,10 @@ namespace Divine_Right.HelperFunctions
             GameState.PlayerCharacter.IsPlayerCharacter = true;
             GameState.PlayerCharacter.Anatomy = ActorGeneration.GenerateAnatomy("human");
 
-            MapBlock block = GameState.LocalMap.GetBlockAtCoordinate(new MapCoordinate(5, 5, 0, DRObjects.Enums.MapTypeEnum.LOCAL));
+            MapBlock block = GameState.LocalMap.GetBlockAtCoordinate(new MapCoordinate(5, 5, 0, DRObjects.Enums.MapType.LOCAL));
             
             MapItem player = new MapItem();
-            player.Coordinate = new MapCoordinate(5,5,0,DRObjects.Enums.MapTypeEnum.LOCAL);
+            player.Coordinate = new MapCoordinate(5,5,0,DRObjects.Enums.MapType.LOCAL);
             player.Description = "The player character";
             player.Graphic = SpriteManager.GetSprite(LocalSpriteName.PLAYERCHAR_MALE);
             player.InternalName = "Player Char";
@@ -96,7 +96,7 @@ namespace Divine_Right.HelperFunctions
 
         public static void GenerateSettlement()
         {
-            var settlement = SettlementGenerator.GenerateSettlement(new MapCoordinate(50, 50, 0, DRObjects.Enums.MapTypeEnum.GLOBAL), GameState.Random.Next(10) + 2, new List<DRObjects.Enums.GlobalResourceType>());
+            var settlement = SettlementGenerator.GenerateSettlement(new MapCoordinate(50, 50, 0, DRObjects.Enums.MapType.GLOBAL), GameState.Random.Next(10) + 2, new List<DRObjects.Enums.GlobalResourceType>());
 
             GameState.LocalMap = new LocalMap(250, 250, 1, 0);
             GameState.LocalMap.Settlement = settlement;
@@ -169,14 +169,14 @@ namespace Divine_Right.HelperFunctions
             GameState.LocalMap.AddToLocalMap(collapsedMap.ToArray());
 
             MapItem player = new MapItem();
-            player.Coordinate = new MapCoordinate(10, 5, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+            player.Coordinate = new MapCoordinate(10, 5, 0, DRObjects.Enums.MapType.LOCAL);
             player.Description = "The player character";
             player.Graphic = SpriteManager.GetSprite(LocalSpriteName.PLAYERCHAR_MALE);
             player.InternalName = "Player Char";
             player.MayContainItems = false;
             player.Name = "Player";
 
-            MapBlock playerBlock = GameState.LocalMap.GetBlockAtCoordinate(new MapCoordinate(5, 5, 0, DRObjects.Enums.MapTypeEnum.LOCAL));
+            MapBlock playerBlock = GameState.LocalMap.GetBlockAtCoordinate(new MapCoordinate(5, 5, 0, DRObjects.Enums.MapType.LOCAL));
             playerBlock.PutItemOnBlock(player);
             GameState.PlayerCharacter = new Actor();
             GameState.PlayerCharacter.MapCharacter = player;
@@ -358,14 +358,14 @@ namespace Divine_Right.HelperFunctions
             GameState.LocalMap.AddToLocalMap(collapsedMap.ToArray());
 
             MapItem player = new MapItem();
-            player.Coordinate = new MapCoordinate(10, 5, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+            player.Coordinate = new MapCoordinate(10, 5, 0, DRObjects.Enums.MapType.LOCAL);
             player.Description = "The player character";
             player.Graphic = SpriteManager.GetSprite(LocalSpriteName.PLAYERCHAR_MALE);
             player.InternalName = "Player Char";
             player.MayContainItems = false;
             player.Name = "Player";
 
-            MapBlock playerBlock = GameState.LocalMap.GetBlockAtCoordinate(new MapCoordinate(10, 5, 0, DRObjects.Enums.MapTypeEnum.LOCAL));
+            MapBlock playerBlock = GameState.LocalMap.GetBlockAtCoordinate(new MapCoordinate(10, 5, 0, DRObjects.Enums.MapType.LOCAL));
             playerBlock.PutItemOnBlock(player);
             GameState.PlayerCharacter = new Actor();
             GameState.PlayerCharacter.MapCharacter = player;
@@ -542,14 +542,14 @@ namespace Divine_Right.HelperFunctions
             GameState.LocalMap.AddToLocalMap(collapsedMap.ToArray());
 
             MapItem player = new MapItem();
-            player.Coordinate = new MapCoordinate(10, 5, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+            player.Coordinate = new MapCoordinate(10, 5, 0, DRObjects.Enums.MapType.LOCAL);
             player.Description = "The player character";
             player.Graphic = SpriteManager.GetSprite(LocalSpriteName.PLAYERCHAR_MALE);
             player.InternalName = "Player Char";
             player.MayContainItems = false;
             player.Name = "Player";
 
-            MapBlock playerBlock = GameState.LocalMap.GetBlockAtCoordinate(new MapCoordinate(10, 5, 0, DRObjects.Enums.MapTypeEnum.LOCAL));
+            MapBlock playerBlock = GameState.LocalMap.GetBlockAtCoordinate(new MapCoordinate(10, 5, 0, DRObjects.Enums.MapType.LOCAL));
             playerBlock.PutItemOnBlock(player);
             GameState.PlayerCharacter = new Actor();
             GameState.PlayerCharacter.MapCharacter = player;

@@ -518,6 +518,8 @@ namespace DRObjects.Graphics
         LEATHER_LEGGINGS,
         PADDED_LEGGINGS,
         PLAYERCHAR_FEMALE,
+        PALLISADE_LR,
+        PALLISADE_TB,
 
     }
 }

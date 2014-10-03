@@ -8,7 +8,7 @@ namespace DRObjects.Enums
     /// <summary>
     /// The type of the map
     /// </summary>
-    public enum MapTypeEnum
+    public enum MapType
     {
         LOCAL,
         GLOBAL,

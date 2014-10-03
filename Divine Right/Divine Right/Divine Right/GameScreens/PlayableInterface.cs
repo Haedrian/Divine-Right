@@ -151,23 +151,9 @@ namespace Divine_Right.GameScreens
 
                 InventoryItemManager mgr = new InventoryItemManager();
 
-                ////Create a bunch of inventory items yaay
-                //for (int i=0; i < 5; i++)
-                //{
-                //    var item = mgr.CreateItem(DatabaseHandling.GetItemIdFromTag(Archetype.INVENTORYITEMS, "loot")) as InventoryItem;
-                //    item.InInventory = true;
-                //    GameState.PlayerCharacter.Inventory.Inventory.Add(item.Category, item);
-                //    item = mgr.CreateItem(DatabaseHandling.GetItemIdFromTag(Archetype.INVENTORYITEMS, "armour")) as InventoryItem;
-                //    item.InInventory = true;
-                //    GameState.PlayerCharacter.Inventory.Inventory.Add(item.Category, item);
-                //    item = mgr.CreateItem(DatabaseHandling.GetItemIdFromTag(Archetype.INVENTORYITEMS, "weapon")) as InventoryItem;
-                //    item.InInventory = true;
-                //    GameState.PlayerCharacter.Inventory.Inventory.Add(item.Category, item);
-                //}
-
                 for (int i=0; i < 100; i++)
                 {
-                    var block = GameState.LocalMap.GetBlockAtCoordinate(new MapCoordinate(GameState.Random.Next(GameState.LocalMap.localGameMap.GetLength(0)), GameState.Random.Next(GameState.LocalMap.localGameMap.GetLength(1)), 0, MapTypeEnum.LOCAL));
+                    var block = GameState.LocalMap.GetBlockAtCoordinate(new MapCoordinate(GameState.Random.Next(GameState.LocalMap.localGameMap.GetLength(0)), GameState.Random.Next(GameState.LocalMap.localGameMap.GetLength(1)), 0, MapType.LOCAL));
 
                     if (block.MayContainItems)
                     {
@@ -247,7 +233,47 @@ namespace Divine_Right.GameScreens
             }
             else
             {
-                TestFunctions.GenerateDungeon();
+                MapCoordinate coo = new MapCoordinate();
+                Actor[] arr = null;
+                var gennedMap = CampGenerator.GenerateCamp(out coo, out arr);
+
+                GameState.LocalMap = new LocalMap(100, 100, 1, 0);
+
+                List<Actor> actors = null;
+                List<MapBlock> collapsedMap = new List<MapBlock>();
+
+                foreach (MapBlock block in gennedMap)
+                {
+                    collapsedMap.Add(block);
+                }
+
+                GameState.LocalMap.AddToLocalMap(collapsedMap.ToArray());
+
+                MapItem player = new MapItem();
+                player.Coordinate = coo;
+                player.Description = "The player character";
+                player.Graphic = SpriteManager.GetSprite(LocalSpriteName.PLAYERCHAR_MALE);
+                player.InternalName = "Player Char";
+                player.MayContainItems = false;
+                player.Name = "Player";
+
+                MapBlock playerBlock = GameState.LocalMap.GetBlockAtCoordinate(player.Coordinate);
+                playerBlock.PutItemOnBlock(player);
+
+                GameState.PlayerCharacter = new Actor();
+                GameState.PlayerCharacter.MapCharacter = player;
+                GameState.PlayerCharacter.IsPlayerCharacter = true;
+
+                GameState.PlayerCharacter.Attributes = ActorGeneration.GenerateAttributes("human", DRObjects.ActorHandling.CharacterSheet.Enums.ActorProfession.WARRIOR, 10, GameState.PlayerCharacter);
+
+                GameState.PlayerCharacter.Anatomy = ActorGeneration.GenerateAnatomy("human");
+
+                GameState.PlayerCharacter.Attributes.Health = GameState.PlayerCharacter.Anatomy;
+
+                GameState.LocalMap.Actors.Add(GameState.PlayerCharacter);
+               // GameState.LocalMap.Actors.AddRange(actors);
+
+                //TestFunctions.GenerateDungeon();
             }
 
             //Add the health control

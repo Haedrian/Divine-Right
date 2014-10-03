@@ -73,7 +73,7 @@ namespace DivineRightGame.LocalMapGenerator
                 for (int y = 0; y < generatedMap.GetLength(1); y++)
                 {
                     MapItem tile = factory.CreateItem("tile", tileID);
-                    tile.Coordinate = new MapCoordinate(x, y, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+                    tile.Coordinate = new MapCoordinate(x, y, 0, DRObjects.Enums.MapType.LOCAL);
 
                     MapBlock block = new MapBlock();
                     block.Tile = tile;
@@ -392,7 +392,7 @@ namespace DivineRightGame.LocalMapGenerator
                             if (contents.Position == DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.FIXED)
                             {
                                 //Fix it in a particular position.
-                                MapCoordinate coordinate = new MapCoordinate(smallestX + contents.x.Value, smallestY + contents.y.Value, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+                                MapCoordinate coordinate = new MapCoordinate(smallestX + contents.x.Value, smallestY + contents.y.Value, 0, DRObjects.Enums.MapType.LOCAL);
 
                                 var selectedBlock = candidateBlocks.Where(cb => cb.Tile.Coordinate.Equals(coordinate)).FirstOrDefault();
 
@@ -435,7 +435,7 @@ namespace DivineRightGame.LocalMapGenerator
                         if (wallSegment == null)
                         {
                             //Its a start
-                            wallSegment = new Line(new MapCoordinate(x, y, 0, DRObjects.Enums.MapTypeEnum.LOCAL), null);
+                            wallSegment = new Line(new MapCoordinate(x, y, 0, DRObjects.Enums.MapType.LOCAL), null);
                         }
                         else
                         {
@@ -445,10 +445,10 @@ namespace DivineRightGame.LocalMapGenerator
                             if (planningMap[x + 1, y] == PlanningMapItemType.WALL || planningMap[x - 1, y] == PlanningMapItemType.WALL)
                             {
                                 //terminate the wall - and start a new one
-                                wallSegment.End = new MapCoordinate(x, y, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+                                wallSegment.End = new MapCoordinate(x, y, 0, DRObjects.Enums.MapType.LOCAL);
                                 wallSegments.Add(wallSegment);
 
-                                wallSegment = new Line(new MapCoordinate(x, y, 0, DRObjects.Enums.MapTypeEnum.LOCAL), null);
+                                wallSegment = new Line(new MapCoordinate(x, y, 0, DRObjects.Enums.MapType.LOCAL), null);
                             }
                             else
                             {
@@ -463,7 +463,7 @@ namespace DivineRightGame.LocalMapGenerator
                         if (wallSegment != null)
                         {
                             //It has - lets terminate it
-                            wallSegment.End = new MapCoordinate(x, y - 1, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+                            wallSegment.End = new MapCoordinate(x, y - 1, 0, DRObjects.Enums.MapType.LOCAL);
                             wallSegments.Add(wallSegment);
 
                             wallSegment = null;
@@ -477,7 +477,7 @@ namespace DivineRightGame.LocalMapGenerator
                 //Check if there's an active line - maybe it reaches till the end of the maplet
                 if (wallSegment != null)
                 {
-                    wallSegment.End = new MapCoordinate(x, (planningMap.GetLength(1) - 1), 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+                    wallSegment.End = new MapCoordinate(x, (planningMap.GetLength(1) - 1), 0, DRObjects.Enums.MapType.LOCAL);
                     wallSegments.Add(wallSegment);
                     wallSegment = null;
                 }
@@ -501,7 +501,7 @@ namespace DivineRightGame.LocalMapGenerator
                         if (wallSegment == null)
                         {
                             //Its a start
-                            wallSegment = new Line(new MapCoordinate(x, y, 0, DRObjects.Enums.MapTypeEnum.LOCAL), null);
+                            wallSegment = new Line(new MapCoordinate(x, y, 0, DRObjects.Enums.MapType.LOCAL), null);
                         }
                         else
                         {
@@ -511,10 +511,10 @@ namespace DivineRightGame.LocalMapGenerator
                             if (planningMap[x, y + 1] == PlanningMapItemType.WALL || planningMap[x, y - 1] == PlanningMapItemType.WALL)
                             {
                                 //terminate the wall - and start a new one
-                                wallSegment.End = new MapCoordinate(x, y, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+                                wallSegment.End = new MapCoordinate(x, y, 0, DRObjects.Enums.MapType.LOCAL);
                                 wallSegments.Add(wallSegment);
 
-                                wallSegment = new Line(new MapCoordinate(x, y, 0, DRObjects.Enums.MapTypeEnum.LOCAL), null);
+                                wallSegment = new Line(new MapCoordinate(x, y, 0, DRObjects.Enums.MapType.LOCAL), null);
                             }
                             else
                             {
@@ -529,7 +529,7 @@ namespace DivineRightGame.LocalMapGenerator
                         if (wallSegment != null)
                         {
                             //It has - lets terminate it
-                            wallSegment.End = new MapCoordinate(x - 1, y, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+                            wallSegment.End = new MapCoordinate(x - 1, y, 0, DRObjects.Enums.MapType.LOCAL);
                             wallSegments.Add(wallSegment);
 
                             wallSegment = null;
@@ -543,7 +543,7 @@ namespace DivineRightGame.LocalMapGenerator
                 //Check if there's an active line - maybe it reaches till the end of the maplet
                 if (wallSegment != null)
                 {
-                    wallSegment.End = new MapCoordinate(planningMap.GetLength(0) - 1, y, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+                    wallSegment.End = new MapCoordinate(planningMap.GetLength(0) - 1, y, 0, DRObjects.Enums.MapType.LOCAL);
                     wallSegments.Add(wallSegment);
                     wallSegment = null;
                 }
@@ -674,7 +674,7 @@ namespace DivineRightGame.LocalMapGenerator
                             if (generatedMap[x, y].MayContainItems)
                             {
                                 //Put it there
-                                mapCharacter.Coordinate = new MapCoordinate(x, y, 0, MapTypeEnum.LOCAL);
+                                mapCharacter.Coordinate = new MapCoordinate(x, y, 0, MapType.LOCAL);
                                 generatedMap[x, y].ForcePutItemOnBlock(mapCharacter);
                                 actorList.Add(newActor);
 
@@ -883,7 +883,7 @@ namespace DivineRightGame.LocalMapGenerator
                     {
                         //33% of them will Wander - 
                         WanderMission mission = new WanderMission();
-                        mission.WanderPoint = new MapCoordinate(x, y, 0, MapTypeEnum.LOCAL);
+                        mission.WanderPoint = new MapCoordinate(x, y, 0, MapType.LOCAL);
                         mission.WanderRectangle = new Rectangle(0, 0, blocks.GetLength(0), blocks.GetLength(1));
 
                         actor.MissionStack.Push(mission);
@@ -1395,12 +1395,12 @@ namespace DivineRightGame.LocalMapGenerator
                         //The only time when this will be true is if there is a shared wall, in which case we'll keep the parent wall type
                         baseMap[x + startX, y + startY] = mapletBlock;
                         //Fix the base coordinate
-                        baseMap[x + startX, y + startY].Tile.Coordinate = new MapCoordinate(x + startX, y + startY, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+                        baseMap[x + startX, y + startY].Tile.Coordinate = new MapCoordinate(x + startX, y + startY, 0, DRObjects.Enums.MapType.LOCAL);
 
                         //also fix any items on the tile
                         foreach (MapItem item in baseMap[x + startX, y + startY].GetItems())
                         {
-                            item.Coordinate = new MapCoordinate(x + startX, y + startY, 0, DRObjects.Enums.MapTypeEnum.LOCAL);
+                            item.Coordinate = new MapCoordinate(x + startX, y + startY, 0, DRObjects.Enums.MapType.LOCAL);
                         }
                     }
 

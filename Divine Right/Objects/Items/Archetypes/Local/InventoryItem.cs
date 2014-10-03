@@ -142,7 +142,7 @@ namespace DRObjects.Items.Archetypes.Local
                     if (actionType == ActionTypeEnum.TAKE)
                     {
                         //take it
-                        this.Coordinate = new MapCoordinate(999, 999, 0, MapTypeEnum.CONTAINER); //Dummy - this will cause the block to reject and delete it
+                        this.Coordinate = new MapCoordinate(999, 999, 0, MapType.CONTAINER); //Dummy - this will cause the block to reject and delete it
                         actor.Inventory.Inventory.Add(this.Category, this);
                         this.InInventory = true;
 

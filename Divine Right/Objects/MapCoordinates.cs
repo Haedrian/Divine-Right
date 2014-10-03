@@ -28,7 +28,7 @@ namespace DRObjects
         /// <summary>
         /// Whether the map is global, local or something else
         /// </summary>
-        public MapTypeEnum MapType { get; set; }
+        public MapType MapType { get; set; }
 
         /// <summary>
         /// Two coordinates are equal if they share the same X Y and Z coordinate
@@ -121,7 +121,7 @@ namespace DRObjects
 
         }
 
-        public MapCoordinate(int x, int y, int z, MapTypeEnum mapType)
+        public MapCoordinate(int x, int y, int z, MapType mapType)
         {
             this.MapType = mapType;
             this.X = x;

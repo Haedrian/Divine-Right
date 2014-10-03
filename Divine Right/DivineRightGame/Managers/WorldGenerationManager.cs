@@ -144,7 +144,7 @@ namespace DivineRightGame.Managers
                     {
                         MapBlock block = new MapBlock();
                         block.Tile = new GlobalTile();
-                        block.Tile.Coordinate = new MapCoordinate(x, y, 0, MapTypeEnum.GLOBAL);
+                        block.Tile.Coordinate = new MapCoordinate(x, y, 0, MapType.GLOBAL);
 
                         GlobalTile gTile = (block.Tile as GlobalTile);
                         gTile.Elevation = 40;
@@ -175,20 +175,20 @@ namespace DivineRightGame.Managers
                 {
                     for (int y = 0; y < WORLDSIZE / 100; y++)
                     {
-                        regions[0].Blocks.Add(GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapTypeEnum.GLOBAL)));
-                        (GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapTypeEnum.GLOBAL)).Tile as GlobalTile).Region = 0;
+                        regions[0].Blocks.Add(GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapType.GLOBAL)));
+                        (GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapType.GLOBAL)).Tile as GlobalTile).Region = 0;
 
-                        regions[0].Blocks.Add(GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(y, x, 0, MapTypeEnum.GLOBAL)));
-                        (GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(y, x, 0, MapTypeEnum.GLOBAL)).Tile as GlobalTile).Region = 0;
+                        regions[0].Blocks.Add(GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(y, x, 0, MapType.GLOBAL)));
+                        (GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(y, x, 0, MapType.GLOBAL)).Tile as GlobalTile).Region = 0;
 
-                        regions[0].Blocks.Add(GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(WORLDSIZE - 1 - y, x, 0, MapTypeEnum.GLOBAL)));
-                        (GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(WORLDSIZE - 1 - y, x, 0, MapTypeEnum.GLOBAL)).Tile as GlobalTile).Region = 0;
+                        regions[0].Blocks.Add(GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(WORLDSIZE - 1 - y, x, 0, MapType.GLOBAL)));
+                        (GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(WORLDSIZE - 1 - y, x, 0, MapType.GLOBAL)).Tile as GlobalTile).Region = 0;
 
-                        regions[0].Blocks.Add(GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, WORLDSIZE - 1 - y, 0, MapTypeEnum.GLOBAL)));
-                        (GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, WORLDSIZE - 1 - y, 0, MapTypeEnum.GLOBAL)).Tile as GlobalTile).Region = 0;
+                        regions[0].Blocks.Add(GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, WORLDSIZE - 1 - y, 0, MapType.GLOBAL)));
+                        (GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, WORLDSIZE - 1 - y, 0, MapType.GLOBAL)).Tile as GlobalTile).Region = 0;
 
 
-                        regions[0].Center = new MapCoordinate(-1, -1, -1, MapTypeEnum.GLOBAL);
+                        regions[0].Center = new MapCoordinate(-1, -1, -1, MapType.GLOBAL);
                     }
 
                 }
@@ -223,14 +223,14 @@ namespace DivineRightGame.Managers
                     int x = random.Next(WORLDSIZE - 1);
                     int y = random.Next(WORLDSIZE - 1);
 
-                    if ((GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapTypeEnum.GLOBAL)).Tile as GlobalTile).Region == -1)
+                    if ((GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapType.GLOBAL)).Tile as GlobalTile).Region == -1)
                     {
                         //not assigned
 
                         //set this location as the centre
-                        regions[i].Center = new MapCoordinate(x, y, 0, MapTypeEnum.GLOBAL);
-                        regions[i].Blocks.Add(GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapTypeEnum.GLOBAL)));
-                        (GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapTypeEnum.GLOBAL)).Tile as GlobalTile).Region = i;
+                        regions[i].Center = new MapCoordinate(x, y, 0, MapType.GLOBAL);
+                        regions[i].Blocks.Add(GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapType.GLOBAL)));
+                        (GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapType.GLOBAL)).Tile as GlobalTile).Region = i;
                     }
                     else
                     {
@@ -251,7 +251,7 @@ namespace DivineRightGame.Managers
                     {
                         //Is this tile already in a region?
 
-                        MapCoordinate currentCoordinate = new MapCoordinate(x, y, 0, MapTypeEnum.GLOBAL);
+                        MapCoordinate currentCoordinate = new MapCoordinate(x, y, 0, MapType.GLOBAL);
 
                         MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(currentCoordinate);
                         //Find the closest region to the current unassigned block
@@ -333,7 +333,7 @@ namespace DivineRightGame.Managers
             {
                 for (int y = 0; y < WORLDSIZE; y++)
                 {
-                    MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapTypeEnum.GLOBAL));
+                    MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapType.GLOBAL));
 
                     lock (GlobalMap.lockMe)
                     {
@@ -356,7 +356,7 @@ namespace DivineRightGame.Managers
                     //CurrentStep = "Eroding the tile " + x + "," + y;
                     lock (GlobalMap.lockMe)
                     {
-                        MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapTypeEnum.GLOBAL));
+                        MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapType.GLOBAL));
 
                         (block.Tile as GlobalTile).Elevation = Interpolation.NearestNeighbour(WORLDSIZE, block);
                     }
@@ -373,7 +373,7 @@ namespace DivineRightGame.Managers
                     //CurrentStep = "Eroding the tile " + x + "," + y;
                     lock (GlobalMap.lockMe)
                     {
-                        MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapTypeEnum.GLOBAL));
+                        MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapType.GLOBAL));
 
                         (block.Tile as GlobalTile).Elevation = Interpolation.NearestNeighbour(WORLDSIZE, block);
                     }
@@ -390,7 +390,7 @@ namespace DivineRightGame.Managers
                     //CurrentStep = "Eroding the tile " + x + "," + y;
                     lock (GlobalMap.lockMe)
                     {
-                        MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapTypeEnum.GLOBAL));
+                        MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapType.GLOBAL));
 
                         (block.Tile as GlobalTile).Elevation = Interpolation.NearestNeighbour(WORLDSIZE, block);
                     }
@@ -407,7 +407,7 @@ namespace DivineRightGame.Managers
                     //CurrentStep = "Eroding the tile " + x + "," + y;
                     lock (GlobalMap.lockMe)
                     {
-                        MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapTypeEnum.GLOBAL));
+                        MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapType.GLOBAL));
 
                         (block.Tile as GlobalTile).Elevation = Interpolation.NearestNeighbour(WORLDSIZE, block);
                     }
@@ -455,7 +455,7 @@ namespace DivineRightGame.Managers
                     {
                         for (int y = -1; y <= 1; y++)
                         {
-                            surroundingTiles.Add((GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(currentTile.Coordinate.X + x, currentTile.Coordinate.Y + y, 0, MapTypeEnum.GLOBAL)).Tile as GlobalTile));
+                            surroundingTiles.Add((GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(currentTile.Coordinate.X + x, currentTile.Coordinate.Y + y, 0, MapType.GLOBAL)).Tile as GlobalTile));
                         }
                     }
 
@@ -512,7 +512,7 @@ namespace DivineRightGame.Managers
             {
                 for (int y = 0; y < WORLDSIZE; y++)
                 {
-                    MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapTypeEnum.GLOBAL));
+                    MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapType.GLOBAL));
 
                     List<GlobalTile> surroundingTiles = new List<GlobalTile>();
                     //is the block underwater?
@@ -525,7 +525,7 @@ namespace DivineRightGame.Managers
                         {
                             for (int y2 = -1; y2 <= 1; y2++)
                             {
-                                surroundingTiles.Add((GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(block.Tile.Coordinate.X + x2, block.Tile.Coordinate.Y + y2, 0, MapTypeEnum.GLOBAL)).Tile as GlobalTile));
+                                surroundingTiles.Add((GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(block.Tile.Coordinate.X + x2, block.Tile.Coordinate.Y + y2, 0, MapType.GLOBAL)).Tile as GlobalTile));
                             }
                         }
 
@@ -570,7 +570,7 @@ namespace DivineRightGame.Managers
             {
                 for (int y = 0; y < WORLDSIZE; y++)
                 {
-                    MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapTypeEnum.GLOBAL));
+                    MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapType.GLOBAL));
 
                     //determine the temperature we'll assign it
                     GlobalTile tile = (block.Tile as GlobalTile);
@@ -615,7 +615,7 @@ namespace DivineRightGame.Managers
                 int xRain = random.Next(WORLDSIZE);
                 int yRain = random.Next(WORLDSIZE);
 
-                MapBlock targetBlock = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(xRain, yRain, 0, MapTypeEnum.GLOBAL));
+                MapBlock targetBlock = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(xRain, yRain, 0, MapType.GLOBAL));
 
                 if (failureCount > 100)
                 {
@@ -636,7 +636,7 @@ namespace DivineRightGame.Managers
 
                 while (rainAmount > 0)
                 {
-                    MapBlock[] rainBlocks = GetCircleAroundPoint(new MapCoordinate(xRain, yRain, 0, MapTypeEnum.GLOBAL), radius);
+                    MapBlock[] rainBlocks = GetCircleAroundPoint(new MapCoordinate(xRain, yRain, 0, MapType.GLOBAL), radius);
 
                     foreach (MapBlock block in rainBlocks)
                     {
@@ -682,7 +682,7 @@ namespace DivineRightGame.Managers
             {
                 for (int y = 0; y < WORLDSIZE; y++)
                 {
-                    MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapTypeEnum.GLOBAL));
+                    MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapType.GLOBAL));
 
                     GlobalTile tile = (block.Tile as GlobalTile);
 
@@ -780,7 +780,7 @@ namespace DivineRightGame.Managers
             {
                 for (int y = 0; y < WORLDSIZE; y++)
                 {
-                    allBlocks.Add(GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapTypeEnum.GLOBAL)));
+                    allBlocks.Add(GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapType.GLOBAL)));
                 }
             }
 
@@ -861,7 +861,7 @@ namespace DivineRightGame.Managers
             {
                 for (int y = 0; y < WORLDSIZE; y++)
                 {
-                    MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapTypeEnum.GLOBAL));
+                    MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapType.GLOBAL));
 
                     GlobalTile tile = (block.Tile as GlobalTile);
 
@@ -890,7 +890,7 @@ namespace DivineRightGame.Managers
 
                 //choose a random x and y
 
-                MapBlock centreBlock = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(random.Next(WORLDSIZE), random.Next(WORLDSIZE), 0, MapTypeEnum.GLOBAL));
+                MapBlock centreBlock = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(random.Next(WORLDSIZE), random.Next(WORLDSIZE), 0, MapType.GLOBAL));
 
                 //Get all tiles in the 'region'
                 MapBlock[] regionalBlocks = GetBlocksAroundPoint(centreBlock.Tile.Coordinate, HUMAN_CAPITAL_SEARCH_RADIUS);
@@ -1003,7 +1003,7 @@ namespace DivineRightGame.Managers
             {
                 for (int y = 0; y < WORLDSIZE; y++)
                 {
-                    MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapTypeEnum.GLOBAL));
+                    MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapType.GLOBAL));
 
                     var tile = block.Tile as GlobalTile;
 
@@ -1035,15 +1035,15 @@ namespace DivineRightGame.Managers
                 //Put an entire group of Dungeon Items on it
                 MapCoordinate[] dungeonCoordinates = new MapCoordinate[10];
 
-                dungeonCoordinates[7] = new MapCoordinate(block.Tile.Coordinate.X - 1, block.Tile.Coordinate.Y - 1, 0, MapTypeEnum.GLOBAL);
-                dungeonCoordinates[8] = new MapCoordinate(block.Tile.Coordinate.X, block.Tile.Coordinate.Y - 1, 0, MapTypeEnum.GLOBAL);
-                dungeonCoordinates[9] = new MapCoordinate(block.Tile.Coordinate.X + 1, block.Tile.Coordinate.Y - 1, 0, MapTypeEnum.GLOBAL);
-                dungeonCoordinates[4] = new MapCoordinate(block.Tile.Coordinate.X - 1, block.Tile.Coordinate.Y, 0, MapTypeEnum.GLOBAL);
-                dungeonCoordinates[5] = new MapCoordinate(block.Tile.Coordinate.X, block.Tile.Coordinate.Y, 0, MapTypeEnum.GLOBAL);
-                dungeonCoordinates[6] = new MapCoordinate(block.Tile.Coordinate.X + 1, block.Tile.Coordinate.Y, 0, MapTypeEnum.GLOBAL);
-                dungeonCoordinates[1] = new MapCoordinate(block.Tile.Coordinate.X - 1, block.Tile.Coordinate.Y + 1, 0, MapTypeEnum.GLOBAL);
-                dungeonCoordinates[2] = new MapCoordinate(block.Tile.Coordinate.X, block.Tile.Coordinate.Y + 1, 0, MapTypeEnum.GLOBAL);
-                dungeonCoordinates[3] = new MapCoordinate(block.Tile.Coordinate.X + 1, block.Tile.Coordinate.Y + 1, 0, MapTypeEnum.GLOBAL);
+                dungeonCoordinates[7] = new MapCoordinate(block.Tile.Coordinate.X - 1, block.Tile.Coordinate.Y - 1, 0, MapType.GLOBAL);
+                dungeonCoordinates[8] = new MapCoordinate(block.Tile.Coordinate.X, block.Tile.Coordinate.Y - 1, 0, MapType.GLOBAL);
+                dungeonCoordinates[9] = new MapCoordinate(block.Tile.Coordinate.X + 1, block.Tile.Coordinate.Y - 1, 0, MapType.GLOBAL);
+                dungeonCoordinates[4] = new MapCoordinate(block.Tile.Coordinate.X - 1, block.Tile.Coordinate.Y, 0, MapType.GLOBAL);
+                dungeonCoordinates[5] = new MapCoordinate(block.Tile.Coordinate.X, block.Tile.Coordinate.Y, 0, MapType.GLOBAL);
+                dungeonCoordinates[6] = new MapCoordinate(block.Tile.Coordinate.X + 1, block.Tile.Coordinate.Y, 0, MapType.GLOBAL);
+                dungeonCoordinates[1] = new MapCoordinate(block.Tile.Coordinate.X - 1, block.Tile.Coordinate.Y + 1, 0, MapType.GLOBAL);
+                dungeonCoordinates[2] = new MapCoordinate(block.Tile.Coordinate.X, block.Tile.Coordinate.Y + 1, 0, MapType.GLOBAL);
+                dungeonCoordinates[3] = new MapCoordinate(block.Tile.Coordinate.X + 1, block.Tile.Coordinate.Y + 1, 0, MapType.GLOBAL);
 
                 //Block surrounding tiles
                 MapBlock[] regionalBlocks = GetBlocksAroundPoint(block.Tile.Coordinate, 1);
@@ -1101,15 +1101,15 @@ namespace DivineRightGame.Managers
             //Put an entire group of SettlementItems on it
             MapCoordinate[] settlementCoordinates = new MapCoordinate[10];
 
-            settlementCoordinates[7] = new MapCoordinate(block.Tile.Coordinate.X - 1, block.Tile.Coordinate.Y - 1, 0, MapTypeEnum.GLOBAL);
-            settlementCoordinates[8] = new MapCoordinate(block.Tile.Coordinate.X, block.Tile.Coordinate.Y - 1, 0, MapTypeEnum.GLOBAL);
-            settlementCoordinates[9] = new MapCoordinate(block.Tile.Coordinate.X + 1, block.Tile.Coordinate.Y - 1, 0, MapTypeEnum.GLOBAL);
-            settlementCoordinates[4] = new MapCoordinate(block.Tile.Coordinate.X - 1, block.Tile.Coordinate.Y, 0, MapTypeEnum.GLOBAL);
-            settlementCoordinates[5] = new MapCoordinate(block.Tile.Coordinate.X, block.Tile.Coordinate.Y, 0, MapTypeEnum.GLOBAL);
-            settlementCoordinates[6] = new MapCoordinate(block.Tile.Coordinate.X + 1, block.Tile.Coordinate.Y, 0, MapTypeEnum.GLOBAL);
-            settlementCoordinates[1] = new MapCoordinate(block.Tile.Coordinate.X - 1, block.Tile.Coordinate.Y + 1, 0, MapTypeEnum.GLOBAL);
-            settlementCoordinates[2] = new MapCoordinate(block.Tile.Coordinate.X, block.Tile.Coordinate.Y + 1, 0, MapTypeEnum.GLOBAL);
-            settlementCoordinates[3] = new MapCoordinate(block.Tile.Coordinate.X + 1, block.Tile.Coordinate.Y + 1, 0, MapTypeEnum.GLOBAL);
+            settlementCoordinates[7] = new MapCoordinate(block.Tile.Coordinate.X - 1, block.Tile.Coordinate.Y - 1, 0, MapType.GLOBAL);
+            settlementCoordinates[8] = new MapCoordinate(block.Tile.Coordinate.X, block.Tile.Coordinate.Y - 1, 0, MapType.GLOBAL);
+            settlementCoordinates[9] = new MapCoordinate(block.Tile.Coordinate.X + 1, block.Tile.Coordinate.Y - 1, 0, MapType.GLOBAL);
+            settlementCoordinates[4] = new MapCoordinate(block.Tile.Coordinate.X - 1, block.Tile.Coordinate.Y, 0, MapType.GLOBAL);
+            settlementCoordinates[5] = new MapCoordinate(block.Tile.Coordinate.X, block.Tile.Coordinate.Y, 0, MapType.GLOBAL);
+            settlementCoordinates[6] = new MapCoordinate(block.Tile.Coordinate.X + 1, block.Tile.Coordinate.Y, 0, MapType.GLOBAL);
+            settlementCoordinates[1] = new MapCoordinate(block.Tile.Coordinate.X - 1, block.Tile.Coordinate.Y + 1, 0, MapType.GLOBAL);
+            settlementCoordinates[2] = new MapCoordinate(block.Tile.Coordinate.X, block.Tile.Coordinate.Y + 1, 0, MapType.GLOBAL);
+            settlementCoordinates[3] = new MapCoordinate(block.Tile.Coordinate.X + 1, block.Tile.Coordinate.Y + 1, 0, MapType.GLOBAL);
 
             //Block the radius around it from colonising
             MapBlock[] regionalBlocks = GetBlocksAroundPoint(block.Tile.Coordinate, HUMAN_COLONY_BLOCKING_RADIUS);
@@ -1312,7 +1312,7 @@ namespace DivineRightGame.Managers
             {
                 for (int xLoop = minX; xLoop <= maxX; xLoop++)
                 {
-                    MapCoordinate coord = new MapCoordinate(xLoop, yLoop, 0, MapTypeEnum.GLOBAL);
+                    MapCoordinate coord = new MapCoordinate(xLoop, yLoop, 0, MapType.GLOBAL);
 
                     if (xLoop >= 0 && xLoop < WORLDSIZE && yLoop >= 0 && yLoop < WORLDSIZE)
                     { //make sure they're in the map
@@ -1346,7 +1346,7 @@ namespace DivineRightGame.Managers
             {
                 for (int xLoop = minX; xLoop <= maxX; xLoop++)
                 {
-                    MapCoordinate coord = new MapCoordinate(xLoop, yLoop, 0, MapTypeEnum.GLOBAL);
+                    MapCoordinate coord = new MapCoordinate(xLoop, yLoop, 0, MapType.GLOBAL);
 
                     if (xLoop >= 0 && xLoop < WORLDSIZE && yLoop >= 0 && yLoop < WORLDSIZE)
                     { //make sure they're in the map

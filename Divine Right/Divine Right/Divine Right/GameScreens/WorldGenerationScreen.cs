@@ -203,7 +203,7 @@ namespace Divine_Right.GameScreens
 
             lock (GlobalMap.lockMe)
             {
-                blocks = UserInterfaceManager.GetBlocksAroundPoint(new MapCoordinate(locationX, locationY, 0, DRObjects.Enums.MapTypeEnum.GLOBAL), TotalTilesWidth / 2, TotalTilesHeight / 2, 0, OVERLAY);
+                blocks = UserInterfaceManager.GetBlocksAroundPoint(new MapCoordinate(locationX, locationY, 0, DRObjects.Enums.MapType.GLOBAL), TotalTilesWidth / 2, TotalTilesHeight / 2, 0, OVERLAY);
             }
 
             List<InterfaceBlock> iBlocks = this.PrepareGrid(blocks.ToList<GraphicalBlock>());

@@ -48,7 +48,7 @@ namespace DivineRightGame
             //Does it belong on the global map?
             MapCoordinate coord = block.Tile.Coordinate;
 
-            if (coord.MapType != DRObjects.Enums.MapTypeEnum.GLOBAL)
+            if (coord.MapType != DRObjects.Enums.MapType.GLOBAL)
             {
                 //Error
                 throw new Exception("The map block is not for a global map");
