@@ -231,7 +231,7 @@ namespace Divine_Right.GameScreens
                 interfaceComponents.Add(mdc);
 
             }
-            else
+            else if (parameters[0].ToString().Equals("Camp"))
             {
                 MapCoordinate coo = new MapCoordinate();
                 Actor[] arr = null;
@@ -271,9 +271,11 @@ namespace Divine_Right.GameScreens
                 GameState.PlayerCharacter.Attributes.Health = GameState.PlayerCharacter.Anatomy;
 
                 GameState.LocalMap.Actors.Add(GameState.PlayerCharacter);
-               // GameState.LocalMap.Actors.AddRange(actors);
-
-                //TestFunctions.GenerateDungeon();
+                // GameState.LocalMap.Actors.AddRange(actors
+            }
+            else
+            {
+                TestFunctions.GenerateDungeon();
             }
 
             //Add the health control

@@ -55,7 +55,7 @@ namespace DivineRightGame.LocalMapGenerator
             int startCoord = (MAP_EDGE - FORTIFICATION_EDGE) / 2;
             int endCoord = MAP_EDGE - ((MAP_EDGE -  FORTIFICATION_EDGE)/2);
 
-            for (int x = startCoord; x < endCoord; x++)
+            for (int x = startCoord+1; x < endCoord; x++)
             {
                 MapBlock block = map[x, startCoord];
                 MapItem item = factory.CreateItem("mundaneitems", pallisadeID);
@@ -72,7 +72,7 @@ namespace DivineRightGame.LocalMapGenerator
 
             factory.CreateItem(Archetype.MUNDANEITEMS, "pallisade wall tb", out pallisadeID);
 
-            for (int y = startCoord; y <= endCoord; y++)
+            for (int y = startCoord+1; y < endCoord; y++)
             {
                 MapBlock block = map[startCoord, y];
                 MapItem item = factory.CreateItem("mundaneitems", pallisadeID);
