@@ -110,6 +110,9 @@ namespace Divine_Right.GameScreens
 
         public override void Update(GameTime gameTime)
         {
+            //This fixes an issue in monogame with resizing
+            graphics.ApplyChanges();
+
             base.Update(gameTime);
 
             if (gameTime.TotalGameTime.TotalMilliseconds - previousGameTime < GAMEINPUTDELAY)

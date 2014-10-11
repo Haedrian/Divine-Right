@@ -52,6 +52,9 @@ namespace Divine_Right.GameScreens
 
        public override void Update(GameTime gameTime)
        {
+           //This fixes an issue in monogame with resizing
+           graphics.ApplyChanges();
+
            KeyboardState key = Keyboard.GetState();
 
            if (key.IsKeyDown(Keys.Space))

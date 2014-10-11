@@ -346,6 +346,9 @@ namespace Divine_Right.GameScreens
 
         public override void Update(GameTime gameTime)
         {
+            //This fixes an issue in monogame with resizing
+            graphics.ApplyChanges();
+
             //Is the user asking to quit?
             if (saveAndQuit)
             {
