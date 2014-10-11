@@ -5,6 +5,7 @@ using System.Text;
 using DRObjects;
 using DRObjects.Enums;
 using Microsoft.Xna.Framework;
+using DRObjects.LocalMapGeneratorObjects;
 
 namespace DivineRightGame.LocalMapGenerator
 {
@@ -13,11 +14,11 @@ namespace DivineRightGame.LocalMapGenerator
         /// <summary>
         /// The size of each edge of the map
         /// </summary>
-        private const int MAP_EDGE = 40;
+        private const int MAP_EDGE = 25;
         /// <summary>
         /// The size of each edge of the fortified part of the map
         /// </summary>
-        private const int FORTIFICATION_EDGE = 30;
+        private const int FORTIFICATION_EDGE = 15;
 
         /// <summary>
         /// Generates a camp
@@ -99,6 +100,26 @@ namespace DivineRightGame.LocalMapGenerator
 
                 block.RemoveTopItem();
             }
+
+            for (int y = -1; y < 2; y++)
+            {
+                MapBlock block = map[startCoord, y + center];
+                block.RemoveTopItem();
+
+                block = map[endCoord, y + center];
+                block.RemoveTopItem();
+            }
+
+            //Now, let's create some maplets in there
+            
+            //There's a single maplet containing the other maplets - let's get it
+            LocalMapXMLParser lm = new LocalMapXMLParser();
+            Maplet maplet = lm.ParseMapletFromTag("camp");
+
+            LocalMapGenerator gen = new LocalMapGenerator();
+            var gennedMap = gen.GenerateMap(grassTileID, null, maplet, false, "", out enemyArray);
+
+            gen.JoinMaps(map, gennedMap, startCoord + 1, startCoord + 1);
 
             startPoint = new MapCoordinate(0, 0, 0, MapType.LOCAL);
             enemyArray = null;

@@ -1,0 +1,11 @@
+﻿<Maplet name="campMaplet" Tiled="false" SizeX ="13" SizeY="13" Walled="false">
+  <MapletContents>
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="5" ProbabilityPercentage="75" Tag="bedroll"/>
+
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="74" Tag="chest"/>
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="74" Tag="treasure"/>
+
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="3" ProbabilityPercentage="75" Tag="weapon decoration"/>
+    
+  </MapletContents>
+</Maplet>

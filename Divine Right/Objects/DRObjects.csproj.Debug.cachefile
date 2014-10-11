@@ -1,4 +1,8 @@
 Items.sdf
+Maplets\Camp\CampMaplet.xml
+Maplets\Camp\LootArea.xml
+Maplets\Camp\SleepingArea.xml
+Maplets\Camp\WeaponsArea.xml
 Maplets\Components\LargeBedroom.xml
 Maplets\Components\MediumBedroom.xml
 Maplets\Components\Plazas\FountainPlaza.xml

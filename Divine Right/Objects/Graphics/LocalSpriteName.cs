@@ -520,6 +520,10 @@ namespace DRObjects.Graphics
         PLAYERCHAR_FEMALE,
         PALLISADE_LR,
         PALLISADE_TB,
+        BEDROLL,
+        BANDIT_EASY,
+        BANDIT_HARD,
+        BANDIT_MEDIUM,
 
     }
 }

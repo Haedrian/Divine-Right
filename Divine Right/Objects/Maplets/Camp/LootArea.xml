@@ -1,0 +1,6 @@
+﻿<Maplet name="sleepingArea" Tiled="false" SizeX ="3" SizeY="3" Walled="false">
+  <MapletContents>
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="74" Tag="container"/>
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="74" Tag="treasure"/>
+  </MapletContents>
+</Maplet>

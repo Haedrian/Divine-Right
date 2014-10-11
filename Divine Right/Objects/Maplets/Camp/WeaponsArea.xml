@@ -1,0 +1,5 @@
+﻿<Maplet name="sleepingArea" Tiled="false" SizeX ="3" SizeY="3" Walled="false">
+  <MapletContents>
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="3" ProbabilityPercentage="75" Tag="weapon decoration"/>
+  </MapletContents>
+</Maplet>

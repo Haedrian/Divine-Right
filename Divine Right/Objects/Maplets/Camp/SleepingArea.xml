@@ -1,0 +1,5 @@
+﻿<Maplet name="sleepingArea" Tiled="false" SizeX ="5" SizeY="5" Walled="false">
+  <MapletContents>
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="5" ProbabilityPercentage="75" Tag="bedroll"/>
+  </MapletContents>
+</Maplet>

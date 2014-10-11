@@ -275,6 +275,7 @@ namespace DRObjects.Graphics
             AddLocalSprite(LocalSpriteName.STOCKS_2, HOUSEITEM, 5, 11);
             AddLocalSprite(LocalSpriteName.PALLISADE_LR, HOUSEITEM, 6, 11);
             AddLocalSprite(LocalSpriteName.PALLISADE_TB, HOUSEITEM, 7, 11);
+            AddLocalSprite(LocalSpriteName.BEDROLL, HOUSEITEM, 8, 11);
 
             localSprites[(int)LocalSpriteName.WOOD_LOGS] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(0, 0, 50, 50));
             localSprites[(int)LocalSpriteName.WOOD_LOGS_THREE] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(50, 0, 50, 50));
@@ -583,6 +584,10 @@ namespace DRObjects.Graphics
 
             AddLocalSprite(LocalSpriteName.PRIEST_BODY, PRIEST, 0, 0);
             AddLocalSprite(LocalSpriteName.PRIEST_CLOTHES, PRIEST, 1, 0);
+
+            AddLocalSprite(LocalSpriteName.BANDIT_EASY, ENEMIES, 0, 6);
+            AddLocalSprite(LocalSpriteName.BANDIT_MEDIUM, ENEMIES, 1, 6);
+            AddLocalSprite(LocalSpriteName.BANDIT_HARD, ENEMIES, 2, 6);
 
             AddLocalSprite(LocalSpriteName.GREY_GEM, INVENTORYITEMS, 0, 0);
             AddLocalSprite(LocalSpriteName.BROWN_GEM, INVENTORYITEMS, 1, 0);
