@@ -106,9 +106,6 @@ namespace Divine_Right.GameScreens
 
         public override void Update(GameTime gameTime)
         {
-            //This fixes an issue in monogame with resizing
-            graphics.ApplyChanges();
-
             base.Update(gameTime);
 
             //this screen only supports left mouse clicks
@@ -117,7 +114,7 @@ namespace Divine_Right.GameScreens
             InternalActionEnum? action = null;
             object[] args = null;
 
-            if (mouse.LeftButton == ButtonState.Pressed)
+            if (mouse.LeftButton == ButtonState.Pressed && Game.IsActive)
             {
                 Point mousePoint = new Point(mouse.X, mouse.Y);
 

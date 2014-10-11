@@ -35,7 +35,6 @@ namespace Divine_Right.HelperFunctions
 
        public static void Draw(this SpriteBatch batch, ContentManager content, SpriteData data, Rectangle drawRect, Color colour)
        {
-
             batch.Draw(content.Load<Texture2D>(data.path),drawRect,data.sourceRectangle,colour);
        }
 
