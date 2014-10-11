@@ -11,7 +11,6 @@ using System.Runtime.Serialization;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using DRObjects.DataStructures;
-using Microsoft.Xna.Framework;
 
 namespace DivineRightGame
 {
@@ -75,14 +74,6 @@ namespace DivineRightGame
             saveFile.UniverseTime = GameState.UniverseTime;
 
             IFormatter formatter = new BinaryFormatter();
-
-            SurrogateSelector ss = new SurrogateSelector();
-
-            ss.AddSurrogate(typeof(Rectangle), new StreamingContext(StreamingContextStates.All), new RectSerializationSurrogate());
-            ss.AddSurrogate(typeof(Color), new StreamingContext(StreamingContextStates.All), new ColorSerializationSurrogate());
-
-            formatter.SurrogateSelector = ss;
-
             Stream stream = new FileStream(GameState.SAVEPATH + "GameState.dvg", FileMode.Create, FileAccess.Write, FileShare.None);
             formatter.Serialize(stream, saveFile);
             stream.Close();
@@ -94,14 +85,6 @@ namespace DivineRightGame
         public static void LoadGame()
         {
             IFormatter formatter = new BinaryFormatter();
-
-            SurrogateSelector ss = new SurrogateSelector();
-
-            ss.AddSurrogate(typeof(Rectangle), new StreamingContext(StreamingContextStates.All), new RectSerializationSurrogate());
-            ss.AddSurrogate(typeof(Color), new StreamingContext(StreamingContextStates.All), new ColorSerializationSurrogate());
-
-            formatter.SurrogateSelector = ss;
-
             Stream stream = new FileStream(GameState.SAVEPATH + "GameState.dvg", FileMode.Open, FileAccess.Read, FileShare.Read);
             GameStateSaveFile obj = (GameStateSaveFile)formatter.Deserialize(stream);
             stream.Close();

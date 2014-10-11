@@ -98,12 +98,9 @@
     <Compile Include="ActorHandling\VendorDetails.cs" />
     <Compile Include="Compare\MapCoordinateCompare.cs" />
     <Compile Include="Database\DatabaseHandling.cs" />
-    <Compile Include="DataStructures\ColorSerializationSurrogate.cs" />
     <Compile Include="DataStructures\DivineRightDateTime.cs" />
     <Compile Include="DataStructures\Enum\DRTimeComponent.cs" />
     <Compile Include="DataStructures\GroupedList.cs" />
-    <Compile Include="DataStructures\PointSerializationSurrogate.cs" />
-    <Compile Include="DataStructures\RectSerializationSurrogate.cs" />
     <Compile Include="Enums\Archetype.cs" />
     <Compile Include="Enums\EnemyThought.cs" />
     <Compile Include="Enums\EquipmentLocation.cs" />

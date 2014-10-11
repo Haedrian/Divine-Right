@@ -19,7 +19,6 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using DRObjects.DataStructures.Enum;
-using DRObjects.DataStructures;
 
 namespace DivineRightGame
 {
@@ -270,14 +269,6 @@ namespace DivineRightGame
             }
 
             IFormatter formatter = new BinaryFormatter();
-
-            SurrogateSelector ss = new SurrogateSelector();
-
-            ss.AddSurrogate(typeof(Rectangle), new StreamingContext(StreamingContextStates.All), new RectSerializationSurrogate());
-            ss.AddSurrogate(typeof(Color), new StreamingContext(StreamingContextStates.All), new ColorSerializationSurrogate());
-
-            formatter.SurrogateSelector = ss;
-
             Stream stream = new FileStream(GameState.SAVEPATH + uniqueGuid + ".dvd", FileMode.Create, FileAccess.Write, FileShare.None);
             formatter.Serialize(stream, this);
             stream.Close();
@@ -291,14 +282,6 @@ namespace DivineRightGame
         public static LocalMap DeserialiseLocalMap(Guid uniqueGuid)
         {
             IFormatter formatter = new BinaryFormatter();
-
-            SurrogateSelector ss = new SurrogateSelector();
-
-            ss.AddSurrogate(typeof(Rectangle), new StreamingContext(StreamingContextStates.All), new RectSerializationSurrogate());
-            ss.AddSurrogate(typeof(Color), new StreamingContext(StreamingContextStates.All), new ColorSerializationSurrogate());
-
-            formatter.SurrogateSelector = ss;
-
             Stream stream = new FileStream(GameState.SAVEPATH + uniqueGuid + ".dvd", FileMode.Open, FileAccess.Read, FileShare.Read);
             LocalMap obj = (LocalMap)formatter.Deserialize(stream);
             stream.Close();
