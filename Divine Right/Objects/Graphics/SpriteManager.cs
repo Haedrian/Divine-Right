@@ -515,6 +515,8 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.WEAPON_RACK_2] = new SpriteData(DUNGEON, new Rectangle(400, 200, 50, 50));
             localSprites[(int)LocalSpriteName.SPIKES] = new SpriteData(DUNGEON, new Rectangle(450, 200, 50, 50));
 
+            localSprites[(int)LocalSpriteName.CAMPFIRE] = new SpriteData(DUNGEON, new Rectangle(0, 250, 50, 50));
+
             localSprites[(int)LocalSpriteName.ENEMY_SKELETON] = new SpriteData(ENEMIES, new Rectangle(0, 0, 50, 50));
             localSprites[(int)LocalSpriteName.ENEMY_ORC_CIV] = new SpriteData(ENEMIES, new Rectangle(50, 0, 50, 50));
 

@@ -524,6 +524,7 @@ namespace DRObjects.Graphics
         BANDIT_EASY,
         BANDIT_HARD,
         BANDIT_MEDIUM,
+        CAMPFIRE,
 
     }
 }

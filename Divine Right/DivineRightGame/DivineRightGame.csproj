@@ -99,7 +99,6 @@
     <Compile Include="Pathfinding\PriorityQueueB.cs" />
     <Compile Include="GameState.cs" />
     <Compile Include="GlobalMap.cs" />
-    <Compile Include="ItemFactory\FileReader.cs" />
     <Compile Include="ItemFactory\ItemFactory.cs" />
     <Compile Include="ItemFactory\ItemFactoryManagers\EnemyManager.cs" />
     <Compile Include="ItemFactory\ItemFactoryManagers\IItemFactoryManager.cs" />
