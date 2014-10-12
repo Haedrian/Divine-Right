@@ -6,6 +6,7 @@ using DRObjects;
 using DRObjects.Enums;
 using Microsoft.Xna.Framework;
 using DRObjects.LocalMapGeneratorObjects;
+using DRObjects.Items.Archetypes.Local;
 
 namespace DivineRightGame.LocalMapGenerator
 {
@@ -27,6 +28,8 @@ namespace DivineRightGame.LocalMapGenerator
         public static MapBlock[,] GenerateCamp(out MapCoordinate startPoint, out DRObjects.Actor[] enemyArray)
         {
             MapBlock[,] map = new MapBlock[MAP_EDGE, MAP_EDGE];
+
+            Random random = new Random();
 
             ItemFactory.ItemFactory factory = new ItemFactory.ItemFactory();
 
@@ -121,7 +124,92 @@ namespace DivineRightGame.LocalMapGenerator
 
             gen.JoinMaps(map, gennedMap, startCoord + 1, startCoord + 1);
 
-            startPoint = new MapCoordinate(0, 0, 0, MapType.LOCAL);
+
+            //Let's add some trees and stuff
+            int decorCount = (int)(map.GetLength(1) * 0.50);
+
+            //Just find as many random points and if it happens to be grass, drop them
+            int itemID = 0;
+
+            for (int i = 0; i < decorCount; i++)
+            {
+                //Just trees
+                MapItem decorItem = factory.CreateItem(Archetype.MUNDANEITEMS, "tree", out itemID);
+
+                //Pick a random point
+                MapBlock randomBlock = map[random.Next(map.GetLength(0)), random.Next(map.GetLength(1))];
+
+                //Make sure its not inside the camp
+                if (randomBlock.Tile.Coordinate.X >= startCoord && randomBlock.Tile.Coordinate.X <= endCoord && randomBlock.Tile.Coordinate.Y >= startCoord && randomBlock.Tile.Coordinate.Y <= endCoord )
+                {
+                    //Not within the camp
+                    i--;
+                    continue; //try again
+                }
+
+                if (randomBlock.MayContainItems && randomBlock.Tile.Name == "Grass")
+                {
+                    //Yes, can support it
+                    randomBlock.ForcePutItemOnBlock(decorItem);
+                }
+                //Otherwise forget all about it
+            }
+
+
+            //Now select all the border tiles and put in a "Exit here" border
+            for (int x = 0; x < map.GetLength(0); x++)
+            {
+                MapCoordinate coo = new MapCoordinate(x, 0, 0, MapType.LOCAL);
+
+                LeaveTownItem lti = new LeaveTownItem();
+                lti.Coordinate = coo;
+                lti.Description = "path outside the town";
+                lti.Name = "Leave Town";
+
+                lti.Coordinate = coo;
+
+                map[x, 0].ForcePutItemOnBlock(lti);
+
+                coo = new MapCoordinate(x, map.GetLength(1) - 1, 0, MapType.LOCAL);
+
+                lti = new LeaveTownItem();
+                lti.Coordinate = coo;
+                lti.Description = "path outside the town";
+                lti.Name = "Leave Town";
+
+                lti.Coordinate = coo;
+
+                map[x, map.GetLength(1) - 1].ForcePutItemOnBlock(lti);
+
+            }
+
+            for (int y = 0; y < map.GetLength(1); y++)
+            {
+                MapCoordinate coo = new MapCoordinate(0, y, 0, MapType.LOCAL);
+
+                LeaveTownItem lti = new LeaveTownItem();
+                lti.Coordinate = coo;
+                lti.Description = "path outside the town";
+                lti.Name = "Leave Town";
+
+                lti.Coordinate = coo;
+
+                map[0, y].ForcePutItemOnBlock(lti);
+
+                coo = new MapCoordinate(map.GetLength(0) - 1, y, 0, MapType.LOCAL);
+
+                lti = new LeaveTownItem();
+                lti.Coordinate = coo;
+                lti.Description = "path outside the town";
+                lti.Name = "Town Borders";
+
+                lti.Coordinate = coo;
+
+                map[map.GetLength(0) - 1, y].ForcePutItemOnBlock(lti);
+            }
+
+
+            startPoint = new MapCoordinate(map.GetLength(0) / 2, 0, 0, MapType.LOCAL);
             enemyArray = null;
             return map;
 
