@@ -239,7 +239,6 @@ namespace Divine_Right.GameScreens
 
                 GameState.LocalMap = new LocalMap(100, 100, 1, 0);
 
-                List<Actor> actors = null;
                 List<MapBlock> collapsedMap = new List<MapBlock>();
 
                 foreach (MapBlock block in gennedMap)
@@ -248,6 +247,8 @@ namespace Divine_Right.GameScreens
                 }
 
                 GameState.LocalMap.AddToLocalMap(collapsedMap.ToArray());
+
+                GameState.LocalMap.Actors.AddRange(arr);
 
                 MapItem player = new MapItem();
                 player.Coordinate = coo;

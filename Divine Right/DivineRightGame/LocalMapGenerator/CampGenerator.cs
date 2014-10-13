@@ -9,6 +9,7 @@ using DRObjects.LocalMapGeneratorObjects;
 using DRObjects.Items.Archetypes.Local;
 using DivineRightGame.ActorHandling;
 using DRObjects.ActorHandling.ActorMissions;
+using DRObjects.ActorHandling;
 
 namespace DivineRightGame.LocalMapGenerator
 {
@@ -271,6 +272,18 @@ namespace DivineRightGame.LocalMapGenerator
                     actor.MapCharacter.Coordinate = new MapCoordinate(randomX, randomY, 0, MapType.LOCAL);
                     map[randomX, randomY].ForcePutItemOnBlock(actor.MapCharacter);
                     tries = 0;
+
+                    //If they are wandering, make them wander in the right place
+                    var mission = actor.MissionStack.Peek();
+
+                    if (mission.MissionType == ActorMissionType.WANDER)
+                    {
+                        var wander = mission as WanderMission;
+
+                        wander.WanderPoint = new MapCoordinate(actor.MapCharacter.Coordinate);
+                        wander.WanderRectangle = new Rectangle(startCoord, startCoord, FORTIFICATION_EDGE, FORTIFICATION_EDGE);
+                    }
+
                 }
                 else
                 {
@@ -327,6 +340,11 @@ namespace DivineRightGame.LocalMapGenerator
                 {
                     //Yes
                     actor.MissionStack.Push(new PatrolRouteMission() { PatrolRoute = random.Next(2) == 1 ? outsidePatrol : insidePatrol });
+                }
+                else
+                {
+                    //wander
+                    actor.MissionStack.Push(new WanderMission());
                 }
             }
 
