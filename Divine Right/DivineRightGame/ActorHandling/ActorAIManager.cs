@@ -9,6 +9,7 @@ using DRObjects.Items.Archetypes.Local;
 using DivineRightGame.CombatHandling;
 using DivineRightGame.Pathfinding;
 using DRObjects.LocalMapGeneratorObjects;
+using DRObjects.ActorHandling;
 
 namespace DivineRightGame.ActorHandling
 {
@@ -342,6 +343,25 @@ namespace DivineRightGame.ActorHandling
                 {
                     TargetCoordinate = poi.Coordinate
                 };
+            }
+            else if (actor.CurrentMission.MissionType == ActorMissionType.PATROL_ROUTE)
+            {
+                PatrolRouteMission mission = actor.CurrentMission as PatrolRouteMission;
+
+                //Push it back on the stack
+                actor.MissionStack.Push(mission);
+
+                //Create a move to mission which moves the actor to the next point
+                WalkToMission wTM = new WalkToMission()
+                {
+                    TargetCoordinate = mission.GetNextPoint()
+                };
+
+                actor.CurrentMission = wTM;
+
+                 //Log it
+                Console.WriteLine("Actor " + actor.ToString() + " is going to" +  wTM.TargetCoordinate.ToString() + " as part of his patrol route");
+
             }
 
             return feedback;

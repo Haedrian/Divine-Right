@@ -7,6 +7,8 @@ using DRObjects.Enums;
 using Microsoft.Xna.Framework;
 using DRObjects.LocalMapGeneratorObjects;
 using DRObjects.Items.Archetypes.Local;
+using DivineRightGame.ActorHandling;
+using DRObjects.ActorHandling.ActorMissions;
 
 namespace DivineRightGame.LocalMapGenerator
 {
@@ -21,11 +23,19 @@ namespace DivineRightGame.LocalMapGenerator
         /// </summary>
         private const int FORTIFICATION_EDGE = 15;
 
+        private const int EASY_LEVEL = 2;
+        private const int MEDIUM_LEVEL = 3;
+        private const int HARD_LEVEL = 5;
+
+        private const int EASY_MONEY = 100;
+        private const int MEDIUM_MONEY = 200;
+        private const int HARD_MONEY = 300;
+
         /// <summary>
         /// Generates a camp
         /// </summary>
         /// <returns></returns>
-        public static MapBlock[,] GenerateCamp(out MapCoordinate startPoint, out DRObjects.Actor[] enemyArray)
+        public static MapBlock[,] GenerateCamp(int enemies, out MapCoordinate startPoint, out DRObjects.Actor[] enemyArray)
         {
             MapBlock[,] map = new MapBlock[MAP_EDGE, MAP_EDGE];
 
@@ -57,9 +67,9 @@ namespace DivineRightGame.LocalMapGenerator
             //Create a square of pallisade wall
 
             int startCoord = (MAP_EDGE - FORTIFICATION_EDGE) / 2;
-            int endCoord = MAP_EDGE - ((MAP_EDGE -  FORTIFICATION_EDGE)/2);
+            int endCoord = MAP_EDGE - ((MAP_EDGE - FORTIFICATION_EDGE) / 2);
 
-            for (int x = startCoord+1; x < endCoord; x++)
+            for (int x = startCoord + 1; x < endCoord; x++)
             {
                 MapBlock block = map[x, startCoord];
                 MapItem item = factory.CreateItem("mundaneitems", pallisadeID);
@@ -76,14 +86,14 @@ namespace DivineRightGame.LocalMapGenerator
 
             factory.CreateItem(Archetype.MUNDANEITEMS, "pallisade wall tb", out pallisadeID);
 
-            for (int y = startCoord+1; y < endCoord; y++)
+            for (int y = startCoord + 1; y < endCoord; y++)
             {
                 MapBlock block = map[startCoord, y];
                 MapItem item = factory.CreateItem("mundaneitems", pallisadeID);
 
                 block.ForcePutItemOnBlock(item);
 
-                block = map[endCoord,y];
+                block = map[endCoord, y];
                 item = factory.CreateItem("mundaneitems", pallisadeID);
 
                 block.ForcePutItemOnBlock(item);
@@ -114,7 +124,7 @@ namespace DivineRightGame.LocalMapGenerator
             }
 
             //Now, let's create some maplets in there
-            
+
             //There's a single maplet containing the other maplets - let's get it
             LocalMapXMLParser lm = new LocalMapXMLParser();
             Maplet maplet = lm.ParseMapletFromTag("camp");
@@ -140,7 +150,7 @@ namespace DivineRightGame.LocalMapGenerator
                 MapBlock randomBlock = map[random.Next(map.GetLength(0)), random.Next(map.GetLength(1))];
 
                 //Make sure its not inside the camp
-                if (randomBlock.Tile.Coordinate.X >= startCoord && randomBlock.Tile.Coordinate.X <= endCoord && randomBlock.Tile.Coordinate.Y >= startCoord && randomBlock.Tile.Coordinate.Y <= endCoord )
+                if (randomBlock.Tile.Coordinate.X >= startCoord && randomBlock.Tile.Coordinate.X <= endCoord && randomBlock.Tile.Coordinate.Y >= startCoord && randomBlock.Tile.Coordinate.Y <= endCoord)
                 {
                     //Not within the camp
                     i--;
@@ -208,12 +218,167 @@ namespace DivineRightGame.LocalMapGenerator
                 map[map.GetLength(0) - 1, y].ForcePutItemOnBlock(lti);
             }
 
+            #region Patrol Points
+
+            //Now let's collect the patrol points. We're going to have two possible patrols - one around each of the entrances - and another on the outside corners of the map
+
+            List<MapCoordinate> outsidePatrol = new List<MapCoordinate>();
+
+            outsidePatrol.Add(new MapCoordinate(startCoord - 2, startCoord, 0, MapType.LOCAL));
+            outsidePatrol.Add(new MapCoordinate(endCoord + 2, startCoord, 0, MapType.LOCAL));
+            outsidePatrol.Add(new MapCoordinate(endCoord + 2, endCoord, 0, MapType.LOCAL));
+            outsidePatrol.Add(new MapCoordinate(startCoord - 2, endCoord , 0, MapType.LOCAL));
+
+            List<MapCoordinate> insidePatrol = new List<MapCoordinate>();
+
+            insidePatrol.Add(new MapCoordinate(center, startCoord,0,MapType.LOCAL));
+            insidePatrol.Add(new MapCoordinate(center, endCoord, 0, MapType.LOCAL));
+            insidePatrol.Add(new MapCoordinate(startCoord, center, 0, MapType.LOCAL));
+            insidePatrol.Add(new MapCoordinate(endCoord, center, 0, MapType.LOCAL));
+
+            //Go through all of those and make sure they're clear of anything that wouldn't let them walk upon them
+            foreach (var coordinate in outsidePatrol)
+            {
+                map[coordinate.X, coordinate.Y].RemoveTopItem();
+            }
+
+            foreach (var coordinate in insidePatrol)
+            {
+                map[coordinate.X, coordinate.Y].RemoveTopItem();
+            }
+
+            #endregion
+
+            #region Actors
+
+            enemyArray = CreateBandits(enemies, outsidePatrol, insidePatrol);
+
+            ConformEnemies(enemyArray.ToList());
+
+            int tries = 0;
+
+            //Put them on the mappity map
+            for (int i = 0; i < enemyArray.Length; i++)
+            {
+                Actor actor = enemyArray[i];
+
+                int randomX = random.Next(map.GetLength(0));
+                int randomY = random.Next(map.GetLength(1));
+
+                if (map[randomX, randomY].MayContainItems)
+                {
+                    //Plop it on there
+                    actor.MapCharacter.Coordinate = new MapCoordinate(randomX, randomY, 0, MapType.LOCAL);
+                    map[randomX, randomY].ForcePutItemOnBlock(actor.MapCharacter);
+                    tries = 0;
+                }
+                else
+                {
+                    tries++;
+                    i--;
+                }
+
+                if (tries >= 50)
+                {
+                    //give up
+                    continue;
+                }
+            }
+
+            #endregion
+
 
             startPoint = new MapCoordinate(map.GetLength(0) / 2, 0, 0, MapType.LOCAL);
-            enemyArray = null;
+
             return map;
 
 
         }
+
+        /// <summary>
+        /// Creates a number of bandits.
+        /// They will be structured
+        /// 9:3:1 in difficulty
+        /// 33% will be assigned to a patrol. They will not be positioned on the map
+        /// </summary>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        public static Actor[] CreateBandits(int total, List<MapCoordinate> outsidePatrol, List<MapCoordinate> insidePatrol)
+        {
+            Random random = new Random();
+
+            List<Actor> actors = new List<Actor>();
+
+            ItemFactory.ItemFactory fact = new ItemFactory.ItemFactory();
+
+            for (int i = 0; i < total; i++)
+            {
+                int enemyID = 0;
+                Actor actor = ActorGeneration.CreateActor("human", "bandit easy", true, 10, 10, null, out enemyID, null);
+
+                actors.Add(actor);
+
+                actor.MapCharacter = fact.CreateItem("ENEMIES", enemyID);
+                (actor.MapCharacter as LocalCharacter).Actor = actor;
+
+                //Is this going to be one of the patroling ones ?
+
+                if (random.Next(10) % 3 == 0)
+                {
+                    //Yes
+                    actor.MissionStack.Push(new PatrolRouteMission() { PatrolRoute = random.Next(2) == 1 ? outsidePatrol : insidePatrol });
+                }
+            }
+
+            return actors.ToArray();
+        }
+
+        public static void ConformEnemies(List<Actor> enemies)
+        {
+            Random random = new Random();
+
+            //Filter out the enemies which are the denizens of this dungeon
+            List<Actor> ens = enemies.Where(e => e.EnemyData.Intelligent).ToList();
+
+            //The rules for level are as follows
+            //For each 3 'easys' - put in a medium
+            //For each 3 mediums - put in a hard
+            //Later we might have an even harder, but leave it like that for now
+
+            int easyCount = 0;
+            int mediumCount = 0;
+
+            //Shuffle the ens - so we don't get hard batches. It'd be more logically to leave them unshuffled, but it'd be too hard.
+
+            ens = ens.OrderBy(r => random.Next(100)).ToList();
+
+            foreach (var enemy in ens)
+            {
+                if (mediumCount == 3)
+                {
+                    //Generate a hard
+                    ActorGeneration.RegenerateBandit(enemy, HARD_LEVEL, HARD_MONEY);
+                    mediumCount = 0;
+                }
+                else if (easyCount == 3)
+                {
+                    //Generate a medium
+                    ActorGeneration.RegenerateBandit(enemy, MEDIUM_LEVEL, MEDIUM_MONEY);
+                    easyCount = 0;
+                    mediumCount++;
+                }
+                else
+                {
+                    //Generate an easy
+                    ActorGeneration.RegenerateBandit(enemy, EASY_LEVEL, EASY_MONEY);
+                    easyCount++;
+                }
+            }
+
+            //Done
+            return;
+
+        }
+
     }
 }

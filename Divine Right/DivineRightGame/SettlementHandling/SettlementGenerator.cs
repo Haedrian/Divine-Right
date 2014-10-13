@@ -349,6 +349,8 @@ namespace DivineRightGame.SettlementHandling
                 }
             }
 
+            #region Foliage Generation
+
             //Let's add some trees and stuff
             int decorCount = (int)(mainMap.GetLength(1) * 1.5);
 
@@ -371,6 +373,9 @@ namespace DivineRightGame.SettlementHandling
                 //Otherwise forget all about it
             }
 
+            #endregion
+
+            #region Leave Border
 
             //Now select all the border tiles and put in a "Exit here" border
             for (int x = 0; x < mainMap.GetLength(0); x++)
@@ -423,6 +428,8 @@ namespace DivineRightGame.SettlementHandling
 
                 mainMap[mainMap.GetLength(0)-1, y].ForcePutItemOnBlock(lti);
             }
+
+            #endregion
 
             PointOfInterest poi = new PointOfInterest();
             poi.Type = PointOfInterestType.ENTRANCE;
