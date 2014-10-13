@@ -78,7 +78,7 @@ namespace DivineRightGame.ActorHandling
         /// <param name="gearCost">The total cost of this unit's equipped items</param>
         /// <param name="?"></param>
         /// <returns></returns>
-        public static DRObjects.Actor CreateActor(string enemyType, string enemyTag, bool? intelligent, int level, int gearCost, Gender? gender, out int enemyID, ActorProfession? profession = null)
+        public static Actor CreateActor(string enemyType, string enemyTag, bool? intelligent, int level, int gearCost, Gender? gender, out int enemyID, ActorProfession? profession = null)
         {
             //Get all the data from the database and we'll make our own filtering
             var dictionary = DatabaseHandling.GetDatabase(Archetype.ENEMIES);
@@ -502,6 +502,50 @@ namespace DivineRightGame.ActorHandling
             }
 
             //Done
+        }
+
+        /// <summary>
+        /// Regenerate the stats of a human bandit such that it retains any missions it has, however it will be of a particular level with a particular gear cost
+        /// Will also pick the correct bandit icon depending on level
+        /// </summary>
+        /// <param name="actor"></param>
+        /// <param name="level"></param>
+        /// <param name="gearCost"></param>
+        public static void RegenerateBandit(Actor actor,int level, int gearCost)
+        {
+            Random random = new Random();
+
+            //This should give us a random from 0.75 to 1.25
+            double multiplier = (random.NextDouble() / 2) - 0.25 + 1;
+
+            //Start by regenerating the actor's stats and gear
+            actor.Attributes = GenerateAttributes("human", level == 2 ? ActorProfession.CIVILIAN : ActorProfession.WARRIOR, (int)(level * multiplier), actor);
+
+            multiplier = (random.NextDouble() / 2) - 0.25 + 1;
+
+            //And the gear
+            actor.Inventory.EquippedItems = GenerateEquippedItems((int)(gearCost * multiplier));
+
+            foreach (var item in actor.Inventory.EquippedItems.Values)
+            {
+                actor.Inventory.Inventory.Add(item.Category, item);
+            }
+
+            //And finally, we need to pick the right graphic
+            string graphic = String.Empty;
+
+            if (level <= 2)
+            {
+                actor.MapCharacter.Graphic = SpriteManager.GetSprite(LocalSpriteName.BANDIT_EASY);
+            }
+            else if (level <= 3)
+            {
+                actor.MapCharacter.Graphic = SpriteManager.GetSprite(LocalSpriteName.BANDIT_MEDIUM);
+            }
+            else
+            {
+                actor.MapCharacter.Graphic = SpriteManager.GetSprite(LocalSpriteName.BANDIT_HARD);
+            }
         }
 
     }

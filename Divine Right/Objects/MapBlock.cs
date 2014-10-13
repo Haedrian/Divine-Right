@@ -120,10 +120,15 @@ namespace DRObjects
         }
 
         /// <summary>
-        /// Removes the top item
+        /// Removes the top item. If it is empty - do nothing
         /// </summary>
         public void RemoveTopItem()
         {
+            if (this.mapItems.Count == 0)
+            {
+                return;
+            }
+
             this.mapItems.RemoveAt(this.mapItems.Count - 1);
         }
 

@@ -77,6 +77,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActorHandling\ActorInventory.cs" />
+    <Compile Include="ActorHandling\ActorMissions\PatrolRouteMission.cs" />
     <Compile Include="ActorHandling\ActorMissions\WaitMission.cs" />
     <Compile Include="ActorHandling\ActorNameGenerator.cs" />
     <Compile Include="ActorHandling\ActorStance.cs" />
