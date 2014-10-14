@@ -64,6 +64,11 @@ namespace DivineRightGame
         /// </summary>
         public Dungeon Dungeon { get; set; }
 
+        /// <summary>
+        /// Represents the bandit camp the player is currently at
+        /// </summary>
+        public BanditCamp Camp { get; set; }
+
         #endregion
 
         #region Constructors
@@ -315,6 +320,5 @@ namespace DivineRightGame
         {
             return File.Exists(GameState.SAVEPATH + uniqueGuid +".dvd");
         }
-
     }
 }

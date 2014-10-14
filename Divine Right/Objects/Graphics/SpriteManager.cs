@@ -116,6 +116,8 @@ namespace DRObjects.Graphics
             globalSprites[(int)GlobalSpriteName.VILLAGE_8] = new SpriteData(WORLDITEMS, new Rectangle(500, 100, 50, 50));
             globalSprites[(int)GlobalSpriteName.VILLAGE_9] = new SpriteData(WORLDITEMS, new Rectangle(550, 100, 50, 50));
 
+            globalSprites[(int)GlobalSpriteName.BANDIT_CAMP] = new SpriteData(WORLDITEMS, new Rectangle(700, 50, 50, 50));
+
             colourSprites[(int)ColourSpriteName.BROWN] = new SpriteData(@"Graphics/World/Overlay/Regions/Brown");
             colourSprites[(int)ColourSpriteName.GREEN] = new SpriteData(@"Graphics/World/Overlay/Regions/Green");
             colourSprites[(int)ColourSpriteName.INDIGO] = new SpriteData(@"Graphics/World/Overlay/Regions/Indigo");

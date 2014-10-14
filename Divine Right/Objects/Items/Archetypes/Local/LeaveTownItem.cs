@@ -41,6 +41,18 @@ namespace DRObjects.Items.Archetypes.Local
             return actions.ToArray();
         }
 
+        public override bool MayContainItems
+        {
+            get
+            {
+                return true;
+            }
+            set
+            {
+                
+            }
+        }
+
         public override GraphicsEngineObjects.Abstract.ActionFeedback[] PerformAction(ActionTypeEnum actionType, Actor actor, object[] args)
         {
             if (actionType != ActionTypeEnum.LEAVE)

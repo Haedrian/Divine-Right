@@ -35,6 +35,8 @@ namespace DivineRightGame.Managers
 
         public const int DUNGEON_TOTAL = 20;
 
+        public const int BANDIT_TOTAL = 40;
+
         public const int REGIONSIZE = WORLDSIZE * 2;
 
         protected static Region[] regions;
@@ -107,6 +109,9 @@ namespace DivineRightGame.Managers
 
             CurrentStep = "And the humans awoke the beasts and monsters of the land";
             CreateDungeons();
+
+            CurrentStep = "And some humans took to thievery";
+            CreateBandits();
 
             CurrentStep = "And thus the world was done. [Enter] to continue";
             isGenerating = false;
@@ -928,7 +933,7 @@ namespace DivineRightGame.Managers
                     }
                 }
 
-                Settlement settlement = SettlementGenerator.GenerateSettlement(block.Tile.Coordinate, random.Next(5) + 10,resources,true);
+                Settlement settlement = SettlementGenerator.GenerateSettlement(block.Tile.Coordinate, random.Next(5) + 10, resources, true);
                 settlement.IsCapital = true;
 
                 GameState.GlobalMap.WorldSettlements.Add(settlement);
@@ -975,7 +980,7 @@ namespace DivineRightGame.Managers
                         }
                     }
 
-                    settlement = SettlementGenerator.GenerateSettlement(block.Tile.Coordinate, random.Next(7) + 1,resources);
+                    settlement = SettlementGenerator.GenerateSettlement(block.Tile.Coordinate, random.Next(7) + 1, resources);
 
                     GameState.GlobalMap.WorldSettlements.Add(settlement);
 
@@ -1023,7 +1028,7 @@ namespace DivineRightGame.Managers
 
                 Dungeon dungeon = new Dungeon();
                 dungeon.Coordinate = new MapCoordinate(block.Tile.Coordinate);
-                dungeon.GuardRooms = GameState.Random.Next(2) +1;
+                dungeon.GuardRooms = GameState.Random.Next(2) + 1;
                 dungeon.MaxOwnedPopulation = GameState.Random.Next(10) + 2;
                 dungeon.MaxWildPopulation = GameState.Random.Next(4);
                 dungeon.OwnerCreatureType = enemyRace;
@@ -1083,6 +1088,53 @@ namespace DivineRightGame.Managers
 
                     blocks.Remove(block);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Create bandit camps
+        /// </summary>
+        public static void CreateBandits()
+        {
+            List<MapBlock> blocks = new List<MapBlock>();
+
+            //Collect all the points
+            for (int x = 0; x < WORLDSIZE; x++)
+            {
+                for (int y = 0; y < WORLDSIZE; y++)
+                {
+                    MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapType.GLOBAL));
+
+                    var tile = block.Tile as GlobalTile;
+
+                    if (!tile.HasRiver && !tile.IsBlockedForColonisation && !tile.HasResource && tile.Elevation > 0 && tile.Elevation < 250)
+                    {
+                        blocks.Add(block);
+                    }
+                }
+            }
+
+            //Just toss them anywhere
+            for (int i = 0; i < BANDIT_TOTAL; i++)
+            {
+                int randomNumber = GameState.Random.Next(blocks.Count);
+
+                MapBlock block = blocks[randomNumber];
+
+                //And remove it
+                blocks.RemoveAt(randomNumber);
+
+                BanditCamp camp = new BanditCamp();
+                camp.BanditTotal = GameState.Random.Next(5, 10);
+                camp.Coordinate = new MapCoordinate(block.Tile.Coordinate);
+
+                BanditCampItem item = new BanditCampItem();
+                item.Camp = camp;
+                item.Coordinate = new MapCoordinate(block.Tile.Coordinate);
+                item.Name = "Bandit Camp";
+                item.Description = "A camp full of bandits";
+
+                block.ForcePutItemOnBlock(item);
             }
         }
 

@@ -1093,12 +1093,20 @@ namespace Divine_Right.GameScreens
                     {
                         LoadDungeon(lce.VisitDungeon);
                     }
+                    else if (lce.VisitCamp != null)
+                    {
+                        LoadCamp(lce.VisitCamp);
+                    }
                     else if (lce.VisitMainMap)
                     {
                         //Serialise the old map
                         GameState.LocalMap.SerialiseLocalMap();
-
-                        if (GameState.LocalMap.Settlement == null)
+                        
+                        if (GameState.LocalMap.Camp != null)
+                        {
+                            LoadGlobalMap(GameState.LocalMap.Camp.Coordinate);
+                        }
+                        else if (GameState.LocalMap.Settlement == null)
                         {
                             //Dungeon
                             LoadGlobalMap(GameState.LocalMap.Dungeon.Coordinate);
@@ -1199,6 +1207,70 @@ namespace Divine_Right.GameScreens
             playerBlock.PutItemOnBlock(GameState.PlayerCharacter.MapCharacter);
 
             GameState.LocalMap.Actors.Add(GameState.PlayerCharacter);
+        }
+
+        private void LoadCamp(BanditCamp camp)
+        {
+            if (LocalMap.MapGenerated(camp.UniqueGUID))
+            {
+                //Reload the map
+                var savedMap = LocalMap.DeserialiseLocalMap(camp.UniqueGUID);
+
+                GameState.LocalMap = new LocalMap(savedMap.localGameMap.GetLength(0), savedMap.localGameMap.GetLength(1), 1, 0);
+
+                GameState.LocalMap.Actors = new List<Actor>();
+
+                List<MapBlock> collapsedMap = new List<MapBlock>();
+
+                foreach (MapBlock block in savedMap.localGameMap)
+                {
+                    collapsedMap.Add(block);
+                }
+
+                GameState.LocalMap.AddToLocalMap(collapsedMap.ToArray());
+                GameState.LocalMap.PathfindingMap = savedMap.PathfindingMap;
+                GameState.LocalMap.PointsOfInterest = savedMap.PointsOfInterest;
+
+                GameState.LocalMap.Actors = savedMap.Actors;
+
+                //Find the player character item
+                var playerActor = GameState.LocalMap.Actors.Where(a => a.IsPlayerCharacter).FirstOrDefault();
+
+                GameState.PlayerCharacter.MapCharacter.Coordinate = playerActor.MapCharacter.Coordinate;
+                GameState.PlayerCharacter.MapCharacter = playerActor.MapCharacter;
+
+                GameState.LocalMap.Camp = camp;
+            }
+            else
+            {
+                Actor[] actors = null;
+
+                MapCoordinate startPoint = null;
+                List<PointOfInterest> pointsOfInterest = null;
+
+                var gennedCamp = CampGenerator.GenerateCamp(camp.BanditTotal,out startPoint, out actors);
+
+                GameState.LocalMap = new LocalMap(gennedCamp.GetLength(0), gennedCamp.GetLength(1), 1, 0);
+                GameState.LocalMap.Actors = new List<Actor>();
+
+                List<MapBlock> collapsedMap = new List<MapBlock>();
+
+                foreach (MapBlock block in gennedCamp)
+                {
+                    collapsedMap.Add(block);
+                }
+
+                GameState.LocalMap.AddToLocalMap(collapsedMap.ToArray());
+
+                GameState.PlayerCharacter.MapCharacter.Coordinate = startPoint;
+
+                MapBlock playerBlock = GameState.LocalMap.GetBlockAtCoordinate(startPoint);
+                playerBlock.PutItemOnBlock(GameState.PlayerCharacter.MapCharacter);
+                GameState.LocalMap.Actors.AddRange(actors);
+                GameState.LocalMap.Actors.Add(GameState.PlayerCharacter);
+                GameState.LocalMap.PointsOfInterest = pointsOfInterest;
+                GameState.LocalMap.Camp = camp;
+            }
         }
 
         private void LoadDungeon(Dungeon dungeon)
