@@ -1,11 +1,17 @@
-﻿<Maplet name="campMaplet" Tiled="false" TileTag="" SizeX ="14" SizeY="14" Walled="false">
+﻿<Maplet name="campMaplet" Tiled="false" TileTag="" SizeX ="13" SizeY="13" Walled="false">
   <MapletContents>
     <MapletContentsItemTag Position="Middle" Category="mundaneitems" MaxAmount="5" ProbabilityPercentage="75" Tag="bedroll"/>
     <MapletContentsItemTag Position="Middle" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="campfire"/>
-        
-    <MapletContentsItemTag Position="Middle" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="74" Tag="chest"/>
-    <MapletContentsItemTag Position="Middle" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="74" Tag="treasure"/>
 
+    <MapletContentsMaplet Position="Middle" MaxAmount="1" ProbabilityPercentage="100" >
+      <Maplet name="treasure" Tiled="true" TileTag="soil" SizeX ="5" SizeY="5" Walled="false" WindowProbability="0">
+        <MapletContents>
+          <MapletContentsItemTag Position="Middle" Category="mundaneitems" MaxAmount="3" ProbabilityPercentage="74" Tag="chest"/>
+        <MapletContentsItemTag Position="Middle" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="74" Tag="treasure"/>
+        </MapletContents>
+      </Maplet>
+    </MapletContentsMaplet>
+    
     <MapletContentsItemTag Position="Middle" Category="mundaneitems" MaxAmount="3" ProbabilityPercentage="75" Tag="weapon decoration"/>
 
   </MapletContents>

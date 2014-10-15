@@ -277,6 +277,9 @@ namespace DRObjects.Graphics
             AddLocalSprite(LocalSpriteName.STOCKS_2, HOUSEITEM, 5, 11);
             AddLocalSprite(LocalSpriteName.PALLISADE_LR, HOUSEITEM, 6, 11);
             AddLocalSprite(LocalSpriteName.PALLISADE_TB, HOUSEITEM, 7, 11);
+            AddLocalSprite(LocalSpriteName.PALLISADE_RL, HOUSEITEM, 9, 11);
+            AddLocalSprite(LocalSpriteName.PALLISADE_BT, HOUSEITEM, 0, 12);
+
             AddLocalSprite(LocalSpriteName.BEDROLL, HOUSEITEM, 8, 11);
 
             localSprites[(int)LocalSpriteName.WOOD_LOGS] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(0, 0, 50, 50));

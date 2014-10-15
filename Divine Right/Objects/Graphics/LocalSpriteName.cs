@@ -525,6 +525,8 @@ namespace DRObjects.Graphics
         BANDIT_HARD,
         BANDIT_MEDIUM,
         CAMPFIRE,
+        PALLISADE_BT,
+        PALLISADE_RL,
 
     }
 }

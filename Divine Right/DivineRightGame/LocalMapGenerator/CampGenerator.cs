@@ -85,14 +85,16 @@ namespace DivineRightGame.LocalMapGenerator
 
             pallisadeID = 0;
 
-            factory.CreateItem(Archetype.MUNDANEITEMS, "pallisade wall tb", out pallisadeID);
-
             for (int y = startCoord + 1; y < endCoord; y++)
             {
+                factory.CreateItem(Archetype.MUNDANEITEMS, "pallisade wall tb", out pallisadeID);
+
                 MapBlock block = map[startCoord, y];
                 MapItem item = factory.CreateItem("mundaneitems", pallisadeID);
 
                 block.ForcePutItemOnBlock(item);
+
+                factory.CreateItem(Archetype.MUNDANEITEMS, "pallisade wall bt", out pallisadeID);
 
                 block = map[endCoord, y];
                 item = factory.CreateItem("mundaneitems", pallisadeID);
@@ -104,24 +106,38 @@ namespace DivineRightGame.LocalMapGenerator
             //Let's poke one at the top and one at the bottom
             int center = MAP_EDGE / 2;
 
+            int rValue = GameState.Random.Next(2);
+
             for (int x = -1; x < 2; x++)
             {
-                MapBlock block = map[center + x, startCoord];
+                if (rValue == 1)
+                {
+                    MapBlock block = map[center + x, startCoord];
 
-                block.RemoveTopItem();
+                    block.RemoveTopItem();
+                }
+                else
+                {
+                    MapBlock block = map[center + x, endCoord];
 
-                block = map[center + x, endCoord];
-
-                block.RemoveTopItem();
+                    block.RemoveTopItem();
+                }
             }
+
+            rValue = GameState.Random.Next(2);
 
             for (int y = -1; y < 2; y++)
             {
-                MapBlock block = map[startCoord, y + center];
-                block.RemoveTopItem();
-
-                block = map[endCoord, y + center];
-                block.RemoveTopItem();
+                if (rValue == 1)
+                {
+                    MapBlock block = map[startCoord, y + center];
+                    block.RemoveTopItem();
+                }
+                else
+                {
+                    MapBlock block = map[endCoord, y + center];
+                    block.RemoveTopItem();
+                }
             }
 
             //Now, let's create some maplets in there
@@ -219,6 +235,74 @@ namespace DivineRightGame.LocalMapGenerator
                 map[map.GetLength(0) - 1, y].ForcePutItemOnBlock(lti);
             }
 
+            #region Treasure Room
+
+            //This is a bit naughty. We need to locate where the tiles become soil
+
+            MapCoordinate soilStart = null;
+
+            bool breakOut = false;
+
+            for (int x = 0; x < map.GetLength(0); x++)
+            {
+                for (int y = 0; y < map.GetLength(1); y++)
+                {
+                    if (map[x, y].Tile.Name.ToLower().Equals("soil"))
+                    {
+                        soilStart = new MapCoordinate(x, y, 0, MapType.LOCAL);
+                        breakOut = true;
+                        break;
+                    }
+                }
+
+                if (breakOut)
+                {
+                    break;
+                }
+            }
+
+            //Also naughty, we know it's 5x5
+
+            #region Inner Wall
+
+            for (int x = 0; x < 5; x++)
+            {
+                factory.CreateItem(Archetype.MUNDANEITEMS, "pallisade wall lr", out pallisadeID);
+
+                MapItem item = factory.CreateItem("mundaneitems", pallisadeID);
+
+                if (x != 2) //hole in the top
+                {
+                    map[soilStart.X + x, soilStart.Y].ForcePutItemOnBlock(item);
+                }
+
+                factory.CreateItem(Archetype.MUNDANEITEMS, "pallisade wall lr", out pallisadeID);
+
+                item = factory.CreateItem("mundaneitems", pallisadeID);
+
+                map[soilStart.X + x, soilStart.Y + 5].ForcePutItemOnBlock(item);
+
+            }
+
+            for (int y = 0; y < 5; y++)
+            {
+                factory.CreateItem(Archetype.MUNDANEITEMS, "pallisade wall tb", out pallisadeID);
+
+                MapItem item = factory.CreateItem("mundaneitems", pallisadeID);
+
+                map[soilStart.X - 1, soilStart.Y + y].ForcePutItemOnBlock(item);
+
+                factory.CreateItem(Archetype.MUNDANEITEMS, "pallisade wall bt", out pallisadeID);
+
+                item = factory.CreateItem("mundaneitems", pallisadeID);
+
+                map[soilStart.X + 5, soilStart.Y + y].ForcePutItemOnBlock(item);
+            }
+
+            #endregion
+
+            #endregion
+
             #region Patrol Points
 
             //Now let's collect the patrol points. We're going to have two possible patrols - one around each of the entrances - and another on the outside corners of the map
@@ -228,14 +312,14 @@ namespace DivineRightGame.LocalMapGenerator
             outsidePatrol.Add(new MapCoordinate(startCoord - 2, startCoord, 0, MapType.LOCAL));
             outsidePatrol.Add(new MapCoordinate(endCoord + 2, startCoord, 0, MapType.LOCAL));
             outsidePatrol.Add(new MapCoordinate(endCoord + 2, endCoord, 0, MapType.LOCAL));
-            outsidePatrol.Add(new MapCoordinate(startCoord - 2, endCoord , 0, MapType.LOCAL));
+            outsidePatrol.Add(new MapCoordinate(startCoord - 2, endCoord, 0, MapType.LOCAL));
 
             List<MapCoordinate> insidePatrol = new List<MapCoordinate>();
 
-            insidePatrol.Add(new MapCoordinate(center, startCoord,0,MapType.LOCAL));
-            insidePatrol.Add(new MapCoordinate(center, endCoord, 0, MapType.LOCAL));
-            insidePatrol.Add(new MapCoordinate(startCoord, center, 0, MapType.LOCAL));
-            insidePatrol.Add(new MapCoordinate(endCoord, center, 0, MapType.LOCAL));
+            insidePatrol.Add(new MapCoordinate(center, startCoord +1, 0, MapType.LOCAL));
+            insidePatrol.Add(new MapCoordinate(center, endCoord -1, 0, MapType.LOCAL));
+            insidePatrol.Add(new MapCoordinate(startCoord +1, center, 0, MapType.LOCAL));
+            insidePatrol.Add(new MapCoordinate(endCoord -1, center, 0, MapType.LOCAL));
 
             //Go through all of those and make sure they're clear of anything that wouldn't let them walk upon them
             foreach (var coordinate in outsidePatrol)
