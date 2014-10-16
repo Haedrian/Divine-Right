@@ -93,10 +93,15 @@ namespace DivineRightGame.CombatHandling
             if (actor.Anatomy.BloodTotal < 0)
             {
                 //Death
-                actor.IsAlive = false;
+                CombatManager.KillCharacter(actor); //Drop the stuff
+
                 if (actor.IsPlayerCharacter)
                 {
                     return new ActionFeedback[] { new CurrentLogFeedback(InterfaceSpriteName.BLEEDING, Color.Red, "You bleed to death"), new CreateEventFeedback("DEATH") };
+                }
+                else
+                {
+                    return new ActionFeedback[] { new CurrentLogFeedback(InterfaceSpriteName.BLEEDING, Color.Red, actor.Name + " has bled to death") };
                 }
             }
 

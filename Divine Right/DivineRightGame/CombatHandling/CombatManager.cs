@@ -468,7 +468,7 @@ namespace DivineRightGame.CombatHandling
         /// Kills the current character
         /// </summary>
         /// <param name="actor"></param>
-        private static void KillCharacter(Actor actor)
+        public static void KillCharacter(Actor actor)
         {
             actor.IsAlive = false;
 
