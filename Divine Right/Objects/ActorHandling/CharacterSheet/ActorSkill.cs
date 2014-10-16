@@ -12,10 +12,10 @@ namespace DRObjects.ActorHandling.CharacterSheet
     {
         //These repersents how many LearnSkills are required in order to level up.
         //They are divided in batches of five.
-        private const int FIRST_FIVE_COST = 10;
-        private const int SECOND_FIVE_COST = 20;
-        private const int THIRD_FIVE_COST = 40;
-        private const int FOURTH_FIVE_COST = 80;
+        private const double FIRST_FIVE_COST = 10;
+        private const double SECOND_FIVE_COST = 20;
+        private const double THIRD_FIVE_COST = 40;
+        private const double FOURTH_FIVE_COST = 80;
 
         private static readonly TextInfo myTI = new CultureInfo("en-gb", false).TextInfo;
 
