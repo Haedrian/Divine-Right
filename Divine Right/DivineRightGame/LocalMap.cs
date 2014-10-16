@@ -251,7 +251,7 @@ namespace DivineRightGame
             }
 
             //Make time pass - 10 seconds for a tick
-            GameState.UniverseTime.Add(DRTimeComponent.SECOND, 10);
+            GameState.IncrementGameTime(DRTimeComponent.SECOND, 10);
 
             return feedback.ToArray();
         }

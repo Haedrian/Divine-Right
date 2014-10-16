@@ -1137,7 +1137,7 @@ namespace Divine_Right.GameScreens
                     TimePassFeedback tpf = feedback as TimePassFeedback;
 
                     //Move time forth
-                    GameState.UniverseTime.Add(DRTimeComponent.MINUTE, tpf.TimePassInMinutes);
+                    GameState.IncrementGameTime(DRTimeComponent.MINUTE, tpf.TimePassInMinutes);
                 }
        
             }

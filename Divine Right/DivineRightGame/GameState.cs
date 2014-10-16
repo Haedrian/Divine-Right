@@ -12,6 +12,8 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using DRObjects.DataStructures;
 using Microsoft.Xna.Framework;
+using DRObjects.DataStructures.Enum;
+using DivineRightGame.CombatHandling;
 
 namespace DivineRightGame
 {
@@ -36,7 +38,36 @@ namespace DivineRightGame
         /// </summary>
         public static Actor PlayerCharacter { get; set; }
 
-        public static DivineRightDateTime UniverseTime { get; set; }
+        private static DivineRightDateTime _universeTime = null;
+
+        /// <summary>
+        /// Returns an object having the same value as the Universe Time
+        /// Modifying this value has no effect. Use IncremementGameTime instead
+        /// </summary>
+        public static DivineRightDateTime UniverseTime
+        {
+            get
+            {
+                return new DivineRightDateTime(_universeTime);
+            }
+        }
+
+        /// <summary>
+        /// Incremements the Game Time by an amount of minutes, and does any processing that needs to be done
+        /// </summary>
+        /// <param name="minutes"></param>
+        public static void IncrementGameTime(DRTimeComponent timeComponent,int value)
+        {
+            int lastDay = _universeTime.GetTimeComponent(DRTimeComponent.DAY);
+
+            _universeTime.Add(timeComponent,value);
+
+            if (lastDay != _universeTime.GetTimeComponent(DRTimeComponent.DAY))
+            {
+                //A day has passed. Healing if needs be
+                HealthCheckManager.HealCharacter(GameState.PlayerCharacter, 1);
+            }
+        }
 
         /// <summary>
         /// A log for storing feedback. Only holds one tick's worth.
@@ -59,7 +90,7 @@ namespace DivineRightGame
         static GameState()
         {
             //Start off at the 1/1/210
-            UniverseTime = new DivineRightDateTime(210, 1, 1);
+            _universeTime = new DivineRightDateTime(210, 1, 1);
         }
 
         /// <summary>
@@ -110,7 +141,7 @@ namespace DivineRightGame
             GameState.LocalMap = obj.LocalMap;
             GameState.GlobalMap = obj.GlobalMap;
             GameState.PlayerCharacter = obj.PlayerCharacter;
-            GameState.UniverseTime = obj.UniverseTime;
+            GameState._universeTime = obj.UniverseTime;
         }
 
         /// <summary>

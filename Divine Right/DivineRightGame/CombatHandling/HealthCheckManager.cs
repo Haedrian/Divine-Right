@@ -10,6 +10,7 @@ using DRObjects.ActorHandling;
 using DRObjects.Graphics;
 using Microsoft.Xna.Framework;
 using DRObjects.Items.Archetypes.Local;
+using DRObjects.ActorHandling.CharacterSheet.Enums;
 
 namespace DivineRightGame.CombatHandling
 {
@@ -129,12 +130,12 @@ namespace DivineRightGame.CombatHandling
                 {
                     //Stunned
                     actor.IsStunned = true;
-                    
+
                     if (actor.MapCharacter as LocalCharacter != null)
                     {
                         (actor.MapCharacter as LocalCharacter).IsStunned = true;
                     }
-                    
+
                     //Feel better
                     actor.Anatomy.StunAmount--;
 
@@ -146,6 +147,125 @@ namespace DivineRightGame.CombatHandling
             }
 
             return new ActionFeedback[] { };
+
+        }
+
+        /// <summary>
+        /// Heal this character if they require it
+        /// You heal one point each time, +1 for every 5 levels in Healing
+        /// Healing happens top down
+        /// </summary>
+        /// <param name="actor"></param>
+        /// <param name="rounds">The amount of rounds we're going to do this for.</param>
+        public static void HealCharacter(Actor actor, int rounds)
+        {
+            //Do we need healing?
+            if (actor.Anatomy.Head > -5 && actor.Anatomy.Head == actor.Anatomy.HeadMax
+              && actor.Anatomy.Chest > -5 && actor.Anatomy.Chest == actor.Anatomy.ChestMax
+              && actor.Anatomy.Legs > -5 && actor.Anatomy.Legs == actor.Anatomy.LegsMax
+              && actor.Anatomy.LeftArm > -5 && actor.Anatomy.LeftArm == actor.Anatomy.LeftArmMax
+              && actor.Anatomy.RightArm > -5 && actor.Anatomy.RightArm == actor.Anatomy.RightArmMax)
+            {
+                //Nope, we're fine
+                return;
+            }
+
+            //Let's determine how much healing we're able to do
+            int healing = 1*rounds;
+
+            int skill = 0;
+
+            if (actor.Attributes.Skills.ContainsKey(SkillName.HEALER))
+            {
+                skill = (int) actor.Attributes.Skills[SkillName.HEALER].SkillLevel;
+            }
+
+            healing = (1 + (skill / 5)) * rounds;
+
+            //Go through each body part and incremement as needed
+
+            int headHealing = actor.Anatomy.Head > -5 ? actor.Anatomy.HeadMax - actor.Anatomy.Head : 0;
+            int chestHealing = actor.Anatomy.Chest > -5 ? actor.Anatomy.ChestMax - actor.Anatomy.Chest : 0;
+            int leftHealing = actor.Anatomy.LeftArm > -5 ? actor.Anatomy.LeftArmMax - actor.Anatomy.LeftArm : 0;
+            int rightHealing = actor.Anatomy.RightArm > -5 ? actor.Anatomy.RightArmMax - actor.Anatomy.RightArm : 0;
+            int legHealing = actor.Anatomy.Legs > -5 ? actor.Anatomy.LegsMax - actor.Anatomy.Legs : 0;
+
+            if (headHealing > 0)
+            {
+                //Heal the head
+                if (headHealing <= healing)
+                {
+                    actor.Anatomy.Head += headHealing;
+                    healing -= headHealing;
+                }
+                else
+                {
+                    actor.Anatomy.Head += healing;
+                    healing = 0;
+                }
+            }
+
+            if (chestHealing > 0 && healing > 0)
+            {
+                if (chestHealing <= healing)
+                {
+                    actor.Anatomy.Chest += chestHealing;
+                    healing -= chestHealing;
+                }
+                else
+                {
+                    actor.Anatomy.Chest += healing;
+                    healing = 0;
+                }
+            }
+
+            if (leftHealing > 0 && healing > 0)
+            {
+                if (leftHealing<= healing)
+                {
+                    actor.Anatomy.LeftArm+= leftHealing;
+                    healing -= leftHealing;
+                }
+                else
+                {
+                    actor.Anatomy.LeftArm += healing;
+                    healing = 0;
+                }
+            }
+
+            if (rightHealing > 0 && healing > 0)
+            {
+                if (rightHealing <= healing)
+                {
+                    actor.Anatomy.RightArm+= rightHealing;
+                    healing -= rightHealing;
+                }
+                else
+                {
+                    actor.Anatomy.RightArm += healing;
+                    healing = 0;
+                }
+            }
+
+            if (legHealing > 0 && healing > 0)
+            {
+                if (legHealing <= healing)
+                {
+                    actor.Anatomy.Legs+= legHealing;
+                    healing -= legHealing;
+                }
+                else
+                {
+                    actor.Anatomy.Legs += healing;
+                    healing = 0;
+                }
+            }
+
+            //And increase some skill!
+            for (int i = 0; i < rounds; i++)
+            {
+                actor.Attributes.IncreaseSkill(SkillName.HEALER);
+            }
 
         }
     }
