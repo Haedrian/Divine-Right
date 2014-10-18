@@ -234,23 +234,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Graphics\World\Settlements\LargeSettlement.png">
-      <Name>LargeSettlement</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Graphics\World\Settlements\MediumSettlement.png">
-      <Name>MediumSettlement</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Graphics\World\Settlements\SmallSettlement.png">
-      <Name>SmallSettlement</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Graphics\Local\Player.png">
       <Name>Player</Name>
       <Importer>TextureImporter</Importer>
@@ -281,13 +264,6 @@
   <ItemGroup>
     <Compile Include="Graphics\Local\ResourcesAndTools.png">
       <Name>ResourcesAndTools</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Graphics\Interface\Level21.png">
-      <Name>Level21</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -337,13 +313,6 @@
   <ItemGroup>
     <Compile Include="Graphics\Interface\CharacterSheetIcons.png">
       <Name>CharacterSheetIcons</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Graphics\Interface\graveyard.png">
-      <Name>graveyard</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -449,13 +418,6 @@
   <ItemGroup>
     <Compile Include="Graphics\Interface\gotoWorldMap.png">
       <Name>gotoWorldMap</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Graphics\Interface\gotoWorldMap2.png">
-      <Name>gotoWorldMap2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
