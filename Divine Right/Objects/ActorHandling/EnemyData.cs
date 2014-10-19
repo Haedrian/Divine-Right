@@ -8,7 +8,7 @@ namespace DRObjects.ActorHandling
 {
     [Serializable]
     /// <summary>
-    /// Contains data about a particular enemy, such as line of sight, health and stuff like that
+    /// Contains data about a particular enemy, such as line of sight
     /// </summary>
     public class EnemyData
     {

@@ -65,18 +65,7 @@ namespace DRObjects.Items.Archetypes.Local
         {
             get
             {
-                List<SpriteData> sprites = new List<SpriteData>();
-
-                if (graphics == null || graphics.Count == 0)
-                {
-                    //The bottom one will always be the base sprite
-                    sprites.Add(this.Graphic);
-                }
-                else
-                {
-                    sprites.AddRange(graphics);
-                }
-                
+                List<SpriteData> sprites = new List<SpriteData>();                
 
                 if (IsStunned)
                 {
@@ -101,6 +90,16 @@ namespace DRObjects.Items.Archetypes.Local
                         default:
                             throw new NotImplementedException("There is no graphic for the thought " + EnemyThought);
                     }
+                }
+
+                if (graphics == null || graphics.Count == 0)
+                {
+                    //The base sprite goes on top
+                    sprites.Add(this.Graphic);
+                }
+                else
+                {
+                    sprites.AddRange(graphics);
                 }
 
                 return sprites;

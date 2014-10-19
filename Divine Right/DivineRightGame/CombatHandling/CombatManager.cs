@@ -179,7 +179,7 @@ namespace DivineRightGame.CombatHandling
             int def = 0;
 
             //The type of dice we roll 3 of to determine weapon damage
-            int weaponDiceRolls = 1; //Default damage
+            int weaponDiceRolls = attacker.UnarmedDamageDice; //Default damage
             int weaponWoundPotential = 0;
             int weaponStunAmount = 0;
 

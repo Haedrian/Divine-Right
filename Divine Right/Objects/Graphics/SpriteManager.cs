@@ -28,6 +28,7 @@ namespace DRObjects.Graphics
         private static string GOTOWORLDMAP = @"Graphics/Interface/gotoWorldMap";
         private static string TIMEICONS = @"Graphics/Interface/timeIcons";
         private static string BUYSELLICONS = @"Graphics/Interface/buySellIcons";
+        private static string ANIMALS = @"Graphics/Local/animals";
 
         private static string MERCHANT = @"Graphics/Local/merchant";
         private static string GUARD = @"Graphics/Local/humanguard";
@@ -595,6 +596,29 @@ namespace DRObjects.Graphics
             AddLocalSprite(LocalSpriteName.BANDIT_EASY, ENEMIES, 0, 6);
             AddLocalSprite(LocalSpriteName.BANDIT_MEDIUM, ENEMIES, 1, 6);
             AddLocalSprite(LocalSpriteName.BANDIT_HARD, ENEMIES, 2, 6);
+
+            AddLocalSprite(LocalSpriteName.MOOSE, ANIMALS, 0, 0);
+            AddLocalSprite(LocalSpriteName.RAT, ANIMALS, 1, 0);
+            AddLocalSprite(LocalSpriteName.CAMEL_1, ANIMALS, 2, 0);
+            AddLocalSprite(LocalSpriteName.CAMEL_2, ANIMALS, 3, 0);
+            AddLocalSprite(LocalSpriteName.COUGAR, ANIMALS, 4, 0);
+            AddLocalSprite(LocalSpriteName.ELEPHANT, ANIMALS, 5, 0);
+            AddLocalSprite(LocalSpriteName.POLAR_BEAR, ANIMALS, 6, 0);
+            AddLocalSprite(LocalSpriteName.WOLF_1, ANIMALS, 7, 0);
+            AddLocalSprite(LocalSpriteName.WOLF_2, ANIMALS, 8, 0);
+            AddLocalSprite(LocalSpriteName.GIANT_SNAKE, ANIMALS, 9, 0);
+            AddLocalSprite(LocalSpriteName.GIANT_LIZARD_1, ANIMALS, 10, 0);
+            AddLocalSprite(LocalSpriteName.GIANT_LIZARD_2, ANIMALS, 11, 0);
+            AddLocalSprite(LocalSpriteName.CHICKEN_1, ANIMALS, 0, 1);
+            AddLocalSprite(LocalSpriteName.COW, ANIMALS, 1, 1);
+            AddLocalSprite(LocalSpriteName.LLAMA, ANIMALS, 2, 1);
+            AddLocalSprite(LocalSpriteName.PIG, ANIMALS, 3, 1);
+            AddLocalSprite(LocalSpriteName.SHEEP, ANIMALS, 4, 1);
+            AddLocalSprite(LocalSpriteName.WALRUS, ANIMALS, 5, 1);
+            AddLocalSprite(LocalSpriteName.GIANT_TURTLE, ANIMALS, 6, 1);
+            AddLocalSprite(LocalSpriteName.RABBIT, ANIMALS, 7, 1);
+            AddLocalSprite(LocalSpriteName.PANTHER, ANIMALS, 8, 1);
+            AddLocalSprite(LocalSpriteName.BEAR, ANIMALS, 9, 1);
 
             AddLocalSprite(LocalSpriteName.GREY_GEM, INVENTORYITEMS, 0, 0);
             AddLocalSprite(LocalSpriteName.BROWN_GEM, INVENTORYITEMS, 1, 0);

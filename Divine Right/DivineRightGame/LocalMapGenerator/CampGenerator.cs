@@ -336,9 +336,13 @@ namespace DivineRightGame.LocalMapGenerator
 
             #region Actors
 
-            enemyArray = CreateBandits(enemies, outsidePatrol, insidePatrol);
+            //enemyArray = CreateBandits(enemies, outsidePatrol, insidePatrol);
 
-            ConformEnemies(enemyArray.ToList());
+            //ConformEnemies(enemyArray.ToList());
+
+            var animals = ActorGeneration.CreateAnimalHerds(GlobalBiome.WOODLAND, false, 4);
+
+            enemyArray = animals.SelectMany(a => a).ToArray();
 
             int tries = 0;
 
@@ -357,16 +361,16 @@ namespace DivineRightGame.LocalMapGenerator
                     map[randomX, randomY].ForcePutItemOnBlock(actor.MapCharacter);
                     tries = 0;
 
-                    //If they are wandering, make them wander in the right place
-                    var mission = actor.MissionStack.Peek();
+                    ////If they are wandering, make them wander in the right place
+                    //var mission = actor.MissionStack.Peek();
 
-                    if (mission.MissionType == ActorMissionType.WANDER)
-                    {
-                        var wander = mission as WanderMission;
+                    //if (mission.MissionType == ActorMissionType.WANDER)
+                    //{
+                    //    var wander = mission as WanderMission;
 
-                        wander.WanderPoint = new MapCoordinate(actor.MapCharacter.Coordinate);
-                        wander.WanderRectangle = new Rectangle(startCoord, startCoord, FORTIFICATION_EDGE, FORTIFICATION_EDGE);
-                    }
+                    //    wander.WanderPoint = new MapCoordinate(actor.MapCharacter.Coordinate);
+                    //    wander.WanderRectangle = new Rectangle(startCoord, startCoord, FORTIFICATION_EDGE, FORTIFICATION_EDGE);
+                    //}
 
                 }
                 else

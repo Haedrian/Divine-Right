@@ -90,6 +90,21 @@ namespace DRObjects
         public bool IsAggressive { get; set; }
 
         /// <summary>
+        /// Whether it's an animal or not. Animals can be attacked even if they're not aggressive. That'll make them aggressive. Unless they're domesticated.
+        /// </summary>
+        public bool IsAnimal { get; set; }
+
+        /// <summary>
+        /// Whether it's a domesticated animal or not. Animals which are domesticated may be attacked and won't attack back.
+        /// </summary>
+        public bool IsDomesticatedAnimal { get; set; }
+
+        /// <summary>
+        /// The unarmed damage dice done by this actor
+        /// </summary>
+        public int UnarmedDamageDice { get; set; }
+
+        /// <summary>
         /// Additional details if this actor is a vendor.
         /// </summary>
         public VendorDetails VendorDetails { get; set; }
@@ -138,6 +153,7 @@ namespace DRObjects
             this.Inventory = new ActorInventory();
             this.Attributes = new SkillsAndAttributes();
             this.Attributes.Actor = this;
+            this.UnarmedDamageDice = 1;
         }
 
     }

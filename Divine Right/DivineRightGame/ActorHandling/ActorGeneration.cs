@@ -11,6 +11,7 @@ using DivineRightGame.ItemFactory.ItemFactoryManagers;
 using DRObjects.ActorHandling.Enums;
 using DRObjects;
 using DRObjects.Graphics;
+using DRObjects.ActorHandling.ActorMissions;
 
 namespace DivineRightGame.ActorHandling
 {
@@ -150,6 +151,47 @@ namespace DivineRightGame.ActorHandling
             }
 
             return actor;
+        }
+
+        /// <summary>
+        /// Create a number of herds of particular types of animal. This could be limited to just one animal per herd depending on the type of animal
+        /// </summary>
+        /// <param name="biome">The biome the animal lives in. If it is null, it'll be ignored</param>
+        /// <param name="domesticated">Whether the animal is domesticated or not. If null, it'll be ignored</param>
+        /// <param name="herds">The total amount of herds to be created</param>
+        /// <returns>A list of arrays. Each element of the list represents a different herd. Each element of the array represents an animal within that herd</returns>
+        public static List<List<Actor>> CreateAnimalHerds(GlobalBiome? biome,bool? domesticated,int herds)
+        {
+            var dictionary = DatabaseHandling.GetDatabase(Archetype.ANIMALS);
+
+            //Pick the right one
+            var animalData = dictionary.Values.Select(d => new AnimalData(d.ToArray()));
+
+            var candidates = animalData.Where(a => (domesticated == null || a.Domesticated.Equals(domesticated.Value)) && (biome == null || a.BiomeList.Contains(biome.ToString())));
+
+            var candidatesList = candidates.ToArray();
+
+            List<List<Actor>> retHerds = new List<List<Actor>>();
+
+            for(int i=0; i < herds; i++)
+            {
+                //Let's generate a bunch of herds
+                var chosen = candidatesList[GameState.Random.Next(candidatesList.Length)];
+
+                //Let's generate a herd of those
+                List<Actor> herd = new List<Actor>();
+
+                int herdContents = GameState.Random.Next(chosen.PackSizeMin,chosen.PackSizeMax);
+
+                for (int j=0; j < herdContents; j++)
+                {
+                    herd.Add(AnimalGeneration.GenerateAnimal(chosen));
+                }
+
+                retHerds.Add(herd);
+            }
+
+            return retHerds;
         }
 
         public static SkillsAndAttributes GenerateAttributes(string race, ActorProfession profession, int level,Actor actor)
@@ -441,6 +483,7 @@ namespace DivineRightGame.ActorHandling
                 {
                     RaceData datum = new RaceData()
                     {
+                        RaceID = Int32.Parse(dbRace[0]),
                         RaceName = dbRace[1],
                         IsIntelligent = bool.Parse(dbRace[2]),
                         BrawnModifier = Int32.Parse(dbRace[3]),
@@ -455,6 +498,37 @@ namespace DivineRightGame.ActorHandling
             }
 
             return database.Where(d => d.RaceName.Equals(race, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+        }
+
+        public static RaceData ReadRaceData(int raceID)
+        {
+            if (database == null)
+            {
+                database = new List<RaceData>();
+
+                //Get the entirety of the race database
+                var raceDB = DatabaseHandling.GetDatabase(Archetype.RACE);
+
+                //Parse it and shove it in the array
+                foreach (List<string> dbRace in raceDB.Values)
+                {
+                    RaceData datum = new RaceData()
+                    {
+                        RaceID = Int32.Parse(dbRace[0]),
+                        RaceName = dbRace[1],
+                        IsIntelligent = bool.Parse(dbRace[2]),
+                        BrawnModifier = Int32.Parse(dbRace[3]),
+                        AgilModifier = Int32.Parse(dbRace[4]),
+                        DexModifier = Int32.Parse(dbRace[5]),
+                        PercModifier = Int32.Parse(dbRace[6]),
+                        IntelModifier = Int32.Parse(dbRace[7])
+                    };
+
+                    database.Add(datum);
+                }
+            }
+
+            return database.Where(d => d.RaceID.Equals(raceID)).FirstOrDefault();
         }
 
         /// <summary>

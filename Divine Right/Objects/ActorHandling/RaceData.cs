@@ -10,6 +10,7 @@ namespace DRObjects.ActorHandling
     /// </summary>
     public class RaceData
     {
+        public int RaceID { get; set; }
         public String RaceName { get; set; }
         public int BrawnModifier { get; set; }
         public int AgilModifier { get; set; }
