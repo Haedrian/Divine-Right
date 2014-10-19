@@ -266,7 +266,7 @@ namespace DivineRightGame.ActorHandling
                 }
 
                 //Are we near the mission point?
-                if (Math.Abs(actor.MapCharacter.Coordinate - mission.TargetCoordinate) <= 1)
+                if (mission.TargetCoordinate == null || Math.Abs(actor.MapCharacter.Coordinate - mission.TargetCoordinate) <= 1)
                 {
                     //MIssion is done.
                     actor.CurrentMission = null;

@@ -336,13 +336,13 @@ namespace DivineRightGame.LocalMapGenerator
 
             #region Actors
 
-            //enemyArray = CreateBandits(enemies, outsidePatrol, insidePatrol);
+            enemyArray = CreateBandits(enemies, outsidePatrol, insidePatrol);
 
-            //ConformEnemies(enemyArray.ToList());
+            ConformEnemies(enemyArray.ToList());
 
-            var animals = ActorGeneration.CreateAnimalHerds(GlobalBiome.WOODLAND, false, 4);
+            //var animals = ActorGeneration.CreateAnimalHerds(GlobalBiome.WOODLAND, false, 4);
 
-            enemyArray = animals.SelectMany(a => a).ToArray();
+            //enemyArray = animals.SelectMany(a => a).ToArray();
 
             int tries = 0;
 

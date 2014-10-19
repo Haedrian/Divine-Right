@@ -1,4 +1,8 @@
 Items.sdf
+Maplets\Camp\CampMaplet.xml
+Maplets\Camp\LootArea.xml
+Maplets\Camp\SleepingArea.xml
+Maplets\Camp\WeaponsArea.xml
 Maplets\Components\LargeBedroom.xml
 Maplets\Components\MediumBedroom.xml
 Maplets\Components\Plazas\FountainPlaza.xml
@@ -59,6 +63,12 @@ Maplets\Tavern.xml
 Maplets\TavernLevel1.xml
 Maplets\Temple.xml
 Maplets\Village.xml
+Resources\HumanNames\FemaleNames.txt
+Resources\HumanNames\MaleNames.txt
+Resources\HumanNames\Surnames.txt
+Resources\OrcNames\FirstName.txt
+Resources\OrcNames\SurnameAft.txt
+Resources\OrcNames\SurnameFore.txt
 Resources\SettlementNames\Prefix.txt
 Resources\SettlementNames\Suffix.txt
 Maplets\GeneralStore.xml
