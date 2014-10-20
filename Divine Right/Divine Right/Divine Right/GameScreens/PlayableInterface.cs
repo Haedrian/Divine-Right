@@ -156,7 +156,7 @@ namespace Divine_Right.GameScreens
 
                 InventoryItemManager mgr = new InventoryItemManager();
 
-                for (int i=0; i < 100; i++)
+                for (int i=0; i < 500; i++)
                 {
                     var block = GameState.LocalMap.GetBlockAtCoordinate(new MapCoordinate(GameState.Random.Next(GameState.LocalMap.localGameMap.GetLength(0)), GameState.Random.Next(GameState.LocalMap.localGameMap.GetLength(1)), 0, MapType.LOCAL));
 

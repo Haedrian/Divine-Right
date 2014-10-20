@@ -144,17 +144,58 @@ namespace Divine_Right.InterfaceComponents.Components
                 {
                     //Also assign the item
                     row1Items[column].Item = inventoryitems[i];
-                    batch.Draw(content, inventoryitems[i].Graphic, row1Items[column].Rect, Color.White);
+
+                    foreach(var graphic in inventoryitems[i].Graphics)
+                    {
+                        if (graphic.GetType().Equals(typeof(TextSpriteData)))
+                        {
+                            var sGraph = graphic as TextSpriteData;
+
+                            batch.DrawString(font, sGraph.Text, row1Items[column].Rect, Alignment.Bottom | Alignment.Right, sGraph.Colour);
+                        }
+                        else
+                        {
+                            batch.Draw(content, graphic, row1Items[column].Rect, Color.White);
+                        }
+                    }
+
+                    
                 }
                 else if (row == 1)
                 {
                     row2Items[column].Item = inventoryitems[i];
-                    batch.Draw(content, inventoryitems[i].Graphic, row2Items[column].Rect, Color.White);
+
+                    foreach (var graphic in inventoryitems[i].Graphics)
+                    {
+                        if (graphic.GetType().Equals(typeof(TextSpriteData)))
+                        {
+                            var sGraph = graphic as TextSpriteData;
+
+                            batch.DrawString(font, sGraph.Text, row2Items[column].Rect, Alignment.Bottom | Alignment.Right, sGraph.Colour);
+                        }
+                        else
+                        {
+                            batch.Draw(content, graphic, row2Items[column].Rect, Color.White);
+                        }
+                    }
                 }
                 else
                 {
                     row3Items[column].Item = inventoryitems[i];
-                    batch.Draw(content, inventoryitems[i].Graphic, row3Items[column].Rect, Color.White);
+
+                    foreach (var graphic in inventoryitems[i].Graphics)
+                    {
+                        if (graphic.GetType().Equals(typeof(TextSpriteData)))
+                        {
+                            var sGraph = graphic as TextSpriteData;
+
+                            batch.DrawString(font, sGraph.Text, row3Items[column].Rect, Alignment.Bottom | Alignment.Right, sGraph.Colour);
+                        }
+                        else
+                        {
+                            batch.Draw(content, graphic, row3Items[column].Rect, Color.White);
+                        }
+                    }
                 }
             }
 

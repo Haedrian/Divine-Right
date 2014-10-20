@@ -18,6 +18,16 @@ namespace DRObjects.Items.Archetypes.Local
         MapItem
     {
         /// <summary>
+        /// The total amount of Inventory Item in this 'stack'
+        /// </summary>
+        public int TotalAmount { get; set; }
+
+        /// <summary>
+        /// Whether this Item may represent a stack of items. Items which aren't stackable may only contain a single amount
+        /// </summary>
+        public bool Stackable { get; set; }
+
+        /// <summary>
         /// Whether the item is held in the inventory
         /// </summary>
         public bool InInventory { get; set; }
@@ -35,7 +45,21 @@ namespace DRObjects.Items.Archetypes.Local
         /// <summary>
         /// The base value of this item if it is sold
         /// </summary>
-        public int BaseValue { get; set; }
+
+        private int _baseSingleValue;
+
+        public int BaseValue
+        {
+            get
+            {
+                //Multiply the base single value by how many we have of the item
+                return _baseSingleValue * TotalAmount;
+            }
+            set
+            {
+                _baseSingleValue = value;
+            }
+        }
 
         /// <summary>
         /// How useful the device is as armour
@@ -98,6 +122,27 @@ namespace DRObjects.Items.Archetypes.Local
             }
         }
 
+        public override List<SpriteData> Graphics
+        {
+            get
+            {
+                var graphics = base.Graphics;
+
+                if (Stackable && TotalAmount > 1)
+                {
+                    //Remove any old text sprite data - not sure of a better way to do this without refactoring the code :(
+                    graphics.Remove(graphics.FirstOrDefault(f => f.GetType().Equals(typeof(TextSpriteData))));
+
+                    graphics.Add(new TextSpriteData() { Text = TotalAmount.ToString(), Colour = Color.Black });
+                }
+
+                return graphics;
+            }
+            set
+            {
+                base.Graphics = value;
+            }
+        }
 
         public override Enums.ActionTypeEnum[] GetPossibleActions(Actor actor)
         {
@@ -111,15 +156,15 @@ namespace DRObjects.Items.Archetypes.Local
                     actions.Add(ActionTypeEnum.UNEQUIP);
                 }
                 else
-                if (IsEquippable)
-                {
-                    actions.Add(ActionTypeEnum.EQUIP);
-                    actions.Add(ActionTypeEnum.DROP);
-                }
-                else
-                {
-                    actions.Add(ActionTypeEnum.DROP);
-                }
+                    if (IsEquippable)
+                    {
+                        actions.Add(ActionTypeEnum.EQUIP);
+                        actions.Add(ActionTypeEnum.DROP);
+                    }
+                    else
+                    {
+                        actions.Add(ActionTypeEnum.DROP);
+                    }
 
             }
             else
@@ -143,8 +188,29 @@ namespace DRObjects.Items.Archetypes.Local
                     {
                         //take it
                         this.Coordinate = new MapCoordinate(999, 999, 0, MapType.CONTAINER); //Dummy - this will cause the block to reject and delete it
-                        actor.Inventory.Inventory.Add(this.Category, this);
-                        this.InInventory = true;
+
+                        //Is the item stackable ?
+                        if (this.Stackable)
+                        {
+                            //Do we have an item with the same name in the inventory?
+                            var item = actor.Inventory.Inventory.GetObjectsByGroup(this.Category).Where(g => g.Name.Equals(this.Name)).FirstOrDefault();
+
+                            if (item != null)
+                            {
+                                //Instead we increment the total in that item in the inventory
+                                item.TotalAmount++;
+                            }
+                            else
+                            {
+                                actor.Inventory.Inventory.Add(this.Category, this);
+                                this.InInventory = true;
+                            }
+                        }
+                        else
+                        {
+                            actor.Inventory.Inventory.Add(this.Category, this);
+                            this.InInventory = true;
+                        }
 
                         return new ActionFeedback[1] { new CurrentLogFeedback(InterfaceSpriteName.MAN, Color.Black, "You pick up the " + this.Name) };
 

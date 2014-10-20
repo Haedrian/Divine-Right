@@ -18,7 +18,8 @@ namespace DivineRightGame.ItemFactory.ItemFactoryManagers
         public DRObjects.MapItem CreateItem(List<string> parameters)
         {
             return CreateItem(Int32.Parse(parameters[0]), parameters[1], parameters[2], parameters[3], Int32.Parse(parameters[4]), Boolean.Parse(parameters[5]), Int32.Parse(parameters[6])
-                , Int32.Parse(parameters[7]), parameters[8], parameters[10], parameters[11], Int32.Parse(string.IsNullOrEmpty(parameters[12]) ? "0" : parameters[12]), Int32.Parse(string.IsNullOrEmpty(parameters[13]) ? "0" : parameters[13]));
+                , Int32.Parse(parameters[7]), parameters[8], parameters[10], parameters[11], Int32.Parse(string.IsNullOrEmpty(parameters[12]) ? "0" : parameters[12]), Int32.Parse(string.IsNullOrEmpty(parameters[13]) ? "0" : parameters[13]),
+                Boolean.Parse(parameters[14]));
         }
 
         public DRObjects.MapItem CreateItem(int internalID)
@@ -111,7 +112,7 @@ namespace DivineRightGame.ItemFactory.ItemFactoryManagers
 
         public MapItem CreateItem(int itemID,string name,string description, string graphic, int value  
             ,bool equippable,int armourRating, int damageRating, string damageType,string category,string equippableLocation,
-            int woundPotential, int stunAmount)
+            int woundPotential, int stunAmount,bool stackable)
         {
             InventoryItem item = new InventoryItem();
             item.Description = description;
@@ -148,6 +149,8 @@ namespace DivineRightGame.ItemFactory.ItemFactoryManagers
             item.StunAmount = stunAmount;
             item.WoundPotential = woundPotential;
             item.WeaponType = damageType;
+            item.Stackable = stackable;
+            item.TotalAmount = 1;
 
             if (!String.IsNullOrEmpty(equippableLocation))
             {
