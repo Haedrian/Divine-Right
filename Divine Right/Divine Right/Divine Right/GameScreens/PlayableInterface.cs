@@ -107,6 +107,11 @@ namespace Divine_Right.GameScreens
         List<InterfaceBlock> blocks = new List<InterfaceBlock>();
         Game game;
 
+        /// <summary>
+        /// The font to draw text in
+        /// </summary>
+        private SpriteFont font;
+
         private List<IGameInterfaceComponent> interfaceComponents = new List<IGameInterfaceComponent>();
         TextLogComponent log;
         List<ISystemInterfaceComponent> menuButtons = new List<ISystemInterfaceComponent>();
@@ -761,6 +766,12 @@ namespace Divine_Right.GameScreens
 
         public override void Draw(GameTime gameTime)
         {
+            if (font == null)
+            {
+                //Load the font
+                font = game.Content.Load<SpriteFont>(@"Fonts/LightText");
+            }
+
             GraphicsDevice.Clear(Color.Black);
 
             //get the current state of the game
@@ -923,13 +934,24 @@ namespace Divine_Right.GameScreens
                         {
                             if (itemGraphic != null)
                             {
-                                if (itemGraphic.sourceRectangle == null)
+                                if (itemGraphic.GetType().Equals(typeof(TextSpriteData)))
                                 {
-                                    spriteBatch.Draw(this.game.Content.Load<Texture2D>(itemGraphic.path), rec, itemGraphic.ColorFilter.HasValue ? itemGraphic.ColorFilter.Value : Color.White);
+                                    TextSpriteData data = (TextSpriteData) itemGraphic;
+
+                                    //Write it in the screen
+                                    spriteBatch.DrawString(font, data.Text, rec, Alignment.Right | Alignment.Bottom, data.Colour);
                                 }
                                 else
-                                { //part of a tileset
-                                    spriteBatch.Draw(this.game.Content.Load<Texture2D>(itemGraphic.path), rec, itemGraphic.sourceRectangle, itemGraphic.ColorFilter.HasValue ? itemGraphic.ColorFilter.Value : Color.White);
+                                {
+
+                                    if (itemGraphic.sourceRectangle == null)
+                                    {
+                                        spriteBatch.Draw(this.game.Content.Load<Texture2D>(itemGraphic.path), rec, itemGraphic.ColorFilter.HasValue ? itemGraphic.ColorFilter.Value : Color.White);
+                                    }
+                                    else
+                                    { //part of a tileset
+                                        spriteBatch.Draw(this.game.Content.Load<Texture2D>(itemGraphic.path), rec, itemGraphic.sourceRectangle, itemGraphic.ColorFilter.HasValue ? itemGraphic.ColorFilter.Value : Color.White);
+                                    }
                                 }
                             }
                         }

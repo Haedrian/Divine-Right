@@ -8,10 +8,10 @@ namespace Divine_Right.HelperFunctions
     [Flags]
     public enum Alignment 
     { 
-        Center = 0, 
-        Left = 1, 
-        Right = 2, 
-        Top = 4,
-        Bottom = 8 
+        Center = 1, 
+        Left = 2, 
+        Right = 4, 
+        Top = 8,
+        Bottom = 16 
     }
 }

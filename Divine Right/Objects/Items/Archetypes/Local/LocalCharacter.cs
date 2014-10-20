@@ -5,6 +5,7 @@ using System.Text;
 using DRObjects.Enums;
 using DRObjects.Graphics;
 using DRObjects.GraphicsEngineObjects;
+using Microsoft.Xna.Framework;
 
 namespace DRObjects.Items.Archetypes.Local
 {
