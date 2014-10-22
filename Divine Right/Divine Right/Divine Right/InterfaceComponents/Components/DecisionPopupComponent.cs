@@ -41,7 +41,7 @@ namespace Divine_Right.InterfaceComponents.Components
             this.locationX = locationX;
             this.locationY = locationY;
             this.decisions = decisions;
-            this.title = title;
+            this.title = title; 
             this.text = text;
             this.image = image;
             this.visible = true;
