@@ -55,7 +55,7 @@ namespace DivineRightGame.ActorHandling
                 meat.ArmourRating = 0;
                 meat.BaseValue = 50;
                 meat.Category = InventoryCategory.SUPPLY;
-                meat.Description = "Some meat";
+                meat.Description = "The meat of a " + data.Name;
                 meat.EffectPower = 1;
                 meat.Effects = ConsumableEffect.FEED;
                 meat.Graphic = SpriteManager.GetSprite(LocalSpriteName.STEAK);
@@ -69,6 +69,28 @@ namespace DivineRightGame.ActorHandling
                 meat.TotalAmount = data.MeatAmount;
 
                 actor.Inventory.Inventory.Add(meat.Category, meat);
+            }
+
+            //Hide
+            if (data.HideAmount > 0)
+            {
+                //Create a hide
+                InventoryItem hide = new InventoryItem();
+                hide.ArmourRating = 0;
+                hide.BaseValue = data.HideValue;
+                hide.Category = InventoryCategory.LOOT;
+                hide.Description = "The hide of a " + data.Name;
+                hide.Graphic = SpriteManager.GetSprite(LocalSpriteName.HIDE);
+                hide.InInventory = true;
+                hide.InternalName = "hide";
+                hide.IsEquippable = false;
+                hide.IsEquipped = false;
+                hide.MayContainItems = true;
+                hide.Name = data.Name + " hide";
+                hide.Stackable = true;
+                hide.TotalAmount = data.HideAmount;
+
+                actor.Inventory.Inventory.Add(hide.Category, hide);
             }
 
             actor.IsAggressive = data.IsAggressive;

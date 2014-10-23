@@ -549,6 +549,7 @@ namespace DRObjects.Graphics
         RABBIT,
         PANTHER,
         BEAR,
+        HIDE,
 
     }
 }
