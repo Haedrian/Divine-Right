@@ -10,8 +10,9 @@ namespace DRObjects.Enums
         WEAPON,
         ARMOUR,
         LOOT,
-       // CONSUMABLES,
-       // DOCUMENTS,
-       // RESOURCES
+        // CONSUMABLES,
+        // DOCUMENTS,
+        // RESOURCES
+        SUPPLY,
     }
 }

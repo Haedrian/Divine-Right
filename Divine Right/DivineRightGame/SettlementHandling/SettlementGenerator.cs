@@ -277,7 +277,13 @@ namespace DivineRightGame.SettlementHandling
             //Now we put some people in
             var plazaActors = GenerateTownsfolk(settlement);
 
+            //Let's add some animals too
+            var animals = ActorGeneration.CreateAnimalHerds(null, true, 5);
+
+            plazaActors.AddRange(animals.SelectMany(a => a).ToList());
+
             actors.AddRange(plazaActors);
+
 
             //Go through them one at a time and position them on the plaza
 

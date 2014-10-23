@@ -111,9 +111,9 @@ namespace DRObjects.Items.Archetypes.Local
             }
         }
 
-        public override ActionTypeEnum[] GetPossibleActions(Actor actor)
+        public override ActionType[] GetPossibleActions(Actor actor)
         {
-            List<ActionTypeEnum> actions = new List<ActionTypeEnum>();
+            List<ActionType> actions = new List<ActionType>();
 
             actions.AddRange(base.GetPossibleActions(actor));
 
@@ -121,25 +121,25 @@ namespace DRObjects.Items.Archetypes.Local
             if (this.Coordinate - actor.MapCharacter.Coordinate < 2 && this.Actor.IsAggressive)
             {
                 //Add the attack one too
-                actions.Add(ActionTypeEnum.PREPARE_ATTACK);
+                actions.Add(ActionType.PREPARE_ATTACK);
             }
 
             //Is he a vendor?
             if (this.Coordinate - actor.MapCharacter.Coordinate < 2 && this.Actor.VendorDetails != null)
             {
-                actions.Add(ActionTypeEnum.TRADE);
+                actions.Add(ActionType.TRADE);
             }
 
             return actions.ToArray();
         }
 
-        public override GraphicsEngineObjects.Abstract.ActionFeedback[] PerformAction(ActionTypeEnum actionType, Actor actor, object[] args)
+        public override GraphicsEngineObjects.Abstract.ActionFeedback[] PerformAction(ActionType actionType, Actor actor, object[] args)
         {
-            if (actionType == ActionTypeEnum.PREPARE_ATTACK)
+            if (actionType == ActionType.PREPARE_ATTACK)
             {
                 return new InterfaceToggleFeedback[] { new InterfaceToggleFeedback(InternalActionEnum.OPEN_ATTACK,true,this) };
             }
-            else if (actionType == ActionTypeEnum.TRADE)
+            else if (actionType == ActionType.TRADE)
             {
                 return new InterfaceToggleFeedback[] { new InterfaceToggleFeedback(InternalActionEnum.OPEN_TRADE,true,new object[2] {this.Actor,actor})};
             }

@@ -7,6 +7,7 @@ using DRObjects.ActorHandling;
 using DRObjects.ActorHandling.ActorMissions;
 using DRObjects.ActorHandling.CharacterSheet.Enums;
 using DRObjects.ActorHandling.Enums;
+using DRObjects.Enums;
 using DRObjects.Graphics;
 using DRObjects.Items.Archetypes.Local;
 
@@ -40,6 +41,30 @@ namespace DivineRightGame.ActorHandling
             actor.Inventory = new ActorInventory();
 
             //TODO: GENERATE THE FOOD AND HIDE DROPS
+
+            //Meat.
+            if (data.MeatAmount > 0)
+            {
+                //Create some meat
+                ConsumableItem meat = new ConsumableItem();
+                meat.ArmourRating = 0;
+                meat.BaseValue = 50;
+                meat.Category = InventoryCategory.SUPPLY;
+                meat.Description = "some meat";
+                meat.EffectPower = 1;
+                meat.Effects = ConsumableEffect.FEED;
+                meat.Graphic = SpriteManager.GetSprite(LocalSpriteName.STEAK);
+                meat.InternalName = "meat";
+                meat.IsEquippable = false;
+                meat.InInventory = true;
+                meat.IsEquipped = false;
+                meat.MayContainItems = true;
+                meat.Name = data.Name + " meat";
+                meat.Stackable = true;
+                meat.TotalAmount = data.MeatAmount;
+
+                actor.Inventory.Inventory.Add(meat.Category, meat);
+            }
 
             actor.IsAggressive = data.IsAggressive;
             actor.IsAlive = true;

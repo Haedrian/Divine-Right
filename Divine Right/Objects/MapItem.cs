@@ -88,16 +88,16 @@ namespace DRObjects
         /// <summary>
         /// Defines what happens when an action is performed upon the tile or item. These are the default values. 
         /// </summary>
-        public virtual ActionFeedback[] PerformAction(ActionTypeEnum actionType, Actor actor, object[] args)
+        public virtual ActionFeedback[] PerformAction(ActionType actionType, Actor actor, object[] args)
         {
 
             if (GetPossibleActions(actor).Contains(actionType))
             {
                 switch (actionType)
                 {
-                    case ActionTypeEnum.EXAMINE :
+                    case ActionType.EXAMINE :
                         return new ActionFeedback[] { new CurrentLogFeedback(InterfaceSpriteName.PERC,Color.Black,"You see " + this.Description) };
-                    case ActionTypeEnum.LOOK:
+                    case ActionType.LOOK:
                         return new ActionFeedback[] { new TextFeedback(this.Name) };
                     default:
                         //TODO: ERROR HANDLING
@@ -118,16 +118,16 @@ namespace DRObjects
         /// Other details to be added later.
         /// </summary>
         /// <returns></returns>
-        public virtual ActionTypeEnum[] GetPossibleActions(Actor actor)
+        public virtual ActionType[] GetPossibleActions(Actor actor)
         {
             if (actor.IsPlayerCharacter)
             {
-                return new ActionTypeEnum[] { ActionTypeEnum.EXAMINE, ActionTypeEnum.LOOK };
+                return new ActionType[] { ActionType.EXAMINE, ActionType.LOOK };
             }
             else
             {
                 //todo
-                return new ActionTypeEnum[0] { };
+                return new ActionType[0] { };
             }
         }
 

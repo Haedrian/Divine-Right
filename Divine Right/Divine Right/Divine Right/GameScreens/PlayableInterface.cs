@@ -394,7 +394,7 @@ namespace Divine_Right.GameScreens
             else
             {
                 //is there a component which wants to handle the keyboard movement?
-                ActionTypeEnum? kAction = null;
+                ActionType? kAction = null;
                 object[] kArgs = null;
                 MapCoordinate kTargetCoord = null;
 
@@ -461,7 +461,7 @@ namespace Divine_Right.GameScreens
                     if (keyboardState.IsKeyDown(Keys.OemPeriod))
                     {
                         //Just waste time
-                        this.PerformAction(null,null, ActionTypeEnum.IDLE, null);
+                        this.PerformAction(null,null, ActionType.IDLE, null);
                     }
                     else if (keyboardState.IsKeyDown(Keys.Up))
                     {
@@ -487,7 +487,7 @@ namespace Divine_Right.GameScreens
                         coord += difference;
 
                         //send a move message to that coordinate
-                        this.PerformAction(coord,null, DRObjects.Enums.ActionTypeEnum.MOVE, null);
+                        this.PerformAction(coord,null, DRObjects.Enums.ActionType.MOVE, null);
 
                     }
 
@@ -504,7 +504,7 @@ namespace Divine_Right.GameScreens
             MouseActionEnum? mouseAction = this.DetermineMouseAction(mouse);
 
             //this is a potential mouse action
-            ActionTypeEnum? action = null;
+            ActionType? action = null;
             object[] args = null;
             MapCoordinate targetCoord = null;
             MapItem item = null;
@@ -721,14 +721,14 @@ namespace Divine_Right.GameScreens
                     {
                         if (iBlock != null)
                         {
-                            this.PerformAction(iBlock.MapCoordinate,null, DRObjects.Enums.ActionTypeEnum.LOOK, null);
+                            this.PerformAction(iBlock.MapCoordinate,null, DRObjects.Enums.ActionType.LOOK, null);
                         }
                     }
                     else if (mouseAction.Value == MouseActionEnum.RIGHT_CLICK)
                     {
                         if (iBlock != null)
                         {
-                            ActionTypeEnum[] actions = UserInterfaceManager.GetPossibleActions(iBlock.MapCoordinate);
+                            ActionType[] actions = UserInterfaceManager.GetPossibleActions(iBlock.MapCoordinate);
 
                             //we are going to get a context menu
 
@@ -745,7 +745,7 @@ namespace Divine_Right.GameScreens
 
                             ContextMenuComponent comp = new ContextMenuComponent(mouse.X + 10, mouse.Y, iBlock.MapCoordinate);
 
-                            foreach (ActionTypeEnum act in actions)
+                            foreach (ActionType act in actions)
                             {
                                 comp.AddContextMenuItem(act, null, this.game.Content);
                             }
@@ -970,7 +970,7 @@ namespace Divine_Right.GameScreens
         /// Performs the action and handles feedback
         /// </summary>
         /// <param name="?"></param>
-        public void PerformAction(MapCoordinate coord, MapItem item, DRObjects.Enums.ActionTypeEnum actionType, object[] args)
+        public void PerformAction(MapCoordinate coord, MapItem item, DRObjects.Enums.ActionType actionType, object[] args)
         {
             //remove any viewtiletext components or contextmenu components
             for (int i = 0; i < interfaceComponents.Count; i++)

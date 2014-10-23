@@ -48,12 +48,12 @@ namespace DRObjects.Items.Tiles
         /// Gets all possible actions for this air tile. That is, nothing
         /// </summary>
         /// <returns></returns>
-        public override ActionTypeEnum[] GetPossibleActions(Actor actor)
+        public override ActionType[] GetPossibleActions(Actor actor)
         {
-            return new ActionTypeEnum[] { };
+            return new ActionType[] { };
         }
 
-        public override ActionFeedback[] PerformAction(ActionTypeEnum actionType, Actor actor, object[] args)
+        public override ActionFeedback[] PerformAction(ActionType actionType, Actor actor, object[] args)
         {
             //none of the actions are valid for this tile
             return new ActionFeedback[] { };

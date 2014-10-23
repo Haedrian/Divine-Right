@@ -24,13 +24,13 @@ namespace DivineRightGame.Managers
         /// <param name="coordinate"></param>
         /// <param name="actionType"></param>
         /// <param name="args"></param>
-        public static ActionFeedback[] PerformAction(MapCoordinate coordinate,MapItem item, ActionTypeEnum actionType, object[] args)
+        public static ActionFeedback[] PerformAction(MapCoordinate coordinate,MapItem item, ActionType actionType, object[] args)
         {
             List<ActionFeedback> feedback = new List<ActionFeedback>();
 
             bool validAttack = false;
 
-            if (actionType == ActionTypeEnum.ATTACK)
+            if (actionType == ActionType.ATTACK)
             {
                 //Handle this seperatly
                 //Argument 0 - attacker
@@ -54,7 +54,7 @@ namespace DivineRightGame.Managers
                     return new ActionFeedback[] { new CurrentLogFeedback(null,Color.Black,"You are too far away to hit your target")};
                 }
             }
-            else if (actionType == ActionTypeEnum.IDLE)
+            else if (actionType == ActionType.IDLE)
             {
                 //Do nothing
             }
@@ -81,7 +81,7 @@ namespace DivineRightGame.Managers
                 }
             }
 
-            if (actionType == ActionTypeEnum.EXAMINE || actionType == ActionTypeEnum.MOVE || (actionType == ActionTypeEnum.ATTACK && validAttack) || actionType == ActionTypeEnum.IDLE)
+            if (actionType == ActionType.EXAMINE || actionType == ActionType.MOVE || (actionType == ActionType.ATTACK && validAttack) || actionType == ActionType.IDLE)
             {
                 //Perform a tick
                 //Clear the Log
@@ -117,7 +117,7 @@ namespace DivineRightGame.Managers
         /// </summary>
         /// <param name="coordinate"></param>
         /// <returns></returns>
-        public static ActionTypeEnum[] GetPossibleActions(MapCoordinate coordinate)
+        public static ActionType[] GetPossibleActions(MapCoordinate coordinate)
         {
             switch (coordinate.MapType)
             {

@@ -60,7 +60,7 @@ namespace Divine_Right.InterfaceComponents.Components
         /// <summary>
         /// Adds a new Context Menu Item to the list from an actiontype and arguments
         /// </summary>
-        public void AddContextMenuItem(ActionTypeEnum action, object[] args, ContentManager content)
+        public void AddContextMenuItem(ActionType action, object[] args, ContentManager content)
         {
             ContextMenuItem item = new ContextMenuItem();
             item.Action = action;
@@ -125,7 +125,7 @@ namespace Divine_Right.InterfaceComponents.Components
             }
         }
 
-        public bool HandleClick(int x, int y, MouseActionEnum mouseAction, out ActionTypeEnum? actionType, out InternalActionEnum? internalActionType, out object[] args, out MapItem itm, out MapCoordinate coord, out bool destroy)
+        public bool HandleClick(int x, int y, MouseActionEnum mouseAction, out ActionType? actionType, out InternalActionEnum? internalActionType, out object[] args, out MapItem itm, out MapCoordinate coord, out bool destroy)
         {
             itm = null;
             internalActionType = null;
@@ -172,7 +172,7 @@ namespace Divine_Right.InterfaceComponents.Components
             return drawRectangle;
         }
 
-        public bool HandleKeyboard(Microsoft.Xna.Framework.Input.KeyboardState keyboard, out ActionTypeEnum? actionType, out object[] args, out MapCoordinate coord, out bool destroy)
+        public bool HandleKeyboard(Microsoft.Xna.Framework.Input.KeyboardState keyboard, out ActionType? actionType, out object[] args, out MapCoordinate coord, out bool destroy)
         {
             //This component doesn't handle any keyboard
             actionType = null;

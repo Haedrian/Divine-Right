@@ -54,24 +54,24 @@ namespace DRObjects.Items.Archetypes.Global
         #endregion
 
         #region Overridden functions
-        public override ActionTypeEnum[] GetPossibleActions(Actor actor)
+        public override ActionType[] GetPossibleActions(Actor actor)
         {
-            List<ActionTypeEnum> actions = new List<ActionTypeEnum>();
+            List<ActionType> actions = new List<ActionType>();
 
             actions.AddRange(base.GetPossibleActions(actor));
 
             if (Math.Abs(actor.MapCharacter.Coordinate - this.Coordinate) < 2)
             {
-                actions.Add(ActionTypeEnum.EXPLORE);
+                actions.Add(ActionType.EXPLORE);
             }
 
             return actions.ToArray();
         }
 
-        public override GraphicsEngineObjects.Abstract.ActionFeedback[] PerformAction(ActionTypeEnum actionType, Actor actor, object[] args)
+        public override GraphicsEngineObjects.Abstract.ActionFeedback[] PerformAction(ActionType actionType, Actor actor, object[] args)
         {
             //Use base for everything that's not visit
-            if (actionType != ActionTypeEnum.EXPLORE)
+            if (actionType != ActionType.EXPLORE)
             {
                 return base.PerformAction(actionType, actor, args);
             }

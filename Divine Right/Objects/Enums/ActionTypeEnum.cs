@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DRObjects.Enums
 {
-    public enum ActionTypeEnum
+    public enum ActionType
     {
         IDLE = 0,
         LOOK = 1,
@@ -22,5 +22,6 @@ namespace DRObjects.Enums
         UNEQUIP,
         TRADE,
         MULTIDECISION,
+        CONSUME,
     }
 }

@@ -29,14 +29,14 @@ namespace DRObjects.Items.Archetypes.Local
             }
         }
 
-        public override Enums.ActionTypeEnum[] GetPossibleActions(Actor actor)
+        public override Enums.ActionType[] GetPossibleActions(Actor actor)
         {
-            List<ActionTypeEnum> actions = new List<ActionTypeEnum>();
+            List<ActionType> actions = new List<ActionType>();
             actions.AddRange(base.GetPossibleActions(actor));
 
             if (actor.MapCharacter.Coordinate - this.Coordinate < 2)
             {
-                actions.Add(ActionTypeEnum.LEAVE);
+                actions.Add(ActionType.LEAVE);
             }
             return actions.ToArray();
         }
@@ -53,9 +53,9 @@ namespace DRObjects.Items.Archetypes.Local
             }
         }
 
-        public override GraphicsEngineObjects.Abstract.ActionFeedback[] PerformAction(ActionTypeEnum actionType, Actor actor, object[] args)
+        public override GraphicsEngineObjects.Abstract.ActionFeedback[] PerformAction(ActionType actionType, Actor actor, object[] args)
         {
-            if (actionType != ActionTypeEnum.LEAVE)
+            if (actionType != ActionType.LEAVE)
             {
                 return base.PerformAction(actionType, actor, args);
             }

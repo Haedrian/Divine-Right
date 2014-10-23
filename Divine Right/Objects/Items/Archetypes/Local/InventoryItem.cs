@@ -144,26 +144,26 @@ namespace DRObjects.Items.Archetypes.Local
             }
         }
 
-        public override Enums.ActionTypeEnum[] GetPossibleActions(Actor actor)
+        public override Enums.ActionType[] GetPossibleActions(Actor actor)
         {
-            List<ActionTypeEnum> actions = base.GetPossibleActions(actor).ToList();
+            List<ActionType> actions = base.GetPossibleActions(actor).ToList();
 
             if (InInventory)
             {
-                actions = new List<ActionTypeEnum>(); //Clear them
+                actions = new List<ActionType>(); //Clear them
                 if (IsEquipped)
                 {
-                    actions.Add(ActionTypeEnum.UNEQUIP);
+                    actions.Add(ActionType.UNEQUIP);
                 }
                 else
                     if (IsEquippable)
                     {
-                        actions.Add(ActionTypeEnum.EQUIP);
-                        actions.Add(ActionTypeEnum.DROP);
+                        actions.Add(ActionType.EQUIP);
+                        actions.Add(ActionType.DROP);
                     }
                     else
                     {
-                        actions.Add(ActionTypeEnum.DROP);
+                        actions.Add(ActionType.DROP);
                     }
 
             }
@@ -171,20 +171,20 @@ namespace DRObjects.Items.Archetypes.Local
             {
                 if (Math.Abs(actor.MapCharacter.Coordinate - this.Coordinate) < 2)
                 {
-                    actions.Add(ActionTypeEnum.TAKE);
+                    actions.Add(ActionType.TAKE);
                 }
             }
 
             return actions.ToArray();
         }
 
-        public override GraphicsEngineObjects.Abstract.ActionFeedback[] PerformAction(ActionTypeEnum actionType, Actor actor, object[] args)
+        public override GraphicsEngineObjects.Abstract.ActionFeedback[] PerformAction(ActionType actionType, Actor actor, object[] args)
         {
-            if (actionType == ActionTypeEnum.TAKE)
+            if (actionType == ActionType.TAKE)
             {
                 if (Math.Abs(actor.MapCharacter.Coordinate - this.Coordinate) < 2)
                 {
-                    if (actionType == ActionTypeEnum.TAKE)
+                    if (actionType == ActionType.TAKE)
                     {
                         //take it
                         this.Coordinate = new MapCoordinate(999, 999, 0, MapType.CONTAINER); //Dummy - this will cause the block to reject and delete it
@@ -217,7 +217,7 @@ namespace DRObjects.Items.Archetypes.Local
                     }
                 }
             }
-            else if (actionType == ActionTypeEnum.DROP)
+            else if (actionType == ActionType.DROP)
             {
                 //Drop it.
                 //Since we can't access GameState from out here, we'll need to use an ActionFeedback
@@ -225,7 +225,7 @@ namespace DRObjects.Items.Archetypes.Local
                 this.InInventory = false;
                 return new ActionFeedback[1] { new DropItemFeedback() { ItemToDrop = this } };
             }
-            else if (actionType == ActionTypeEnum.EQUIP && this.IsEquippable && this.EquippableLocation.HasValue)
+            else if (actionType == ActionType.EQUIP && this.IsEquippable && this.EquippableLocation.HasValue)
             {
                 //Equip it
                 this.IsEquipped = true;
@@ -271,7 +271,7 @@ namespace DRObjects.Items.Archetypes.Local
                 actor.Inventory.EquippedItems.Add(clearLocation.Value, this);
 
             }
-            else if (actionType == ActionTypeEnum.UNEQUIP && this.IsEquipped)
+            else if (actionType == ActionType.UNEQUIP && this.IsEquipped)
             {
                 this.IsEquipped = false;
 

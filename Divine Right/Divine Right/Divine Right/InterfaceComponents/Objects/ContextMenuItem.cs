@@ -17,7 +17,7 @@ namespace Divine_Right.InterfaceComponents.Objects
         /// <summary>
         /// The type of the action to display and send
         /// </summary>
-        public ActionTypeEnum Action{get;set; }
+        public ActionType Action{get;set; }
         /// <summary>
         /// The rectangle which encompasses this context menu item
         /// </summary>

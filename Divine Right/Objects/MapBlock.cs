@@ -190,15 +190,15 @@ namespace DRObjects
         /// </summary>
         /// <param name="actor"></param>
         /// <returns></returns>
-        public ActionTypeEnum[] GetActions(Actor actor)
+        public ActionType[] GetActions(Actor actor)
         {
             MapItem item = GetTopItem();
-            ActionTypeEnum[] actions = item.GetPossibleActions(actor);
+            ActionType[] actions = item.GetPossibleActions(actor);
 
             if (this.MayContainItems)
             {
-                List<ActionTypeEnum> actionList = actions.ToList();
-                actionList.Add(ActionTypeEnum.MOVE);
+                List<ActionType> actionList = actions.ToList();
+                actionList.Add(ActionType.MOVE);
 
                 return actionList.ToArray();
             }
@@ -208,9 +208,9 @@ namespace DRObjects
             }
         }
 
-        public ActionFeedback[] PerformAction(ActionTypeEnum actionType, Actor actor, object[] args)
+        public ActionFeedback[] PerformAction(ActionType actionType, Actor actor, object[] args)
         {
-            if (actionType == ActionTypeEnum.MOVE)
+            if (actionType == ActionType.MOVE)
             {
                 //the block must handle this
                 //TODO: Future - the block can transmit 'moved on' action on the top item or the tile for things like traps

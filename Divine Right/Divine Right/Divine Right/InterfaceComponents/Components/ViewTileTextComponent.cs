@@ -94,7 +94,7 @@ namespace Divine_Right.InterfaceComponents.Components
             }
         }
 
-        bool IGameInterfaceComponent.HandleClick(int x, int y, MouseActionEnum mouse, out DRObjects.Enums.ActionTypeEnum? actionType,out InternalActionEnum? internalActionType, out object[] args, out MapItem itm, out DRObjects.MapCoordinate coord, out bool destroy)
+        bool IGameInterfaceComponent.HandleClick(int x, int y, MouseActionEnum mouse, out DRObjects.Enums.ActionType? actionType,out InternalActionEnum? internalActionType, out object[] args, out MapItem itm, out DRObjects.MapCoordinate coord, out bool destroy)
         {
             //This component will 'absorb' the click, but do nothing whatsoever.
             actionType = null;
@@ -113,7 +113,7 @@ namespace Divine_Right.InterfaceComponents.Components
             return componentRectangle;
         }
 
-        public bool HandleKeyboard(Microsoft.Xna.Framework.Input.KeyboardState keyboard, out DRObjects.Enums.ActionTypeEnum? actionType, out object[] args, out DRObjects.MapCoordinate coord, out bool destroy)
+        public bool HandleKeyboard(Microsoft.Xna.Framework.Input.KeyboardState keyboard, out DRObjects.Enums.ActionType? actionType, out object[] args, out DRObjects.MapCoordinate coord, out bool destroy)
         {
             //we don't handle the keyboard
             actionType = null;

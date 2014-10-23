@@ -23,7 +23,7 @@ namespace Divine_Right.InterfaceComponents.Objects
         /// <summary>
         /// The type of the action to trigger when this choice is selected.
         /// </summary>
-        public ActionTypeEnum? ActionType { get; set; }
+        public ActionType? ActionType { get; set; }
         /// <summary>
         /// The arguments to send with the action
         /// </summary>
@@ -34,7 +34,7 @@ namespace Divine_Right.InterfaceComponents.Objects
         /// </summary>
         public Rectangle Rect { get; set; }
 
-        public DecisionPopupChoice(string text, InternalActionEnum? internalAction, ActionTypeEnum? gameAction,object[] arguments)
+        public DecisionPopupChoice(string text, InternalActionEnum? internalAction, ActionType? gameAction,object[] arguments)
         {
             this.Text = text;
             this.InternalAction = internalAction;

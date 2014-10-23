@@ -111,6 +111,7 @@
     <Compile Include="DataStructures\PointSerializationSurrogate.cs" />
     <Compile Include="DataStructures\RectSerializationSurrogate.cs" />
     <Compile Include="Enums\Archetype.cs" />
+    <Compile Include="Enums\ConsumableEffect.cs" />
     <Compile Include="Enums\EnemyThought.cs" />
     <Compile Include="Enums\EquipmentLocation.cs" />
     <Compile Include="Enums\GlobalBiome.cs" />
@@ -153,6 +154,7 @@
     <Compile Include="Items\Archetypes\Global\MapResource.cs" />
     <Compile Include="Items\Archetypes\Global\Settlement.cs" />
     <Compile Include="Items\Archetypes\Global\SettlementItem.cs" />
+    <Compile Include="Items\Archetypes\Local\ConsumableItem.cs" />
     <Compile Include="Items\Archetypes\Local\InventoryItem.cs" />
     <Compile Include="Items\Archetypes\Local\LeaveTownItem.cs" />
     <Compile Include="Items\Archetypes\Local\LocalCharacter.cs" />

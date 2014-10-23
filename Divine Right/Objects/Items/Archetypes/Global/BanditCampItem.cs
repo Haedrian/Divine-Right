@@ -33,22 +33,22 @@ namespace DRObjects.Items.Archetypes.Global
             sprites.Add(SpriteManager.GetSprite(GlobalSpriteName.BANDIT_CAMP));
         }
 
-        public override Enums.ActionTypeEnum[] GetPossibleActions(Actor actor)
+        public override Enums.ActionType[] GetPossibleActions(Actor actor)
         {
-            List<ActionTypeEnum> actionTypes = new List<ActionTypeEnum>();
+            List<ActionType> actionTypes = new List<ActionType>();
             actionTypes.AddRange(base.GetPossibleActions(actor));
 
             if (Math.Abs(this.Coordinate - actor.MapCharacter.Coordinate) < 2)
             {
-                actionTypes.Add(ActionTypeEnum.EXPLORE);
+                actionTypes.Add(ActionType.EXPLORE);
             }
 
             return actionTypes.ToArray();
         }
 
-        public override GraphicsEngineObjects.Abstract.ActionFeedback[] PerformAction(ActionTypeEnum actionType, Actor actor, object[] args)
+        public override GraphicsEngineObjects.Abstract.ActionFeedback[] PerformAction(ActionType actionType, Actor actor, object[] args)
         {
-            if (actionType != ActionTypeEnum.EXPLORE)
+            if (actionType != ActionType.EXPLORE)
             {
                 return base.PerformAction(actionType, actor, args);
             }

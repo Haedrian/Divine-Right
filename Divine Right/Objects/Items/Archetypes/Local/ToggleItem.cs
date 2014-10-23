@@ -113,23 +113,23 @@ namespace DRObjects.Items.Archetypes.Local
             }
         }
 
-        public override Enums.ActionTypeEnum[]  GetPossibleActions(Actor actor)
+        public override Enums.ActionType[]  GetPossibleActions(Actor actor)
         {
- 	        List<Enums.ActionTypeEnum> enums = base.GetPossibleActions(actor).ToList();
+ 	        List<Enums.ActionType> enums = base.GetPossibleActions(actor).ToList();
 
             //We also want to add support for the "Use" enum - if they're one tile away
 
             if (Math.Abs(actor.MapCharacter.Coordinate - this.Coordinate) < 2)
             {
-                enums.Add(Enums.ActionTypeEnum.USE);
+                enums.Add(Enums.ActionType.USE);
             }
 
             return enums.ToArray();
         }
 
-        public override GraphicsEngineObjects.Abstract.ActionFeedback[]  PerformAction(Enums.ActionTypeEnum actionType, Actor actor, object[] args)
+        public override GraphicsEngineObjects.Abstract.ActionFeedback[]  PerformAction(Enums.ActionType actionType, Actor actor, object[] args)
         {
-            if (actionType == Enums.ActionTypeEnum.USE)
+            if (actionType == Enums.ActionType.USE)
             {
                 if (Math.Abs(actor.MapCharacter.Coordinate - this.Coordinate) < 2)
                 {

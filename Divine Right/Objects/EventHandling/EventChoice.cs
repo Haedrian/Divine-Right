@@ -22,7 +22,7 @@ namespace DRObjects.EventHandling
         /// <summary>
         /// The action to invoke when clicked
         /// </summary>
-        public ActionTypeEnum? Action { get; set; }
+        public ActionType? Action { get; set; }
 
         /// <summary>
         /// Arguments
