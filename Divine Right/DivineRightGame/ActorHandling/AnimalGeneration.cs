@@ -32,10 +32,15 @@ namespace DivineRightGame.ActorHandling
             actor.Attributes.Actor = actor;
             ActorGeneration.GenerateAttributes(data.RaceData.RaceName,ActorProfession.WARRIOR,GameState.Random.Next(data.MinLevel,data.MaxLevel),actor);
 
+            actor.Attributes.Health = actor.Anatomy;
+            actor.Attributes.HandToHand = GameState.Random.Next(data.MinLevel, data.MaxLevel);
+            actor.Attributes.Evasion = GameState.Random.Next(data.MinLevel, data.MaxLevel);
+
             actor.EnemyData = new EnemyData();
             actor.EnemyData.EnemyLineOfSight = data.LineOfSight;
             actor.EnemyData.Intelligent = false;
             actor.EnemyData.Profession = ActorProfession.WARRIOR;
+            actor.EnemyData.EnemyName = data.Name;
 
             actor.Gender = Gender.U;
             actor.Inventory = new ActorInventory();
@@ -50,7 +55,7 @@ namespace DivineRightGame.ActorHandling
                 meat.ArmourRating = 0;
                 meat.BaseValue = 50;
                 meat.Category = InventoryCategory.SUPPLY;
-                meat.Description = "some meat";
+                meat.Description = "Some meat";
                 meat.EffectPower = 1;
                 meat.Effects = ConsumableEffect.FEED;
                 meat.Graphic = SpriteManager.GetSprite(LocalSpriteName.STEAK);

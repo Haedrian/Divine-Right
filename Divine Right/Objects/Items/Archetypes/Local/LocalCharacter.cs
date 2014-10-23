@@ -117,8 +117,8 @@ namespace DRObjects.Items.Archetypes.Local
 
             actions.AddRange(base.GetPossibleActions(actor));
 
-            //Are we next to the target? Is the actor aggressive
-            if (this.Coordinate - actor.MapCharacter.Coordinate < 2 && this.Actor.IsAggressive)
+            //Are we next to the target? Is the actor aggressive, or an animal?
+            if (this.Coordinate - actor.MapCharacter.Coordinate < 2 && (this.Actor.IsAggressive || this.Actor.IsAnimal))
             {
                 //Add the attack one too
                 actions.Add(ActionType.PREPARE_ATTACK);

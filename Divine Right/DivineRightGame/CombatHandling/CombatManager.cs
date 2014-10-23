@@ -240,7 +240,7 @@ namespace DivineRightGame.CombatHandling
 
                 //Calculate the amount of damage we're going to do. Roll 3 dice of a particular kind
 
-                int weaponDamage = random.Next(weaponDiceRolls) + random.Next(weaponDiceRolls) + random.Next(weaponDiceRolls);
+                int weaponDamage = random.Next(weaponDiceRolls+1) + random.Next(weaponDiceRolls+1) + random.Next(weaponDiceRolls+1);
 
                 Console.WriteLine("Damage Roll : " + weaponDamage);
 
