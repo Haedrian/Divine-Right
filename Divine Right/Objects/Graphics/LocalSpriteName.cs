@@ -550,6 +550,12 @@ namespace DRObjects.Graphics
         PANTHER,
         BEAR,
         HIDE,
+        JUNGLE_TILE,
+        JUNGLE_TREE_1,
+        JUNGLE_TREE_2,
+        JUNGLE_TREE_3,
+        CACTUS_1,
+        CACTUS_2,
 
     }
 }

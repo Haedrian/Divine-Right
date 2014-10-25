@@ -240,7 +240,9 @@ namespace Divine_Right.GameScreens
             {
                 MapCoordinate coo = new MapCoordinate();
                 Actor[] arr = null;
-                var gennedMap = CampGenerator.GenerateCamp(15,out coo, out arr);
+                //var gennedMap = CampGenerator.GenerateCamp(15,out coo, out arr);
+
+                var gennedMap = WildernessGenerator.GenerateMap(GlobalBiome.RAINFOREST,3, 0, out arr, out coo);
 
                 GameState.LocalMap = new LocalMap(100, 100, 1, 0);
 
