@@ -22,6 +22,7 @@ namespace DivineRightGame.LocalMapGenerator
 
         private static int TREE_AMOUNT_FOREST = 100;
         private static int TREE_AMOUNT_WOODLAND = 50;
+        private static int ARID_DESERT_TREE_COUNT = 15;
 
         /// <summary>
         /// Generates a light forest wilderness
@@ -36,7 +37,9 @@ namespace DivineRightGame.LocalMapGenerator
 
             Random random = new Random();
 
-            if (biome == GlobalBiome.DENSE_FOREST || biome == GlobalBiome.WOODLAND || biome == GlobalBiome.RAINFOREST)
+            if (biome == GlobalBiome.DENSE_FOREST || biome == GlobalBiome.WOODLAND 
+                || biome == GlobalBiome.RAINFOREST
+                || biome == GlobalBiome.ARID_DESERT)
             {
                 ItemFactory.ItemFactory factory = new ItemFactory.ItemFactory();
 
@@ -50,6 +53,11 @@ namespace DivineRightGame.LocalMapGenerator
                 {
                     factory.CreateItem(Archetype.TILES, "jungle", out tileID);
                 }
+                else if (biome == GlobalBiome.ARID_DESERT)
+                {
+                    factory.CreateItem(Archetype.TILES, "sand", out tileID);
+                }
+
                 //Create a new map which is edge X edge in dimensions and made of grass
                 for (int x = 0; x < MAP_EDGE; x++)
                 {
@@ -62,8 +70,79 @@ namespace DivineRightGame.LocalMapGenerator
                     }
                 }
 
-                //Since this is a forest, let's put in a bunch of trees
-                for (int i = 0; i < (biome == GlobalBiome.DENSE_FOREST || biome == GlobalBiome.RAINFOREST ? TREE_AMOUNT_FOREST : TREE_AMOUNT_WOODLAND); i++)
+                if (biome == GlobalBiome.ARID_DESERT)
+                {
+                    //Let's create a pool of water towards one of the corners.
+                    int randomNumber = random.Next(2);
+
+                    int rXCoord = 0;
+
+                    if (randomNumber == 1)
+                    {
+                        //Lower
+                        rXCoord = random.Next(0, MAP_EDGE / 3);
+                    }
+                    else
+                    {
+                        rXCoord = random.Next(2 * MAP_EDGE / 3, MAP_EDGE);
+                    }
+
+                    randomNumber = random.Next(2);
+
+                    int rYCoord = 0;
+
+                    if (randomNumber == 1)
+                    {
+                        //Lower
+                        rYCoord = random.Next(0, MAP_EDGE / 3);
+                    }
+                    else
+                    {
+                        rYCoord = random.Next(2 * MAP_EDGE / 3, MAP_EDGE);
+                    }
+
+                    //The pool will have a radius of 3
+
+                    MapCoordinate coo = new MapCoordinate(rXCoord, rYCoord, 0, MapType.LOCAL);
+
+                    //Go through the blocks with a radius of 3
+                    var oasisBlocks = map.Cast<MapBlock>().ToArray().Where(b => Math.Abs(b.Tile.Coordinate - coo) <= 3).ToArray();
+
+                    int waterTile = -1;
+
+                    factory.CreateItem(Archetype.TILES, "water", out waterTile);
+
+                    foreach(var block in oasisBlocks)
+                    {
+                        var coord = block.Tile.Coordinate;
+                        block.Tile = factory.CreateItem("tile", waterTile);
+                        block.Tile.Coordinate = coord;
+                    }
+
+                    var aroundOasis = map.Cast<MapBlock>().ToArray().Where(b => Math.Abs(b.Tile.Coordinate - coo) <= 4 && Math.Abs(b.Tile.Coordinate - coo) > 3).ToArray();
+
+                    int dummy;
+
+                    //Put in some trees around the pool
+                    for (int i = 0; i < 3; i++)
+                    {
+                        MapItem tree = factory.CreateItem(Archetype.MUNDANEITEMS, "jungle tree", out dummy);
+
+                        var block =aroundOasis[random.Next(aroundOasis.Length)];
+
+                        if (block.MayContainItems)
+                        {
+                            //Drop it
+                            block.ForcePutItemOnBlock(tree);
+                        }
+                    }
+
+                }
+
+                int treeCount = (biome == GlobalBiome.DENSE_FOREST || biome == GlobalBiome.RAINFOREST ? TREE_AMOUNT_FOREST : TREE_AMOUNT_WOODLAND);
+                treeCount = (biome == GlobalBiome.ARID_DESERT ? ARID_DESERT_TREE_COUNT : treeCount);
+
+                for (int i = 0; i < treeCount; i++)
                 {
                     int treeID = 0;
                     MapItem item = null;
@@ -75,6 +154,10 @@ namespace DivineRightGame.LocalMapGenerator
                     else if (biome == GlobalBiome.RAINFOREST)
                     {
                         item = factory.CreateItem(Archetype.MUNDANEITEMS, "jungle tree", out treeID);
+                    }
+                    else if (biome == GlobalBiome.ARID_DESERT)
+                    {
+                        item = factory.CreateItem(Archetype.MUNDANEITEMS, "cactus", out treeID);
                     }
 
                     //try 50 times to put it somewhere

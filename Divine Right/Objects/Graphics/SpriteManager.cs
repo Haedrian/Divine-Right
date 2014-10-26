@@ -147,6 +147,7 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.LAVA_TILE] = new SpriteData(TILES, new Rectangle(200, 50, 50, 50));
             localSprites[(int)LocalSpriteName.WATER_TILE] = new SpriteData(TILES, new Rectangle(250, 50, 50, 50));
             localSprites[(int)LocalSpriteName.JUNGLE_TILE] = new SpriteData(TILES, new Rectangle(300, 50, 50, 50));
+            localSprites[(int)LocalSpriteName.SAND] = new SpriteData(TILES, new Rectangle(350, 50, 50, 50));
             localSprites[(int)LocalSpriteName.NONE] = new SpriteData(TILES, new Rectangle(450, 450, 1, 1));
 
             localSprites[(int)LocalSpriteName.PLAYERCHAR_MALE] = new SpriteData(@"Graphics/Local/Player");

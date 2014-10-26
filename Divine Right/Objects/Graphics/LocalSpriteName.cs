@@ -556,6 +556,7 @@ namespace DRObjects.Graphics
         JUNGLE_TREE_3,
         CACTUS_1,
         CACTUS_2,
+        SAND,
 
     }
 }
