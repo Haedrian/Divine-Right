@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework;
 
 namespace DRObjects.Items.Archetypes.Local
 {
+    [Serializable]
     /// <summary>
     /// An item that can be consumed.
     /// A consumed item is a special kind of inventory item which may be consumed to provide some benefit

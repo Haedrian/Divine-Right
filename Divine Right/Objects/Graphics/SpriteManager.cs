@@ -151,6 +151,7 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.SNOW] = new SpriteData(TILES, new Rectangle(400, 50, 50, 50));
             localSprites[(int)LocalSpriteName.SNOW_2] = new SpriteData(TILES, new Rectangle(450, 50, 50, 50));
             localSprites[(int)LocalSpriteName.SWAMP] = new SpriteData(TILES, new Rectangle(0, 100, 50, 50));
+            localSprites[(int)LocalSpriteName.GARRIGUE] = new SpriteData(TILES, new Rectangle(100, 100, 50, 50));
 
             localSprites[(int)LocalSpriteName.NONE] = new SpriteData(TILES, new Rectangle(450, 450, 1, 1));
 
@@ -439,6 +440,11 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.SNOW_TREE_1] = new SpriteData(FORESTS_AND_MINES, new Rectangle(300, 50, 50, 50));
             localSprites[(int)LocalSpriteName.SNOW_TREE_2] = new SpriteData(FORESTS_AND_MINES, new Rectangle(350, 50, 50, 50));
             localSprites[(int)LocalSpriteName.SNOW_TREE_3] = new SpriteData(FORESTS_AND_MINES, new Rectangle(400, 50, 50, 50));
+
+            localSprites[(int)LocalSpriteName.SHRUB_1] = new SpriteData(FORESTS_AND_MINES, new Rectangle(450, 50, 50, 50));
+            localSprites[(int)LocalSpriteName.SHRUB_2] = new SpriteData(FORESTS_AND_MINES, new Rectangle(0, 100, 50, 50));
+            localSprites[(int)LocalSpriteName.TREE_8] = new SpriteData(FORESTS_AND_MINES, new Rectangle(50, 100, 50, 50));
+            localSprites[(int)LocalSpriteName.TREE_9] = new SpriteData(FORESTS_AND_MINES, new Rectangle(100, 100, 50, 50));
 
             localSprites[(int)LocalSpriteName.FLOWER_1] = new SpriteData(OUTDOORS, new Rectangle(0, 0, 50, 50));
             localSprites[(int)LocalSpriteName.FLOWER_2] = new SpriteData(OUTDOORS, new Rectangle(50, 0, 50, 50));

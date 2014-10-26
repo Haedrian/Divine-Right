@@ -566,6 +566,11 @@ namespace DRObjects.Graphics
         SNOW_TREE_1,
         SNOW_2,
         SWAMP,
+        GARRIGUE,
+        SHRUB_1,
+        SHRUB_2,
+        TREE_8,
+        TREE_9,
 
     }
 }

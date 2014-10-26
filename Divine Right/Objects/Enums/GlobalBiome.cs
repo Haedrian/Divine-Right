@@ -5,6 +5,7 @@ using System.Text;
 
 namespace DRObjects.Enums
 {
+    [Serializable]
     /// <summary>
     /// Describes the biome of the current tile
     /// </summary>

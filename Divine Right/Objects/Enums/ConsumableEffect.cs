@@ -5,6 +5,7 @@ using System.Text;
 
 namespace DRObjects.Enums
 {
+    [Serializable]
     /// <summary>
     /// The effects a particular item has when it is consumed
     /// </summary>

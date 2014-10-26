@@ -7,6 +7,7 @@ using DivineRightGame.LocalMapGenerator.Objects;
 using DRObjects;
 using DRObjects.ActorHandling.ActorMissions;
 using DRObjects.Enums;
+using DRObjects.Items.Archetypes.Local;
 using Microsoft.Xna.Framework;
 
 namespace DivineRightGame.LocalMapGenerator
@@ -36,6 +37,7 @@ namespace DivineRightGame.LocalMapGenerator
             details.Add(GlobalBiome.POLAR_DESERT, new WildernessGenerationData() { BaseTileTag = "snow", TreeCount = ARID_DESERT_TREE_COUNT, TreeTag = "dead tree" });
             details.Add(GlobalBiome.POLAR_FOREST, new WildernessGenerationData() { BaseTileTag = "snow", TreeCount = TREE_AMOUNT_WOODLAND, TreeTag = "snow tree" });
             details.Add(GlobalBiome.WETLAND, new WildernessGenerationData() { BaseTileTag = "swamp", TreeCount = TREE_AMOUNT_WOODLAND, TreeTag = "jungle tree" });
+            details.Add(GlobalBiome.GARIGUE, new WildernessGenerationData() { BaseTileTag = "rocky", TreeCount = ARID_DESERT_TREE_COUNT, TreeTag = "shrub" });
         }
 
         /// <summary>
@@ -68,6 +70,62 @@ namespace DivineRightGame.LocalMapGenerator
                     block.Tile.Coordinate = new MapCoordinate(x, y, 0, MapType.LOCAL);
                 }
             }
+
+            #region Leave Town Item
+
+            //Now select all the border tiles and put in a "Exit here" border
+            for (int x = 0; x < map.GetLength(0); x++)
+            {
+                MapCoordinate coo = new MapCoordinate(x, 0, 0, MapType.LOCAL);
+
+                LeaveTownItem lti = new LeaveTownItem();
+                lti.Coordinate = coo;
+                lti.Description = "continue on your journey";
+                lti.Name = "Leave Area";
+
+                lti.Coordinate = coo;
+
+                map[x, 0].ForcePutItemOnBlock(lti);
+
+                coo = new MapCoordinate(x, map.GetLength(1) - 1, 0, MapType.LOCAL);
+
+                lti = new LeaveTownItem();
+                lti.Coordinate = coo;
+                lti.Description = "continue on your journey";
+                lti.Name = "Leave Area";
+
+                lti.Coordinate = coo;
+
+                map[x, map.GetLength(1) - 1].ForcePutItemOnBlock(lti);
+
+            }
+
+            for (int y = 0; y < map.GetLength(1); y++)
+            {
+                MapCoordinate coo = new MapCoordinate(0, y, 0, MapType.LOCAL);
+
+                LeaveTownItem lti = new LeaveTownItem();
+                lti.Coordinate = coo;
+                lti.Description = "continue on your journey";
+                lti.Name = "Leave Area";
+
+                lti.Coordinate = coo;
+
+                map[0, y].ForcePutItemOnBlock(lti);
+
+                coo = new MapCoordinate(map.GetLength(0) - 1, y, 0, MapType.LOCAL);
+
+                lti = new LeaveTownItem();
+                lti.Coordinate = coo;
+                lti.Description = "continue on your journey";
+                lti.Name = "Leave Area";
+
+                lti.Coordinate = coo;
+
+                map[map.GetLength(0) - 1, y].ForcePutItemOnBlock(lti);
+            }
+
+            #endregion
 
             #region Desert Oasis
             if (biome == GlobalBiome.ARID_DESERT)
