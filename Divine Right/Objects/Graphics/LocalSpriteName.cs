@@ -565,6 +565,7 @@ namespace DRObjects.Graphics
         SNOW_TREE_2,
         SNOW_TREE_1,
         SNOW_2,
+        SWAMP,
 
     }
 }

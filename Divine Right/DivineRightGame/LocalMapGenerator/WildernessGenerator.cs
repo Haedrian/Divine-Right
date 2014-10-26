@@ -35,6 +35,7 @@ namespace DivineRightGame.LocalMapGenerator
             details.Add(GlobalBiome.RAINFOREST, new WildernessGenerationData() { BaseTileTag = "jungle", TreeCount = TREE_AMOUNT_FOREST, TreeTag = "jungle tree" });
             details.Add(GlobalBiome.POLAR_DESERT, new WildernessGenerationData() { BaseTileTag = "snow", TreeCount = ARID_DESERT_TREE_COUNT, TreeTag = "dead tree" });
             details.Add(GlobalBiome.POLAR_FOREST, new WildernessGenerationData() { BaseTileTag = "snow", TreeCount = TREE_AMOUNT_WOODLAND, TreeTag = "snow tree" });
+            details.Add(GlobalBiome.WETLAND, new WildernessGenerationData() { BaseTileTag = "swamp", TreeCount = TREE_AMOUNT_WOODLAND, TreeTag = "jungle tree" });
         }
 
         /// <summary>
@@ -148,6 +149,41 @@ namespace DivineRightGame.LocalMapGenerator
                 }
 
             }
+            #endregion
+
+            #region Wetland Splotches
+
+            if (biome == GlobalBiome.WETLAND)
+            {
+                int waterTile = -1;
+
+                factory.CreateItem(Archetype.TILES, "water", out waterTile);
+
+                for (int i=0; i < 7; i++)
+                {
+                    MapBlock rBlock = map[random.Next(map.GetLength(0)), random.Next(map.GetLength(1))];
+
+                    Rectangle safeRect = new Rectangle( MAP_EDGE/2 - 5,MAP_EDGE/2 -5,10,10); 
+
+                    if (safeRect.Contains(rBlock.Tile.Coordinate.X,rBlock.Tile.Coordinate.Y))
+                    {
+                        continue; //Not here!
+                    }
+
+                    int size = random.Next(1, 3);
+
+                    //Get all the tiles around the block for a particular size
+                    var pool = map.Cast<MapBlock>().ToArray().Where(b => Math.Abs(b.Tile.Coordinate - rBlock.Tile.Coordinate) <= size).ToArray();
+
+                    foreach(var block in pool)
+                    {
+                        MapCoordinate coo = block.Tile.Coordinate;
+                        block.Tile = factory.CreateItem("tiles", waterTile);
+                        block.Tile.Coordinate = coo;
+                    }
+                }
+            }
+
             #endregion
 
             for (int i = 0; i < details[biome].TreeCount; i++)

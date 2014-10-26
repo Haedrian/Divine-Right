@@ -150,6 +150,7 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.SAND] = new SpriteData(TILES, new Rectangle(350, 50, 50, 50));
             localSprites[(int)LocalSpriteName.SNOW] = new SpriteData(TILES, new Rectangle(400, 50, 50, 50));
             localSprites[(int)LocalSpriteName.SNOW_2] = new SpriteData(TILES, new Rectangle(450, 50, 50, 50));
+            localSprites[(int)LocalSpriteName.SWAMP] = new SpriteData(TILES, new Rectangle(0, 100, 50, 50));
 
             localSprites[(int)LocalSpriteName.NONE] = new SpriteData(TILES, new Rectangle(450, 450, 1, 1));
 
