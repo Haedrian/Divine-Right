@@ -86,7 +86,7 @@ namespace DRObjects
             int dy = c1.Y - c2.Y;
             int dz = c1.Z - c2.Z;
 
-            int distance = (int)Math.Round(Math.Sqrt(Math.Pow(dx, 2) + Math.Pow(dy, 2) + Math.Pow(dx, 2)));
+            int distance = (int)Math.Round(Math.Sqrt(Math.Pow(dx, 2) + Math.Pow(dy, 2) + Math.Pow(dz, 2)));
 
             return distance;
 
