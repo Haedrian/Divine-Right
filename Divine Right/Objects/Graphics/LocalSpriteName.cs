@@ -557,6 +557,14 @@ namespace DRObjects.Graphics
         CACTUS_1,
         CACTUS_2,
         SAND,
+        SNOW,
+        DEAD_TREE_2,
+        DEAD_TREE_3,
+        SNOW_BUSH,
+        SNOW_TREE_3,
+        SNOW_TREE_2,
+        SNOW_TREE_1,
+        SNOW_2,
 
     }
 }

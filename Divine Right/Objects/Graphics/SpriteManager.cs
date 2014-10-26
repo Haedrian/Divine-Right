@@ -148,6 +148,9 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.WATER_TILE] = new SpriteData(TILES, new Rectangle(250, 50, 50, 50));
             localSprites[(int)LocalSpriteName.JUNGLE_TILE] = new SpriteData(TILES, new Rectangle(300, 50, 50, 50));
             localSprites[(int)LocalSpriteName.SAND] = new SpriteData(TILES, new Rectangle(350, 50, 50, 50));
+            localSprites[(int)LocalSpriteName.SNOW] = new SpriteData(TILES, new Rectangle(400, 50, 50, 50));
+            localSprites[(int)LocalSpriteName.SNOW_2] = new SpriteData(TILES, new Rectangle(450, 50, 50, 50));
+
             localSprites[(int)LocalSpriteName.NONE] = new SpriteData(TILES, new Rectangle(450, 450, 1, 1));
 
             localSprites[(int)LocalSpriteName.PLAYERCHAR_MALE] = new SpriteData(@"Graphics/Local/Player");
@@ -427,6 +430,14 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.JUNGLE_TREE_3] = new SpriteData(FORESTS_AND_MINES, new Rectangle(0, 50, 50, 50));
             localSprites[(int)LocalSpriteName.CACTUS_1] = new SpriteData(FORESTS_AND_MINES, new Rectangle(50, 50, 50, 50));
             localSprites[(int)LocalSpriteName.CACTUS_2] = new SpriteData(FORESTS_AND_MINES, new Rectangle(100, 50, 50, 50));
+            
+            localSprites[(int)LocalSpriteName.DEAD_TREE_2] = new SpriteData(FORESTS_AND_MINES, new Rectangle(150, 50, 50, 50));
+            localSprites[(int)LocalSpriteName.DEAD_TREE_3] = new SpriteData(FORESTS_AND_MINES, new Rectangle(200, 50, 50, 50));
+
+            localSprites[(int)LocalSpriteName.SNOW_BUSH] = new SpriteData(FORESTS_AND_MINES, new Rectangle(250, 50, 50, 50));
+            localSprites[(int)LocalSpriteName.SNOW_TREE_1] = new SpriteData(FORESTS_AND_MINES, new Rectangle(300, 50, 50, 50));
+            localSprites[(int)LocalSpriteName.SNOW_TREE_2] = new SpriteData(FORESTS_AND_MINES, new Rectangle(350, 50, 50, 50));
+            localSprites[(int)LocalSpriteName.SNOW_TREE_3] = new SpriteData(FORESTS_AND_MINES, new Rectangle(400, 50, 50, 50));
 
             localSprites[(int)LocalSpriteName.FLOWER_1] = new SpriteData(OUTDOORS, new Rectangle(0, 0, 50, 50));
             localSprites[(int)LocalSpriteName.FLOWER_2] = new SpriteData(OUTDOORS, new Rectangle(50, 0, 50, 50));
