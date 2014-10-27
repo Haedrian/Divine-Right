@@ -40,6 +40,11 @@ namespace DRObjects
         public bool IsAlive { get; set; }
 
         /// <summary>
+        /// The method that this character is using to travel
+        /// </summary>
+        public TravelMethod TravelMethod { get; set; }
+
+        /// <summary>
         /// Which map item this Actor represents
         /// </summary> 
         public MapItem MapCharacter { get; set; }
@@ -154,6 +159,7 @@ namespace DRObjects
             this.Attributes = new SkillsAndAttributes();
             this.Attributes.Actor = this;
             this.UnarmedDamageDice = 1;
+            this.TravelMethod = Enums.TravelMethod.WALKING;
         }
 
     }

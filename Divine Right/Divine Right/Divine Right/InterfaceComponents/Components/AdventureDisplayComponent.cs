@@ -8,13 +8,15 @@ using DRObjects.Graphics;
 using Divine_Right.HelperFunctions;
 using DivineRightGame;
 using DRObjects.DataStructures.Enum;
+using DRObjects.Enums;
 
 namespace Divine_Right.InterfaceComponents.Components
 {
     /// <summary>
     /// Displays the date. And time.
+    /// And the way the character is walking
     /// </summary>
-    public class TimeDisplayComponent:
+    public class AdventureDisplayComponent:
      IGameInterfaceComponent
     {
         protected int locationX;
@@ -29,7 +31,11 @@ namespace Divine_Right.InterfaceComponents.Components
 
         private Rectangle[] timePositionRects;
 
-        public TimeDisplayComponent(int x, int y)
+        private Rectangle sneakRect;
+        private Rectangle walkRect;
+        private Rectangle huntRect;
+
+        public AdventureDisplayComponent(int x, int y)
         {
             locationX = x;
             locationY = y;
@@ -39,6 +45,11 @@ namespace Divine_Right.InterfaceComponents.Components
 
         public void Draw(Microsoft.Xna.Framework.Content.ContentManager content, Microsoft.Xna.Framework.Graphics.SpriteBatch batch)
         {
+            if (!GameState.LocalMap.IsGlobalMap)
+            {
+                return;
+            }
+
             var white = SpriteManager.GetSprite(ColourSpriteName.WHITE);
 
             batch.Draw(content, white, borderRect, Color.DarkGray);
@@ -70,6 +81,10 @@ namespace Divine_Right.InterfaceComponents.Components
                 batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.SUN), timePositionRects[GameState.UniverseTime.GetTimeComponent(DRTimeComponent.HOUR)], Color.White);
             }
 
+            batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.SNEAK), sneakRect, GameState.PlayerCharacter.TravelMethod == TravelMethod.SNEAKING ? Color.Green : Color.Black);
+            batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.WALK), walkRect, GameState.PlayerCharacter.TravelMethod == TravelMethod.WALKING ? Color.Green : Color.Black);
+            batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.HUNT), huntRect, GameState.PlayerCharacter.TravelMethod == TravelMethod.HUNTING ? Color.Green : Color.Black);
+
         }
 
         public bool HandleClick(int x, int y, Objects.Enums.MouseActionEnum mouseAction, out DRObjects.Enums.ActionType? actionType, out DRObjects.Enums.InternalActionEnum? internalActionType, out object[] args, out DRObjects.MapItem item, out DRObjects.MapCoordinate coord, out bool destroy)
@@ -80,6 +95,21 @@ namespace Divine_Right.InterfaceComponents.Components
             item = null;
             coord = null;
             destroy = false;
+
+            if (sneakRect.Contains(x,y))
+            {
+                //Sneak!
+                GameState.PlayerCharacter.TravelMethod = TravelMethod.SNEAKING;
+            }
+            else if (walkRect.Contains(x,y))
+            {
+                GameState.PlayerCharacter.TravelMethod = TravelMethod.WALKING;
+            }
+            else if (huntRect.Contains(x,y))
+            {
+                GameState.PlayerCharacter.TravelMethod = TravelMethod.HUNTING;
+            }
+
             return true; 
         }
 
@@ -107,8 +137,8 @@ namespace Divine_Right.InterfaceComponents.Components
             this.locationX += deltaX;
             this.locationY += deltaY;
 
-            this.borderRect = new Rectangle(locationX - 2, locationY - 2, 154, 74);
-            this.drawRect = new Rectangle(locationX, locationY, 150, 70);
+            this.borderRect = new Rectangle(locationX - 2, locationY - 2, 154, 124);
+            this.drawRect = new Rectangle(locationX, locationY, 150, 120);
             this.dateRect = new Rectangle(locationX, locationY+40, 150, 30);
             this.timeRect = new Rectangle(locationX, locationY, 150, 40);
 
@@ -120,6 +150,10 @@ namespace Divine_Right.InterfaceComponents.Components
                 new Rectangle(locationX + 90,locationY + 10, 20,20),
                 new Rectangle(locationX + 120,locationY + 20,20,20)
             };
+
+            this.sneakRect = new Rectangle(locationX, locationY + 70, 50, 50);
+            this.walkRect = new Rectangle(locationX + 50, locationY + 70, 50, 50);
+            this.huntRect = new Rectangle(locationX + 100, locationY + 70, 50, 50);
         }
 
         public bool IsModal()

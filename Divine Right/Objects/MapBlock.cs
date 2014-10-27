@@ -235,7 +235,7 @@ namespace DRObjects
                     if (actor.IsPlayerCharacter && this.Tile.GetType() == typeof(GlobalTile))
                     {
                         //Make some time pass
-                        return new ActionFeedback[1] { new TimePassFeedback() { TimePassInMinutes = (this.Tile as GlobalTile).TraverseTimeInMinutes } };
+                        return new ActionFeedback[1] { new TimePassFeedback() { TimePassInMinutes = (this.Tile as GlobalTile).TraverseTimeInMinutes(actor) } };
                     }
 
                     return new ActionFeedback[0];

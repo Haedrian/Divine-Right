@@ -69,6 +69,11 @@ namespace DivineRightGame
         /// </summary>
         public BanditCamp Camp { get; set; }
 
+        /// <summary>
+        /// Whether the character is currently on the global map or not
+        /// </summary>
+        public bool IsGlobalMap { get; set; }
+
         #endregion
 
         #region Constructors
@@ -162,19 +167,6 @@ namespace DivineRightGame
         }
 
         /// <summary>
-        /// Loads a local map and clears actors
-        /// </summary>
-        /// <param name="map"></param>x`
-        public void LoadLocalMap(MapBlock[, ,] map, int groundLevel)
-        {
-            this.localGameMap = map;
-            this.groundLevel = groundLevel;
-            this.actors = new List<Actor>(); //clear actors
-
-            GeneratePathfindingMap(); //Generate the pathfinding map again
-        }
-
-        /// <summary>
         /// Generates the map required for pathfinding, and assign it to the Interface
         /// </summary>
         public void GeneratePathfindingMap()
@@ -202,24 +194,6 @@ namespace DivineRightGame
             }
 
             PathfinderInterface.Nodes = PathfindingMap;
-        }
-
-        /// <summary>
-        /// Updates the pathfinding map for that particular coordinate. and for the 9 tiles around it
-        /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        public void UpdatePathfindingMap(int x, int y)
-        {
-            PathfindingMap[x, y] = localGameMap[x, y, 0].MayContainItems ? (byte)1 : Byte.MaxValue;
-
-            for (int xLoop = -1; xLoop >= 0 && xLoop < localGameMap.GetLength(0) && xLoop < 2; xLoop++)
-            {
-                for (int yLoop = -1; yLoop >= 0 && yLoop < localGameMap.GetLength(1) && yLoop < 2; yLoop++)
-                {
-                    PathfindingMap[x + xLoop, y + yLoop] = localGameMap[x + xLoop, y + yLoop, 0].MayContainItems ? (byte)1 : Byte.MaxValue;
-                }
-            }
         }
 
         /// <summary>
@@ -272,6 +246,10 @@ namespace DivineRightGame
             else if (this.Dungeon != null)
             {
                 uniqueGuid = this.Dungeon.UniqueGUID;
+            }
+            else if (this.Camp != null)
+            {
+                uniqueGuid = this.Camp.UniqueGUID;
             }
 
             IFormatter formatter = new BinaryFormatter();

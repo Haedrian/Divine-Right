@@ -122,6 +122,7 @@
     <Compile Include="Enums\MapType.cs" />
     <Compile Include="Enums\PointOfInterestType.cs" />
     <Compile Include="Enums\SettlementType.cs" />
+    <Compile Include="Enums\TravelMethod.cs" />
     <Compile Include="Enums\VendorType.cs" />
     <Compile Include="EventHandling\Event.cs" />
     <Compile Include="EventHandling\EventChoice.cs" />

@@ -174,6 +174,8 @@ namespace Divine_Right.GameScreens
 
                 interfaceComponents.Add(mdc);
 
+                GameState.LocalMap.IsGlobalMap = false;
+
             }
             else if (parameters[0].ToString().Equals("Continue"))
             {
@@ -235,6 +237,8 @@ namespace Divine_Right.GameScreens
 
                 interfaceComponents.Add(mdc);
 
+                GameState.LocalMap.IsGlobalMap = true;
+
             }
             else if (parameters[0].ToString().Equals("Camp"))
             {
@@ -280,6 +284,9 @@ namespace Divine_Right.GameScreens
 
                 GameState.LocalMap.Actors.Add(GameState.PlayerCharacter);
                 // GameState.LocalMap.Actors.AddRange(actors
+
+                GameState.LocalMap.IsGlobalMap = false;
+
             }
             else
             {
@@ -305,7 +312,7 @@ namespace Divine_Right.GameScreens
 
             log = tlc;
 
-            TimeDisplayComponent tdc = new TimeDisplayComponent(GraphicsDevice.Viewport.Width / 2 - 100, 0);
+            AdventureDisplayComponent tdc = new AdventureDisplayComponent(GraphicsDevice.Viewport.Width / 2 - 100, 0);
             interfaceComponents.Add(tdc);
 
             var cemetry = SpriteManager.GetSprite(InterfaceSpriteName.DEAD);
@@ -1112,14 +1119,18 @@ namespace Divine_Right.GameScreens
                         interfaceComponents.Add(ldc);
                         menuButtons.Add(new AutoSizeGameButton(" Settlement ", this.game.Content, InternalActionEnum.TOGGLE_SETTLEMENT, new object[] { }, 270, GraphicsDevice.Viewport.Height - 35));
                         Window_ClientSizeChanged(null, null); //button is in the wrong position for some reason
+
+                        GameState.LocalMap.IsGlobalMap = false;
                     }
                     else if (lce.VisitDungeon != null)
                     {
                         LoadDungeon(lce.VisitDungeon);
+                        GameState.LocalMap.IsGlobalMap = false;
                     }
                     else if (lce.VisitCamp != null)
                     {
                         LoadCamp(lce.VisitCamp);
+                        GameState.LocalMap.IsGlobalMap = false;
                     }
                     else if (lce.VisitMainMap)
                     {
@@ -1141,6 +1152,7 @@ namespace Divine_Right.GameScreens
                             LoadGlobalMap(GameState.LocalMap.Settlement.Coordinate);
                         }
 
+                        GameState.LocalMap.IsGlobalMap = true;
 
                     }
                 }

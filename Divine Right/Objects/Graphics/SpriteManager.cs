@@ -741,6 +741,11 @@ namespace DRObjects.Graphics
             interfaceSprites[(int)InterfaceSpriteName.BLEEDING] = new SpriteData(CHARACTER_SHEET, new Rectangle(100, 50, 50, 50));
             interfaceSprites[(int)InterfaceSpriteName.CLOSE] = new SpriteData(CHARACTER_SHEET, new Rectangle(150, 50, 50, 50));
 
+            interfaceSprites[(int)InterfaceSpriteName.SNEAK] = new SpriteData(CHARACTER_SHEET, new Rectangle(250, 50, 50, 50));
+            interfaceSprites[(int)InterfaceSpriteName.WALK] = new SpriteData(CHARACTER_SHEET, new Rectangle(300, 50, 50, 50));
+            interfaceSprites[(int)InterfaceSpriteName.HUNT] = new SpriteData(CHARACTER_SHEET, new Rectangle(350, 50, 50, 50));
+
+
             interfaceSprites[(int)InterfaceSpriteName.BANNER_GREEN] = new SpriteData(BANNERS, new Rectangle(1, 0, 60, 100));
             interfaceSprites[(int)InterfaceSpriteName.BANNER_YELLOW] = new SpriteData(BANNERS, new Rectangle(71, 0, 60, 100));
             interfaceSprites[(int)InterfaceSpriteName.BANNER_RED] = new SpriteData(BANNERS, new Rectangle(141, 0, 60, 100));

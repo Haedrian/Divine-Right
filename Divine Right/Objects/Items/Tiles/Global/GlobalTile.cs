@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DRObjects.ActorHandling.CharacterSheet.Enums;
 using DRObjects.Enums;
 using DRObjects.Graphics;
 
@@ -11,7 +12,7 @@ namespace DRObjects.Items.Tiles.Global
     /// <summary>
     /// This is a special kind of map item tile which can be used for all global tiles.
     /// </summary>
-    public class GlobalTile:
+    public class GlobalTile :
         MapItem
     {
         #region Constants
@@ -109,58 +110,78 @@ namespace DRObjects.Items.Tiles.Global
         #region Properties
 
         /// <summary>
-        /// Returns the total amount of time needed to traverse into this tile
+        /// Returns the total amount of time needed to traverse into this tile.
+        /// Takes into consideration the actor's skill and the way they're travelling
         /// </summary>
-        public int TraverseTimeInMinutes
+        public int TraverseTimeInMinutes(Actor actor)
         {
-            get
+            int totalTime = 0;
+
+            if (this.Elevation > 250)
             {
-                int totalTime = 0;
-
-                if (this.Elevation > 250)
-                {
-                    totalTime += 250;
-                }
-
-                if (!this.Biome.HasValue)
-                {
-                    return 100;
-                }
-
-                //What biome do we have?
-                switch(this.Biome.Value)
-                {
-                    case GlobalBiome.ARID_DESERT:
-                        totalTime += 100;
-                        break;
-                    case GlobalBiome.DENSE_FOREST:
-                        totalTime += 200;
-                        break;
-                    case GlobalBiome.GARIGUE:
-                        totalTime += 75;
-                        break;
-                    case GlobalBiome.GRASSLAND:
-                        totalTime += 50;
-                        break;
-                    case GlobalBiome.POLAR_DESERT:
-                        totalTime += 100;
-                        break;
-                    case GlobalBiome.POLAR_FOREST:
-                        totalTime += 150;
-                        break;
-                    case GlobalBiome.RAINFOREST:
-                        totalTime += 200;
-                        break;
-                    case GlobalBiome.WETLAND:
-                        totalTime += 100;
-                        break;
-                    case GlobalBiome.WOODLAND:
-                        totalTime += 100;
-                        break;
-                }
-
-                return totalTime;
+                totalTime += 250;
             }
+
+            if (!this.Biome.HasValue)
+            {
+                return 100;
+            }
+
+            //What biome do we have?
+            switch (this.Biome.Value)
+            {
+                case GlobalBiome.ARID_DESERT:
+                    totalTime += 100;
+                    break;
+                case GlobalBiome.DENSE_FOREST:
+                    totalTime += 200;
+                    break;
+                case GlobalBiome.GARIGUE:
+                    totalTime += 75;
+                    break;
+                case GlobalBiome.GRASSLAND:
+                    totalTime += 50;
+                    break;
+                case GlobalBiome.POLAR_DESERT:
+                    totalTime += 100;
+                    break;
+                case GlobalBiome.POLAR_FOREST:
+                    totalTime += 150;
+                    break;
+                case GlobalBiome.RAINFOREST:
+                    totalTime += 200;
+                    break;
+                case GlobalBiome.WETLAND:
+                    totalTime += 100;
+                    break;
+                case GlobalBiome.WOODLAND:
+                    totalTime += 100;
+                    break;
+            }
+
+            //Take the skill into consideration
+            double skillEffect = 1;
+            if (actor.Attributes.Skills.ContainsKey(SkillName.EXPLORER))
+            {
+                skillEffect = 20 - actor.Attributes.Skills[SkillName.EXPLORER].SkillLevel;
+
+                skillEffect = 0.5 + ((0.5 / 20) * skillEffect);
+            }
+
+            totalTime = totalTime * (int)skillEffect;
+
+            //Increase skill
+            actor.Attributes.IncreaseSkill(SkillName.EXPLORER);
+
+            //If we're sneaking or hunting, double it
+
+            if (actor.TravelMethod != TravelMethod.WALKING)
+            {
+                totalTime *= 2;
+            }
+
+            return totalTime;
+
         }
 
         public override bool MayContainItems
@@ -252,8 +273,8 @@ namespace DRObjects.Items.Tiles.Global
         public override List<SpriteData> Graphics
         {
             get
-            {        
-               //we need to determine what kind of items we have on the tile
+            {
+                //we need to determine what kind of items we have on the tile
                 List<SpriteData> graphics = new List<SpriteData>();
 
                 //check the elevation and determine which graphic we'll show
@@ -504,7 +525,7 @@ namespace DRObjects.Items.Tiles.Global
                 {
                     return null;
                 }
-                
+
                 switch (Owner.Value)
                 {
                     case 0: return BROWN;

@@ -62,6 +62,9 @@ namespace DRObjects.Graphics
         SUN,
         SELL,
         BUY,
-        BOOK
+        BOOK,
+        HUNT,
+        WALK,
+        SNEAK
     }
 }
