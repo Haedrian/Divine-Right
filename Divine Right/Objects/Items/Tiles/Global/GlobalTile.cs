@@ -168,7 +168,7 @@ namespace DRObjects.Items.Tiles.Global
                 skillEffect = 0.5 + ((0.5 / 20) * skillEffect);
             }
 
-            totalTime = totalTime * (int)skillEffect;
+            totalTime = (int)(totalTime * skillEffect);
 
             //Increase skill
             actor.Attributes.IncreaseSkill(SkillName.EXPLORER);

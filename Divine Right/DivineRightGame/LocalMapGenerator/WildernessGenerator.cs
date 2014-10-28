@@ -32,7 +32,8 @@ namespace DivineRightGame.LocalMapGenerator
         {
             details.Add(GlobalBiome.ARID_DESERT, new WildernessGenerationData() { BaseTileTag="sand",TreeCount=ARID_DESERT_TREE_COUNT,TreeTag="cactus" });
             details.Add(GlobalBiome.DENSE_FOREST, new WildernessGenerationData() { BaseTileTag = "grass", TreeCount = TREE_AMOUNT_FOREST, TreeTag = "tree" });
-            details.Add(GlobalBiome.GRASSLAND, new WildernessGenerationData() { BaseTileTag = "grass", TreeCount = TREE_AMOUNT_WOODLAND, TreeTag = "tree" });
+            details.Add(GlobalBiome.GRASSLAND, new WildernessGenerationData() { BaseTileTag = "grass", TreeCount = ARID_DESERT_TREE_COUNT, TreeTag = "tree" });
+            details.Add(GlobalBiome.WOODLAND, new WildernessGenerationData() { BaseTileTag = "grass", TreeCount = TREE_AMOUNT_WOODLAND, TreeTag = "tree" });
             details.Add(GlobalBiome.RAINFOREST, new WildernessGenerationData() { BaseTileTag = "jungle", TreeCount = TREE_AMOUNT_FOREST, TreeTag = "jungle tree" });
             details.Add(GlobalBiome.POLAR_DESERT, new WildernessGenerationData() { BaseTileTag = "snow", TreeCount = ARID_DESERT_TREE_COUNT, TreeTag = "dead tree" });
             details.Add(GlobalBiome.POLAR_FOREST, new WildernessGenerationData() { BaseTileTag = "snow", TreeCount = TREE_AMOUNT_WOODLAND, TreeTag = "snow tree" });
@@ -41,7 +42,7 @@ namespace DivineRightGame.LocalMapGenerator
         }
 
         /// <summary>
-        /// Generates a light forest wilderness
+        /// Generates a map with a particular biome
         /// </summary>
         /// <param name="herdAmount">The total amount of herds to generate</param>
         /// <param name="BanditAmount">The total amount of bandits to generate.</param>

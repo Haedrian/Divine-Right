@@ -7,6 +7,7 @@ using DRObjects.GraphicsEngineObjects;
 using DRObjects.Enums;
 using DRObjects.Items.Tiles.Global;
 using DRObjects.Graphics;
+using DRObjects.ActorHandling.CharacterSheet.Enums;
 
 namespace DRObjects
 {
@@ -236,15 +237,46 @@ namespace DRObjects
                     {
                         //So, how about a random encounter?
 
-                        //Let's do it in a dumb way for now
+                        Random random = new Random();
 
+                        int randomValue = random.Next(100);
+
+                        //Are we sneaking ?
+
+                        if (actor.TravelMethod == TravelMethod.SNEAKING)
+                        {
+                            if (actor.Attributes.Skills.ContainsKey(SkillName.EXPLORER))
+                            {
+                                //Reduce the random value
+                                randomValue -= (int) actor.Attributes.Skills[SkillName.EXPLORER].SkillLevel;
+                            }
+                        }
+                            //Are we hunting ?
+                        else if (actor.TravelMethod == TravelMethod.HUNTING)
+                        {
+                            if (actor.Attributes.Skills.ContainsKey(SkillName.EXPLORER))
+                            {
+                                //Reduce the random value
+                                randomValue += ((int)actor.Attributes.Skills[SkillName.EXPLORER].SkillLevel) * 3;
+                            }
+                        }
+
+                        List<ActionFeedback> feedback = new List<ActionFeedback>();
+
+                        //20%
+                        if (randomValue > 80)
+                        {
+                            feedback.Add(new LocationChangeFeedback() { RandomEncounter = (this.Tile as GlobalTile).Biome  });
+                        }
 
                         //Change the location of the character
                         actor.GlobalCoordinates = new MapCoordinate(this.Tile.Coordinate);
                         actor.GlobalCoordinates.MapType = MapType.GLOBAL;
 
                         //Make some time pass
-                        return new ActionFeedback[1] { new TimePassFeedback() { TimePassInMinutes = (this.Tile as GlobalTile).TraverseTimeInMinutes(actor) } };
+                        feedback.Add(new TimePassFeedback() { TimePassInMinutes = (this.Tile as GlobalTile).TraverseTimeInMinutes(actor) });
+
+                        return feedback.ToArray();
                     }
 
                     return new ActionFeedback[0];

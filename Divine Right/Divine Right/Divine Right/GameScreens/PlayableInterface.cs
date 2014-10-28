@@ -1142,6 +1142,11 @@ namespace Divine_Right.GameScreens
                         GameState.LocalMap.IsGlobalMap = true;
 
                     }
+                    else if (lce.RandomEncounter != null)
+                    {
+                        //Get the biome
+                        LoadRandomEncounter(lce.RandomEncounter.Value);
+                    }
                 }
                 else if (feedback.GetType().Equals(typeof(DropItemFeedback)))
                 {
@@ -1231,6 +1236,41 @@ namespace Divine_Right.GameScreens
 
             GameState.LocalMap.Actors.Add(GameState.PlayerCharacter);
         }
+
+        /// <summary>
+        /// Loads a Random encounter at a particular biome
+        /// </summary>
+        /// <param name="biome"></param>
+        private void LoadRandomEncounter(GlobalBiome biome)
+        {
+            Actor[] actors = null;
+
+            MapCoordinate startPoint = null;
+            List<PointOfInterest> pointsOfInterest = null;
+
+            var gennedCamp = WildernessGenerator.GenerateMap(biome, 3, 0, out actors, out startPoint);
+
+            GameState.LocalMap = new LocalMap(gennedCamp.GetLength(0), gennedCamp.GetLength(1), 1, 0);
+            GameState.LocalMap.Actors = new List<Actor>();
+
+            List<MapBlock> collapsedMap = new List<MapBlock>();
+
+            foreach (MapBlock block in gennedCamp)
+            {
+                collapsedMap.Add(block);
+            }
+
+            GameState.LocalMap.AddToLocalMap(collapsedMap.ToArray());
+
+            GameState.PlayerCharacter.MapCharacter.Coordinate = startPoint;
+
+            MapBlock playerBlock = GameState.LocalMap.GetBlockAtCoordinate(startPoint);
+            playerBlock.PutItemOnBlock(GameState.PlayerCharacter.MapCharacter);
+            GameState.LocalMap.Actors.AddRange(actors);
+            GameState.LocalMap.Actors.Add(GameState.PlayerCharacter);
+            GameState.LocalMap.PointsOfInterest = pointsOfInterest;
+        }
+
 
         private void LoadCamp(BanditCamp camp)
         {

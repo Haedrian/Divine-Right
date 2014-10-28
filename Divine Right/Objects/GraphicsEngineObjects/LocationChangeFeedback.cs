@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using DRObjects.Items.Archetypes.Global;
 using DRObjects.GraphicsEngineObjects.Abstract;
+using DRObjects.Enums;
 
 namespace DRObjects.GraphicsEngineObjects
 {
@@ -18,12 +19,15 @@ namespace DRObjects.GraphicsEngineObjects
         public Dungeon VisitDungeon { get; set; }
         public BanditCamp VisitCamp { get; set; }
 
+        public GlobalBiome? RandomEncounter { get; set; }
+
         public LocationChangeFeedback()
         {
             VisitSettlement = null;
             VisitMainMap = false;
             VisitDungeon = null;
             VisitCamp = null;
+            RandomEncounter = null;
         }
     }
 }
