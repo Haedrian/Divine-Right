@@ -234,6 +234,15 @@ namespace DRObjects
                     //Are we moving the player character on the world map?
                     if (actor.IsPlayerCharacter && this.Tile.GetType() == typeof(GlobalTile))
                     {
+                        //So, how about a random encounter?
+
+                        //Let's do it in a dumb way for now
+
+
+                        //Change the location of the character
+                        actor.GlobalCoordinates = new MapCoordinate(this.Tile.Coordinate);
+                        actor.GlobalCoordinates.MapType = MapType.GLOBAL;
+
                         //Make some time pass
                         return new ActionFeedback[1] { new TimePassFeedback() { TimePassInMinutes = (this.Tile as GlobalTile).TraverseTimeInMinutes(actor) } };
                     }

@@ -1136,21 +1136,8 @@ namespace Divine_Right.GameScreens
                     {
                         //Serialise the old map
                         GameState.LocalMap.SerialiseLocalMap();
-                        
-                        if (GameState.LocalMap.Camp != null)
-                        {
-                            LoadGlobalMap(GameState.LocalMap.Camp.Coordinate);
-                        }
-                        else if (GameState.LocalMap.Settlement == null)
-                        {
-                            //Dungeon
-                            LoadGlobalMap(GameState.LocalMap.Dungeon.Coordinate);
-                        }
-                        else
-                        {
-                            //Go to the global map
-                            LoadGlobalMap(GameState.LocalMap.Settlement.Coordinate);
-                        }
+
+                        LoadGlobalMap(GameState.PlayerCharacter.GlobalCoordinates);
 
                         GameState.LocalMap.IsGlobalMap = true;
 
