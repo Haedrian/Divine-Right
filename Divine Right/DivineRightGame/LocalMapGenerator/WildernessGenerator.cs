@@ -272,41 +272,44 @@ namespace DivineRightGame.LocalMapGenerator
             List<Actor> actorList = new List<Actor>();
 
             //There, now that's done, lets generate some animals
-            if (herdAmount > 0)
+            if (herdAmount + banditAmount > 0)
             {
                 var herds = ActorGeneration.CreateAnimalHerds(biome, false, herdAmount);
+                var bandits = CampGenerator.CreateBandits(banditAmount);
 
-                //Each herd will be placed in a random 3 radius circle
+                var actorGroups = herds.Union(bandits);
 
-                foreach (var herd in herds)
+                //Each actor group will be placed in a random 3 radius circle
+
+                foreach (var actorGroup in actorGroups)
                 {
                     MapBlock randomBlock = map[random.Next(map.GetLength(0)), random.Next(map.GetLength(1))];
 
                     Rectangle wanderRect = new Rectangle(randomBlock.Tile.Coordinate.X - 2, randomBlock.Tile.Coordinate.Y - 2, 4, 4);
 
-                    //Put the herd animals somewhere around that block
+                    //Put the actor groups somewhere around that block
                     var blocks = map.Cast<MapBlock>().ToArray().Where(b => Math.Abs(b.Tile.Coordinate - randomBlock.Tile.Coordinate) < 4).ToArray();
 
                     //Pick a number of random blocks
 
-                    foreach (var animal in herd)
+                    foreach (var newActor in actorGroup)
                     {
                         int tries = 0;
 
                         while (tries < 50)
                         {
-                            var animalBlock = blocks[random.Next(blocks.Length)];
+                            var actorBlock = blocks[random.Next(blocks.Length)];
 
-                            if (animalBlock.MayContainItems)
+                            if (actorBlock.MayContainItems)
                             {
                                 //Put it there
-                                animal.MapCharacter.Coordinate = animalBlock.Tile.Coordinate;
-                                animalBlock.ForcePutItemOnBlock(animal.MapCharacter);
+                                newActor.MapCharacter.Coordinate = actorBlock.Tile.Coordinate;
+                                actorBlock.ForcePutItemOnBlock(newActor.MapCharacter);
 
                                 //Make them wander
-                                animal.MissionStack.Push(new WanderMission() { LoiterPercentage = 50, WanderPoint = animalBlock.Tile.Coordinate, WanderRectangle = wanderRect });
+                                newActor.MissionStack.Push(new WanderMission() { LoiterPercentage = 50, WanderPoint = actorBlock.Tile.Coordinate, WanderRectangle = wanderRect });
 
-                                actorList.Add(animal);
+                                actorList.Add(newActor);
 
                                 break;
                             }

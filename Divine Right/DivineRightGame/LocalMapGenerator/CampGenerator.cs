@@ -397,6 +397,47 @@ namespace DivineRightGame.LocalMapGenerator
         }
 
         /// <summary>
+        /// Creates a number of bandits groups of 3
+        /// </summary>
+        /// <param name="totalGroups"></param>
+        /// <returns></returns>
+        public static List<List<Actor>> CreateBandits(int totalGroups)
+        {
+            Random random = new Random();
+
+            List<List<Actor>> actors = new List<List<Actor>>();
+
+            ItemFactory.ItemFactory fact = new ItemFactory.ItemFactory();
+
+            for (int i = 0; i < totalGroups; i++)
+            {
+                List<Actor> groupActors = new List<Actor>();
+                for (int j = 0; j < 3; j++)
+                {
+                    int enemyID = 0;
+                    Actor actor = ActorGeneration.CreateActor("human", "bandit easy", true, 10, 10, null, out enemyID, null);
+
+                    groupActors.Add(actor);
+
+                    actor.MapCharacter = fact.CreateItem("ENEMIES", enemyID);
+                    (actor.MapCharacter as LocalCharacter).Actor = actor;
+
+                    //Two easies and a medium
+                    if (j < 2)
+                    {
+                        ActorGeneration.RegenerateBandit(actor, EASY_LEVEL, EASY_MONEY);
+                    }
+                    else
+                    {
+                        ActorGeneration.RegenerateBandit(actor, MEDIUM_LEVEL, MEDIUM_MONEY);
+                    }
+                }
+                actors.Add(groupActors);
+            }
+            return actors;
+        }
+
+        /// <summary>
         /// Creates a number of bandits.
         /// They will be structured
         /// 9:3:1 in difficulty

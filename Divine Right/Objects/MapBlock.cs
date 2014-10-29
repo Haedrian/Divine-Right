@@ -266,6 +266,7 @@ namespace DRObjects
                         //10%
                         if (randomValue > 90)
                         {
+                            //Are we next to a bandit camp ?
                             feedback.Add(new LocationChangeFeedback() { RandomEncounter = (this.Tile as GlobalTile).Biome  });
                         }
 

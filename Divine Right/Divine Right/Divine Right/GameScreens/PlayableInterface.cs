@@ -1248,7 +1248,7 @@ namespace Divine_Right.GameScreens
             MapCoordinate startPoint = null;
             List<PointOfInterest> pointsOfInterest = null;
 
-            var gennedCamp = WildernessGenerator.GenerateMap(biome, 3, 0, out actors, out startPoint);
+            var gennedCamp = WildernessGenerator.GenerateMap(biome, GameState.Random.Next(1,5), GameState.Random.Next(0,2), out actors, out startPoint);
 
             GameState.LocalMap = new LocalMap(gennedCamp.GetLength(0), gennedCamp.GetLength(1), 1, 0);
             GameState.LocalMap.Actors = new List<Actor>();
