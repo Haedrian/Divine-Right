@@ -89,6 +89,8 @@ namespace DRObjects.LocalMapGeneratorObjects
 
         public List<MapletActor> MapletActors { get; set; }
 
+        public List<MapletHerd> MapletHerds { get; set; }
+
         private bool sizeBitAdded = false;
 
         /// <summary>
@@ -108,6 +110,7 @@ namespace DRObjects.LocalMapGeneratorObjects
         {
             this.MapletActors = new List<MapletActor>();
             this.MapletContents = new List<MapletContents>();
+            this.MapletHerds = new List<MapletHerd>();
         }
     }
 }

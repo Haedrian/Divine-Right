@@ -74,6 +74,7 @@ namespace DivineRightGame.LocalMapGenerator
                     case "MapletContentsItemTag": content = new MapletContentsItemTag(); break;
                     case "MapletContentsMaplet": content = new MapletContentsMaplet(); break;
                     case "MapletActor": content = new MapletActor(); break;
+                    case "MapletHerd": content = new MapletHerd(); break;
                 }
 
                 //Get the attributes
@@ -102,6 +103,8 @@ namespace DivineRightGame.LocalMapGenerator
                         case "EnemyMission": ((MapletActor)content).EnemyMission = (ActorMissionType)Enum.Parse(typeof(ActorMissionType), value.ToUpper()); break;
                         case "VendorType": ((MapletActor)content).VendorType = (VendorType)Enum.Parse(typeof(VendorType), value.ToUpper()); break;
                         case "VendorLevel": ((MapletActor)content).VendorLevel = Int32.Parse(value.ToString()); break;
+                        case "BiomeName": ((MapletHerd)content).BiomeName = value.ToString(); break;
+                        case "Domesticated": ((MapletHerd)content).Domesticated = bool.Parse(value); break;
                     }
                 }
 

@@ -655,7 +655,7 @@ namespace DivineRightGame.LocalMapGenerator
 
                         if (actor.VendorType.HasValue)
                         {
-                            GenerateVendor(newActor,actor);    
+                            GenerateVendor(newActor, actor);
                         }
 
                         //Generate the map character
@@ -698,7 +698,62 @@ namespace DivineRightGame.LocalMapGenerator
 
             #endregion
 
+            #region Aniamls
+
+            //Now lets create enemies :)
+            foreach (var mc in maplet.MapletContents.Where(mc => mc.GetType().Equals(typeof(MapletHerd))).OrderByDescending(o => o.ProbabilityPercentage))
+            {
+                var herd = mc as MapletHerd;
+
+                for (int i = 0; i < herd.MaxAmount; i++)
+                {
+                    //Check the random
+                    if (random.Next(100) < herd.ProbabilityPercentage)
+                    {
+                        var herds = ActorGeneration.CreateAnimalHerds(herd.Biome, herd.Domesticated, 1);
+
+                        foreach (var animalHerd in herds)
+                        {
+                            foreach (var animal in animalHerd)
+                            {
+                                //Position them on the map
+                                for (int attempt = 0; attempt < 150; attempt++)
+                                {
+                                    //Try 150 times
+                                    int x = random.Next(maplet.SizeX);
+                                    int y = random.Next(maplet.SizeY);
+
+                                    if (generatedMap[x, y].MayContainItems)
+                                    {
+                                        //Put it there
+                                        animal.MapCharacter.Coordinate = new MapCoordinate(x, y, 0, MapType.LOCAL);
+                                        generatedMap[x, y].ForcePutItemOnBlock(animal.MapCharacter);
+                                        actorList.Add(animal);
+
+                                        //Wander around does he have?
+                                        animal.MissionStack.Push(new WanderMission()
+                                        {
+                                            LoiterPercentage = 80,
+                                            WanderPoint = new MapCoordinate(animal.MapCharacter.Coordinate),
+                                            WanderRectangle = new Rectangle(0, 0, generatedMap.GetLength(0), generatedMap.GetLength(1))
+                                        });
+
+
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+
+
+                    }
+                }
+            }
+
+            #endregion
+
             actors = actorList.ToArray();
+
             //we're done
             return generatedMap;
         }
@@ -708,7 +763,7 @@ namespace DivineRightGame.LocalMapGenerator
         /// </summary>
         /// <param name="newActor"></param>
         /// <param name="actor"></param>
-        public void GenerateVendor(Actor newActor,MapletActor actor)
+        public void GenerateVendor(Actor newActor, MapletActor actor)
         {
             newActor.VendorDetails = new VendorDetails();
             newActor.VendorDetails.VendorType = actor.VendorType.Value;
@@ -785,29 +840,29 @@ namespace DivineRightGame.LocalMapGenerator
             switch (actor.VendorDetails.VendorType)
             {
                 case VendorType.GENERAL:
-                    foreach (InventoryItem inv in iim.GetItemsWithAMaxValue(InventoryCategory.ARMOUR.ToString(), totalMoney/3))
+                    foreach (InventoryItem inv in iim.GetItemsWithAMaxValue(InventoryCategory.ARMOUR.ToString(), totalMoney / 3))
                     {
                         inv.InInventory = true;
                         actor.VendorDetails.Stock.Add(inv.Category, inv);
                     }
-                    foreach (InventoryItem inv in iim.GetItemsWithAMaxValue(InventoryCategory.LOOT.ToString(), totalMoney/3))
+                    foreach (InventoryItem inv in iim.GetItemsWithAMaxValue(InventoryCategory.LOOT.ToString(), totalMoney / 3))
                     {
                         inv.InInventory = true;
                         actor.VendorDetails.Stock.Add(inv.Category, inv);
                     }
-                    foreach (InventoryItem inv in iim.GetItemsWithAMaxValue(InventoryCategory.WEAPON.ToString(), totalMoney/3))
+                    foreach (InventoryItem inv in iim.GetItemsWithAMaxValue(InventoryCategory.WEAPON.ToString(), totalMoney / 3))
                     {
                         inv.InInventory = true;
                         actor.VendorDetails.Stock.Add(inv.Category, inv);
                     }
                     break;
                 case VendorType.SMITH:
-                    foreach (InventoryItem inv in iim.GetItemsWithAMaxValue(InventoryCategory.ARMOUR.ToString(), totalMoney/2))
+                    foreach (InventoryItem inv in iim.GetItemsWithAMaxValue(InventoryCategory.ARMOUR.ToString(), totalMoney / 2))
                     {
                         inv.InInventory = true;
                         actor.VendorDetails.Stock.Add(inv.Category, inv);
                     }
-                    foreach (InventoryItem inv in iim.GetItemsWithAMaxValue(InventoryCategory.WEAPON.ToString(), totalMoney/2))
+                    foreach (InventoryItem inv in iim.GetItemsWithAMaxValue(InventoryCategory.WEAPON.ToString(), totalMoney / 2))
                     {
                         inv.InInventory = true;
                         actor.VendorDetails.Stock.Add(inv.Category, inv);
@@ -832,7 +887,7 @@ namespace DivineRightGame.LocalMapGenerator
         /// <param name="enemyCount"></param>
         /// <param name="enemyType"></param>
         /// <returns></returns>
-        public MapBlock[,] GenerateEnemies(MapBlock[,] blocks, int enemyCount, string enemyType, out DRObjects.Actor[] actors,int level, int equipmentCost=0)
+        public MapBlock[,] GenerateEnemies(MapBlock[,] blocks, int enemyCount, string enemyType, out DRObjects.Actor[] actors, int level, int equipmentCost = 0)
         {
             ItemFactory.ItemFactory fact = new ItemFactory.ItemFactory();
             List<Actor> actorList = new List<Actor>();

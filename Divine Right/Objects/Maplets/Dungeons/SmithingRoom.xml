@@ -1,0 +1,23 @@
+﻿<Maplet MapletName="GuardRoom" SizeX="12" SizeY="12" SizeRange="3" Walled="false" Tiled="true" TileTag="Dungeon">
+  <MapletContents>
+    <MapletContentsMaplet Position="Middle" MaxAmount="2" ProbabilityPercentage="77">
+      <MapletTag Tag="Pit" />
+    </MapletContentsMaplet>
+
+    <MapletContentsMaplet Position="Middle" MaxAmount="2" ProbabilityPercentage="76">
+      <MapletTag Tag="Obstacle" />
+    </MapletContentsMaplet>
+
+    <MapletContentsItemTag Position="Sides" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="85" Tag="furnace"/>
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="5" ProbabilityPercentage="50" Tag="metal"/>
+    <MapletContentsItemTag Position="Sides" Category="mundaneitems" MaxAmount="3" ProbabilityPercentage="100" Tag="container"/>
+
+    MapletContentsItemTag Position="Middle" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="80" Tag="anvil"/>
+
+    <MapletContentsItemTag Position="Middle" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="bucket"/>
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="3" ProbabilityPercentage="75" Tag="smith tool"/>
+
+    <MapletContentsItemTag Position="Sides" Category="mundaneitems" MaxAmount="3" ProbabilityPercentage="100" Tag="weapon decoration"/>
+    
+  </MapletContents>
+</Maplet>

@@ -44,10 +44,10 @@ namespace DivineRightGame.LocalMapGenerator
         /// <param name="percentageOwned">The percentage of the rooms which are owned as opposed to being wild. Bear in mind that wild rooms can spawn quite a bit of enemies</param>
         /// <param name="pointsOfInterest">The points of interest (ie guard and treasure rooms for instance) which have been generated. Used for patrols</param>
         /// <param name="startPoint">The entrance start point</param>
-        /// <param name="trapRooms">The maximum amount of trap rooms to generate</param>
+        /// <param name="utilityRooms">The maximum amount of Utility rooms to generate - these might contain civilian orcs which ignore the maxOwnedPopulation value</param>
         /// <param name="treasureRooms">The maximum amount of teasure rooms to generate</param>
         /// <returns></returns>
-        public MapBlock[,] GenerateDungeon(int tiers, int trapRooms, int guardRooms, int treasureRooms,string ownerType, 
+        public MapBlock[,] GenerateDungeon(int tiers, int utilityRooms, int guardRooms, int treasureRooms,string ownerType, 
             decimal percentageOwned, int maxWildPopulation, int maxOwnedPopulation,
             out MapCoordinate startPoint,out DRObjects.Actor[] enemyArray,out List<PointOfInterest> pointsOfInterest)
         {
@@ -179,14 +179,14 @@ namespace DivineRightGame.LocalMapGenerator
             int lowerBoundary = rooms.Count/3;
             int upperBoundary = 2*rooms.Count/3;
 
-            var orderedTrap = rooms.Where
+            var orderedUtilities = rooms.Where
                 (o => o.DungeonRoomType == DungeonRoomType.EMPTY_ROOM).OrderByDescending(o => random.Next(100) *
                 (o.UniqueID > upperBoundary ? 1 : o.UniqueID > lowerBoundary ? 2 : 3)).Where(r => r.DungeonRoomType == DungeonRoomType.EMPTY_ROOM
-                    ).ToArray().Take(trapRooms);
+                    ).ToArray().Take(utilityRooms);
 
-            foreach (var room in orderedTrap)
+            foreach (var room in orderedUtilities)
             {
-                room.DungeonRoomType = DungeonRoomType.TRAPPED_ROOM;
+                room.DungeonRoomType = DungeonRoomType.UTILITY_ROOM;
             }
 
             //Same thing for treasure rooms
@@ -251,7 +251,7 @@ namespace DivineRightGame.LocalMapGenerator
                 {
                     case DungeonRoomType.EMPTY_ROOM: tag = "Empty Dungeon"; break;
                     case DungeonRoomType.GUARD_ROOM: tag = "Guard Dungeon"; break;
-                    case DungeonRoomType.TRAPPED_ROOM: tag = "Trap Dungeon"; break;
+                    case DungeonRoomType.UTILITY_ROOM: tag = "Utility Dungeon"; break;
                     case DungeonRoomType.TREASURE_ROOM: tag = "Treasure Dungeon"; break;
                     case DungeonRoomType.WILD_ROOM: tag = "Empty Dungeon"; break;
                     default:
@@ -261,9 +261,11 @@ namespace DivineRightGame.LocalMapGenerator
                 //Generate it :)
                 Maplet maplet = xmlGen.ParseMapletFromTag(tag);
 
-                Actor[] dummyAct = null;
+                Actor[] acts = null;
 
-                gennedMap = gen.GenerateMap(25, null, maplet, true,"",out dummyAct);
+                gennedMap = gen.GenerateMap(25, null, maplet, true,"",out acts);
+
+                enemies.AddRange(acts);
 
                 //Is it a treasure room?
                 if (room.DungeonRoomType == DungeonRoomType.TREASURE_ROOM)
@@ -306,6 +308,7 @@ namespace DivineRightGame.LocalMapGenerator
                 }
 
                 DRObjects.Actor[] roomEnemies = new DRObjects.Actor[] { };
+
                 if (room.DungeonRoomType == DungeonRoomType.GUARD_ROOM || room.DungeonRoomType == DungeonRoomType.TREASURE_ROOM)
                 {
                     //Create an amount of enemies - level doesn't matter, we'll regen later
@@ -339,7 +342,7 @@ namespace DivineRightGame.LocalMapGenerator
 
 
                 //Fix the patrol points of any enemies 
-                foreach (Actor enemy in roomEnemies)
+                foreach (Actor enemy in roomEnemies.Union(acts))
                 {
                     if (enemy.MissionStack.Count != 0 && enemy.MissionStack.Peek().MissionType  == DRObjects.ActorHandling.ActorMissionType.WANDER)
                     {
