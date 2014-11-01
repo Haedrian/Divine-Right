@@ -12,7 +12,7 @@
     <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="5" ProbabilityPercentage="50" Tag="metal"/>
     <MapletContentsItemTag Position="Sides" Category="mundaneitems" MaxAmount="3" ProbabilityPercentage="100" Tag="container"/>
 
-    MapletContentsItemTag Position="Middle" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="80" Tag="anvil"/>
+    <MapletContentsItemTag Position="Middle" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="80" Tag="anvil"/>
 
     <MapletContentsItemTag Position="Middle" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="bucket"/>
     <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="3" ProbabilityPercentage="75" Tag="smith tool"/>
