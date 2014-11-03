@@ -4,7 +4,7 @@
     <MapletActor MaxAmount="1" ProbabilityPercentage="100" UseLocalType="true" EnemyTag="priest" EnemyMission="wander"  />
     <MapletContentsItemTag Position="Fixed" x="3" y="2" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="110" Tag="angel statue top"/>
     <MapletContentsItemTag Position="Fixed" x="3" y="1" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="110" Tag="angel statue bottom"/>
-
+ 
     <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="18" ProbabilityPercentage="90" Tag="flower"/>
     
     <MapletContentsMaplet Position="Fixed" x="1" y="1" MaxAmount="1" ProbabilityPercentage="107">
