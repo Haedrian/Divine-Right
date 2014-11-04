@@ -1033,8 +1033,8 @@ namespace DivineRightGame.Managers
                 dungeon.MaxWildPopulation = GameState.Random.Next(4);
                 dungeon.OwnerCreatureType = enemyRace;
                 dungeon.PercentageOwned = GameState.Random.Next(50) + 50;
-                dungeon.TierCount = GameState.Random.Next(4) + 2;
-                dungeon.TrapRooms = 2;
+                dungeon.TierCount = GameState.Random.Next(4) + 3;
+                dungeon.TrapRooms = GameState.Random.Next(5) + 2;
                 dungeon.TreasureRoom = GameState.Random.Next(5);
 
                 //Put an entire group of Dungeon Items on it

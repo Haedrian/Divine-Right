@@ -17,7 +17,7 @@ namespace DivineRightGame.LocalMapGenerator
 {
     public class DungeonGenerator
     {
-        private const int WIDTH = 5;
+        private const int WIDTH = 6;
         //Probability for the game to create 2..3..4 rooms in the same tier
         //private const int PROB_2 = 65;
         //private const int PROB_3 = 55;
@@ -26,6 +26,7 @@ namespace DivineRightGame.LocalMapGenerator
         private const int PROB_2 = 95;
         private const int PROB_3 = 85;
         private const int PROB_4 = 75;
+        private const int PROB_5 = 65;
 
         /// <summary>
         /// How much loot (multiplied per tier) to generate
@@ -102,6 +103,7 @@ namespace DivineRightGame.LocalMapGenerator
                     case 1: treshold = PROB_2; break;
                     case 2: treshold = PROB_3; break;
                     case 3: treshold = PROB_4; break;
+                    case 4: treshold = PROB_5; break;
                     default: treshold = 0; break; //NEVER
                 }
 
