@@ -1,0 +1,6 @@
+﻿<Maplet MapletName="MediumBedroom" SizeX="3" SizeY="3" Tiled="false" Walled="false">
+  <MapletContents>
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="bed"/>
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="3" ProbabilityPercentage="100" Tag="bedroom furniture"/>
+  </MapletContents>
+</Maplet>

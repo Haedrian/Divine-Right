@@ -47,9 +47,9 @@ namespace DivineRightGame.LocalMapGenerator
         /// <param name="utilityRooms">The maximum amount of Utility rooms to generate - these might contain civilian orcs which ignore the maxOwnedPopulation value</param>
         /// <param name="treasureRooms">The maximum amount of teasure rooms to generate</param>
         /// <returns></returns>
-        public MapBlock[,] GenerateDungeon(int tiers, int utilityRooms, int guardRooms, int treasureRooms,string ownerType, 
+        public MapBlock[,] GenerateDungeon(int tiers, int utilityRooms, int guardRooms, int treasureRooms, string ownerType,
             decimal percentageOwned, int maxWildPopulation, int maxOwnedPopulation,
-            out MapCoordinate startPoint,out DRObjects.Actor[] enemyArray,out List<PointOfInterest> pointsOfInterest)
+            out MapCoordinate startPoint, out DRObjects.Actor[] enemyArray, out List<PointOfInterest> pointsOfInterest)
         {
             startPoint = new MapCoordinate(0, 0, 0, MapType.LOCAL);
             pointsOfInterest = new List<PointOfInterest>();
@@ -60,7 +60,7 @@ namespace DivineRightGame.LocalMapGenerator
 
             //Start with the root node
             DungeonRoom root = new DungeonRoom();
-            root.SquareNumber = (int) Math.Ceiling((double)WIDTH / 2);
+            root.SquareNumber = (int)Math.Ceiling((double)WIDTH / 2);
             root.TierNumber = 0;
             root.UniqueID = uniqueID++;
             root.Connections.Add(-1); //this is a special id. We'll use it to create a start point
@@ -97,7 +97,7 @@ namespace DivineRightGame.LocalMapGenerator
                 int siblings = rooms.Where(r => r.TierNumber.Equals(currentTier)).Count();
                 int treshold = 0;
 
-                switch(siblings)
+                switch (siblings)
                 {
                     case 1: treshold = PROB_2; break;
                     case 2: treshold = PROB_3; break;
@@ -176,8 +176,8 @@ namespace DivineRightGame.LocalMapGenerator
             //Other - x2
             //Unfavoured - x1
 
-            int lowerBoundary = rooms.Count/3;
-            int upperBoundary = 2*rooms.Count/3;
+            int lowerBoundary = rooms.Count / 3;
+            int upperBoundary = 2 * rooms.Count / 3;
 
             var orderedUtilities = rooms.Where
                 (o => o.DungeonRoomType == DungeonRoomType.EMPTY_ROOM).OrderByDescending(o => random.Next(100) *
@@ -199,7 +199,7 @@ namespace DivineRightGame.LocalMapGenerator
             {
                 room.DungeonRoomType = DungeonRoomType.TREASURE_ROOM;
             }
-            
+
             //And guard rooms
             var orderedGuard = rooms.Where
                 (o => o.DungeonRoomType == DungeonRoomType.EMPTY_ROOM).OrderByDescending(o => random.Next(100) *
@@ -216,8 +216,8 @@ namespace DivineRightGame.LocalMapGenerator
             //We go for a 15x15 room and connect the items in it.
 
             //15x15 - with a gap of 7 between them for tunnels
-            int mapWidth = ((WIDTH+7) * 20);
-            int mapHeight = ((tiers+7) * 20);
+            int mapWidth = ((WIDTH + 7) * 20);
+            int mapHeight = ((tiers + 7) * 20);
 
 
             //Create new blocks
@@ -231,7 +231,7 @@ namespace DivineRightGame.LocalMapGenerator
                         {
                             Tile = new MapItem()
                             {
-                                Coordinate = new MapCoordinate(x,y,0,DRObjects.Enums.MapType.LOCAL),
+                                Coordinate = new MapCoordinate(x, y, 0, DRObjects.Enums.MapType.LOCAL),
                                 MayContainItems = false
                             }
                         };
@@ -247,7 +247,7 @@ namespace DivineRightGame.LocalMapGenerator
                 MapBlock[,] gennedMap = null;
                 string tag = String.Empty;
 
-                switch(room.DungeonRoomType)
+                switch (room.DungeonRoomType)
                 {
                     case DungeonRoomType.EMPTY_ROOM: tag = "Empty Dungeon"; break;
                     case DungeonRoomType.GUARD_ROOM: tag = "Guard Dungeon"; break;
@@ -263,7 +263,7 @@ namespace DivineRightGame.LocalMapGenerator
 
                 Actor[] acts = null;
 
-                gennedMap = gen.GenerateMap(25, null, maplet, true,"",out acts);
+                gennedMap = gen.GenerateMap(25, null, maplet, true, "", out acts);
 
                 enemies.AddRange(acts);
 
@@ -312,7 +312,7 @@ namespace DivineRightGame.LocalMapGenerator
                 if (room.DungeonRoomType == DungeonRoomType.GUARD_ROOM || room.DungeonRoomType == DungeonRoomType.TREASURE_ROOM)
                 {
                     //Create an amount of enemies - level doesn't matter, we'll regen later
-                    gennedMap = gen.GenerateEnemies(gennedMap, random.Next(maxOwnedPopulation), ownerType,out roomEnemies,10);
+                    gennedMap = gen.GenerateEnemies(gennedMap, random.Next(maxOwnedPopulation), ownerType, out roomEnemies, 10);
 
                     enemies.AddRange(roomEnemies);
                 }
@@ -322,7 +322,7 @@ namespace DivineRightGame.LocalMapGenerator
                     //Create an amount of wild enemies - let's get a random type for this room. This will be of level 5. Later we'll have proper wildlife
                     string type = ActorGeneration.GetEnemyType(false);
 
-                    gennedMap = gen.GenerateEnemies(gennedMap, random.Next(maxWildPopulation), type, out roomEnemies,5);
+                    gennedMap = gen.GenerateEnemies(gennedMap, random.Next(maxWildPopulation), type, out roomEnemies, 5);
 
                     //go through all of room enemies and set them to idle
                     foreach (var enemy in roomEnemies)
@@ -337,14 +337,14 @@ namespace DivineRightGame.LocalMapGenerator
 
                 //fit her onto the main map
 
-                int xIncreaser = room.SquareNumber*20 ;
-                int yIncreaser = (room.TierNumber*20) + 3;
+                int xIncreaser = room.SquareNumber * 20;
+                int yIncreaser = (room.TierNumber * 20) + 3;
 
 
                 //Fix the patrol points of any enemies 
                 foreach (Actor enemy in roomEnemies.Union(acts))
                 {
-                    if (enemy.MissionStack.Count != 0 && enemy.MissionStack.Peek().MissionType  == DRObjects.ActorHandling.ActorMissionType.WANDER)
+                    if (enemy.MissionStack.Count != 0 && enemy.MissionStack.Peek().MissionType == DRObjects.ActorHandling.ActorMissionType.WANDER)
                     {
                         //Change patrol point
                         MapCoordinate point = (enemy.MissionStack.Peek() as WanderMission).WanderPoint;
@@ -370,7 +370,7 @@ namespace DivineRightGame.LocalMapGenerator
                 {
                     for (int y = 0; y < gennedMap.GetLength(1); y++)
                     {
-                        map[x + xIncreaser,y + yIncreaser] = gennedMap[x,y];
+                        map[x + xIncreaser, y + yIncreaser] = gennedMap[x, y];
                         map[x + xIncreaser, y + yIncreaser].Tile.Coordinate = new MapCoordinate(x + xIncreaser, y + yIncreaser, 0, DRObjects.Enums.MapType.LOCAL);
 
                         foreach (var item in map[x + xIncreaser, y + yIncreaser].GetItems())
@@ -381,7 +381,7 @@ namespace DivineRightGame.LocalMapGenerator
                 }
 
                 //Lets draw the connections - only the ones who's rooms we've drawn yet
-                
+
                 ItemFactory.ItemFactory factory = new ItemFactory.ItemFactory();
 
                 foreach (var connection in room.Connections.Where(c => c < room.UniqueID))
@@ -395,19 +395,19 @@ namespace DivineRightGame.LocalMapGenerator
                         int bottomEdgeXMax = gennedMap.GetLength(0) + xIncreaser;
 
                         //Find the start
-                        int xStart = (bottomEdgeXMax - bottomEdgeXMin)/2 + bottomEdgeXMin;
+                        int xStart = (bottomEdgeXMax - bottomEdgeXMin) / 2 + bottomEdgeXMin;
 
                         //Set the start point
-                        startPoint = new MapCoordinate(xStart+1, topEdgeY-2, 0, MapType.LOCAL);
+                        startPoint = new MapCoordinate(xStart + 1, topEdgeY - 2, 0, MapType.LOCAL);
                         //Put the 'leave town' item on it
 
                         map[startPoint.X, startPoint.Y].ForcePutItemOnBlock(new LeaveTownItem());
 
                         int x = xStart;
                         int y = topEdgeY;
-                        
+
                         //go 3 steps down
-                        for(int a = 0; a < 3; a++)
+                        for (int a = 0; a < 3; a++)
                         {
                             for (int x1 = 0; x1 < 3; x1++)
                             {
@@ -432,13 +432,13 @@ namespace DivineRightGame.LocalMapGenerator
                             }
 
                             y++; //move up
-                        }while (x >= 0 && y < map.GetLength(1) && !map[x, y].Tile.MayContainItems);
+                        } while (x >= 0 && y < map.GetLength(1) && !map[x, y].Tile.MayContainItems);
 
                         //Put the spikes at the entrance
                         int dummy = -1;
 
                         map[xStart, topEdgeY - 2].ForcePutItemOnBlock(factory.CreateItem(Archetype.MUNDANEITEMS, "spikes", out dummy));
-                        map[xStart+2, topEdgeY - 2].ForcePutItemOnBlock(factory.CreateItem(Archetype.MUNDANEITEMS, "spikes", out dummy));
+                        map[xStart + 2, topEdgeY - 2].ForcePutItemOnBlock(factory.CreateItem(Archetype.MUNDANEITEMS, "spikes", out dummy));
 
 
                         continue;
@@ -456,33 +456,22 @@ namespace DivineRightGame.LocalMapGenerator
                         int rightEdgeX = gennedMap.GetLength(0) + xIncreaser;
                         int rightEdgeYMin = 0 + yIncreaser;
                         int rightEdgeYMax = gennedMap.GetLength(1) + yIncreaser;
- 
+
                         //Pick a start at random
-                        int yStart = random.Next(rightEdgeYMax - rightEdgeYMin-2) + rightEdgeYMin;
+                        int yStart = random.Next(rightEdgeYMax - rightEdgeYMin - 2) + rightEdgeYMin;
 
                         //Now 'walk' from ystart-ystart+3 until you hit on something which has a block in it
 
                         int x = rightEdgeX;
                         int y = yStart;
 
-                        while ( x < map.GetLength(0) && y < map.GetLength(1) && !map[x, y].Tile.MayContainItems)
+                        while (x < map.GetLength(0) && y < map.GetLength(1) && !map[x, y].Tile.MayContainItems)
                         {
-                            bool holed = false;
                             for (int y1 = 0; y1 < 3; y1++)
                             {
-                                if (!holed)
-                                {
-                                    //Have a chance of putting in a hole
-                                    if (random.Next(8) == 0)
-                                    {
-                                        holed = true;
-                                        continue; //don't put in a tile
-                                    }
-                                }
-
                                 //Draw!
-                                map[x, y + y1].Tile = factory.CreateItem("TILES",25);
-                                map[x,y+y1].Tile.Coordinate = new MapCoordinate(x,y+y1,0,MapType.LOCAL);
+                                map[x, y + y1].Tile = factory.CreateItem("TILES", 25);
+                                map[x, y + y1].Tile.Coordinate = new MapCoordinate(x, y + y1, 0, MapType.LOCAL);
                             }
 
                             x++; //increment x
@@ -515,7 +504,7 @@ namespace DivineRightGame.LocalMapGenerator
                         int leftEdgeYMax = gennedMap.GetLength(1) + yIncreaser;
 
                         //Pick a start at random
-                        int yStart = random.Next(leftEdgeYMax - leftEdgeYMin-2) + leftEdgeYMin;
+                        int yStart = random.Next(leftEdgeYMax - leftEdgeYMin - 2) + leftEdgeYMin;
 
                         //Now 'walk' from ystart-ystart+3 until you hit on something which has a block in it
 
@@ -524,21 +513,9 @@ namespace DivineRightGame.LocalMapGenerator
 
                         do
                         {
-                            bool holed = false;
 
                             for (int y1 = 0; y1 < 3; y1++)
                             {
-
-                                if (!holed)
-                                {
-                                    //Have a chance of putting in a hole
-                                    if (random.Next(8) == 0)
-                                    {
-                                        holed = true;
-                                        continue; //don't put in a tile
-                                    }
-                                }
-
                                 //Draw!
                                 map[x, y + y1].Tile = factory.CreateItem("TILES", 25);
                                 map[x, y + y1].Tile.Coordinate = new MapCoordinate(x, y + y1, 0, MapType.LOCAL);
@@ -574,7 +551,7 @@ namespace DivineRightGame.LocalMapGenerator
                         int bottomEdgeXMax = gennedMap.GetLength(0) + xIncreaser;
 
                         //Pick a start at random
-                        int xStart = random.Next(bottomEdgeXMax - bottomEdgeXMin- 2) + bottomEdgeXMin;
+                        int xStart = random.Next(bottomEdgeXMax - bottomEdgeXMin - 2) + bottomEdgeXMin;
 
                         //Now 'walk' from xstart-xstart+3 until you hit on something which has a block in it
 
@@ -583,28 +560,16 @@ namespace DivineRightGame.LocalMapGenerator
 
                         do
                         {
-                            bool holed = false;
-
                             for (int x1 = 0; x1 < 3; x1++)
                             {
 
-                                if (!holed)
-                                {
-                                    //Have a chance of putting in a hole
-                                    if (random.Next(8) == 0)
-                                    {
-                                        holed = true;
-                                        continue; //don't put in a tile
-                                    }
-                                }
-
                                 //Draw!
-                                map[x+x1, y].Tile = factory.CreateItem("TILES", 25);
-                                map[x+x1, y].Tile.Coordinate = new MapCoordinate(x+x1, y, 0, MapType.LOCAL);
+                                map[x + x1, y].Tile = factory.CreateItem("TILES", 25);
+                                map[x + x1, y].Tile.Coordinate = new MapCoordinate(x + x1, y, 0, MapType.LOCAL);
                             }
 
                             y--; //decrement y
-                        } while (x >= 0 && x < map.GetLength(0) && y >= 0 && y < map.GetLength(1) &&!map[x, y].Tile.MayContainItems);
+                        } while (x >= 0 && x < map.GetLength(0) && y >= 0 && y < map.GetLength(1) && !map[x, y].Tile.MayContainItems);
 
                         y = bottomEdgeY + 1;
 
@@ -620,7 +585,7 @@ namespace DivineRightGame.LocalMapGenerator
 
                             y++; //walk back
                         } while (x >= 0 && x < map.GetLength(0) && y >= 0 && y < map.GetLength(1) && !map[x, y].Tile.MayContainItems);
-                        
+
                     }
                     else if (roomToBeConnected.TierNumber > room.TierNumber)
                     {
@@ -743,7 +708,7 @@ namespace DivineRightGame.LocalMapGenerator
                     easyCount++;
                 }
             }
-            
+
             //Done
             return;
 
@@ -783,10 +748,10 @@ namespace DivineRightGame.LocalMapGenerator
         {
             return sourceList.Where
                 (
-                sl => (sl.TierNumber.Equals(tier+1) && sl.SquareNumber.Equals(square)
+                sl => (sl.TierNumber.Equals(tier + 1) && sl.SquareNumber.Equals(square)
                     )
-                
-                    || (sl.TierNumber.Equals(tier) && (sl.SquareNumber.Equals(square+1) || sl.SquareNumber.Equals(square-1 ) ))).ToArray();
+
+                    || (sl.TierNumber.Equals(tier) && (sl.SquareNumber.Equals(square + 1) || sl.SquareNumber.Equals(square - 1)))).ToArray();
         }
 
 

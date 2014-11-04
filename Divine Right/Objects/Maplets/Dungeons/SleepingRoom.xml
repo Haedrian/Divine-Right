@@ -1,0 +1,17 @@
+﻿<Maplet MapletName="EmptyRoom" SizeX="12" SizeY="12" SizeRange="4" Walled="false" Tiled="true" TileTag="Dungeon">
+  <MapletContents>
+    <MapletContentsMaplet Position="Middle" MaxAmount="1" ProbabilityPercentage="76">
+      <MapletTag Tag="Obstacle" />
+    </MapletContentsMaplet>
+    <MapletContentsMaplet Position="Middle" MaxAmount="1" ProbabilityPercentage="76">
+      <MapletTag Tag="Pit" />
+    </MapletContentsMaplet>
+    <MapletContentsMaplet Position="SIDES" FirstFit="false" MaxAmount="10" ProbabilityPercentage="78">
+      <MapletTag Tag="Erosion" />
+    </MapletContentsMaplet>
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="25" ProbabilityPercentage="68" Tag="dungeon decoration"/>
+
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="7" ProbabilityPercentage="75" Tag="bedroll"/>
+    
+  </MapletContents>
+</Maplet>
