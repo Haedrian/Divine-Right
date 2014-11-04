@@ -1,0 +1,8 @@
+﻿<Maplet MapletName="Angel Statue" SizeX="2" SizeY="2" Tiled="false" Walled="false">
+  <MapletContents>
+    <MapletContentsItemTag Position="Fixed" x="0" y="0" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="unholy statue bl"/>
+    <MapletContentsItemTag Position="Fixed" x="1" y="0" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="unholy statue br"/>
+    <MapletContentsItemTag Position="Fixed" x="0" y="1" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="unholy statue tl"/>
+    <MapletContentsItemTag Position="Fixed" x="1" y="1" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="unholy statue tr"/>
+  </MapletContents>
+</Maplet>

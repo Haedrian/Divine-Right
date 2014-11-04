@@ -571,6 +571,10 @@ namespace DRObjects.Graphics
         SHRUB_2,
         TREE_8,
         TREE_9,
+        UNHOLY_STATUE_TL,
+        UNHOLY_STATUE_TR,
+        UNHOLY_STATUE_BL,
+        UNHOLY_STATUE_BR,
 
     }
 }

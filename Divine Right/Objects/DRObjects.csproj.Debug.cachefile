@@ -17,6 +17,7 @@ Maplets\BarracksLevel3.xml
 Maplets\CommerceLevel1.xml
 Maplets\CommerceLevel2.xml
 Maplets\CommerceLevel3.xml
+Maplets\Dungeons\Components\UnholyStatue.xml
 Maplets\Dungeons\Components\BedroomComponent.xml
 Maplets\Dungeons\DrinkingRoom.xml
 Maplets\Dungeons\FarmRoom.xml
@@ -76,4 +77,5 @@ Resources\OrcNames\SurnameAft.txt
 Resources\OrcNames\SurnameFore.txt
 Resources\SettlementNames\Prefix.txt
 Resources\SettlementNames\Suffix.txt
+Maplets\Dungeons\TempleRoom.xml
 Maplets\GeneralStore.xml
