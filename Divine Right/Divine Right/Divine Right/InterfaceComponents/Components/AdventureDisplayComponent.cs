@@ -15,6 +15,7 @@ namespace Divine_Right.InterfaceComponents.Components
     /// <summary>
     /// Displays the date. And time.
     /// And the way the character is walking
+    /// And how their tummy is feeling
     /// </summary>
     public class AdventureDisplayComponent:
      IGameInterfaceComponent
@@ -34,6 +35,8 @@ namespace Divine_Right.InterfaceComponents.Components
         private Rectangle sneakRect;
         private Rectangle walkRect;
         private Rectangle huntRect;
+
+        private Rectangle hungerRect;
 
         public AdventureDisplayComponent(int x, int y)
         {
@@ -85,6 +88,7 @@ namespace Divine_Right.InterfaceComponents.Components
             batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.WALK), walkRect, GameState.PlayerCharacter.TravelMethod == TravelMethod.WALKING ? Color.Green : Color.Black);
             batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.HUNT), huntRect, GameState.PlayerCharacter.TravelMethod == TravelMethod.HUNTING ? Color.Green : Color.Black);
 
+            batch.DrawString(font, GameState.PlayerCharacter.FeedingLevel.ToString().Replace("_", ""), hungerRect, Alignment.Center, (int) GameState.PlayerCharacter.FeedingLevel >= 3 ? Color.Green : Color.DarkRed);
         }
 
         public bool HandleClick(int x, int y, Objects.Enums.MouseActionEnum mouseAction, out DRObjects.Enums.ActionType? actionType, out DRObjects.Enums.InternalActionEnum? internalActionType, out object[] args, out DRObjects.MapItem item, out DRObjects.MapCoordinate coord, out bool destroy)
@@ -137,8 +141,9 @@ namespace Divine_Right.InterfaceComponents.Components
             this.locationX += deltaX;
             this.locationY += deltaY;
 
-            this.borderRect = new Rectangle(locationX - 2, locationY - 2, 154, 124);
-            this.drawRect = new Rectangle(locationX, locationY, 150, 120);
+            this.drawRect = new Rectangle(locationX, locationY, 150, 150);
+
+            this.borderRect = new Rectangle(this.drawRect.X- 2, this.drawRect.Y - 2,  this.drawRect.Width + 4, this.drawRect.Height + 4);
             this.dateRect = new Rectangle(locationX, locationY+40, 150, 30);
             this.timeRect = new Rectangle(locationX, locationY, 150, 40);
 
@@ -154,6 +159,8 @@ namespace Divine_Right.InterfaceComponents.Components
             this.sneakRect = new Rectangle(locationX, locationY + 70, 50, 50);
             this.walkRect = new Rectangle(locationX + 50, locationY + 70, 50, 50);
             this.huntRect = new Rectangle(locationX + 100, locationY + 70, 50, 50);
+
+            this.hungerRect = new Rectangle(locationX, locationY + 120, 150, 30);
         }
 
         public bool IsModal()

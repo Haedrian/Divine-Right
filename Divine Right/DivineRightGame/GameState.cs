@@ -76,7 +76,7 @@ namespace DivineRightGame
                 foreach (var item in GameState.PlayerCharacter.Inventory.Inventory.GetObjectsByGroup(InventoryCategory.SUPPLY))
                 {
                     //Do we have anything to feed him ?
-                    if ((int)GameState.PlayerCharacter.FeedingLevel <= 4)
+                    if ((int)GameState.PlayerCharacter.FeedingLevel < 4)
                     {
                         var cons = item as ConsumableItem;
 
@@ -97,7 +97,6 @@ namespace DivineRightGame
                 if (GameState.PlayerCharacter.FeedingLevel <= 0 )
                 {
                     //Died of hunger. Silly Billy
-                    //TODO: PROPER MESSAGE
                     CombatManager.KillCharacter(GameState.PlayerCharacter);
                 }
                 else if ((int)GameState.PlayerCharacter.FeedingLevel <= 2)
