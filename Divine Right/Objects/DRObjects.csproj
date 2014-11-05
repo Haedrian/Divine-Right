@@ -114,6 +114,7 @@
     <Compile Include="Enums\ConsumableEffect.cs" />
     <Compile Include="Enums\EnemyThought.cs" />
     <Compile Include="Enums\EquipmentLocation.cs" />
+    <Compile Include="Enums\FeedingLevel.cs" />
     <Compile Include="Enums\GlobalBiome.cs" />
     <Compile Include="Enums\GlobalOverlay.cs" />
     <Compile Include="Enums\GlobalResource.cs" />

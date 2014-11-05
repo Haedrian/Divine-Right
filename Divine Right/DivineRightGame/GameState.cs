@@ -14,6 +14,8 @@ using DRObjects.DataStructures;
 using Microsoft.Xna.Framework;
 using DRObjects.DataStructures.Enum;
 using DivineRightGame.CombatHandling;
+using DRObjects.Items.Archetypes.Local;
+using DRObjects.Graphics;
 
 namespace DivineRightGame
 {
@@ -23,7 +25,7 @@ namespace DivineRightGame
     /// </summary>
     public static class GameState
     {
-        public static readonly string SAVEPATH =  Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/DivineRight/";
+        public static readonly string SAVEPATH = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/DivineRight/";
         /// <summary>
         /// The state of the global map
         /// </summary>
@@ -56,16 +58,53 @@ namespace DivineRightGame
         /// Incremements the Game Time by an amount of minutes, and does any processing that needs to be done
         /// </summary>
         /// <param name="minutes"></param>
-        public static void IncrementGameTime(DRTimeComponent timeComponent,int value)
+        public static void IncrementGameTime(DRTimeComponent timeComponent, int value)
         {
             int lastDay = _universeTime.GetTimeComponent(DRTimeComponent.DAY);
 
-            _universeTime.Add(timeComponent,value);
+            _universeTime.Add(timeComponent, value);
 
             if (lastDay != _universeTime.GetTimeComponent(DRTimeComponent.DAY))
             {
                 //A day has passed. Healing if needs be
                 HealthCheckManager.HealCharacter(GameState.PlayerCharacter, 1);
+
+                //Get somewhat hungrier too
+                GameState.PlayerCharacter.FeedingLevel--;
+
+                //Do we have any food?
+                foreach (var item in GameState.PlayerCharacter.Inventory.Inventory.GetObjectsByGroup(InventoryCategory.SUPPLY))
+                {
+                    //Do we have anything to feed him ?
+                    if ((int)GameState.PlayerCharacter.FeedingLevel <= 4)
+                    {
+                        var cons = item as ConsumableItem;
+
+                        //It's a flag, but if we later have stuff which feeds and does something else, we don't want it. So just take those which only feed
+                        if (cons != null && cons.Effects == (ConsumableEffect.FEED))
+                        {
+                            //Nom Nom Nom!
+                           var feedback =  cons.PerformAction(ActionType.CONSUME, GameState.PlayerCharacter, null);
+                        }
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+
+                //So, is he dead ?
+                if (GameState.PlayerCharacter.FeedingLevel <= 0 )
+                {
+                    //Died of hunger. Silly Billy
+                    //TODO: PROPER MESSAGE
+                    CombatManager.KillCharacter(GameState.PlayerCharacter);
+                }
+                else if ((int)GameState.PlayerCharacter.FeedingLevel <= 2)
+                {
+                    GameState.NewLog.Add(new CurrentLogFeedback(InterfaceSpriteName.MOON, Color.DarkRed, "You are hungry and out of food"));
+                }
+
             }
         }
 

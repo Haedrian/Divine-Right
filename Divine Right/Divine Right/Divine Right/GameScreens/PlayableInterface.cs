@@ -1166,6 +1166,15 @@ namespace Divine_Right.GameScreens
 
                     //Move time forth
                     GameState.IncrementGameTime(DRTimeComponent.MINUTE, tpf.TimePassInMinutes);
+
+                    //Is the character dead?
+                    if (!GameState.PlayerCharacter.IsAlive)
+                    {
+                        var gameEvent = EventHandlingManager.CreateEvent("Hunger Death");
+
+                        //Create the actual control
+                        interfaceComponents.Add(new DecisionPopupComponent(PlayableWidth / 2 - 150, PlayableHeight / 2 - 150, gameEvent));
+                    }
                 }
        
             }

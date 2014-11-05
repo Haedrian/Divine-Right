@@ -119,11 +119,13 @@ namespace DRObjects
         public SkillsAndAttributes Attributes { get; set; }
 
         //These are the total effective points of attributes after temporary and equipment has been taken into consideration
-        public int TotalBrawn { get { return Attributes.Brawn; } }
-        public int TotalAgil { get { return Attributes.Agil; } }
-        public int TotalDex { get { return Attributes.Char; } }
-        public int TotalPerc { get { return Attributes.Perc; } }
-        public int TotalIntel { get { return Attributes.Intel; } }
+        public int TotalBrawn { get { return Attributes.Brawn - FeedingLevel == 0 ? 3 : 0; } }
+        public int TotalAgil { get { return Attributes.Agil - FeedingLevel == 0 ? 3 : 0; } }
+        public int TotalDex { get { return Attributes.Char - FeedingLevel == 0 ? 3 : 0; } }
+        public int TotalPerc { get { return Attributes.Perc - FeedingLevel == 0 ? 3 : 0; } }
+        public int TotalIntel { get { return Attributes.Intel - FeedingLevel == 0 ? 3 : 0; } }
+
+        public FeedingLevel FeedingLevel { get; set; }
 
         /// <summary>
         /// The character's combat stance
@@ -160,6 +162,7 @@ namespace DRObjects
             this.Attributes.Actor = this;
             this.UnarmedDamageDice = 1;
             this.TravelMethod = Enums.TravelMethod.WALKING;
+            this.FeedingLevel = Enums.FeedingLevel.STUFFED;
         }
 
     }

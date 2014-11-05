@@ -46,8 +46,9 @@ namespace DRObjects.Items.Archetypes.Local
                 if (Effects.HasFlag(ConsumableEffect.FEED))
                 {
                     //Eat
-                    
-                    //TODO - LATER
+                    int newFeedingLevel = (int) actor.FeedingLevel + this.EffectPower;
+
+                    actor.FeedingLevel = (FeedingLevel) ( (newFeedingLevel > 5) ? 5 : newFeedingLevel);
                 }
                 //How many have we got?
                 if (this.TotalAmount > 1)
