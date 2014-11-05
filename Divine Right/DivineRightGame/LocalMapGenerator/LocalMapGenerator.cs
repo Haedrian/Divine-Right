@@ -780,12 +780,22 @@ namespace DivineRightGame.LocalMapGenerator
             switch (newActor.VendorDetails.VendorType)
             {
                 case VendorType.GENERAL:
-                    foreach (InventoryItem inv in iim.GetItemsWithAMaxValue(InventoryCategory.SUPPLY.ToString(), maxCategorySize*2))
+                    foreach (InventoryItem inv in iim.GetItemsWithAMaxValue(InventoryCategory.SUPPLY.ToString(), (int) (maxCategorySize * 0.75)))
                     {
                         inv.InInventory = true;
                         newActor.VendorDetails.Stock.Add(inv.Category, inv);
                     }
-                    foreach (InventoryItem inv in iim.GetItemsWithAMaxValue(InventoryCategory.LOOT.ToString(), maxCategorySize))
+                    foreach (InventoryItem inv in iim.GetItemsWithAMaxValue(InventoryCategory.LOOT.ToString(), (int)(maxCategorySize * 0.75)))
+                    {
+                        inv.InInventory = true;
+                        newActor.VendorDetails.Stock.Add(inv.Category, inv);
+                    }
+                    foreach (InventoryItem inv in iim.GetItemsWithAMaxValue(InventoryCategory.ARMOUR.ToString(), (int)(maxCategorySize * 0.75)))
+                    {
+                        inv.InInventory = true;
+                        newActor.VendorDetails.Stock.Add(inv.Category, inv);
+                    }
+                    foreach (InventoryItem inv in iim.GetItemsWithAMaxValue(InventoryCategory.WEAPON.ToString(), (int) (maxCategorySize * 0.75)))
                     {
                         inv.InInventory = true;
                         newActor.VendorDetails.Stock.Add(inv.Category, inv);
@@ -805,6 +815,13 @@ namespace DivineRightGame.LocalMapGenerator
                     break;
                 case VendorType.TRADER:
                     foreach (InventoryItem inv in iim.GetItemsWithAMaxValue(InventoryCategory.LOOT.ToString(), maxCategorySize * 3))
+                    {
+                        inv.InInventory = true;
+                        newActor.VendorDetails.Stock.Add(inv.Category, inv);
+                    }
+                    break;
+                case VendorType.TAVERN:
+                    foreach (InventoryItem inv in iim.GetItemsWithAMaxValue(InventoryCategory.SUPPLY.ToString(), maxCategorySize))
                     {
                         inv.InInventory = true;
                         newActor.VendorDetails.Stock.Add(inv.Category, inv);
@@ -835,17 +852,22 @@ namespace DivineRightGame.LocalMapGenerator
             switch (actor.VendorDetails.VendorType)
             {
                 case VendorType.GENERAL:
-                    foreach (InventoryItem inv in iim.GetItemsWithAMaxValue(InventoryCategory.ARMOUR.ToString(), totalMoney / 3))
+                    foreach (InventoryItem inv in iim.GetItemsWithAMaxValue(InventoryCategory.ARMOUR.ToString(), totalMoney / 4))
                     {
                         inv.InInventory = true;
                         actor.VendorDetails.Stock.Add(inv.Category, inv);
                     }
-                    foreach (InventoryItem inv in iim.GetItemsWithAMaxValue(InventoryCategory.LOOT.ToString(), totalMoney / 3))
+                    foreach (InventoryItem inv in iim.GetItemsWithAMaxValue(InventoryCategory.LOOT.ToString(), totalMoney / 4))
                     {
                         inv.InInventory = true;
                         actor.VendorDetails.Stock.Add(inv.Category, inv);
                     }
-                    foreach (InventoryItem inv in iim.GetItemsWithAMaxValue(InventoryCategory.WEAPON.ToString(), totalMoney / 3))
+                    foreach (InventoryItem inv in iim.GetItemsWithAMaxValue(InventoryCategory.WEAPON.ToString(), totalMoney / 4))
+                    {
+                        inv.InInventory = true;
+                        actor.VendorDetails.Stock.Add(inv.Category, inv);
+                    }
+                    foreach (InventoryItem inv in iim.GetItemsWithAMaxValue(InventoryCategory.SUPPLY.ToString(), totalMoney / 4))
                     {
                         inv.InInventory = true;
                         actor.VendorDetails.Stock.Add(inv.Category, inv);
@@ -865,6 +887,13 @@ namespace DivineRightGame.LocalMapGenerator
                     break;
                 case VendorType.TRADER:
                     foreach (InventoryItem inv in iim.GetItemsWithAMaxValue(InventoryCategory.LOOT.ToString(), totalMoney))
+                    {
+                        inv.InInventory = true;
+                        actor.VendorDetails.Stock.Add(inv.Category, inv);
+                    }
+                    break;
+                case VendorType.TAVERN:
+                    foreach (InventoryItem inv in iim.GetItemsWithAMaxValue(InventoryCategory.SUPPLY.ToString(), totalMoney))
                     {
                         inv.InInventory = true;
                         actor.VendorDetails.Stock.Add(inv.Category, inv);

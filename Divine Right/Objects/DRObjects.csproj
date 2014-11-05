@@ -411,10 +411,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Maplets\Smithy.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Maplets\Rooms\Study.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

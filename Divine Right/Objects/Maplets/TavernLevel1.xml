@@ -18,7 +18,7 @@
       <Maplet Tiled="true" SizeX="12" SizeY="10" Walled="true" TileTag="wood" WindowProbability="20">
         <MapletContents>
           <MapletActor MaxAmount="4" ProbabilityPercentage="50" UseLocalType="true" EnemyTag="poor" EnemyMission="wander"  />
-          <MapletActor MaxAmount="1" ProbabilityPercentage="100" UseLocalType="true" EnemyTag="merchant" EnemyMission="wander"  />
+          <MapletActor MaxAmount="1" ProbabilityPercentage="100" UseLocalType="true" EnemyTag="merchant" VendorType="TAVERN" VendorLevel="1" EnemyMission="Idle"  />
           <MapletContentsMaplet Position="Sides" MaxAmount="1" ProbabilityPercentage="102" >
             <MapletTag Tag="Bar" />
           </MapletContentsMaplet>

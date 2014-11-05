@@ -11,5 +11,6 @@ namespace DRObjects.Enums
         GENERAL,
         SMITH,
         TRADER,
+        TAVERN,
     }
 }

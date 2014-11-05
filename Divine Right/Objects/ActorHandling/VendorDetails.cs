@@ -74,6 +74,35 @@ namespace DRObjects.ActorHandling
                 
                 return multiplier;
             }
+            else if (this.VendorType == DRObjects.Enums.VendorType.TAVERN)
+            {
+                double multiplier = 1;
+
+                if (vendorIsBuying && category != InventoryCategory.SUPPLY)
+                {
+                    multiplier = 0.5;
+                }
+                else if (vendorIsBuying)
+                {
+                    multiplier = 0.75;
+                }
+                else
+                {
+                    switch (this.VendorLevel)
+                    {
+                        case 1:
+                            multiplier = 1.50;
+                            break;
+                        case 2:
+                            multiplier = 1.40; break;
+                        case 3:
+                            multiplier = 1.30;
+                            break;
+                    }
+                }
+
+                return multiplier;
+            }
             else if (this.VendorType == DRObjects.Enums.VendorType.TRADER)
             {
                 //Will buy loot at best price
