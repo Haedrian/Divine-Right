@@ -555,7 +555,7 @@ namespace DivineRightGame.LocalMapGenerator
 
             //Get all wall segments larger than 0, and we can put a door there
 
-            foreach (Line segment in wallSegments.Where(ws => ws.Length() > 0))
+            foreach (Line segment in wallSegments.Where(ws => ws.Length() > 1))
             {
                 //Put a door somewhere, as long as its not the start or end
                 //Oh and remove the wall
