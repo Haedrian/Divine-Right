@@ -13,9 +13,7 @@
     <MapletContentsMaplet Position="Anywhere" MaxAmount="1" ProbabilityPercentage="50" >
       <Maplet Tiled="false" SizeX="3" SizeY="3" Walled="false" TileID="1">
         <MapletContents>
-          <!-- Meat -->
-          <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="4" ProbabilityPercentage="40" Tag="meat" />
-          <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="4" ProbabilityPercentage="40" Tag="fish" />
+          
         </MapletContents>
       </Maplet>
     </MapletContentsMaplet>

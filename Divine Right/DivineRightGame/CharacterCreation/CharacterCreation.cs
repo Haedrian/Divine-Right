@@ -9,6 +9,8 @@ using DRObjects.ActorHandling.Enums;
 using DRObjects.ActorHandling.CharacterSheet.Enums;
 using DRObjects.ActorHandling.CharacterSheet;
 using DivineRightGame.ItemFactory.ItemFactoryManagers;
+using DRObjects.Enums;
+using DRObjects.Items.Archetypes.Local;
 
 namespace DivineRightGame.CharacterCreation
 {
@@ -193,6 +195,16 @@ namespace DivineRightGame.CharacterCreation
 
             next.Choices = choices.ToArray();
 
+            //Give them the items everyone starts with
+            InventoryItemManager iim = new InventoryItemManager();
+
+            var food = iim.GetItemsWithAMaxValue("SUPPLY", 150);
+
+            foreach (var foodItem in food)
+            {
+                GameState.PlayerCharacter.Inventory.Inventory.Add(InventoryCategory.SUPPLY, foodItem as InventoryItem);
+                (foodItem as InventoryItem).InInventory = true;
+            }
             return gme;
         }
 

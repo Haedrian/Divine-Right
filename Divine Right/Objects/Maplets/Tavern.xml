@@ -6,8 +6,6 @@
           <MapletContentsItem Position="Sides" ItemID="2" ItemCategory="toggleitems" MaxAmount="1" ProbabilityPercentage="102" />
           <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="3" ProbabilityPercentage="80" Tag="kitchen furniture"/>
           <MapletContentsItemTag Position="Sides" Category="mundaneitems" MaxAmount="4" ProbabilityPercentage="100" Tag="barrel"/>
-          <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="80" Tag="meat"/>
-          <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="80" Tag="fish"/>
           <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="80" Tag="farm produce"/>
         </MapletContents>
       </Maplet>

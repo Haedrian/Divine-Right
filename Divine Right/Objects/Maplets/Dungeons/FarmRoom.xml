@@ -10,7 +10,6 @@
 
     <MapletHerd MaxAmount="3" ProbabilityPercentage="74" Domesticated="true"/>
 
-    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="4" ProbabilityPercentage="74" Tag="meat"/>
     <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="4" ProbabilityPercentage="74" Tag="farm produce"/>
     <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="74" Tag="container"/>
 

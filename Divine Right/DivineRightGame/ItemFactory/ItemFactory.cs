@@ -46,6 +46,9 @@ namespace DivineRightGame.ItemFactory
                 case "enemies":
                     mgr = new EnemyManager();
                     break;
+                case "inventoryitems":
+                    mgr = new InventoryItemManager();
+                    break;
                 default:
                     throw new NotImplementedException("The category : " + category + " could not be found");
             }

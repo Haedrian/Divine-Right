@@ -13,7 +13,7 @@
     </MapletContentsMaplet>
 
     <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="74" Tag="bed"/>
-    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="4" ProbabilityPercentage="74" Tag="meat"/>
+    <MapletContentsItemTag Position="Anywhere" Category="inventoryitems" MaxAmount="4" ProbabilityPercentage="74" Tag="meat"/>
 
     <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="15" ProbabilityPercentage="74" Tag="dungeon decoration"/>
     <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="24" Tag="treasure"/>
