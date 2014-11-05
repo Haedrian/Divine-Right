@@ -780,17 +780,12 @@ namespace DivineRightGame.LocalMapGenerator
             switch (newActor.VendorDetails.VendorType)
             {
                 case VendorType.GENERAL:
-                    foreach (InventoryItem inv in iim.GetItemsWithAMaxValue(InventoryCategory.ARMOUR.ToString(), maxCategorySize))
+                    foreach (InventoryItem inv in iim.GetItemsWithAMaxValue(InventoryCategory.SUPPLY.ToString(), maxCategorySize*2))
                     {
                         inv.InInventory = true;
                         newActor.VendorDetails.Stock.Add(inv.Category, inv);
                     }
                     foreach (InventoryItem inv in iim.GetItemsWithAMaxValue(InventoryCategory.LOOT.ToString(), maxCategorySize))
-                    {
-                        inv.InInventory = true;
-                        newActor.VendorDetails.Stock.Add(inv.Category, inv);
-                    }
-                    foreach (InventoryItem inv in iim.GetItemsWithAMaxValue(InventoryCategory.WEAPON.ToString(), maxCategorySize))
                     {
                         inv.InInventory = true;
                         newActor.VendorDetails.Stock.Add(inv.Category, inv);

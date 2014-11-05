@@ -72,23 +72,21 @@ namespace DivineRightGame
                 //Get somewhat hungrier too
                 GameState.PlayerCharacter.FeedingLevel--;
 
-                //Do we have any food?
-                foreach (var item in GameState.PlayerCharacter.Inventory.Inventory.GetObjectsByGroup(InventoryCategory.SUPPLY))
+                //We hungry?
+                while ((int)GameState.PlayerCharacter.FeedingLevel < 4)
                 {
-                    //Do we have anything to feed him ?
-                    if ((int)GameState.PlayerCharacter.FeedingLevel < 4)
-                    {
-                        var cons = item as ConsumableItem;
+                    //Do we have any food?
+                    //It's a flag, but if we later have stuff which feeds and does something else, we don't want it. So just take those which only feed
+                    var food = GameState.PlayerCharacter.Inventory.Inventory.GetObjectsByGroup(InventoryCategory.SUPPLY).Where(f => (f as ConsumableItem).Effects == ConsumableEffect.FEED).FirstOrDefault();
 
-                        //It's a flag, but if we later have stuff which feeds and does something else, we don't want it. So just take those which only feed
-                        if (cons != null && cons.Effects == (ConsumableEffect.FEED))
-                        {
-                            //Nom Nom Nom!
-                           var feedback =  cons.PerformAction(ActionType.CONSUME, GameState.PlayerCharacter, null);
-                        }
+                    if (food != null)
+                    {
+                        //Nom it
+                        food.PerformAction(ActionType.CONSUME, GameState.PlayerCharacter, null);
                     }
                     else
                     {
+                        //We're out of food
                         break;
                     }
                 }

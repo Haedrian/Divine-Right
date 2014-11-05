@@ -159,6 +159,8 @@ namespace Divine_Right.InterfaceComponents.Components
                 inventoryitems = this.PlayerActor.Inventory.Inventory.GetObjectsByGroup(enums.GetValue(ChosenCategory)).Where(i => !i.IsEquipped).ToArray();
             }
 
+            inventoryitems = inventoryitems.Take(36).ToArray(); //Take only the top 36
+
             //Clear all the items held in the boxes
             foreach (var item in row1Items)
             {
