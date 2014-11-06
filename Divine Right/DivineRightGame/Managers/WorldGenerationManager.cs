@@ -24,7 +24,7 @@ namespace DivineRightGame.Managers
         public const int RIVERCOUNT = 50;
         public const int RAINCENTERCOUNT = 6;
 
-        public const int RESOURCES_PER_TYPE = 5;
+        public const int RESOURCES_PER_TYPE = 7;
 
         public const int HUMAN_CAPITAL_COUNT = 4;
         public const int HUMAN_SETTLEMENTS_PER_CIVILIZATION = 7;
@@ -907,7 +907,7 @@ namespace DivineRightGame.Managers
                 var candidateBlocks = regionalBlocks.Where(rb => !(rb.Tile as GlobalTile).HasRiver && !(rb.Tile as GlobalTile).HasResource && (rb.Tile as GlobalTile).Elevation > 0 && (rb.Tile as GlobalTile).Elevation < 250
                     && !(rb.Tile as GlobalTile).IsBlockedForColonisation
                     && ((rb.Tile as GlobalTile).Owner == null || (rb.Tile as GlobalTile).Owner == i))
-                    .OrderByDescending(rb => (rb.Tile as GlobalTile).BaseDesirability + (GetBlocksAroundPoint(rb.Tile.Coordinate, 2).Sum(rba => (rba.Tile as GlobalTile).BaseDesirability)));
+                    .OrderByDescending(rb => (rb.Tile as GlobalTile).BaseDesirability + (GetBlocksAroundPoint(rb.Tile.Coordinate, 3).Sum(rba => (rba.Tile as GlobalTile).BaseDesirability)));
 
                 if (candidateBlocks.ToArray().Length == 0)
                 {
