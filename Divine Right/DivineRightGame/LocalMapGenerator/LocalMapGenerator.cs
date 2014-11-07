@@ -30,9 +30,10 @@ namespace DivineRightGame.LocalMapGenerator
         /// <param name="parentWallID">The wall that the parent has</param>
         /// <param name="parentTileID">The ID of the tiles used in the parent maplet item</param>
         /// <param name="enemyType">The type of actor which is dominant in this map</param>
+        /// <param name="owner">The owner of the map. Any maplet items which don't belong will be hidden</param>
         /// <param name="actors">The actors which we have generated</param>
         /// <returns></returns>
-        public MapBlock[,] GenerateMap(int parentTileID, int? parentWallID, Maplet maplet, bool preferSides, string actorType, out Actor[] actors)
+        public MapBlock[,] GenerateMap(int parentTileID, int? parentWallID, Maplet maplet, bool preferSides, string actorType, OwningFactions owner, out Actor[] actors)
         {
             List<Actor> actorList = new List<Actor>();
 
@@ -171,7 +172,7 @@ namespace DivineRightGame.LocalMapGenerator
                             {
                                 //it fits, generate it - <3 Recursion
                                 Actor[] childActors = null;
-                                MapBlock[,] childMap = this.GenerateMap(tileID, wallID.Value, childMaplet.Maplet, childMaplet.Position == DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES, actorType, out childActors);
+                                MapBlock[,] childMap = this.GenerateMap(tileID, wallID.Value, childMaplet.Maplet, childMaplet.Position == DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES, actorType,owner, out childActors);
 
                                 //Add the child actors
                                 actorList.AddRange(childActors);
@@ -204,7 +205,7 @@ namespace DivineRightGame.LocalMapGenerator
                             {
                                 //it fits, generate it - <3 Recursion
                                 Actor[] childActors = null;
-                                MapBlock[,] childMap = this.GenerateMap(tileID, wallID.Value, childMaplet.Maplet, childMaplet.Position == DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES, actorType, out childActors);
+                                MapBlock[,] childMap = this.GenerateMap(tileID, wallID.Value, childMaplet.Maplet, childMaplet.Position == DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES, actorType,owner, out childActors);
 
                                 //Add the child actors
                                 actorList.AddRange(childActors);
@@ -336,6 +337,10 @@ namespace DivineRightGame.LocalMapGenerator
                             MapletContentsItemTag mapletContent = (MapletContentsItemTag)contents;
                             int tempInt;
                             itemPlaced = factory.CreateItem(mapletContent.Category, mapletContent.Tag, out tempInt);
+                            if (mapletContent.Factions.HasValue)
+                            {
+                                itemPlaced.OwnedBy = mapletContent.Factions.Value;
+                            }
                         }
 
                         if (candidateBlocks.Count != 0)
@@ -753,6 +758,22 @@ namespace DivineRightGame.LocalMapGenerator
             #endregion
 
             actors = actorList.ToArray();
+
+            #region Ownership
+
+            //Go through all map items - If they're not valid for this particular owner, make them inactive.
+            foreach(var mapBlock in generatedMap)
+            {
+                foreach(var item in mapBlock.GetItems())
+                {
+                    if (!item.OwnedBy.HasFlag(owner))
+                    {
+                        item.IsActive = false;
+                    }
+                }
+            }
+
+            #endregion
 
             //we're done
             return generatedMap;

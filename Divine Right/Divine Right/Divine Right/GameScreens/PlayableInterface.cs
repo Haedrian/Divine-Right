@@ -242,50 +242,54 @@ namespace Divine_Right.GameScreens
             }
             else if (parameters[0].ToString().Equals("Camp"))
             {
-                MapCoordinate coo = new MapCoordinate();
-                Actor[] arr = null;
-                //var gennedMap = CampGenerator.GenerateCamp(15,out coo, out arr);
 
-                var gennedMap = WildernessGenerator.GenerateMap(GlobalBiome.ARID_DESERT,3, 0, out arr, out coo);
+                TestFunctions.ParseXML();
 
-                GameState.LocalMap = new LocalMap(100, 100, 1, 0);
+                //MapCoordinate coo = new MapCoordinate();
+                //Actor[] arr = null;
+                ////var gennedMap = CampGenerator.GenerateCamp(15,out coo, out arr);
 
-                List<MapBlock> collapsedMap = new List<MapBlock>();
 
-                foreach (MapBlock block in gennedMap)
-                {
-                    collapsedMap.Add(block);
-                }
+                //var gennedMap = WildernessGenerator.GenerateMap(GlobalBiome.ARID_DESERT,3, 0, out arr, out coo);
 
-                GameState.LocalMap.AddToLocalMap(collapsedMap.ToArray());
+                //GameState.LocalMap = new LocalMap(100, 100, 1, 0);
 
-                GameState.LocalMap.Actors.AddRange(arr);
+                //List<MapBlock> collapsedMap = new List<MapBlock>();
 
-                MapItem player = new MapItem();
-                player.Coordinate = coo;
-                player.Description = "The player character";
-                player.Graphic = SpriteManager.GetSprite(LocalSpriteName.PLAYERCHAR_MALE);
-                player.InternalName = "Player Char";
-                player.MayContainItems = false;
-                player.Name = "Player";
+                //foreach (MapBlock block in gennedMap)
+                //{
+                //    collapsedMap.Add(block);
+                //}
 
-                MapBlock playerBlock = GameState.LocalMap.GetBlockAtCoordinate(player.Coordinate);
-                playerBlock.PutItemOnBlock(player);
+                //GameState.LocalMap.AddToLocalMap(collapsedMap.ToArray());
 
-                GameState.PlayerCharacter = new Actor();
-                GameState.PlayerCharacter.MapCharacter = player;
-                GameState.PlayerCharacter.IsPlayerCharacter = true;
+                //GameState.LocalMap.Actors.AddRange(arr);
 
-                GameState.PlayerCharacter.Attributes = ActorGeneration.GenerateAttributes("human", DRObjects.ActorHandling.CharacterSheet.Enums.ActorProfession.WARRIOR, 10, GameState.PlayerCharacter);
+                //MapItem player = new MapItem();
+                //player.Coordinate = coo;
+                //player.Description = "The player character";
+                //player.Graphic = SpriteManager.GetSprite(LocalSpriteName.PLAYERCHAR_MALE);
+                //player.InternalName = "Player Char";
+                //player.MayContainItems = false;
+                //player.Name = "Player";
 
-                GameState.PlayerCharacter.Anatomy = ActorGeneration.GenerateAnatomy("human");
+                //MapBlock playerBlock = GameState.LocalMap.GetBlockAtCoordinate(player.Coordinate);
+                //playerBlock.PutItemOnBlock(player);
 
-                GameState.PlayerCharacter.Attributes.Health = GameState.PlayerCharacter.Anatomy;
+                //GameState.PlayerCharacter = new Actor();
+                //GameState.PlayerCharacter.MapCharacter = player;
+                //GameState.PlayerCharacter.IsPlayerCharacter = true;
 
-                GameState.LocalMap.Actors.Add(GameState.PlayerCharacter);
-                // GameState.LocalMap.Actors.AddRange(actors
+                //GameState.PlayerCharacter.Attributes = ActorGeneration.GenerateAttributes("human", DRObjects.ActorHandling.CharacterSheet.Enums.ActorProfession.WARRIOR, 10, GameState.PlayerCharacter);
 
-                GameState.LocalMap.IsGlobalMap = false;
+                //GameState.PlayerCharacter.Anatomy = ActorGeneration.GenerateAnatomy("human");
+
+                //GameState.PlayerCharacter.Attributes.Health = GameState.PlayerCharacter.Anatomy;
+
+                //GameState.LocalMap.Actors.Add(GameState.PlayerCharacter);
+                //// GameState.LocalMap.Actors.AddRange(actors
+
+                //GameState.LocalMap.IsGlobalMap = false;
 
             }
             else

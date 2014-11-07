@@ -16,8 +16,8 @@
       <MapletTag Tag="TableSet" />
     </MapletContentsMaplet>
 
-    <MapletContentsItemTag Position="Middle" MaxAmount="10" ProbabilityPercentage="50" Category="mundaneitems" Tag="decoration"/>
-    <MapletContentsItemTag Position="Anywhere" MaxAmount="3" ProbabilityPercentage="50" Category="mundaneitems" Tag="furniture"/>
+    <MapletContentsItemTag Position="Middle" MaxAmount="10" Owners="Undead" ProbabilityPercentage="50" Category="mundaneitems" Tag="decoration"/>
+    <MapletContentsItemTag Position="Anywhere" MaxAmount="3" Owners="Bandits" ProbabilityPercentage="50" Category="mundaneitems" Tag="furniture"/>
     
   </MapletContents>
 </Maplet>

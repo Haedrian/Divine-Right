@@ -147,7 +147,8 @@ namespace DivineRightGame.LocalMapGenerator
             Maplet maplet = lm.ParseMapletFromTag("camp");
 
             LocalMapGenerator gen = new LocalMapGenerator();
-            var gennedMap = gen.GenerateMap(grassTileID, null, maplet, false, "", out enemyArray);
+            //TODO: LATER THE OWNER MIGHT NOT BE A BANDIT
+            var gennedMap = gen.GenerateMap(grassTileID, null, maplet, false, "",OwningFactions.BANDITS, out enemyArray);
 
             gen.JoinMaps(map, gennedMap, startCoord + 1, startCoord + 1);
 

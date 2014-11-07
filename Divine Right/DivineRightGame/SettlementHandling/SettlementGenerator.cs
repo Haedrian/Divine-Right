@@ -208,7 +208,7 @@ namespace DivineRightGame.SettlementHandling
 
                 Actor[] localAct = null;
 
-                var gennedMap = gen.GenerateMap(grassTileID, null, borderMaplet, true, "human", out localAct);
+                var gennedMap = gen.GenerateMap(grassTileID, null, borderMaplet, true, "human",OwningFactions.HUMANS, out localAct);
 
                 actors.AddRange(localAct);
 
@@ -270,7 +270,7 @@ namespace DivineRightGame.SettlementHandling
             Actor[] tempAct = null;
 
             gen.JoinMaps(mainMap,
-                gen.GenerateMap(plazaTile, null, plazaMaplet, true, "", out tempAct),
+                gen.GenerateMap(plazaTile, null, plazaMaplet, true, "",OwningFactions.HUMANS, out tempAct),
                 (plazaRect.X - 1 + plazaRect.Width / 2) - plazaMaplet.SizeX / 2,
                 (plazaRect.Y - 1 + plazaRect.Height / 2) - plazaMaplet.SizeY / 2);
 

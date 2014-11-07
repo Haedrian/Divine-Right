@@ -121,6 +121,7 @@
     <Compile Include="Enums\InternalActionEnum.cs" />
     <Compile Include="Enums\InventoryCategory.cs" />
     <Compile Include="Enums\MapType.cs" />
+    <Compile Include="Enums\OwningFactions.cs" />
     <Compile Include="Enums\PointOfInterestType.cs" />
     <Compile Include="Enums\SettlementType.cs" />
     <Compile Include="Enums\TravelMethod.cs" />

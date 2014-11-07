@@ -134,30 +134,42 @@ namespace DRObjects
         }
 
         /// <summary>
-        /// Gets the top mapitem in the stack, or null if there is no item
+        /// Gets the top mapitem in the stack, or null if there is no item.
+        /// It will check if the map item is active or not before showing it.
         /// </summary>
         /// <returns></returns>
         public MapItem GetTopMapItem()
         {
             MapItem item = null;
 
+            //This is used due to the active thing. The 'top' item might be inactive
+            int counter = 1;
+
             while (item == null)
             {
-                if (this.mapItems.Count == 0)
+                if (this.mapItems.Count == 0 || mapItems.Count - counter < 0)
                 {
                     return null;
                 }
                 else
                 {
                     //This is to do moving items lazily
-                    item = this.mapItems[mapItems.Count-1];
+                    item = this.mapItems[mapItems.Count-counter];
                     
                     //Do the coordinates match?
                     if (!item.Coordinate.Equals(Tile.Coordinate))
                     {
                         //remove it from the list
                         mapItems.Remove(item);
-                        item = null; 
+                        item = null;
+                        continue;
+                    }
+
+                    //Is the item active?
+                    if (!item.IsActive)
+                    {
+                        item = null;
+                        counter++;
                     }
                 }
             }
@@ -171,7 +183,7 @@ namespace DRObjects
         /// <returns></returns>
         public MapItem GetTopItem()
         {
-            if (this.mapItems.Count == 0)
+            if (this.mapItems.Where(mi => mi.IsActive).Count() == 0)
             {
                 return Tile;
             }
@@ -181,6 +193,10 @@ namespace DRObjects
             }
         }
 
+        /// <summary>
+        /// Gets all items. This includes inactive ones - you might want to check that
+        /// </summary>
+        /// <returns></returns>
         public MapItem[] GetItems()
         {
             return this.mapItems.ToArray();
@@ -312,7 +328,7 @@ namespace DRObjects
             if (this.GetTopMapItem() != null)
             {
                 //go through all the items and add them to the list in order
-                foreach (MapItem item in this.mapItems)
+                foreach (MapItem item in this.mapItems.Where(mi => mi.IsActive))
                 {
                     itemGraphics.AddRange(item.Graphics);
                 }

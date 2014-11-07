@@ -22,8 +22,28 @@ namespace DRObjects
         /// Defines whether the tile or item may have items placed on it.
         /// A value of false means that this tile can't have MapItems placed on it - this includes Actors walking on it
         /// </summary>
-        public virtual bool MayContainItems { get; set; }
+        /// 
+        private bool _mayContainItems = true;
 
+        public virtual bool MayContainItems
+        {
+            get
+            {
+                if (!IsActive)
+                {
+                    return true;
+                }
+                else
+                {
+                    return _mayContainItems;
+                }
+
+            }
+            set
+            {
+                _mayContainItems = value;
+            }
+        }
         /// <summary>
         /// Represents the name of the tile or item
         /// </summary>
@@ -38,6 +58,10 @@ namespace DRObjects
         /// Represents the graphics that this tile will use to represent itself. 
         /// </summary>
         public virtual List<SpriteData> Graphics { get; set; }
+
+        public bool IsActive { get; set; }
+
+        public OwningFactions OwnedBy { get; set; }
 
         /// <summary>
         /// Represents the top graphic that this tile uses to represent itself. Assigning this WILL OVERWRITE the top graphic
@@ -90,13 +114,12 @@ namespace DRObjects
         /// </summary>
         public virtual ActionFeedback[] PerformAction(ActionType actionType, Actor actor, object[] args)
         {
-
             if (GetPossibleActions(actor).Contains(actionType))
             {
                 switch (actionType)
                 {
-                    case ActionType.EXAMINE :
-                        return new ActionFeedback[] { new CurrentLogFeedback(InterfaceSpriteName.PERC,Color.Black,"You see " + this.Description) };
+                    case ActionType.EXAMINE:
+                        return new ActionFeedback[] { new CurrentLogFeedback(InterfaceSpriteName.PERC, Color.Black, "You see " + this.Description) };
                     case ActionType.LOOK:
                         return new ActionFeedback[] { new TextFeedback(this.Name) };
                     default:
@@ -120,6 +143,11 @@ namespace DRObjects
         /// <returns></returns>
         public virtual ActionType[] GetPossibleActions(Actor actor)
         {
+            if (!IsActive)
+            {
+                return new ActionType[] { };
+            }
+
             if (actor.IsPlayerCharacter)
             {
                 return new ActionType[] { ActionType.EXAMINE, ActionType.LOOK };
@@ -140,6 +168,8 @@ namespace DRObjects
         public MapItem()
         {
             this.Graphics = new List<SpriteData>();
+            this.IsActive = true; //active unless we say otherwise
+            this.OwnedBy = OwningFactions.BANDITS | OwningFactions.HUMANS | OwningFactions.ORCS | OwningFactions.UNDEAD | OwningFactions.ABANDONED; //Everyone!
         }
 
         /// <summary>

@@ -265,7 +265,7 @@ namespace DivineRightGame.LocalMapGenerator
 
                 Actor[] acts = null;
 
-                gennedMap = gen.GenerateMap(25, null, maplet, true, "", out acts);
+                gennedMap = gen.GenerateMap(25, null, maplet, true, "", OwningFactions.ORCS ,out acts);
 
                 enemies.AddRange(acts);
 
