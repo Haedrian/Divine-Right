@@ -17,3 +17,4 @@ namespace DRObjects.Enums
         HORSE
     }
 }
+    

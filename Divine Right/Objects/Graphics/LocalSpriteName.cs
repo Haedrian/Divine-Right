@@ -575,6 +575,15 @@ namespace DRObjects.Graphics
         UNHOLY_STATUE_TR,
         UNHOLY_STATUE_BL,
         UNHOLY_STATUE_BR,
+        MINE_SHAFT_TL,
+        MINE_SHAFT_TC,
+        MINE_SHAFT_TR,
+        MINE_SHAFT_CL,
+        MINE_SHAFT_CC,
+        MINE_SHAFT_CR,
+        MINE_SHAFT_BL,
+        MINE_SHAFT_BC,
+        MINE_SHAFT_BR,
 
     }
 }

@@ -365,8 +365,6 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.COURGETTE] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(250, 350, 50, 50));
             localSprites[(int)LocalSpriteName.CORN] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(300, 350, 50, 50));
 
-
-
             AddLocalSprite(LocalSpriteName.PEEL_1, RESOURCES_AND_TOOLS, 0, 8);
             AddLocalSprite(LocalSpriteName.PEEL_2, RESOURCES_AND_TOOLS, 1, 8);
             AddLocalSprite(LocalSpriteName.FURNACE_LARGE_TOP, RESOURCES_AND_TOOLS, 2, 8);
@@ -418,6 +416,18 @@ namespace DRObjects.Graphics
             AddLocalSprite(LocalSpriteName.SAWHORSE_2, RESOURCES_AND_TOOLS, 15, 2);
             AddLocalSprite(LocalSpriteName.PLANKS_1, RESOURCES_AND_TOOLS, 16, 2);
             AddLocalSprite(LocalSpriteName.PLANKS_2, RESOURCES_AND_TOOLS, 17, 2);
+
+            AddLocalSprite(LocalSpriteName.MINE_SHAFT_TL, RESOURCES_AND_TOOLS, 12, 4);
+            AddLocalSprite(LocalSpriteName.MINE_SHAFT_TC, RESOURCES_AND_TOOLS, 13, 4);
+            AddLocalSprite(LocalSpriteName.MINE_SHAFT_TR, RESOURCES_AND_TOOLS, 14, 4);
+
+            AddLocalSprite(LocalSpriteName.MINE_SHAFT_CL, RESOURCES_AND_TOOLS, 12, 5);
+            AddLocalSprite(LocalSpriteName.MINE_SHAFT_CC, RESOURCES_AND_TOOLS, 13, 5);
+            AddLocalSprite(LocalSpriteName.MINE_SHAFT_CR, RESOURCES_AND_TOOLS, 14, 5);
+
+            AddLocalSprite(LocalSpriteName.MINE_SHAFT_BL, RESOURCES_AND_TOOLS, 12, 6);
+            AddLocalSprite(LocalSpriteName.MINE_SHAFT_BC, RESOURCES_AND_TOOLS, 13, 6);
+            AddLocalSprite(LocalSpriteName.MINE_SHAFT_BR, RESOURCES_AND_TOOLS, 14, 6);
 
             localSprites[(int)LocalSpriteName.TREE_1] = new SpriteData(FORESTS_AND_MINES, new Rectangle(0, 0, 50, 50));
             localSprites[(int)LocalSpriteName.DEAD_TREE] = new SpriteData(FORESTS_AND_MINES, new Rectangle(50, 0, 50, 50));

@@ -74,6 +74,7 @@ Maplets\Camp\WeaponsArea.xml
 Maplets\Components\LargeBedroom.xml
 Maplets\Components\MediumBedroom.xml
 Maplets\Components\Plazas\FountainPlaza.xml
+Maplets\Components\MiningPit.xml
 Maplets\Components\Plazas\StatuePlaza.xml
 Maplets\Components\SmallBedroom.xml
 Maplets\CarpentryLevel1.xml
@@ -91,6 +92,7 @@ Maplets\Dungeons\DrinkingRoom.xml
 Maplets\Dungeons\FarmRoom.xml
 Maplets\Dungeons\SleepingRoom.xml
 Maplets\Dungeons\SmithingRoom.xml
+Maplets\IronMine.xml
 Maplets\IronworksLevel3.xml
 Maplets\IronworksLevel2.xml
 Maplets\IronworksLevel1.xml

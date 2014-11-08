@@ -146,7 +146,7 @@ namespace Divine_Right.HelperFunctions
         {
             LocalMapXMLParser parser = new LocalMapXMLParser();
 
-            Maplet maplet = parser.ParseMaplet(@"Maplets/HouseMaplet.xml");
+            Maplet maplet = parser.ParseMaplet(@"Maplets/IronMine.xml");
 
             //Generate it
             LocalMapGenerator gen = new LocalMapGenerator();

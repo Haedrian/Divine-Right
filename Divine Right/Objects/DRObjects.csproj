@@ -185,6 +185,7 @@
   <ItemGroup>
     <Folder Include="GraphicsEngineObjects\Enums\" />
     <Folder Include="Items\Tiles\Local\" />
+    <Folder Include="Maplets\ResourceBuildings\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ExternalDLLs\NewtonSoft-JSlicense.txt" />
@@ -213,6 +214,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Maplets\Components\Plazas\FountainPlaza.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Maplets\Components\MiningPit.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Maplets\Components\Plazas\StatuePlaza.xml">
@@ -276,6 +280,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Maplets\Dungeons\SmithingRoom.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Maplets\IronMine.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Maplets\IronworksLevel3.xml">

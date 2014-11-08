@@ -4,8 +4,8 @@
     <MapletContentsMaplet Position="Sides" MaxAmount="1" ProbabilityPercentage="100" >
       <Maplet MapletName="Library" SizeX="7" SizeY="7" SizeRange="2" Tiled="true" TileID="1" Walled="true" >
         <MapletContents>
-          <MapletContentsItemTag Position="Sides" Category="mundaneitems" MaxAmount="3" ProbabilityPercentage="66" Tag="reading" />
-          <MapletContentsItemTag Position="Middle" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="75" Tag="desk"/>
+          <MapletContentsItemTag Position="Sides" Owners="Humans,Bandits" Category="mundaneitems" MaxAmount="3" ProbabilityPercentage="66" Tag="reading" />
+          <MapletContentsItemTag Position="Middle" Owners="Humans,Bandits" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="75" Tag="desk"/>
         </MapletContents>
       </Maplet>
     </MapletContentsMaplet>
@@ -16,8 +16,8 @@
       <MapletTag Tag="TableSet" />
     </MapletContentsMaplet>
 
-    <MapletContentsItemTag Position="Middle" MaxAmount="10" Owners="Undead" ProbabilityPercentage="50" Category="mundaneitems" Tag="decoration"/>
-    <MapletContentsItemTag Position="Anywhere" MaxAmount="3" Owners="Bandits" ProbabilityPercentage="50" Category="mundaneitems" Tag="furniture"/>
+    <MapletContentsItemTag Position="Middle" MaxAmount="10" Owners="Humans" ProbabilityPercentage="50" Category="mundaneitems" Tag="decoration"/>
+    <MapletContentsItemTag Position="Anywhere" MaxAmount="3" Owners="Humans" ProbabilityPercentage="50" Category="mundaneitems" Tag="furniture"/>
     
   </MapletContents>
 </Maplet>
