@@ -117,6 +117,11 @@ namespace Divine_Right.GameScreens
             InternalActionEnum? action = null;
             object[] args = null;
 
+            if (!Game.IsActive)
+            {
+                return;
+            }
+
             if (mouse.LeftButton == ButtonState.Pressed)
             {
                 Point mousePoint = new Point(mouse.X, mouse.Y);

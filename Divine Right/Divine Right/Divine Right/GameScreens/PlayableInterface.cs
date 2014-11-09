@@ -382,399 +382,405 @@ namespace Divine_Right.GameScreens
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 game.Exit();
 
-            //Lets see if there are any keyboard keys being pressed
-
-            KeyboardState keyboardState = Keyboard.GetState();
-
-            //Has the user pressed esc?
-            if (keyboardState.IsKeyDown(Keys.Escape))
+            
+            //Only check if the game is actually active
+            if (Game.IsActive)
             {
-                GameState.NewLog.Add(new CurrentLogFeedback(InterfaceSpriteName.BANNER_GREEN, Color.White, "Saving Game Please Wait..."));
 
-                saveAndQuit = true;
-            }
 
-            bool shiftHeld = keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift);
+                //Lets see if there are any keyboard keys being pressed
 
-            //has the user pressed one of the directional keys?
-            //If yes, try to move
+                KeyboardState keyboardState = Keyboard.GetState();
 
-            //If shift was held, then we wait for less, so game moves faster
-            if (gameTime.TotalGameTime.TotalMilliseconds - previousGameTime < GAMEINPUTDELAY / (shiftHeld ? 2 : 1))
-            {
-                //do nothing
-            }
-            else
-            {
-                //is there a component which wants to handle the keyboard movement?
-                ActionType? kAction = null;
-                object[] kArgs = null;
-                MapCoordinate kTargetCoord = null;
-
-                bool keyHandled = false;
-                bool destroy = false;
-
-                //Do it upside down, so the stuff which appears on top happens first
-                for (int i = interfaceComponents.Count - 1; i >= 0; i--)
+                //Has the user pressed esc?
+                if (keyboardState.IsKeyDown(Keys.Escape))
                 {
-                    var interfaceComponent = interfaceComponents[i];
+                    GameState.NewLog.Add(new CurrentLogFeedback(InterfaceSpriteName.BANNER_GREEN, Color.White, "Saving Game Please Wait..."));
 
-                    keyHandled = interfaceComponent.HandleKeyboard(keyboardState, out kAction, out kArgs, out kTargetCoord, out destroy);
-
-                    //do we destroy?
-
-                    if (destroy)
-                    {
-                        interfaceComponents.RemoveAt(i);
-                        i++; //increment by 1
-                    }
-
-                    if (keyHandled)
-                    {
-                        //Break out of the loop - someone handled it
-                        break;
-                    }
+                    saveAndQuit = true;
                 }
 
-                if (kAction != null)
+                bool shiftHeld = keyboardState.IsKeyDown(Keys.LeftShift) || keyboardState.IsKeyDown(Keys.RightShift);
+
+                //has the user pressed one of the directional keys?
+                //If yes, try to move
+
+                //If shift was held, then we wait for less, so game moves faster
+                if (gameTime.TotalGameTime.TotalMilliseconds - previousGameTime < GAMEINPUTDELAY / (shiftHeld ? 2 : 1))
                 {
-                    this.PerformAction(kTargetCoord,null, kAction.Value, kArgs);
-                }
-
-                //did we do anything?
-                if (keyHandled)
-                {
-
-
+                    //do nothing
                 }
                 else
                 {
-                    //Lets see if tab is held down
-                    if (keyboardState.IsKeyDown(Keys.Tab))
-                    {
-                        //Zoom out a bit
-                        TILEWIDTH = MINTILEWIDTH;
-                        TILEHEIGHT = MINTILEHEIGHT;
-                    }
-                    else
-                    {
-                        //Let's animate it :)
+                    //is there a component which wants to handle the keyboard movement?
+                    ActionType? kAction = null;
+                    object[] kArgs = null;
+                    MapCoordinate kTargetCoord = null;
 
-                        //Leave it zoomed in
-                        TILEWIDTH = MAXTILEWIDTH;
-                        TILEHEIGHT = MAXTILEHEIGHT;
-                    }
-
-                    //not handled, lets walk
-                    //where is the user?
-                    MapCoordinate coord = UserInterfaceManager.GetPlayerActor().MapCharacter.Coordinate;
-                    MapCoordinate difference = new MapCoordinate(0, 0, 0, coord.MapType);
-                    //we will either increase or decrease it by an amount depending on the directional key pressed
-
-                    if (keyboardState.IsKeyDown(Keys.OemPeriod))
-                    {
-                        //Just waste time
-                        this.PerformAction(null,null, ActionType.IDLE, null);
-                    }
-                    else if (keyboardState.IsKeyDown(Keys.Up))
-                    {
-                        difference = new MapCoordinate(0, 1, 0, coord.MapType);
-                    }
-                    else if (keyboardState.IsKeyDown(Keys.Down))
-                    {
-                        difference = new MapCoordinate(0, -1, 0, coord.MapType);
-                    }
-                    else if (keyboardState.IsKeyDown(Keys.Left))
-                    {
-                        difference = new MapCoordinate(-1, 0, 0, coord.MapType);
-                    }
-                    else if (keyboardState.IsKeyDown(Keys.Right))
-                    {
-                        difference = new MapCoordinate(1, 0, 0, coord.MapType);
-                    }
-
-                    //The fact that they'er not the same means the user pressed a key, lets move
-                    if (!difference.Equals(new MapCoordinate(0, 0, 0, coord.MapType)))
-                    {
-                        //add the difference to the coordinate
-                        coord += difference;
-
-                        //send a move message to that coordinate
-                        this.PerformAction(coord,null, DRObjects.Enums.ActionType.MOVE, null);
-
-                    }
-
-                }
-                //mark the current time
-                previousGameTime = (int)gameTime.TotalGameTime.TotalMilliseconds;
-            }
-
-            #region Mouse Handling
-
-            //See what the mouse is doing
-            MouseState mouse = Mouse.GetState();
-
-            MouseActionEnum? mouseAction = this.DetermineMouseAction(mouse);
-
-            //this is a potential mouse action
-            ActionType? action = null;
-            object[] args = null;
-            MapCoordinate targetCoord = null;
-            MapItem item = null;
-
-            //see if there is a component which will handle it instead
-
-            //Is the mouse over a particular component ?
-            foreach (var component in interfaceComponents.Where(ic => ic.Visible))
-            {
-                if (component.ReturnLocation().Contains(mouse.X, mouse.Y))
-                {
-                    //Mouse over trigger
-                    component.HandleMouseOver(mouse.X, mouse.Y);
-                }
-            }
-
-
-            if (mouseAction != null)
-            {
-                bool mouseHandled = false;
-
-                InternalActionEnum? internalAction = null;
-                object[] arg = null;
-
-                foreach (var menuButton in menuButtons)
-                {
-                    if (menuButton.ReturnLocation().Contains(new Point(mouse.X, mouse.Y)) && mouseAction == MouseActionEnum.LEFT_CLICK && menuButton.HandleClick(mouse.X, mouse.Y, out internalAction, out arg))
-                    {
-                        mouseHandled = true; //don't get into the other loop
-                        break; //break out
-                    }
-                }
-
-                //Are we dragging something?
-
-                if (isDragging)
-                {
-                    //Check the location we're at
-                    int deltaX = mouse.X - dragPointX;
-                    int deltaY = mouse.Y - dragPointY;
-
-                    //Drag it
-                    dragItem.PerformDrag(deltaX, deltaY);
-
-                    //Update the dragpoints
-
-                    dragPointX = deltaX;
-                    dragPointY = deltaY;
-
-                    //are we still dragging?
-                    if (mouseAction.Value != MouseActionEnum.DRAG)
-                    {
-                        //Nope
-                        isDragging = false;
-                    }
-                }
-
-                //Do we have a MODAL interface component?
-                var modalComponent = interfaceComponents.Where(ic => ic.IsModal()).FirstOrDefault();
-
-                if (modalComponent != null)
-                {
-                    //Force it to handle it
+                    bool keyHandled = false;
                     bool destroy = false;
 
-                    modalComponent.HandleClick(mouse.X, mouse.Y, mouseAction.Value, out action,out internalAction, out args, out item, out targetCoord, out destroy);
-
-                    if (destroy)
+                    //Do it upside down, so the stuff which appears on top happens first
+                    for (int i = interfaceComponents.Count - 1; i >= 0; i--)
                     {
-                        //Destroy it
-                        interfaceComponents.Remove(modalComponent);
-                    }
+                        var interfaceComponent = interfaceComponents[i];
 
-                    //It's handled
-                    mouseHandled = true;
-                }
+                        keyHandled = interfaceComponent.HandleKeyboard(keyboardState, out kAction, out kArgs, out kTargetCoord, out destroy);
 
-                for (int i = interfaceComponents.Count - 1; i >= 0; i--)
-                {
-                    if (mouseHandled)
-                    {
-                        break;
-                    }
-
-                    var interfaceComponent = interfaceComponents[i];
-
-                    //is the click within this interface's scope? or is it modal?
-
-                    Point mousePoint = new Point(mouse.X, mouse.Y);
-
-                    if (interfaceComponent.IsModal() || interfaceComponent.ReturnLocation().Contains(mousePoint) && interfaceComponent.Visible)
-                    {
-                        bool destroy;
-
-                        //Are we dragging?
-                        if (mouseAction.Value == MouseActionEnum.DRAG)
-                        {
-                            //Yes
-                            this.dragPointX = mouse.X;
-                            this.dragPointY = mouse.Y;
-                            isDragging = true;
-                            dragItem = interfaceComponent;
-
-                            mouseHandled = true;
-
-                            //insert the item again
-                            interfaceComponents.RemoveAt(i);
-
-                            interfaceComponents.Add(interfaceComponent);
-
-                            break; //break out
-                        }
-
-                        //see if the component can handle it
-                        mouseHandled = interfaceComponent.HandleClick(mouse.X, mouse.Y, mouseAction.Value, out action,out internalAction, out args,out item, out targetCoord, out destroy);
+                        //do we destroy?
 
                         if (destroy)
                         {
-                            //destroy the component
                             interfaceComponents.RemoveAt(i);
-                            i++;
+                            i++; //increment by 1
                         }
 
+                        if (keyHandled)
+                        {
+                            //Break out of the loop - someone handled it
+                            break;
+                        }
+                    }
+
+                    if (kAction != null)
+                    {
+                        this.PerformAction(kTargetCoord, null, kAction.Value, kArgs);
+                    }
+
+                    //did we do anything?
+                    if (keyHandled)
+                    {
+
+
+                    }
+                    else
+                    {
+                        //Lets see if tab is held down
+                        if (keyboardState.IsKeyDown(Keys.Tab))
+                        {
+                            //Zoom out a bit
+                            TILEWIDTH = MINTILEWIDTH;
+                            TILEHEIGHT = MINTILEHEIGHT;
+                        }
+                        else
+                        {
+                            //Let's animate it :)
+
+                            //Leave it zoomed in
+                            TILEWIDTH = MAXTILEWIDTH;
+                            TILEHEIGHT = MAXTILEHEIGHT;
+                        }
+
+                        //not handled, lets walk
+                        //where is the user?
+                        MapCoordinate coord = UserInterfaceManager.GetPlayerActor().MapCharacter.Coordinate;
+                        MapCoordinate difference = new MapCoordinate(0, 0, 0, coord.MapType);
+                        //we will either increase or decrease it by an amount depending on the directional key pressed
+
+                        if (keyboardState.IsKeyDown(Keys.OemPeriod))
+                        {
+                            //Just waste time
+                            this.PerformAction(null, null, ActionType.IDLE, null);
+                        }
+                        else if (keyboardState.IsKeyDown(Keys.Up))
+                        {
+                            difference = new MapCoordinate(0, 1, 0, coord.MapType);
+                        }
+                        else if (keyboardState.IsKeyDown(Keys.Down))
+                        {
+                            difference = new MapCoordinate(0, -1, 0, coord.MapType);
+                        }
+                        else if (keyboardState.IsKeyDown(Keys.Left))
+                        {
+                            difference = new MapCoordinate(-1, 0, 0, coord.MapType);
+                        }
+                        else if (keyboardState.IsKeyDown(Keys.Right))
+                        {
+                            difference = new MapCoordinate(1, 0, 0, coord.MapType);
+                        }
+
+                        //The fact that they'er not the same means the user pressed a key, lets move
+                        if (!difference.Equals(new MapCoordinate(0, 0, 0, coord.MapType)))
+                        {
+                            //add the difference to the coordinate
+                            coord += difference;
+
+                            //send a move message to that coordinate
+                            this.PerformAction(coord, null, DRObjects.Enums.ActionType.MOVE, null);
+
+                        }
+
+                    }
+                    //mark the current time
+                    previousGameTime = (int)gameTime.TotalGameTime.TotalMilliseconds;
+                }
+
+                #region Mouse Handling
+
+                //See what the mouse is doing
+                MouseState mouse = Mouse.GetState();
+
+                MouseActionEnum? mouseAction = this.DetermineMouseAction(mouse);
+
+                //this is a potential mouse action
+                ActionType? action = null;
+                object[] args = null;
+                MapCoordinate targetCoord = null;
+                MapItem item = null;
+
+                //see if there is a component which will handle it instead
+
+                //Is the mouse over a particular component ?
+                foreach (var component in interfaceComponents.Where(ic => ic.Visible))
+                {
+                    if (component.ReturnLocation().Contains(mouse.X, mouse.Y))
+                    {
+                        //Mouse over trigger
+                        component.HandleMouseOver(mouse.X, mouse.Y);
+                    }
+                }
+
+
+                if (mouseAction != null)
+                {
+                    bool mouseHandled = false;
+
+                    InternalActionEnum? internalAction = null;
+                    object[] arg = null;
+
+                    foreach (var menuButton in menuButtons)
+                    {
+                        if (menuButton.ReturnLocation().Contains(new Point(mouse.X, mouse.Y)) && mouseAction == MouseActionEnum.LEFT_CLICK && menuButton.HandleClick(mouse.X, mouse.Y, out internalAction, out arg))
+                        {
+                            mouseHandled = true; //don't get into the other loop
+                            break; //break out
+                        }
+                    }
+
+                    //Are we dragging something?
+
+                    if (isDragging)
+                    {
+                        //Check the location we're at
+                        int deltaX = mouse.X - dragPointX;
+                        int deltaY = mouse.Y - dragPointY;
+
+                        //Drag it
+                        dragItem.PerformDrag(deltaX, deltaY);
+
+                        //Update the dragpoints
+
+                        dragPointX = deltaX;
+                        dragPointY = deltaY;
+
+                        //are we still dragging?
+                        if (mouseAction.Value != MouseActionEnum.DRAG)
+                        {
+                            //Nope
+                            isDragging = false;
+                        }
+                    }
+
+                    //Do we have a MODAL interface component?
+                    var modalComponent = interfaceComponents.Where(ic => ic.IsModal()).FirstOrDefault();
+
+                    if (modalComponent != null)
+                    {
+                        //Force it to handle it
+                        bool destroy = false;
+
+                        modalComponent.HandleClick(mouse.X, mouse.Y, mouseAction.Value, out action, out internalAction, out args, out item, out targetCoord, out destroy);
+
+                        if (destroy)
+                        {
+                            //Destroy it
+                            interfaceComponents.Remove(modalComponent);
+                        }
+
+                        //It's handled
+                        mouseHandled = true;
+                    }
+
+                    for (int i = interfaceComponents.Count - 1; i >= 0; i--)
+                    {
                         if (mouseHandled)
                         {
-                            //Get out of the loop - someone has handled it
                             break;
                         }
-                    }
-                }
 
-                //dispatch the action, if any
-                if (action.HasValue)
-                {
-                    this.PerformAction(targetCoord, item, action.Value, args);
-                }
+                        var interfaceComponent = interfaceComponents[i];
 
-                //Dispatch the internal action, if any
-                if (internalAction.HasValue)
-                {
-                    //Let's do it here
-                    switch (internalAction.Value)
-                    {
-                        case InternalActionEnum.OPEN_HEALTH:
-                            //Toggle the health
-                            var health = this.interfaceComponents.Where(ic => ic.GetType().Equals(typeof(HealthDisplayComponent))).FirstOrDefault();
+                        //is the click within this interface's scope? or is it modal?
 
-                            health.Visible = !health.Visible;
+                        Point mousePoint = new Point(mouse.X, mouse.Y);
 
-                            break;
-                        case InternalActionEnum.OPEN_ATTRIBUTES:
-                            //Toggle the attributes
-                            var att = this.interfaceComponents.Where(ic => ic.GetType().Equals(typeof(CharacterSheetComponent))).FirstOrDefault();
-                            att.Visible = !att.Visible;
-
-                            break;
-
-                        case InternalActionEnum.TOGGLE_SETTLEMENT:
-                            //Toggle the settlements
-                            var loc = this.interfaceComponents.Where(ic => ic.GetType().Equals(typeof(LocationDetailsComponent))).FirstOrDefault();
-                            loc.Visible = !loc.Visible;
-
-                            break;
-
-                        case InternalActionEnum.OPEN_LOG:
-                            //Toggle the log
-                            var log = this.interfaceComponents.Where(ic => ic.GetType().Equals(typeof(TextLogComponent))).FirstOrDefault();
-                            log.Visible = !log.Visible;
-                            break;
-
-                        case InternalActionEnum.OPEN_INVENTORY:
-                            //Toggle inventory
-                            var inv = this.interfaceComponents.Where(ic => ic.GetType().Equals(typeof(InventoryDisplayComponent))).FirstOrDefault();
-                            inv.Visible = !inv.Visible;
-                            break;
-
-                        case InternalActionEnum.LOSE:
-                            //For now, just go back to the main menu
-                             BaseGame.requestedInternalAction = InternalActionEnum.EXIT;
-                             BaseGame.requestedArgs = new object[0];
-                            break;
-                        case InternalActionEnum.MULTIDECISION:
-                            //The only thing that has multidecisions right now is char creation
-                            //So let's do it dirty for now
-                            CharacterCreation.ProcessParameters(args[1] as List<string>);
-                            break;
-
-                        //TODO: THE REST
-                    }
-                }
-
-
-
-                //do we continue?
-                if (mouseHandled)
-                {
-
-                }
-                else
-                {
-                    //the grid will handle it
-
-                    //determine where we clicked
-                    int xCord = (int)(mouse.X / TILEWIDTH);
-                    int yCord = (int)(mouse.Y / TILEHEIGHT);
-
-                    //get the game coordinate from the interface coordinate
-
-                    InterfaceBlock iBlock = blocks.FirstOrDefault(b => b.InterfaceX.Equals(xCord) && b.InterfaceY.Equals(yCord));
-
-                    //if it was a left click, we look
-
-                    if (mouseAction.Value == MouseActionEnum.LEFT_CLICK)
-                    {
-                        if (iBlock != null)
+                        if (interfaceComponent.IsModal() || interfaceComponent.ReturnLocation().Contains(mousePoint) && interfaceComponent.Visible)
                         {
-                            this.PerformAction(iBlock.MapCoordinate,null, DRObjects.Enums.ActionType.LOOK, null);
-                        }
-                    }
-                    else if (mouseAction.Value == MouseActionEnum.RIGHT_CLICK)
-                    {
-                        if (iBlock != null)
-                        {
-                            ActionType[] actions = UserInterfaceManager.GetPossibleActions(iBlock.MapCoordinate);
+                            bool destroy;
 
-                            //we are going to get a context menu
-
-                            //Check for other context menus and remove them - we can only have one
-                            for (int i = 0; i < interfaceComponents.Count; i++)
+                            //Are we dragging?
+                            if (mouseAction.Value == MouseActionEnum.DRAG)
                             {
-                                if (interfaceComponents[i].GetType().Equals(typeof(ContextMenuComponent)))
+                                //Yes
+                                this.dragPointX = mouse.X;
+                                this.dragPointY = mouse.Y;
+                                isDragging = true;
+                                dragItem = interfaceComponent;
+
+                                mouseHandled = true;
+
+                                //insert the item again
+                                interfaceComponents.RemoveAt(i);
+
+                                interfaceComponents.Add(interfaceComponent);
+
+                                break; //break out
+                            }
+
+                            //see if the component can handle it
+                            mouseHandled = interfaceComponent.HandleClick(mouse.X, mouse.Y, mouseAction.Value, out action, out internalAction, out args, out item, out targetCoord, out destroy);
+
+                            if (destroy)
+                            {
+                                //destroy the component
+                                interfaceComponents.RemoveAt(i);
+                                i++;
+                            }
+
+                            if (mouseHandled)
+                            {
+                                //Get out of the loop - someone has handled it
+                                break;
+                            }
+                        }
+                    }
+
+                    //dispatch the action, if any
+                    if (action.HasValue)
+                    {
+                        this.PerformAction(targetCoord, item, action.Value, args);
+                    }
+
+                    //Dispatch the internal action, if any
+                    if (internalAction.HasValue)
+                    {
+                        //Let's do it here
+                        switch (internalAction.Value)
+                        {
+                            case InternalActionEnum.OPEN_HEALTH:
+                                //Toggle the health
+                                var health = this.interfaceComponents.Where(ic => ic.GetType().Equals(typeof(HealthDisplayComponent))).FirstOrDefault();
+
+                                health.Visible = !health.Visible;
+
+                                break;
+                            case InternalActionEnum.OPEN_ATTRIBUTES:
+                                //Toggle the attributes
+                                var att = this.interfaceComponents.Where(ic => ic.GetType().Equals(typeof(CharacterSheetComponent))).FirstOrDefault();
+                                att.Visible = !att.Visible;
+
+                                break;
+
+                            case InternalActionEnum.TOGGLE_SETTLEMENT:
+                                //Toggle the settlements
+                                var loc = this.interfaceComponents.Where(ic => ic.GetType().Equals(typeof(LocationDetailsComponent))).FirstOrDefault();
+                                loc.Visible = !loc.Visible;
+
+                                break;
+
+                            case InternalActionEnum.OPEN_LOG:
+                                //Toggle the log
+                                var log = this.interfaceComponents.Where(ic => ic.GetType().Equals(typeof(TextLogComponent))).FirstOrDefault();
+                                log.Visible = !log.Visible;
+                                break;
+
+                            case InternalActionEnum.OPEN_INVENTORY:
+                                //Toggle inventory
+                                var inv = this.interfaceComponents.Where(ic => ic.GetType().Equals(typeof(InventoryDisplayComponent))).FirstOrDefault();
+                                inv.Visible = !inv.Visible;
+                                break;
+
+                            case InternalActionEnum.LOSE:
+                                //For now, just go back to the main menu
+                                BaseGame.requestedInternalAction = InternalActionEnum.EXIT;
+                                BaseGame.requestedArgs = new object[0];
+                                break;
+                            case InternalActionEnum.MULTIDECISION:
+                                //The only thing that has multidecisions right now is char creation
+                                //So let's do it dirty for now
+                                CharacterCreation.ProcessParameters(args[1] as List<string>);
+                                break;
+
+                            //TODO: THE REST
+                        }
+                    }
+
+
+
+                    //do we continue?
+                    if (mouseHandled)
+                    {
+
+                    }
+                    else
+                    {
+                        //the grid will handle it
+
+                        //determine where we clicked
+                        int xCord = (int)(mouse.X / TILEWIDTH);
+                        int yCord = (int)(mouse.Y / TILEHEIGHT);
+
+                        //get the game coordinate from the interface coordinate
+
+                        InterfaceBlock iBlock = blocks.FirstOrDefault(b => b.InterfaceX.Equals(xCord) && b.InterfaceY.Equals(yCord));
+
+                        //if it was a left click, we look
+
+                        if (mouseAction.Value == MouseActionEnum.LEFT_CLICK)
+                        {
+                            if (iBlock != null)
+                            {
+                                this.PerformAction(iBlock.MapCoordinate, null, DRObjects.Enums.ActionType.LOOK, null);
+                            }
+                        }
+                        else if (mouseAction.Value == MouseActionEnum.RIGHT_CLICK)
+                        {
+                            if (iBlock != null)
+                            {
+                                ActionType[] actions = UserInterfaceManager.GetPossibleActions(iBlock.MapCoordinate);
+
+                                //we are going to get a context menu
+
+                                //Check for other context menus and remove them - we can only have one
+                                for (int i = 0; i < interfaceComponents.Count; i++)
                                 {
-                                    //remove it
-                                    interfaceComponents.RemoveAt(i);
-                                    i--;
+                                    if (interfaceComponents[i].GetType().Equals(typeof(ContextMenuComponent)))
+                                    {
+                                        //remove it
+                                        interfaceComponents.RemoveAt(i);
+                                        i--;
+                                    }
                                 }
+
+                                ContextMenuComponent comp = new ContextMenuComponent(mouse.X + 10, mouse.Y, iBlock.MapCoordinate);
+
+                                foreach (ActionType act in actions)
+                                {
+                                    comp.AddContextMenuItem(act, null, this.game.Content);
+                                }
+
+                                //And add it
+                                interfaceComponents.Add(comp);
                             }
-
-                            ContextMenuComponent comp = new ContextMenuComponent(mouse.X + 10, mouse.Y, iBlock.MapCoordinate);
-
-                            foreach (ActionType act in actions)
-                            {
-                                comp.AddContextMenuItem(act, null, this.game.Content);
-                            }
-
-                            //And add it
-                            interfaceComponents.Add(comp);
                         }
                     }
-                }
 
-            } //end mouse handling
+                } //end mouse handling
 
-            this.lastLeftButtonClicked = (mouse.LeftButton == ButtonState.Pressed);
-            this.lastRightButtonClicked = (mouse.RightButton == ButtonState.Pressed);
-            #endregion
-
+                this.lastLeftButtonClicked = (mouse.LeftButton == ButtonState.Pressed);
+                this.lastRightButtonClicked = (mouse.RightButton == ButtonState.Pressed);
+                #endregion
+            }
         }
 
         public override void Draw(GameTime gameTime)
