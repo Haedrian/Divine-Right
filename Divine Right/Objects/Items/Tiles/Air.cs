@@ -26,6 +26,7 @@ namespace DRObjects.Items.Tiles
             this.MayContainItems = false;
             this.Name = "";
             this.InternalName = "Air";
+            this.IsActive = true;
         }
 
         /// <summary>
