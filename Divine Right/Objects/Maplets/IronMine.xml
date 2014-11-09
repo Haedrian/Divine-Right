@@ -11,7 +11,7 @@
     <MapletContentsMaplet Position="Anywhere" MaxAmount="1" ProbabilityPercentage="100" >
       <Maplet Tiled="true" SizeX="5" SizeY="5" Walled="false" TileTag="wood">
         <MapletContents>
-          <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="15" ProbabilityPercentage="50" Tag="metal"/>
+          <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="15" ProbabilityPercentage="50" Tag="iron"/>
         </MapletContents>
       </Maplet>
     </MapletContentsMaplet>
@@ -21,7 +21,7 @@
         <MapletContents>
           <!-- Furnace and storeroom -->
           <MapletContentsItemTag Position="Sides" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="85" Tag="furnace"/>
-          <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="15" ProbabilityPercentage="50" Tag="metal"/>
+          <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="15" ProbabilityPercentage="50" Tag="iron"/>
           <MapletContentsItemTag Position="Sides" Category="mundaneitems" MaxAmount="3" ProbabilityPercentage="100" Tag="container"/>
         </MapletContents>
       </Maplet>

@@ -1,16 +1,19 @@
-﻿<Maplet MapletName="Mining Pit" SizeX="3" SizeY="3" Tiled="false" Walled="false">
+﻿<Maplet MapletName="Mining Pit" SizeX="5" SizeY="5" Tiled="false" Walled="false">
   <MapletContents>
-    <MapletContentsItemTag Position="Fixed" x="0" y="2" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="mineshaft tl"/>
-    <MapletContentsItemTag Position="Fixed" x="1" y="2" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="mineshaft tc"/>
-    <MapletContentsItemTag Position="Fixed" x="2" y="2" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="mineshaft tr"/>
+    <MapletContentsItemTag Position="Fixed" x="1" y="3" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="mineshaft tl"/>
+    <MapletContentsItemTag Position="Fixed" x="2" y="3" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="mineshaft tc"/>
+    <MapletContentsItemTag Position="Fixed" x="3" y="3" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="mineshaft tr"/>
 
-    <MapletContentsItemTag Position="Fixed" x="0" y="1" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="mineshaft cl"/>
-    <MapletContentsItemTag Position="Fixed" x="1" y="1" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="mineshaft cc"/>
-    <MapletContentsItemTag Position="Fixed" x="2" y="1" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="mineshaft cr"/>
+    <MapletContentsItemTag Position="Fixed" x="1" y="2" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="mineshaft cl"/>
+    <MapletContentsItemTag Position="Fixed" x="2" y="2" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="mineshaft cc"/>
+    <MapletContentsItemTag Position="Fixed" x="3" y="2" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="mineshaft cr"/>
 
-    <MapletContentsItemTag Position="Fixed" x="0" y="0" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="mineshaft bl"/>
-    <MapletContentsItemTag Position="Fixed" x="1" y="0" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="mineshaft bc"/>
-    <MapletContentsItemTag Position="Fixed" x="2" y="0" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="mineshaft br"/>
+    <MapletContentsItemTag Position="Fixed" x="1" y="1" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="mineshaft bl"/>
+    <MapletContentsItemTag Position="Fixed" x="2" y="1" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="mineshaft bc"/>
+    <MapletContentsItemTag Position="Fixed" x="3" y="1" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="mineshaft br"/>
+
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="75" Tag="mining tool"/>
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="75" Tag="bucket"/>
     
   </MapletContents>
 </Maplet>
