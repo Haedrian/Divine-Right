@@ -92,6 +92,7 @@
     <Compile Include="ItemFactory\ItemFactoryManagers\InventoryItemManager.cs" />
     <Compile Include="LocalMapGenerator\CampGenerator.cs" />
     <Compile Include="LocalMapGenerator\Objects\WildernessGenerationData.cs" />
+    <Compile Include="LocalMapGenerator\SiteGenerator.cs" />
     <Compile Include="LocalMapGenerator\WildernessGenerator.cs" />
     <Compile Include="SettlementHandling\Objects\SettlementBuilding.cs" />
     <Compile Include="Pathfinding\AuthorAttribute.cs" />

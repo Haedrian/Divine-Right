@@ -134,6 +134,14 @@ namespace DRObjects
         }
 
         /// <summary>
+        /// Removes all items from the MapBlock. THIS INCLUDES THE ONES WHICH ARE INACTIVE
+        /// </summary>
+        public void RemoveAllItems()
+        {
+            this.mapItems = new List<MapItem>();
+        }
+
+        /// <summary>
         /// Gets the top mapitem in the stack, or null if there is no item.
         /// It will check if the map item is active or not before showing it.
         /// </summary>

@@ -1,4 +1,4 @@
-﻿<Maplet name="ironMine" Tiled="true" TileTag="rocky" SizeX ="20" SizeY="20" Walled="false">
+﻿<Maplet name="ironMine" Tiled="false" TileTag="rocky" SizeX ="20" SizeY="20" Walled="false">
   <MapletContents>
 
     <MapletContentsMaplet Position="Middle" FirstFit="false" MaxAmount="1" ProbabilityPercentage="100">
@@ -6,12 +6,19 @@
     </MapletContentsMaplet>
 
     <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="5" ProbabilityPercentage="85" Tag="mining tool"/>
-    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="20" ProbabilityPercentage="85" Tag="tree stumps"/>
 
     <MapletContentsMaplet Position="Anywhere" MaxAmount="1" ProbabilityPercentage="100" >
       <Maplet Tiled="true" SizeX="5" SizeY="5" Walled="false" TileTag="wood">
         <MapletContents>
-          <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="15" ProbabilityPercentage="50" Tag="iron"/>
+          <MapletContentsItemTag Position="Anywhere" Owners="Humans" Category="mundaneitems" MaxAmount="15" ProbabilityPercentage="50" Tag="iron"/>
+        </MapletContents>
+      </Maplet>
+    </MapletContentsMaplet>
+    
+  <MapletContentsMaplet Position="Anywhere" MaxAmount="1" ProbabilityPercentage="100" >
+      <Maplet Tiled="true" SizeX="3" SizeY="3" Walled="false" TileTag="wood">
+        <MapletContents>
+          <MapletContentsItemTag Position="Anywhere" Owners="Humans" Category="mundaneitems" MaxAmount="5" ProbabilityPercentage="50" Tag="mining tool"/>
         </MapletContents>
       </Maplet>
     </MapletContentsMaplet>
@@ -31,7 +38,7 @@
       <Maplet Tiled="true" SizeX="10" SizeY="10" Walled="true" TileTag="wood" WindowProbability="20">
         <MapletContents>
           <MapletContentsMaplet Position="Sides" MaxAmount="1" ProbabilityPercentage="100">
-            <Maplet Tiled="false" SizeX="10" SizeY="4" Walled="true" Name="Bedrooms">
+            <Maplet Tiled="false" SizeX="5" SizeY="4" Walled="true" Name="Bedrooms">
               <MapletContents>
                 <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="5" ProbabilityPercentage="75" Tag="bedroll"/>
               </MapletContents>
@@ -46,7 +53,7 @@
             </Maplet>
           </MapletContentsMaplet>
 
-          <MapletContentsMaplet Position="Middle" MaxAmount="1" ProbabilityPercentage="99">
+          <MapletContentsMaplet Position="Middle" MaxAmount="2" ProbabilityPercentage="99">
             <MapletTag Tag="TableSet" />
           </MapletContentsMaplet>
           

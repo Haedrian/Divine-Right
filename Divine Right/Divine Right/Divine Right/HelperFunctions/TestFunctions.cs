@@ -146,18 +146,21 @@ namespace Divine_Right.HelperFunctions
         {
             LocalMapXMLParser parser = new LocalMapXMLParser();
 
-            Maplet maplet = parser.ParseMaplet(@"Maplets/IronMine.xml");
+            //Maplet maplet = parser.ParseMaplet(@"Maplets/IronMine.xml");
 
-            //Generate it
-            LocalMapGenerator gen = new LocalMapGenerator();
-
+            
             Actor[] tempy = null;
 
-            MapBlock[,] generatedMap = gen.GenerateMap(0, null, maplet, true,"human",DRObjects.Enums.OwningFactions.HUMANS,out tempy);
+            //MapBlock[,] generatedMap = gen.GenerateMap(0, null, maplet, true,"human",DRObjects.Enums.OwningFactions.HUMANS,out tempy);
 
             //put in the map
 
-            GameState.LocalMap = new LocalMap(150, 150, 1, 0);
+            ////Generate it
+            LocalMapGenerator gen = new LocalMapGenerator();
+
+            MapBlock[,] generatedMap = SiteGenerator.GenerateSite(DRObjects.Enums.SiteType.IRON_MINE, DRObjects.Enums.GlobalBiome.POLAR_FOREST, DRObjects.Enums.OwningFactions.HUMANS, out tempy);
+
+            GameState.LocalMap = new LocalMap(50, 50, 1, 0);
 
             List<MapBlock> collapsedMap = new List<MapBlock>();
 

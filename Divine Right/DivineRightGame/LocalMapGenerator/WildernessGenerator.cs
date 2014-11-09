@@ -20,13 +20,13 @@ namespace DivineRightGame.LocalMapGenerator
         /// <summary>
         /// The size of the wilderness map
         /// </summary>
-        private static int MAP_EDGE = 25;
+        private static int MAP_EDGE = 30;
 
         private static int TREE_AMOUNT_FOREST = 100;
         private static int TREE_AMOUNT_WOODLAND = 50;
         private static int ARID_DESERT_TREE_COUNT = 15;
 
-        private static Dictionary<GlobalBiome, WildernessGenerationData> details = new Dictionary<GlobalBiome, WildernessGenerationData>();
+        public static Dictionary<GlobalBiome, WildernessGenerationData> details = new Dictionary<GlobalBiome, WildernessGenerationData>();
 
         static WildernessGenerator()
         {
