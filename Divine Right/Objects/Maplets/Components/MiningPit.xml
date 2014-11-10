@@ -12,7 +12,7 @@
     <MapletContentsItemTag Position="Fixed" x="2" y="1" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="mineshaft bc"/>
     <MapletContentsItemTag Position="Fixed" x="3" y="1" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="mineshaft br"/>
 
-    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="75" Tag="mining tool"/>
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="7" ProbabilityPercentage="75" Tag="rubble"/>
     <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="75" Tag="bucket"/>
     
   </MapletContents>

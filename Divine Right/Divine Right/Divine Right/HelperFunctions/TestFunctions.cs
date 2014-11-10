@@ -158,7 +158,7 @@ namespace Divine_Right.HelperFunctions
             ////Generate it
             LocalMapGenerator gen = new LocalMapGenerator();
 
-            MapBlock[,] generatedMap = SiteGenerator.GenerateSite(DRObjects.Enums.SiteType.IRON_MINE, DRObjects.Enums.GlobalBiome.POLAR_FOREST, DRObjects.Enums.OwningFactions.HUMANS, out tempy);
+            MapBlock[,] generatedMap = SiteGenerator.GenerateSite(DRObjects.Enums.SiteType.IRON_MINE, DRObjects.Enums.GlobalBiome.WETLAND, DRObjects.Enums.OwningFactions.HUMANS, out tempy);
 
             GameState.LocalMap = new LocalMap(50, 50, 1, 0);
 
