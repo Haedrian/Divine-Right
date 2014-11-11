@@ -39,6 +39,10 @@ namespace DRObjects
         /// </summary>
         public bool IsAlive { get; set; }
 
+        public bool IsActive { get; set; }
+
+        public OwningFactions Owners { get;set; }
+
         /// <summary>
         /// The method that this character is using to travel
         /// </summary>

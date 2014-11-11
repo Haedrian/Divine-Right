@@ -30,7 +30,7 @@ namespace DivineRightGame.CombatHandling
         /// <returns></returns>
         public static ActionFeedback[] CheckHealth(Actor actor)
         {
-            if (!actor.IsAlive)
+            if (!actor.IsAlive || !actor.MapCharacter.IsActive)
             {
                 //Nothing we can do here
                 return new ActionFeedback[] { };

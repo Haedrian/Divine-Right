@@ -667,6 +667,13 @@ namespace DivineRightGame.LocalMapGenerator
                         var mapCharacter = factory.CreateItem("enemies", actorID);
 
                         newActor.MapCharacter = mapCharacter;
+
+                        if (actor.Factions.HasValue && !actor.Factions.Value.HasFlag(owner))
+                        {
+                            //inactive character
+                            newActor.MapCharacter.IsActive = false;
+                        }
+                        
                         (mapCharacter as LocalCharacter).Actor = newActor;
 
                         //Lets position them randomly

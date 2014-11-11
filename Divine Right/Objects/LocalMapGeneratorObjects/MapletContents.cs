@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DRObjects.Enums;
 using DRObjects.LocalMapGeneratorObjects.Enums;
 
 namespace DRObjects.LocalMapGeneratorObjects
@@ -48,5 +49,42 @@ namespace DRObjects.LocalMapGeneratorObjects
         /// If the position is fixed, the SINGLE item will be placed in this location. Otherwise will be ignored
         /// </summary>
         public int? y { get; set; }
+
+        /// <summary>
+        /// A comma seperated representation of the factions which own this mcit
+        /// </summary>
+        public string OwnerFactions { get; set; }
+
+        /// <summary>
+        /// The factions which own this object
+        /// </summary>
+        public OwningFactions? Factions
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(OwnerFactions))
+                {
+                    return null;
+                }
+
+                OwningFactions? fact = null;
+                //Parse it
+                foreach (var own in OwnerFactions.Split(','))
+                {
+                    OwningFactions ownParsed = (OwningFactions)Enum.Parse(typeof(OwningFactions), own.ToUpper());
+
+                    if (fact == null)
+                    {
+                        fact = ownParsed;
+                    }
+                    else
+                    {
+                        fact = fact | ownParsed;
+                    }
+                }
+
+                return fact;
+            }
+        }
     }
 }

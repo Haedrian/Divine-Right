@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DRObjects;
+using DRObjects.ActorHandling.ActorMissions;
 using DRObjects.Database;
 using DRObjects.Enums;
 using DRObjects.LocalMapGeneratorObjects;
+using Microsoft.Xna.Framework;
 
 namespace DivineRightGame.LocalMapGenerator
 {
@@ -50,6 +52,19 @@ namespace DivineRightGame.LocalMapGenerator
 
             //Now generate the actual map
             MapBlock[,] siteMap = lmg.GenerateMap(tileID, null, maplet, false, "", owner, out actors);
+
+            foreach(var actor in actors)
+            {
+                if (actor.CurrentMission!= null && actor.CurrentMission.GetType() == typeof(WanderMission))
+                {
+                    WanderMission wMiss = actor.CurrentMission as WanderMission;
+
+                    wMiss.WanderPoint.X += 4;
+                    wMiss.WanderPoint.Y += 4;
+
+                    wMiss.WanderRectangle = new Rectangle(wMiss.WanderRectangle.X + 4, wMiss.WanderRectangle.Y + 4, wMiss.WanderRectangle.Width, wMiss.WanderRectangle.Height);
+                }
+            }
 
             //Now lets fuse the maps
             map = lmg.JoinMaps(map, siteMap, 4, 4);

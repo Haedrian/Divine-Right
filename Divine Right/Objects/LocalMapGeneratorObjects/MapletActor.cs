@@ -19,6 +19,7 @@ namespace DRObjects.LocalMapGeneratorObjects
         public VendorType? VendorType { get; set; }
         public int? VendorLevel { get; set; }
 
+
         /// <summary>
         /// Whether to use the type of enemy that dominates the area
         /// Ie - for a human town, use humans.

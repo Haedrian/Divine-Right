@@ -206,20 +206,20 @@ namespace DivineRightGame
             MapCoordinate playerLocation = actors.Where(a => a.IsPlayerCharacter).FirstOrDefault().MapCharacter.Coordinate;
 
             //Check if we have any dead actors to clean up
-            foreach (Actor deadActor in actors.Where(a => !a.IsAlive && !a.IsPlayerCharacter && a.MapCharacter != null))
+            foreach (Actor deadActor in actors.Where(a => !a.IsAlive && !a.MapCharacter.IsActive && !a.IsPlayerCharacter && a.MapCharacter != null))
             {
                 this.GetBlockAtCoordinate(deadActor.MapCharacter.Coordinate).RemoveTopItem(); //remove the character
 
                 deadActor.MapCharacter = null; //detatch it
             }
 
-            foreach (Actor actor in actors.Where(a => !a.IsPlayerCharacter && a.IsAlive))
+            foreach (Actor actor in actors.Where(a => !a.IsPlayerCharacter && a.IsAlive && a.MapCharacter.IsActive))
             {
                 feedback.AddRange(ActorAIManager.PerformActions(actor, actors, playerLocation));
             }
 
             //Health check
-            foreach (Actor actor in actors.Where(a => a.IsAlive))
+            foreach (Actor actor in actors.Where(a => a.IsAlive && a.MapCharacter.IsActive))
             {
                 feedback.AddRange(HealthCheckManager.CheckHealth(actor));
             }

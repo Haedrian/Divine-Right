@@ -105,7 +105,7 @@ namespace DivineRightGame.LocalMapGenerator
                         case "VendorLevel": ((MapletActor)content).VendorLevel = Int32.Parse(value.ToString()); break;
                         case "BiomeName": ((MapletHerd)content).BiomeName = value.ToString(); break;
                         case "Domesticated": ((MapletHerd)content).Domesticated = bool.Parse(value); break;
-                        case "Owners": ((MapletContentsItemTag)content).OwnerFactions = value.ToString(); break;
+                        case "Owners": content.OwnerFactions = value.ToString(); break;
                     }
                 }
 
