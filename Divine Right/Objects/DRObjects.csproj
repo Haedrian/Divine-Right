@@ -169,6 +169,7 @@
     <Compile Include="LocalMapGeneratorObjects\Enums\PositionAffinity.cs" />
     <Compile Include="LocalMapGeneratorObjects\Maplet.cs" />
     <Compile Include="LocalMapGeneratorObjects\MapletActor.cs" />
+    <Compile Include="LocalMapGeneratorObjects\MapletActorComposition.cs" />
     <Compile Include="LocalMapGeneratorObjects\MapletContents.cs" />
     <Compile Include="LocalMapGeneratorObjects\MapletContentsItem.cs" />
     <Compile Include="LocalMapGeneratorObjects\MapletContentsItemTag.cs" />

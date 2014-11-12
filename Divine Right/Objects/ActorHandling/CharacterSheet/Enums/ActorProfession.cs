@@ -14,6 +14,7 @@ namespace DRObjects.ActorHandling.CharacterSheet.Enums
         WARRIOR,
         HARVESTER,
         CIVILIAN,
-        CRAFTER
+        CRAFTER,
+        PRIEST
     }
 }

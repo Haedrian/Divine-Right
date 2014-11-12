@@ -1,5 +1,8 @@
 ﻿<Maplet name="ironMine" Tiled="false" TileTag="rocky" SizeX ="20" SizeY="20" Walled="false">
   <MapletContents>    
+    
+      <MapletActorComposition Owners="Humans" Profession="Warrior" MinAmount="3" MaxAmount="5"  />
+      
     <MapletContentsMaplet Position="Middle" FirstFit="false" MaxAmount="1" ProbabilityPercentage="100">
       <MapletTag Tag="mineshaft" />
     </MapletContentsMaplet>
