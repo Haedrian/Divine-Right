@@ -264,8 +264,9 @@ namespace DivineRightGame.LocalMapGenerator
                 Maplet maplet = xmlGen.ParseMapletFromTag(tag);
 
                 Actor[] acts = null;
+                MapletActorWanderArea[] wanderAreas = null;
 
-                gennedMap = gen.GenerateMap(25, null, maplet, true, "", OwningFactions.ORCS ,out acts);
+                gennedMap = gen.GenerateMap(25, null, maplet, true, "", OwningFactions.ORCS ,out acts,out wanderAreas);
 
                 enemies.AddRange(acts);
 

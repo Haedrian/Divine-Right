@@ -208,7 +208,9 @@ namespace DivineRightGame.SettlementHandling
 
                 Actor[] localAct = null;
 
-                var gennedMap = gen.GenerateMap(grassTileID, null, borderMaplet, true, "human",OwningFactions.HUMANS, out localAct);
+                MapletActorWanderArea[] wanderAreas = null;
+
+                var gennedMap = gen.GenerateMap(grassTileID, null, borderMaplet, true, "human",OwningFactions.HUMANS, out localAct,out wanderAreas);
 
                 actors.AddRange(localAct);
 
@@ -268,9 +270,10 @@ namespace DivineRightGame.SettlementHandling
             Maplet plazaMaplet = parser.ParseMaplet(MapletDatabaseHandler.GetMapletByTag("plaza"));
 
             Actor[] tempAct = null;
+            MapletActorWanderArea[] wa = null;
 
             gen.JoinMaps(mainMap,
-                gen.GenerateMap(plazaTile, null, plazaMaplet, true, "",OwningFactions.HUMANS, out tempAct),
+                gen.GenerateMap(plazaTile, null, plazaMaplet, true, "",OwningFactions.HUMANS, out tempAct,out wa),
                 (plazaRect.X - 1 + plazaRect.Width / 2) - plazaMaplet.SizeX / 2,
                 (plazaRect.Y - 1 + plazaRect.Height / 2) - plazaMaplet.SizeY / 2);
 

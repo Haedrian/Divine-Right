@@ -76,7 +76,7 @@ namespace DivineRightGame.LocalMapGenerator
                     case "MapletContentsMaplet": content = new MapletContentsMaplet(); break;
                     case "MapletActor": content = new MapletActor(); break;
                     case "MapletHerd": content = new MapletHerd(); break;
-                    case "MapletActorComposition": content = new MapletActorComposition(); break;
+                    case "MapletActorWanderArea": content = new MapletActorWanderArea(); break;
                 }
 
                 //Get the attributes
@@ -108,8 +108,7 @@ namespace DivineRightGame.LocalMapGenerator
                         case "BiomeName": ((MapletHerd)content).BiomeName = value.ToString(); break;
                         case "Domesticated": ((MapletHerd)content).Domesticated = bool.Parse(value); break;
                         case "Owners": content.OwnerFactions = value.ToString(); break;
-                        case "Profession": ((MapletActorComposition)content).Profession = (ActorProfession)Enum.Parse(typeof(ActorProfession), value.ToUpper()); break;
-                        case "MinimumAmount": ((MapletActorComposition)content).MinAmount = Int32.Parse(value); break;
+                        case "Profession": ((MapletActorWanderArea)content).Profession = (ActorProfession)Enum.Parse(typeof(ActorProfession), value.ToUpper()); break;
                         case "MaximumAmount": content.MaxAmount = Int32.Parse(value); break;
                     }
                 }

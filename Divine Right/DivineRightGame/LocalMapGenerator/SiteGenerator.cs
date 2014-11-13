@@ -6,7 +6,9 @@ using DRObjects;
 using DRObjects.ActorHandling.ActorMissions;
 using DRObjects.Database;
 using DRObjects.Enums;
+using DRObjects.Items.Tiles;
 using DRObjects.LocalMapGeneratorObjects;
+using DRObjects.Sites;
 using Microsoft.Xna.Framework;
 
 namespace DivineRightGame.LocalMapGenerator
@@ -25,12 +27,12 @@ namespace DivineRightGame.LocalMapGenerator
         /// <param name="startPoint"></param>
         /// <param name="actors"></param>
         /// <returns></returns>
-        public static MapBlock[,] GenerateSite(SiteType siteType,GlobalBiome biome,OwningFactions owner, out Actor[] actors)
+        public static MapBlock[,] GenerateSite(SiteData siteData, out Actor[] actors)
         {
             MapCoordinate startPoint = null;
 
             //First we generate some empty wilderness of the right type
-            MapBlock[,] map = WildernessGenerator.GenerateMap(biome, 0, 0,out actors,out startPoint);
+            MapBlock[,] map = WildernessGenerator.GenerateMap(siteData.Biome, 0, 0,out actors,out startPoint);
 
             //Now, clear the tiles from between 4,4 till 24,24
             for(int x = 4; x < 25; x++)
@@ -46,12 +48,14 @@ namespace DivineRightGame.LocalMapGenerator
 
             LocalMapXMLParser parser = new LocalMapXMLParser();
 
-            Maplet maplet = parser.ParseMapletFromTag(siteType.ToString().Replace("_"," ").ToLower());
+            Maplet maplet = parser.ParseMapletFromTag(siteData.SiteTypeData.SiteType.ToString().Replace("_"," ").ToLower());
 
-            var tileID = DatabaseHandling.GetItemIdFromTag(Archetype.TILES,WildernessGenerator.details[biome].BaseTileTag);
+            var tileID = DatabaseHandling.GetItemIdFromTag(Archetype.TILES,WildernessGenerator.details[siteData.Biome].BaseTileTag);
+
+            MapletActorWanderArea[] wanderAreas = null;
 
             //Now generate the actual map
-            MapBlock[,] siteMap = lmg.GenerateMap(tileID, null, maplet, false, "", owner, out actors);
+            MapBlock[,] siteMap = lmg.GenerateMap(tileID, null, maplet, false, "", siteData.Owners, out actors, out wanderAreas);
 
             foreach(var actor in actors)
             {
@@ -66,10 +70,32 @@ namespace DivineRightGame.LocalMapGenerator
                 }
             }
 
+            foreach(var area in wanderAreas)
+            {
+                area.WanderRect = new Rectangle(area.WanderRect.X + 4, area.WanderRect.Y + 4, area.WanderRect.Width, area.WanderRect.Height);
+            }
+
+            
+
             //Now lets fuse the maps
             map = lmg.JoinMaps(map, siteMap, 4, 4);
 
+            map[wanderAreas[0].WanderRect.X, wanderAreas[0].WanderRect.Y].RemoveAllItems();
+            map[wanderAreas[0].WanderRect.X, wanderAreas[0].WanderRect.Y].ForcePutItemOnBlock(new Air());
+
             return map;
+        }
+
+        /// <summary>
+        /// Regenerates a site's actors based on the sitedata. If the owner hasn't changed, will do nothing
+        /// </summary>
+        /// <param name="sitedata"></param>
+        /// <param name="currentMap"></param>
+        /// <param name="actors"></param>
+        /// <returns></returns>
+        public static MapBlock[,] RegenerateSite(SiteData sitedata,MapBlock[,] currentMap,Actor[] currentActors,out Actor[] actors)
+        {
+            throw new NotImplementedException();
         }
     }
 }

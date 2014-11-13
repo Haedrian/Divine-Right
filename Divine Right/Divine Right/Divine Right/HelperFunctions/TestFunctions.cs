@@ -14,6 +14,8 @@ using DivineRightGame.ActorHandling;
 using DivineRightGame.SettlementHandling;
 using DRObjects.ActorHandling.CharacterSheet.Enums;
 using DRObjects.ActorHandling.CharacterSheet;
+using DRObjects.Sites;
+using DRObjects.Enums;
 
 namespace Divine_Right.HelperFunctions
 {
@@ -158,7 +160,12 @@ namespace Divine_Right.HelperFunctions
             ////Generate it
             LocalMapGenerator gen = new LocalMapGenerator();
 
-            MapBlock[,] generatedMap = SiteGenerator.GenerateSite(DRObjects.Enums.SiteType.IRON_MINE, DRObjects.Enums.GlobalBiome.WETLAND, DRObjects.Enums.OwningFactions.HUMANS, out tempy);
+            SiteData siteData = new SiteData();
+            siteData.Biome = GlobalBiome.POLAR_DESERT;
+            siteData.Owners = OwningFactions.HUMANS;
+            siteData.SiteTypeData = new SiteTypeData() { SiteType = SiteType.IRON_MINE };
+
+            MapBlock[,] generatedMap = SiteGenerator.GenerateSite(siteData, out tempy);
 
             GameState.LocalMap = new LocalMap(50, 50, 1, 0);
 

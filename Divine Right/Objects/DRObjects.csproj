@@ -169,7 +169,7 @@
     <Compile Include="LocalMapGeneratorObjects\Enums\PositionAffinity.cs" />
     <Compile Include="LocalMapGeneratorObjects\Maplet.cs" />
     <Compile Include="LocalMapGeneratorObjects\MapletActor.cs" />
-    <Compile Include="LocalMapGeneratorObjects\MapletActorComposition.cs" />
+    <Compile Include="LocalMapGeneratorObjects\MapletActorWanderArea.cs" />
     <Compile Include="LocalMapGeneratorObjects\MapletContents.cs" />
     <Compile Include="LocalMapGeneratorObjects\MapletContentsItem.cs" />
     <Compile Include="LocalMapGeneratorObjects\MapletContentsItemTag.cs" />
@@ -183,6 +183,9 @@
     <Compile Include="Settlements\Districts\District.cs" />
     <Compile Include="Settlements\Districts\DistrictType.cs" />
     <Compile Include="Settlements\Districts\SettlementBuilding.cs" />
+    <Compile Include="Sites\SiteActorCount.cs" />
+    <Compile Include="Sites\SiteData.cs" />
+    <Compile Include="Sites\SiteTypeData.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="GraphicsEngineObjects\Enums\" />

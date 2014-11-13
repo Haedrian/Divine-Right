@@ -33,9 +33,10 @@ namespace DivineRightGame.LocalMapGenerator
         /// <param name="owner">The owner of the map. Any maplet items which don't belong will be hidden</param>
         /// <param name="actors">The actors which we have generated</param>
         /// <returns></returns>
-        public MapBlock[,] GenerateMap(int parentTileID, int? parentWallID, Maplet maplet, bool preferSides, string actorType, OwningFactions owner, out Actor[] actors)
+        public MapBlock[,] GenerateMap(int parentTileID, int? parentWallID, Maplet maplet, bool preferSides, string actorType, OwningFactions owner, out Actor[] actors,out MapletActorWanderArea[] wAreas)
         {
             List<Actor> actorList = new List<Actor>();
+            List<MapletActorWanderArea> wanderAreas = new List<MapletActorWanderArea>();
 
             PlanningMapItemType[,] planningMap = new PlanningMapItemType[maplet.SizeX, maplet.SizeY];
 
@@ -172,7 +173,10 @@ namespace DivineRightGame.LocalMapGenerator
                             {
                                 //it fits, generate it - <3 Recursion
                                 Actor[] childActors = null;
-                                MapBlock[,] childMap = this.GenerateMap(tileID, wallID.Value, childMaplet.Maplet, childMaplet.Position == DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES, actorType,owner, out childActors);
+
+                                MapletActorWanderArea[] wanderA = null;
+
+                                MapBlock[,] childMap = this.GenerateMap(tileID, wallID.Value, childMaplet.Maplet, childMaplet.Position == DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES, actorType,owner, out childActors,out wanderA);
 
                                 //Add the child actors
                                 actorList.AddRange(childActors);
@@ -195,6 +199,15 @@ namespace DivineRightGame.LocalMapGenerator
                                     }
                                 }
 
+                                //Update any wander areas too
+                                foreach(var area in wanderA)
+                                {
+                                    area.WanderRect = new Rectangle(area.WanderRect.X + childMaplet.x.Value, area.WanderRect.Y + childMaplet.y.Value, area.WanderRect.Width, area.WanderRect.Height);
+                                }
+
+                                //And add them
+                                wanderAreas.AddRange(wanderA);
+
                                 //Join the two maps together
                                 generatedMap = this.JoinMaps(generatedMap, childMap, childMaplet.x.Value, childMaplet.y.Value);
                             }
@@ -205,10 +218,39 @@ namespace DivineRightGame.LocalMapGenerator
                             {
                                 //it fits, generate it - <3 Recursion
                                 Actor[] childActors = null;
-                                MapBlock[,] childMap = this.GenerateMap(tileID, wallID.Value, childMaplet.Maplet, childMaplet.Position == DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES, actorType,owner, out childActors);
+                                MapletActorWanderArea[] wanderA = null;
+
+                                MapBlock[,] childMap = this.GenerateMap(tileID, wallID.Value, childMaplet.Maplet, childMaplet.Position == DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES, actorType,owner, out childActors,out wanderA);
 
                                 //Add the child actors
                                 actorList.AddRange(childActors);
+
+                                //Update any actors's locations should they have any
+                                foreach (var actor in childActors)
+                                {
+                                    if (actor.MissionStack.Count() > 0)
+                                    {
+                                        var wander = actor.MissionStack.Peek() as WanderMission;
+
+                                        if (wander != null)
+                                        {
+                                            wander.WanderPoint.X += x;
+                                            wander.WanderPoint.Y += y;
+
+                                            wander.WanderRectangle = new Rectangle(wander.WanderRectangle.X + x, wander.WanderRectangle.Y + y, wander.WanderRectangle.Width, wander.WanderRectangle.Height);
+                                        }
+
+                                    }
+                                }
+
+                                //Update any wander areas too
+                                foreach (var area in wanderA)
+                                {
+                                    area.WanderRect = new Rectangle(area.WanderRect.X + x, area.WanderRect.Y + y, area.WanderRect.Width, area.WanderRect.Height);
+                                }
+
+                                //And add them
+                                wanderAreas.AddRange(wanderA);
 
                                 //Join the two maps together
                                 generatedMap = this.JoinMaps(generatedMap, childMap, x, y);
@@ -710,6 +752,22 @@ namespace DivineRightGame.LocalMapGenerator
 
             #endregion
 
+            #region Wander Areas
+
+            foreach(var mc in maplet.MapletContents.Where(mc => mc.GetType().Equals(typeof(MapletActorWanderArea))))
+            {
+                var wander = mc as MapletActorWanderArea;
+
+                //The area of this is going to be the entire maplet (so if we're in a submaplet, they'll wander in there - Awesome no ?)
+                wander.WanderRect = new Rectangle(0, 0, generatedMap.GetLength(0), generatedMap.GetLength(1));
+
+                wanderAreas.Add(wander);
+            }
+
+            wAreas = wanderAreas.ToArray();
+
+            #endregion
+
             #region Aniamls
 
             //Now lets create enemies :)
@@ -781,6 +839,7 @@ namespace DivineRightGame.LocalMapGenerator
             }
 
             #endregion
+
 
             //we're done
             return generatedMap;
