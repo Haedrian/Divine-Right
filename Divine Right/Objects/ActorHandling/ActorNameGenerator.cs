@@ -116,6 +116,16 @@ namespace DRObjects.ActorHandling
             }
         }
 
+        /// <summary>
+        /// Whether we can generate a name or not
+        /// </summary>
+        /// <param name="race"></param>
+        /// <returns></returns>
+        public static bool CanGenerateName(string race)
+        {
+            return (race == "human" || race == "orc");
+        }
+
        
     }
 }

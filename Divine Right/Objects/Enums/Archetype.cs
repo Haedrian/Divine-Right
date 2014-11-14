@@ -17,6 +17,7 @@ namespace DRObjects.Enums
         RACE,
         INVENTORYITEMS,
         ANIMALS,
+        ACTORS,
 
     }
 }

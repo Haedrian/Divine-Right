@@ -12,9 +12,9 @@ namespace DRObjects.ActorHandling.CharacterSheet.Enums
     public enum ActorProfession
     {
         WARRIOR,
-        HARVESTER,
-        CIVILIAN,
-        CRAFTER,
+        RICH,
+        WORKER,
+        MERCHANT,
         PRIEST
     }
 }

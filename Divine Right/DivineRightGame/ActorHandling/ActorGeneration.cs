@@ -46,7 +46,7 @@ namespace DivineRightGame.ActorHandling
                 EnemyName = properties[1],
                 EnemyType = properties[4],
                 Intelligent = Boolean.Parse(properties[7]),
-                Profession = Boolean.Parse(properties[8]) ? ActorProfession.WARRIOR: ActorProfession.CIVILIAN //Keep it simple for now
+                Profession = Boolean.Parse(properties[8]) ? ActorProfession.WARRIOR: ActorProfession.WORKER //Keep it simple for now
             };
 
         }
@@ -66,6 +66,178 @@ namespace DivineRightGame.ActorHandling
             //How many are there? pick one at random
 
             return possibleMatches.ToArray()[random.Next(possibleMatches.Count() - 1)];
+        }
+
+        /// <summary>
+        /// Creates a number of actors for a particular owner and profession. It will also balance the level and difficulty of acctors, and will create a hierarchy of warriors.
+        /// Do not use this for animals
+        /// If there are no actors of that particular type for that profession, will not create anything
+        /// </summary>
+        public static Actor[] CreateActors(OwningFactions owner,ActorProfession profession,int total)
+        {
+            List<Actor> actors = new List<Actor>(); 
+
+            //Get all the data from the database and we'll make our own filtering
+            var dictionary = DatabaseHandling.GetDatabase(Archetype.ACTORS);
+
+            var possibleMatches = dictionary.Values.AsQueryable();
+
+            //Correct owner
+            possibleMatches = possibleMatches.Where(v => v[4].ToUpper().Equals(owner.ToString()));
+
+            //Correct profession
+            possibleMatches = possibleMatches.Where(v => v[6].ToUpper().Equals(profession.ToString()));
+
+            //Have we got at least one ?
+            if (possibleMatches.Count() == 0)
+            {
+                return new Actor[] { }; //Nope - return nothing
+            }
+
+            //For use with warriors
+            int level1 = 0;
+            int level2 = 0;
+
+            for (int i = 0; i < total; i++)
+            {
+                var possibles = possibleMatches;
+
+                //Are we generating warriors?
+                if (profession == ActorProfession.WARRIOR)
+                {
+                    int warriorGenerationLevel = 1;
+
+                    if (level2 == 3)
+                    {
+                        //hard
+                        warriorGenerationLevel = 3;
+                        level2 = 0;
+                    }
+                    else if (level1 == 3)
+                    {
+                        //Generate a medium
+                        warriorGenerationLevel = 2;
+                        level1 = 0;
+                        level2++;
+                    }
+                    else
+                    {
+                        //Generate an easy
+                        warriorGenerationLevel = 1;
+                        level1++;
+                    }
+
+                    possibles = possibles.Where(p => p[7].ToString().Equals(warriorGenerationLevel.ToString()));
+                }
+
+                //Pick a random one from the possibilities - this'll crash if we have no possibles, but that's going to be a problem anyway
+
+                var chosen = possibles.ToArray()[(GameState.Random.Next(possibles.Count() - 1))];
+
+                //Now we can generate the actors themselves
+                Actor actor = new Actor();
+                actor.Anatomy = GenerateAnatomy(chosen[5]);
+                actor.Attributes = GenerateAttributes(chosen[5], (ActorProfession)Enum.Parse(typeof(ActorProfession), chosen[6], true), Int32.Parse(chosen[11]), actor);
+
+                actor.Attributes.Actor = actor;
+                actor.EnemyData = new EnemyData()
+                {
+                    EnemyID = Int32.Parse(chosen[0]),
+                    EnemyLineOfSight = Int32.Parse(chosen[9]),
+                    EnemyName = chosen[1],
+                    EnemyType = chosen[5],
+                    Intelligent = true,
+                    Profession = profession
+                };
+
+                actor.FeedingLevel = FeedingLevel.FULL;
+                actor.Gender = (Gender)Enum.Parse(typeof(Gender), chosen[13]);
+
+                actor.Inventory = new ActorInventory();
+
+                if (profession == ActorProfession.WARRIOR)
+                {
+                    actor.Inventory.EquippedItems = GenerateEquippedItems(Int32.Parse(chosen[12]));
+                }
+
+                actor.IsActive = true;
+                actor.IsAggressive = chosen[8] == "1";
+                actor.IsAlive = true;
+                actor.IsAnimal = false;
+                actor.IsDomesticatedAnimal = false;
+                actor.IsPlayerCharacter = false;
+                actor.IsStunned = false;
+                actor.LineOfSight = Int32.Parse(chosen[9]);
+
+                actor.Name = ActorNameGenerator.CanGenerateName(chosen[5]) ? ActorNameGenerator.GenerateName(chosen[5], actor.Gender) : chosen[1];
+
+                actor.Owners = owner;
+                actor.UniqueId = Guid.NewGuid();
+
+                actor.MapCharacter = new LocalCharacter();
+
+                LocalCharacter mc = actor.MapCharacter as LocalCharacter;
+
+                mc.Actor = actor;
+                mc.Coordinate = new MapCoordinate();
+                mc.Description = chosen[10];
+                mc.EnemyThought = EnemyThought.WAIT;
+
+                string chosenGraphic = string.Empty;
+
+                if (!String.IsNullOrWhiteSpace(chosen[3]))
+                {
+                    string setChoice = String.Empty;
+                    //Does graphicset contain multiple choices?
+                    if (chosen[3].Contains(","))
+                    {
+                        //Yes, lets split it
+                        var possibleSets = chosen[3].Split(',');
+
+                        setChoice = possibleSets[GameState.Random.Next(possibleSets.Length)];
+                    }
+                    else
+                    {
+                        setChoice = chosen[3];
+                    }
+
+                    //Instead of a single graphic, use a graphical set
+                    mc.Graphics = GraphicSetManager.GetSprites((GraphicSetName)Enum.Parse(typeof(GraphicSetName), setChoice.ToUpper()));
+
+                }
+                else
+                {
+                    //Does graphic contain multiple choices?
+                    if (chosen[2].Contains(","))
+                    {
+                        //yes, lets split it
+                        var graphics = chosen[2].Split(',');
+
+                        //use random to determine which one we want
+                        chosenGraphic = graphics[GameState.Random.Next(graphics.Length)];
+
+                        mc.Graphic = SpriteManager.GetSprite((LocalSpriteName)Enum.Parse(typeof(LocalSpriteName), chosenGraphic));
+                    }
+                    else
+                    {
+                        //nope
+                        mc.Graphic = SpriteManager.GetSprite((LocalSpriteName)Enum.Parse(typeof(LocalSpriteName), chosen[2]));
+                    }
+                }
+
+                mc.InternalName = chosen[2];
+                mc.IsActive = true;
+                mc.IsStunned = false;
+                mc.LineOfSightRange = actor.LineOfSight.Value;
+                mc.MayContainItems = false;
+                mc.Name = actor.Name;
+                mc.OwnedBy = owner;
+
+                actors.Add(actor);
+            }
+
+            return actors.ToArray();
+
         }
 
         /// <summary>
@@ -226,7 +398,7 @@ namespace DivineRightGame.ActorHandling
                 att.HandToHand = level;
 
             }
-            else if (profession == ActorProfession.CIVILIAN)
+            else if (profession == ActorProfession.WORKER || profession == ActorProfession.MERCHANT || profession == ActorProfession.RICH)
             {
                 //Prefer things randomly
                 results = results.OrderByDescending(r => random.Next(10)).ToArray();
@@ -237,31 +409,6 @@ namespace DivineRightGame.ActorHandling
                 att.Intel = results[3];
                 att.Char = results[4];
 
-                att.HandToHand = level;
-                att.Evasion = level;
-            }
-            else if (profession == ActorProfession.CRAFTER)
-            {
-                //Prefer Dex, Intel, Perc, Brawn, Agil
-                att.Char = results[0];
-                att.Intel = results[1];
-                att.Perc = results[2];
-                att.Brawn = results[3];
-                att.Agil = results[4];
-
-                att.HandToHand = level;
-                att.Evasion = level;
-            }
-            else if (profession == ActorProfession.HARVESTER)
-            {
-                //Prefer Brawn, Perc, Dex, Intel, Agil
-                att.Brawn = results[0];
-                att.Perc = results[1];
-                att.Char = results[2];
-                att.Intel = results[3];
-                att.Agil = results[4];
-
-                //Give some combat skills
                 att.HandToHand = level;
                 att.Evasion = level;
             }
@@ -547,7 +694,7 @@ namespace DivineRightGame.ActorHandling
             double multiplier = (random.NextDouble()/2)-0.25 + 1;
 
             //Start by regenerating the actor's stats and gear
-            actor.Attributes = GenerateAttributes("orc", level == 5 ? ActorProfession.CIVILIAN : ActorProfession.WARRIOR, (int)(level * multiplier), actor);
+            actor.Attributes = GenerateAttributes("orc", level == 5 ? ActorProfession.WORKER : ActorProfession.WARRIOR, (int)(level * multiplier), actor);
 
             multiplier = (random.NextDouble()/2)-0.25 + 1;
 
@@ -593,7 +740,7 @@ namespace DivineRightGame.ActorHandling
             double multiplier = (random.NextDouble() / 2) - 0.25 + 1;
 
             //Start by regenerating the actor's stats and gear
-            actor.Attributes = GenerateAttributes("human", level == 2 ? ActorProfession.CIVILIAN : ActorProfession.WARRIOR, (int)(level * multiplier), actor);
+            actor.Attributes = GenerateAttributes("human", level == 2 ? ActorProfession.WORKER : ActorProfession.WARRIOR, (int)(level * multiplier), actor);
 
             multiplier = (random.NextDouble() / 2) - 0.25 + 1;
 

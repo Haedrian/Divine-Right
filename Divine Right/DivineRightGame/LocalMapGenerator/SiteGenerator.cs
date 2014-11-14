@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DivineRightGame.ActorHandling;
 using DRObjects;
 using DRObjects.ActorHandling.ActorMissions;
+using DRObjects.ActorHandling.CharacterSheet.Enums;
 using DRObjects.Database;
 using DRObjects.Enums;
 using DRObjects.Items.Tiles;
@@ -55,11 +57,14 @@ namespace DivineRightGame.LocalMapGenerator
             MapletActorWanderArea[] wanderAreas = null;
 
             //Now generate the actual map
-            MapBlock[,] siteMap = lmg.GenerateMap(tileID, null, maplet, false, "", siteData.Owners, out actors, out wanderAreas);
+            MapBlock[,] siteMap = lmg.GenerateMap(tileID, null, maplet, false, "", siteData.Owners, out actors, out wanderAreas);            
 
-            foreach(var actor in actors)
+            //Now lets fuse the maps
+            map = lmg.JoinMaps(map, siteMap, 4, 4);
+
+            foreach (var actor in actors)
             {
-                if (actor.CurrentMission!= null && actor.CurrentMission.GetType() == typeof(WanderMission))
+                if (actor.CurrentMission != null && actor.CurrentMission.GetType() == typeof(WanderMission))
                 {
                     WanderMission wMiss = actor.CurrentMission as WanderMission;
 
@@ -70,18 +75,64 @@ namespace DivineRightGame.LocalMapGenerator
                 }
             }
 
-            foreach(var area in wanderAreas)
+            foreach (var area in wanderAreas)
             {
                 area.WanderRect = new Rectangle(area.WanderRect.X + 4, area.WanderRect.Y + 4, area.WanderRect.Width, area.WanderRect.Height);
             }
 
-            
+            List<Actor> actorList = new List<Actor>();
 
-            //Now lets fuse the maps
-            map = lmg.JoinMaps(map, siteMap, 4, 4);
+            //Let's generate a number of actors then
+            foreach (ActorProfession profession in Enum.GetValues(typeof(ActorProfession)))
+            {
+                //Any actors?
+                if (siteData.ActorCounts.ContainsKey(profession))
+                {
+                    //Yes, how many
+                    int total = siteData.ActorCounts[profession];
 
-            map[wanderAreas[0].WanderRect.X, wanderAreas[0].WanderRect.Y].RemoveAllItems();
-            map[wanderAreas[0].WanderRect.X, wanderAreas[0].WanderRect.Y].ForcePutItemOnBlock(new Air());
+                    var a = ActorGeneration.CreateActors(siteData.Owners, profession, total);
+
+                    actorList.AddRange(a);
+
+                    foreach (var actor in a)
+                    {
+                        //So, where we going to drop them off ? Randomly
+                        int tries = 0;
+
+                        for (; ; )
+                        {
+                            int randomX = GameState.Random.Next(map.GetLength(0));
+                            int randomY = GameState.Random.Next(map.GetLength(1));
+
+                            if (map[randomX, randomY].MayContainItems)
+                            {
+                                //Plop it on there
+                                actor.MapCharacter.Coordinate = new MapCoordinate(randomX, randomY, 0, MapType.LOCAL);
+                                map[randomX, randomY].ForcePutItemOnBlock(actor.MapCharacter);
+                                tries = 0;
+                                break;
+                            }
+                            else
+                            {
+                                tries++;
+                            }
+
+                            if (tries >= 150)
+                            {
+                                //give up
+                                break;
+                            }
+                        }
+                    }
+
+                    //TODO: GIVE ACTORS SOMETHING TO DO
+
+                }
+
+            }
+
+            actors = actorList.ToArray();
 
             return map;
         }

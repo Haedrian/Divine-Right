@@ -164,6 +164,9 @@ namespace Divine_Right.HelperFunctions
             siteData.Biome = GlobalBiome.POLAR_DESERT;
             siteData.Owners = OwningFactions.HUMANS;
             siteData.SiteTypeData = new SiteTypeData() { SiteType = SiteType.IRON_MINE };
+            siteData.ActorCounts = new Dictionary<ActorProfession, int>();
+            siteData.ActorCounts.Add(ActorProfession.WORKER, 5);
+            siteData.ActorCounts.Add(ActorProfession.WARRIOR, 5);
 
             MapBlock[,] generatedMap = SiteGenerator.GenerateSite(siteData, out tempy);
 

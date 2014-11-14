@@ -51,7 +51,7 @@
           <MapletContentsMaplet Position="Sides" MaxAmount="1" ProbabilityPercentage="100">
             <Maplet Tiled="false" SizeX="5" SizeY="4" Walled="true" Name="Bedrooms">
               <MapletContents>
-                <MapletActorWanderArea MaxAmount="2" Owners="Humans" Profession="CIVILIAN" />
+                <MapletActorWanderArea MaxAmount="2" Owners="Humans" Profession="WORKER" />
                 <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="5" ProbabilityPercentage="75" Tag="bedroll"/>
               </MapletContents>
             </Maplet>
