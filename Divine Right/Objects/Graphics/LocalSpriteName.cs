@@ -584,6 +584,11 @@ namespace DRObjects.Graphics
         MINE_SHAFT_BL,
         MINE_SHAFT_BC,
         MINE_SHAFT_BR,
+        ENEMY_ORC_MEDIUM,
+        ENEMY_ORC_PRIEST,
+        HUMAN_FIGHTER_LIGHT,
+        HUMAN_FIGHTER_MEDIUM,
+        HUMAN_FIGHTER_HEAVY,
 
     }
 }

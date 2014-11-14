@@ -571,20 +571,18 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.DIRE_BEAR] = new SpriteData(ENEMIES, new Rectangle(150, 0, 50, 50));
             
             localSprites[(int)LocalSpriteName.ENEMY_ORC_LIGHT] = new SpriteData(ENEMIES, new Rectangle(200, 0, 50, 50));
-            localSprites[(int)LocalSpriteName.ENEMY_ORC_HEAVY] = new SpriteData(ENEMIES, new Rectangle(250, 0, 50, 50));
+            localSprites[(int)LocalSpriteName.ENEMY_ORC_MEDIUM] = new SpriteData(ENEMIES, new Rectangle(250, 0, 50, 50));
+            localSprites[(int)LocalSpriteName.ENEMY_ORC_HEAVY] = new SpriteData(ENEMIES, new Rectangle(350, 0, 50, 50));
+            localSprites[(int)LocalSpriteName.ENEMY_ORC_PRIEST] = new SpriteData(ENEMIES, new Rectangle(300, 0, 50, 50));
 
             localSprites[(int)LocalSpriteName.ENEMY_THOUGHT_WALK] = new SpriteData(ENEMIES, new Rectangle(0, 50, 50, 50));
             localSprites[(int)LocalSpriteName.ENEMY_THOUGHT_WAIT] = new SpriteData(ENEMIES, new Rectangle(50, 50, 50, 50));
             localSprites[(int)LocalSpriteName.ENEMY_THOUGHT_ATTACK] = new SpriteData(ENEMIES, new Rectangle(100, 50, 50, 50));
             localSprites[(int)LocalSpriteName.ENEMY_THOUGH_CONFUSED] = new SpriteData(ENEMIES, new Rectangle(150, 50, 50, 50));
 
-            AddLocalSprite(LocalSpriteName.HUMANGUARD1, ENEMIES, 0, 2);
-            AddLocalSprite(LocalSpriteName.HUMANGUARD2, ENEMIES, 1, 2);
-            AddLocalSprite(LocalSpriteName.HUMANGUARD3, ENEMIES, 2, 2);
-            AddLocalSprite(LocalSpriteName.HUMANGUARD4, ENEMIES, 3, 2);
-            AddLocalSprite(LocalSpriteName.HUMANGUARD5, ENEMIES, 4, 2);
-            AddLocalSprite(LocalSpriteName.HUMANGUARD6, ENEMIES, 5, 2);
-            AddLocalSprite(LocalSpriteName.HUMANGUARD7, ENEMIES, 6, 2);
+            localSprites[(int)LocalSpriteName.HUMAN_FIGHTER_LIGHT] = new SpriteData(ENEMIES, new Rectangle(0, 100, 50, 50));
+            localSprites[(int)LocalSpriteName.HUMAN_FIGHTER_MEDIUM] = new SpriteData(ENEMIES, new Rectangle(50, 100, 50, 50));
+            localSprites[(int)LocalSpriteName.HUMAN_FIGHTER_HEAVY] = new SpriteData(ENEMIES, new Rectangle(100, 100, 50, 50));
 
             AddLocalSprite(LocalSpriteName.HUMANMERCHANT1, ENEMIES, 0, 3);
             AddLocalSprite(LocalSpriteName.HUMANMERCHANT2, ENEMIES, 1, 3);
