@@ -132,7 +132,7 @@ namespace DivineRightGame.ActorHandling
 
                 //Pick a random one from the possibilities - this'll crash if we have no possibles, but that's going to be a problem anyway
 
-                var chosen = possibles.ToArray()[(GameState.Random.Next(possibles.Count() - 1))];
+                var chosen = possibles.ToArray()[(GameState.Random.Next(possibles.Count()))];
 
                 //Now we can generate the actors themselves
                 Actor actor = new Actor();
