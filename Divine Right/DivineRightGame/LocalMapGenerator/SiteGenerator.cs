@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using DivineRightGame.ActorHandling;
 using DRObjects;
+using DRObjects.ActorHandling;
 using DRObjects.ActorHandling.ActorMissions;
 using DRObjects.ActorHandling.CharacterSheet.Enums;
 using DRObjects.Database;
@@ -34,10 +35,10 @@ namespace DivineRightGame.LocalMapGenerator
             MapCoordinate startPoint = null;
 
             //First we generate some empty wilderness of the right type
-            MapBlock[,] map = WildernessGenerator.GenerateMap(siteData.Biome, 0, 0,out actors,out startPoint);
+            MapBlock[,] map = WildernessGenerator.GenerateMap(siteData.Biome, 0, 0, out actors, out startPoint);
 
             //Now, clear the tiles from between 4,4 till 24,24
-            for(int x = 4; x < 25; x++)
+            for (int x = 4; x < 25; x++)
             {
                 for (int y = 4; y < 25; y++)
                 {
@@ -50,14 +51,14 @@ namespace DivineRightGame.LocalMapGenerator
 
             LocalMapXMLParser parser = new LocalMapXMLParser();
 
-            Maplet maplet = parser.ParseMapletFromTag(siteData.SiteTypeData.SiteType.ToString().Replace("_"," ").ToLower());
+            Maplet maplet = parser.ParseMapletFromTag(siteData.SiteTypeData.SiteType.ToString().Replace("_", " ").ToLower());
 
-            var tileID = DatabaseHandling.GetItemIdFromTag(Archetype.TILES,WildernessGenerator.details[siteData.Biome].BaseTileTag);
+            var tileID = DatabaseHandling.GetItemIdFromTag(Archetype.TILES, WildernessGenerator.details[siteData.Biome].BaseTileTag);
 
             MapletActorWanderArea[] wanderAreas = null;
 
             //Now generate the actual map
-            MapBlock[,] siteMap = lmg.GenerateMap(tileID, null, maplet, false, "", siteData.Owners, out actors, out wanderAreas);            
+            MapBlock[,] siteMap = lmg.GenerateMap(tileID, null, maplet, false, "", siteData.Owners, out actors, out wanderAreas);
 
             //Now lets fuse the maps
             map = lmg.JoinMaps(map, siteMap, 4, 4);
@@ -85,6 +86,9 @@ namespace DivineRightGame.LocalMapGenerator
             //Let's generate a number of actors then
             foreach (ActorProfession profession in Enum.GetValues(typeof(ActorProfession)))
             {
+                //So do we have any wander areas for them ?
+                var possibleAreas = wanderAreas.Where(wa => wa.Factions.Equals(siteData.Owners) && wa.Profession.Equals(profession));
+
                 //Any actors?
                 if (siteData.ActorCounts.ContainsKey(profession))
                 {
@@ -124,9 +128,25 @@ namespace DivineRightGame.LocalMapGenerator
                                 break;
                             }
                         }
-                    }
 
-                    //TODO: GIVE ACTORS SOMETHING TO DO
+                        //Go through each actor, and either tell them to wander in the whole map, or within any possible area which matches
+                        //Any possible area avaialble?
+
+                        var chosenArea = possibleAreas.Where(pa => pa.MaxAmount > pa.CurrentAmount).OrderBy(pa => GameState.Random.Next(100)).FirstOrDefault();
+
+                        if (chosenArea == null)
+                        {
+                            //Wander around the whole map
+                            actor.CurrentMission = new WanderMission() { LoiterPercentage = 25, WanderPoint = new MapCoordinate(map.GetLength(0) / 2, map.GetLength(1) / 2, 0, MapType.LOCAL), WanderRectangle = new Rectangle(0, 0, map.GetLength(0), map.GetLength(1)) };
+                        }
+                        else
+                        {
+                            //Wander around in that area
+                            actor.CurrentMission = new WanderMission() { LoiterPercentage = 25, WanderPoint = new MapCoordinate(chosenArea.WanderPoint), WanderRectangle = chosenArea.WanderRect };
+                            chosenArea.CurrentAmount++;
+                        }
+
+                    }
 
                 }
 
@@ -144,7 +164,7 @@ namespace DivineRightGame.LocalMapGenerator
         /// <param name="currentMap"></param>
         /// <param name="actors"></param>
         /// <returns></returns>
-        public static MapBlock[,] RegenerateSite(SiteData sitedata,MapBlock[,] currentMap,Actor[] currentActors,out Actor[] actors)
+        public static MapBlock[,] RegenerateSite(SiteData sitedata, MapBlock[,] currentMap, Actor[] currentActors, out Actor[] actors)
         {
             throw new NotImplementedException();
         }

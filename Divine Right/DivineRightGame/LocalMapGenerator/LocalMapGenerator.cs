@@ -203,6 +203,8 @@ namespace DivineRightGame.LocalMapGenerator
                                 foreach(var area in wanderA)
                                 {
                                     area.WanderRect = new Rectangle(area.WanderRect.X + childMaplet.x.Value, area.WanderRect.Y + childMaplet.y.Value, area.WanderRect.Width, area.WanderRect.Height);
+                                    area.WanderPoint.X += childMaplet.x.Value;
+                                    area.WanderPoint.Y += childMaplet.y.Value;
                                 }
 
                                 //And add them
@@ -247,6 +249,8 @@ namespace DivineRightGame.LocalMapGenerator
                                 foreach (var area in wanderA)
                                 {
                                     area.WanderRect = new Rectangle(area.WanderRect.X + x, area.WanderRect.Y + y, area.WanderRect.Width, area.WanderRect.Height);
+                                    area.WanderPoint.X += x;
+                                    area.WanderPoint.Y += y;
                                 }
 
                                 //And add them
@@ -760,6 +764,9 @@ namespace DivineRightGame.LocalMapGenerator
 
                 //The area of this is going to be the entire maplet (so if we're in a submaplet, they'll wander in there - Awesome no ?)
                 wander.WanderRect = new Rectangle(0, 0, generatedMap.GetLength(0), generatedMap.GetLength(1));
+
+                //Pick the wander point to be the middle of the rectangle. If the point isn't valid we might have a problem
+                wander.WanderPoint = new MapCoordinate(generatedMap.GetLength(0) / 2, generatedMap.GetLength(1) / 2,0,MapType.LOCAL);
 
                 wanderAreas.Add(wander);
             }

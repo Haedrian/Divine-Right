@@ -171,6 +171,7 @@ namespace Divine_Right.HelperFunctions
             MapBlock[,] generatedMap = SiteGenerator.GenerateSite(siteData, out tempy);
 
             GameState.LocalMap = new LocalMap(50, 50, 1, 0);
+            GameState.LocalMap.Actors = tempy.ToList();
 
             List<MapBlock> collapsedMap = new List<MapBlock>();
 
