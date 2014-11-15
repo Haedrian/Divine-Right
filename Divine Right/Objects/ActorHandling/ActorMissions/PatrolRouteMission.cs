@@ -14,11 +14,11 @@ namespace DRObjects.ActorHandling.ActorMissions
     public class PatrolRouteMission:
         ActorMission
     {
-        private List<MapCoordinate> patrolRoute;
+        private List<PatrolPoint> patrolRoute;
         /// <summary>
         /// 
         /// </summary>
-        public List<MapCoordinate> PatrolRoute
+        public List<PatrolPoint> PatrolRoute
         {
             get
             {
@@ -36,7 +36,7 @@ namespace DRObjects.ActorHandling.ActorMissions
         /// Gets the next point the patroller has to visit. Will change the Next Point.
         /// </summary>
         /// <returns></returns>
-        public MapCoordinate GetNextPoint()
+        public PatrolPoint GetNextPoint()
         {
             PointID ++;
 

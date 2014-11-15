@@ -339,7 +339,7 @@ namespace DivineRightGame.LocalMapGenerator
 
             #region Actors
 
-            enemyArray = CreateBandits(enemies, outsidePatrol, insidePatrol);
+            enemyArray = CreateBandits(enemies, outsidePatrol.Select(op => new PatrolPoint() { AcceptableRadius = 2, Coordinate = op }).ToList(), insidePatrol.Select(op => new PatrolPoint() { AcceptableRadius = 2, Coordinate = op }).ToList());
 
             ConformEnemies(enemyArray.ToList());
 
@@ -448,7 +448,7 @@ namespace DivineRightGame.LocalMapGenerator
         /// </summary>
         /// <param name="count"></param>
         /// <returns></returns>
-        public static Actor[] CreateBandits(int total, List<MapCoordinate> outsidePatrol, List<MapCoordinate> insidePatrol)
+        public static Actor[] CreateBandits(int total, List<PatrolPoint> outsidePatrol, List<PatrolPoint> insidePatrol)
         {
             Random random = new Random();
 
