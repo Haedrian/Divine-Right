@@ -34,10 +34,11 @@ namespace DivineRightGame.LocalMapGenerator
         /// <param name="actors">The actors which we have generated</param>
         /// <returns></returns>
         public MapBlock[,] GenerateMap(int parentTileID, int? parentWallID, Maplet maplet, bool preferSides, string actorType, OwningFactions owner, 
-            out Actor[] actors,out MapletActorWanderArea[] wAreas)
+            out Actor[] actors,out MapletActorWanderArea[] wAreas,out MapletPatrolPoint[] patrolRoutes)
         {
             List<Actor> actorList = new List<Actor>();
             List<MapletActorWanderArea> wanderAreas = new List<MapletActorWanderArea>();
+            List<MapletPatrolPoint> patrolRouteList = new List<MapletPatrolPoint>();
 
             PlanningMapItemType[,] planningMap = new PlanningMapItemType[maplet.SizeX, maplet.SizeY];
 
@@ -176,8 +177,9 @@ namespace DivineRightGame.LocalMapGenerator
                                 Actor[] childActors = null;
 
                                 MapletActorWanderArea[] wanderA = null;
+                                MapletPatrolPoint[] patrolPoints = null;
 
-                                MapBlock[,] childMap = this.GenerateMap(tileID, wallID.Value, childMaplet.Maplet, childMaplet.Position == DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES, actorType,owner, out childActors,out wanderA);
+                                MapBlock[,] childMap = this.GenerateMap(tileID, wallID.Value, childMaplet.Maplet, childMaplet.Position == DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES, actorType,owner, out childActors,out wanderA,out patrolPoints);
 
                                 //Add the child actors
                                 actorList.AddRange(childActors);
@@ -208,8 +210,16 @@ namespace DivineRightGame.LocalMapGenerator
                                     area.WanderPoint.Y += childMaplet.y.Value;
                                 }
 
+                                //and patrol points
+                                foreach(var point in patrolPoints)
+                                {
+                                    point.Point.X += childMaplet.x.Value;
+                                    point.Point.Y += childMaplet.y.Value;
+                                }
+
                                 //And add them
                                 wanderAreas.AddRange(wanderA);
+                                patrolRouteList.AddRange(patrolPoints);
 
                                 //Join the two maps together
                                 generatedMap = this.JoinMaps(generatedMap, childMap, childMaplet.x.Value, childMaplet.y.Value);
@@ -222,8 +232,9 @@ namespace DivineRightGame.LocalMapGenerator
                                 //it fits, generate it - <3 Recursion
                                 Actor[] childActors = null;
                                 MapletActorWanderArea[] wanderA = null;
+                                MapletPatrolPoint[] patrolPoints = null;
 
-                                MapBlock[,] childMap = this.GenerateMap(tileID, wallID.Value, childMaplet.Maplet, childMaplet.Position == DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES, actorType,owner, out childActors,out wanderA);
+                                MapBlock[,] childMap = this.GenerateMap(tileID, wallID.Value, childMaplet.Maplet, childMaplet.Position == DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES, actorType,owner, out childActors,out wanderA,out patrolPoints);
 
                                 //Add the child actors
                                 actorList.AddRange(childActors);
@@ -254,8 +265,16 @@ namespace DivineRightGame.LocalMapGenerator
                                     area.WanderPoint.Y += y;
                                 }
 
+                                //and patrol routes
+                                foreach(var point in patrolPoints)
+                                {
+                                    point.Point.X += x;
+                                    point.Point.Y += y;
+                                }
+
                                 //And add them
                                 wanderAreas.AddRange(wanderA);
+                                patrolRouteList.AddRange(patrolPoints);
 
                                 //Join the two maps together
                                 generatedMap = this.JoinMaps(generatedMap, childMap, x, y);
@@ -773,6 +792,22 @@ namespace DivineRightGame.LocalMapGenerator
             }
 
             wAreas = wanderAreas.ToArray();
+
+            #endregion
+
+            #region Patrol Points
+
+            foreach(var mc in maplet.MapletContents.Where(mc => mc.GetType().Equals(typeof(MapletPatrolPoint))))
+            {
+                var point = mc as MapletPatrolPoint;
+
+                //The point is going to be in the middle of the entire maplet
+                point.Point = new MapCoordinate(generatedMap.GetLength(0) / 2, generatedMap.GetLength(1) / 2, 0, MapType.LOCAL);
+
+                patrolRouteList.Add(point);
+            }
+
+            patrolRoutes = patrolRouteList.ToArray();
 
             #endregion
 

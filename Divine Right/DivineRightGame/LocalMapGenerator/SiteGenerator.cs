@@ -56,9 +56,10 @@ namespace DivineRightGame.LocalMapGenerator
             var tileID = DatabaseHandling.GetItemIdFromTag(Archetype.TILES, WildernessGenerator.details[siteData.Biome].BaseTileTag);
 
             MapletActorWanderArea[] wanderAreas = null;
+            MapletPatrolPoint[] patrolPoints = null;
 
             //Now generate the actual map
-            MapBlock[,] siteMap = lmg.GenerateMap(tileID, null, maplet, false, "", siteData.Owners, out actors, out wanderAreas);
+            MapBlock[,] siteMap = lmg.GenerateMap(tileID, null, maplet, false, "", siteData.Owners, out actors, out wanderAreas, out patrolPoints);
 
             //Now lets fuse the maps
             map = lmg.JoinMaps(map, siteMap, 4, 4);
