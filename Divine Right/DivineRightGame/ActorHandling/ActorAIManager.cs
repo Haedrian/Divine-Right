@@ -266,7 +266,7 @@ namespace DivineRightGame.ActorHandling
                 }
 
                 //Are we near the mission point?
-                if (mission.TargetCoordinate == null || Math.Abs(actor.MapCharacter.Coordinate - mission.TargetCoordinate) <= 1)
+                if (mission.TargetCoordinate == null || Math.Abs(actor.MapCharacter.Coordinate - mission.TargetCoordinate) <= mission.AcceptableRadius)
                 {
                     //MIssion is done.
                     actor.CurrentMission = null;
@@ -351,10 +351,13 @@ namespace DivineRightGame.ActorHandling
                 //Push it back on the stack
                 actor.MissionStack.Push(mission);
 
+                var nextPoint = mission.GetNextPoint();
+
                 //Create a move to mission which moves the actor to the next point
                 WalkToMission wTM = new WalkToMission()
                 {
-                    TargetCoordinate = mission.GetNextPoint()
+                    TargetCoordinate = nextPoint.Coordinate,
+                    AcceptableRadius = nextPoint.AcceptableRadius
                 };
 
                 actor.CurrentMission = wTM;

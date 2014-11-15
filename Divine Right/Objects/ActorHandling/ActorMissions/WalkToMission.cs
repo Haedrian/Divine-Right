@@ -21,5 +21,15 @@ namespace DRObjects.ActorHandling.ActorMissions
 
         public Stack<MapCoordinate> Coordinates { get; set; }
         public MapCoordinate TargetCoordinate { get; set; }
+
+        /// <summary>
+        /// How close it is acceptable to be to count as having reached the point
+        /// </summary>
+        public int AcceptableRadius { get; set; }
+
+        public WalkToMission()
+        {
+            AcceptableRadius = 1;
+        }
     }
 }

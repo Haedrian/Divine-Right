@@ -79,6 +79,7 @@
   <ItemGroup>
     <Compile Include="ActorHandling\ActorInventory.cs" />
     <Compile Include="ActorHandling\ActorMissions\AnimalData.cs" />
+    <Compile Include="ActorHandling\ActorMissions\PatrolPoint.cs" />
     <Compile Include="ActorHandling\ActorMissions\PatrolRouteMission.cs" />
     <Compile Include="ActorHandling\ActorMissions\WaitMission.cs" />
     <Compile Include="ActorHandling\ActorNameGenerator.cs" />
@@ -175,6 +176,8 @@
     <Compile Include="LocalMapGeneratorObjects\MapletContentsItemTag.cs" />
     <Compile Include="LocalMapGeneratorObjects\MapletContentsMaplet.cs" />
     <Compile Include="LocalMapGeneratorObjects\MapletHerd.cs" />
+    <Compile Include="LocalMapGeneratorObjects\MapletPatrolPoint.cs" />
+    <Compile Include="LocalMapGeneratorObjects\PatrolRoute.cs" />
     <Compile Include="LocalMapGeneratorObjects\PointOfInterest.cs" />
     <Compile Include="MapBlock.cs" />
     <Compile Include="MapCoordinates.cs" />

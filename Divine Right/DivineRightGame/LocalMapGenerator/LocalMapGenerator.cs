@@ -33,7 +33,8 @@ namespace DivineRightGame.LocalMapGenerator
         /// <param name="owner">The owner of the map. Any maplet items which don't belong will be hidden</param>
         /// <param name="actors">The actors which we have generated</param>
         /// <returns></returns>
-        public MapBlock[,] GenerateMap(int parentTileID, int? parentWallID, Maplet maplet, bool preferSides, string actorType, OwningFactions owner, out Actor[] actors,out MapletActorWanderArea[] wAreas)
+        public MapBlock[,] GenerateMap(int parentTileID, int? parentWallID, Maplet maplet, bool preferSides, string actorType, OwningFactions owner, 
+            out Actor[] actors,out MapletActorWanderArea[] wAreas)
         {
             List<Actor> actorList = new List<Actor>();
             List<MapletActorWanderArea> wanderAreas = new List<MapletActorWanderArea>();

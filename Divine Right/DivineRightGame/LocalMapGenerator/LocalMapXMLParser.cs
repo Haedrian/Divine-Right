@@ -77,6 +77,7 @@ namespace DivineRightGame.LocalMapGenerator
                     case "MapletActor": content = new MapletActor(); break;
                     case "MapletHerd": content = new MapletHerd(); break;
                     case "MapletActorWanderArea": content = new MapletActorWanderArea(); break;
+                    case "MapletPatrolPoint": content = new MapletPatrolPoint(); break;
                 }
 
                 //Get the attributes
@@ -108,8 +109,21 @@ namespace DivineRightGame.LocalMapGenerator
                         case "BiomeName": ((MapletHerd)content).BiomeName = value.ToString(); break;
                         case "Domesticated": ((MapletHerd)content).Domesticated = bool.Parse(value); break;
                         case "Owners": content.OwnerFactions = value.ToString(); break;
-                        case "Profession": ((MapletActorWanderArea)content).Profession = (ActorProfession)Enum.Parse(typeof(ActorProfession), value.ToUpper()); break;
+                        case "Profession": 
+                            
+                            if (content.GetType() == typeof(MapletActorWanderArea))
+                            {
+                                ((MapletActorWanderArea)content).Profession = (ActorProfession)Enum.Parse(typeof(ActorProfession), value.ToUpper());
+                            }
+                            else if (content.GetType() == typeof(MapletPatrolPoint))
+                            {
+                                ((MapletPatrolPoint)content).Profession = (ActorProfession)Enum.Parse(typeof(ActorProfession), value.ToUpper()); 
+                            }
+                            break;
                         case "MaximumAmount": content.MaxAmount = Int32.Parse(value); break;
+                        case "PatrolName": ((MapletPatrolPoint)content).PatrolName = value; break;
+                        case "PointRadius": ((MapletPatrolPoint)content).PointRadius = Int32.Parse(value); break;
+                            
                     }
                 }
 
