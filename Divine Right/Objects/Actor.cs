@@ -41,6 +41,11 @@ namespace DRObjects
 
         public bool IsActive { get; set; }
 
+        /// <summary>
+        /// Whether the actor is prone or not
+        /// </summary>
+        public bool IsProne { get; set; }
+
         public OwningFactions Owners { get;set; }
 
         /// <summary>
@@ -167,6 +172,7 @@ namespace DRObjects
             this.UnarmedDamageDice = 1;
             this.TravelMethod = Enums.TravelMethod.WALKING;
             this.FeedingLevel = Enums.FeedingLevel.STUFFED;
+            this.IsProne = false;
         }
 
     }

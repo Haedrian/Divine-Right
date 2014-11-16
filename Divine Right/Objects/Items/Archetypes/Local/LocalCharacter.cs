@@ -43,12 +43,21 @@ namespace DRObjects.Items.Archetypes.Local
             }
         }
 
+        private static SpriteData ProneSprite
+        {
+            get
+            {
+                return SpriteManager.GetSprite(LocalSpriteName.ENEMY_THOUGHT_PRONE);
+            }
+        }
+
         private SpriteData baseGraphic;
 
         /// <summary>
         /// What the enemy is thinking
         /// </summary>
         public EnemyThought EnemyThought { get; set; }
+
 
         public override SpriteData Graphic
         {
@@ -88,6 +97,9 @@ namespace DRObjects.Items.Archetypes.Local
                             //sprites.Insert(0, WalkSprite);
                             sprites.Add(WalkSprite);
                             break;
+                        case Enums.EnemyThought.PRONE:
+                            sprites.Add(ProneSprite);
+                            break;
                         default:
                             throw new NotImplementedException("There is no graphic for the thought " + EnemyThought);
                     }
@@ -108,6 +120,18 @@ namespace DRObjects.Items.Archetypes.Local
             set
             {
                 graphics = value;
+            }
+        }
+
+        public override bool MayContainItems
+        {
+            get
+            {
+                return Actor.IsProne;
+            }
+            set
+            {
+                base.MayContainItems = value;
             }
         }
 

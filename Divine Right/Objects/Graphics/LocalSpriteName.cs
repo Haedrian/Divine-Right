@@ -589,6 +589,7 @@ namespace DRObjects.Graphics
         HUMAN_FIGHTER_LIGHT,
         HUMAN_FIGHTER_MEDIUM,
         HUMAN_FIGHTER_HEAVY,
+        ENEMY_THOUGHT_PRONE,
 
     }
 }

@@ -40,7 +40,7 @@ namespace DRObjects.ActorHandling.ActorMissions
         {
             PointID ++;
 
-            if (PatrolRoute.Count > PointID)
+            if (PatrolRoute.Count <= PointID)
             {
                 //Patrol ready, start over
                 PointID = 0;

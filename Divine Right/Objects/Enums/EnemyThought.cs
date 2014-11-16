@@ -12,6 +12,7 @@ namespace DRObjects.Enums
     {
         WAIT,
         WALK,
-        ATTACK
+        ATTACK,
+        PRONE
     }
 }

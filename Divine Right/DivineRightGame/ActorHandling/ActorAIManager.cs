@@ -10,6 +10,7 @@ using DivineRightGame.CombatHandling;
 using DivineRightGame.Pathfinding;
 using DRObjects.LocalMapGeneratorObjects;
 using DRObjects.ActorHandling;
+using DRObjects.Enums;
 
 namespace DivineRightGame.ActorHandling
 {
@@ -48,11 +49,32 @@ namespace DivineRightGame.ActorHandling
             }
 
             //Update the graphic
-            (actor.MapCharacter as LocalCharacter).EnemyThought = actor.CurrentMission.EnemyThought;
+            if (actor.IsProne)
+            {
+                (actor.MapCharacter as LocalCharacter).EnemyThought = EnemyThought.PRONE;
+            }
+            else
+            {
+                (actor.MapCharacter as LocalCharacter).EnemyThought = actor.CurrentMission.EnemyThought;
+            }
 
             if (actor.IsStunned) //Do nothing
             {
                 return new ActionFeedback[] { };
+            }
+
+            if (actor.IsProne)
+            {
+                //Can we get up?
+                if (GameState.LocalMap.GetBlockAtCoordinate(actor.MapCharacter.Coordinate).MayContainItems)
+                {
+                    //Yes we can
+                    actor.IsProne = false;
+                }
+                else
+                {
+                    return new ActionFeedback[] { }; //Do nothing
+                }
             }
 
             if (actor.CurrentMission.MissionType == DRObjects.ActorHandling.ActorMissionType.IDLE)
@@ -283,12 +305,61 @@ namespace DivineRightGame.ActorHandling
                     }
                     else if (!GameState.LocalMap.GetBlockAtCoordinate(mission.Coordinates.Peek()).MayContainItems)
                     {
-                        //Invalid path
-                        Console.WriteLine("Invalid Path");
-                        //lose the mission
-                        actor.CurrentMission = new WaitMission(2); //wait for 2 turns
-                        //Regenerate the path 
-                        GameState.LocalMap.GeneratePathfindingMap();
+                        //Is what is blocking us another actor? Force him to go prone
+                        var nonProneActors = GameState.LocalMap.GetBlockAtCoordinate(mission.Coordinates.Peek()).GetItems().Where(gi => gi.IsActive && gi.GetType().Equals(typeof(LocalCharacter))
+                            && GameState.LocalMap.Actors.Any(a => a.MapCharacter == gi && a.Owners == actor.Owners && !a.IsProne));
+
+                        if (nonProneActors.Count() > 0)
+                        {
+                            //Push them
+                            foreach (var npa in nonProneActors)
+                            {
+                                GameState.LocalMap.Actors.First(a => a.MapCharacter == npa).IsProne = true;
+                            }
+
+                            //Walk
+                            //Okay, now...advance
+                            if (mission.Coordinates.Count == 0)
+                            {
+                                //Where did he go? Take a turn to figure it out
+                                mission.Coordinates = null;
+                                return feedback;
+                            }
+
+                            MapCoordinate nextStep = mission.Coordinates.Pop();
+
+                            //Are we close enough to move?
+                            if (Math.Abs(nextStep - actor.MapCharacter.Coordinate) > 1)
+                            {
+                                //We moved off the path. Regenerate it
+                                mission.Coordinates = null;
+                                return feedback;
+                            }
+
+                            //Do it
+                            if (GameState.LocalMap.GetBlockAtCoordinate(nextStep).MayContainItems)
+                            {
+                                GameState.LocalMap.GetBlockAtCoordinate(nextStep).PutItemOnBlock(actor.MapCharacter);
+                                actor.MapCharacter.Coordinate = nextStep;
+                            }
+                            else
+                            {
+                                //Something changed. Let's regenerate the map and try again
+                                mission.Coordinates = null;
+                                return feedback;
+                            }
+
+
+                        }
+                        else
+                        {
+                            //Invalid path
+                            Console.WriteLine("Invalid Path");
+                            //lose the mission
+                            actor.CurrentMission = new WaitMission(2); //wait for 2 turns
+                            //Regenerate the path 
+                            GameState.LocalMap.GeneratePathfindingMap();
+                        }
                     }
                 }
                 else

@@ -579,6 +579,7 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.ENEMY_THOUGHT_WAIT] = new SpriteData(ENEMIES, new Rectangle(50, 50, 50, 50));
             localSprites[(int)LocalSpriteName.ENEMY_THOUGHT_ATTACK] = new SpriteData(ENEMIES, new Rectangle(100, 50, 50, 50));
             localSprites[(int)LocalSpriteName.ENEMY_THOUGH_CONFUSED] = new SpriteData(ENEMIES, new Rectangle(150, 50, 50, 50));
+            localSprites[(int)LocalSpriteName.ENEMY_THOUGHT_PRONE] = new SpriteData(ENEMIES, new Rectangle(200, 50, 50, 50));
 
             localSprites[(int)LocalSpriteName.HUMAN_FIGHTER_LIGHT] = new SpriteData(ENEMIES, new Rectangle(0, 100, 50, 50));
             localSprites[(int)LocalSpriteName.HUMAN_FIGHTER_MEDIUM] = new SpriteData(ENEMIES, new Rectangle(50, 100, 50, 50));
