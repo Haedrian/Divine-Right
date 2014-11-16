@@ -77,6 +77,17 @@ namespace DivineRightGame.LocalMapGenerator
                 }
             }
 
+             //Fix the patrol points
+
+            foreach(var point in patrolPoints)
+            {
+                point.Point.X += 4;
+                point.Point.Y += 4;
+            }
+
+            //Let's fix the patrol points, we need to merge them into PatrolRoutes
+            var patrolRoutes = PatrolRoute.GetPatrolRoutes(patrolPoints);
+
             foreach (var area in wanderAreas)
             {
                 area.WanderRect = new Rectangle(area.WanderRect.X + 4, area.WanderRect.Y + 4, area.WanderRect.Width, area.WanderRect.Height);
@@ -88,7 +99,8 @@ namespace DivineRightGame.LocalMapGenerator
             foreach (ActorProfession profession in Enum.GetValues(typeof(ActorProfession)))
             {
                 //So do we have any wander areas for them ?
-                var possibleAreas = wanderAreas.Where(wa => wa.Factions.Equals(siteData.Owners) && wa.Profession.Equals(profession));
+                var possibleAreas = wanderAreas.Where(wa => wa.Factions.HasFlag(siteData.Owners) && wa.Profession.Equals(profession));
+                var possibleRoutes = patrolRoutes.Where(pr => pr.Owners.HasFlag(siteData.Owners) && pr.Profession.Equals(profession));
 
                 //Any actors?
                 if (siteData.ActorCounts.ContainsKey(profession))
@@ -132,8 +144,12 @@ namespace DivineRightGame.LocalMapGenerator
 
                         //Go through each actor, and either tell them to wander in the whole map, or within any possible area which matches
                         //Any possible area avaialble?
+                        List<object> possibleMissions = new List<object>(); //I know :( But Using an interface or trying to mangle together an inheritance was worse
 
-                        var chosenArea = possibleAreas.Where(pa => pa.MaxAmount > pa.CurrentAmount).OrderBy(pa => GameState.Random.Next(100)).FirstOrDefault();
+                        possibleMissions.AddRange(possibleAreas.Where(pa => pa.MaxAmount > pa.CurrentAmount));
+                        possibleMissions.AddRange(possibleRoutes);
+
+                        var chosenArea = possibleMissions.OrderBy(pa => GameState.Random.Next(100)).FirstOrDefault();
 
                         if (chosenArea == null)
                         {
@@ -142,9 +158,24 @@ namespace DivineRightGame.LocalMapGenerator
                         }
                         else
                         {
-                            //Wander around in that area
-                            actor.CurrentMission = new WanderMission() { LoiterPercentage = 25, WanderPoint = new MapCoordinate(chosenArea.WanderPoint), WanderRectangle = chosenArea.WanderRect };
-                            chosenArea.CurrentAmount++;
+                            //Is this a patrol or a wander ?
+                            if (chosenArea.GetType().Equals(typeof(PatrolRoute)))
+                            {
+                                var patrolDetails = chosenArea as PatrolRoute;
+
+                                PatrolRouteMission pm = new PatrolRouteMission();
+                                pm.PatrolRoute.AddRange(patrolDetails.Route);
+
+                                actor.CurrentMission = pm;
+                            }
+                            else if (chosenArea.GetType().Equals(typeof(MapletActorWanderArea)))
+                            {
+                                var wanderDetails = chosenArea as MapletActorWanderArea;
+
+                                //Wander around in that area
+                                actor.CurrentMission = new WanderMission() { LoiterPercentage = 25, WanderPoint = new MapCoordinate(wanderDetails.WanderPoint), WanderRectangle = wanderDetails.WanderRect };
+                                wanderDetails.CurrentAmount++;
+                            }
                         }
 
                     }

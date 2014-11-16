@@ -403,10 +403,8 @@ namespace DivineRightGame.LocalMapGenerator
                             MapletContentsItemTag mapletContent = (MapletContentsItemTag)contents;
                             int tempInt;
                             itemPlaced = factory.CreateItem(mapletContent.Category, mapletContent.Tag, out tempInt);
-                            if (mapletContent.Factions.HasValue)
-                            {
-                                itemPlaced.OwnedBy = mapletContent.Factions.Value;
-                            }
+                            //I CHANGED THIS
+                            itemPlaced.OwnedBy = mapletContent.Factions;
                         }
 
                         if (candidateBlocks.Count != 0)
@@ -734,7 +732,7 @@ namespace DivineRightGame.LocalMapGenerator
 
                         newActor.MapCharacter = mapCharacter;
 
-                        if (actor.Factions.HasValue && !actor.Factions.Value.HasFlag(owner))
+                        if (!actor.Factions.HasFlag(owner))
                         {
                             //inactive character
                             newActor.MapCharacter.IsActive = false;

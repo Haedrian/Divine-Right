@@ -161,7 +161,7 @@ namespace Divine_Right.HelperFunctions
             LocalMapGenerator gen = new LocalMapGenerator();
 
             SiteData siteData = new SiteData();
-            siteData.Biome = GlobalBiome.POLAR_DESERT;
+            siteData.Biome = GlobalBiome.RAINFOREST;
             siteData.Owners = OwningFactions.HUMANS;
             siteData.SiteTypeData = new SiteTypeData() { SiteType = SiteType.IRON_MINE };
             siteData.ActorCounts = new Dictionary<ActorProfession, int>();

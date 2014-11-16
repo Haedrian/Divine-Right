@@ -1,5 +1,8 @@
 ﻿<Maplet MapletName="Mining Pit" SizeX="5" SizeY="5" Tiled="false" Walled="false">
   <MapletContents>
+
+    <MapletPatrolPoint Profession="WORKER" PointRadius="3" />
+    
     <MapletContentsItemTag Position="Fixed" x="1" y="3" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="mineshaft tl"/>
     <MapletContentsItemTag Position="Fixed" x="2" y="3" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="mineshaft tc"/>
     <MapletContentsItemTag Position="Fixed" x="3" y="3" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="mineshaft tr"/>

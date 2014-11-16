@@ -58,16 +58,17 @@ namespace DRObjects.LocalMapGeneratorObjects
         /// <summary>
         /// The factions which own this object
         /// </summary>
-        public OwningFactions? Factions
+        public OwningFactions Factions
         {
             get
             {
                 if (string.IsNullOrEmpty(OwnerFactions))
                 {
-                    return null;
+                    //All of them
+                    return OwningFactions.ABANDONED | OwningFactions.BANDITS | OwningFactions.HUMANS | OwningFactions.ORCS | OwningFactions.UNDEAD;
                 }
 
-                OwningFactions? fact = null;
+                OwningFactions fact =  OwningFactions.ABANDONED;
                 //Parse it
                 foreach (var own in OwnerFactions.Split(','))
                 {

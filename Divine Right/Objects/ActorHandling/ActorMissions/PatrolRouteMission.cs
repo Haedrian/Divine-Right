@@ -59,5 +59,10 @@ namespace DRObjects.ActorHandling.ActorMissions
         {
             get { return EnemyThought.WAIT; }
         }
+
+        public PatrolRouteMission()
+        {
+            this.patrolRoute = new List<PatrolPoint>();
+        }
     }
 }

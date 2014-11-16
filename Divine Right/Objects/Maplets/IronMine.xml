@@ -1,6 +1,6 @@
 ﻿<Maplet name="ironMine" Tiled="false" TileTag="rocky" SizeX ="20" SizeY="20" Walled="false">
-  <MapletContents>    
-    
+  <MapletContents>
+
     <MapletContentsMaplet Position="Middle" FirstFit="false" MaxAmount="1" ProbabilityPercentage="100">
       <MapletTag Tag="mineshaft" />
     </MapletContentsMaplet>
@@ -10,16 +10,19 @@
     <MapletContentsMaplet Position="Anywhere" MaxAmount="1" ProbabilityPercentage="100" >
       <Maplet Tiled="true" SizeX="5" SizeY="5" Walled="false" TileTag="wood">
         <MapletContents>
+          <MapletPatrolPoint Profession="WORKER" PointRadius="3" />
+          <MapletPatrolPoint Profession="WARRIOR" PointRadius="3" />
           <MapletContentsItemTag Position="Anywhere" Owners="Humans" Category="mundaneitems" MaxAmount="15" ProbabilityPercentage="50" Tag="iron"/>
         </MapletContents>
       </Maplet>
     </MapletContentsMaplet>
-    
+
     <!-- foreman's office-->
 
     <MapletContentsMaplet Position="Anywhere" MaxAmount="1" ProbabilityPercentage="100" >
       <Maplet Tiled="true" SizeX="5" SizeY="5" Walled="true" TileTag="wood">
         <MapletContents>
+          <MapletPatrolPoint Profession="WARRIOR" PointRadius="3" />
           <MapletActor Owners="Humans" MaxAmount="1" ProbabilityPercentage="100" UseLocalType="false" EnemyType="human" EnemyTag="merchant" VendorType="SMITH" VendorLevel="1" EnemyMission="Idle"  />
           <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="desk"/>
         </MapletContents>
@@ -29,6 +32,8 @@
     <MapletContentsMaplet Position="Anywhere" MaxAmount="1" ProbabilityPercentage="100" >
       <Maplet Tiled="true" SizeX="3" SizeY="3" Walled="false" TileTag="wood">
         <MapletContents>
+          <MapletPatrolPoint Profession="WORKER" PointRadius="3" />
+
           <MapletContentsItemTag Position="Anywhere" Owners="Humans" Category="mundaneitems" MaxAmount="5" ProbabilityPercentage="50" Tag="mining tool"/>
         </MapletContents>
       </Maplet>
@@ -38,6 +43,8 @@
       <Maplet Tiled="true" SizeX="10" SizeY="5" Walled="true" TileTag="wood">
         <MapletContents>
           <!-- Furnace and storeroom -->
+          <MapletPatrolPoint Profession="WORKER" PointRadius="3" />
+          <MapletPatrolPoint Profession="WARRIOR" PointRadius="3" />
           <MapletContentsItemTag Position="Sides" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="85" Tag="furnace"/>
           <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="15" ProbabilityPercentage="50" Tag="iron"/>
           <MapletContentsItemTag Position="Sides" Category="mundaneitems" MaxAmount="3" ProbabilityPercentage="100" Tag="container"/>
@@ -68,7 +75,7 @@
           <MapletContentsMaplet Position="Middle" MaxAmount="2" ProbabilityPercentage="99">
             <MapletTag Tag="TableSet" />
           </MapletContentsMaplet>
-          
+
         </MapletContents>
       </Maplet>
     </MapletContentsMaplet>
