@@ -206,7 +206,7 @@ namespace DivineRightGame
             MapCoordinate playerLocation = actors.Where(a => a.IsPlayerCharacter).FirstOrDefault().MapCharacter.Coordinate;
 
             //Check if we have any dead actors to clean up
-            foreach (Actor deadActor in actors.Where(a => !a.IsAlive && !a.MapCharacter.IsActive && !a.IsPlayerCharacter && a.MapCharacter != null))
+            foreach (Actor deadActor in actors.Where(a => !a.IsAlive && !a.IsPlayerCharacter && a.MapCharacter != null))
             {
                 this.GetBlockAtCoordinate(deadActor.MapCharacter.Coordinate).RemoveTopItem(); //remove the character
 

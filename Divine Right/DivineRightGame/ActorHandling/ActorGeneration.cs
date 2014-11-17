@@ -158,6 +158,12 @@ namespace DivineRightGame.ActorHandling
                 if (profession == ActorProfession.WARRIOR)
                 {
                     actor.Inventory.EquippedItems = GenerateEquippedItems(Int32.Parse(chosen[12]));
+
+                    //Add all of those into the inventory
+                    foreach (var item in actor.Inventory.EquippedItems.Values)
+                    {
+                        actor.Inventory.Inventory.Add(item.Category, item);
+                    }
                 }
 
                 actor.IsActive = true;

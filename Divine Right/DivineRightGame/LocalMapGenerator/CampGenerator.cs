@@ -10,6 +10,7 @@ using DRObjects.Items.Archetypes.Local;
 using DivineRightGame.ActorHandling;
 using DRObjects.ActorHandling.ActorMissions;
 using DRObjects.ActorHandling;
+using DRObjects.ActorHandling.CharacterSheet.Enums;
 
 namespace DivineRightGame.LocalMapGenerator
 {
@@ -151,7 +152,7 @@ namespace DivineRightGame.LocalMapGenerator
             MapletActorWanderArea[] wanderAreas = null;
             MapletPatrolPoint[] patrolPoints = null;
 
-            var gennedMap = gen.GenerateMap(grassTileID, null, maplet, false, "",OwningFactions.BANDITS, out enemyArray,out wanderAreas,out patrolPoints);
+            var gennedMap = gen.GenerateMap(grassTileID, null, maplet, false, "", OwningFactions.BANDITS, out enemyArray, out wanderAreas, out patrolPoints);
 
             gen.JoinMaps(map, gennedMap, startCoord + 1, startCoord + 1);
 
@@ -320,10 +321,10 @@ namespace DivineRightGame.LocalMapGenerator
 
             List<MapCoordinate> insidePatrol = new List<MapCoordinate>();
 
-            insidePatrol.Add(new MapCoordinate(center, startCoord +1, 0, MapType.LOCAL));
-            insidePatrol.Add(new MapCoordinate(center, endCoord -1, 0, MapType.LOCAL));
-            insidePatrol.Add(new MapCoordinate(startCoord +1, center, 0, MapType.LOCAL));
-            insidePatrol.Add(new MapCoordinate(endCoord -1, center, 0, MapType.LOCAL));
+            insidePatrol.Add(new MapCoordinate(center, startCoord + 1, 0, MapType.LOCAL));
+            insidePatrol.Add(new MapCoordinate(center, endCoord - 1, 0, MapType.LOCAL));
+            insidePatrol.Add(new MapCoordinate(startCoord + 1, center, 0, MapType.LOCAL));
+            insidePatrol.Add(new MapCoordinate(endCoord - 1, center, 0, MapType.LOCAL));
 
             //Go through all of those and make sure they're clear of anything that wouldn't let them walk upon them
             foreach (var coordinate in outsidePatrol)
@@ -341,12 +342,6 @@ namespace DivineRightGame.LocalMapGenerator
             #region Actors
 
             enemyArray = CreateBandits(enemies, outsidePatrol.Select(op => new PatrolPoint() { AcceptableRadius = 2, Coordinate = op }).ToList(), insidePatrol.Select(op => new PatrolPoint() { AcceptableRadius = 2, Coordinate = op }).ToList());
-
-            ConformEnemies(enemyArray.ToList());
-
-            //var animals = ActorGeneration.CreateAnimalHerds(GlobalBiome.WOODLAND, false, 4);
-
-            //enemyArray = animals.SelectMany(a => a).ToArray();
 
             int tries = 0;
 
@@ -401,7 +396,7 @@ namespace DivineRightGame.LocalMapGenerator
         }
 
         /// <summary>
-        /// Creates a number of bandits groups of 3
+        /// Creates a number of bandits groups of 4
         /// </summary>
         /// <param name="totalGroups"></param>
         /// <returns></returns>
@@ -416,26 +411,9 @@ namespace DivineRightGame.LocalMapGenerator
             for (int i = 0; i < totalGroups; i++)
             {
                 List<Actor> groupActors = new List<Actor>();
-                for (int j = 0; j < 3; j++)
-                {
-                    int enemyID = 0;
-                    Actor actor = ActorGeneration.CreateActor("human", "bandit easy", true, 10, 10, null, out enemyID, null);
 
-                    groupActors.Add(actor);
+                groupActors.AddRange(ActorGeneration.CreateActors(OwningFactions.BANDITS, ActorProfession.WARRIOR, 4));
 
-                    actor.MapCharacter = fact.CreateItem("ENEMIES", enemyID);
-                    (actor.MapCharacter as LocalCharacter).Actor = actor;
-
-                    //Two easies and a medium
-                    if (j < 2)
-                    {
-                        ActorGeneration.RegenerateBandit(actor, EASY_LEVEL, EASY_MONEY);
-                    }
-                    else
-                    {
-                        ActorGeneration.RegenerateBandit(actor, MEDIUM_LEVEL, MEDIUM_MONEY);
-                    }
-                }
                 actors.Add(groupActors);
             }
             return actors;
@@ -457,16 +435,10 @@ namespace DivineRightGame.LocalMapGenerator
 
             ItemFactory.ItemFactory fact = new ItemFactory.ItemFactory();
 
-            for (int i = 0; i < total; i++)
+            actors.AddRange(ActorGeneration.CreateActors(OwningFactions.BANDITS, ActorProfession.WARRIOR, total));
+
+            foreach(var actor in actors)
             {
-                int enemyID = 0;
-                Actor actor = ActorGeneration.CreateActor("human", "bandit easy", true, 10, 10, null, out enemyID, null);
-
-                actors.Add(actor);
-
-                actor.MapCharacter = fact.CreateItem("ENEMIES", enemyID);
-                (actor.MapCharacter as LocalCharacter).Actor = actor;
-
                 //Is this going to be one of the patroling ones ?
 
                 if (random.Next(10) % 3 == 0)
@@ -482,53 +454,6 @@ namespace DivineRightGame.LocalMapGenerator
             }
 
             return actors.ToArray();
-        }
-
-        public static void ConformEnemies(List<Actor> enemies)
-        {
-            Random random = new Random();
-
-            //Filter out the enemies which are the denizens of this dungeon
-            List<Actor> ens = enemies.Where(e => e.EnemyData.Intelligent).ToList();
-
-            //The rules for level are as follows
-            //For each 3 'easys' - put in a medium
-            //For each 3 mediums - put in a hard
-            //Later we might have an even harder, but leave it like that for now
-
-            int easyCount = 0;
-            int mediumCount = 0;
-
-            //Shuffle the ens - so we don't get hard batches. It'd be more logically to leave them unshuffled, but it'd be too hard.
-
-            ens = ens.OrderBy(r => random.Next(100)).ToList();
-
-            foreach (var enemy in ens)
-            {
-                if (mediumCount == 3)
-                {
-                    //Generate a hard
-                    ActorGeneration.RegenerateBandit(enemy, HARD_LEVEL, HARD_MONEY);
-                    mediumCount = 0;
-                }
-                else if (easyCount == 3)
-                {
-                    //Generate a medium
-                    ActorGeneration.RegenerateBandit(enemy, MEDIUM_LEVEL, MEDIUM_MONEY);
-                    easyCount = 0;
-                    mediumCount++;
-                }
-                else
-                {
-                    //Generate an easy
-                    ActorGeneration.RegenerateBandit(enemy, EASY_LEVEL, EASY_MONEY);
-                    easyCount++;
-                }
-            }
-
-            //Done
-            return;
-
         }
 
     }
