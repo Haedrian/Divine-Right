@@ -149,7 +149,6 @@ namespace Divine_Right.HelperFunctions
             LocalMapXMLParser parser = new LocalMapXMLParser();
 
             //Maplet maplet = parser.ParseMaplet(@"Maplets/IronMine.xml");
-
             
             Actor[] tempy = null;
 
@@ -161,12 +160,13 @@ namespace Divine_Right.HelperFunctions
             LocalMapGenerator gen = new LocalMapGenerator();
 
             SiteData siteData = new SiteData();
+            siteData.SiteTypeData = SiteDataManager.GetData(SiteType.IRON_MINE);
+
             siteData.Biome = GlobalBiome.RAINFOREST;
             siteData.Owners = OwningFactions.HUMANS;
-            siteData.SiteTypeData = new SiteTypeData() { SiteType = SiteType.IRON_MINE };
-            siteData.ActorCounts = new Dictionary<ActorProfession, int>();
-            siteData.ActorCounts.Add(ActorProfession.WORKER, 5);
-            siteData.ActorCounts.Add(ActorProfession.WARRIOR, 5);
+            
+            //Locate the right actor counts
+            siteData.LoadAppropriateActorCounts();
 
             MapBlock[,] generatedMap = SiteGenerator.GenerateSite(siteData, out tempy);
 

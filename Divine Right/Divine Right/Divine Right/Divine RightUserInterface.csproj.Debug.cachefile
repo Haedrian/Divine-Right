@@ -146,6 +146,7 @@ Resources\OrcNames\SurnameAft.txt
 Resources\OrcNames\SurnameFore.txt
 Resources\SettlementNames\Prefix.txt
 Resources\SettlementNames\Suffix.txt
+Resources\SiteData\SiteData.json
 App.config
 Maplets.sdf
 Maplets\Dungeons\TempleRoom.xml

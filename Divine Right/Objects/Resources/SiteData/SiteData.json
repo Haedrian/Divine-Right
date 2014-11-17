@@ -1,0 +1,25 @@
+﻿{
+    "Sites": [
+        {
+            "Name": "Iron_Mine",
+            "ActorCounts": [
+                {
+                    "Profession": "WARRIOR",
+                    "BaseAmount": 4,
+                    "MaxAmount": 10
+                },
+                {
+                    "Profession": "WORKER",
+                    "BaseAmount": 5,
+                    "MaxAmount": 10
+                },
+                {
+                    "Owner": "UNDEAD",
+                    "Profession": "WARRIOR",
+                    "BaseAmount": 9,
+					"MaxAmount": 15
+                }
+            ]
+        }
+    ]
+}

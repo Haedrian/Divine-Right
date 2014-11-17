@@ -17,5 +17,11 @@ namespace DRObjects.Sites
         public ActorProfession Profession { get; set; }
         public int? BaseAmount { get; set; }
         public int? MaxAmount { get; set; }
+
+        public SiteActorCount()
+        {
+            //All owners
+            Owner = OwningFactions.ABANDONED | OwningFactions.BANDITS | OwningFactions.HUMANS | OwningFactions.ORCS | OwningFactions.UNDEAD;
+        }
     }
 }
