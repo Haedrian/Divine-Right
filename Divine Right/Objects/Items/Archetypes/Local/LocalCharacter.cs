@@ -5,6 +5,7 @@ using System.Text;
 using DRObjects.Enums;
 using DRObjects.Graphics;
 using DRObjects.GraphicsEngineObjects;
+using DRObjects.GraphicsEngineObjects.Abstract;
 using Microsoft.Xna.Framework;
 
 namespace DRObjects.Items.Archetypes.Local
@@ -154,10 +155,16 @@ namespace DRObjects.Items.Archetypes.Local
                 actions.Add(ActionType.TRADE);
             }
 
+            //Can we shove them ?
+            if (this.Coordinate - actor.MapCharacter.Coordinate <2 && !this.Actor.IsAggressive)
+            {
+                actions.Add(ActionType.SHOVE);
+            }
+
             return actions.ToArray();
         }
 
-        public override GraphicsEngineObjects.Abstract.ActionFeedback[] PerformAction(ActionType actionType, Actor actor, object[] args)
+        public override ActionFeedback[] PerformAction(ActionType actionType, Actor actor, object[] args)
         {
             if (actionType == ActionType.PREPARE_ATTACK)
             {
@@ -166,6 +173,11 @@ namespace DRObjects.Items.Archetypes.Local
             else if (actionType == ActionType.TRADE)
             {
                 return new InterfaceToggleFeedback[] { new InterfaceToggleFeedback(InternalActionEnum.OPEN_TRADE,true,new object[2] {this.Actor,actor})};
+            }
+            else if (actionType == ActionType.SHOVE)
+            {
+                this.Actor.IsProne = true;
+                return new CurrentLogFeedback[] { new CurrentLogFeedback( InterfaceSpriteName.CHA, Color.Black, "You shove " + this.Name)};
             }
             else
             {

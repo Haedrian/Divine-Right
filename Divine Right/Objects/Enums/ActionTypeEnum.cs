@@ -23,5 +23,6 @@ namespace DRObjects.Enums
         TRADE,
         MULTIDECISION,
         CONSUME,
+        SHOVE,
     }
 }
