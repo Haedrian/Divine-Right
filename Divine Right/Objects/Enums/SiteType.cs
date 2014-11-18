@@ -10,6 +10,7 @@ namespace DRObjects.Enums
     /// </summary>
     public enum SiteType
     {
-        IRON_MINE
+        IRON_MINE,
+        GOLD_MINE
     }
 }

@@ -160,9 +160,9 @@ namespace Divine_Right.HelperFunctions
             LocalMapGenerator gen = new LocalMapGenerator();
 
             SiteData siteData = new SiteData();
-            siteData.SiteTypeData = SiteDataManager.GetData(SiteType.IRON_MINE);
+            siteData.SiteTypeData = SiteDataManager.GetData(SiteType.GOLD_MINE);
 
-            siteData.Biome = GlobalBiome.RAINFOREST;
+            siteData.Biome = GlobalBiome.ARID_DESERT;
             siteData.Owners = OwningFactions.HUMANS;
             
             //Locate the right actor counts

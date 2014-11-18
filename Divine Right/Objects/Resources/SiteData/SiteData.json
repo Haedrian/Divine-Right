@@ -17,6 +17,27 @@
                     "Owner": "UNDEAD",
                     "Profession": "WARRIOR",
                     "BaseAmount": 9,
+                    "MaxAmount": 15
+                }
+            ]
+        },
+        {
+            "Name": "Gold_Mine",
+            "ActorCounts": [
+                {
+                    "Profession": "WARRIOR",
+                    "BaseAmount": 5,
+                    "MaxAmount": 15
+                },
+                {
+                    "Profession": "WORKER",
+                    "BaseAmount": 7,
+                    "MaxAmount": 15
+                },
+                {
+                    "Owner": "UNDEAD",
+                    "Profession": "WARRIOR",
+                    "BaseAmount": 9,
 					"MaxAmount": 15
                 }
             ]
