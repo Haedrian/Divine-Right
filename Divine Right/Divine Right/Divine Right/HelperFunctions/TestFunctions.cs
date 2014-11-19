@@ -162,7 +162,7 @@ namespace Divine_Right.HelperFunctions
             SiteData siteData = new SiteData();
             siteData.SiteTypeData = SiteDataManager.GetData(SiteType.GOLD_MINE);
 
-            siteData.Biome = GlobalBiome.ARID_DESERT;
+            siteData.Biome = GlobalBiome.GRASSLAND;
             siteData.Owners = OwningFactions.HUMANS;
             
             //Locate the right actor counts

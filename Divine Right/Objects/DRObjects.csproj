@@ -290,6 +290,9 @@
     <Content Include="Maplets\Dungeons\SmithingRoom.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Maplets\Farm.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Maplets\GoldMine.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
