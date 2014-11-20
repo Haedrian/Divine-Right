@@ -38,7 +38,28 @@
                     "Owner": "UNDEAD",
                     "Profession": "WARRIOR",
                     "BaseAmount": 9,
-					"MaxAmount": 15
+                    "MaxAmount": 15
+                }
+            ]
+        },
+        {
+            "Name": "Farm",
+            "ActorCounts": [
+                {
+                    "Profession": "WARRIOR",
+                    "BaseAmount": 2,
+                    "MaxAmount": 5
+                },
+                {
+                    "Profession": "WORKER",
+                    "BaseAmount": 5,
+                    "MaxAmount": 10
+                },
+                {
+                    "Owner": "UNDEAD",
+                    "Profession": "WARRIOR",
+                    "BaseAmount": 3,
+					"MaxAmount": 5
                 }
             ]
         }

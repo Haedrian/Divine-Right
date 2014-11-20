@@ -11,6 +11,7 @@ namespace DRObjects.Enums
     public enum SiteType
     {
         IRON_MINE,
-        GOLD_MINE
+        GOLD_MINE,
+        FARM
     }
 }

@@ -9,10 +9,10 @@
     <MapletContentsMaplet Position="Sides" MaxAmount="1"  ProbabilityPercentage="102">
       <Maplet Tiled="true" SizeX="15" SizeY="10" Walled="true" TileTag="wood" WindowProbability="20">
         <MapletContents>
+          <MapletPatrolPoint PointRadius="3" Profession="WORKER" />
           <MapletContentsMaplet Position="Sides" MaxAmount="1" ProbabilityPercentage="100">
             <Maplet Tiled="false" SizeX="5" SizeY="4" Walled="true" Name="Bedrooms">
               <MapletContents>
-                <MapletActorWanderArea MaxAmount="2" Owners="Humans" Profession="WORKER" />
                 <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="5" ProbabilityPercentage="75" Tag="bedroll"/>
               </MapletContents>
             </Maplet>
@@ -36,7 +36,7 @@
             <Maplet Tiled="true" SizeX="5" SizeY="5" Walled="true" TileTag="wood">
               <MapletContents>
                 <MapletPatrolPoint Profession="WARRIOR" PointRadius="2" />
-                <MapletActor Owners="Humans" MaxAmount="1" ProbabilityPercentage="100" UseLocalType="false" EnemyType="human" EnemyTag="merchant" VendorType="SMITH" VendorLevel="1" EnemyMission="Wander"  />
+                <MapletActor Owners="Humans" MaxAmount="1" ProbabilityPercentage="100" UseLocalType="false" EnemyType="human" EnemyTag="merchant" VendorType="TAVERN" VendorLevel="1" EnemyMission="Wander"  />
                 <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="desk"/>
               </MapletContents>
             </Maplet>
@@ -52,6 +52,7 @@
           <MapletContentsMaplet Position="Middle" MaxAmount="1"  ProbabilityPercentage="101">
             <Maplet Tiled="true" SizeX="8" SizeY="3" Walled="false" TileTag="soil">
               <MapletContents>
+                <MapletPatrolPoint PointRadius="1" Profession="WORKER" />
                 <MapletContentsItemTag Owners="Humans,Bandits" Position="Anywhere" Category="mundaneitems" MaxAmount="24" ProbabilityPercentage="50" Tag="plant"/>
               </MapletContents>
             </Maplet>
