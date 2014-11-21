@@ -596,6 +596,8 @@ namespace DRObjects.Graphics
         FISHING_STALL_3,
         FISHING_STALL_4,
         FISHING_STALL_5,
+        FISHING_BOAT_RIGHT,
+        FISHING_BOAT_LEFT,
 
     }
 }

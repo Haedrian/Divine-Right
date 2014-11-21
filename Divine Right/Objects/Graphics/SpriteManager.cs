@@ -371,6 +371,8 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.FISHING_STALL_3] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(500, 150, 50, 50));
             localSprites[(int)LocalSpriteName.FISHING_STALL_4] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(500, 200, 50, 50));
             localSprites[(int)LocalSpriteName.FISHING_STALL_5] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(500, 250, 50, 50));
+            localSprites[(int)LocalSpriteName.FISHING_BOAT_LEFT] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(350, 300, 50, 50));
+            localSprites[(int)LocalSpriteName.FISHING_BOAT_RIGHT] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(400, 300, 50, 50));
 
             AddLocalSprite(LocalSpriteName.PEEL_1, RESOURCES_AND_TOOLS, 0, 8);
             AddLocalSprite(LocalSpriteName.PEEL_2, RESOURCES_AND_TOOLS, 1, 8);
