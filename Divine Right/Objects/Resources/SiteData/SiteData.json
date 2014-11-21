@@ -59,6 +59,27 @@
                     "Owner": "UNDEAD",
                     "Profession": "WARRIOR",
                     "BaseAmount": 3,
+                    "MaxAmount": 5
+                }
+            ]
+        },
+        {
+            "Name": "Fishing_Village",
+            "ActorCounts": [
+                {
+                    "Profession": "WARRIOR",
+                    "BaseAmount": 2,
+                    "MaxAmount": 5
+                },
+                {
+                    "Profession": "WORKER",
+                    "BaseAmount": 5,
+                    "MaxAmount": 10
+                },
+                {
+                    "Owner": "UNDEAD",
+                    "Profession": "WARRIOR",
+                    "BaseAmount": 3,
 					"MaxAmount": 5
                 }
             ]

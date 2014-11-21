@@ -37,13 +37,36 @@ namespace DivineRightGame.LocalMapGenerator
             //First we generate some empty wilderness of the right type
             MapBlock[,] map = WildernessGenerator.GenerateMap(siteData.Biome, 0, 0, out actors, out startPoint);
 
-            //Now, clear the tiles from between 4,4 till 24,24
-            for (int x = 4; x < 25; x++)
+            //Now, clear the tiles from between 5,5 till 25,25
+            for (int x = 5; x < 26; x++)
             {
-                for (int y = 4; y < 25; y++)
+                for (int y = 5; y < 26; y++)
                 {
                     MapBlock block = map[x, y];
                     block.RemoveAllItems();
+                }
+            }
+
+            ItemFactory.ItemFactory itemFactory = new ItemFactory.ItemFactory();
+
+            int waterID = 0;
+
+            MapItem waterTile = itemFactory.CreateItem(Archetype.TILES, "water", out waterID);
+
+            //If it's a fishing village, put some water in
+            if (siteData.SiteTypeData.SiteType == SiteType.FISHING_VILLAGE)
+            {
+                for(int x = 0; x < map.GetLength(0); x++)
+                {
+                    for (int y=map.GetLength(1) -10; y < map.GetLength(1); y++)
+                    {
+                        MapBlock block = map[x, y];
+                        block.RemoveAllItems();
+
+                        //Set the tile to water
+                        block.Tile = itemFactory.CreateItem("tiles", waterID);
+                        block.Tile.Coordinate = new MapCoordinate(x, y, 0, MapType.LOCAL);
+                    }
                 }
             }
 
@@ -62,7 +85,7 @@ namespace DivineRightGame.LocalMapGenerator
             MapBlock[,] siteMap = lmg.GenerateMap(tileID, null, maplet, false, "", siteData.Owners, out actors, out wanderAreas, out patrolPoints);
 
             //Now lets fuse the maps
-            map = lmg.JoinMaps(map, siteMap, 4, 4);
+            map = lmg.JoinMaps(map, siteMap, 5, 5);
 
             foreach (var actor in actors)
             {
@@ -70,10 +93,10 @@ namespace DivineRightGame.LocalMapGenerator
                 {
                     WanderMission wMiss = actor.CurrentMission as WanderMission;
 
-                    wMiss.WanderPoint.X += 4;
-                    wMiss.WanderPoint.Y += 4;
+                    wMiss.WanderPoint.X += 5;
+                    wMiss.WanderPoint.Y += 5;
 
-                    wMiss.WanderRectangle = new Rectangle(wMiss.WanderRectangle.X + 4, wMiss.WanderRectangle.Y + 4, wMiss.WanderRectangle.Width, wMiss.WanderRectangle.Height);
+                    wMiss.WanderRectangle = new Rectangle(wMiss.WanderRectangle.X + 5, wMiss.WanderRectangle.Y + 5, wMiss.WanderRectangle.Width, wMiss.WanderRectangle.Height);
                 }
             }
 
@@ -81,8 +104,8 @@ namespace DivineRightGame.LocalMapGenerator
 
             foreach(var point in patrolPoints)
             {
-                point.Point.X += 4;
-                point.Point.Y += 4;
+                point.Point.X += 5;
+                point.Point.Y += 5;
             }
 
             //Let's fix the patrol points, we need to merge them into PatrolRoutes
@@ -90,7 +113,7 @@ namespace DivineRightGame.LocalMapGenerator
 
             foreach (var area in wanderAreas)
             {
-                area.WanderRect = new Rectangle(area.WanderRect.X + 4, area.WanderRect.Y + 4, area.WanderRect.Width, area.WanderRect.Height);
+                area.WanderRect = new Rectangle(area.WanderRect.X + 5, area.WanderRect.Y + 5, area.WanderRect.Width, area.WanderRect.Height);
             }
 
             List<Actor> actorList = new List<Actor>();

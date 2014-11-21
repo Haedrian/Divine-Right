@@ -273,6 +273,8 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.LARGE_TABLE_TEA_BL] = new SpriteData(HOUSEITEM, new Rectangle(0, 550, 50, 50));
             localSprites[(int)LocalSpriteName.LARGE_TABLE_TEA_BR] = new SpriteData(HOUSEITEM, new Rectangle(50, 550, 50, 50));
 
+            localSprites[(int)LocalSpriteName.TABLE_FOR_1] = new SpriteData(HOUSEITEM, new Rectangle(50, 600, 50, 50));
+
             AddLocalSprite(LocalSpriteName.WATER_TROUGH, HOUSEITEM, 2, 10);
             AddLocalSprite(LocalSpriteName.FOOD_TROUGH, HOUSEITEM, 3, 10);
             AddLocalSprite(LocalSpriteName.HAY_BALE, HOUSEITEM, 4, 10);
@@ -366,11 +368,11 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.CORN] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(300, 350, 50, 50));
 
             localSprites[(int)LocalSpriteName.FISHING_ROD] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(500, 0, 50, 50));
-            localSprites[(int)LocalSpriteName.FISHING_STALL_1] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(500, 50, 50, 50));
-            localSprites[(int)LocalSpriteName.FISHING_STALL_2] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(500, 100, 50, 50));
-            localSprites[(int)LocalSpriteName.FISHING_STALL_3] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(500, 150, 50, 50));
-            localSprites[(int)LocalSpriteName.FISHING_STALL_4] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(500, 200, 50, 50));
-            localSprites[(int)LocalSpriteName.FISHING_STALL_5] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(500, 250, 50, 50));
+            localSprites[(int)LocalSpriteName.FISH_STALL_1] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(500, 50, 50, 50));
+            localSprites[(int)LocalSpriteName.FISH_STALL_2] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(500, 100, 50, 50));
+            localSprites[(int)LocalSpriteName.FISH_STALL_3] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(500, 150, 50, 50));
+            localSprites[(int)LocalSpriteName.FISH_STALL_4] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(500, 200, 50, 50));
+            localSprites[(int)LocalSpriteName.FISH_STALL_5] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(500, 250, 50, 50));
             localSprites[(int)LocalSpriteName.FISHING_BOAT_LEFT] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(350, 300, 50, 50));
             localSprites[(int)LocalSpriteName.FISHING_BOAT_RIGHT] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(400, 300, 50, 50));
 

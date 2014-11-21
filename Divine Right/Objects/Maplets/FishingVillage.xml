@@ -1,0 +1,85 @@
+﻿<Maplet name="ironMine" Tiled="false" TileTag="rocky" SizeX ="20" SizeY="20" Walled="false">
+  <MapletContents>
+
+    <MapletContentsMaplet Position="Sides" FirstFit="true" MaxAmount="1" ProbabilityPercentage="105">
+      <Maplet Tiled="true" SizeX="20" SizeY="5" Walled="false" TileTag="water">
+        <MapletContents>
+          <!-- Create a pier-->
+          <MapletContentsMaplet Position="Middle" MaxAmount="1" ProbabilityPercentage="100">
+            <Maplet Tiled="true" SizeX="2" SizeY="5" Walled="false" TileTag="wood">
+              <MapletContents>
+                <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="fishing tool"/>
+                <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="bucket"/>
+              </MapletContents>
+            </Maplet>
+          </MapletContentsMaplet>
+
+          <!-- Another pier - maybe-->
+          <MapletContentsMaplet Position="Middle" MaxAmount="1" ProbabilityPercentage="50">
+            <Maplet Tiled="true" SizeX="2" SizeY="5" Walled="false" TileTag="wood">
+              <MapletContents>
+                <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="fishing tool"/>
+                <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="bucket"/>
+              </MapletContents>
+            </Maplet>
+          </MapletContentsMaplet>
+
+        </MapletContents>
+      </Maplet>
+    </MapletContentsMaplet>
+
+    <MapletContentsMaplet Position="Sides" FirstFit="true" MaxAmount="1" ProbabilityPercentage="110">
+      <Maplet Tiled="false" SizeX="20" SizeY="15" Walled="false">
+        <MapletContents>
+
+          <MapletContentsItemTag Position="Middle" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="well" />
+
+          <!-- Resource Area-->
+          <MapletContentsMaplet Position="Middle" MaxAmount="1" ProbabilityPercentage="101">
+            <Maplet Tiled="true" SizeX="3" SizeY="3" Walled="false" TileTag="wood">
+              <MapletContents>
+                <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="9" ProbabilityPercentage="50" Tag="fish"  />
+              </MapletContents>
+            </Maplet>
+          </MapletContentsMaplet>
+
+          <!-- Boat -->
+          <MapletContentsMaplet Position="Middle" FirstFit="false" MaxAmount="1" ProbabilityPercentage="100">
+            <MapletTag Tag="fishingboat" />
+          </MapletContentsMaplet>
+
+           <MapletContentsMaplet Position="Middle" FirstFit="false" MaxAmount="1" ProbabilityPercentage="50">
+            <MapletTag Tag="fishingboat" />
+          </MapletContentsMaplet>
+
+          <!-- Huts -->
+          <MapletContentsMaplet Position="Sides" MaxAmount="5" ProbabilityPercentage="101">
+            <Maplet Tiled="true" SizeX="5" SizeY="4" Walled="true" TileTag="wood">
+              <MapletContents>
+                <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="bedroom furniture"  />
+                <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="bed"  />
+                <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="tablesetting"  />
+              </MapletContents>
+            </Maplet>
+          </MapletContentsMaplet>
+
+          <!-- Head Honcho Hut -->
+          <MapletContentsMaplet Position="Sides" MaxAmount="1" ProbabilityPercentage="101" >
+            <Maplet Tiled="true" SizeX="5" SizeY="4" Walled="true" TileTag="wood">
+              <MapletContents>
+                <MapletActor Owners="Humans" MaxAmount="1" ProbabilityPercentage="100" UseLocalType="false" EnemyType="human" EnemyTag="merchant" VendorType="TAVERN" VendorLevel="1" EnemyMission="Wander"  />
+                <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="desk"/>
+                <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="decoration"  />
+              </MapletContents>
+            </Maplet>
+          </MapletContentsMaplet>
+
+          <!-- Boat Area -->
+
+
+        </MapletContents>
+      </Maplet>
+    </MapletContentsMaplet>
+
+  </MapletContents>
+</Maplet>

@@ -12,6 +12,7 @@ namespace DRObjects.Enums
     {
         IRON_MINE,
         GOLD_MINE,
-        FARM
+        FARM,
+        FISHING_VILLAGE
     }
 }

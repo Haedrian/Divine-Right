@@ -3,6 +3,7 @@ Maplets\Camp\CampMaplet.xml
 Maplets\Camp\LootArea.xml
 Maplets\Camp\SleepingArea.xml
 Maplets\Camp\WeaponsArea.xml
+Maplets\Components\FishingBoat.xml
 Maplets\Components\LargeBedroom.xml
 Maplets\Components\MediumBedroom.xml
 Maplets\Components\Plazas\FountainPlaza.xml
@@ -25,6 +26,7 @@ Maplets\Dungeons\FarmRoom.xml
 Maplets\Dungeons\SleepingRoom.xml
 Maplets\Dungeons\SmithingRoom.xml
 Maplets\Farm.xml
+Maplets\FishingVillage.xml
 Maplets\GoldMine.xml
 Maplets\IronMine.xml
 Maplets\IronworksLevel3.xml

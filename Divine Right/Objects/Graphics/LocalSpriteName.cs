@@ -591,13 +591,14 @@ namespace DRObjects.Graphics
         HUMAN_FIGHTER_HEAVY,
         ENEMY_THOUGHT_PRONE,
         FISHING_ROD,
-        FISHING_STALL_1,
-        FISHING_STALL_2,
-        FISHING_STALL_3,
-        FISHING_STALL_4,
-        FISHING_STALL_5,
+        FISH_STALL_1,
+        FISH_STALL_2,
+        FISH_STALL_3,
+        FISH_STALL_4,
+        FISH_STALL_5,
         FISHING_BOAT_RIGHT,
         FISHING_BOAT_LEFT,
+        TABLE_FOR_1,
 
     }
 }
