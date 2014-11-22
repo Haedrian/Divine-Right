@@ -32,13 +32,15 @@ namespace DivineRightGame.LocalMapGenerator
         /// <param name="enemyType">The type of actor which is dominant in this map</param>
         /// <param name="owner">The owner of the map. Any maplet items which don't belong will be hidden</param>
         /// <param name="actors">The actors which we have generated</param>
+        /// <param name="actorType">The type of actors to generate</param>
         /// <returns></returns>
         public MapBlock[,] GenerateMap(int parentTileID, int? parentWallID, Maplet maplet, bool preferSides, string actorType, OwningFactions owner, 
-            out Actor[] actors,out MapletActorWanderArea[] wAreas,out MapletPatrolPoint[] patrolRoutes)
+            out Actor[] actors,out MapletActorWanderArea[] wAreas,out MapletPatrolPoint[] patrolRoutes, out MapletFootpathNode[] footpathNodes)
         {
             List<Actor> actorList = new List<Actor>();
             List<MapletActorWanderArea> wanderAreas = new List<MapletActorWanderArea>();
             List<MapletPatrolPoint> patrolRouteList = new List<MapletPatrolPoint>();
+            List<MapletFootpathNode> footpathNodeList = new List<MapletFootpathNode>();
 
             PlanningMapItemType[,] planningMap = new PlanningMapItemType[maplet.SizeX, maplet.SizeY];
 
@@ -178,8 +180,9 @@ namespace DivineRightGame.LocalMapGenerator
 
                                 MapletActorWanderArea[] wanderA = null;
                                 MapletPatrolPoint[] patrolPoints = null;
+                                MapletFootpathNode[] fpNodes = null;
 
-                                MapBlock[,] childMap = this.GenerateMap(tileID, wallID.Value, childMaplet.Maplet, childMaplet.Position == DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES, actorType,owner, out childActors,out wanderA,out patrolPoints);
+                                MapBlock[,] childMap = this.GenerateMap(tileID, wallID.Value, childMaplet.Maplet, childMaplet.Position == DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES, actorType,owner, out childActors,out wanderA,out patrolPoints,out fpNodes);
 
                                 //Add the child actors
                                 actorList.AddRange(childActors);
@@ -217,9 +220,16 @@ namespace DivineRightGame.LocalMapGenerator
                                     point.Point.Y += childMaplet.y.Value;
                                 }
 
+                                foreach(var n in fpNodes)
+                                {
+                                    n.Point.X += childMaplet.x.Value;
+                                    n.Point.Y += childMaplet.y.Value;
+                                }
+
                                 //And add them
                                 wanderAreas.AddRange(wanderA);
                                 patrolRouteList.AddRange(patrolPoints);
+                                footpathNodeList.AddRange(fpNodes);
 
                                 //Join the two maps together
                                 generatedMap = this.JoinMaps(generatedMap, childMap, childMaplet.x.Value, childMaplet.y.Value);
@@ -233,8 +243,9 @@ namespace DivineRightGame.LocalMapGenerator
                                 Actor[] childActors = null;
                                 MapletActorWanderArea[] wanderA = null;
                                 MapletPatrolPoint[] patrolPoints = null;
+                                MapletFootpathNode[] fpNodes = null;
 
-                                MapBlock[,] childMap = this.GenerateMap(tileID, wallID.Value, childMaplet.Maplet, childMaplet.Position == DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES, actorType,owner, out childActors,out wanderA,out patrolPoints);
+                                MapBlock[,] childMap = this.GenerateMap(tileID, wallID.Value, childMaplet.Maplet, childMaplet.Position == DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES, actorType,owner, out childActors,out wanderA,out patrolPoints,out fpNodes);
 
                                 //Add the child actors
                                 actorList.AddRange(childActors);
@@ -272,9 +283,16 @@ namespace DivineRightGame.LocalMapGenerator
                                     point.Point.Y += y;
                                 }
 
+                                foreach(var n in fpNodes)
+                                {
+                                    n.Point.X += x;
+                                    n.Point.Y += y;
+                                }
+
                                 //And add them
                                 wanderAreas.AddRange(wanderA);
                                 patrolRouteList.AddRange(patrolPoints);
+                                footpathNodeList.AddRange(fpNodes);
 
                                 //Join the two maps together
                                 generatedMap = this.JoinMaps(generatedMap, childMap, x, y);
@@ -793,7 +811,7 @@ namespace DivineRightGame.LocalMapGenerator
 
             #endregion
 
-            #region Patrol Points
+            #region Patrol Points & Paths
 
             foreach(var mc in maplet.MapletContents.Where(mc => mc.GetType().Equals(typeof(MapletPatrolPoint))))
             {
@@ -806,6 +824,23 @@ namespace DivineRightGame.LocalMapGenerator
             }
 
             patrolRoutes = patrolRouteList.ToArray();
+
+            foreach(var n in maplet.MapletContents.Where(mc => mc.GetType().Equals(typeof(MapletFootpathNode))))
+            {
+                var node = n as MapletFootpathNode;
+
+                //Point is going to be in the middle of the entire maplet
+                node.Point = new MapCoordinate(generatedMap.GetLength(0) / 2, generatedMap.GetLength(1) / 2, 0, MapType.LOCAL);
+
+                //Better create a new one
+                MapletFootpathNode clone = new MapletFootpathNode();
+                clone.Point = new MapCoordinate(node.Point);
+                clone.IsPrimary = node.IsPrimary;
+
+                footpathNodeList.Add(clone);
+            }
+
+            footpathNodes = footpathNodeList.ToArray();
 
             #endregion
 

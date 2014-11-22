@@ -266,8 +266,9 @@ namespace DivineRightGame.LocalMapGenerator
                 Actor[] acts = null;
                 MapletActorWanderArea[] wanderAreas = null;
                 MapletPatrolPoint[] patrolPoints = null;
+                MapletFootpathNode[] footPath = null;
 
-                gennedMap = gen.GenerateMap(25, null, maplet, true, "", OwningFactions.ORCS ,out acts,out wanderAreas,out patrolPoints);
+                gennedMap = gen.GenerateMap(25, null, maplet, true, "", OwningFactions.ORCS ,out acts,out wanderAreas,out patrolPoints,out footPath);
 
                 enemies.AddRange(acts);
 

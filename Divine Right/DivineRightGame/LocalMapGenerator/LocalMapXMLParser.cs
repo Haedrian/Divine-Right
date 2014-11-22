@@ -78,6 +78,7 @@ namespace DivineRightGame.LocalMapGenerator
                     case "MapletHerd": content = new MapletHerd(); break;
                     case "MapletActorWanderArea": content = new MapletActorWanderArea(); break;
                     case "MapletPatrolPoint": content = new MapletPatrolPoint(); break;
+                    case "MapletFootpathNode": content = new MapletFootpathNode(); break; 
                 }
 
                 //Get the attributes
@@ -123,6 +124,7 @@ namespace DivineRightGame.LocalMapGenerator
                         case "MaximumAmount": content.MaxAmount = Int32.Parse(value); break;
                         case "PatrolName": ((MapletPatrolPoint)content).PatrolName = value; break;
                         case "PointRadius": ((MapletPatrolPoint)content).PointRadius = Int32.Parse(value); break;
+                        case "IsPrimary": ((MapletFootpathNode)content).IsPrimary = Boolean.Parse(value); break;
                             
                     }
                 }

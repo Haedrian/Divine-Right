@@ -175,6 +175,7 @@
     <Compile Include="LocalMapGeneratorObjects\MapletContentsItem.cs" />
     <Compile Include="LocalMapGeneratorObjects\MapletContentsItemTag.cs" />
     <Compile Include="LocalMapGeneratorObjects\MapletContentsMaplet.cs" />
+    <Compile Include="LocalMapGeneratorObjects\MapletFootpathNode.cs" />
     <Compile Include="LocalMapGeneratorObjects\MapletHerd.cs" />
     <Compile Include="LocalMapGeneratorObjects\MapletPatrolPoint.cs" />
     <Compile Include="LocalMapGeneratorObjects\PatrolRoute.cs" />

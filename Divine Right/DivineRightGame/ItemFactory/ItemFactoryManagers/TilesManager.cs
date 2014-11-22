@@ -36,7 +36,7 @@ namespace DivineRightGame.ItemFactory.ItemFactoryManagers
         /// <returns></returns>
         public MapItem CreateItem(List<string> parameters)
         {
-            return CreateItem(parameters[1], parameters[2], parameters[3], parameters[4]);
+            return CreateItem(parameters[1], parameters[2], parameters[3], parameters[4],parameters[5]);
         }
 
         /// <summary>
@@ -48,13 +48,14 @@ namespace DivineRightGame.ItemFactory.ItemFactoryManagers
         /// <param name="graphic">The graphic to show</param>
         /// <param name="canHaveItems">Whether it can have items placed on it or not</param>
         /// <returns></returns>
-        public MapItem CreateItem(string name, string description, string graphic, string canHaveItems)
+        public MapItem CreateItem(string name, string description, string graphic, string canHaveItems,string tags)
         {
             MapItem item = new MapItem();
             item.Description = description;
             item.Graphic = SpriteManager.GetSprite((LocalSpriteName)Enum.Parse(typeof(LocalSpriteName), graphic)); 
             item.MayContainItems = Boolean.Parse(canHaveItems);
             item.Name = name;
+            item.InternalName = tags;
 
             return item;
         }

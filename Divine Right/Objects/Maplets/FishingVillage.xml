@@ -38,7 +38,8 @@
           <MapletContentsMaplet Position="Middle" MaxAmount="1" ProbabilityPercentage="101">
             <Maplet Tiled="true" SizeX="3" SizeY="3" Walled="false" TileTag="wood">
               <MapletContents>
-                <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="9" ProbabilityPercentage="50" Tag="fish"  />
+                <MapletFootpathNode IsPrimary="true"/>
+                <MapletContentsItemTag Position="Anywhere" Owners="Humans,Bandits,Orcs" Category="mundaneitems" MaxAmount="9" ProbabilityPercentage="50" Tag="fish"  />
               </MapletContents>
             </Maplet>
           </MapletContentsMaplet>
@@ -56,9 +57,10 @@
           <MapletContentsMaplet Position="Sides" MaxAmount="5" ProbabilityPercentage="101">
             <Maplet Tiled="true" SizeX="5" SizeY="4" Walled="true" TileTag="wood">
               <MapletContents>
-                <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="bedroom furniture"  />
+                <MapletFootpathNode IsPrimary="false"/>
+                <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="bedroom furniture" Owners="Humans,Bandits,Orcs"  />
                 <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="bed"  />
-                <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="tablesetting"  />
+               <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="tablesetting"  Owners="Humans,Bandits,Orcs" />
               </MapletContents>
             </Maplet>
           </MapletContentsMaplet>
@@ -67,6 +69,7 @@
           <MapletContentsMaplet Position="Sides" MaxAmount="1" ProbabilityPercentage="101" >
             <Maplet Tiled="true" SizeX="5" SizeY="4" Walled="true" TileTag="wood">
               <MapletContents>
+                <MapletFootpathNode IsPrimary="false"/>
                 <MapletActor Owners="Humans" MaxAmount="1" ProbabilityPercentage="100" UseLocalType="false" EnemyType="human" EnemyTag="merchant" VendorType="TAVERN" VendorLevel="1" EnemyMission="Wander"  />
                 <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="desk"/>
                 <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="decoration"  />

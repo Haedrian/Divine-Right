@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DivineRightGame.ActorHandling;
+using DivineRightGame.Pathfinding;
 using DRObjects;
 using DRObjects.ActorHandling;
 using DRObjects.ActorHandling.ActorMissions;
@@ -56,9 +57,9 @@ namespace DivineRightGame.LocalMapGenerator
             //If it's a fishing village, put some water in
             if (siteData.SiteTypeData.SiteType == SiteType.FISHING_VILLAGE)
             {
-                for(int x = 0; x < map.GetLength(0); x++)
+                for (int x = 0; x < map.GetLength(0); x++)
                 {
-                    for (int y=map.GetLength(1) -10; y < map.GetLength(1); y++)
+                    for (int y = map.GetLength(1) - 10; y < map.GetLength(1); y++)
                     {
                         MapBlock block = map[x, y];
                         block.RemoveAllItems();
@@ -80,9 +81,10 @@ namespace DivineRightGame.LocalMapGenerator
 
             MapletActorWanderArea[] wanderAreas = null;
             MapletPatrolPoint[] patrolPoints = null;
+            MapletFootpathNode[] footPath = null;
 
             //Now generate the actual map
-            MapBlock[,] siteMap = lmg.GenerateMap(tileID, null, maplet, false, "", siteData.Owners, out actors, out wanderAreas, out patrolPoints);
+            MapBlock[,] siteMap = lmg.GenerateMap(tileID, null, maplet, false, "", siteData.Owners, out actors, out wanderAreas, out patrolPoints, out footPath);
 
             //Now lets fuse the maps
             map = lmg.JoinMaps(map, siteMap, 5, 5);
@@ -100,9 +102,9 @@ namespace DivineRightGame.LocalMapGenerator
                 }
             }
 
-             //Fix the patrol points
+            //Fix the patrol points
 
-            foreach(var point in patrolPoints)
+            foreach (var point in patrolPoints)
             {
                 point.Point.X += 5;
                 point.Point.Y += 5;
@@ -114,6 +116,51 @@ namespace DivineRightGame.LocalMapGenerator
             foreach (var area in wanderAreas)
             {
                 area.WanderRect = new Rectangle(area.WanderRect.X + 5, area.WanderRect.Y + 5, area.WanderRect.Width, area.WanderRect.Height);
+            }
+
+            //And fix the path nodes
+            foreach (var pn in footPath)
+            {
+                pn.Point.X += 5;
+                pn.Point.Y += 5;
+            }
+
+            //If the map already has any actors in it, make the characters prone
+            foreach (var actor in actors)
+            {
+                actor.IsProne = true;
+            }
+
+            //Now generate the pathfinding map
+            PathfinderInterface.Nodes = GeneratePathfindingMap(map);
+
+            int pathTileID = -1;
+
+            var dummy = itemFactory.CreateItem(Archetype.TILES, "stone", out pathTileID);
+
+            //Go through each footpath node. Attempt to connect the node with the other primary nodes
+            foreach (var fp in footPath)
+            {
+                foreach (var primary in footPath.Where(p => p.IsPrimary))
+                {
+                    //Join them up
+                    var path = PathfinderInterface.GetPath(fp.Point, primary.Point);
+                    if (path != null)
+                    {
+                        foreach (var coord in path)
+                        {
+                            MapBlock block = map[coord.X, coord.Y];
+
+                            //Only do this if the tile isn't wood, or stone
+                            if (!block.Tile.InternalName.ToUpper().Contains("STONE") && !block.Tile.InternalName.ToUpper().Contains("WOOD"))
+                            {
+                                block.Tile = itemFactory.CreateItem("tiles", pathTileID);
+                                block.Tile.Coordinate = new MapCoordinate(coord);
+                            }
+
+                        }
+                    }
+                }
             }
 
             List<Actor> actorList = new List<Actor>();
@@ -222,6 +269,38 @@ namespace DivineRightGame.LocalMapGenerator
         public static MapBlock[,] RegenerateSite(SiteData sitedata, MapBlock[,] currentMap, Actor[] currentActors, out Actor[] actors)
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Generates a pathfinding map from the mapl pushed in
+        /// </summary>
+        /// <returns></returns>
+        private static byte[,] GeneratePathfindingMap(MapBlock[,] map)
+        {
+            //Generate a byte map of x and y
+            int squareSize = PathfinderInterface.CeilToPower2(Math.Max(map.GetLength(0), map.GetLength(1)));
+
+            byte[,] pf = new byte[squareSize, squareSize];
+
+            for (int i = 0; i < map.GetLength(0); i++)
+            {
+                for (int j = 0; j < map.GetLength(1); j++)
+                {
+                    if (i < map.GetLength(0) - 1 && j < map.GetLength(1) - 1)
+                    {
+                        //Copyable - if it may contain items, put a weight of 1, otherwise an essagerated one. Also consider who the owners are. If it's owned by someone in particular then ignore it
+                        pf[i, j] = map[i, j] != null ? map[i, j].MayContainItems || map[i,j].GetTopItem().OwnedBy != (OwningFactions.ABANDONED | OwningFactions.BANDITS | OwningFactions.HUMANS | OwningFactions.ORCS | OwningFactions.UNDEAD )
+                            ? (byte)1 : Byte.MaxValue : Byte.MaxValue;
+                    }
+                    else
+                    {
+                        //Put in the largest possible weight
+                        pf[i, j] = Byte.MaxValue;
+                    }
+                }
+            }
+
+            return pf;
         }
     }
 }
