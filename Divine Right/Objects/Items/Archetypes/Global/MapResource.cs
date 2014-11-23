@@ -72,6 +72,12 @@ namespace DRObjects.Items.Archetypes.Global
                     this.Description = "Wood here grows well";
                     this.Desirability = 3;
                     break;
+                case GlobalResourceType.HOLY:
+                    sprites.Add(SpriteManager.GetSprite(GlobalSpriteName.DOVE));
+                    this.Name = "Holy Site";
+                    this.Description = "This site has been blessed";
+                    this.Desirability = 2;
+                    break;
                 default:
                     throw new NotImplementedException("No code for resource type " + ResourceType);
             }

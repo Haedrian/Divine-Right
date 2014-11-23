@@ -70,5 +70,6 @@ namespace DRObjects.Graphics
         DUNGEON_8,
         DUNGEON_9,
         BANDIT_CAMP,
+        DOVE,
     }
 }

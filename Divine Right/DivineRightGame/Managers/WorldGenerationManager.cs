@@ -795,6 +795,7 @@ namespace DivineRightGame.Managers
             var denseForestBlocks = allBlocks.Where(ab => (ab.Tile as GlobalTile).Biome == GlobalBiome.DENSE_FOREST && !(ab.Tile as GlobalTile).HasResource && !(ab.Tile as GlobalTile).HasRiver).OrderBy(ab => GameState.Random.Next(1000));
             var forestBlocks = allBlocks.Where(ab => (ab.Tile as GlobalTile).Biome == GlobalBiome.WOODLAND && !(ab.Tile as GlobalTile).HasResource && !(ab.Tile as GlobalTile).HasRiver).OrderBy(ab => GameState.Random.Next(1000));
             var hillyLocations = allBlocks.Where(ab => (ab.Tile as GlobalTile).Elevation > 80 && !(ab.Tile as GlobalTile).HasResource && !(ab.Tile as GlobalTile).HasRiver).OrderBy(ab => GameState.Random.Next(1000));
+            var nonWater = allBlocks.Where(ab => (ab.Tile as GlobalTile).Elevation > 0 && !(ab.Tile as GlobalTile).HasResource && !(ab.Tile as GlobalTile).HasRiver).OrderBy(ab => GameState.Random.Next(1000));
 
             foreach (GlobalResourceType resource in Enum.GetValues(typeof(GlobalResourceType)))
             {
@@ -833,6 +834,10 @@ namespace DivineRightGame.Managers
                         //Wood is found in dense forests and woodland
                         candidateBlocks.AddRange(denseForestBlocks.Take(150));
                         candidateBlocks.AddRange(forestBlocks.Take(100));
+                        break;
+                    case GlobalResourceType.HOLY:
+                        //Holy sites are found everywhere
+                        candidateBlocks.AddRange(nonWater.Take(100));
                         break;
                 }
 

@@ -76,6 +76,7 @@ namespace DRObjects.Graphics
             globalSprites[(int)GlobalSpriteName.FARMLAND] = new SpriteData(WORLDITEMS, new Rectangle(800, 0, 50, 50));
             globalSprites[(int)GlobalSpriteName.STONES] = new SpriteData(WORLDITEMS, new Rectangle(850, 0, 50, 50));
             globalSprites[(int)GlobalSpriteName.DUNGEON] = new SpriteData(WORLDITEMS, new Rectangle(150, 50, 50, 50));
+            globalSprites[(int)GlobalSpriteName.DOVE] = new SpriteData(WORLDITEMS, new Rectangle(750, 50, 50, 50));
 
             globalSprites[(int)GlobalSpriteName.DUNGEON_1] = new SpriteData(WORLDITEMS, new Rectangle(900, 0, 50, 50));
             globalSprites[(int)GlobalSpriteName.DUNGEON_2] = new SpriteData(WORLDITEMS, new Rectangle(950, 0, 50, 50));

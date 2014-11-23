@@ -13,7 +13,8 @@ namespace DRObjects.Enums
         FISH,
         WOOD,
         GAME,
-        HORSE
+        HORSE,
+        HOLY
     }
 }
     
