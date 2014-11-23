@@ -829,10 +829,6 @@ namespace DivineRightGame.Managers
                         //Iron is found in hills
                         candidateBlocks.AddRange(hillyLocations);
                         break;
-                    case GlobalResourceType.STONE:
-                        //Stone is found in hills
-                        candidateBlocks.AddRange(hillyLocations);
-                        break;
                     case GlobalResourceType.WOOD:
                         //Wood is found in dense forests and woodland
                         candidateBlocks.AddRange(denseForestBlocks.Take(150));

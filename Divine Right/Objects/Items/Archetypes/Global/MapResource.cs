@@ -60,12 +60,6 @@ namespace DRObjects.Items.Archetypes.Global
                     this.Description = "Iron is found here";
                     this.Desirability = 4;
                     break;
-                case GlobalResourceType.STONE:
-                    sprites.Add(SpriteManager.GetSprite(GlobalSpriteName.STONES));
-                    this.Name = "Stone";
-                    this.Description = "Good stone is found here";
-                    this.Desirability = 3;
-                    break;
                 case GlobalResourceType.FARMLAND:
                     sprites.Add(SpriteManager.GetSprite(GlobalSpriteName.FARMLAND));
                     this.Name = "Farmland";

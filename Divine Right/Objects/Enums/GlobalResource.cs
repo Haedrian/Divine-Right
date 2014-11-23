@@ -11,7 +11,6 @@ namespace DRObjects.Enums
         GOLD,
         FARMLAND,
         FISH,
-        STONE,
         WOOD,
         GAME,
         HORSE

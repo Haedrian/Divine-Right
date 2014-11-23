@@ -499,10 +499,6 @@ namespace DivineRightGame.SettlementHandling
                         //Create an ironworking district
                         districts.Add(new District(DistrictType.IRONWORKS, 2));
                         break;
-                    case GlobalResourceType.STONE:
-                        //No idea what to represent with this. Let's put it as barracks for now
-                        districts.Add(new District(DistrictType.BARRACKS, 1));
-                        break;
                     case GlobalResourceType.WOOD:
                         //Create woodworking district
                         districts.Add(new District(DistrictType.CARPENTRY, 2));

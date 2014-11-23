@@ -804,7 +804,13 @@ namespace DivineRightGame.LocalMapGenerator
                 //Pick the wander point to be the middle of the rectangle. If the point isn't valid we might have a problem
                 wander.WanderPoint = new MapCoordinate(generatedMap.GetLength(0) / 2, generatedMap.GetLength(1) / 2,0,MapType.LOCAL);
 
-                wanderAreas.Add(wander);
+                MapletActorWanderArea clone = new MapletActorWanderArea();
+                clone.WanderPoint = new MapCoordinate(wander.WanderPoint);
+                clone.WanderRect = new Rectangle(wander.WanderRect.X, wander.WanderRect.Y, wander.WanderRect.Width, wander.WanderRect.Height);
+                clone.Profession = wander.Profession;
+                clone.OwnerFactions = wander.OwnerFactions;
+
+                wanderAreas.Add(clone);
             }
 
             wAreas = wanderAreas.ToArray();
@@ -820,7 +826,13 @@ namespace DivineRightGame.LocalMapGenerator
                 //The point is going to be in the middle of the entire maplet
                 point.Point = new MapCoordinate(generatedMap.GetLength(0) / 2, generatedMap.GetLength(1) / 2, 0, MapType.LOCAL);
 
-                patrolRouteList.Add(point);
+                MapletPatrolPoint clone = new MapletPatrolPoint();
+                clone.Point = new MapCoordinate(point.Point);
+                clone.OwnerFactions = point.OwnerFactions;
+                clone.Profession = point.Profession;
+                clone.PointRadius = point.PointRadius;
+
+                patrolRouteList.Add(clone);
             }
 
             patrolRoutes = patrolRouteList.ToArray();
