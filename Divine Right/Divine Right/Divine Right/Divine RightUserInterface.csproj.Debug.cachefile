@@ -65,6 +65,7 @@ Content\Graphics\Interface\buySellIcons.xnb
 Content\Graphics\Interface\book.xnb
 Content\Graphics\Local\PlayerFemale.xnb
 Content\Graphics\Local\animals.xnb
+Content\Graphics\Local\walls.xnb
 Content\Fonts\TextFeedbackFont.spritefont
 Items.sdf
 Maplets\Camp\CampMaplet.xml

@@ -10,6 +10,7 @@ using DRObjects.ActorHandling.ActorMissions;
 using DRObjects.ActorHandling.CharacterSheet.Enums;
 using DRObjects.Database;
 using DRObjects.Enums;
+using DRObjects.Items.Archetypes.Local;
 using DRObjects.Items.Tiles;
 using DRObjects.LocalMapGeneratorObjects;
 using DRObjects.Sites;

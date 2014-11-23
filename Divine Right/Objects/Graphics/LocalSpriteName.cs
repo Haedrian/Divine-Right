@@ -599,6 +599,10 @@ namespace DRObjects.Graphics
         FISHING_BOAT_RIGHT,
         FISHING_BOAT_LEFT,
         TABLE_FOR_1,
+        WALL_WOOD_D,
+        WALL_WOOD_R,
+        WALL_WOOD_U,
+        WALL_WOOD_L,
 
     }
 }
