@@ -603,6 +603,10 @@ namespace DRObjects.Graphics
         WALL_WOOD_R,
         WALL_WOOD_U,
         WALL_WOOD_L,
+        HAY_BALE_3,
+        HAY_BALE_2,
+        WOOD_LOGS_3,
+        TREE_STUMP_HATCHET,
 
     }
 }

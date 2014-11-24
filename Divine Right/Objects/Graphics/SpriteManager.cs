@@ -441,6 +441,11 @@ namespace DRObjects.Graphics
             AddLocalSprite(LocalSpriteName.MINE_SHAFT_BC, RESOURCES_AND_TOOLS, 13, 6);
             AddLocalSprite(LocalSpriteName.MINE_SHAFT_BR, RESOURCES_AND_TOOLS, 14, 6);
 
+            AddLocalSprite(LocalSpriteName.TREE_STUMP_HATCHET, RESOURCES_AND_TOOLS, 18, 0);
+            AddLocalSprite(LocalSpriteName.WOOD_LOGS_3, RESOURCES_AND_TOOLS, 19, 0);
+            AddLocalSprite(LocalSpriteName.HAY_BALE_2, RESOURCES_AND_TOOLS, 18, 1);
+            AddLocalSprite(LocalSpriteName.HAY_BALE_3, RESOURCES_AND_TOOLS, 19, 1);
+
             localSprites[(int)LocalSpriteName.TREE_1] = new SpriteData(FORESTS_AND_MINES, new Rectangle(0, 0, 50, 50));
             localSprites[(int)LocalSpriteName.DEAD_TREE] = new SpriteData(FORESTS_AND_MINES, new Rectangle(50, 0, 50, 50));
             localSprites[(int)LocalSpriteName.TREE_2] = new SpriteData(FORESTS_AND_MINES, new Rectangle(100, 0, 50, 50));
