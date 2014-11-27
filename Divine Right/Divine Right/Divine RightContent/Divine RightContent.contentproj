@@ -41,7 +41,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="MonoGameContentProcessors">
-      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\MSBuild\MonoGame\v3.0\MonoGameContentProcessors.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\MSBuild\MonoGame\v3.0\MonoGameContentProcessors.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -64,6 +64,7 @@
       <Name>TitleFont</Name>
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
+      <SubType>Designer</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
