@@ -415,7 +415,7 @@ namespace DRObjects.Graphics
             AddLocalSprite(LocalSpriteName.BOW_SAW_1, RESOURCES_AND_TOOLS, 16, 0);
             AddLocalSprite(LocalSpriteName.BOW_SAW_2, RESOURCES_AND_TOOLS, 17, 0);
             AddLocalSprite(LocalSpriteName.CARPENTRY_WORKBENCH, RESOURCES_AND_TOOLS, 11, 1);
-            AddLocalSprite(LocalSpriteName.LOG_PILE, RESOURCES_AND_TOOLS, 12, 0);
+            AddLocalSprite(LocalSpriteName.LOG_PILE, RESOURCES_AND_TOOLS, 17, 1);
             AddLocalSprite(LocalSpriteName.CARPENTRY_WORKBENCH_2, RESOURCES_AND_TOOLS, 13, 1);
             AddLocalSprite(LocalSpriteName.CARPENTRY_WORKBENCH_3, RESOURCES_AND_TOOLS, 14, 1);
             AddLocalSprite(LocalSpriteName.CARPENTRY_WORKBENCH_4, RESOURCES_AND_TOOLS, 15, 1);

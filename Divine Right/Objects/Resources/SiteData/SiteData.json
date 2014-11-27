@@ -1,88 +1,109 @@
 ﻿{
-    "Sites": [
-        {
-            "Name": "Iron_Mine",
-            "ActorCounts": [
-                {
-                    "Profession": "WARRIOR",
-                    "BaseAmount": 4,
-                    "MaxAmount": 10
-                },
-                {
-                    "Profession": "WORKER",
-                    "BaseAmount": 5,
-                    "MaxAmount": 10
-                },
-                {
-                    "Owner": "UNDEAD",
-                    "Profession": "WARRIOR",
-                    "BaseAmount": 9,
-                    "MaxAmount": 15
-                }
-            ]
-        },
-        {
-            "Name": "Gold_Mine",
-            "ActorCounts": [
-                {
-                    "Profession": "WARRIOR",
-                    "BaseAmount": 5,
-                    "MaxAmount": 15
-                },
-                {
-                    "Profession": "WORKER",
-                    "BaseAmount": 7,
-                    "MaxAmount": 15
-                },
-                {
-                    "Owner": "UNDEAD",
-                    "Profession": "WARRIOR",
-                    "BaseAmount": 9,
-                    "MaxAmount": 15
-                }
-            ]
-        },
-        {
-            "Name": "Farm",
-            "ActorCounts": [
-                {
-                    "Profession": "WARRIOR",
-                    "BaseAmount": 2,
-                    "MaxAmount": 5
-                },
-                {
-                    "Profession": "WORKER",
-                    "BaseAmount": 5,
-                    "MaxAmount": 10
-                },
-                {
-                    "Owner": "UNDEAD",
-                    "Profession": "WARRIOR",
-                    "BaseAmount": 3,
-                    "MaxAmount": 5
-                }
-            ]
-        },
-        {
-            "Name": "Fishing_Village",
-            "ActorCounts": [
-                {
-                    "Profession": "WARRIOR",
-                    "BaseAmount": 2,
-                    "MaxAmount": 5
-                },
-                {
-                    "Profession": "WORKER",
-                    "BaseAmount": 5,
-                    "MaxAmount": 10
-                },
-                {
-                    "Owner": "UNDEAD",
-                    "Profession": "WARRIOR",
-                    "BaseAmount": 3,
+	"Sites": [
+		{
+			"Name": "Iron_Mine",
+			"ActorCounts": [
+				{
+					"Profession": "WARRIOR",
+					"BaseAmount": 4,
+					"MaxAmount": 10
+				},
+				{
+					"Profession": "WORKER",
+					"BaseAmount": 5,
+					"MaxAmount": 10
+				},
+				{
+					"Owner": "UNDEAD",
+					"Profession": "WARRIOR",
+					"BaseAmount": 9,
+					"MaxAmount": 15
+				}
+			]
+		},
+		{
+			"Name": "Gold_Mine",
+			"ActorCounts": [
+				{
+					"Profession": "WARRIOR",
+					"BaseAmount": 5,
+					"MaxAmount": 15
+				},
+				{
+					"Profession": "WORKER",
+					"BaseAmount": 7,
+					"MaxAmount": 15
+				},
+				{
+					"Owner": "UNDEAD",
+					"Profession": "WARRIOR",
+					"BaseAmount": 9,
+					"MaxAmount": 15
+				}
+			]
+		},
+		{
+			"Name": "Farm",
+			"ActorCounts": [
+				{
+					"Profession": "WARRIOR",
+					"BaseAmount": 2,
 					"MaxAmount": 5
-                }
-            ]
-        }
-    ]
+				},
+				{
+					"Profession": "WORKER",
+					"BaseAmount": 5,
+					"MaxAmount": 10
+				},
+				{
+					"Owner": "UNDEAD",
+					"Profession": "WARRIOR",
+					"BaseAmount": 3,
+					"MaxAmount": 5
+				}
+			]
+		},
+		{
+			"Name": "Fishing_Village",
+			"ActorCounts": [
+				{
+					"Profession": "WARRIOR",
+					"BaseAmount": 2,
+					"MaxAmount": 5
+				},
+				{
+					"Profession": "WORKER",
+					"BaseAmount": 5,
+					"MaxAmount": 10
+				},
+				{
+					"Owner": "UNDEAD",
+					"Profession": "WARRIOR",
+					"BaseAmount": 3,
+					"MaxAmount": 5
+				}
+			]
+		},
+				{
+			"Name": "Woodcutter",
+			"ActorCounts": [
+				{
+					"Profession": "WARRIOR",
+					"BaseAmount": 2,
+					"MaxAmount": 5
+				},
+				{
+					"Profession": "WORKER",
+					"BaseAmount": 2,
+					"MaxAmount": 5
+				},
+				{
+					"Owner": "UNDEAD",
+					"Profession": "WARRIOR",
+					"BaseAmount": 3,
+					"MaxAmount": 5
+				}
+			]
+		}
+	]
 }

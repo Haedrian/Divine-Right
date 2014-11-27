@@ -73,6 +73,11 @@ namespace DRObjects
             return false;
         }
 
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
         /// <summary>
         /// Performs minus on two map coordinates, and gives the cartesian distance between them. The coordinates must be on the same MapType to work
         /// </summary>

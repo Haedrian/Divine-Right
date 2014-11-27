@@ -13,6 +13,7 @@ namespace DRObjects.Enums
         IRON_MINE,
         GOLD_MINE,
         FARM,
-        FISHING_VILLAGE
+        FISHING_VILLAGE,
+        WOODCUTTER
     }
 }

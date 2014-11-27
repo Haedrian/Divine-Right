@@ -1,0 +1,88 @@
+﻿<Maplet name="woodcutter" Tiled="false" TileTag="rocky" SizeX ="20" SizeY="20" Walled="false">
+  <MapletContents>
+
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="75" Tag="well"/>
+
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="50" ProbabilityPercentage="80" Tag="tree" />
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="50" ProbabilityPercentage="80" Tag="tree stumps" />
+
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="99" Tag="woodcutter static tool"/>
+
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="99" Tag="lumberjack tool"/>
+
+    <MapletContentsMaplet Position="Anywhere" MaxAmount="1" ProbabilityPercentage="100">
+      <Maplet Tiled="false" SizeX="17" SizeY="11" Walled="false" TileTag="wood">
+        <MapletContents>
+
+
+          <MapletContentsMaplet Position="Sides" FirstFit="true" MaxAmount="1" ProbabilityPercentage="100">
+            <Maplet Tiled="true" SizeX="11" SizeY="10" Walled="true" TileTag="wood">
+
+              <MapletContents>
+
+                <!-- Boss Room-->
+                <MapletContentsMaplet Position="Sides" FirstFit="true" MaxAmount="1" ProbabilityPercentage="100" >
+                  <Maplet Tiled="false" SizeX="5" SizeY="5" Walled="true" >
+                    <MapletContents>
+                      <MapletActor Owners="Humans" MaxAmount="1" ProbabilityPercentage="100" UseLocalType="false" EnemyType="human" EnemyTag="merchant" EnemyMission="Wander"  />
+                      <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="desk"/>
+                      <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="reading"/>
+                    </MapletContents>
+                  </Maplet>
+                </MapletContentsMaplet>
+
+                <!--Sleeping Quarters-->
+                <MapletContentsMaplet Position="Sides" FirstFit="true" MaxAmount="1" ProbabilityPercentage="100" >
+                  <Maplet Tiled="false" SizeX="4" SizeY="4" Walled="true" Name="Bedrooms">
+                    <MapletContents>
+                      <MapletActorWanderArea MaxAmount="2" Owners="Humans" Profession="WORKER" />
+                      <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="5" ProbabilityPercentage="75" Tag="bedroll"/>
+                    </MapletContents>
+                  </Maplet>
+                </MapletContentsMaplet>
+
+                <!-- Food Store -->
+                <MapletContentsMaplet Position="Sides" FirstFit="true" MaxAmount="1" ProbabilityPercentage="100">
+                  <Maplet Tiled="false" SizeX="4" SizeY="4" Walled="true" Name="Storeroom">
+                    <MapletContents>
+                      <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="5" ProbabilityPercentage="75" Tag="farm produce"/>
+                    </MapletContents>
+                  </Maplet>
+                </MapletContentsMaplet>
+                
+                <!-- Carpentry Room and tools -->
+                <MapletContentsMaplet Position="Sides" FirstFit="true" MaxAmount="1" ProbabilityPercentage="100" >
+                  <Maplet Tiled="false" SizeX="5" SizeY="5" Walled="true" >
+                    <MapletContents>
+                      <MapletContentsItemTag Position="Sides" Category="mundaneitems" MaxAmount="3" ProbabilityPercentage="75" Tag="carpentry static tool"/>
+                      <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="75" Tag="carpentry tool"/>
+                      <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="99" Tag="lumberjack tool"/>
+                    </MapletContents>
+                  </Maplet>
+                </MapletContentsMaplet>
+
+                <MapletContentsMaplet Position="Middle" MaxAmount="1" ProbabilityPercentage="99">
+                  <MapletTag Tag="TableSet" />
+                </MapletContentsMaplet>
+                
+
+              </MapletContents>
+            </Maplet>
+          </MapletContentsMaplet>
+
+          <!-- Storage Area-->
+
+          <MapletContentsMaplet Position="Sides" MaxAmount="1" ProbabilityPercentage="99" >
+            <Maplet Tiled="true" SizeX="5" SizeY="5" Walled="false" TileTag="wood">
+              <MapletContents>
+                <MapletContentsItemTag Position="Anywhere" Owners="Humans" Category="mundaneitems" MaxAmount="5" ProbabilityPercentage="75" Tag="wood"/>
+              </MapletContents>
+            </Maplet>
+          </MapletContentsMaplet>
+
+        </MapletContents>
+      </Maplet>
+    </MapletContentsMaplet>
+
+  </MapletContents>
+</Maplet>

@@ -74,7 +74,7 @@ namespace DRObjects.LocalMapGeneratorObjects
                 {
                     OwningFactions ownParsed = (OwningFactions)Enum.Parse(typeof(OwningFactions), own.ToUpper());
 
-                    if (fact == null)
+                    if (fact == OwningFactions.ABANDONED)
                     {
                         fact = ownParsed;
                     }
