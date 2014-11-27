@@ -64,7 +64,7 @@ namespace Divine_Right.GameScreens
             //We want it to be in the centre
             Rectangle titleRect = new Rectangle((int)(GraphicsDevice.Viewport.Width / 2 - titleSize.X), (int)(50 - titleSize.Y), (int)titleSize.X * 2, (int)titleSize.Y * 2);
 
-            Vector2 stringDraw = new Vector2(titleRect.Center.X - (titleSize.X / 2), titleRect.Center.Y - (titleSize.Y / 2));
+            Vector2 stringDraw = new Vector2(titleRect.Center.X - (titleSize.X / 2), titleRect.Center.Y - (titleSize.Y / 2) +25);
 
             sprites.DrawString(titleFont, "Divine Right", stringDraw, Color.SlateGray);
 
