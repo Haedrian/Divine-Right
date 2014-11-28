@@ -4,7 +4,7 @@
     <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="75" Tag="well"/>
 
     <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="50" ProbabilityPercentage="80" Tag="tree" />
-    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="50" ProbabilityPercentage="80" Tag="tree stumps" />
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="10" ProbabilityPercentage="80" Tag="tree stumps" />
 
     <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="99" Tag="woodcutter static tool"/>
 

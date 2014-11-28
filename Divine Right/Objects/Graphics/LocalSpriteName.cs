@@ -607,6 +607,9 @@ namespace DRObjects.Graphics
         HAY_BALE_2,
         WOOD_LOGS_3,
         TREE_STUMP_HATCHET,
+        TREE_STUMPS_2,
+        TREE_STUMPS_3,
+        TREE_STUMPS_4,
 
     }
 }
