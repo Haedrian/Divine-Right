@@ -8,6 +8,7 @@ using DRObjects.Enums;
 using Microsoft.Xna.Framework.Graphics;
 using DivineRightGame;
 using System.IO;
+using System.Windows.Forms;
 
 namespace Divine_Right
 {
@@ -40,6 +41,9 @@ namespace Divine_Right
 
             this.IsMouseVisible = true;
             this.Window.AllowUserResizing = true;
+
+            var form = (Form)Form.FromHandle(Window.Handle);
+            form.WindowState = FormWindowState.Maximized;
            
             Content.RootDirectory = "Content";
 
