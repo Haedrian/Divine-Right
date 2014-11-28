@@ -347,13 +347,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Fonts\h1.spritefont">
-      <Name>h1</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Graphics\Interface\locationInterface.png">
       <Name>locationInterface</Name>
       <Importer>TextureImporter</Importer>
