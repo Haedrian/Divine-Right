@@ -160,9 +160,9 @@ namespace Divine_Right.HelperFunctions
             LocalMapGenerator gen = new LocalMapGenerator();
 
             SiteData siteData = new SiteData();
-            siteData.SiteTypeData = SiteDataManager.GetData(SiteType.WOODCUTTER);
+            siteData.SiteTypeData = SiteDataManager.GetData(SiteType.FISHING_VILLAGE);
 
-            siteData.Biome = GlobalBiome.DENSE_FOREST;
+            siteData.Biome = GlobalBiome.POLAR_DESERT;
             siteData.Owners = OwningFactions.HUMANS;
             
             //Locate the right actor counts
