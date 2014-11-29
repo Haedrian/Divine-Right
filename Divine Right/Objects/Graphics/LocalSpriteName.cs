@@ -610,6 +610,11 @@ namespace DRObjects.Graphics
         TREE_STUMPS_2,
         TREE_STUMPS_3,
         TREE_STUMPS_4,
+        TANNING_RACK,
+        MEAT_TABLE,
+        MEAT_TABLE2,
+        MEAT_TABLE3,
+        KNIFE_SET,
 
     }
 }

@@ -380,6 +380,12 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.FISHING_BOAT_LEFT] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(350, 300, 50, 50));
             localSprites[(int)LocalSpriteName.FISHING_BOAT_RIGHT] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(400, 300, 50, 50));
 
+            localSprites[(int)LocalSpriteName.TANNING_RACK] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(350, 350, 50, 50));
+            localSprites[(int)LocalSpriteName.MEAT_TABLE] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(400, 350, 50, 50));
+            localSprites[(int)LocalSpriteName.MEAT_TABLE2] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(450, 350, 50, 50));
+            localSprites[(int)LocalSpriteName.MEAT_TABLE3] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(500, 350, 50, 50));
+            localSprites[(int)LocalSpriteName.KNIFE_SET] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(550, 350, 50, 50));
+
             AddLocalSprite(LocalSpriteName.PEEL_1, RESOURCES_AND_TOOLS, 0, 8);
             AddLocalSprite(LocalSpriteName.PEEL_2, RESOURCES_AND_TOOLS, 1, 8);
             AddLocalSprite(LocalSpriteName.FURNACE_LARGE_TOP, RESOURCES_AND_TOOLS, 2, 8);
