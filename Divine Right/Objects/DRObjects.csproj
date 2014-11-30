@@ -287,6 +287,7 @@
     </Content>
     <Content Include="Maplets\Dungeons\FarmRoom.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Maplets\Dungeons\SleepingRoom.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
