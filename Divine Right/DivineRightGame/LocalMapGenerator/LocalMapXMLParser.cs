@@ -15,9 +15,9 @@ namespace DivineRightGame.LocalMapGenerator
     {
         private const string MAPLETTAG = "MapletTag";
 
-        public Maplet ParseMapletFromTag(string tag)
+        public Maplet ParseMapletFromTag(string tag,GlobalBiome? biome =  null)
         {
-            return ParseMaplet(MapletDatabaseHandler.GetMapletByTag(tag));
+            return ParseMaplet(MapletDatabaseHandler.GetMapletByTag(tag),biome);
         }
 
         public Maplet ParseMaplet(string path)
@@ -26,7 +26,13 @@ namespace DivineRightGame.LocalMapGenerator
             return ParseMaplet((XElement)doc.FirstNode);
         }
 
-        public Maplet ParseMaplet(XElement xml)
+        /// <summary>
+        /// Parses the maplet. The optional biome is for use on herds
+        /// </summary>
+        /// <param name="xml"></param>
+        /// <param name="biome"></param>
+        /// <returns></returns>
+        public Maplet ParseMaplet(XElement xml,GlobalBiome? biome = null)
         {
             //Read the first node - its going to be a maplet
             XElement element =  xml;
@@ -75,7 +81,7 @@ namespace DivineRightGame.LocalMapGenerator
                     case "MapletContentsItemTag": content = new MapletContentsItemTag(); break;
                     case "MapletContentsMaplet": content = new MapletContentsMaplet(); break;
                     case "MapletActor": content = new MapletActor(); break;
-                    case "MapletHerd": content = new MapletHerd(); break;
+                    case "MapletHerd": content = new MapletHerd() { LocalBiome = biome.HasValue ? biome.Value : GlobalBiome.ARID_DESERT  }; break;
                     case "MapletActorWanderArea": content = new MapletActorWanderArea(); break;
                     case "MapletPatrolPoint": content = new MapletPatrolPoint(); break;
                     case "MapletFootpathNode": content = new MapletFootpathNode(); break; 
@@ -109,6 +115,7 @@ namespace DivineRightGame.LocalMapGenerator
                         case "VendorLevel": ((MapletActor)content).VendorLevel = Int32.Parse(value.ToString()); break;
                         case "BiomeName": ((MapletHerd)content).BiomeName = value.ToString(); break;
                         case "Domesticated": ((MapletHerd)content).Domesticated = bool.Parse(value); break;
+                        case "UseLocalBiome": ((MapletHerd)content).UseLocalBiome = bool.Parse(value); break;
                         case "Owners": content.OwnerFactions = value.ToString(); break;
                         case "Profession": 
                             

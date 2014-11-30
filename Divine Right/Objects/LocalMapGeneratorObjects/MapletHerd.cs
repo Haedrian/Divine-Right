@@ -22,6 +22,11 @@ namespace DRObjects.LocalMapGeneratorObjects
         {
             get
             {
+                if (UseLocalBiome)
+                {
+                    return LocalBiome;
+                }
+
                 if (string.IsNullOrEmpty(this.BiomeName))
                 {
                     return null;
@@ -36,5 +41,21 @@ namespace DRObjects.LocalMapGeneratorObjects
         /// Whether the herd is domesticated, undomesticated or either.
         /// </summary>
         public bool? Domesticated { get; set; }
+
+        /// <summary>
+        /// The Biome of the location
+        /// </summary>
+        public GlobalBiome LocalBiome { get; set; }
+
+        /// <summary>
+        /// If set to true, will use the local biome
+        /// </summary>
+        public bool UseLocalBiome { get; set; }
+
+        public MapletHerd()
+        {
+            UseLocalBiome = true;
+            LocalBiome = GlobalBiome.ARID_DESERT;
+        }
     }
 }

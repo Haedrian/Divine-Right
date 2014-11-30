@@ -385,6 +385,7 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.MEAT_TABLE2] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(450, 350, 50, 50));
             localSprites[(int)LocalSpriteName.MEAT_TABLE3] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(500, 350, 50, 50));
             localSprites[(int)LocalSpriteName.KNIFE_SET] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(550, 350, 50, 50));
+            localSprites[(int)LocalSpriteName.BEAR_TRAP] = new SpriteData(RESOURCES_AND_TOOLS, new Rectangle(600, 350, 50, 50));
 
             AddLocalSprite(LocalSpriteName.PEEL_1, RESOURCES_AND_TOOLS, 0, 8);
             AddLocalSprite(LocalSpriteName.PEEL_2, RESOURCES_AND_TOOLS, 1, 8);
