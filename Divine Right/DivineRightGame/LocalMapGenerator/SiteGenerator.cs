@@ -76,7 +76,7 @@ namespace DivineRightGame.LocalMapGenerator
 
             LocalMapXMLParser parser = new LocalMapXMLParser();
 
-            Maplet maplet = parser.ParseMapletFromTag(siteData.SiteTypeData.SiteType.ToString().Replace("_", " ").ToLower());
+            Maplet maplet = parser.ParseMapletFromTag(siteData.SiteTypeData.SiteType.ToString().Replace("_", " ").ToLower(),siteData.Biome);
 
             var tileID = DatabaseHandling.GetItemIdFromTag(Archetype.TILES, WildernessGenerator.details[siteData.Biome].BaseTileTag);
 
@@ -165,6 +165,8 @@ namespace DivineRightGame.LocalMapGenerator
             }
 
             List<Actor> actorList = new List<Actor>();
+
+            actorList.AddRange(actors); //And add the actors
 
             //Let's generate a number of actors then
             foreach (ActorProfession profession in Enum.GetValues(typeof(ActorProfession)))

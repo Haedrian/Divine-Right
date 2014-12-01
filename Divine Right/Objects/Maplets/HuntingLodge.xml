@@ -3,6 +3,7 @@
 
     <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="75" Tag="well"/>
 
+    <MapletHerd UseLocalBiome="true" Domesticated="false" MaxAmount="3" ProbabilityPercentage="75" />
 
     <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="3" ProbabilityPercentage="75" Tag="hunting tool"/>
 
