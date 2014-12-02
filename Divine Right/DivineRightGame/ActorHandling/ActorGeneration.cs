@@ -336,16 +336,28 @@ namespace DivineRightGame.ActorHandling
         /// </summary>
         /// <param name="biome">The biome the animal lives in. If it is null, it'll be ignored</param>
         /// <param name="domesticated">Whether the animal is domesticated or not. If null, it'll be ignored</param>
+        /// <param name="tag">If contains a tag, will ignore all other values and generate one having the right tag</param>
         /// <param name="herds">The total amount of herds to be created</param>
         /// <returns>A list of arrays. Each element of the list represents a different herd. Each element of the array represents an animal within that herd</returns>
-        public static List<List<Actor>> CreateAnimalHerds(GlobalBiome? biome,bool? domesticated,int herds)
+        public static List<List<Actor>> CreateAnimalHerds(GlobalBiome? biome,bool? domesticated,string tag,int herds)
         {
             var dictionary = DatabaseHandling.GetDatabase(Archetype.ANIMALS);
 
             //Pick the right one
             var animalData = dictionary.Values.Select(d => new AnimalData(d.ToArray()));
 
-            var candidates = animalData.Where(a => (domesticated == null || a.Domesticated.Equals(domesticated.Value)) && (biome == null || a.BiomeList.Contains(biome.ToString())));
+            IEnumerable<AnimalData> candidates = null;
+
+            if (String.IsNullOrEmpty(tag))
+            {
+                candidates = animalData.Where(a => ((domesticated == null || a.Domesticated.Equals(domesticated.Value)) && (biome == null || a.BiomeList.Contains(biome.ToString()))));
+            }
+            else 
+            {
+                candidates = animalData.Where(a => a.Tags.ToUpper().Split(',').Contains(tag.ToUpper()));
+            }
+
+            
 
             var candidatesList = candidates.ToArray();
 

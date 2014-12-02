@@ -274,7 +274,7 @@ namespace DivineRightGame.LocalMapGenerator
             //There, now that's done, lets generate some animals
             if (herdAmount + banditAmount > 0)
             {
-                var herds = ActorGeneration.CreateAnimalHerds(biome, false, herdAmount);
+                var herds = ActorGeneration.CreateAnimalHerds(biome, false, null, herdAmount);
                 var bandits = CampGenerator.CreateBandits(banditAmount);
 
                 var actorGroups = herds.Union(bandits);

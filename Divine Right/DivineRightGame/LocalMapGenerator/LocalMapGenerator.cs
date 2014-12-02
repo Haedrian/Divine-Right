@@ -868,7 +868,7 @@ namespace DivineRightGame.LocalMapGenerator
                     //Check the random
                     if (random.Next(100) < herd.ProbabilityPercentage)
                     {
-                        var herds = ActorGeneration.CreateAnimalHerds(herd.Biome, herd.Domesticated, 1);
+                        var herds = ActorGeneration.CreateAnimalHerds(herd.Biome, herd.Domesticated, herd.HerdTag, 1);
 
                         foreach (var animalHerd in herds)
                         {

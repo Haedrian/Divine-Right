@@ -216,6 +216,10 @@
     <Content Include="Maplets\Camp\WeaponsArea.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Maplets\Components\HorsePaddock.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Maplets\Components\FishingBoat.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

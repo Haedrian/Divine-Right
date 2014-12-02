@@ -52,6 +52,11 @@ namespace DRObjects.LocalMapGeneratorObjects
         /// </summary>
         public bool UseLocalBiome { get; set; }
 
+        /// <summary>
+        /// If this is set - will ignore all other parameters and fetch animals having this tag
+        /// </summary>
+        public string HerdTag { get; set; }
+
         public MapletHerd()
         {
             UseLocalBiome = true;

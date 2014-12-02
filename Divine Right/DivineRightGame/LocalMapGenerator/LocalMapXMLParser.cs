@@ -132,6 +132,7 @@ namespace DivineRightGame.LocalMapGenerator
                         case "PatrolName": ((MapletPatrolPoint)content).PatrolName = value; break;
                         case "PointRadius": ((MapletPatrolPoint)content).PointRadius = Int32.Parse(value); break;
                         case "IsPrimary": ((MapletFootpathNode)content).IsPrimary = Boolean.Parse(value); break;
+                        case "HerdTag": ((MapletHerd)content).HerdTag = value; break;
                             
                     }
                 }
