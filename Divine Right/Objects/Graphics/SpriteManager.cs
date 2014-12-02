@@ -276,6 +276,11 @@ namespace DRObjects.Graphics
 
             localSprites[(int)LocalSpriteName.TABLE_FOR_1] = new SpriteData(HOUSEITEM, new Rectangle(50, 600, 50, 50));
 
+            localSprites[(int)LocalSpriteName.FENCE_BOTTOM] = new SpriteData(OUTDOORS, new Rectangle(0, 200, 50, 50));
+            localSprites[(int)LocalSpriteName.FENCE_RIGHT] = new SpriteData(OUTDOORS, new Rectangle(50, 200, 50, 50));
+            localSprites[(int)LocalSpriteName.FENCE_TOP] = new SpriteData(OUTDOORS, new Rectangle(100, 200, 50, 50));
+            localSprites[(int)LocalSpriteName.FENCE_LEFT] = new SpriteData(OUTDOORS, new Rectangle(150, 200, 50, 50));
+
             AddLocalSprite(LocalSpriteName.WATER_TROUGH, HOUSEITEM, 2, 10);
             AddLocalSprite(LocalSpriteName.FOOD_TROUGH, HOUSEITEM, 3, 10);
             AddLocalSprite(LocalSpriteName.HAY_BALE, HOUSEITEM, 4, 10);

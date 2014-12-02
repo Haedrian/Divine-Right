@@ -619,6 +619,10 @@ namespace DRObjects.Graphics
         HORSE1,
         HORSE3,
         HORSE2,
+        FENCE_LEFT,
+        FENCE_TOP,
+        FENCE_RIGHT,
+        FENCE_BOTTOM,
 
     }
 }
