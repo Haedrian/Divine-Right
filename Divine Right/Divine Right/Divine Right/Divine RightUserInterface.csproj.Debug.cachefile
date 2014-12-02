@@ -1,7 +1,6 @@
 Content\Fonts\TextFeedbackFont.xnb
 Content\Fonts\ButtonTextFont.xnb
 Content\Fonts\TitleFont.xnb
-Content\Fonts\h1.xnb
 Content\Fonts\LightText.xnb
 Content\Graphics\World\Mountain.xnb
 Content\Graphics\World\Tiles\GrassTile.xnb
@@ -65,6 +64,7 @@ Content\Graphics\Interface\buySellIcons.xnb
 Content\Graphics\Interface\book.xnb
 Content\Graphics\Local\PlayerFemale.xnb
 Content\Graphics\Local\animals.xnb
+Content\Fonts\h1.xnb
 Content\Fonts\TextFeedbackFont.spritefont
 Items.sdf
 Maplets\Camp\CampMaplet.xml

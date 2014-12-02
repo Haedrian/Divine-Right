@@ -92,6 +92,11 @@ namespace DivineRightGame.LocalMapGenerator
 
             foreach (var actor in actors)
             {
+                if (actor.CurrentMission == null)
+                {
+                    actor.CurrentMission = actor.MissionStack.Count > 0 ? actor.MissionStack.Pop() : null;
+                }
+
                 if (actor.CurrentMission != null && actor.CurrentMission.GetType() == typeof(WanderMission))
                 {
                     WanderMission wMiss = actor.CurrentMission as WanderMission;
