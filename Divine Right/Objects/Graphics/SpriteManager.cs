@@ -687,6 +687,9 @@ namespace DRObjects.Graphics
             AddLocalSprite(LocalSpriteName.RABBIT, ANIMALS, 7, 1);
             AddLocalSprite(LocalSpriteName.PANTHER, ANIMALS, 8, 1);
             AddLocalSprite(LocalSpriteName.BEAR, ANIMALS, 9, 1);
+            AddLocalSprite(LocalSpriteName.HORSE1, ANIMALS, 10, 1);
+            AddLocalSprite(LocalSpriteName.HORSE2, ANIMALS, 11, 1);
+            AddLocalSprite(LocalSpriteName.HORSE3, ANIMALS, 0, 2);
 
             AddLocalSprite(LocalSpriteName.GREY_GEM, INVENTORYITEMS, 0, 0);
             AddLocalSprite(LocalSpriteName.BROWN_GEM, INVENTORYITEMS, 1, 0);

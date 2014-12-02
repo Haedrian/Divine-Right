@@ -616,6 +616,9 @@ namespace DRObjects.Graphics
         MEAT_TABLE3,
         KNIFE_SET,
         BEAR_TRAP,
+        HORSE1,
+        HORSE3,
+        HORSE2,
 
     }
 }
