@@ -84,7 +84,7 @@
 				}
 			]
 		},
-				{
+		{
 			"Name": "Woodcutter",
 			"ActorCounts": [
 				{
@@ -96,6 +96,27 @@
 					"Profession": "WORKER",
 					"BaseAmount": 2,
 					"MaxAmount": 5
+				},
+				{
+					"Owner": "UNDEAD",
+					"Profession": "WARRIOR",
+					"BaseAmount": 3,
+					"MaxAmount": 5
+				}
+			]
+		},
+		{
+			"Name": "Hunter",
+			"ActorCounts": [
+				{
+					"Profession": "WARRIOR",
+					"BaseAmount": 4,
+					"MaxAmount": 7
+				},
+				{
+					"Profession": "WORKER",
+					"BaseAmount": 1,
+					"MaxAmount": 3
 				},
 				{
 					"Owner": "UNDEAD",

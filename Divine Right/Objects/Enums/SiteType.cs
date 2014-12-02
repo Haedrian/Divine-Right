@@ -14,6 +14,7 @@ namespace DRObjects.Enums
         GOLD_MINE,
         FARM,
         FISHING_VILLAGE,
-        WOODCUTTER
+        WOODCUTTER,
+        HUNTER
     }
 }
