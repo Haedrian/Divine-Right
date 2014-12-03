@@ -15,6 +15,7 @@ namespace DRObjects.Enums
         FARM,
         FISHING_VILLAGE,
         WOODCUTTER,
-        HUNTER
+        HUNTER,
+        STABLES
     }
 }

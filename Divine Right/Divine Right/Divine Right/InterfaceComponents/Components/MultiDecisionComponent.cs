@@ -27,7 +27,6 @@ namespace Divine_Right.InterfaceComponents.Components
         private Rectangle titleRect;
         private Rectangle drawingRect;
         private Rectangle textRect;
-        private SpriteData image;
 
         private SpriteFont font;
 

@@ -57,7 +57,6 @@ namespace Divine_Right.InterfaceComponents.Components
 
         private Rectangle seperatorRect;
 
-        private Rectangle targetHealthStatusRect;
         private Rectangle attackButtonRectangle;
 
         private Rectangle closeRect;

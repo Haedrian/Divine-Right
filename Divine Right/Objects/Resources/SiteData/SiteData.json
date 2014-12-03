@@ -125,6 +125,27 @@
 					"MaxAmount": 5
 				}
 			]
+		},
+		{
+			"Name": "Stables",
+			"ActorCounts": [
+				{
+					"Profession": "WARRIOR",
+					"BaseAmount": 2,
+					"MaxAmount": 4
+				},
+				{
+					"Profession": "WORKER",
+					"BaseAmount": 3,
+					"MaxAmount": 5
+				},
+				{
+					"Owner": "UNDEAD",
+					"Profession": "WARRIOR",
+					"BaseAmount": 3,
+					"MaxAmount": 5
+				}
+			]
 		}
 	]
 }

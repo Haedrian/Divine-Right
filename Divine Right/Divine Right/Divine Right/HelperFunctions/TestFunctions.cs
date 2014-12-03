@@ -160,7 +160,7 @@ namespace Divine_Right.HelperFunctions
             LocalMapGenerator gen = new LocalMapGenerator();
 
             SiteData siteData = new SiteData();
-            siteData.SiteTypeData = SiteDataManager.GetData(SiteType.HUNTER);
+            siteData.SiteTypeData = SiteDataManager.GetData(SiteType.STABLES);
 
             siteData.Biome = GlobalBiome.DENSE_FOREST;
             siteData.Owners = OwningFactions.HUMANS;
