@@ -2,6 +2,10 @@
   <MapletContents>
 
     <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="75" Tag="well"/>
+
+    <MapletContentsMaplet Position="Middle" FirstFit="false" MaxAmount="1" ProbabilityPercentage="101">
+      <MapletTag Tag="animal paddock" />
+    </MapletContentsMaplet>
     
     <!-- <MapletHerd Owners="Humans,Bandits,Orcs" Domesticated="true" MaxAmount="6" ProbabilityPercentage="100" /> -->
 
@@ -47,10 +51,10 @@
 
     <!-- Fields - with some produce -->
     <MapletContentsMaplet Position="Anywhere" MaxAmount="4" ProbabilityPercentage="101">
-      <Maplet Tiled="false" SizeX="10" SizeY="5" Walled="false">
+      <Maplet Tiled="false" SizeX="5" SizeY="5" Walled="false">
         <MapletContents>
           <MapletContentsMaplet Position="Middle" MaxAmount="1"  ProbabilityPercentage="101">
-            <Maplet Tiled="true" SizeX="8" SizeY="3" Walled="false" TileTag="soil">
+            <Maplet Tiled="true" SizeX="3" SizeY="3" Walled="false" TileTag="soil">
               <MapletContents>
                 <MapletPatrolPoint PointRadius="1" Profession="WORKER" />
                 <MapletContentsItemTag Owners="Humans,Bandits" Position="Anywhere" Category="mundaneitems" MaxAmount="24" ProbabilityPercentage="50" Tag="plant"/>

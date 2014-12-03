@@ -46,7 +46,7 @@ namespace DivineRightGame.ActorHandling
                 EnemyName = properties[1],
                 EnemyType = properties[4],
                 Intelligent = Boolean.Parse(properties[7]),
-                Profession = Boolean.Parse(properties[8]) ? ActorProfession.WARRIOR: ActorProfession.WORKER //Keep it simple for now
+                Profession = Boolean.Parse(properties[8]) ? ActorProfession.WARRIOR : ActorProfession.WORKER //Keep it simple for now
             };
 
         }
@@ -73,9 +73,9 @@ namespace DivineRightGame.ActorHandling
         /// Do not use this for animals
         /// If there are no actors of that particular type for that profession, will not create anything
         /// </summary>
-        public static Actor[] CreateActors(OwningFactions owner,ActorProfession profession,int total)
+        public static Actor[] CreateActors(OwningFactions owner, ActorProfession profession, int total)
         {
-            List<Actor> actors = new List<Actor>(); 
+            List<Actor> actors = new List<Actor>();
 
             //Get all the data from the database and we'll make our own filtering
             var dictionary = DatabaseHandling.GetDatabase(Archetype.ACTORS);
@@ -281,7 +281,7 @@ namespace DivineRightGame.ActorHandling
 
             if (gender.HasValue)
             {
-                possibleMatches = possibleMatches.Where(v =>(v[12]).Equals(gender.Value.ToString()));
+                possibleMatches = possibleMatches.Where(v => (v[12]).Equals(gender.Value.ToString()));
             }
 
             //Put the possible matches and pick one at random
@@ -306,12 +306,12 @@ namespace DivineRightGame.ActorHandling
             actor.LineOfSight = data.EnemyLineOfSight;
             actor.UniqueId = Guid.NewGuid();
             actor.IsAggressive = aggressivity > 0;
-            actor.Gender = (Gender) Enum.Parse(typeof(Gender), selected[12]);
+            actor.Gender = (Gender)Enum.Parse(typeof(Gender), selected[12]);
 
             actor.Name = ActorNameGenerator.GenerateName(enemyType, actor.Gender);
 
             //Give him attributes 
-            actor.Attributes = GenerateAttributes(data.EnemyType, data.Profession, level,actor);
+            actor.Attributes = GenerateAttributes(data.EnemyType, data.Profession, level, actor);
 
             //Set his anatomy too
             actor.Anatomy = GenerateAnatomy(data.EnemyType);
@@ -339,7 +339,7 @@ namespace DivineRightGame.ActorHandling
         /// <param name="tag">If contains a tag, will ignore all other values and generate one having the right tag</param>
         /// <param name="herds">The total amount of herds to be created</param>
         /// <returns>A list of arrays. Each element of the list represents a different herd. Each element of the array represents an animal within that herd</returns>
-        public static List<List<Actor>> CreateAnimalHerds(GlobalBiome? biome,bool? domesticated,string tag,int herds)
+        public static List<List<Actor>> CreateAnimalHerds(GlobalBiome? biome, bool? domesticated, string tag, int herds)
         {
             var dictionary = DatabaseHandling.GetDatabase(Archetype.ANIMALS);
 
@@ -350,7 +350,17 @@ namespace DivineRightGame.ActorHandling
 
             if (String.IsNullOrEmpty(tag))
             {
-                candidates = animalData.Where(a => ((domesticated == null || a.Domesticated.Equals(domesticated.Value)) && (biome == null || a.BiomeList.Contains(biome.ToString()))));
+
+                if (domesticated != null)
+                {
+                    candidates = animalData.Where(a => a.Domesticated.Equals(domesticated.Value));
+                }
+                else 
+                {
+                   candidates = animalData.Where(a => (biome == null || a.BiomeList.Contains(biome.ToString())));
+                }
+
+;
             }
             else 
             {
@@ -384,7 +394,7 @@ namespace DivineRightGame.ActorHandling
             return retHerds;
         }
 
-        public static SkillsAndAttributes GenerateAttributes(string race, ActorProfession profession, int level,Actor actor)
+        public static SkillsAndAttributes GenerateAttributes(string race, ActorProfession profession, int level, Actor actor)
         {
             //Roll 6 3d3s and put the results in an array
             int[] results = new int[6];
@@ -393,7 +403,7 @@ namespace DivineRightGame.ActorHandling
 
             for (int i = 0; i < results.Length; i++)
             {
-                results[i] = random.Next(3) + 1 + random.Next(3) + 1 + random.Next(3) + 1; 
+                results[i] = random.Next(3) + 1 + random.Next(3) + 1 + random.Next(3) + 1;
             }
 
             //sort the array by size so top one goes first
@@ -410,7 +420,7 @@ namespace DivineRightGame.ActorHandling
                 att.Perc = results[2];
                 att.Intel = results[3];
                 att.Char = results[4];
-                
+
                 //Combat skills - give him evasion and attack in an amount equal to level
                 att.Evasion = level;
                 att.HandToHand = level;
@@ -461,7 +471,7 @@ namespace DivineRightGame.ActorHandling
         /// Generates a set of equipped items, not exceeding the total cost. For now will only work on warriors
         /// </summary>
         /// <returns></returns>
-        public static Dictionary<EquipmentLocation,InventoryItem> GenerateEquippedItems(int totalCost)
+        public static Dictionary<EquipmentLocation, InventoryItem> GenerateEquippedItems(int totalCost)
         {
             Dictionary<EquipmentLocation, InventoryItem> equipped = new Dictionary<EquipmentLocation, InventoryItem>();
 
@@ -608,21 +618,21 @@ namespace DivineRightGame.ActorHandling
             //This is a dummmy for now. Just generate the standard humanoid anatomy
             HumanoidAnatomy anatomy = new HumanoidAnatomy()
             {
-                    Head = 4,
-                    HeadMax = 4,
-                    LeftArm = 6,
-                    LeftArmMax = 6,
-                    RightArm = 6,
-                    RightArmMax = 6,
-                    Chest = 12,
-                    ChestMax = 12,
-                    Legs = 8,
-                    LegsMax = 8,
+                Head = 4,
+                HeadMax = 4,
+                LeftArm = 6,
+                LeftArmMax = 6,
+                RightArm = 6,
+                RightArmMax = 6,
+                Chest = 12,
+                ChestMax = 12,
+                Legs = 8,
+                LegsMax = 8,
 
-                    BloodLoss = 0, 
-                    BloodTotal = HumanoidAnatomy.BLOODTOTAL,
-                    BodyTimer = 0, 
-                    StunAmount = 0
+                BloodLoss = 0,
+                BloodTotal = HumanoidAnatomy.BLOODTOTAL,
+                BodyTimer = 0,
+                StunAmount = 0
             };
 
             return anatomy;
@@ -704,17 +714,17 @@ namespace DivineRightGame.ActorHandling
         /// <param name="gearCost"></param>
         /// <param name="enemyID"></param>
         /// <returns></returns>
-        public static void RegenerateOrc(Actor actor,int level, int gearCost)
+        public static void RegenerateOrc(Actor actor, int level, int gearCost)
         {
             Random random = new Random();
 
             //This should give us a random from 0.75 to 1.25
-            double multiplier = (random.NextDouble()/2)-0.25 + 1;
+            double multiplier = (random.NextDouble() / 2) - 0.25 + 1;
 
             //Start by regenerating the actor's stats and gear
             actor.Attributes = GenerateAttributes("orc", level == 5 ? ActorProfession.WORKER : ActorProfession.WARRIOR, (int)(level * multiplier), actor);
 
-            multiplier = (random.NextDouble()/2)-0.25 + 1;
+            multiplier = (random.NextDouble() / 2) - 0.25 + 1;
 
             //And the gear
             actor.Inventory.EquippedItems = GenerateEquippedItems((int)(gearCost * multiplier));
@@ -750,7 +760,7 @@ namespace DivineRightGame.ActorHandling
         /// <param name="actor"></param>
         /// <param name="level"></param>
         /// <param name="gearCost"></param>
-        public static void RegenerateBandit(Actor actor,int level, int gearCost)
+        public static void RegenerateBandit(Actor actor, int level, int gearCost)
         {
             Random random = new Random();
 

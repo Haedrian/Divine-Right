@@ -1,0 +1,49 @@
+﻿<Maplet MapletName="Horse Paddock" SizeX="9" SizeY="9" Tiled="false" TileTag="soil" Walled="false">
+  <MapletContents>
+
+    <MapletHerd MaxAmount="2" ProbabilityPercentage="98" Domesticated="true"/>
+
+    <MapletContentsItemTag Position="Middle" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="99" Tag="hay"/>
+    <MapletContentsItemTag Position="Middle" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="99" Tag="water trough"/>
+
+    <!-- Top -->
+    <MapletContentsItemTag Position="Fixed" x="1" y="8" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="fence bottom"/>
+    <MapletContentsItemTag Position="Fixed" x="2" y="8" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="fence bottom"/>
+    <MapletContentsItemTag Position="Fixed" x="3" y="8" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="fence bottom"/>
+    <!-- Hole -->
+    <MapletContentsItemTag Position="Fixed" x="5" y="8" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="fence bottom"/>
+    <MapletContentsItemTag Position="Fixed" x="6" y="8" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="fence bottom"/>
+    <MapletContentsItemTag Position="Fixed" x="7" y="8" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="fence bottom"/>
+
+    
+    <!-- Bottom -->
+    
+    <MapletContentsItemTag Position="Fixed" x="1" y="0" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="fence top"/>
+    <MapletContentsItemTag Position="Fixed" x="2" y="0" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="fence top"/>
+    <MapletContentsItemTag Position="Fixed" x="3" y="0" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="fence top"/>
+    <!-- Hole -->
+    <MapletContentsItemTag Position="Fixed" x="5" y="0" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="fence top"/>
+    <MapletContentsItemTag Position="Fixed" x="6" y="0" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="fence top"/>
+    <MapletContentsItemTag Position="Fixed" x="7" y="0" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="fence top"/>
+    
+    
+    <!-- Left -->
+    <MapletContentsItemTag Position="Fixed" x="0" y="1" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="fence right"/>
+    <MapletContentsItemTag Position="Fixed" x="0" y="2" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="fence right"/>
+    <MapletContentsItemTag Position="Fixed" x="0" y="3" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="fence right"/>
+    <!-- Hole -->
+    <MapletContentsItemTag Position="Fixed" x="0" y="5" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="fence right"/>
+    <MapletContentsItemTag Position="Fixed" x="0" y="6" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="fence right"/>
+    <MapletContentsItemTag Position="Fixed" x="0" y="7" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="fence right"/>
+    
+    <!-- Right -->
+    <MapletContentsItemTag Position="Fixed" x="8" y="1" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="fence left"/>
+    <MapletContentsItemTag Position="Fixed" x="8" y="2" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="fence left"/>
+    <MapletContentsItemTag Position="Fixed" x="8" y="3" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="fence left"/>
+    <!-- Hole -->
+    <MapletContentsItemTag Position="Fixed" x="8" y="5" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="fence left"/>
+    <MapletContentsItemTag Position="Fixed" x="8" y="6" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="fence left"/>
+    <MapletContentsItemTag Position="Fixed" x="8" y="7" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="fence left"/>
+    
+  </MapletContents>
+</Maplet>
