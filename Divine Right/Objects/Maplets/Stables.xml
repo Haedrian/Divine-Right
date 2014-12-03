@@ -3,17 +3,16 @@
 
     <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="75" Tag="well"/>
 
-    <MapletContentsMaplet Position="Middle" FirstFit="false" MaxAmount="1" ProbabilityPercentage="101">
-      <MapletTag Tag="animal paddock" />
+    <MapletContentsMaplet Position="Middle" FirstFit="false" MaxAmount="2" ProbabilityPercentage="101">
+      <MapletTag Tag="horse paddock" />
     </MapletContentsMaplet>
     
     <!-- <MapletHerd Owners="Humans,Bandits,Orcs" Domesticated="true" MaxAmount="6" ProbabilityPercentage="100" /> -->
 
     <!-- Farm House-->
     <MapletContentsMaplet Position="Sides" MaxAmount="1"  ProbabilityPercentage="102">
-      <Maplet Tiled="true" SizeX="15" SizeY="10" Walled="true" TileTag="wood" WindowProbability="20">
+      <Maplet Tiled="true" SizeX="12" SizeY="10" Walled="true" TileTag="wood" WindowProbability="20">
         <MapletContents>
-          <MapletPatrolPoint PointRadius="3" Profession="WORKER" />
           <MapletContentsMaplet Position="Sides" MaxAmount="1" ProbabilityPercentage="100">
             <Maplet Tiled="false" SizeX="5" SizeY="4" Walled="true" Name="Bedrooms">
               <MapletContents>
@@ -29,18 +28,15 @@
               </MapletContents>
             </Maplet>
           </MapletContentsMaplet>
-
-          <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="farm tool"/>
-          
-          <MapletContentsMaplet Position="Middle" MaxAmount="2" ProbabilityPercentage="99">
+         
+          <MapletContentsMaplet Position="Middle" MaxAmount="1" ProbabilityPercentage="99">
             <MapletTag Tag="TableSet" />
           </MapletContentsMaplet>
 
           <MapletContentsMaplet Position="Anywhere" MaxAmount="1" ProbabilityPercentage="102" >
             <Maplet Tiled="true" SizeX="5" SizeY="5" Walled="true" TileTag="wood">
               <MapletContents>
-                <MapletPatrolPoint Profession="WARRIOR" PointRadius="2" />
-                <MapletActor Owners="Humans" MaxAmount="1" ProbabilityPercentage="100" UseLocalType="false" EnemyType="human" EnemyTag="merchant" VendorType="TAVERN" VendorLevel="1" EnemyMission="Wander"  />
+                <MapletActor Owners="Humans" MaxAmount="1" ProbabilityPercentage="100" UseLocalType="false" EnemyType="human" EnemyTag="merchant" EnemyMission="Wander"  />
                 <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="desk"/>
               </MapletContents>
             </Maplet>
@@ -48,31 +44,12 @@
         </MapletContents>
       </Maplet>
     </MapletContentsMaplet>
-
-    <!-- Fields - with some produce -->
-    <MapletContentsMaplet Position="Anywhere" MaxAmount="2" ProbabilityPercentage="101">
-      <Maplet Tiled="false" SizeX="5" SizeY="5" Walled="false">
-        <MapletContents>
-          <MapletContentsMaplet Position="Middle" MaxAmount="1"  ProbabilityPercentage="101">
-            <Maplet Tiled="true" SizeX="3" SizeY="3" Walled="false" TileTag="soil">
-              <MapletContents>
-                <MapletPatrolPoint PointRadius="1" Profession="WORKER" />
-                <MapletContentsItemTag Owners="Humans,Bandits" Position="Anywhere" Category="mundaneitems" MaxAmount="24" ProbabilityPercentage="50" Tag="plant"/>
-              </MapletContents>
-            </Maplet>
-          </MapletContentsMaplet>
-        </MapletContents>
-      </Maplet>
-    </MapletContentsMaplet>
-
-    <!-- Storage Area-->
+    <!-- Horse Storage Area Area-->
     
     <MapletContentsMaplet Position="Anywhere" MaxAmount="1" ProbabilityPercentage="100" >
-      <Maplet Tiled="true" SizeX="5" SizeY="5" Walled="false" TileTag="wood">
+      <Maplet Tiled="true" SizeX="5" SizeY="5" Walled="true" TileTag="wood">
         <MapletContents>
-          <MapletPatrolPoint Profession="WORKER" PointRadius="2" />
-          <MapletPatrolPoint Profession="WARRIOR" PointRadius="2" />
-          <MapletContentsItemTag Position="Anywhere" Owners="Humans" Category="mundaneitems" MaxAmount="5" ProbabilityPercentage="50" Tag="farm produce"/>
+          <MapletHerd MaxAmount="1" ProbabilityPercentage="98" HerdTag="horse"/>
         </MapletContents>
       </Maplet>
     </MapletContentsMaplet>
