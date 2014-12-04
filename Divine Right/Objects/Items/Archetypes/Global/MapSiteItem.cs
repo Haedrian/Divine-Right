@@ -8,6 +8,7 @@ using System.Text;
 
 namespace DRObjects.Items.Archetypes.Global
 {
+    [Serializable]
     public class MapSiteItem:
         MapItem
     {
@@ -16,41 +17,14 @@ namespace DRObjects.Items.Archetypes.Global
         /// </summary>
         private List<SpriteData> sprites = null;
         
-        public MapSite Camp { get; set; }
+        public MapSite Site { get; set; }
 
         /// <summary>
-        /// Creates a bandit camp item.
+        /// Creates a map site item
         /// </summary>
         public MapSiteItem()
         {
             this.MayContainItems = true;
-            sprites = new List<SpriteData>();
-
-            //Show a graphic depending on the type of the site (and later on the owner)
-            switch(Camp.SiteData.SiteTypeData.SiteType)
-            {
-                case SiteType.FARM:
-                    sprites.Add(SpriteManager.GetSprite(GlobalSpriteName.FARM));
-                    break;
-                case SiteType.FISHING_VILLAGE:
-                    sprites.Add(SpriteManager.GetSprite(GlobalSpriteName.FISHING_HUT));
-                    break;
-                case SiteType.GOLD_MINE:
-                    sprites.Add(SpriteManager.GetSprite(GlobalSpriteName.GOLD_MINE));
-                    break;
-                case SiteType.HUNTER:
-                    sprites.Add(SpriteManager.GetSprite(GlobalSpriteName.HUNTER));
-                    break;
-                case SiteType.IRON_MINE:
-                    sprites.Add(SpriteManager.GetSprite(GlobalSpriteName.IRON_MINE));
-                    break;
-                case SiteType.STABLES:
-                    sprites.Add(SpriteManager.GetSprite(GlobalSpriteName.STABLES));
-                    break;
-                case SiteType.WOODCUTTER:
-                    sprites.Add(SpriteManager.GetSprite(GlobalSpriteName.WOODCUTTER));
-                    break;
-            }
         }
 
         public override Enums.ActionType[] GetPossibleActions(Actor actor)
@@ -79,7 +53,7 @@ namespace DRObjects.Items.Archetypes.Global
                 new LocationChangeFeedback()
                 {
                     VisitMainMap = false,
-                    //VisitCamp = this.Camp
+                    VisitSite = this.Site
                 }
             };
         }
@@ -88,6 +62,37 @@ namespace DRObjects.Items.Archetypes.Global
         {
             get
             {
+                if (sprites == null)
+                {
+                    sprites = new List<SpriteData>();
+
+                    //Show a graphic depending on the type of the site (and later on the owner)
+                    switch (Site.SiteData.SiteTypeData.SiteType)
+                    {
+                        case SiteType.FARM:
+                            sprites.Add(SpriteManager.GetSprite(GlobalSpriteName.FARM));
+                            break;
+                        case SiteType.FISHING_VILLAGE:
+                            sprites.Add(SpriteManager.GetSprite(GlobalSpriteName.FISHING_HUT));
+                            break;
+                        case SiteType.GOLD_MINE:
+                            sprites.Add(SpriteManager.GetSprite(GlobalSpriteName.GOLD_MINE));
+                            break;
+                        case SiteType.HUNTER:
+                            sprites.Add(SpriteManager.GetSprite(GlobalSpriteName.HUNTER));
+                            break;
+                        case SiteType.IRON_MINE:
+                            sprites.Add(SpriteManager.GetSprite(GlobalSpriteName.IRON_MINE));
+                            break;
+                        case SiteType.STABLES:
+                            sprites.Add(SpriteManager.GetSprite(GlobalSpriteName.STABLES));
+                            break;
+                        case SiteType.WOODCUTTER:
+                            sprites.Add(SpriteManager.GetSprite(GlobalSpriteName.WOODCUTTER));
+                            break;
+                    }
+                }
+
                 return sprites;
             }
             set

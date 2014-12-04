@@ -18,6 +18,7 @@ namespace DRObjects.GraphicsEngineObjects
         public bool VisitMainMap { get; set; }
         public Dungeon VisitDungeon { get; set; }
         public BanditCamp VisitCamp { get; set; }
+        public MapSite VisitSite { get; set; }
 
         public GlobalBiome? RandomEncounter { get; set; }
 
@@ -27,6 +28,7 @@ namespace DRObjects.GraphicsEngineObjects
             VisitMainMap = false;
             VisitDungeon = null;
             VisitCamp = null;
+            VisitSite = null;
             RandomEncounter = null;
         }
     }

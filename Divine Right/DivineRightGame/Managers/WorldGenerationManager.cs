@@ -31,7 +31,9 @@ namespace DivineRightGame.Managers
         public const int HUMAN_CAPITAL_SEARCH_RADIUS = 150;
         public const int HUMAN_COLONY_SEARCH_RADIUS = 20;
         public const int HUMAN_COLONY_BLOCKING_RADIUS = 5;
+
         public const int HUMAN_COLONY_CLAIMING_RADIUS = 10;
+        public const int DUNGEON_CLAIMING_RADIUS = 10;
 
         public const int DUNGEON_TOTAL = 20;
 
@@ -112,6 +114,9 @@ namespace DivineRightGame.Managers
 
             CurrentStep = "And some humans took to thievery";
             CreateBandits();
+
+            CurrentStep = "And they harvested the resources of the land";
+            HarvestResources();
 
             CurrentStep = "And thus the world was done. [Enter] to continue";
             isGenerating = false;
@@ -855,6 +860,86 @@ namespace DivineRightGame.Managers
         }
 
         /// <summary>
+        /// Replaces certain resources with sites instead
+        /// </summary>
+        public static void HarvestResources()
+        {
+            //Go through each resource tile and see which of those are claimed by someone
+
+            List<MapBlock> blocks = new List<MapBlock>();
+
+            for (int x = 0; x < WORLDSIZE; x++)
+            {
+                for (int y = 0; y < WORLDSIZE; y++)
+                {
+                    MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapType.GLOBAL));
+
+                    var tile = block.Tile as GlobalTile;
+
+                    if (tile.Owner.HasValue && tile.HasResource && block.GetTopItem().GetType().Equals(typeof(MapResource)))
+                    {
+                        blocks.Add(block);
+                    }
+                }
+            }
+
+            //Now we have to go through the blocks. If they are non-fish, just replace them with the right type
+            //We'll handle fish differently
+            foreach (var block in blocks)
+            {
+                var mapResource = block.GetItems().First(gi => gi.GetType().Equals(typeof(MapResource))) as MapResource;
+
+                block.RemoveTopItem(); //remove it
+
+                MapSite ms = new MapSite();
+                ms.Coordinate = new MapCoordinate(block.Tile.Coordinate);
+                ms.SiteData = new DRObjects.Sites.SiteData()
+                {
+                    Biome = (block.Tile as GlobalTile).Biome ?? GlobalBiome.GARIGUE,
+                    OwnerChanged = false,
+                    Owners = (block.Tile as GlobalTile).Owner.Value == 100 ? OwningFactions.ORCS : OwningFactions.HUMANS //TODO: EXPAND LATER
+                };
+
+                switch (mapResource.ResourceType)
+                {
+                    case GlobalResourceType.FARMLAND:
+                        //And lets put somethign else
+                       ms.SiteData.SiteTypeData = SiteDataManager.GetData(SiteType.FARM);
+                        break;
+                    case GlobalResourceType.FISH:
+                        //TODO Later
+                        break;
+                    case GlobalResourceType.GAME:
+                        ms.SiteData.SiteTypeData = SiteDataManager.GetData(SiteType.HUNTER);
+                        break;
+                    case GlobalResourceType.GOLD:
+                        ms.SiteData.SiteTypeData = SiteDataManager.GetData(SiteType.GOLD_MINE);
+                        break;
+                    case GlobalResourceType.HORSE:
+                        ms.SiteData.SiteTypeData = SiteDataManager.GetData(SiteType.STABLES);
+                        break;
+                    case GlobalResourceType.IRON:
+                        ms.SiteData.SiteTypeData = SiteDataManager.GetData(SiteType.IRON_MINE);
+                        break;
+                    case GlobalResourceType.WOOD:
+                        ms.SiteData.SiteTypeData = SiteDataManager.GetData(SiteType.WOODCUTTER);
+                        break;
+                }
+
+                MapSiteItem msi = new MapSiteItem();
+                msi.Coordinate = new MapCoordinate(ms.Coordinate);
+                msi.Description = ""; //TODO Later
+                msi.IsActive = true;
+                msi.MayContainItems = true;
+                msi.Name = ""; //TODO LATER
+                msi.Site = ms;
+
+                block.ForcePutItemOnBlock(msi);
+            }
+
+        }
+
+        /// <summary>
         /// This determines the base desirability for all tile by examining the tile itself
         /// </summary>
         public static void DetermineDesirability()
@@ -1023,6 +1108,14 @@ namespace DivineRightGame.Managers
 
                 MapBlock block = blocks[GameState.Random.Next(blocks.Count)];
 
+                //Still valid?
+                if ((block.Tile as GlobalTile).IsBlockedForColonisation || (block.Tile as GlobalTile).Owner.HasValue)
+                {
+                    //Nope
+                    i--;
+                    continue;
+                }
+
                 Dungeon dungeon = new Dungeon();
                 dungeon.Coordinate = new MapCoordinate(block.Tile.Coordinate);
                 dungeon.GuardRooms = GameState.Random.Next(2) + 1;
@@ -1055,6 +1148,14 @@ namespace DivineRightGame.Managers
                     (rblock.Tile as GlobalTile).IsBlockedForColonisation = true;
                 }
 
+                //Also claim the surrounding areas for orcs. Let's give them an owner of 100
+                MapBlock[] claimedBlocks = GetBlocksAroundPoint(block.Tile.Coordinate, DUNGEON_CLAIMING_RADIUS);
+
+                foreach (MapBlock rblock in claimedBlocks)
+                {
+                    (rblock.Tile as GlobalTile).Owner = 100;
+                }
+
                 for (int corner = 1; corner < 10; corner++)
                 {
                     var cornerBlock = GameState.GlobalMap.GetBlockAtCoordinate(dungeonCoordinates[corner]);
@@ -1077,8 +1178,8 @@ namespace DivineRightGame.Managers
                     //Create a new dungeon
                     DungeonItem item = new DungeonItem(corner);
                     item.Coordinate = new MapCoordinate(cornerBlock.Tile.Coordinate);
-                    item.Name = "Dungeon";
-                    item.Description = "a monster infested maze";
+                    item.Name = "Orc Citadel";
+                    item.Description = "a dark dungeon owned by Orcs";
                     item.Dungeon = dungeon;
 
                     cornerBlock.ForcePutItemOnBlock(item);

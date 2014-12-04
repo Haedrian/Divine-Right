@@ -157,6 +157,8 @@
     <Compile Include="Items\Archetypes\Global\Dungeon.cs" />
     <Compile Include="Items\Archetypes\Global\DungeonItem.cs" />
     <Compile Include="Items\Archetypes\Global\MapResource.cs" />
+    <Compile Include="Items\Archetypes\Global\MapSite.cs" />
+    <Compile Include="Items\Archetypes\Global\MapSiteItem.cs" />
     <Compile Include="Items\Archetypes\Global\Settlement.cs" />
     <Compile Include="Items\Archetypes\Global\SettlementItem.cs" />
     <Compile Include="Items\Archetypes\Local\ConsumableItem.cs" />
