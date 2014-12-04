@@ -835,10 +835,6 @@ namespace DivineRightGame.Managers
                         candidateBlocks.AddRange(denseForestBlocks.Take(150));
                         candidateBlocks.AddRange(forestBlocks.Take(100));
                         break;
-                    case GlobalResourceType.HOLY:
-                        //Holy sites are found everywhere
-                        candidateBlocks.AddRange(nonWater.Take(100));
-                        break;
                 }
 
                 //Shuffle the candidates, and take the first few blocks
