@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DRObjects.Enums;
+using DRObjects.ActorHandling.CharacterSheet.Enums;
+using DRObjects.Sites;
 
 namespace DRObjects.Items.Archetypes.Global
 {
@@ -13,7 +15,7 @@ namespace DRObjects.Items.Archetypes.Global
 
         public Guid UniqueGUID { get { return _uniqueGUID; } }
 
-        //public int GuardTotal { get; set; }
+        public SiteData SiteData { get; set; }
 
         public MapSite()
         {
@@ -22,7 +24,6 @@ namespace DRObjects.Items.Archetypes.Global
 
         public MapCoordinate Coordinate { get; set; }
 
-        public SiteType SiteType { get; set; }
-        public OwningFactions Owners { get; set; }
+  
     }
 }

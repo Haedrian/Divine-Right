@@ -120,6 +120,15 @@ namespace DRObjects.Graphics
 
             globalSprites[(int)GlobalSpriteName.BANDIT_CAMP] = new SpriteData(WORLDITEMS, new Rectangle(700, 50, 50, 50));
 
+            globalSprites[(int)GlobalSpriteName.IRON_MINE] = new SpriteData(WORLDITEMS, new Rectangle(0, 150, 50, 50));
+            globalSprites[(int)GlobalSpriteName.GOLD_MINE] = new SpriteData(WORLDITEMS, new Rectangle(50, 150, 50, 50));
+            globalSprites[(int)GlobalSpriteName.FARM] = new SpriteData(WORLDITEMS, new Rectangle(100, 150, 50, 50));
+            globalSprites[(int)GlobalSpriteName.FISHING_HUT] = new SpriteData(WORLDITEMS, new Rectangle(150, 150, 50, 50));
+            globalSprites[(int)GlobalSpriteName.WOODCUTTER] = new SpriteData(WORLDITEMS, new Rectangle(200, 150, 50, 50));
+            globalSprites[(int)GlobalSpriteName.HUNTER] = new SpriteData(WORLDITEMS, new Rectangle(250, 150, 50, 50));
+            globalSprites[(int)GlobalSpriteName.STABLES] = new SpriteData(WORLDITEMS, new Rectangle(300, 150, 50, 50));
+
+
             colourSprites[(int)ColourSpriteName.BROWN] = new SpriteData(@"Graphics/World/Overlay/Regions/Brown");
             colourSprites[(int)ColourSpriteName.GREEN] = new SpriteData(@"Graphics/World/Overlay/Regions/Green");
             colourSprites[(int)ColourSpriteName.INDIGO] = new SpriteData(@"Graphics/World/Overlay/Regions/Indigo");

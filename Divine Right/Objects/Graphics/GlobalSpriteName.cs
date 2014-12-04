@@ -71,5 +71,12 @@ namespace DRObjects.Graphics
         DUNGEON_9,
         BANDIT_CAMP,
         DOVE,
+        IRON_MINE,
+        GOLD_MINE,
+        FARM,
+        FISHING_HUT,
+        WOODCUTTER,
+        HUNTER,
+        STABLES,
     }
 }
