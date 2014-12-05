@@ -946,6 +946,8 @@ namespace DivineRightGame.Managers
                         break;
                 }
 
+                msi.Site.SiteData.LoadAppropriateActorCounts();
+
 
                 block.ForcePutItemOnBlock(msi);
             }

@@ -1152,6 +1152,11 @@ namespace Divine_Right.GameScreens
                         GameState.LocalMap.IsGlobalMap = true;
 
                     }
+                    else if (lce.VisitSite != null)
+                    {
+                        LoadSite(lce.VisitSite);
+                        GameState.LocalMap.IsGlobalMap = false;
+                    }
                     else if (lce.RandomEncounter != null)
                     {
                         //Get the biome
@@ -1418,6 +1423,85 @@ namespace Divine_Right.GameScreens
                 GameState.LocalMap.Actors.Add(GameState.PlayerCharacter);
                 GameState.LocalMap.PointsOfInterest = pointsOfInterest;
                 GameState.LocalMap.Dungeon = dungeon;
+            }
+        }
+
+        private void LoadSite(MapSite site)
+        {
+            //Do we already have the map generated ?
+
+            if (LocalMap.MapGenerated(site.UniqueGUID))
+            {
+                //Reload the map
+                var savedMap = LocalMap.DeserialiseLocalMap(site.UniqueGUID);
+
+                GameState.LocalMap = new LocalMap(savedMap.localGameMap.GetLength(0), savedMap.localGameMap.GetLength(1), 1, 0);
+
+                GameState.LocalMap.Actors = new List<Actor>();
+
+                List<MapBlock> collapsedMap = new List<MapBlock>();
+
+                foreach (MapBlock block in savedMap.localGameMap)
+                {
+                    collapsedMap.Add(block);
+                }
+
+                GameState.LocalMap.AddToLocalMap(collapsedMap.ToArray());
+
+                GameState.LocalMap.Actors = savedMap.Actors;
+
+                LocalMapGenerator lmg = new LocalMapGenerator();
+
+                //Go through the actors
+                foreach (var actor in GameState.LocalMap.Actors)
+                {
+                    //Do we have any vendors ?
+                    if (actor.VendorDetails != null)
+                    {
+                        if (Math.Abs((actor.VendorDetails.GenerationTime - GameState.UniverseTime).GetTimeComponent(DRTimeComponent.MONTH)) > 1)
+                        {
+                            //More than a month old
+                            //Regenerate it
+                            lmg.UpdateVendorStock(actor);
+                        }
+                    }
+                }
+
+                //Find the player character item
+                var playerActor = GameState.LocalMap.Actors.Where(a => a.IsPlayerCharacter).FirstOrDefault();
+
+                GameState.PlayerCharacter.MapCharacter.Coordinate = playerActor.MapCharacter.Coordinate;
+                GameState.PlayerCharacter.MapCharacter = playerActor.MapCharacter;
+
+                GameState.LocalMap.Site = site;
+            }
+            else
+            {
+                Actor[] actors = null;
+
+                var gennedMap = SiteGenerator.GenerateSite(site.SiteData, out actors);
+
+                //Wipe the old map
+                GameState.LocalMap = new LocalMap(gennedMap.GetLength(0), gennedMap.GetLength(1), 1, 0);
+                GameState.LocalMap.Actors = new List<Actor>();
+
+                List<MapBlock> collapsedMap = new List<MapBlock>();
+
+                foreach (MapBlock block in gennedMap)
+                {
+                    collapsedMap.Add(block);
+                }
+
+                GameState.LocalMap.AddToLocalMap(collapsedMap.ToArray());
+
+                GameState.PlayerCharacter.MapCharacter.Coordinate = new MapCoordinate(5,0,0,MapType.LOCAL);
+
+                MapBlock playerBlock = GameState.LocalMap.GetBlockAtCoordinate(new MapCoordinate(5, 0, 0, MapType.LOCAL));
+                playerBlock.PutItemOnBlock(GameState.PlayerCharacter.MapCharacter);
+                GameState.LocalMap.Actors.AddRange(actors);
+                GameState.LocalMap.Actors.Add(GameState.PlayerCharacter);
+
+                GameState.LocalMap.Site = site;
             }
         }
 

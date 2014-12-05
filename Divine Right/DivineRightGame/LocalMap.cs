@@ -69,6 +69,8 @@ namespace DivineRightGame
         /// </summary>
         public BanditCamp Camp { get; set; }
 
+        public MapSite Site { get; set; }
+
         /// <summary>
         /// Whether the character is currently on the global map or not
         /// </summary>
