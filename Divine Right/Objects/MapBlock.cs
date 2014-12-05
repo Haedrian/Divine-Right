@@ -281,14 +281,14 @@ namespace DRObjects
                             if (actor.Attributes.Skills.ContainsKey(SkillName.EXPLORER))
                             {
                                 //Reduce the random value
-                                randomValue += ((int)actor.Attributes.Skills[SkillName.EXPLORER].SkillLevel) * 3;
+                                randomValue += ((int)actor.Attributes.Skills[SkillName.EXPLORER].SkillLevel) * 5;
                             }
                         }
 
                         List<ActionFeedback> feedback = new List<ActionFeedback>();
 
-                        //10%
-                        if (randomValue > 90)
+                        //1%
+                        if (randomValue > 99)
                         {
                             //Are we next to a bandit camp ?
                             feedback.Add(new LocationChangeFeedback() { RandomEncounter = (this.Tile as GlobalTile).Biome  });

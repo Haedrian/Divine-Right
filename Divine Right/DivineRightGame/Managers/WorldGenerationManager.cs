@@ -24,7 +24,7 @@ namespace DivineRightGame.Managers
         public const int RIVERCOUNT = 50;
         public const int RAINCENTERCOUNT = 6;
 
-        public const int RESOURCES_PER_TYPE = 7;
+        public const int RESOURCES_PER_TYPE = 10;
 
         public const int HUMAN_CAPITAL_COUNT = 4;
         public const int HUMAN_SETTLEMENTS_PER_CIVILIZATION = 7;
@@ -797,8 +797,8 @@ namespace DivineRightGame.Managers
             //Prepare stuff we might need
             var grassLandBlocks = allBlocks.Where(ab => (ab.Tile as GlobalTile).Biome == GlobalBiome.GRASSLAND && (ab.Tile as GlobalTile).Elevation > 0 && !(ab.Tile as GlobalTile).HasResource && !(ab.Tile as GlobalTile).HasRiver).OrderBy(ab => GameState.Random.Next(1000));
             var waterBlocks = allBlocks.Where(ab => (ab.Tile as GlobalTile).Elevation <= 0 && !(ab.Tile as GlobalTile).HasResource && !(ab.Tile as GlobalTile).HasRiver).OrderBy(ab => GameState.Random.Next(1000));
-            var denseForestBlocks = allBlocks.Where(ab => (ab.Tile as GlobalTile).Biome == GlobalBiome.DENSE_FOREST && !(ab.Tile as GlobalTile).HasResource && !(ab.Tile as GlobalTile).HasRiver).OrderBy(ab => GameState.Random.Next(1000));
-            var forestBlocks = allBlocks.Where(ab => (ab.Tile as GlobalTile).Biome == GlobalBiome.WOODLAND && !(ab.Tile as GlobalTile).HasResource && !(ab.Tile as GlobalTile).HasRiver).OrderBy(ab => GameState.Random.Next(1000));
+            var denseForestBlocks = allBlocks.Where(ab => (ab.Tile as GlobalTile).Biome == GlobalBiome.DENSE_FOREST && (ab.Tile as GlobalTile).Elevation > 0 && !(ab.Tile as GlobalTile).HasResource && !(ab.Tile as GlobalTile).HasRiver).OrderBy(ab => GameState.Random.Next(1000));
+            var forestBlocks = allBlocks.Where(ab => (ab.Tile as GlobalTile).Biome == GlobalBiome.WOODLAND && (ab.Tile as GlobalTile).Elevation > 0 && !(ab.Tile as GlobalTile).HasResource && !(ab.Tile as GlobalTile).HasRiver).OrderBy(ab => GameState.Random.Next(1000));
             var hillyLocations = allBlocks.Where(ab => (ab.Tile as GlobalTile).Elevation > 80 && !(ab.Tile as GlobalTile).HasResource && !(ab.Tile as GlobalTile).HasRiver).OrderBy(ab => GameState.Random.Next(1000));
             var nonWater = allBlocks.Where(ab => (ab.Tile as GlobalTile).Elevation > 0 && !(ab.Tile as GlobalTile).HasResource && !(ab.Tile as GlobalTile).HasRiver).OrderBy(ab => GameState.Random.Next(1000));
 
@@ -900,14 +900,34 @@ namespace DivineRightGame.Managers
                     Owners = (block.Tile as GlobalTile).Owner.Value == 100 ? OwningFactions.ORCS : OwningFactions.HUMANS //TODO: EXPAND LATER
                 };
 
+                MapSiteItem msi = new MapSiteItem();
+                msi.Coordinate = new MapCoordinate(ms.Coordinate);
+                msi.IsActive = true;
+                msi.MayContainItems = true;
+                msi.Site = ms;
+
                 switch (mapResource.ResourceType)
                 {
                     case GlobalResourceType.FARMLAND:
                         //And lets put somethign else
-                       ms.SiteData.SiteTypeData = SiteDataManager.GetData(SiteType.FARM);
+                        ms.SiteData.SiteTypeData = SiteDataManager.GetData(SiteType.FARM);
                         break;
                     case GlobalResourceType.FISH:
-                        //TODO Later
+
+                        //So, we can't put it on the actual fish, instead go around it and grab the first piece of land which we have
+                        var fBlock = GetBlocksAroundPoint(ms.Coordinate, 2).Where(b => (b.Tile as GlobalTile).Elevation > 0 &&
+                            !(b.Tile as GlobalTile).HasResource && !(b.Tile as GlobalTile).IsBlockedForColonisation).OrderBy(r => GameState.Random.Next(2)).FirstOrDefault();
+
+                        if (fBlock != null)
+                        {
+                            //Use this as a location
+                            msi.Coordinate = new MapCoordinate(fBlock.Tile.Coordinate);
+                            ms.Coordinate = new MapCoordinate(fBlock.Tile.Coordinate);
+
+                            ms.SiteData.SiteTypeData = SiteDataManager.GetData(SiteType.FISHING_VILLAGE);
+                        }
+
+
                         break;
                     case GlobalResourceType.GAME:
                         ms.SiteData.SiteTypeData = SiteDataManager.GetData(SiteType.HUNTER);
@@ -926,13 +946,6 @@ namespace DivineRightGame.Managers
                         break;
                 }
 
-                MapSiteItem msi = new MapSiteItem();
-                msi.Coordinate = new MapCoordinate(ms.Coordinate);
-                msi.Description = ""; //TODO Later
-                msi.IsActive = true;
-                msi.MayContainItems = true;
-                msi.Name = ""; //TODO LATER
-                msi.Site = ms;
 
                 block.ForcePutItemOnBlock(msi);
             }

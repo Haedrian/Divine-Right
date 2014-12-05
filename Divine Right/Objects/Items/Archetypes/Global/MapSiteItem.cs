@@ -27,6 +27,52 @@ namespace DRObjects.Items.Archetypes.Global
             this.MayContainItems = true;
         }
 
+        public override string Name
+        {
+            get
+            {
+                switch(Site.SiteData.SiteTypeData.SiteType)
+                {
+                    case SiteType.FARM: return "Farm";
+                    case SiteType.FISHING_VILLAGE: return "Fishing Village";
+                    case SiteType.GOLD_MINE: return "Gold Mine";
+                    case SiteType.HUNTER: return "Hunting Lodge";
+                    case SiteType.IRON_MINE: return "Iron Mine";
+                    case SiteType.STABLES: return "Stables";
+                    case SiteType.WOODCUTTER: return "Woodcutter";
+                    default:
+                        return "";
+                }
+            }
+            set
+            {
+                base.Name = value;
+            }
+        }
+
+        public override string Description
+        {
+            get
+            {
+                switch(Site.SiteData.SiteTypeData.SiteType)
+                {
+                    case SiteType.FARM: return "A farm";
+                    case SiteType.FISHING_VILLAGE: return "A village of fishermen";
+                    case SiteType.GOLD_MINE: return "A mine where gold ore may be found";
+                    case SiteType.HUNTER: return "A hunting lodge";
+                    case SiteType.IRON_MINE: return "A mine where ferrous metals may be found";
+                    case SiteType.STABLES: return "A stable for breeding of horses";
+                    case SiteType.WOODCUTTER: return "A woodcutter's hut";
+                    default:
+                        return "";
+                }
+            }
+            set
+            {
+                base.Description = value;
+            }
+        }
+
         public override Enums.ActionType[] GetPossibleActions(Actor actor)
         {
             List<ActionType> actionTypes = new List<ActionType>();
