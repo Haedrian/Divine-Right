@@ -242,6 +242,8 @@ namespace Divine_Right.InterfaceComponents.Components
             {
                 this.feedback.AddRange(this.globalLog);
 
+                this.globalLog.Clear(); //Clear it now that we're done
+
                 //Do we have more than say 50 messages?
 
                 if (this.feedback.Count > 50)
