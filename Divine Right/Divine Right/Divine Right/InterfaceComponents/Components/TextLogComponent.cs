@@ -49,7 +49,7 @@ namespace Divine_Right.InterfaceComponents.Components
             this.locationX = x;
             this.locationY = y;
 
-            this.rect = new Rectangle(x, y, 750, 120);
+            this.rect = new Rectangle(x, y, 750, 20);
 
             this.feedback = new List<CurrentLogFeedback>();
             this.globalLog = globalLog;
@@ -92,7 +92,7 @@ namespace Divine_Right.InterfaceComponents.Components
                 font = content.Load<SpriteFont>(@"Fonts/TextFeedbackFont");
             }
 
-            if (bigMode && bigSizeSwitch < BIGSIZE)
+            while (bigMode && bigSizeSwitch < BIGSIZE)
             {
                 //Increment by 20
                 bigSizeSwitch += 20;
@@ -100,7 +100,8 @@ namespace Divine_Right.InterfaceComponents.Components
                 this.rect.Y -= 20;
                 this.rect.Height += 20;
             }
-            else if (!bigMode && bigSizeSwitch > 0)
+
+            while (!bigMode && bigSizeSwitch > 0)
             {
                 //Decrement by 20
                 bigSizeSwitch -= 20;

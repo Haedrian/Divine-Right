@@ -310,8 +310,8 @@ namespace Divine_Right.GameScreens
             ivt.Visible = false;
             interfaceComponents.Add(ivt);
 
-            TextLogComponent tlc = new TextLogComponent(10, GraphicsDevice.Viewport.Height - 150, GameState.NewLog);
-            tlc.Visible = false;
+            TextLogComponent tlc = new TextLogComponent(10, GraphicsDevice.Viewport.Height - 50, GameState.NewLog);
+            tlc.Visible = true;
             interfaceComponents.Add(tlc);
 
             log = tlc;
@@ -325,8 +325,7 @@ namespace Divine_Right.GameScreens
             menuButtons.Add(new AutoSizeGameButton("  Health  ", this.game.Content, InternalActionEnum.OPEN_HEALTH, new object[] { }, 50, GraphicsDevice.Viewport.Height -35));
             menuButtons.Add(new AutoSizeGameButton(" Attributes ", this.game.Content, InternalActionEnum.OPEN_ATTRIBUTES, new object[] { }, 150, GraphicsDevice.Viewport.Height -35));
             //menuButtons.Add(new AutoSizeGameButton(" Settlement ", this.game.Content, InternalActionEnum.TOGGLE_SETTLEMENT, new object[] { }, 270, GraphicsDevice.Viewport.Height - 35));
-            menuButtons.Add(new AutoSizeGameButton(" Log ", this.game.Content, InternalActionEnum.OPEN_LOG, new object[] { }, 350, GraphicsDevice.Viewport.Height - 35));
-            menuButtons.Add(new AutoSizeGameButton(" Inventory ", this.game.Content, InternalActionEnum.OPEN_INVENTORY, new object[] { }, 425, GraphicsDevice.Viewport.Height - 35));
+            menuButtons.Add(new AutoSizeGameButton(" Inventory ", this.game.Content, InternalActionEnum.OPEN_INVENTORY, new object[] { }, 350, GraphicsDevice.Viewport.Height - 35));
 
             //Invoke a size change
             Window_ClientSizeChanged(null, null);
@@ -347,7 +346,7 @@ namespace Divine_Right.GameScreens
 
                 if (textLog != null)
                 {
-                    textLog.Move(textLog.ReturnLocation().X, GraphicsDevice.Viewport.Height - 175);
+                    textLog.Move(textLog.ReturnLocation().X, GraphicsDevice.Viewport.Height - 70);
                 }
             }
         }
