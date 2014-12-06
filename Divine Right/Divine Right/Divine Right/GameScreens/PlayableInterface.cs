@@ -169,7 +169,7 @@ namespace Divine_Right.GameScreens
                 }
 
                 //Create the new character stuff
-                MultiDecisionComponent mdc = new MultiDecisionComponent(PlayableWidth / 2 - 250, 100, CharacterCreation.GenerateCharacterCreation());
+                MultiDecisionComponent mdc = new MultiDecisionComponent(PlayableWidth / 2 - 250, 150, CharacterCreation.GenerateCharacterCreation());
                 mdc.Visible = true;
 
                 interfaceComponents.Add(mdc);
@@ -232,7 +232,7 @@ namespace Divine_Right.GameScreens
                 GameState.LocalMap.Actors.Add(GameState.PlayerCharacter);
 
                 //What attributes do we want?
-                MultiDecisionComponent mdc = new MultiDecisionComponent(PlayableWidth / 2 - 250, 100, CharacterCreation.GenerateCharacterCreation());
+                MultiDecisionComponent mdc = new MultiDecisionComponent(PlayableWidth / 2 - 250, 150, CharacterCreation.GenerateCharacterCreation());
                 mdc.Visible = true;
 
                 interfaceComponents.Add(mdc);
@@ -311,7 +311,7 @@ namespace Divine_Right.GameScreens
             interfaceComponents.Add(ivt);
 
             TextLogComponent tlc = new TextLogComponent(10, GraphicsDevice.Viewport.Height - 150, GameState.NewLog);
-            tlc.Visible = true;
+            tlc.Visible = false;
             interfaceComponents.Add(tlc);
 
             log = tlc;
