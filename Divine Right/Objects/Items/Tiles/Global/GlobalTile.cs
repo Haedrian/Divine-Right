@@ -5,6 +5,9 @@ using System.Text;
 using DRObjects.ActorHandling.CharacterSheet.Enums;
 using DRObjects.Enums;
 using DRObjects.Graphics;
+using DRObjects.GraphicsEngineObjects;
+using DRObjects.GraphicsEngineObjects.Abstract;
+using Microsoft.Xna.Framework;
 
 namespace DRObjects.Items.Tiles.Global
 {
@@ -108,6 +111,39 @@ namespace DRObjects.Items.Tiles.Global
         #endregion
 
         #region Properties
+
+        /// <summary>
+        /// Determine how difficult it is to hunt successfully. Hunting will be d10 + explorer skill
+        /// </summary>
+        /// <returns></returns>
+        public int HuntDifficulty()
+        {
+            //What biome do we have?
+            switch (this.Biome.Value)
+            {
+                case GlobalBiome.ARID_DESERT:
+                    return 20;
+                case GlobalBiome.DENSE_FOREST:
+                    return 3;
+                case GlobalBiome.GARIGUE:
+                    return 10 ;
+                case GlobalBiome.GRASSLAND:
+                    return 5;
+                case GlobalBiome.POLAR_DESERT:
+                    return 20;
+                case GlobalBiome.POLAR_FOREST:
+                    return 18;
+                case GlobalBiome.RAINFOREST:
+                    return 3;
+                case GlobalBiome.WETLAND:
+                    return 10;
+                case GlobalBiome.WOODLAND:
+                    return 4;
+            }
+
+            throw new NotImplementedException("Type " + this.Biome.Value + " not implemented");
+        }
+
 
         /// <summary>
         /// Returns the total amount of time needed to traverse into this tile.
@@ -348,6 +384,53 @@ namespace DRObjects.Items.Tiles.Global
             set
             {
                 base.Graphics = value;
+            }
+        }
+
+        public override ActionType[] GetPossibleActions(Actor actor)
+        {
+            List<ActionType> actions = new List<ActionType>();
+
+            actions.AddRange(base.GetPossibleActions(actor));
+
+            if (actor.MapCharacter.Coordinate - this.Coordinate < 2)
+            {
+                //Allow a hunt
+                actions.Add(ActionType.HUNT);
+            }
+
+            return actions.ToArray();
+        }
+
+        public override GraphicsEngineObjects.Abstract.ActionFeedback[] PerformAction(ActionType actionType, Actor actor, object[] args)
+        {
+            if (actionType == ActionType.HUNT)
+            {
+                //User is going to try to hunt.
+
+                actor.Attributes.IncreaseSkill(SkillName.EXPLORER);
+
+                //Depending on his skill and how plentiful animals are, time will pass. But we'll always be successful
+
+                TimePassFeedback tps = new TimePassFeedback() { TimePassInMinutes = 100 }; //An IG Hour
+
+                Random random = new Random();
+
+                int diceRoll = random.Next(10) + 1; //Roll a d10
+
+                if (diceRoll + actor.Attributes.Skills[SkillName.EXPLORER].SkillLevel + (actor.Attributes.Perc - 5) >= HuntDifficulty())
+                {
+                    LocationChangeFeedback lcf = new LocationChangeFeedback() { RandomEncounter = this.Biome };
+
+                    return new ActionFeedback[] { tps,lcf }; //Success!
+
+                }
+                
+                return new ActionFeedback[] { tps, new CurrentLogFeedback(InterfaceSpriteName.HUNT,Color.Orange,"You fail to find anything") };
+            }
+            else
+            {
+                return base.PerformAction(actionType, actor, args);
             }
         }
 

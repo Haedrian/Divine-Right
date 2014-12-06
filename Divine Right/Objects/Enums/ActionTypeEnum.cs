@@ -24,5 +24,6 @@ namespace DRObjects.Enums
         MULTIDECISION,
         CONSUME,
         SHOVE,
+        HUNT,
     }
 }
