@@ -351,7 +351,7 @@ namespace DivineRightGame.ActorHandling
             if (String.IsNullOrEmpty(tag))
             {
 
-                if (domesticated != null)
+                if (domesticated != null && domesticated == true)
                 {
                     candidates = animalData.Where(a => a.Domesticated.Equals(domesticated.Value));
                 }
