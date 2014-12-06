@@ -78,6 +78,17 @@ namespace Divine_Right.InterfaceComponents.Components
                 batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.SUN), timePositionRects[GameState.UniverseTime.GetTimeComponent(DRTimeComponent.HOUR)], Color.White);
             }
 
+            if ((int)GameState.PlayerCharacter.FeedingLevel > 2)
+            {
+                this.drawRect.Height = 70; //short form
+                this.borderRect = new Rectangle(this.drawRect.X - 2, this.drawRect.Y - 2, this.drawRect.Width + 4, this.drawRect.Height + 4);
+            }
+            else
+            {
+                this.drawRect.Height = 100;
+                this.borderRect = new Rectangle(this.drawRect.X - 2, this.drawRect.Y - 2, this.drawRect.Width + 4, this.drawRect.Height + 4);
+            }
+
             if ((int)GameState.PlayerCharacter.FeedingLevel == 1)
             {
                 batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.HUNGRY), hungerRect, Color.DarkRed);
@@ -123,7 +134,7 @@ namespace Divine_Right.InterfaceComponents.Components
             this.locationX += deltaX;
             this.locationY += deltaY;
 
-            this.drawRect = new Rectangle(locationX, locationY, 150, 100);
+            this.drawRect = new Rectangle(locationX, locationY, 150, 70);
 
             this.borderRect = new Rectangle(this.drawRect.X- 2, this.drawRect.Y - 2,  this.drawRect.Width + 4, this.drawRect.Height + 4);
             this.dateRect = new Rectangle(locationX, locationY+40, 150, 30);

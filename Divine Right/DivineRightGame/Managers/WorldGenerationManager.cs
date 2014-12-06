@@ -765,6 +765,11 @@ namespace DivineRightGame.Managers
                         {
                             tile.Biome = GlobalBiome.POLAR_FOREST;
                         }
+                        else
+                        {
+                            //polar desert
+                            tile.Biome = GlobalBiome.POLAR_DESERT;
+                        }
 
                     }
                     else if (tile.ClimateTemperature < 4)
