@@ -65,6 +65,7 @@ namespace DRObjects.Graphics
         BOOK,
         HUNT,
         WALK,
-        SNEAK
+        SNEAK,
+        HUNGRY
     }
 }

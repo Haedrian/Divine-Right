@@ -77,7 +77,15 @@ namespace Divine_Right.InterfaceComponents.Components
                 batch.Draw(content, SpriteManager.GetSprite(ColourSpriteName.MARBLEBLUE), timeRect, Color.LightSkyBlue);
                 batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.SUN), timePositionRects[GameState.UniverseTime.GetTimeComponent(DRTimeComponent.HOUR)], Color.White);
             }
-            batch.DrawString(font, GameState.PlayerCharacter.FeedingLevel.ToString().Replace("_", ""), hungerRect, Alignment.Center, (int) GameState.PlayerCharacter.FeedingLevel >= 3 ? Color.Green : Color.DarkRed);
+
+            if ((int)GameState.PlayerCharacter.FeedingLevel == 1)
+            {
+                batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.HUNGRY), hungerRect, Color.DarkRed);
+            }
+            else if ((int) GameState.PlayerCharacter.FeedingLevel == 2 )
+            {
+                batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.HUNGRY), hungerRect, Color.Red);
+            }
         }
 
         public bool HandleClick(int x, int y, Objects.Enums.MouseActionEnum mouseAction, out DRObjects.Enums.ActionType? actionType, out DRObjects.Enums.InternalActionEnum? internalActionType, out object[] args, out DRObjects.MapItem item, out DRObjects.MapCoordinate coord, out bool destroy)
@@ -129,7 +137,7 @@ namespace Divine_Right.InterfaceComponents.Components
                 new Rectangle(locationX + 90,locationY + 10, 20,20),
                 new Rectangle(locationX + 120,locationY + 20,20,20)
             };
-            this.hungerRect = new Rectangle(locationX, locationY + 70, 150, 30);
+            this.hungerRect = new Rectangle(locationX, locationY + 70, 30, 30);
         }
 
         public bool IsModal()

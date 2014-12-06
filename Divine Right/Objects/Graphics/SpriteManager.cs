@@ -803,6 +803,7 @@ namespace DRObjects.Graphics
             interfaceSprites[(int)InterfaceSpriteName.SNEAK] = new SpriteData(CHARACTER_SHEET, new Rectangle(250, 50, 50, 50));
             interfaceSprites[(int)InterfaceSpriteName.WALK] = new SpriteData(CHARACTER_SHEET, new Rectangle(300, 50, 50, 50));
             interfaceSprites[(int)InterfaceSpriteName.HUNT] = new SpriteData(CHARACTER_SHEET, new Rectangle(350, 50, 50, 50));
+            interfaceSprites[(int)InterfaceSpriteName.HUNGRY] = new SpriteData(CHARACTER_SHEET, new Rectangle(400, 50, 50, 50));
 
 
             interfaceSprites[(int)InterfaceSpriteName.BANNER_GREEN] = new SpriteData(BANNERS, new Rectangle(1, 0, 60, 100));
