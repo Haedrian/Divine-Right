@@ -265,26 +265,6 @@ namespace DRObjects
 
                         int randomValue = random.Next(100);
 
-                        //Are we sneaking ?
-
-                        if (actor.TravelMethod == TravelMethod.SNEAKING)
-                        {
-                            if (actor.Attributes.Skills.ContainsKey(SkillName.EXPLORER))
-                            {
-                                //Reduce the random value
-                                randomValue -= (int) (actor.Attributes.Skills[SkillName.EXPLORER].SkillLevel /2);
-                            }
-                        }
-                            //Are we hunting ?
-                        else if (actor.TravelMethod == TravelMethod.HUNTING)
-                        {
-                            if (actor.Attributes.Skills.ContainsKey(SkillName.EXPLORER))
-                            {
-                                //Reduce the random value
-                                randomValue += ((int)actor.Attributes.Skills[SkillName.EXPLORER].SkillLevel) * 5;
-                            }
-                        }
-
                         List<ActionFeedback> feedback = new List<ActionFeedback>();
 
                         //1%

@@ -173,13 +173,6 @@ namespace DRObjects.Items.Tiles.Global
             //Increase skill
             actor.Attributes.IncreaseSkill(SkillName.EXPLORER);
 
-            //If we're sneaking or hunting, double it
-
-            if (actor.TravelMethod != TravelMethod.WALKING)
-            {
-                totalTime *= 2;
-            }
-
             return totalTime;
 
         }

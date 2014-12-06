@@ -14,7 +14,6 @@ namespace Divine_Right.InterfaceComponents.Components
 {
     /// <summary>
     /// Displays the date. And time.
-    /// And the way the character is walking
     /// And how their tummy is feeling
     /// </summary>
     public class AdventureDisplayComponent:
@@ -31,11 +30,6 @@ namespace Divine_Right.InterfaceComponents.Components
         private Rectangle timeRect;
 
         private Rectangle[] timePositionRects;
-
-        private Rectangle sneakRect;
-        private Rectangle walkRect;
-        private Rectangle huntRect;
-
         private Rectangle hungerRect;
 
         public AdventureDisplayComponent(int x, int y)
@@ -83,11 +77,6 @@ namespace Divine_Right.InterfaceComponents.Components
                 batch.Draw(content, SpriteManager.GetSprite(ColourSpriteName.MARBLEBLUE), timeRect, Color.LightSkyBlue);
                 batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.SUN), timePositionRects[GameState.UniverseTime.GetTimeComponent(DRTimeComponent.HOUR)], Color.White);
             }
-
-            batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.SNEAK), sneakRect, GameState.PlayerCharacter.TravelMethod == TravelMethod.SNEAKING ? Color.Green : Color.Black);
-            batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.WALK), walkRect, GameState.PlayerCharacter.TravelMethod == TravelMethod.WALKING ? Color.Green : Color.Black);
-            batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.HUNT), huntRect, GameState.PlayerCharacter.TravelMethod == TravelMethod.HUNTING ? Color.Green : Color.Black);
-
             batch.DrawString(font, GameState.PlayerCharacter.FeedingLevel.ToString().Replace("_", ""), hungerRect, Alignment.Center, (int) GameState.PlayerCharacter.FeedingLevel >= 3 ? Color.Green : Color.DarkRed);
         }
 
@@ -99,21 +88,6 @@ namespace Divine_Right.InterfaceComponents.Components
             item = null;
             coord = null;
             destroy = false;
-
-            if (sneakRect.Contains(x,y))
-            {
-                //Sneak!
-                GameState.PlayerCharacter.TravelMethod = TravelMethod.SNEAKING;
-            }
-            else if (walkRect.Contains(x,y))
-            {
-                GameState.PlayerCharacter.TravelMethod = TravelMethod.WALKING;
-            }
-            else if (huntRect.Contains(x,y))
-            {
-                GameState.PlayerCharacter.TravelMethod = TravelMethod.HUNTING;
-            }
-
             return true; 
         }
 
@@ -141,7 +115,7 @@ namespace Divine_Right.InterfaceComponents.Components
             this.locationX += deltaX;
             this.locationY += deltaY;
 
-            this.drawRect = new Rectangle(locationX, locationY, 150, 150);
+            this.drawRect = new Rectangle(locationX, locationY, 150, 100);
 
             this.borderRect = new Rectangle(this.drawRect.X- 2, this.drawRect.Y - 2,  this.drawRect.Width + 4, this.drawRect.Height + 4);
             this.dateRect = new Rectangle(locationX, locationY+40, 150, 30);
@@ -155,12 +129,7 @@ namespace Divine_Right.InterfaceComponents.Components
                 new Rectangle(locationX + 90,locationY + 10, 20,20),
                 new Rectangle(locationX + 120,locationY + 20,20,20)
             };
-
-            this.sneakRect = new Rectangle(locationX, locationY + 70, 50, 50);
-            this.walkRect = new Rectangle(locationX + 50, locationY + 70, 50, 50);
-            this.huntRect = new Rectangle(locationX + 100, locationY + 70, 50, 50);
-
-            this.hungerRect = new Rectangle(locationX, locationY + 120, 150, 30);
+            this.hungerRect = new Rectangle(locationX, locationY + 70, 150, 30);
         }
 
         public bool IsModal()
