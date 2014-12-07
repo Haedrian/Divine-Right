@@ -931,6 +931,10 @@ namespace DivineRightGame.Managers
 
                             ms.SiteData.SiteTypeData = SiteDataManager.GetData(SiteType.FISHING_VILLAGE);
                         }
+                        else
+                        {
+                            continue; //Skip it. Can't be harvested
+                        }
 
 
                         break;
