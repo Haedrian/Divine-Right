@@ -31,6 +31,7 @@ using DivineRightGame.ItemFactory.ItemFactoryManagers;
 using DRObjects.DataStructures.Enum;
 using System.Threading;
 using DivineRightGame.CharacterCreation;
+using DRObjects.ActorHandling.CharacterSheet.Enums;
 
 namespace Divine_Right.GameScreens
 {
@@ -101,7 +102,7 @@ namespace Divine_Right.GameScreens
         /// This is a dirty hack to allow the draw to run at least once before it blocks for saving
         /// </summary>
         private bool saveAndQuit = false;
-        
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         List<InterfaceBlock> blocks = new List<InterfaceBlock>();
@@ -156,7 +157,7 @@ namespace Divine_Right.GameScreens
 
                 InventoryItemManager mgr = new InventoryItemManager();
 
-                for (int i=0; i < 500; i++)
+                for (int i = 0; i < 500; i++)
                 {
                     var block = GameState.LocalMap.GetBlockAtCoordinate(new MapCoordinate(GameState.Random.Next(GameState.LocalMap.localGameMap.GetLength(0)), GameState.Random.Next(GameState.LocalMap.localGameMap.GetLength(1)), 0, MapType.LOCAL));
 
@@ -217,7 +218,7 @@ namespace Divine_Right.GameScreens
                 GameState.PlayerCharacter.MapCharacter = player;
                 GameState.PlayerCharacter.IsPlayerCharacter = true;
 
-                GameState.PlayerCharacter.Attributes = ActorGeneration.GenerateAttributes("human", DRObjects.ActorHandling.CharacterSheet.Enums.ActorProfession.WARRIOR, 10,GameState.PlayerCharacter);
+                GameState.PlayerCharacter.Attributes = ActorGeneration.GenerateAttributes("human", DRObjects.ActorHandling.CharacterSheet.Enums.ActorProfession.WARRIOR, 10, GameState.PlayerCharacter);
                 GameState.PlayerCharacter.Anatomy = ActorGeneration.GenerateAnatomy("human");
 
                 GameState.PlayerCharacter.Attributes.Health = GameState.PlayerCharacter.Anatomy;
@@ -306,7 +307,7 @@ namespace Divine_Right.GameScreens
             csc.Visible = false;
             interfaceComponents.Add(csc);
 
-            InventoryDisplayComponent ivt = new InventoryDisplayComponent(50,50,GameState.LocalMap.Actors.Where(a => a.IsPlayerCharacter).FirstOrDefault());
+            InventoryDisplayComponent ivt = new InventoryDisplayComponent(50, 50, GameState.LocalMap.Actors.Where(a => a.IsPlayerCharacter).FirstOrDefault());
             ivt.Visible = false;
             interfaceComponents.Add(ivt);
 
@@ -322,8 +323,8 @@ namespace Divine_Right.GameScreens
             var cemetry = SpriteManager.GetSprite(InterfaceSpriteName.DEAD);
 
             //Create the menu buttons
-            menuButtons.Add(new AutoSizeGameButton("  Health  ", this.game.Content, InternalActionEnum.OPEN_HEALTH, new object[] { }, 50, GraphicsDevice.Viewport.Height -35));
-            menuButtons.Add(new AutoSizeGameButton(" Attributes ", this.game.Content, InternalActionEnum.OPEN_ATTRIBUTES, new object[] { }, 150, GraphicsDevice.Viewport.Height -35));
+            menuButtons.Add(new AutoSizeGameButton("  Health  ", this.game.Content, InternalActionEnum.OPEN_HEALTH, new object[] { }, 50, GraphicsDevice.Viewport.Height - 35));
+            menuButtons.Add(new AutoSizeGameButton(" Attributes ", this.game.Content, InternalActionEnum.OPEN_ATTRIBUTES, new object[] { }, 150, GraphicsDevice.Viewport.Height - 35));
             //menuButtons.Add(new AutoSizeGameButton(" Settlement ", this.game.Content, InternalActionEnum.TOGGLE_SETTLEMENT, new object[] { }, 270, GraphicsDevice.Viewport.Height - 35));
             menuButtons.Add(new AutoSizeGameButton(" Inventory ", this.game.Content, InternalActionEnum.OPEN_INVENTORY, new object[] { }, 350, GraphicsDevice.Viewport.Height - 35));
 
@@ -372,7 +373,7 @@ namespace Divine_Right.GameScreens
             {
                 //Go to loading. It'll open the main menu when it's done
                 BaseGame.requestedInternalAction = InternalActionEnum.CONTINUE;
-                BaseGame.requestedArgs = new object[1]{"Save"};
+                BaseGame.requestedArgs = new object[1] { "Save" };
 
                 saveAndQuit = false;
             }
@@ -381,7 +382,7 @@ namespace Divine_Right.GameScreens
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 game.Exit();
 
-            
+
             //Only check if the game is actually active
             if (Game.IsActive)
             {
@@ -806,7 +807,7 @@ namespace Divine_Right.GameScreens
 
             this.DrawGrid(iBlocks);
 
-           // nighttime 
+            // nighttime 
             if (GameState.UniverseTime.GetTimeComponent(DRTimeComponent.HOUR) >= 5)
             {
                 spriteBatch.Draw(this.game.Content, SpriteManager.GetSprite(ColourSpriteName.MARBLEBLUE), new Rectangle(0, 0, 10000, 10000), new Color(0, 0, 0, 150));
@@ -926,7 +927,7 @@ namespace Divine_Right.GameScreens
                         {
                             if (tileGraphic.sourceRectangle == null)
                             {
-                                spriteBatch.Draw(this.game.Content.Load<Texture2D>(tileGraphic.path), rec, tileGraphic.ColorFilter.HasValue ? tileGraphic.ColorFilter.Value  :Color.White);
+                                spriteBatch.Draw(this.game.Content.Load<Texture2D>(tileGraphic.path), rec, tileGraphic.ColorFilter.HasValue ? tileGraphic.ColorFilter.Value : Color.White);
                             }
                             else
                             { //part of a tileset
@@ -954,7 +955,7 @@ namespace Divine_Right.GameScreens
                             {
                                 if (itemGraphic.GetType().Equals(typeof(TextSpriteData)))
                                 {
-                                    TextSpriteData data = (TextSpriteData) itemGraphic;
+                                    TextSpriteData data = (TextSpriteData)itemGraphic;
 
                                     //Write it in the screen
                                     spriteBatch.DrawString(font, data.Text, rec, Alignment.Right | Alignment.Bottom, data.Colour);
@@ -1002,7 +1003,7 @@ namespace Divine_Right.GameScreens
                 }
             }
 
-            ActionFeedback[] fb = UserInterfaceManager.PerformAction(coord,item, actionType, args);
+            ActionFeedback[] fb = UserInterfaceManager.PerformAction(coord, item, actionType, args);
 
             //go through all the feedback
 
@@ -1101,7 +1102,7 @@ namespace Divine_Right.GameScreens
                 }
                 else if (feedback.GetType().Equals(typeof(LocationChangeFeedback)))
                 {
-                   //Remove settlement button and interface
+                    //Remove settlement button and interface
                     var locDetails = this.interfaceComponents.Where(ic => ic.GetType().Equals(typeof(LocationDetailsComponent))).FirstOrDefault();
 
                     if (locDetails != null)
@@ -1115,7 +1116,7 @@ namespace Divine_Right.GameScreens
                     {
                         this.menuButtons.Remove(button);
                     }
-                        
+
                     LocationChangeFeedback lce = feedback as LocationChangeFeedback;
 
                     if (lce.VisitSettlement != null)
@@ -1143,6 +1144,63 @@ namespace Divine_Right.GameScreens
                     }
                     else if (lce.VisitMainMap)
                     {
+                        //If it's a bandit camp or a site, update the values of the members
+                        if (GameState.LocalMap.Site != null || GameState.LocalMap.Camp != null)
+                        {
+                            ////Count the amount of actors which aren't the player character or animals and update the counts
+                            //TO USE LATER ON WHEN WE WANT A SCOUTING REPORT
+
+                            //int warriors = 0;
+                            //int civilians = 0;
+                            //int priests = 0;
+
+                            //foreach (var actor in GameState.LocalMap.Actors)
+                            //{
+                            //    if (actor.EnemyData != null)
+                            //    {
+                            //        var prof = actor.EnemyData.Profession;
+
+                            //        if (prof == ActorProfession.MERCHANT || prof == ActorProfession.RICH || prof == ActorProfession.WORKER)
+                            //        {
+                            //            civilians++;
+                            //        }
+                            //        else if (prof == ActorProfession.WARRIOR)
+                            //        {
+                            //            warriors++;
+                            //        }
+                            //        else if (prof == ActorProfession.PRIEST)
+                            //        {
+                            //            priests++;
+                            //        }
+                            //    }
+                            //}
+
+                            if (GameState.LocalMap.Camp != null)
+                            {
+                                GameState.LocalMap.Camp.BanditTotal = GameState.LocalMap.Actors.Count(a => a.IsActive && a.IsAlive && !a.IsPlayerCharacter 
+                                    && a.EnemyData != null && a.EnemyData.Profession == ActorProfession.WARRIOR);
+                            }
+                            else if (GameState.LocalMap.Site != null)
+                            {
+                                GameState.LocalMap.Site.SiteData.ActorCounts.Clear();
+                                 
+                                foreach(var actorProfession in (ActorProfession[])Enum.GetValues(typeof(ActorProfession)))
+                                {
+                                    int count = GameState.LocalMap.Actors.Count(a => a.IsActive && a.IsAlive && !a.IsPlayerCharacter 
+                                    && a.EnemyData != null && a.EnemyData.Profession == actorProfession);
+
+                                    GameState.LocalMap.Site.SiteData.ActorCounts.Add(actorProfession, count);
+                                }
+                            }
+                        }
+
+
+                        //Clear the stored location items
+                        GameState.LocalMap.Camp = null;
+                        GameState.LocalMap.Dungeon = null;
+                        GameState.LocalMap.Settlement = null;
+                        GameState.LocalMap.Site = null;
+
                         //Serialise the old map
                         GameState.LocalMap.SerialiseLocalMap();
 
@@ -1190,7 +1248,7 @@ namespace Divine_Right.GameScreens
                         interfaceComponents.Add(new DecisionPopupComponent(PlayableWidth / 2 - 150, PlayableHeight / 2 - 150, gameEvent));
                     }
                 }
-       
+
             }
 
             //Update the log control
@@ -1226,10 +1284,6 @@ namespace Divine_Right.GameScreens
             //TODO: DO THE REST - WE DON'T NEED THEM FOR NOW
             return null;
         }
-
-        #endregion
-
-        #region Helper Functions
 
         /// <summary>
         /// Loads the Global Map, and drops the player at a particular coordinate
@@ -1271,7 +1325,7 @@ namespace Divine_Right.GameScreens
             MapCoordinate startPoint = null;
             List<PointOfInterest> pointsOfInterest = null;
 
-            var gennedCamp = WildernessGenerator.GenerateMap(biome, GameState.Random.Next(1,5), GameState.Random.Next(0,2), out actors, out startPoint);
+            var gennedCamp = WildernessGenerator.GenerateMap(biome, GameState.Random.Next(1, 5), GameState.Random.Next(0, 2), out actors, out startPoint);
 
             GameState.LocalMap = new LocalMap(gennedCamp.GetLength(0), gennedCamp.GetLength(1), 1, 0);
             GameState.LocalMap.Actors = new List<Actor>();
@@ -1334,7 +1388,7 @@ namespace Divine_Right.GameScreens
                 MapCoordinate startPoint = null;
                 List<PointOfInterest> pointsOfInterest = null;
 
-                var gennedCamp = CampGenerator.GenerateCamp(camp.BanditTotal,out startPoint, out actors);
+                var gennedCamp = CampGenerator.GenerateCamp(camp.BanditTotal, out startPoint, out actors);
 
                 GameState.LocalMap = new LocalMap(gennedCamp.GetLength(0), gennedCamp.GetLength(1), 1, 0);
                 GameState.LocalMap.Actors = new List<Actor>();
@@ -1493,7 +1547,7 @@ namespace Divine_Right.GameScreens
 
                 GameState.LocalMap.AddToLocalMap(collapsedMap.ToArray());
 
-                GameState.PlayerCharacter.MapCharacter.Coordinate = new MapCoordinate(5,0,0,MapType.LOCAL);
+                GameState.PlayerCharacter.MapCharacter.Coordinate = new MapCoordinate(5, 0, 0, MapType.LOCAL);
 
                 MapBlock playerBlock = GameState.LocalMap.GetBlockAtCoordinate(new MapCoordinate(5, 0, 0, MapType.LOCAL));
                 playerBlock.PutItemOnBlock(GameState.PlayerCharacter.MapCharacter);
@@ -1513,7 +1567,7 @@ namespace Divine_Right.GameScreens
                 //Reload the map
                 var savedMap = LocalMap.DeserialiseLocalMap(settlement.UniqueGUID);
 
-                GameState.LocalMap = new LocalMap(savedMap.localGameMap.GetLength(0),savedMap.localGameMap.GetLength(1),1,0);
+                GameState.LocalMap = new LocalMap(savedMap.localGameMap.GetLength(0), savedMap.localGameMap.GetLength(1), 1, 0);
 
                 GameState.LocalMap.Actors = new List<Actor>();
 
