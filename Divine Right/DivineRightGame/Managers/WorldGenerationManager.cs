@@ -902,7 +902,8 @@ namespace DivineRightGame.Managers
                 {
                     Biome = (block.Tile as GlobalTile).Biome ?? GlobalBiome.GARIGUE,
                     OwnerChanged = false,
-                    Owners = (block.Tile as GlobalTile).Owner.Value == 100 ? OwningFactions.ORCS : OwningFactions.HUMANS //TODO: EXPAND LATER
+                    Owners = (block.Tile as GlobalTile).Owner.Value == 100 ? OwningFactions.ORCS : OwningFactions.HUMANS, //TODO: EXPAND LATER
+                    OwnerID = (block.Tile as GlobalTile).Owner.Value
                 };
 
                 MapSiteItem msi = new MapSiteItem();

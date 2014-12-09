@@ -19,6 +19,12 @@ namespace DRObjects.Sites
         public OwningFactions Owners { get; set; }
 
         /// <summary>
+        /// The ID of whomever owns the site if it's a human
+        /// </summary>
+        public int OwnerID { get; set; }
+
+
+        /// <summary>
         /// The biome this site stands upon
         /// </summary>
         public GlobalBiome Biome { get; set; }
