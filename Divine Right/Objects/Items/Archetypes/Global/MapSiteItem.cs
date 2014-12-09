@@ -112,6 +112,24 @@ namespace DRObjects.Items.Archetypes.Global
                 {
                     sprites = new List<SpriteData>();
 
+                    //who's the owner?
+                    switch(Site.SiteData.Owners)
+                    {
+                        case OwningFactions.ABANDONED:
+                        case OwningFactions.UNDEAD:
+                            //todo
+                            break;
+                        case OwningFactions.BANDITS:
+                            sprites.Add(SpriteManager.GetSprite(GlobalSpriteName.FLAG_BLACK));
+                            break;
+                        case OwningFactions.HUMANS:
+                            sprites.Add(SpriteManager.GetSprite(GlobalSpriteName.FLAG_BLUE));
+                            break;
+                        case OwningFactions.ORCS:
+                            sprites.Add(SpriteManager.GetSprite(GlobalSpriteName.FLAG_ORC));
+                            break;
+                    }
+
                     //Show a graphic depending on the type of the site (and later on the owner)
                     switch (Site.SiteData.SiteTypeData.SiteType)
                     {

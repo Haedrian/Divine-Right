@@ -127,6 +127,16 @@ namespace DRObjects.Graphics
             globalSprites[(int)GlobalSpriteName.WOODCUTTER] = new SpriteData(WORLDITEMS, new Rectangle(200, 150, 50, 50));
             globalSprites[(int)GlobalSpriteName.HUNTER] = new SpriteData(WORLDITEMS, new Rectangle(250, 150, 50, 50));
             globalSprites[(int)GlobalSpriteName.STABLES] = new SpriteData(WORLDITEMS, new Rectangle(300, 150, 50, 50));
+           
+            globalSprites[(int)GlobalSpriteName.FLAG_BROWN] = new SpriteData(WORLDITEMS, new Rectangle(0, 200, 50, 50));
+            globalSprites[(int)GlobalSpriteName.FLAG_GREEN] = new SpriteData(WORLDITEMS, new Rectangle(50, 200, 50, 50));
+            globalSprites[(int)GlobalSpriteName.FLAG_ORANGE] = new SpriteData(WORLDITEMS, new Rectangle(100, 200, 50, 50));
+            globalSprites[(int)GlobalSpriteName.FLAG_PINK] = new SpriteData(WORLDITEMS, new Rectangle(150, 200, 50, 50));
+            globalSprites[(int)GlobalSpriteName.FLAG_PURPLE] = new SpriteData(WORLDITEMS, new Rectangle(200, 200, 50, 50));
+            globalSprites[(int)GlobalSpriteName.FLAG_RED] = new SpriteData(WORLDITEMS, new Rectangle(250, 200, 50, 50));
+            globalSprites[(int)GlobalSpriteName.FLAG_YELLOW] = new SpriteData(WORLDITEMS, new Rectangle(300, 200, 50, 50));
+            globalSprites[(int)GlobalSpriteName.FLAG_ORC] = new SpriteData(WORLDITEMS, new Rectangle(350, 200, 50, 50));
+            globalSprites[(int)GlobalSpriteName.FLAG_BLACK] = new SpriteData(WORLDITEMS, new Rectangle(400, 200, 50, 50));
 
 
             colourSprites[(int)ColourSpriteName.BROWN] = new SpriteData(@"Graphics/World/Overlay/Regions/Brown");

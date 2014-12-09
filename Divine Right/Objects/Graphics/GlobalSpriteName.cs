@@ -78,5 +78,15 @@ namespace DRObjects.Graphics
         WOODCUTTER,
         HUNTER,
         STABLES,
+        FLAG_BLUE,
+        FLAG_RED,
+        FLAG_BLACK,
+        FLAG_ORC,
+        FLAG_YELLOW,
+        FLAG_PURPLE,
+        FLAG_PINK,
+        FLAG_GREEN,
+        FLAG_BROWN,
+        FLAG_ORANGE,
     }
 }
