@@ -1335,7 +1335,8 @@ namespace DivineRightGame.Managers
                     Description = settlement.Description,
                     InternalName = settlement.InternalName,
                     Name = settlement.Name,
-                    Settlement = settlement
+                    Settlement = settlement,
+                    OwnerID = owner
                 });
             }
         }

@@ -13,7 +13,7 @@ namespace DRObjects.Items.Archetypes.Global
     /// <summary>
     /// This represents an item which is part of a settlement
     /// </summary>
-    public class SettlementItem:
+    public class SettlementItem :
         MapItem
     {
         #region Members
@@ -94,25 +94,27 @@ namespace DRObjects.Items.Archetypes.Global
                 {
                     //Create it
                     sprites = new List<SpriteData>();
-                    sprites.Add(SpriteManager.GetSprite((GlobalSpriteName)Enum.Parse(typeof(GlobalSpriteName),this.SettlementType.ToString() + "_" + SettlementCorner)));
-                    
-                    //Apply colour filter
-                    Color col = Color.Transparent;
 
-                    switch (OwnerID)
+                    //Are we in the top corner?
+                    if (SettlementCorner == 1)
                     {
-                        case 0: col = Color.Brown; break;
-                        case 1: col = Color.Green; break;
-                        case 2: col = Color.Orange; break;
-                        case 3: col = Color.Pink; break;
-                        case 4: col = Color.Purple; break;
-                        case 5: col = Color.Red; break;
-                        case 6: col = Color.Yellow; break;
+                        //Flag it
+
+                        switch (OwnerID)
+                        {
+                            case 0: sprites.Add(SpriteManager.GetSprite(GlobalSpriteName.FLAG_BROWN)); break;
+                            case 1: sprites.Add(SpriteManager.GetSprite(GlobalSpriteName.FLAG_GREEN)); break;
+                            case 2: sprites.Add(SpriteManager.GetSprite(GlobalSpriteName.FLAG_ORANGE)); break;
+                            case 3: sprites.Add(SpriteManager.GetSprite(GlobalSpriteName.FLAG_PINK)); break;
+                            case 4: sprites.Add(SpriteManager.GetSprite(GlobalSpriteName.FLAG_PURPLE)); break;
+                            case 5: sprites.Add(SpriteManager.GetSprite(GlobalSpriteName.FLAG_RED)); break;
+                            case 6: sprites.Add(SpriteManager.GetSprite(GlobalSpriteName.FLAG_YELLOW)); break;
+                        }
                     }
 
-                    sprites[0].ColorFilter = col;
+                    sprites.Add(SpriteManager.GetSprite((GlobalSpriteName)Enum.Parse(typeof(GlobalSpriteName), this.SettlementType.ToString() + "_" + SettlementCorner)));
                 }
-                
+
                 return sprites;
             }
             set
