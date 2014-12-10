@@ -1009,11 +1009,12 @@ namespace DivineRightGame.Managers
 
                 //order them by the sum of the desirabilty
 
-                //We only need to consider tiles which have no river, and actual land which isn't a mountain
+                //We only need to consider tiles which have no river, and actual land which isn't a mountain or a resource
                 //Also consider those which aren't blocked and which aren't claimed
                 var candidateBlocks = regionalBlocks.Where(rb => !(rb.Tile as GlobalTile).HasRiver && !(rb.Tile as GlobalTile).HasResource && (rb.Tile as GlobalTile).Elevation > 0 && (rb.Tile as GlobalTile).Elevation < 250
                     && !(rb.Tile as GlobalTile).IsBlockedForColonisation
-                    && ((rb.Tile as GlobalTile).Owner == null || (rb.Tile as GlobalTile).Owner == i))
+                    && ((rb.Tile as GlobalTile).Owner == null || (rb.Tile as GlobalTile).Owner == i)
+                    && !(GetBlocksAroundPoint(rb.Tile.Coordinate,1).Any(s => (s.Tile as GlobalTile).HasResource)))
                     .OrderByDescending(rb => (rb.Tile as GlobalTile).BaseDesirability + (GetBlocksAroundPoint(rb.Tile.Coordinate, 3).Sum(rba => (rba.Tile as GlobalTile).BaseDesirability)));
 
                 if (candidateBlocks.ToArray().Length == 0)
