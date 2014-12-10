@@ -101,7 +101,35 @@ namespace DRObjects.Items.Tiles.Global
         /// <summary>
         /// Which civilisation owns the tile - if any. Other civilisations will not colonise this tile.
         /// </summary>
-        public int? Owner { get; set; }
+        public int? Owner
+        {
+            get
+            {
+                if (owners == null || owners.Count == 0)
+                {
+                    return null;
+                }
+                else
+                {
+                    return owners.Peek();
+                }
+
+            }
+            set
+            {
+                if (owners == null)
+                {
+                    owners = new Stack<int>();
+                }
+
+                owners.Push(value.Value);
+            }
+        }
+
+        /// <summary>
+        /// Holds the owners. It's a stack so in case the owner changes, we can still keep note of who the owner could also be. This is to be used mostly when clearing resources from being bandit-owned.
+        /// </summary>
+        private Stack<int> owners { get; set; }
 
         /// <summary>
         /// Whether it contains a resource (to save us time looking)
@@ -126,7 +154,7 @@ namespace DRObjects.Items.Tiles.Global
                 case GlobalBiome.DENSE_FOREST:
                     return 3;
                 case GlobalBiome.GARIGUE:
-                    return 10 ;
+                    return 10;
                 case GlobalBiome.GRASSLAND:
                     return 5;
                 case GlobalBiome.POLAR_DESERT:
@@ -422,11 +450,11 @@ namespace DRObjects.Items.Tiles.Global
                 {
                     LocationChangeFeedback lcf = new LocationChangeFeedback() { RandomEncounter = this.Biome };
 
-                    return new ActionFeedback[] { tps,lcf }; //Success!
+                    return new ActionFeedback[] { tps, lcf }; //Success!
 
                 }
-                
-                return new ActionFeedback[] { tps, new CurrentLogFeedback(InterfaceSpriteName.HUNT,Color.Orange,"You fail to find anything") };
+
+                return new ActionFeedback[] { tps, new CurrentLogFeedback(InterfaceSpriteName.HUNT, Color.Orange, "You fail to find anything") };
             }
             else
             {
