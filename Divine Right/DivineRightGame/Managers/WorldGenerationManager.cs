@@ -902,7 +902,7 @@ namespace DivineRightGame.Managers
                 {
                     Biome = (block.Tile as GlobalTile).Biome ?? GlobalBiome.GARIGUE,
                     OwnerChanged = false,
-                    Owners = (block.Tile as GlobalTile).Owner.Value == 100 ? OwningFactions.ORCS : OwningFactions.HUMANS, //TODO: EXPAND LATER
+                    Owners = (block.Tile as GlobalTile).Owner.Value == 100 ? OwningFactions.ORCS : (block.Tile as GlobalTile).Owner.Value == 50 ? OwningFactions.BANDITS : OwningFactions.HUMANS, //TODO: EXPAND LATER
                     OwnerID = (block.Tile as GlobalTile).Owner.Value
                 };
 
@@ -1259,6 +1259,16 @@ namespace DivineRightGame.Managers
                 item.Description = "A camp full of bandits";
 
                 block.ForcePutItemOnBlock(item);
+
+
+                //Also claim the surrounding areas for bandits. Let's give them an owner of 50 and use the dungeon claiming radius
+                MapBlock[] claimedBlocks = GetBlocksAroundPoint(block.Tile.Coordinate, DUNGEON_CLAIMING_RADIUS);
+
+                foreach (MapBlock rblock in claimedBlocks)
+                {
+                    (rblock.Tile as GlobalTile).Owner = 50;
+                }
+
             }
         }
 
