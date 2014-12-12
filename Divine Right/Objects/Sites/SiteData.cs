@@ -39,7 +39,15 @@ namespace DRObjects.Sites
         /// </summary>
         public SiteTypeData SiteTypeData { get; set; }
 
+        /// <summary>
+        /// Set as a flag when the owner changes. We will need to update things.
+        /// </summary>
         public bool OwnerChanged { get; set; }
+
+        /// <summary>
+        /// Set as a flag when the map requires generation 'updates' (aka, changing the visibility of items or adding/removing characters)
+        /// </summary>
+        public bool MapRegenerationRequired { get; set; }
 
         public SiteData()
         {
