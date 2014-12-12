@@ -14,7 +14,7 @@
 					"MaxAmount": 10
 				},
 				{
-					"Owner": "UNDEAD",
+					"Owner": "BANDITS",
 					"Profession": "WARRIOR",
 					"BaseAmount": 9,
 					"MaxAmount": 15
@@ -35,7 +35,7 @@
 					"MaxAmount": 15
 				},
 				{
-					"Owner": "UNDEAD",
+					"Owner": "BANDITS",
 					"Profession": "WARRIOR",
 					"BaseAmount": 9,
 					"MaxAmount": 15
@@ -56,7 +56,7 @@
 					"MaxAmount": 10
 				},
 				{
-					"Owner": "UNDEAD",
+					"Owner": "BANDITS",
 					"Profession": "WARRIOR",
 					"BaseAmount": 3,
 					"MaxAmount": 5
@@ -77,7 +77,7 @@
 					"MaxAmount": 10
 				},
 				{
-					"Owner": "UNDEAD",
+					"Owner": "BANDITS",
 					"Profession": "WARRIOR",
 					"BaseAmount": 3,
 					"MaxAmount": 5
@@ -98,7 +98,7 @@
 					"MaxAmount": 5
 				},
 				{
-					"Owner": "UNDEAD",
+					"Owner": "BANDITS",
 					"Profession": "WARRIOR",
 					"BaseAmount": 3,
 					"MaxAmount": 5
@@ -119,7 +119,7 @@
 					"MaxAmount": 3
 				},
 				{
-					"Owner": "UNDEAD",
+					"Owner": "BANDITS",
 					"Profession": "WARRIOR",
 					"BaseAmount": 3,
 					"MaxAmount": 5
@@ -140,7 +140,7 @@
 					"MaxAmount": 5
 				},
 				{
-					"Owner": "UNDEAD",
+					"Owner": "BANDITS",
 					"Profession": "WARRIOR",
 					"BaseAmount": 3,
 					"MaxAmount": 5
