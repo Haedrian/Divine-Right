@@ -639,6 +639,9 @@ namespace DRObjects.Items.Tiles.Global
                     case 4: return PURPLE;
                     case 5: return RED;
                     case 6: return YELLOW;
+
+                    case 100: return INDIGO; //orc
+                    case 50: return WHITE; //banditS
                 }
             }
             #endregion

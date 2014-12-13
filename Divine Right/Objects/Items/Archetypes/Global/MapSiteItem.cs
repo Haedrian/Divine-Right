@@ -108,6 +108,12 @@ namespace DRObjects.Items.Archetypes.Global
         {
             get
             {
+                if (this.Site.SiteData.OwnerChanged == true)
+                {
+                    sprites = null; //clear the sprites
+                    this.Site.SiteData.OwnerChanged = false;
+                }
+
                 if (sprites == null)
                 {
                     sprites = new List<SpriteData>();

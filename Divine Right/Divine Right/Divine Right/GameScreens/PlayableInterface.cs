@@ -1191,18 +1191,25 @@ namespace Divine_Right.GameScreens
 
                                     GameState.LocalMap.Site.SiteData.ActorCounts.Add(actorProfession, count);
                                 }
+
+                                if (GameState.LocalMap.Site.SiteData.ActorCounts[ActorProfession.WARRIOR] == 0)
+                                {
+                                    //Out of warriors, abandon it. We'll decide who really owns it later
+                                    GameState.LocalMap.Site.SiteData.OwnerChanged = true;
+                                    GameState.LocalMap.Site.SiteData.MapRegenerationRequired = true;
+                                    GameState.LocalMap.Site.SiteData.Owners = OwningFactions.ABANDONED;
+                                    GameState.LocalMap.Site.SiteData.ActorCounts = new Dictionary<ActorProfession, int>();
+                                }
                             }
                         }
-
+                        //Serialise the old map
+                        GameState.LocalMap.SerialiseLocalMap();
 
                         //Clear the stored location items
                         GameState.LocalMap.Camp = null;
                         GameState.LocalMap.Dungeon = null;
                         GameState.LocalMap.Settlement = null;
                         GameState.LocalMap.Site = null;
-
-                        //Serialise the old map
-                        GameState.LocalMap.SerialiseLocalMap();
 
                         LoadGlobalMap(GameState.PlayerCharacter.GlobalCoordinates);
 

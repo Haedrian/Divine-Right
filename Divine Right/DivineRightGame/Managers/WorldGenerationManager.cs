@@ -34,6 +34,7 @@ namespace DivineRightGame.Managers
 
         public const int HUMAN_COLONY_CLAIMING_RADIUS = 10;
         public const int DUNGEON_CLAIMING_RADIUS = 10;
+        public const int BANDIT_CLAIMING_RADIUS = 4;
 
         public const int DUNGEON_TOTAL = 20;
 
@@ -477,7 +478,7 @@ namespace DivineRightGame.Managers
                         break;
                     }
 
-                    nextTile = surroundingTiles.Where(st => !st.HasRiver).OrderBy(st => st.Elevation).ThenBy(st => Math.Abs(st.Coordinate.X - currentTile.Coordinate.X) + Math.Abs(st.Coordinate.Y - currentTile.Coordinate.Y)).FirstOrDefault();
+                    nextTile = surroundingTiles.Where(st => st != null && !st.HasRiver).OrderBy(st => st.Elevation).ThenBy(st => Math.Abs(st.Coordinate.X - currentTile.Coordinate.X) + Math.Abs(st.Coordinate.Y - currentTile.Coordinate.Y)).FirstOrDefault();
 
                     //check whether this tile has a river, or is water
 
@@ -1261,8 +1262,8 @@ namespace DivineRightGame.Managers
                 block.ForcePutItemOnBlock(item);
 
 
-                //Also claim the surrounding areas for bandits. Let's give them an owner of 50 and use the dungeon claiming radius
-                MapBlock[] claimedBlocks = GetBlocksAroundPoint(block.Tile.Coordinate, DUNGEON_CLAIMING_RADIUS);
+                //Also claim the surrounding areas for bandits. Let's give them an owner of 50 and use the bandit claiming radius
+                MapBlock[] claimedBlocks = GetBlocksAroundPoint(block.Tile.Coordinate, BANDIT_CLAIMING_RADIUS);
 
                 foreach (MapBlock rblock in claimedBlocks)
                 {

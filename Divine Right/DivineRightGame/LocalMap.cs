@@ -253,6 +253,15 @@ namespace DivineRightGame
             {
                 uniqueGuid = this.Camp.UniqueGUID;
             }
+            else if (this.Site != null)
+            {
+                uniqueGuid = this.Site.UniqueGUID;
+            }
+
+            if (uniqueGuid == Guid.Empty)
+            {
+                throw new NotImplementedException("Can't get the GUID for this map type");
+            }
 
             IFormatter formatter = new BinaryFormatter();
 

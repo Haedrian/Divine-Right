@@ -21,6 +21,11 @@ namespace DivineRightGame
         private List<Actor> parties;
         private int worldSize;
         public List<Settlement> WorldSettlements { get; set; }
+
+        /// <summary>
+        /// Holds a reference to all map site items, so we can check regarding ownership change and such
+        /// </summary>
+        public List<MapSiteItem> MapSiteItems { get; set; }
         /// <summary>
         /// This lock is to be used during world generation to prevent race conditions
         /// </summary>
@@ -133,6 +138,10 @@ namespace DivineRightGame
                 return airBlock;
             }
         }
+
+        #endregion
+
+        #region Functions
 
         #endregion
 
