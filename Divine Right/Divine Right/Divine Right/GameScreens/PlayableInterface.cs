@@ -1527,6 +1527,8 @@ namespace Divine_Right.GameScreens
 
                     GameState.LocalMap.AddToLocalMap(collapsedMap.ToArray());
                     GameState.LocalMap.Actors = newActors.ToList();
+
+                    GameState.LocalMap.Tick(); //Tick to remove the dead actors
                 }
                 else
                 {
