@@ -137,6 +137,11 @@ namespace DRObjects
         public ActorStance CombatStance { get; set; }
 
         /// <summary>
+        /// Marks the actor as being a member of a site - that is to say, may be removed and regenerated when there is the need to
+        /// </summary>
+        public bool SiteMember { get; set; }
+
+        /// <summary>
         /// Two LocalActors are considered equal if they share the same UniqueID
         /// </summary>
         /// <param name="obj"></param>
@@ -167,6 +172,7 @@ namespace DRObjects
             this.UnarmedDamageDice = 1;
             this.FeedingLevel = Enums.FeedingLevel.STUFFED;
             this.IsProne = false;
+            this.SiteMember = false;
         }
 
     }

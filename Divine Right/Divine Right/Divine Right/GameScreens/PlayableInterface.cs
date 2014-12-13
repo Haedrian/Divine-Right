@@ -1177,16 +1177,16 @@ namespace Divine_Right.GameScreens
 
                             if (GameState.LocalMap.Camp != null)
                             {
-                                GameState.LocalMap.Camp.BanditTotal = GameState.LocalMap.Actors.Count(a => a.IsActive && a.IsAlive && !a.IsPlayerCharacter 
+                                GameState.LocalMap.Camp.BanditTotal = GameState.LocalMap.Actors.Count(a => a.IsActive && a.IsAlive && !a.IsPlayerCharacter
                                     && a.EnemyData != null && a.EnemyData.Profession == ActorProfession.WARRIOR);
                             }
                             else if (GameState.LocalMap.Site != null)
                             {
                                 GameState.LocalMap.Site.SiteData.ActorCounts.Clear();
-                                 
-                                foreach(var actorProfession in (ActorProfession[])Enum.GetValues(typeof(ActorProfession)))
+
+                                foreach (var actorProfession in (ActorProfession[])Enum.GetValues(typeof(ActorProfession)))
                                 {
-                                    int count = GameState.LocalMap.Actors.Count(a => a.IsActive && a.IsAlive && !a.IsPlayerCharacter 
+                                    int count = GameState.LocalMap.Actors.Count(a => a.IsActive && a.IsAlive && !a.IsPlayerCharacter
                                     && a.EnemyData != null && a.EnemyData.Profession == actorProfession);
 
                                     GameState.LocalMap.Site.SiteData.ActorCounts.Add(actorProfession, count);
@@ -1497,18 +1497,50 @@ namespace Divine_Right.GameScreens
 
                 GameState.LocalMap = new LocalMap(savedMap.localGameMap.GetLength(0), savedMap.localGameMap.GetLength(1), 1, 0);
 
+                GameState.LocalMap.Site = site;
+
                 GameState.LocalMap.Actors = new List<Actor>();
 
-                List<MapBlock> collapsedMap = new List<MapBlock>();
+                Actor[] newActors = null;
 
-                foreach (MapBlock block in savedMap.localGameMap)
+                //Before we do anything, check that we don't need to regenerate it
+                if (GameState.LocalMap.Site.SiteData.MapRegenerationRequired)
                 {
-                    collapsedMap.Add(block);
+                    MapBlock[,] savedMap2D = new MapBlock[savedMap.localGameMap.GetLength(0), savedMap.localGameMap.GetLength(1)];
+
+                    for(int x =0; x < savedMap.localGameMap.GetLength(0);x++)
+                    {
+                        for(int y=0; y < savedMap.localGameMap.GetLength(1); y++)
+                        {
+                            savedMap2D[x, y] = savedMap.localGameMap[x, y, 0]; //NB: CHANGE IF WE GO 3D
+                        }
+                    }
+
+                    var blocks = SiteGenerator.RegenerateSite(GameState.LocalMap.Site.SiteData, savedMap2D, savedMap.Actors.ToArray(), out newActors);
+
+                    List<MapBlock> collapsedMap = new List<MapBlock>();
+
+                    foreach (MapBlock block in blocks)
+                    {
+                        collapsedMap.Add(block);
+                    }
+
+                    GameState.LocalMap.AddToLocalMap(collapsedMap.ToArray());
+                    GameState.LocalMap.Actors = newActors.ToList();
                 }
+                else
+                {
+                    List<MapBlock> collapsedMap = new List<MapBlock>();
 
-                GameState.LocalMap.AddToLocalMap(collapsedMap.ToArray());
+                    foreach (MapBlock block in savedMap.localGameMap)
+                    {
+                        collapsedMap.Add(block);
+                    }
 
-                GameState.LocalMap.Actors = savedMap.Actors;
+                    GameState.LocalMap.AddToLocalMap(collapsedMap.ToArray());
+
+                    GameState.LocalMap.Actors = savedMap.Actors;
+                }
 
                 LocalMapGenerator lmg = new LocalMapGenerator();
 
@@ -1532,8 +1564,6 @@ namespace Divine_Right.GameScreens
 
                 GameState.PlayerCharacter.MapCharacter.Coordinate = playerActor.MapCharacter.Coordinate;
                 GameState.PlayerCharacter.MapCharacter = playerActor.MapCharacter;
-
-                GameState.LocalMap.Site = site;
             }
             else
             {

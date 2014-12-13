@@ -188,6 +188,11 @@ namespace DivineRightGame.LocalMapGenerator
 
                     var a = ActorGeneration.CreateActors(siteData.Owners, profession, total);
 
+                    foreach(var ac in a)
+                    {
+                        ac.SiteMember = true;
+                    }
+
                     actorList.AddRange(a);
 
                     foreach (var actor in a)
@@ -264,19 +269,155 @@ namespace DivineRightGame.LocalMapGenerator
 
             actors = actorList.ToArray();
 
+            siteData.PatrolRoutes = patrolRoutes.ToList();
+            siteData.WanderAreas = wanderAreas.ToList();
+
             return map;
         }
 
         /// <summary>
-        /// Regenerates a site's actors based on the sitedata. If the owner hasn't changed, will do nothing
+        /// Regenerates a site's actors based on the sitedata. If it is not marked as needing regeneration , will do nothing
         /// </summary>
         /// <param name="sitedata"></param>
         /// <param name="currentMap"></param>
         /// <param name="actors"></param>
         /// <returns></returns>
-        public static MapBlock[,] RegenerateSite(SiteData sitedata, MapBlock[,] currentMap, Actor[] currentActors, out Actor[] actors)
+        public static MapBlock[,] RegenerateSite(SiteData sitedata, MapBlock[,] currentMap, Actor[] currentActors, out Actor[] newActors)
         {
-            throw new NotImplementedException();
+            if (!sitedata.MapRegenerationRequired)
+            {
+                //Do nothing
+                newActors = currentActors;
+                return currentMap;
+            }
+
+            //So, first go through the actors and remove any of them which shouldn't be there. That is to say all of them which are site members (I realise it's a big ugly but it's a clean check)
+            List<Actor> actors = currentActors.ToList();
+
+            var actorsToRemove = currentActors.Where(ca => ca.SiteMember);
+
+            //Remove the map items for these actors
+            foreach(var a in actorsToRemove)
+            {
+                a.IsAlive = false;
+            }
+
+            //We'll handle actors soon, first we need to go through all the items and set the ones with the wrong owner to inactive
+            foreach (var mapBlock in currentMap)
+            {
+                foreach (var item in mapBlock.GetItems())
+                {
+                    if (!item.OwnedBy.HasFlag(sitedata.Owners))
+                    {
+                        item.IsActive = false;
+                    }
+                    else
+                    {
+                        item.IsActive = true;
+                    }
+                }
+            }
+
+            //Now go through the site's actors and create the new ones as required
+            foreach (ActorProfession profession in Enum.GetValues(typeof(ActorProfession)))
+            {
+                //So do we have any wander areas for them ?
+                var possibleAreas = sitedata.WanderAreas.Where(wa => wa.Factions.HasFlag(sitedata.Owners) && wa.Profession.Equals(profession));
+                var possibleRoutes = sitedata.PatrolRoutes.Where(pr => pr.Owners.HasFlag(sitedata.Owners) && pr.Profession.Equals(profession));
+
+                //Any actors?
+                if (sitedata.ActorCounts.ContainsKey(profession))
+                {
+                    //Yes, how many
+                    int total = sitedata.ActorCounts[profession];
+
+                    var a = ActorGeneration.CreateActors(sitedata.Owners, profession, total);
+
+                    foreach (var ac in a)
+                    {
+                        ac.SiteMember = true;
+                    }
+
+                    actors.AddRange(a);
+
+                    foreach (var actor in a)
+                    {
+                        //So, where we going to drop them off ? Randomly
+                        int tries = 0;
+
+                        for (; ; )
+                        {
+                            int randomX = GameState.Random.Next(currentMap.GetLength(0));
+                            int randomY = GameState.Random.Next(currentMap.GetLength(1));
+
+                            if (currentMap[randomX, randomY].MayContainItems)
+                            {
+                                //Plop it on there
+                                actor.MapCharacter.Coordinate = new MapCoordinate(randomX, randomY, 0, MapType.LOCAL);
+                                currentMap[randomX, randomY].ForcePutItemOnBlock(actor.MapCharacter);
+                                tries = 0;
+                                break;
+                            }
+                            else
+                            {
+                                tries++;
+                            }
+
+                            if (tries >= 150)
+                            {
+                                //give up
+                                break;
+                            }
+                        }
+
+                        //Go through each actor, and either tell them to wander in the whole map, or within any possible area which matches
+                        //Any possible area avaialble?
+                        List<object> possibleMissions = new List<object>(); //I know :( But Using an interface or trying to mangle together an inheritance was worse
+
+                        possibleMissions.AddRange(possibleAreas.Where(pa => pa.MaxAmount > pa.CurrentAmount));
+                        possibleMissions.AddRange(possibleRoutes);
+
+                        var chosenArea = possibleMissions.OrderBy(pa => GameState.Random.Next(100)).FirstOrDefault();
+
+                        if (chosenArea == null)
+                        {
+                            //Wander around the whole map
+                            actor.CurrentMission = new WanderMission() { LoiterPercentage = 25, WanderPoint = new MapCoordinate(currentMap.GetLength(0) / 2, currentMap.GetLength(1) / 2, 0, MapType.LOCAL), WanderRectangle = new Rectangle(0, 0, currentMap.GetLength(0), currentMap.GetLength(1)) };
+                        }
+                        else
+                        {
+                            //Is this a patrol or a wander ?
+                            if (chosenArea.GetType().Equals(typeof(PatrolRoute)))
+                            {
+                                var patrolDetails = chosenArea as PatrolRoute;
+
+                                PatrolRouteMission pm = new PatrolRouteMission();
+                                pm.PatrolRoute.AddRange(patrolDetails.Route);
+
+                                actor.CurrentMission = pm;
+                            }
+                            else if (chosenArea.GetType().Equals(typeof(MapletActorWanderArea)))
+                            {
+                                var wanderDetails = chosenArea as MapletActorWanderArea;
+
+                                //Wander around in that area
+                                actor.CurrentMission = new WanderMission() { LoiterPercentage = 25, WanderPoint = new MapCoordinate(wanderDetails.WanderPoint), WanderRectangle = wanderDetails.WanderRect };
+                                wanderDetails.CurrentAmount++;
+                            }
+                        }
+
+                    }
+
+                }
+
+            }
+
+            newActors = actors.ToArray();
+            sitedata.MapRegenerationRequired = false; //We're done
+
+            return currentMap;
+
+
         }
 
         /// <summary>

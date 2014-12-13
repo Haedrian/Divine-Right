@@ -7,6 +7,7 @@ using DRObjects.LocalMapGeneratorObjects.Enums;
 
 namespace DRObjects.LocalMapGeneratorObjects
 {
+    [Serializable]
     /// <summary>
     /// The Possible Contents of the Maplet.
     /// For each possible amount, there will be a check whether probability is reached

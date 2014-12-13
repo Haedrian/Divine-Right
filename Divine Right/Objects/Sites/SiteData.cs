@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using DRObjects.ActorHandling.CharacterSheet.Enums;
 using DRObjects.Enums;
+using DRObjects.LocalMapGeneratorObjects;
 
 namespace DRObjects.Sites
 {
@@ -48,6 +49,17 @@ namespace DRObjects.Sites
         /// Set as a flag when the map requires generation 'updates' (aka, changing the visibility of items or adding/removing characters)
         /// </summary>
         public bool MapRegenerationRequired { get; set; }
+
+
+        /// <summary>
+        /// Wander areas, used for regeneration
+        /// </summary>
+        public List<MapletActorWanderArea> WanderAreas { get; set; }
+
+        /// <summary>
+        /// Patrol routes, used for regeneration
+        /// </summary>
+        public List<PatrolRoute> PatrolRoutes { get; set; }
 
         public SiteData()
         {
