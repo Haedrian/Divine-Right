@@ -419,7 +419,6 @@ namespace DRObjects.Items.Tiles.Global
                     graphics.Insert(0,SpriteManager.GetSprite(LocalSpriteName.PAVEMENT_TILE_1));
                 }
 
-
                 return graphics;
             }
             set

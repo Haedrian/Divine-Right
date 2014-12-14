@@ -874,6 +874,8 @@ namespace DivineRightGame.Managers
         /// </summary>
         public static void HarvestResources()
         {
+            GameState.GlobalMap.MapSiteItems = new List<MapSiteItem>();
+
             //Go through each resource tile and see which of those are claimed by someone
 
             List<MapBlock> blocks = new List<MapBlock>();
@@ -916,6 +918,8 @@ namespace DivineRightGame.Managers
                 msi.IsActive = true;
                 msi.MayContainItems = true;
                 msi.Site = ms;
+
+                GameState.GlobalMap.MapSiteItems.Add(msi);
 
                 switch (mapResource.ResourceType)
                 {
@@ -1290,6 +1294,10 @@ namespace DivineRightGame.Managers
                 
                 foreach(var village in GameState.GlobalMap.WorldSettlements.Where(ws => !ws.Settlement.IsCapital && ws.OwnerID == i))
                 {
+
+                    //Rebuild
+                    PathfinderInterface.Nodes = GeneratePathfindingMap(GameState.GlobalMap.globalGameMap);
+
                     var path = PathfinderInterface.GetPath(capital.Coordinate,village.Coordinate);
 
                     if (path != null)
@@ -1300,7 +1308,34 @@ namespace DivineRightGame.Managers
                         }
                     }
                 }
+
+                //Now lets build roads between all the sites owned by this person and the closest settlement
+                
+                foreach(var mapSite in GameState.GlobalMap.MapSiteItems.Where(ms => ms.Site.SiteData.OwnerID == i))
+                {
+                    //Rebuild
+                    PathfinderInterface.Nodes = GeneratePathfindingMap(GameState.GlobalMap.globalGameMap);
+
+                    //Find the closest one
+
+                    var closestSettlement = GameState.GlobalMap.WorldSettlements.Where(ws => ws.OwnerID == i).OrderBy(ws => Math.Abs(ws.Coordinate - mapSite.Coordinate ) ).First();
+
+                    //And path it
+                    var path = PathfinderInterface.GetPath(closestSettlement.Coordinate, mapSite.Coordinate);
+
+                    if (path != null)
+                    {
+                        foreach (var coord in path)
+                        {
+                            (GameState.GlobalMap.GetBlockAtCoordinate(coord).Tile as GlobalTile).HasRoad = true; //road it
+                        }
+                    }
+
+                }
+
             }
+
+            
 
 
         }
@@ -1619,8 +1654,8 @@ namespace DivineRightGame.Managers
                 {
                     if (i < map.GetLength(0) - 1 && j < map.GetLength(1) - 1)
                     {
-                        //Copyable - if it may contain items, put a weight of 1, otherwise an essagerated one. Also consider who the owners are. If it's owned by someone in particular then ignore it
-                        pf[i, j] = map[i, j] != null ? map[i, j].MayContainItems ? (byte)1 : Byte.MaxValue : Byte.MaxValue;
+                        //Copyable - If it may contain items, put a weight of 5, otherwise a weight of MaxValue. If there's already a road there, put a weight of 1. This'll encourage road reuse.
+                        pf[i, j] = map[i, j] != null ? map[i, j].MayContainItems ? (map[i,j].Tile as GlobalTile).HasRoad ? (byte)1 : (byte)5 : Byte.MaxValue : Byte.MaxValue;
                     }
                     else
                     {
