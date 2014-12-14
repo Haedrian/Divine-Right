@@ -210,7 +210,7 @@ namespace DivineRightGame
             //Check if we have any dead actors to clean up
             foreach (Actor deadActor in actors.Where(a => !a.IsAlive && !a.IsPlayerCharacter && a.MapCharacter != null))
             {
-                this.GetBlockAtCoordinate(deadActor.MapCharacter.Coordinate).RemoveTopItem(); //remove the character
+                this.GetBlockAtCoordinate(deadActor.MapCharacter.Coordinate).RemoveItem(deadActor.MapCharacter); //This is much cleaner due to the shove mechanism
 
                 deadActor.MapCharacter = null; //detatch it
             }

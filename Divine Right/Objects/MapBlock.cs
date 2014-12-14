@@ -121,6 +121,15 @@ namespace DRObjects
         }
 
         /// <summary>
+        /// Removes a particular item in the block
+        /// </summary>
+        /// <param name="item"></param>
+        public void RemoveItem(MapItem item)
+        {
+            this.mapItems.Remove(item);
+        }
+
+        /// <summary>
         /// Removes the top item. If it is empty - do nothing
         /// </summary>
         public void RemoveTopItem()
