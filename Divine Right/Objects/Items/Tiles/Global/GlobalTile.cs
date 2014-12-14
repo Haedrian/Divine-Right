@@ -240,6 +240,14 @@ namespace DRObjects.Items.Tiles.Global
 
             totalTime = (int)(totalTime * skillEffect);
 
+            //Do we have a road?
+
+            if (this.HasRoad)
+            {
+                //One third of the time
+                totalTime /= 3;
+            }
+
             //Increase skill
             actor.Attributes.IncreaseSkill(SkillName.EXPLORER);
 
