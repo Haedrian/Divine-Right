@@ -475,10 +475,14 @@ namespace DivineRightGame.CombatHandling
             //Drop any stuff they have
             foreach (InventoryItem item in actor.Inventory.Inventory.GetAllObjects())
             {
-                //Drop them
-                item.InInventory = false;
-                item.IsEquipped = false;
-                GameState.LocalMap.GetBlockAtCoordinate(actor.MapCharacter.Coordinate).PutItemUnderneathOnBlock(item);
+                //Always drop loot & supplies,  10% chance of dropping something else
+                if (item.Category == InventoryCategory.LOOT || item.Category == InventoryCategory.SUPPLY || GameState.Random.Next(10) == 5)
+                {
+                    //Drop them
+                    item.InInventory = false;
+                    item.IsEquipped = false;
+                    GameState.LocalMap.GetBlockAtCoordinate(actor.MapCharacter.Coordinate).PutItemUnderneathOnBlock(item);
+                }
             }
 
             
