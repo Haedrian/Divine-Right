@@ -11,6 +11,7 @@ using DRObjects.Items.Archetypes.Global;
 using DivineRightGame.SettlementHandling;
 using DivineRightGame.LocalMapGenerator;
 using DivineRightGame.ActorHandling;
+using DivineRightGame.Pathfinding;
 
 namespace DivineRightGame.Managers
 {
@@ -118,6 +119,9 @@ namespace DivineRightGame.Managers
 
             CurrentStep = "And they harvested the resources of the land";
             HarvestResources();
+
+            CurrentStep = "And they built roads and paths between their properties";
+            GenerateRoads();
 
             CurrentStep = "And thus the world was done. [Enter] to continue";
             isGenerating = false;
@@ -993,7 +997,7 @@ namespace DivineRightGame.Managers
             //We will then calculate the desirability of each tile, sum it with the deseribility of each tile bordering it
             //The most desirable tile in the region will be colonised
 
-            GameState.GlobalMap.WorldSettlements = new List<Settlement>();
+            GameState.GlobalMap.WorldSettlements = new List<SettlementItem>();
 
             Random random = new Random();
 
@@ -1045,9 +1049,8 @@ namespace DivineRightGame.Managers
                 Settlement settlement = SettlementGenerator.GenerateSettlement(block.Tile.Coordinate, random.Next(5) + 10, resources, true);
                 settlement.IsCapital = true;
 
-                GameState.GlobalMap.WorldSettlements.Add(settlement);
+                GameState.GlobalMap.WorldSettlements.Add(CreateSettlement(true, settlement, block, i));
 
-                CreateSettlement(true, settlement, block, i);
 
                 ownedSettlements.Add(settlement);
 
@@ -1091,9 +1094,7 @@ namespace DivineRightGame.Managers
 
                     settlement = SettlementGenerator.GenerateSettlement(block.Tile.Coordinate, random.Next(7) + 1, resources);
 
-                    GameState.GlobalMap.WorldSettlements.Add(settlement);
-
-                    CreateSettlement(false, settlement, block, i);
+                    GameState.GlobalMap.WorldSettlements.Add(CreateSettlement(false, settlement, block, i));
 
                     ownedSettlements.Add(settlement);
 
@@ -1273,6 +1274,37 @@ namespace DivineRightGame.Managers
             }
         }
 
+        /// <summary>
+        /// Generates the roads
+        /// </summary>
+        public static void GenerateRoads()
+        {
+            //Build the pathfinding map
+            PathfinderInterface.Nodes = GeneratePathfindingMap(GameState.GlobalMap.globalGameMap);
+
+            //First lets build roads between all colonies and the capital
+            for(int i=0; i < HUMAN_CAPITAL_COUNT; i++)
+            {
+                //Find the capital
+                var capital = GameState.GlobalMap.WorldSettlements.Where(ws => ws.Settlement.IsCapital && ws.OwnerID == i).First();
+                
+                foreach(var village in GameState.GlobalMap.WorldSettlements.Where(ws => !ws.Settlement.IsCapital && ws.OwnerID == i))
+                {
+                    var path = PathfinderInterface.GetPath(capital.Coordinate,village.Coordinate);
+
+                    if (path != null)
+                    {
+                        foreach(var coord in path)
+                        {
+                            (GameState.GlobalMap.GetBlockAtCoordinate(coord).Tile as GlobalTile).HasRoad = true; //road it
+                        }
+                    }
+                }
+            }
+
+
+        }
+
         #endregion World Generation Functions
 
         #region Helper Functions
@@ -1283,10 +1315,12 @@ namespace DivineRightGame.Managers
         /// <param name="capital">Whether it's the capital or not</param>
         /// <param name="settlement">The settlement which it represents</param>
         /// <param name="block">The block making up the center</param>
-        private static void CreateSettlement(bool capital, Settlement settlement, MapBlock block, int owner)
+        private static SettlementItem CreateSettlement(bool capital, Settlement settlement, MapBlock block, int owner)
         {
             //Put an entire group of SettlementItems on it
             MapCoordinate[] settlementCoordinates = new MapCoordinate[10];
+
+            SettlementItem retItem = null;
 
             settlementCoordinates[7] = new MapCoordinate(block.Tile.Coordinate.X - 1, block.Tile.Coordinate.Y - 1, 0, MapType.GLOBAL);
             settlementCoordinates[8] = new MapCoordinate(block.Tile.Coordinate.X, block.Tile.Coordinate.Y - 1, 0, MapType.GLOBAL);
@@ -1337,8 +1371,9 @@ namespace DivineRightGame.Managers
                         break;
                 }
 
-                GameState.GlobalMap.GetBlockAtCoordinate(settlementCoordinates[corner])
-                .ForcePutItemOnBlock(new SettlementItem()
+
+
+                var settlementItem = new SettlementItem()
                 {
                     Coordinate = settlementCoordinates[corner],
                     IsCapital = capital,
@@ -1350,8 +1385,18 @@ namespace DivineRightGame.Managers
                     Name = settlement.Name,
                     Settlement = settlement,
                     OwnerID = owner
-                });
+                };
+
+                GameState.GlobalMap.GetBlockAtCoordinate(settlementCoordinates[corner])
+                .ForcePutItemOnBlock(settlementItem);
+
+                if (settlementItem.SettlementCorner == 5) //center
+                {
+                    retItem = settlementItem;
+                }
             }
+
+           return retItem;
         }
 
         /// <summary>
@@ -1559,6 +1604,33 @@ namespace DivineRightGame.Managers
             return peak * Math.Pow(Math.E, -(Math.Pow((x - centre), 2) / Math.Pow(2 * width, 2)));
 
 
+        }
+
+        private static byte[,] GeneratePathfindingMap(MapBlock[,] map)
+        {
+            //Generate a byte map of x and y
+            int squareSize = PathfinderInterface.CeilToPower2(Math.Max(map.GetLength(0), map.GetLength(1)));
+
+            byte[,] pf = new byte[squareSize, squareSize];
+
+            for (int i = 0; i < map.GetLength(0); i++)
+            {
+                for (int j = 0; j < map.GetLength(1); j++)
+                {
+                    if (i < map.GetLength(0) - 1 && j < map.GetLength(1) - 1)
+                    {
+                        //Copyable - if it may contain items, put a weight of 1, otherwise an essagerated one. Also consider who the owners are. If it's owned by someone in particular then ignore it
+                        pf[i, j] = map[i, j] != null ? map[i, j].MayContainItems ? (byte)1 : Byte.MaxValue : Byte.MaxValue;
+                    }
+                    else
+                    {
+                        //Put in the largest possible weight
+                        pf[i, j] = Byte.MaxValue;
+                    }
+                }
+            }
+
+            return pf;
         }
 
         #endregion

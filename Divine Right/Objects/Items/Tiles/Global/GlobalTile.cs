@@ -100,6 +100,11 @@ namespace DRObjects.Items.Tiles.Global
         public bool IsBlockedForColonisation { get; set; }
 
         /// <summary>
+        /// Whether this tile has a road. Later we'll have proper directions and everything
+        /// </summary>
+        public bool HasRoad { get; set; }
+
+        /// <summary>
         /// Which civilisation owns the tile - if any. Other civilisations will not colonise this tile.
         /// </summary>
         public int? Owner
@@ -407,6 +412,13 @@ namespace DRObjects.Items.Tiles.Global
                     graphics.Insert(0, MOUNTAIN);
                 }
 
+                //Do we have a road?
+
+                if (HasRoad)
+                {
+                    graphics.Insert(0,SpriteManager.GetSprite(LocalSpriteName.PAVEMENT_TILE_1));
+                }
+
 
                 return graphics;
             }
@@ -661,6 +673,7 @@ namespace DRObjects.Items.Tiles.Global
             base.MayContainItems = true;
             IsBlockedForColonisation = false;
             HasResource = false;
+            HasRoad = false;
         }
 
         #endregion

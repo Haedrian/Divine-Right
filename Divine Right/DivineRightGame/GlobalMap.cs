@@ -20,7 +20,7 @@ namespace DivineRightGame
         public MapBlock[,] globalGameMap;
         private List<Actor> parties;
         private int worldSize;
-        public List<Settlement> WorldSettlements { get; set; }
+        public List<SettlementItem> WorldSettlements { get; set; }
 
         /// <summary>
         /// Holds a reference to all map site items, so we can check regarding ownership change and such

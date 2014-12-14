@@ -260,7 +260,7 @@ namespace DivineRightGame
 
             if (uniqueGuid == Guid.Empty)
             {
-                throw new NotImplementedException("Can't get the GUID for this map type");
+                return;
             }
 
             IFormatter formatter = new BinaryFormatter();
