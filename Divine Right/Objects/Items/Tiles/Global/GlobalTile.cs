@@ -22,18 +22,19 @@ namespace DRObjects.Items.Tiles.Global
 
         private SpriteData BIGTREE = SpriteManager.GetSprite(GlobalSpriteName.BIGTREE);
         private SpriteData DEADTREE = SpriteManager.GetSprite(GlobalSpriteName.DEADTREE);
-        private SpriteData DESERTTILE = SpriteManager.GetSprite(GlobalSpriteName.DESERTTILE);
+        private SpriteData DESERTTILE = SpriteManager.GetSprite(LocalSpriteName.SAND);
         private SpriteData FORESTTILE = SpriteManager.GetSprite(GlobalSpriteName.FORESTTILE);
-        private SpriteData GARIGUETILE = SpriteManager.GetSprite(GlobalSpriteName.GARIGUETILE);
-        private SpriteData GRASSTILE = SpriteManager.GetSprite(GlobalSpriteName.GRASSTILE);
+        private SpriteData GARIGUETILE = SpriteManager.GetSprite(LocalSpriteName.GARRIGUE);
+        private SpriteData GRASSTILE = SpriteManager.GetSprite(LocalSpriteName.GRASS_TILE);
         private SpriteData HILLSLOPE = SpriteManager.GetSprite(GlobalSpriteName.HILLSLOPE);
         private SpriteData MOUNTAIN = SpriteManager.GetSprite(GlobalSpriteName.MOUNTAIN);
         private SpriteData RIVER = SpriteManager.GetSprite(GlobalSpriteName.RIVER);
-        private SpriteData SNOWTILE = SpriteManager.GetSprite(GlobalSpriteName.SNOWTILE);
-        private SpriteData SWAMPTILE = SpriteManager.GetSprite(GlobalSpriteName.SWAMPTILE);
+        private SpriteData SNOWTILE = SpriteManager.GetSprite(LocalSpriteName.SNOW);
+        private SpriteData SWAMPTILE = SpriteManager.GetSprite(LocalSpriteName.SWAMP);
         private SpriteData TREE = SpriteManager.GetSprite(GlobalSpriteName.TREE);
         private SpriteData TROPICALTREE = SpriteManager.GetSprite(GlobalSpriteName.TROPICALTREE);
         private SpriteData WATERTILE = SpriteManager.GetSprite(GlobalSpriteName.WATERTILE);
+        private SpriteData TROPICALTILE = SpriteManager.GetSprite(LocalSpriteName.JUNGLE_TILE);
 
         private SpriteData BROWN = SpriteManager.GetSprite(ColourSpriteName.BROWN);
         private SpriteData GREEN = SpriteManager.GetSprite(ColourSpriteName.GREEN);
@@ -363,7 +364,7 @@ namespace DRObjects.Items.Tiles.Global
                             break;
                         case GlobalBiome.RAINFOREST:
                             graphics.Add(TROPICALTREE);
-                            graphics.Add(FORESTTILE);
+                            graphics.Add(TROPICALTILE);
                             break;
                         case GlobalBiome.WETLAND:
                             graphics.Add(SWAMPTILE);

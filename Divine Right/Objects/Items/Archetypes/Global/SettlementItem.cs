@@ -95,6 +95,8 @@ namespace DRObjects.Items.Archetypes.Global
                     //Create it
                     sprites = new List<SpriteData>();
 
+                    sprites.Add(SpriteManager.GetSprite((GlobalSpriteName)Enum.Parse(typeof(GlobalSpriteName), this.SettlementType.ToString() + "_" + SettlementCorner)));
+
                     //Are we in the top corner?
                     if (SettlementCorner == 1)
                     {
@@ -112,7 +114,6 @@ namespace DRObjects.Items.Archetypes.Global
                         }
                     }
 
-                    sprites.Add(SpriteManager.GetSprite((GlobalSpriteName)Enum.Parse(typeof(GlobalSpriteName), this.SettlementType.ToString() + "_" + SettlementCorner)));
                 }
 
                 return sprites;
