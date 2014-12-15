@@ -17,6 +17,7 @@ using DivineRightGame.CombatHandling;
 using DRObjects.Items.Archetypes.Local;
 using DRObjects.Graphics;
 using System.Threading;
+using DRObjects.Items.Tiles.Global;
 
 namespace DivineRightGame
 {
@@ -114,6 +115,44 @@ namespace DivineRightGame
             if (lastMonth != _universeTime.GetTimeComponent(DRTimeComponent.MONTH))
             {
                 //A month has passed. Go through each site and either reclaim them, or reinforce them
+
+                (new Thread(() =>
+                {
+                    GameState.IsRunningHeavyProcessing = true;
+
+                    //Go through each site
+                    foreach(MapSiteItem item in GameState.GlobalMap.MapSiteItems)
+                    {
+                        //Is the site abandoned?
+                        if (item.Site.SiteData.Owners == OwningFactions.ABANDONED)
+                        {
+                            //Is it reasonable for someone to reclaim it?
+                            if ((GameState.GlobalMap.GetBlockAtCoordinate(item.Coordinate).Tile as GlobalTile).Owner.HasValue)
+                            {
+                                int tileOwner = (GameState.GlobalMap.GetBlockAtCoordinate(item.Coordinate).Tile as GlobalTile).Owner.Value;
+
+                                //Reclaim it!
+                                item.Site.SiteData.Owners = tileOwner < 10 ? OwningFactions.HUMANS : tileOwner == 100 ? OwningFactions.ORCS : OwningFactions.BANDITS;
+
+                                item.Site.SiteData.OwnerID = tileOwner;
+                                item.Site.SiteData.LoadAppropriateActorCounts();
+
+                                item.Site.SiteData.MapRegenerationRequired = true;
+                                item.Site.SiteData.OwnerChanged = true;
+                            }
+                        }
+                        else
+                        //Is the tile owned by the same person ?
+                        if (item.Site.SiteData.OwnerID == (GlobalMap.GetBlockAtCoordinate(item.Coordinate).Tile as GlobalTile).Owner)
+                        {
+                            item.Site.SiteData.IncrementActorCounts();
+                        }
+                    }
+
+                    GameState.IsRunningHeavyProcessing = false;
+
+                })).Start();
+
             }
         }
 

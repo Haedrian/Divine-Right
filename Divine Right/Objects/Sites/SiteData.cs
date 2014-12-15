@@ -67,6 +67,54 @@ namespace DRObjects.Sites
         }
 
         /// <summary>
+        /// Incremements the actor counts for this site up to the maximum amount for this type
+        /// </summary>
+        public void IncrementActorCounts()
+        {
+            List<SiteActorCount> counts = new List<SiteActorCount>();
+
+            foreach (var profession in Enum.GetValues(typeof(ActorProfession)))
+            {
+                var prof = (ActorProfession)profession;
+
+                //Try to find exact match
+
+                var exactMatch = this.SiteTypeData.ActorCounts.Where(ac => ac.Owner.Equals(this.Owners) && ac.Profession.Equals(prof)).FirstOrDefault();
+
+                if (exactMatch == null)
+                {
+                    //try to find the default
+                    var almostMatch = this.SiteTypeData.ActorCounts.Where(ac => ac.Owner.HasFlag(this.Owners) && ac.Profession.Equals(prof)).FirstOrDefault();
+
+                    if (almostMatch == null)
+                    {
+                        //nothing
+                    }
+                    else
+                    {
+                        counts.Add(almostMatch);
+                    }
+                }
+                else
+                {
+                    counts.Add(exactMatch);
+                }
+
+            }
+
+            foreach (var count in counts)
+            {
+                if (this.ActorCounts[count.Profession] < count.MaxAmount)
+                {
+                    this.ActorCounts[count.Profession]++;
+                }
+            }
+
+            //We need to remake it
+            this.MapRegenerationRequired = true;
+        }
+
+        /// <summary>
         /// Loads the actor counts from the SiteTypeData.
         /// Will first try to get an exact match. If it does not find one, it will get the default.
         /// Will overwrite the actor counts
