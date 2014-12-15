@@ -16,6 +16,7 @@ using DRObjects.DataStructures.Enum;
 using DivineRightGame.CombatHandling;
 using DRObjects.Items.Archetypes.Local;
 using DRObjects.Graphics;
+using System.Threading;
 
 namespace DivineRightGame
 {
@@ -43,6 +44,11 @@ namespace DivineRightGame
         private static DivineRightDateTime _universeTime = null;
 
         /// <summary>
+        /// If the game is running heavy processing we store it here, so we can ignore user updates and show him something
+        /// </summary>
+        public static bool IsRunningHeavyProcessing = false;
+
+        /// <summary>
         /// Returns an object having the same value as the Universe Time
         /// Modifying this value has no effect. Use IncremementGameTime instead
         /// </summary>
@@ -61,8 +67,9 @@ namespace DivineRightGame
         public static void IncrementGameTime(DRTimeComponent timeComponent, int value)
         {
             int lastDay = _universeTime.GetTimeComponent(DRTimeComponent.DAY);
+            int lastMonth = _universeTime.GetTimeComponent(DRTimeComponent.MONTH);
 
-            _universeTime.Add(timeComponent, value);
+            _universeTime.Add(timeComponent, value);            
 
             if (lastDay != _universeTime.GetTimeComponent(DRTimeComponent.DAY))
             {
@@ -102,6 +109,11 @@ namespace DivineRightGame
                     GameState.NewLog.Add(new CurrentLogFeedback(InterfaceSpriteName.MOON, Color.DarkRed, "You are hungry and out of food"));
                 }
 
+            }
+
+            if (lastMonth != _universeTime.GetTimeComponent(DRTimeComponent.MONTH))
+            {
+                //A month has passed. Go through each site and either reclaim them, or reinforce them
             }
         }
 

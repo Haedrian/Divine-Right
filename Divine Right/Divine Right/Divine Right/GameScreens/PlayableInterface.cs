@@ -383,8 +383,8 @@ namespace Divine_Right.GameScreens
                 game.Exit();
 
 
-            //Only check if the game is actually active
-            if (Game.IsActive)
+            //Only check if the game is actually active and not busy
+            if (Game.IsActive && !GameState.IsRunningHeavyProcessing)
             {
 
 
@@ -792,6 +792,15 @@ namespace Divine_Right.GameScreens
             }
 
             GraphicsDevice.Clear(Color.Black);
+
+            if (GameState.IsRunningHeavyProcessing)
+            {
+                System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor;
+            }
+            else
+            {
+                System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
+            }
 
             //get the current state of the game
             //11,4,0
