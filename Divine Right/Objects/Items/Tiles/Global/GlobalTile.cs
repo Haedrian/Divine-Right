@@ -20,7 +20,7 @@ namespace DRObjects.Items.Tiles.Global
     {
         #region Constants
 
-        private SpriteData BIGTREE = SpriteManager.GetSprite(GlobalSpriteName.BIGTREE);
+        private SpriteData BIGTREE = SpriteManager.GetSprite(LocalSpriteName.TREE_1);
         private SpriteData DEADTREE = SpriteManager.GetSprite(GlobalSpriteName.DEADTREE);
         private SpriteData DESERTTILE = SpriteManager.GetSprite(LocalSpriteName.SAND);
         private SpriteData FORESTTILE = SpriteManager.GetSprite(GlobalSpriteName.FORESTTILE);
@@ -31,8 +31,8 @@ namespace DRObjects.Items.Tiles.Global
         private SpriteData RIVER = SpriteManager.GetSprite(GlobalSpriteName.RIVER);
         private SpriteData SNOWTILE = SpriteManager.GetSprite(LocalSpriteName.SNOW);
         private SpriteData SWAMPTILE = SpriteManager.GetSprite(LocalSpriteName.SWAMP);
-        private SpriteData TREE = SpriteManager.GetSprite(GlobalSpriteName.TREE);
-        private SpriteData TROPICALTREE = SpriteManager.GetSprite(GlobalSpriteName.TROPICALTREE);
+        private SpriteData TREE = SpriteManager.GetSprite(LocalSpriteName.TREE_2);
+        private SpriteData TROPICALTREE = SpriteManager.GetSprite(LocalSpriteName.JUNGLE_TREE_1);
         private SpriteData WATERTILE = SpriteManager.GetSprite(GlobalSpriteName.WATERTILE);
         private SpriteData TROPICALTILE = SpriteManager.GetSprite(LocalSpriteName.JUNGLE_TILE);
 
