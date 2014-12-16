@@ -33,7 +33,7 @@ namespace DRObjects.Items.Tiles.Global
         private SpriteData SWAMPTILE = SpriteManager.GetSprite(LocalSpriteName.SWAMP);
         private SpriteData TREE = SpriteManager.GetSprite(LocalSpriteName.TREE_2);
         private SpriteData TROPICALTREE = SpriteManager.GetSprite(LocalSpriteName.JUNGLE_TREE_1);
-        private SpriteData WATERTILE = SpriteManager.GetSprite(GlobalSpriteName.WATERTILE);
+        private SpriteData WATERTILE = SpriteManager.GetSprite(LocalSpriteName.WATER_TILE);
         private SpriteData TROPICALTILE = SpriteManager.GetSprite(LocalSpriteName.JUNGLE_TILE);
 
         private SpriteData BROWN = SpriteManager.GetSprite(ColourSpriteName.BROWN);
