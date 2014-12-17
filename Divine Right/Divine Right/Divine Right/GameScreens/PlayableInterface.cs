@@ -32,6 +32,7 @@ using DRObjects.DataStructures.Enum;
 using System.Threading;
 using DivineRightGame.CharacterCreation;
 using DRObjects.ActorHandling.CharacterSheet.Enums;
+using DRObjects.Items.Tiles.Global;
 
 namespace Divine_Right.GameScreens
 {
@@ -1188,6 +1189,39 @@ namespace Divine_Right.GameScreens
                             {
                                 GameState.LocalMap.Camp.BanditTotal = GameState.LocalMap.Actors.Count(a => a.IsActive && a.IsAlive && !a.IsPlayerCharacter
                                     && a.EnemyData != null && a.EnemyData.Profession == ActorProfession.WARRIOR);
+
+                                //Has it been cleared?
+                                if (GameState.LocalMap.Camp.BanditTotal == 0)
+                                {
+                                    //Find the item
+                                    var campItem = GameState.GlobalMap.CampItems.FirstOrDefault(ci => ci.Camp == GameState.LocalMap.Camp);
+
+                                    if (campItem != null)
+                                    {
+                                        campItem.IsActive = false;
+
+                                        GameState.GlobalMap.CampItems.Remove(campItem);
+
+                                        //Also find the coordinate of the camp, grab a circle around it and remove the owner
+                                        var mapblocks = GameState.GlobalMap.GetBlocksAroundPoint(campItem.Coordinate, WorldGenerationManager.BANDIT_CLAIMING_RADIUS);
+
+                                        foreach(var block in mapblocks)
+                                        {
+                                            var tile = (block.Tile as GlobalTile);
+
+                                            //Owned by bandit
+                                            if (tile.Owner == 50)
+                                            {
+                                                tile.RemoveOwner();
+                                            }
+                                        }
+
+                                        //Yes. Let's clear the camp
+                                        GameState.NewLog.Add(new CurrentLogFeedback(InterfaceSpriteName.SWORD, Color.Black, "You drive the bandits away from the camp"));
+                                    }
+
+                                }
+
                             }
                             else if (GameState.LocalMap.Site != null)
                             {

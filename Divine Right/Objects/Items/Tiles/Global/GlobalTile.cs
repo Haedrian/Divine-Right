@@ -133,6 +133,17 @@ namespace DRObjects.Items.Tiles.Global
         }
 
         /// <summary>
+        /// Removes the top owner
+        /// </summary>
+        public void RemoveOwner()
+        {
+            if (owners != null && owners.Count  != 0)
+            {
+                owners.Pop();
+            }
+        }
+
+        /// <summary>
         /// Holds the owners. It's a stack so in case the owner changes, we can still keep note of who the owner could also be. This is to be used mostly when clearing resources from being bandit-owned.
         /// </summary>
         private Stack<int> owners { get; set; }

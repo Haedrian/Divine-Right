@@ -1227,6 +1227,7 @@ namespace DivineRightGame.Managers
         public static void CreateBandits()
         {
             List<MapBlock> blocks = new List<MapBlock>();
+            GameState.GlobalMap.CampItems = new List<BanditCampItem>();
 
             //Collect all the points
             for (int x = 0; x < WORLDSIZE; x++)
@@ -1266,6 +1267,7 @@ namespace DivineRightGame.Managers
 
                 block.ForcePutItemOnBlock(item);
 
+                GameState.GlobalMap.CampItems.Add(item);
 
                 //Also claim the surrounding areas for bandits. Let's give them an owner of 50 and use the bandit claiming radius
                 MapBlock[] claimedBlocks = GetBlocksAroundPoint(block.Tile.Coordinate, BANDIT_CLAIMING_RADIUS);

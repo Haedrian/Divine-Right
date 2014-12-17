@@ -26,6 +26,11 @@ namespace DivineRightGame
         /// Holds a reference to all map site items, so we can check regarding ownership change and such
         /// </summary>
         public List<MapSiteItem> MapSiteItems { get; set; }
+
+        /// <summary>
+        /// Holds a reference to all camp items
+        /// </summary>
+        public List<BanditCampItem> CampItems { get; set; }
         /// <summary>
         /// This lock is to be used during world generation to prevent race conditions
         /// </summary>
@@ -137,6 +142,34 @@ namespace DivineRightGame
 
                 return airBlock;
             }
+        }
+
+        public MapBlock[] GetBlocksAroundPoint(MapCoordinate centre, int radius)
+        {
+            int minY = centre.Y - Math.Abs(radius);
+            int maxY = centre.Y + Math.Abs(radius);
+
+            int minX = centre.X - Math.Abs(radius);
+            int maxX = centre.X + Math.Abs(radius);
+
+            List<MapBlock> returnList = new List<MapBlock>();
+
+            //go through all of them
+
+            for (int yLoop = maxY; yLoop >= minY; yLoop--)
+            {
+                for (int xLoop = minX; xLoop <= maxX; xLoop++)
+                {
+                    MapCoordinate coord = new MapCoordinate(xLoop, yLoop, 0, MapType.GLOBAL);
+
+                    if (xLoop >= 0 && xLoop < this.globalGameMap.GetLength(0) && yLoop >= 0 && yLoop < this.globalGameMap.GetLength(1))
+                    { //make sure they're in the map
+                        returnList.Add(this.GetBlockAtCoordinate(coord));
+                    }
+                }
+            }
+
+            return returnList.ToArray();
         }
 
         #endregion
