@@ -410,13 +410,6 @@ namespace DRObjects.Items.Tiles.Global
                     graphics.Add(GRASSTILE);
                 }
 
-                //Do we have a slope?
-
-                if (HasHillSlope)
-                {
-                    graphics.Insert(0, HILLSLOPE);
-                }
-
                 //Do we have a river?
 
                 if (HasRiver)
@@ -428,6 +421,11 @@ namespace DRObjects.Items.Tiles.Global
 
                 if (Elevation > 250)
                 {
+                    //Mountains overwrite everything - but keep the base tile
+                    while (graphics.Count > 1)
+                    {
+                        graphics.RemoveAt(0);
+                    }
                     graphics.Insert(0, MOUNTAIN);
                 }
 

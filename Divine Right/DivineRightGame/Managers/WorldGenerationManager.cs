@@ -316,7 +316,7 @@ namespace DivineRightGame.Managers
                 }
                 else
                 {
-                    elev = random.Next(180);
+                    elev = random.Next(210);
                 }
 
                 if (Math.Abs(elev) < 10)
