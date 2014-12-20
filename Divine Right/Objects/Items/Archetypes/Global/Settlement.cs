@@ -6,6 +6,7 @@ using DRObjects.Enums;
 using DRObjects.Graphics;
 using DRObjects.Settlements.Districts;
 using System.IO;
+using DRObjects.CivilisationHandling;
 
 namespace DRObjects.Items.Archetypes.Global
 {
@@ -45,6 +46,7 @@ namespace DRObjects.Items.Archetypes.Global
         public int PoorPercentage { get; set; }
         public Guid UniqueGUID { get { return _uniqueGUID; } }
         public bool IsCapital { get; set; }
+        public Civilisation Civilisation { get; set; }
         #endregion
 
         public override List<SpriteData> Graphics

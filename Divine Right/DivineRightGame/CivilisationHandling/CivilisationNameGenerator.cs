@@ -22,31 +22,31 @@ namespace DivineRightGame.CivilisationHandling
         private static void LoadNames()
         {
             //Start with titles
-            using (TextReader reader = new StreamReader("Resources/CivilisationNames/Title"))
+            using (TextReader reader = new StreamReader("Resources/CivilisationNames/Title.txt"))
             {
                 string allFile = reader.ReadToEnd();
 
-                Titles = allFile.Split('\n').Where(a => !String.IsNullOrEmpty(a)).ToList();
+                Titles = allFile.Replace("\r","").Split('\n').Where(a => !String.IsNullOrEmpty(a)).ToList();
             }
 
-            using (TextReader reader = new StreamReader("Resources/CivilisationNames/Prefix"))
+            using (TextReader reader = new StreamReader("Resources/CivilisationNames/Prefix.txt"))
             {
                 string allFile = reader.ReadToEnd();
 
-                Prefixes = allFile.Split('\n').Where(a => !String.IsNullOrEmpty(a)).ToList();
+                Prefixes = allFile.Replace("\r","").Split('\n').Where(a => !String.IsNullOrEmpty(a)).ToList();
             }
 
-            using (TextReader reader = new StreamReader("Resources/CivilisationNames/Suffix"))
+            using (TextReader reader = new StreamReader("Resources/CivilisationNames/Suffix.txt"))
             {
                 string allFile = reader.ReadToEnd();
 
-                Suffixes = allFile.Split('\n').Where(a => !String.IsNullOrEmpty(a)).ToList();
+                Suffixes = allFile.Replace("\r", "").Split('\n').Where(a => !String.IsNullOrEmpty(a)).ToList();
 
                 Suffixes.Add(String.Empty); //Add an empty string
             }
         }
 
-        CivilisationNameGenerator()
+        static CivilisationNameGenerator()
         {
             //Load them
             LoadNames();
@@ -56,11 +56,11 @@ namespace DivineRightGame.CivilisationHandling
         /// Creates a name for the civilisation
         /// </summary>
         /// <returns></returns>
-        public string GetName()
+        public static string GetName()
         {
             Random random = GameState.Random;
 
-            string name = Titles.GetRandom() + " " + Prefixes.GetRandom() + " " + Suffixes.GetRandom();
+            string name = Titles.GetRandom() + " " + Prefixes.GetRandom() + Suffixes.GetRandom();
 
             return name.Trim();
         }

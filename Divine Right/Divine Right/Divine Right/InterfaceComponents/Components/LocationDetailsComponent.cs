@@ -28,6 +28,8 @@ namespace Divine_Right.InterfaceComponents.Components
         private Rectangle middleRect;
         private Rectangle richRect;
 
+        private Rectangle flagRect;
+
         /// <summary>
         /// The location of each building rectangle by it's position number
         /// </summary>
@@ -165,6 +167,8 @@ namespace Divine_Right.InterfaceComponents.Components
             
             }
 
+            //Draw stuff pertaining to the civilisation
+            batch.Draw(content, SpriteManager.GetSprite(this.settlement.Civilisation.Flag), flagRect, Color.White);
             
         }
 
@@ -234,6 +238,9 @@ namespace Divine_Right.InterfaceComponents.Components
             this.buildingRectangles.Add(7, new Rectangle(districtX + 10, districtY + 150, 50,50));
             this.buildingRectangles.Add(8, new Rectangle(districtX + 60, districtY + 150, 50, 50));
             this.buildingRectangles.Add(9, new Rectangle(districtX + 110, districtY + 150, 50, 50));
+
+            //Add something 'bout the owner
+            this.flagRect = new Rectangle(x + 3, y + 5, 50, 50);
 
         }
 

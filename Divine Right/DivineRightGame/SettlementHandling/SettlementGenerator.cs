@@ -20,6 +20,7 @@ using System.Threading;
 using DivineRightGame.Managers.HelperObjects.HelperEnums;
 using DRObjects.Items.Archetypes.Local;
 using DRObjects.ActorHandling.Enums;
+using DRObjects.CivilisationHandling;
 
 namespace DivineRightGame.SettlementHandling
 {
@@ -40,13 +41,13 @@ namespace DivineRightGame.SettlementHandling
         /// <param name="resources">The resources which are available. We will make use of them if there are any</param>
         /// <param name="capital">Whether the settlement is a capital or not</param>
         /// <returns></returns>
-        public static Settlement GenerateSettlement(MapCoordinate globalCoordinates, int size, List<GlobalResourceType> resources, bool capital = false)
+        public static Settlement GenerateSettlement(MapCoordinate globalCoordinates, int size, List<GlobalResourceType> resources, Civilisation civilisation, bool capital = false)
         {
             Settlement settlement = new Settlement();
 
             settlement.Coordinate = globalCoordinates.Clone();
             settlement.Name = SettlementNameGenerator.GenerateName();
-            settlement.Description = capital ? "the capital of " + settlement.Name : "the settlement of " + settlement.Name;
+            settlement.Description = (capital ? "the capital of " + settlement.Name : "the settlement of " + settlement.Name) + " owned by " + civilisation.Name;
             settlement.MayContainItems = false;
             settlement.SettlementSize = size;
 

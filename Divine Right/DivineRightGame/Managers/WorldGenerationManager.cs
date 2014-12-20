@@ -12,6 +12,8 @@ using DivineRightGame.SettlementHandling;
 using DivineRightGame.LocalMapGenerator;
 using DivineRightGame.ActorHandling;
 using DivineRightGame.Pathfinding;
+using DivineRightGame.CivilisationHandling;
+using DRObjects.CivilisationHandling;
 
 namespace DivineRightGame.Managers
 {
@@ -1005,8 +1007,18 @@ namespace DivineRightGame.Managers
 
             Random random = new Random();
 
+            GameState.GlobalMap.Civilisations = new List<Civilisation>();
+
             for (int i = 0; i < HUMAN_CAPITAL_COUNT; i++)
             {
+                //What do these people call themselves?
+                Civilisation civilisation = new Civilisation();
+                civilisation.Faction = OwningFactions.HUMANS;
+                civilisation.ID = i;
+                civilisation.Name = CivilisationNameGenerator.GetName();
+
+                GameState.GlobalMap.Civilisations.Add(civilisation);
+
                 List<Settlement> ownedSettlements = new List<Settlement>();
 
                 //choose a random x and y
@@ -1050,11 +1062,11 @@ namespace DivineRightGame.Managers
                     }
                 }
 
-                Settlement settlement = SettlementGenerator.GenerateSettlement(block.Tile.Coordinate, random.Next(5) + 10, resources, true);
+                Settlement settlement = SettlementGenerator.GenerateSettlement(block.Tile.Coordinate, random.Next(5) + 10, resources,civilisation, true);
                 settlement.IsCapital = true;
+                settlement.Civilisation = civilisation;
 
                 GameState.GlobalMap.WorldSettlements.Add(CreateSettlement(true, settlement, block, i));
-
 
                 ownedSettlements.Add(settlement);
 
@@ -1096,7 +1108,8 @@ namespace DivineRightGame.Managers
                         }
                     }
 
-                    settlement = SettlementGenerator.GenerateSettlement(block.Tile.Coordinate, random.Next(7) + 1, resources);
+                    settlement = SettlementGenerator.GenerateSettlement(block.Tile.Coordinate, random.Next(7) + 1, resources, civilisation);
+                    settlement.Civilisation = civilisation;
 
                     GameState.GlobalMap.WorldSettlements.Add(CreateSettlement(false, settlement, block, i));
 

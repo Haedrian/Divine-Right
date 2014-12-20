@@ -103,6 +103,7 @@
     <Compile Include="ActorHandling\EquippedItem.cs" />
     <Compile Include="ActorHandling\RaceData.cs" />
     <Compile Include="ActorHandling\VendorDetails.cs" />
+    <Compile Include="CivilisationHandling\CivilisationDetails.cs" />
     <Compile Include="Compare\MapCoordinateCompare.cs" />
     <Compile Include="Database\DatabaseHandling.cs" />
     <Compile Include="DataStructures\ColorSerializationSurrogate.cs" />
@@ -132,6 +133,7 @@
     <Compile Include="EventHandling\EventChoice.cs" />
     <Compile Include="EventHandling\MultiEvents\GameMultiEvent.cs" />
     <Compile Include="EventHandling\MultiEvents\MultiEventChoice.cs" />
+    <Compile Include="Extensions\Extensions.cs" />
     <Compile Include="GraphicsEngineObjects\Abstract\PlayerFeedback.cs" />
     <Compile Include="GraphicsEngineObjects\CreateEventFeedback.cs" />
     <Compile Include="GraphicsEngineObjects\CurrentLogFeedback.cs" />
@@ -485,6 +487,15 @@
     <Content Include="Maplets\Village.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Resources\CivilisationNames\Prefix.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\CivilisationNames\Suffix.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\CivilisationNames\Title.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\HumanNames\FemaleNames.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

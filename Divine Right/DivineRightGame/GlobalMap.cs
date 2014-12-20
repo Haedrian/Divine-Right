@@ -7,6 +7,7 @@ using DRObjects.Compare;
 using DRObjects.Items.Tiles.Global;
 using DRObjects.Enums;
 using DRObjects.Items.Archetypes.Global;
+using DRObjects.CivilisationHandling;
 
 namespace DivineRightGame
 {
@@ -17,7 +18,7 @@ namespace DivineRightGame
     public class GlobalMap
     {
         #region Members
-        public List<string> Civilisations { get; set; }
+        public List<Civilisation> Civilisations { get; set; }
         public MapBlock[,] globalGameMap;
         private List<Actor> parties;
         private int worldSize;

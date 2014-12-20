@@ -326,7 +326,15 @@ namespace Divine_Right.GameScreens
             //Create the menu buttons
             menuButtons.Add(new AutoSizeGameButton("  Health  ", this.game.Content, InternalActionEnum.OPEN_HEALTH, new object[] { }, 50, GraphicsDevice.Viewport.Height - 35));
             menuButtons.Add(new AutoSizeGameButton(" Attributes ", this.game.Content, InternalActionEnum.OPEN_ATTRIBUTES, new object[] { }, 150, GraphicsDevice.Viewport.Height - 35));
-            //menuButtons.Add(new AutoSizeGameButton(" Settlement ", this.game.Content, InternalActionEnum.TOGGLE_SETTLEMENT, new object[] { }, 270, GraphicsDevice.Viewport.Height - 35));
+
+            if (GameState.LocalMap.Settlement != null)
+            {
+                menuButtons.Add(new AutoSizeGameButton(" Settlement ", this.game.Content, InternalActionEnum.TOGGLE_SETTLEMENT, new object[] { }, 270, GraphicsDevice.Viewport.Height - 35));
+                LocationDetailsComponent ldc = new LocationDetailsComponent(GameState.LocalMap.Settlement, PlayableWidth - 170, 0);
+                ldc.Visible = true;
+                interfaceComponents.Add(ldc);
+            }
+
             menuButtons.Add(new AutoSizeGameButton(" Inventory ", this.game.Content, InternalActionEnum.OPEN_INVENTORY, new object[] { }, 350, GraphicsDevice.Viewport.Height - 35));
 
             //Invoke a size change
@@ -1135,7 +1143,7 @@ namespace Divine_Right.GameScreens
 
                         //Makde the components visible
                         LocationDetailsComponent ldc = new LocationDetailsComponent(GameState.LocalMap.Settlement, PlayableWidth - 170, 0);
-                        ldc.Visible = false;
+                        ldc.Visible = true;
                         interfaceComponents.Add(ldc);
                         menuButtons.Add(new AutoSizeGameButton(" Settlement ", this.game.Content, InternalActionEnum.TOGGLE_SETTLEMENT, new object[] { }, 270, GraphicsDevice.Viewport.Height - 35));
                         Window_ClientSizeChanged(null, null); //button is in the wrong position for some reason

@@ -16,6 +16,7 @@ using DRObjects.ActorHandling.CharacterSheet.Enums;
 using DRObjects.ActorHandling.CharacterSheet;
 using DRObjects.Sites;
 using DRObjects.Enums;
+using DRObjects.CivilisationHandling;
 
 namespace Divine_Right.HelperFunctions
 {
@@ -98,7 +99,7 @@ namespace Divine_Right.HelperFunctions
 
         public static void GenerateSettlement()
         {
-            var settlement = SettlementGenerator.GenerateSettlement(new MapCoordinate(50, 50, 0, DRObjects.Enums.MapType.GLOBAL), GameState.Random.Next(10) + 2, new List<DRObjects.Enums.GlobalResourceType>());
+            var settlement = SettlementGenerator.GenerateSettlement(new MapCoordinate(50, 50, 0, DRObjects.Enums.MapType.GLOBAL), GameState.Random.Next(10) + 2, new List<DRObjects.Enums.GlobalResourceType>(), new Civilisation() { Name = "Llama Empire",ID = 0 });
 
             GameState.LocalMap = new LocalMap(250, 250, 1, 0);
             GameState.LocalMap.Settlement = settlement;

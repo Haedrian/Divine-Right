@@ -102,16 +102,7 @@ namespace DRObjects.Items.Archetypes.Global
                     {
                         //Flag it
 
-                        switch (OwnerID)
-                        {
-                            case 0: sprites.Add(SpriteManager.GetSprite(GlobalSpriteName.FLAG_BROWN)); break;
-                            case 1: sprites.Add(SpriteManager.GetSprite(GlobalSpriteName.FLAG_GREEN)); break;
-                            case 2: sprites.Add(SpriteManager.GetSprite(GlobalSpriteName.FLAG_ORANGE)); break;
-                            case 3: sprites.Add(SpriteManager.GetSprite(GlobalSpriteName.FLAG_PINK)); break;
-                            case 4: sprites.Add(SpriteManager.GetSprite(GlobalSpriteName.FLAG_PURPLE)); break;
-                            case 5: sprites.Add(SpriteManager.GetSprite(GlobalSpriteName.FLAG_RED)); break;
-                            case 6: sprites.Add(SpriteManager.GetSprite(GlobalSpriteName.FLAG_YELLOW)); break;
-                        }
+                       sprites.Add(SpriteManager.GetSprite(this.Settlement.Civilisation.Flag));
                     }
 
                 }
