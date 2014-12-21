@@ -134,7 +134,7 @@ namespace DivineRightGame
                                 //Reclaim it!
                                 item.Site.SiteData.Owners = tileOwner < 10 ? OwningFactions.HUMANS : tileOwner == 100 ? OwningFactions.ORCS : OwningFactions.BANDITS;
 
-                                item.Site.SiteData.OwnerID = tileOwner;
+                                item.Site.SiteData.Civilisation = GameState.GlobalMap.Civilisations.First(c => c.ID.Equals(tileOwner));
                                 item.Site.SiteData.LoadAppropriateActorCounts();
 
                                 item.Site.SiteData.MapRegenerationRequired = true;
@@ -143,7 +143,7 @@ namespace DivineRightGame
                         }
                         else
                         //Is the tile owned by the same person ?
-                        if (item.Site.SiteData.OwnerID == (GlobalMap.GetBlockAtCoordinate(item.Coordinate).Tile as GlobalTile).Owner)
+                        if (item.Site.SiteData.Civilisation.ID == (GlobalMap.GetBlockAtCoordinate(item.Coordinate).Tile as GlobalTile).Owner)
                         {
                             item.Site.SiteData.IncrementActorCounts();
                         }

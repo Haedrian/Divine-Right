@@ -5,18 +5,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DRObjects.GraphicsEngineObjects.Abstract;
 
 namespace DRObjects.Items.Archetypes.Global
 {
     [Serializable]
-    public class MapSiteItem:
+    public class MapSiteItem :
         MapItem
     {
         /// <summary>
         /// The sprite to display
         /// </summary>
         private List<SpriteData> sprites = null;
-        
+
         public MapSite Site { get; set; }
 
         /// <summary>
@@ -31,7 +32,7 @@ namespace DRObjects.Items.Archetypes.Global
         {
             get
             {
-                switch(Site.SiteData.SiteTypeData.SiteType)
+                switch (Site.SiteData.SiteTypeData.SiteType)
                 {
                     case SiteType.FARM: return "Farm";
                     case SiteType.FISHING_VILLAGE: return "Fishing Village";
@@ -54,7 +55,7 @@ namespace DRObjects.Items.Archetypes.Global
         {
             get
             {
-                switch(Site.SiteData.SiteTypeData.SiteType)
+                switch (Site.SiteData.SiteTypeData.SiteType)
                 {
                     case SiteType.FARM: return "A farm";
                     case SiteType.FISHING_VILLAGE: return "A village of fishermen";
@@ -73,7 +74,7 @@ namespace DRObjects.Items.Archetypes.Global
             }
         }
 
-        public override Enums.ActionType[] GetPossibleActions(Actor actor)
+        public override ActionType[] GetPossibleActions(Actor actor)
         {
             List<ActionType> actionTypes = new List<ActionType>();
             actionTypes.AddRange(base.GetPossibleActions(actor));
@@ -86,7 +87,7 @@ namespace DRObjects.Items.Archetypes.Global
             return actionTypes.ToArray();
         }
 
-        public override GraphicsEngineObjects.Abstract.ActionFeedback[] PerformAction(ActionType actionType, Actor actor, object[] args)
+        public override ActionFeedback[] PerformAction(ActionType actionType, Actor actor, object[] args)
         {
             if (actionType != ActionType.EXPLORE)
             {
@@ -118,36 +119,13 @@ namespace DRObjects.Items.Archetypes.Global
                 {
                     sprites = new List<SpriteData>();
 
-                    //who's the owner?
-                    switch(Site.SiteData.Owners)
+                    //Display the owner's flag
+                    if (this.Site.SiteData.Civilisation != null)
                     {
-                        case OwningFactions.ABANDONED:
-                        case OwningFactions.UNDEAD:
-                            //todo
-                            break;
-                        case OwningFactions.BANDITS:
-                            sprites.Add(SpriteManager.GetSprite(GlobalSpriteName.FLAG_BLACK));
-                            break;
-                        case OwningFactions.HUMANS:
-
-                            switch (this.Site.SiteData.OwnerID)
-                            {
-                                case 0: sprites.Add(SpriteManager.GetSprite(GlobalSpriteName.FLAG_BROWN)); break;
-                                case 1: sprites.Add(SpriteManager.GetSprite(GlobalSpriteName.FLAG_GREEN)); break;
-                                case 2: sprites.Add(SpriteManager.GetSprite(GlobalSpriteName.FLAG_ORANGE)); break;
-                                case 3: sprites.Add(SpriteManager.GetSprite(GlobalSpriteName.FLAG_PINK)); break;
-                                case 4: sprites.Add(SpriteManager.GetSprite(GlobalSpriteName.FLAG_PURPLE)); break;
-                                case 5: sprites.Add(SpriteManager.GetSprite(GlobalSpriteName.FLAG_RED)); break;
-                                case 6: sprites.Add(SpriteManager.GetSprite(GlobalSpriteName.FLAG_YELLOW)); break;
-                            }
-
-                            break;
-                        case OwningFactions.ORCS:
-                            sprites.Add(SpriteManager.GetSprite(GlobalSpriteName.FLAG_ORC));
-                            break;
+                        sprites.Add(SpriteManager.GetSprite(this.Site.SiteData.Civilisation.Flag));
                     }
 
-                    //Show a graphic depending on the type of the site (and later on the owner)
+                    //Show a graphic depending on the type of the site
                     switch (Site.SiteData.SiteTypeData.SiteType)
                     {
                         case SiteType.FARM:

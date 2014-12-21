@@ -114,7 +114,7 @@ namespace DivineRightGame.Managers
             ColoniseWorld();
 
             CurrentStep = "And the humans awoke the beasts and monsters of the land";
-            CreateDungeons();
+            CreateOrcCitadels();
 
             CurrentStep = "And some humans took to thievery";
             CreateBandits();
@@ -912,7 +912,7 @@ namespace DivineRightGame.Managers
                     Biome = (block.Tile as GlobalTile).Biome ?? GlobalBiome.GARIGUE,
                     OwnerChanged = false,
                     Owners = (block.Tile as GlobalTile).Owner.Value == 100 ? OwningFactions.ORCS : (block.Tile as GlobalTile).Owner.Value == 50 ? OwningFactions.BANDITS : OwningFactions.HUMANS, //TODO: EXPAND LATER
-                    OwnerID = (block.Tile as GlobalTile).Owner.Value
+                    Civilisation = GameState.GlobalMap.Civilisations.FirstOrDefault(c => c.ID.Equals( (block.Tile as GlobalTile).Owner.Value))
                 };
 
                 MapSiteItem msi = new MapSiteItem();
@@ -1122,12 +1122,15 @@ namespace DivineRightGame.Managers
         }
 
         /// <summary>
-        /// Creates Dungeons on the Map.
+        /// Creates Citadels on the map
         /// Will colonise areas not claimed by humans.
         /// Later on we'll create ruins which will appear in areas claimed by humans
         /// </summary>
-        public static void CreateDungeons()
+        public static void CreateOrcCitadels()
         {
+            //Create the civilisation
+            GameState.GlobalMap.Civilisations.Add(new Civilisation() { Faction = OwningFactions.ORCS, ID = 100, Name = "Orc Hoardes" });
+
             List<MapBlock> blocks = new List<MapBlock>();
 
             //Collect all the points which aren't claimed
@@ -1239,6 +1242,9 @@ namespace DivineRightGame.Managers
         /// </summary>
         public static void CreateBandits()
         {
+            //Create the bandit civilisation
+            GameState.GlobalMap.Civilisations.Add(new Civilisation() { ID = 50, Faction = OwningFactions.BANDITS, Name = "Bandits" });
+
             List<MapBlock> blocks = new List<MapBlock>();
             GameState.GlobalMap.CampItems = new List<BanditCampItem>();
 
@@ -1326,7 +1332,7 @@ namespace DivineRightGame.Managers
 
                 //Now lets build roads between all the sites owned by this person and the closest settlement
                 
-                foreach(var mapSite in GameState.GlobalMap.MapSiteItems.Where(ms => ms.Site.SiteData.OwnerID == i))
+                foreach(var mapSite in GameState.GlobalMap.MapSiteItems.Where(ms => ms.Site.SiteData.Civilisation.ID == i))
                 {
                     //Rebuild
                     PathfinderInterface.Nodes = GeneratePathfindingMap(GameState.GlobalMap.globalGameMap);

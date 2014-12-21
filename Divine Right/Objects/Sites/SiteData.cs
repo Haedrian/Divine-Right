@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DRObjects.ActorHandling.CharacterSheet.Enums;
+using DRObjects.CivilisationHandling;
 using DRObjects.Enums;
 using DRObjects.LocalMapGeneratorObjects;
 
@@ -20,9 +21,9 @@ namespace DRObjects.Sites
         public OwningFactions Owners { get; set; }
 
         /// <summary>
-        /// The ID of whomever owns the site if it's a human
+        /// The civilisation that owns this item
         /// </summary>
-        public int OwnerID { get; set; }
+        public Civilisation Civilisation { get; set; }
 
 
         /// <summary>
