@@ -6,12 +6,12 @@
 				{
 					"Profession": "WARRIOR",
 					"BaseAmount": 4,
-					"MaxAmount": 10
+					"MaxAmount": 7
 				},
 				{
 					"Profession": "WORKER",
 					"BaseAmount": 5,
-					"MaxAmount": 10
+					"MaxAmount": 7
 				},
 				{
 					"Owner": "BANDITS",
@@ -27,12 +27,12 @@
 				{
 					"Profession": "WARRIOR",
 					"BaseAmount": 5,
-					"MaxAmount": 15
+					"MaxAmount": 7
 				},
 				{
 					"Profession": "WORKER",
 					"BaseAmount": 7,
-					"MaxAmount": 15
+					"MaxAmount": 10
 				},
 				{
 					"Owner": "BANDITS",
@@ -53,7 +53,7 @@
 				{
 					"Profession": "WORKER",
 					"BaseAmount": 5,
-					"MaxAmount": 10
+					"MaxAmount": 7
 				},
 				{
 					"Owner": "BANDITS",
@@ -73,8 +73,8 @@
 				},
 				{
 					"Profession": "WORKER",
-					"BaseAmount": 5,
-					"MaxAmount": 10
+					"BaseAmount": 3,
+					"MaxAmount": 7
 				},
 				{
 					"Owner": "BANDITS",
