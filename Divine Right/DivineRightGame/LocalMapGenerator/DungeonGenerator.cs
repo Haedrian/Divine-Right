@@ -15,12 +15,12 @@ namespace DivineRightGame.LocalMapGenerator
     /// </summary>
     public static class DungeonGenerator
     {
-        private const int SIZE = 102;
+        private const int SIZE = 75;
         private const int AREA = SIZE * SIZE;
         private const int MINIMUM_AREA = 25;
 
-        private const int MINIMUM_EDGE = 4;
-        private const int MAXIMUM_EDGE = 10;
+        private const int MINIMUM_EDGE = 7;
+        private const int MAXIMUM_EDGE = 14;
 
         public static MapBlock[,] GenerateDungeonLevel(int level, int percentCovered, out MapCoordinate startPoint, out List<Actor> enemies)
         {
@@ -28,12 +28,18 @@ namespace DivineRightGame.LocalMapGenerator
             startPoint = new MapCoordinate();
             enemies = new List<Actor>();
 
+            ItemFactory.ItemFactory fact = new ItemFactory.ItemFactory();
+
+            int lavaID = -1;
+            var d = fact.CreateItem("tiles", "lava", out lavaID);
+
             for (int x = 0; x < SIZE; x++)
             {
                 for (int y = 0; y < SIZE; y++)
                 {
-                    map[x, y] = new MapBlock(); //Start with default
-                    map[x, y].Tile = new Air(new MapCoordinate(x, y, 0, MapType.LOCAL));
+                    map[x, y] = new MapBlock(); //Start with lava :)
+                    map[x, y].Tile = fact.CreateItem("tiles", lavaID);
+                    map[x, y].Tile.Coordinate = (new MapCoordinate(x, y, 0, MapType.LOCAL));
                 }
             }
 
@@ -79,7 +85,6 @@ namespace DivineRightGame.LocalMapGenerator
             }
 
             //Put the tiles
-            ItemFactory.ItemFactory fact = new ItemFactory.ItemFactory();
 
             int tileID = -1;
             var dummy = fact.CreateItem("tiles", "cave", out tileID);
