@@ -145,6 +145,7 @@
     <Compile Include="Actor.cs" />
     <Compile Include="Enums\ActionTypeEnum.cs" />
     <Compile Include="GraphicsEngineObjects\TimePassFeedback.cs" />
+    <Compile Include="GraphicsEngineObjects\VisitedBlockFeedback.cs" />
     <Compile Include="Graphics\ColourSpriteName.cs" />
     <Compile Include="Graphics\GraphicSetManager.cs" />
     <Compile Include="Graphics\GraphicSetName.cs" />

@@ -33,6 +33,11 @@ namespace DRObjects
         /// </summary>
         public MapItem Tile { get; set; }
 
+        /// <summary>
+        /// Whether the player has visited this tile. This is used for underground areas
+        /// </summary>
+        public bool WasVisited { get; set; }
+
         public bool MayContainItems
         {
             get
@@ -50,6 +55,7 @@ namespace DRObjects
         public MapBlock()
         {
             this.mapItems = new List<MapItem>();
+            this.WasVisited = false;
         }
 
         #endregion
@@ -293,6 +299,12 @@ namespace DRObjects
                         return feedback.ToArray();
                     }
 
+                   if (actor.IsPlayerCharacter)
+                   {
+                       //Mark all tiles around him as having been visited
+                       return new ActionFeedback[1] { new VisitedBlockFeedback { Coordinate = this.Tile.Coordinate } };
+                   }
+
                     return new ActionFeedback[0];
                 }
                 else
@@ -319,7 +331,7 @@ namespace DRObjects
         public GraphicalBlock ConvertToGraphicalBlock()
         {
             GraphicalBlock block = new GraphicalBlock();
-            block.TileGraphics = this.Tile.Graphics.ToArray();
+            block.TileGraphics =  this.Tile.Graphics.ToArray();
             List<SpriteData> itemGraphics = new List<SpriteData>();
 
             if (this.GetTopMapItem() != null)
@@ -333,6 +345,7 @@ namespace DRObjects
 
             block.ItemGraphics = itemGraphics.ToArray();
             block.MapCoordinate = this.Tile.Coordinate;
+            block.WasVisited = this.WasVisited;
 
             return block;
         }
@@ -355,6 +368,7 @@ namespace DRObjects
 
             block.ItemGraphics = itemGraphics.ToArray();
             block.MapCoordinate = this.Tile.Coordinate;
+            block.WasVisited = this.WasVisited;
 
             //get the overlay images if its a global tile
 

@@ -27,6 +27,16 @@ namespace DRObjects.GraphicsEngineObjects
         /// </summary>
         public SpriteData[] ItemGraphics {get;set; }
 
+        /// <summary>
+        /// Whether this block was visited or not. For underground tiles
+        /// </summary>
+        public bool WasVisited { get; set; }
+
+        /// <summary>
+        /// Whether this block is not in the current LoS
+        /// </summary>
+        public bool IsOld { get; set; }
+
         #region Overridden functions
 
         /// <summary>
@@ -37,6 +47,11 @@ namespace DRObjects.GraphicsEngineObjects
         public override string ToString()
         {
             return "GB at:" + this.MapCoordinate + " " + "Items: " + ItemGraphics.Length;
+        }
+
+        public GraphicalBlock()
+        {
+            this.IsOld = false;
         }
 
         #endregion

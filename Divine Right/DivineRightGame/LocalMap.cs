@@ -171,6 +171,35 @@ namespace DivineRightGame
 
         }
 
+        public MapBlock[] GetBlocksAroundPoint(MapCoordinate centre, int radius)
+        {
+            int minY = centre.Y - Math.Abs(radius);
+            int maxY = centre.Y + Math.Abs(radius);
+
+            int minX = centre.X - Math.Abs(radius);
+            int maxX = centre.X + Math.Abs(radius);
+
+            List<MapBlock> returnList = new List<MapBlock>();
+
+            //go through all of them
+
+            for (int yLoop = maxY; yLoop >= minY; yLoop--)
+            {
+                for (int xLoop = minX; xLoop <= maxX; xLoop++)
+                {
+                    MapCoordinate coord = new MapCoordinate(xLoop, yLoop, 0, MapType.GLOBAL);
+
+                    if (xLoop >= 0 && xLoop < this.localGameMap.GetLength(0) && yLoop >= 0 && yLoop < this.localGameMap.GetLength(1))
+                    { //make sure they're in the map
+                        returnList.Add(this.GetBlockAtCoordinate(coord));
+                    }
+                }
+            }
+
+            return returnList.ToArray();
+        }
+
+
         /// <summary>
         /// Generates the map required for pathfinding, and assign it to the Interface
         /// </summary>
@@ -310,7 +339,7 @@ namespace DivineRightGame
         /// <returns></returns>
         public static bool MapGenerated(Guid uniqueGuid)
         {
-            return File.Exists(GameState.SAVEPATH + uniqueGuid +".dvd");
+            return File.Exists(GameState.SAVEPATH + uniqueGuid + ".dvd");
         }
     }
 }

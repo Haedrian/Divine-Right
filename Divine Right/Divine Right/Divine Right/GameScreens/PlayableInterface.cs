@@ -818,12 +818,32 @@ namespace Divine_Right.GameScreens
             if (GameState.LocalMap.IsUnderground)
             {
                 //Blank out the blocks except the ones next to the player character
-                var blankBlocks = blocks.Where(b => Math.Abs(GameState.PlayerCharacter.MapCharacter.Coordinate - b.MapCoordinate) > 7).ToArray();
+                var blankBlocks = blocks.Where(b => Math.Abs(GameState.PlayerCharacter.MapCharacter.Coordinate - b.MapCoordinate) > GameState.PlayerCharacter.LineOfSight).ToArray();
 
                 for (int i = 0; i < blankBlocks.Length; i++)
                 {
                     blankBlocks[i].ItemGraphics = new SpriteData[] { };
-                    blankBlocks[i].TileGraphics = new SpriteData[] { };
+
+                    if (!blankBlocks[i].WasVisited)
+                    {
+                        blankBlocks[i].TileGraphics = new SpriteData[] { };
+                    }
+                    else
+                    {
+                        blankBlocks[i].IsOld = true;
+                        //foreach (var grph in blankBlocks[i].TileGraphics)
+                        //{
+                        //    if (grph != null)
+                        //    {
+                        //        var color = grph.ColorFilter ?? Color.White;
+                        //        //float fLuminance = 0.299f * color.R + 0.587f * color.G + 0.114f * color.B;
+                        //        //color = new Color(new Vector4(fLuminance, fLuminance, fLuminance, 1.0f));
+
+                        //        grph.ColorFilter = Color.DarkGray;
+                        //    }
+                        //}
+
+                    }
                 }
             }
 
@@ -959,11 +979,11 @@ namespace Divine_Right.GameScreens
                         {
                             if (tileGraphic.sourceRectangle == null)
                             {
-                                spriteBatch.Draw(this.game.Content.Load<Texture2D>(tileGraphic.path), rec, tileGraphic.ColorFilter.HasValue ? tileGraphic.ColorFilter.Value : Color.White);
+                                spriteBatch.Draw(this.game.Content.Load<Texture2D>(tileGraphic.path), rec, block.IsOld ? Color.DarkGray  : (tileGraphic.ColorFilter.HasValue ? tileGraphic.ColorFilter.Value : Color.White));
                             }
                             else
                             { //part of a tileset
-                                spriteBatch.Draw(this.game.Content.Load<Texture2D>(tileGraphic.path), rec, tileGraphic.sourceRectangle, tileGraphic.ColorFilter.HasValue ? tileGraphic.ColorFilter.Value : Color.White);
+                                spriteBatch.Draw(this.game.Content.Load<Texture2D>(tileGraphic.path), rec, tileGraphic.sourceRectangle, block.IsOld ? Color.DarkGray : (tileGraphic.ColorFilter.HasValue ? tileGraphic.ColorFilter.Value : Color.White));
                             }
                         }
                     }
@@ -1318,6 +1338,16 @@ namespace Divine_Right.GameScreens
 
                         //Create the actual control
                         interfaceComponents.Add(new DecisionPopupComponent(PlayableWidth / 2 - 150, PlayableHeight / 2 - 150, gameEvent));
+                    }
+                }
+                else if (feedback.GetType().Equals(typeof(VisitedBlockFeedback)))
+                {
+                    VisitedBlockFeedback vbf = feedback as VisitedBlockFeedback;
+
+                    //Visit a region equal to the line of sight of the player character
+                    foreach (var block in GameState.LocalMap.GetBlocksAroundPoint(vbf.Coordinate, GameState.PlayerCharacter.LineOfSight ?? 0))
+                    {
+                        block.WasVisited = true;
                     }
                 }
 

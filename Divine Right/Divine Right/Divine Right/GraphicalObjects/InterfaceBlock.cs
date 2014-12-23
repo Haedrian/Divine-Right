@@ -28,6 +28,8 @@ namespace Divine_Right.GraphicalObjects
             this.MapCoordinate = block.MapCoordinate;
             this.TileGraphics = block.TileGraphics;
             this.OverlayGraphic = block.OverlayGraphic;
+            this.WasVisited = block.WasVisited;
+            this.IsOld = block.IsOld;
         }
     }
 }
