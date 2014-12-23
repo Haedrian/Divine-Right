@@ -30,15 +30,12 @@ namespace DivineRightGame.LocalMapGenerator
 
             ItemFactory.ItemFactory fact = new ItemFactory.ItemFactory();
 
-            int lavaID = -1;
-            var d = fact.CreateItem("tiles", "lava", out lavaID);
-
             for (int x = 0; x < SIZE; x++)
             {
                 for (int y = 0; y < SIZE; y++)
                 {
-                    map[x, y] = new MapBlock(); //Start with lava :)
-                    map[x, y].Tile = fact.CreateItem("tiles", lavaID);
+                    map[x, y] = new MapBlock(); //Start with air :)
+                    map[x, y].Tile = new Air();
                     map[x, y].Tile.Coordinate = (new MapCoordinate(x, y, 0, MapType.LOCAL));
                 }
             }

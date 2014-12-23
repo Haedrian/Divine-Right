@@ -811,9 +811,22 @@ namespace Divine_Right.GameScreens
                 System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
             }
 
+            GraphicalBlock[] blocks = UserInterfaceManager.GetBlocksAroundPlayer((TotalTilesWidth / 2), (TotalTilesHeight / 2), 0);
+
             //get the current state of the game
             //11,4,0
-            GraphicalBlock[] blocks = UserInterfaceManager.GetBlocksAroundPlayer((TotalTilesWidth / 2), (TotalTilesHeight / 2), 0);
+            if (GameState.LocalMap.IsUnderground)
+            {
+                //Blank out the blocks except the ones next to the player character
+                var blankBlocks = blocks.Where(b => Math.Abs(GameState.PlayerCharacter.MapCharacter.Coordinate - b.MapCoordinate) > 7).ToArray();
+
+                for (int i = 0; i < blankBlocks.Length; i++)
+                {
+                    blankBlocks[i].ItemGraphics = new SpriteData[] { };
+                    blankBlocks[i].TileGraphics = new SpriteData[] { };
+                }
+            }
+
             //clean the blocks up
 
             List<InterfaceBlock> iBlocks = this.PrepareGrid(blocks.ToList<GraphicalBlock>());
@@ -825,8 +838,9 @@ namespace Divine_Right.GameScreens
 
             this.DrawGrid(iBlocks);
 
+
             // nighttime 
-            if (GameState.UniverseTime.GetTimeComponent(DRTimeComponent.HOUR) >= 5)
+            if (GameState.LocalMap.IsUnderground || GameState.UniverseTime.GetTimeComponent(DRTimeComponent.HOUR) >= 5)
             {
                 spriteBatch.Draw(this.game.Content, SpriteManager.GetSprite(ColourSpriteName.MARBLEBLUE), new Rectangle(0, 0, 10000, 10000), new Color(0, 0, 0, 150));
             }
@@ -1213,7 +1227,7 @@ namespace Divine_Right.GameScreens
                                         //Also find the coordinate of the camp, grab a circle around it and remove the owner
                                         var mapblocks = GameState.GlobalMap.GetBlocksAroundPoint(campItem.Coordinate, WorldGenerationManager.BANDIT_CLAIMING_RADIUS);
 
-                                        foreach(var block in mapblocks)
+                                        foreach (var block in mapblocks)
                                         {
                                             var tile = (block.Tile as GlobalTile);
 
@@ -1559,9 +1573,9 @@ namespace Divine_Right.GameScreens
                 {
                     MapBlock[,] savedMap2D = new MapBlock[savedMap.localGameMap.GetLength(0), savedMap.localGameMap.GetLength(1)];
 
-                    for(int x =0; x < savedMap.localGameMap.GetLength(0);x++)
+                    for (int x = 0; x < savedMap.localGameMap.GetLength(0); x++)
                     {
-                        for(int y=0; y < savedMap.localGameMap.GetLength(1); y++)
+                        for (int y = 0; y < savedMap.localGameMap.GetLength(1); y++)
                         {
                             savedMap2D[x, y] = savedMap.localGameMap[x, y, 0]; //NB: CHANGE IF WE GO 3D
                         }

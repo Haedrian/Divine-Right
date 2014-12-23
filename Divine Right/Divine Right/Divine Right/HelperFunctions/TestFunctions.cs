@@ -61,6 +61,7 @@ namespace Divine_Right.HelperFunctions
 
             GameState.LocalMap = new LocalMap(500, 500, 1, 0);
             GameState.LocalMap.PointsOfInterest = pointsOfInterest;
+            GameState.LocalMap.IsUnderground = true;
 
             List<MapBlock> collapsedMap = new List<MapBlock>();
 

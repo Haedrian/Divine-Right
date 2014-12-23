@@ -54,6 +54,8 @@ namespace DivineRightGame
         public List<PointOfInterest> PointsOfInterest { get; set; }
         public Byte[,] PathfindingMap { get; set; }
 
+        public bool IsUnderground { get; set; }
+
         /// <summary>
         /// Represents the settlement the player is currently at
         /// </summary>
@@ -92,6 +94,7 @@ namespace DivineRightGame
             this.localGameMap = new MapBlock[sizeX, sizeY, sizeZ];
             this.groundLevel = groundLevel;
             this.actors = new List<Actor>();
+            this.IsUnderground = false;
         }
 
         #endregion
