@@ -1508,7 +1508,7 @@ namespace Divine_Right.GameScreens
             {
                 Actor[] actors = null;
 
-                DungeonGenerator gen = new DungeonGenerator();
+                CitadelGenerator gen = new CitadelGenerator();
                 MapCoordinate startPoint = null;
                 List<PointOfInterest> pointsOfInterest = null;
 

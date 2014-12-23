@@ -92,6 +92,7 @@
     <Compile Include="GameStateSaveFile.cs" />
     <Compile Include="ItemFactory\ItemFactoryManagers\InventoryItemManager.cs" />
     <Compile Include="LocalMapGenerator\CampGenerator.cs" />
+    <Compile Include="LocalMapGenerator\DungeonGenerator.cs" />
     <Compile Include="LocalMapGenerator\Objects\WildernessGenerationData.cs" />
     <Compile Include="LocalMapGenerator\SiteGenerator.cs" />
     <Compile Include="LocalMapGenerator\WildernessGenerator.cs" />
@@ -117,7 +118,7 @@
     <Compile Include="ItemFactory\Object\KeyListItem.cs" />
     <Compile Include="ItemFactory\Object\MultiDictionary.cs" />
     <Compile Include="LocalMap.cs" />
-    <Compile Include="LocalMapGenerator\DungeonGenerator.cs" />
+    <Compile Include="LocalMapGenerator\CitadelGenerator.cs" />
     <Compile Include="LocalMapGenerator\MapletDatabaseHandler.cs" />
     <Compile Include="LocalMapGenerator\Objects\DungeonRoom.cs" />
     <Compile Include="LocalMapGenerator\Objects\DungeonRoomType.cs" />

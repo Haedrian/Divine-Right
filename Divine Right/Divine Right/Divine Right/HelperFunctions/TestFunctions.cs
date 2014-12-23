@@ -24,7 +24,7 @@ namespace Divine_Right.HelperFunctions
     {
         public static void PrepareFileTestMap()
         {
-            GameState.LocalMap = new LocalMap(15,15,0,0);
+            GameState.LocalMap = new LocalMap(15, 15, 0, 0);
 
             //GameState.LocalMap.LoadLocalMap(mgr.GetMap("testmap"),0);
 
@@ -35,9 +35,9 @@ namespace Divine_Right.HelperFunctions
             GameState.PlayerCharacter.Anatomy = ActorGeneration.GenerateAnatomy("human");
 
             MapBlock block = GameState.LocalMap.GetBlockAtCoordinate(new MapCoordinate(5, 5, 0, DRObjects.Enums.MapType.LOCAL));
-            
+
             MapItem player = new MapItem();
-            player.Coordinate = new MapCoordinate(5,5,0,DRObjects.Enums.MapType.LOCAL);
+            player.Coordinate = new MapCoordinate(5, 5, 0, DRObjects.Enums.MapType.LOCAL);
             player.Description = "The player character";
             player.Graphic = SpriteManager.GetSprite(LocalSpriteName.PLAYERCHAR_MALE);
             player.InternalName = "Player Char";
@@ -51,16 +51,15 @@ namespace Divine_Right.HelperFunctions
 
         public static void GenerateDungeon()
         {
-            DungeonGenerator gen = new DungeonGenerator();
             MapCoordinate start = null;
-            DRObjects.Actor[] actors = null;
+            List<Actor> actors = null;
             List<PointOfInterest> pointsOfInterest = null;
 
             string getOwner = ActorGeneration.GetEnemyType(true);
 
-            MapBlock[,] generatedMap = gen.GenerateDungeon(5, 5, 2, 2,getOwner,75,2,7,out start,out actors,out pointsOfInterest);
+            MapBlock[,] generatedMap = DungeonGenerator.GenerateDungeonLevel(1, 70, out start, out actors);
 
-                GameState.LocalMap = new LocalMap(500, 500, 1, 0);
+            GameState.LocalMap = new LocalMap(500, 500, 1, 0);
             GameState.LocalMap.PointsOfInterest = pointsOfInterest;
 
             List<MapBlock> collapsedMap = new List<MapBlock>();
@@ -88,7 +87,7 @@ namespace Divine_Right.HelperFunctions
             GameState.PlayerCharacter.MapCharacter = player;
             GameState.PlayerCharacter.IsPlayerCharacter = true;
 
-            GameState.PlayerCharacter.Attributes = ActorGeneration.GenerateAttributes("human", DRObjects.ActorHandling.CharacterSheet.Enums.ActorProfession.WARRIOR, 10,GameState.PlayerCharacter);
+            GameState.PlayerCharacter.Attributes = ActorGeneration.GenerateAttributes("human", DRObjects.ActorHandling.CharacterSheet.Enums.ActorProfession.WARRIOR, 10, GameState.PlayerCharacter);
             GameState.PlayerCharacter.Anatomy = ActorGeneration.GenerateAnatomy("human");
 
             GameState.PlayerCharacter.Attributes.Health = GameState.PlayerCharacter.Anatomy;
@@ -99,7 +98,7 @@ namespace Divine_Right.HelperFunctions
 
         public static void GenerateSettlement()
         {
-            var settlement = SettlementGenerator.GenerateSettlement(new MapCoordinate(50, 50, 0, DRObjects.Enums.MapType.GLOBAL), GameState.Random.Next(10) + 2, new List<DRObjects.Enums.GlobalResourceType>(), new Civilisation() { Name = "Llama Empire",ID = 0 });
+            var settlement = SettlementGenerator.GenerateSettlement(new MapCoordinate(50, 50, 0, DRObjects.Enums.MapType.GLOBAL), GameState.Random.Next(10) + 2, new List<DRObjects.Enums.GlobalResourceType>(), new Civilisation() { Name = "Llama Empire", ID = 0 });
 
             GameState.LocalMap = new LocalMap(250, 250, 1, 0);
             GameState.LocalMap.Settlement = settlement;
@@ -108,7 +107,7 @@ namespace Divine_Right.HelperFunctions
 
             PointOfInterest startPoint = null;
 
-            var gennedMap = SettlementGenerator.GenerateMap(settlement, out actors,out startPoint);
+            var gennedMap = SettlementGenerator.GenerateMap(settlement, out actors, out startPoint);
 
             List<MapBlock> collapsedMap = new List<MapBlock>();
 
@@ -134,7 +133,7 @@ namespace Divine_Right.HelperFunctions
             GameState.PlayerCharacter.MapCharacter = player;
             GameState.PlayerCharacter.IsPlayerCharacter = true;
 
-            GameState.PlayerCharacter.Attributes = ActorGeneration.GenerateAttributes("human", DRObjects.ActorHandling.CharacterSheet.Enums.ActorProfession.WARRIOR, 10,GameState.PlayerCharacter);
+            GameState.PlayerCharacter.Attributes = ActorGeneration.GenerateAttributes("human", DRObjects.ActorHandling.CharacterSheet.Enums.ActorProfession.WARRIOR, 10, GameState.PlayerCharacter);
 
             GameState.PlayerCharacter.Anatomy = ActorGeneration.GenerateAnatomy("human");
 
@@ -150,7 +149,7 @@ namespace Divine_Right.HelperFunctions
             LocalMapXMLParser parser = new LocalMapXMLParser();
 
             //Maplet maplet = parser.ParseMaplet(@"Maplets/IronMine.xml");
-            
+
             Actor[] tempy = null;
 
             //MapBlock[,] generatedMap = gen.GenerateMap(0, null, maplet, true,"human",DRObjects.Enums.OwningFactions.HUMANS,out tempy);
@@ -165,7 +164,7 @@ namespace Divine_Right.HelperFunctions
 
             siteData.Biome = GlobalBiome.DENSE_FOREST;
             siteData.Owners = OwningFactions.HUMANS;
-            
+
             //Locate the right actor counts
             siteData.LoadAppropriateActorCounts();
 
@@ -199,7 +198,7 @@ namespace Divine_Right.HelperFunctions
 
             GameState.LocalMap.Actors.Add(GameState.PlayerCharacter);
 
-            GameState.PlayerCharacter.Attributes = ActorGeneration.GenerateAttributes("human", DRObjects.ActorHandling.CharacterSheet.Enums.ActorProfession.WARRIOR, 10,GameState.PlayerCharacter);
+            GameState.PlayerCharacter.Attributes = ActorGeneration.GenerateAttributes("human", DRObjects.ActorHandling.CharacterSheet.Enums.ActorProfession.WARRIOR, 10, GameState.PlayerCharacter);
             GameState.PlayerCharacter.Anatomy = ActorGeneration.GenerateAnatomy("human");
 
             GameState.PlayerCharacter.Attributes.Health = GameState.PlayerCharacter.Anatomy;
