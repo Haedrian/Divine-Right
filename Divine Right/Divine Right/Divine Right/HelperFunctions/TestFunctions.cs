@@ -57,7 +57,7 @@ namespace Divine_Right.HelperFunctions
 
             string getOwner = ActorGeneration.GetEnemyType(true);
 
-            MapBlock[,] generatedMap = DungeonGenerator.GenerateDungeonLevel(1, 70, out start, out actors);
+            MapBlock[,] generatedMap = DungeonGenerator.GenerateDungeonLevel(1, 30, out start, out actors);
 
             GameState.LocalMap = new LocalMap(500, 500, 1, 0);
             GameState.LocalMap.PointsOfInterest = pointsOfInterest;

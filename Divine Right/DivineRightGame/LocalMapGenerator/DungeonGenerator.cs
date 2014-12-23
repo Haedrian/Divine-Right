@@ -19,8 +19,8 @@ namespace DivineRightGame.LocalMapGenerator
         private const int AREA = SIZE * SIZE;
         private const int MINIMUM_AREA = 25;
 
-        private const int MINIMUM_EDGE = 7;
-        private const int MAXIMUM_EDGE = 14;
+        private const int MINIMUM_EDGE = 4;
+        private const int MAXIMUM_EDGE = 15;
 
         public static MapBlock[,] GenerateDungeonLevel(int level, int percentCovered, out MapCoordinate startPoint, out List<Actor> enemies)
         {
@@ -115,7 +115,7 @@ namespace DivineRightGame.LocalMapGenerator
                 Rectangle curr = rectangles[i];
                 Rectangle next = i == rectangles.Count-1 ? rectangles[0] : rectangles[i + 1];  //Next rectangle is either the one in the list, or the first one
 
-                PathfinderInterface.Nodes = GeneratePathfindingMapEmpty(map);
+                PathfinderInterface.Nodes = GeneratePathfindingMapConnector(map);
 
                 //Path from the center of the rectangles
 
@@ -141,7 +141,12 @@ namespace DivineRightGame.LocalMapGenerator
                 return map;
         }
 
-        private static byte[,] GeneratePathfindingMapEmpty(MapBlock[,] map)
+        /// <summary>
+        /// Generates a pathfinding map for connecting
+        /// </summary>
+        /// <param name="map"></param>
+        /// <returns></returns>
+        private static byte[,] GeneratePathfindingMapConnector(MapBlock[,] map)
         {
             //Generate a byte map of x and y
             int squareSize = PathfinderInterface.CeilToPower2(Math.Max(map.GetLength(0), map.GetLength(1)));
@@ -175,8 +180,48 @@ namespace DivineRightGame.LocalMapGenerator
                         {
                             pf[i, j] = (byte) 50;
                         }
+                    }
+                    else
+                    {
+                        //Put in the largest possible weight
+                        pf[i, j] = Byte.MaxValue;
+                    }
+                }
+            }
 
-                        pf[i, j] = map[i, j] != null ? (map[i, j].MayContainItems ? (byte)1 : (byte)10) : Byte.MaxValue;
+            return pf;
+        }
+
+        /// <summary>
+        /// Generates a pathfinding map for walking through
+        /// </summary>
+        /// <param name="map"></param>
+        /// <returns></returns>
+        private static byte[,] GeneratePathfindingMapWalk(MapBlock[,] map)
+        {
+            //Generate a byte map of x and y
+            int squareSize = PathfinderInterface.CeilToPower2(Math.Max(map.GetLength(0), map.GetLength(1)));
+
+            byte[,] pf = new byte[squareSize, squareSize];
+
+            for (int i = 0; i < map.GetLength(0); i++)
+            {
+                for (int j = 0; j < map.GetLength(1); j++)
+                {
+                    if (i < map.GetLength(0) - 1 && j < map.GetLength(1) - 1)
+                    {
+                        if (map[i, j] == null)
+                        {
+                            pf[i, j] = Byte.MaxValue;
+                        }
+                        else if (map[i, j].MayContainItems)
+                        {
+                            pf[i, j] = (byte)1;
+                        }
+                        else
+                        {
+                            pf[i, j] = Byte.MaxValue;
+                        }
                     }
                     else
                     {
