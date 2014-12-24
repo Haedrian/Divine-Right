@@ -623,6 +623,7 @@ namespace DRObjects.Graphics
         FENCE_TOP,
         FENCE_RIGHT,
         FENCE_BOTTOM,
+        DUNGEON_WALL,
 
     }
 }

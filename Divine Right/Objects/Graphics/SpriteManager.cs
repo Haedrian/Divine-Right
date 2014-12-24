@@ -615,6 +615,7 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.UNHOLY_STATUE_TR] = new SpriteData(DUNGEON, new Rectangle(100, 250, 50, 50));
             localSprites[(int)LocalSpriteName.UNHOLY_STATUE_BL] = new SpriteData(DUNGEON, new Rectangle(50, 300, 50, 50));
             localSprites[(int)LocalSpriteName.UNHOLY_STATUE_BR] = new SpriteData(DUNGEON, new Rectangle(100, 300, 50, 50));
+            localSprites[(int)LocalSpriteName.DUNGEON_WALL] = new SpriteData(DUNGEON, new Rectangle(150, 250, 50, 50));
 
             localSprites[(int)LocalSpriteName.ENEMY_SKELETON] = new SpriteData(ENEMIES, new Rectangle(0, 0, 50, 50));
             localSprites[(int)LocalSpriteName.ENEMY_ORC_CIV] = new SpriteData(ENEMIES, new Rectangle(50, 0, 50, 50));

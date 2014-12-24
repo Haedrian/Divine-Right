@@ -107,10 +107,10 @@ namespace DivineRightGame.LocalMapGenerator
             dummy = fact.CreateItem("tiles", "pavement", out pathTile);
 
             //Let's connect each room with each other room
-            for (int i = 0; i < rectangles.Count; i++ )
+            for (int i = 0; i < rectangles.Count; i++)
             {
                 Rectangle curr = rectangles[i];
-                Rectangle next = i == rectangles.Count-1 ? rectangles[0] : rectangles[i + 1];  //Next rectangle is either the one in the list, or the first one
+                Rectangle next = i == rectangles.Count - 1 ? rectangles[0] : rectangles[i + 1];  //Next rectangle is either the one in the list, or the first one
 
                 PathfinderInterface.Nodes = GeneratePathfindingMapConnector(map);
 
@@ -121,7 +121,7 @@ namespace DivineRightGame.LocalMapGenerator
                 if (path != null)
                 {
                     //Path it!
-                    foreach(var p in path)
+                    foreach (var p in path)
                     {
                         if (!map[p.X, p.Y].MayContainItems)
                         {
@@ -130,6 +130,29 @@ namespace DivineRightGame.LocalMapGenerator
                             MapBlock b = map[coord.X, coord.Y];
                             b.Tile = fact.CreateItem("tiles", pathTile);
                             b.Tile.Coordinate = coord;
+                        }
+                    }
+                }
+            }
+
+            //Now we can go through the blocks and put walls around the border
+
+            int borderID = -1;
+            dummy = fact.CreateItem("mundaneitems", "dungeon wall", out borderID);
+
+            for (int x = 0; x < SIZE; x++ )
+            {
+                for (int y =0; y < SIZE; y++)
+                {
+                    MapBlock current = map[x, y];
+
+                    if (!current.MayContainItems)
+                    {
+                        //Are we near one which can contain items?
+                        if (GetBlocksAroundPoint(map,current.Tile.Coordinate,1).Any(b => b.MayContainItems))
+                        {
+                            //Yep - put a wall there
+                            current.ForcePutItemOnBlock(fact.CreateItem("mundaneitems", borderID));
                         }
                     }
                 }
@@ -158,13 +181,13 @@ namespace DivineRightGame.LocalMapGenerator
                     {
                         //To promote path reuse - if it contains a path give it a weight of 1, otherwise 5, otherwise 50
 
-                        if (map[i,j] == null)
+                        if (map[i, j] == null)
                         {
                             pf[i, j] = Byte.MaxValue;
                         }
-                        else if (map[i,j].MayContainItems)
+                        else if (map[i, j].MayContainItems)
                         {
-                            if ( map[i, j].Tile.InternalName.ToLower() == "pavement")
+                            if (map[i, j].Tile.InternalName.ToLower() == "pavement")
                             {
                                 pf[i, j] = (byte)1;
                             }
@@ -175,7 +198,7 @@ namespace DivineRightGame.LocalMapGenerator
                         }
                         else
                         {
-                            pf[i, j] = (byte) 50;
+                            pf[i, j] = (byte)50;
                         }
                     }
                     else
@@ -189,47 +212,32 @@ namespace DivineRightGame.LocalMapGenerator
             return pf;
         }
 
-        /// <summary>
-        /// Generates a pathfinding map for walking through
-        /// </summary>
-        /// <param name="map"></param>
-        /// <returns></returns>
-        private static byte[,] GeneratePathfindingMapWalk(MapBlock[,] map)
+        public static MapBlock[] GetBlocksAroundPoint(MapBlock[,] map,MapCoordinate centre, int radius)
         {
-            //Generate a byte map of x and y
-            int squareSize = PathfinderInterface.CeilToPower2(Math.Max(map.GetLength(0), map.GetLength(1)));
+            int minY = centre.Y - Math.Abs(radius);
+            int maxY = centre.Y + Math.Abs(radius);
 
-            byte[,] pf = new byte[squareSize, squareSize];
+            int minX = centre.X - Math.Abs(radius);
+            int maxX = centre.X + Math.Abs(radius);
 
-            for (int i = 0; i < map.GetLength(0); i++)
+            List<MapBlock> returnList = new List<MapBlock>();
+
+            //go through all of them
+
+            for (int yLoop = maxY; yLoop >= minY; yLoop--)
             {
-                for (int j = 0; j < map.GetLength(1); j++)
+                for (int xLoop = minX; xLoop <= maxX; xLoop++)
                 {
-                    if (i < map.GetLength(0) - 1 && j < map.GetLength(1) - 1)
-                    {
-                        if (map[i, j] == null)
-                        {
-                            pf[i, j] = Byte.MaxValue;
-                        }
-                        else if (map[i, j].MayContainItems)
-                        {
-                            pf[i, j] = (byte)1;
-                        }
-                        else
-                        {
-                            pf[i, j] = Byte.MaxValue;
-                        }
-                    }
-                    else
-                    {
-                        //Put in the largest possible weight
-                        pf[i, j] = Byte.MaxValue;
+                    MapCoordinate coord = new MapCoordinate(xLoop, yLoop, 0, MapType.GLOBAL);
+
+                    if (xLoop >= 0 && xLoop < map.GetLength(0) && yLoop >= 0 && yLoop < map.GetLength(1))
+                    { //make sure they're in the map
+                        returnList.Add(map[xLoop,yLoop]);
                     }
                 }
             }
 
-            return pf;
-        }
-
+            return returnList.ToArray();
+        }    
     }
 }
