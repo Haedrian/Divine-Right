@@ -617,6 +617,16 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.UNHOLY_STATUE_BR] = new SpriteData(DUNGEON, new Rectangle(100, 300, 50, 50));
             localSprites[(int)LocalSpriteName.DUNGEON_WALL] = new SpriteData(DUNGEON, new Rectangle(150, 250, 50, 50));
 
+            localSprites[(int)LocalSpriteName.STAIRS_DOWN] = new SpriteData(DUNGEON, new Rectangle(200, 250, 50, 50));
+            localSprites[(int)LocalSpriteName.STAIRS_UP] = new SpriteData(DUNGEON, new Rectangle(250, 250, 50, 50));
+            localSprites[(int)LocalSpriteName.SUMMONING_CIRCLE] = new SpriteData(DUNGEON, new Rectangle(300, 250, 50, 50));
+            localSprites[(int)LocalSpriteName.ALTAR] = new SpriteData(DUNGEON, new Rectangle(350, 250, 50, 50));
+            localSprites[(int)LocalSpriteName.SMASHED_POT] = new SpriteData(DUNGEON, new Rectangle(400, 250, 50, 50));
+            localSprites[(int)LocalSpriteName.HATCH] = new SpriteData(DUNGEON, new Rectangle(150, 300, 50, 50));
+            localSprites[(int)LocalSpriteName.PILLAR] = new SpriteData(DUNGEON, new Rectangle(200, 300, 50, 50));
+            localSprites[(int)LocalSpriteName.PILLAR_2] = new SpriteData(DUNGEON, new Rectangle(250, 300, 50, 50));
+            localSprites[(int)LocalSpriteName.PILLAR_3] = new SpriteData(DUNGEON, new Rectangle(300, 300, 50, 50));
+
             localSprites[(int)LocalSpriteName.ENEMY_SKELETON] = new SpriteData(ENEMIES, new Rectangle(0, 0, 50, 50));
             localSprites[(int)LocalSpriteName.ENEMY_ORC_CIV] = new SpriteData(ENEMIES, new Rectangle(50, 0, 50, 50));
 
@@ -689,6 +699,21 @@ namespace DRObjects.Graphics
             AddLocalSprite(LocalSpriteName.BANDIT_EASY, ENEMIES, 0, 6);
             AddLocalSprite(LocalSpriteName.BANDIT_MEDIUM, ENEMIES, 1, 6);
             AddLocalSprite(LocalSpriteName.BANDIT_HARD, ENEMIES, 2, 6);
+
+            AddLocalSprite(LocalSpriteName.SKELETON_EASY, ENEMIES, 0, 7);
+            AddLocalSprite(LocalSpriteName.SKELETON_MEDIUM, ENEMIES, 1, 7);
+            AddLocalSprite(LocalSpriteName.SKELETON_PRIEST, ENEMIES, 2, 7);
+            AddLocalSprite(LocalSpriteName.LICH, ENEMIES, 3, 7);
+            AddLocalSprite(LocalSpriteName.WRAITH, ENEMIES, 4, 7);
+            AddLocalSprite(LocalSpriteName.MUMMY_1, ENEMIES, 5, 7);
+            AddLocalSprite(LocalSpriteName.MUMMY_2, ENEMIES, 6, 7);
+
+            AddLocalSprite(LocalSpriteName.ZOMBIE_1, ENEMIES, 0, 8);
+            AddLocalSprite(LocalSpriteName.ZOMBIE_2, ENEMIES, 0, 8);
+            AddLocalSprite(LocalSpriteName.ZOMBIE_3, ENEMIES, 0, 8);
+            AddLocalSprite(LocalSpriteName.ZOMBIE_4, ENEMIES, 0, 8);
+            AddLocalSprite(LocalSpriteName.ZOMBIE_5, ENEMIES, 0, 8);
+            AddLocalSprite(LocalSpriteName.ZOMBIE_6, ENEMIES, 0, 8);
 
             AddLocalSprite(LocalSpriteName.MOOSE, ANIMALS, 0, 0);
             AddLocalSprite(LocalSpriteName.RAT, ANIMALS, 1, 0);
