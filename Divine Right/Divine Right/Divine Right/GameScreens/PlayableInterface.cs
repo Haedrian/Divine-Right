@@ -822,27 +822,14 @@ namespace Divine_Right.GameScreens
 
                 for (int i = 0; i < blankBlocks.Length; i++)
                 {
-                    blankBlocks[i].ItemGraphics = new SpriteData[] { };
-
                     if (!blankBlocks[i].WasVisited)
                     {
                         blankBlocks[i].TileGraphics = new SpriteData[] { };
+                        blankBlocks[i].ItemGraphics = new SpriteData[] { };
                     }
                     else
                     {
                         blankBlocks[i].IsOld = true;
-                        //foreach (var grph in blankBlocks[i].TileGraphics)
-                        //{
-                        //    if (grph != null)
-                        //    {
-                        //        var color = grph.ColorFilter ?? Color.White;
-                        //        //float fLuminance = 0.299f * color.R + 0.587f * color.G + 0.114f * color.B;
-                        //        //color = new Color(new Vector4(fLuminance, fLuminance, fLuminance, 1.0f));
-
-                        //        grph.ColorFilter = Color.DarkGray;
-                        //    }
-                        //}
-
                     }
                 }
             }
@@ -979,7 +966,7 @@ namespace Divine_Right.GameScreens
                         {
                             if (tileGraphic.sourceRectangle == null)
                             {
-                                spriteBatch.Draw(this.game.Content.Load<Texture2D>(tileGraphic.path), rec, block.IsOld ? Color.DarkGray  : (tileGraphic.ColorFilter.HasValue ? tileGraphic.ColorFilter.Value : Color.White));
+                                spriteBatch.Draw(this.game.Content.Load<Texture2D>(tileGraphic.path), rec, block.IsOld ? Color.DarkGray : (tileGraphic.ColorFilter.HasValue ? tileGraphic.ColorFilter.Value : Color.White));
                             }
                             else
                             { //part of a tileset
@@ -1017,11 +1004,11 @@ namespace Divine_Right.GameScreens
 
                                     if (itemGraphic.sourceRectangle == null)
                                     {
-                                        spriteBatch.Draw(this.game.Content.Load<Texture2D>(itemGraphic.path), rec, itemGraphic.ColorFilter.HasValue ? itemGraphic.ColorFilter.Value : Color.White);
+                                        spriteBatch.Draw(this.game.Content.Load<Texture2D>(itemGraphic.path), rec, block.IsOld ? Color.DarkGray : itemGraphic.ColorFilter.HasValue ? itemGraphic.ColorFilter.Value : Color.White);
                                     }
                                     else
                                     { //part of a tileset
-                                        spriteBatch.Draw(this.game.Content.Load<Texture2D>(itemGraphic.path), rec, itemGraphic.sourceRectangle, itemGraphic.ColorFilter.HasValue ? itemGraphic.ColorFilter.Value : Color.White);
+                                        spriteBatch.Draw(this.game.Content.Load<Texture2D>(itemGraphic.path), rec, itemGraphic.sourceRectangle, block.IsOld ? Color.DarkGray : itemGraphic.ColorFilter.HasValue ? itemGraphic.ColorFilter.Value : Color.White);
                                     }
                                 }
                             }
