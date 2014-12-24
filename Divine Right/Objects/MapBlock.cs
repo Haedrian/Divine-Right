@@ -48,6 +48,25 @@ namespace DRObjects
 
         }
 
+        /// <summary>
+        /// Whether this block can be seen through
+        /// It can be seen through if it has no items or the item on top can be walked upon
+        /// </summary>
+        public bool IsSeeThrough
+        {
+            get
+            {
+                if (GetTopMapItem() == null)
+                {
+                    return true;
+                }
+                else
+                {
+                    return GetTopMapItem().MayContainItems;
+                }
+            }
+        }
+
         #endregion
 
         #region Constructors
@@ -346,6 +365,7 @@ namespace DRObjects
             block.ItemGraphics = itemGraphics.ToArray();
             block.MapCoordinate = this.Tile.Coordinate;
             block.WasVisited = this.WasVisited;
+            block.IsSeeThrough = this.IsSeeThrough;
 
             return block;
         }

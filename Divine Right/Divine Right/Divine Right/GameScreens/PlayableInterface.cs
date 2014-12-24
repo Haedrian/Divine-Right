@@ -33,6 +33,7 @@ using System.Threading;
 using DivineRightGame.CharacterCreation;
 using DRObjects.ActorHandling.CharacterSheet.Enums;
 using DRObjects.Items.Tiles.Global;
+using DivineRightGame.RayTracing;
 
 namespace Divine_Right.GameScreens
 {
@@ -820,6 +821,11 @@ namespace Divine_Right.GameScreens
                 //Blank out the blocks except the ones next to the player character
                 var blankBlocks = blocks.Where(b => Math.Abs(GameState.PlayerCharacter.MapCharacter.Coordinate - b.MapCoordinate) > GameState.PlayerCharacter.LineOfSight).ToArray();
 
+                //Grab the nonblank ones and raycast them to see whether we can see anything
+                var nonBlankBlocks = blocks.Where(b => Math.Abs(GameState.PlayerCharacter.MapCharacter.Coordinate - b.MapCoordinate) <= GameState.PlayerCharacter.LineOfSight).ToArray();
+
+                RayTracingHelper.RayTrace(nonBlankBlocks, GameState.PlayerCharacter.MapCharacter.Coordinate);
+
                 for (int i = 0; i < blankBlocks.Length; i++)
                 {
                     if (!blankBlocks[i].WasVisited)
@@ -1331,8 +1337,11 @@ namespace Divine_Right.GameScreens
                 {
                     VisitedBlockFeedback vbf = feedback as VisitedBlockFeedback;
 
-                    //Visit a region equal to the line of sight of the player character
-                    foreach (var block in GameState.LocalMap.GetBlocksAroundPoint(vbf.Coordinate, GameState.PlayerCharacter.LineOfSight ?? 0))
+                    //Visit a region equal to the line of sight of the player character - 
+                    var blocks = GameState.LocalMap.GetBlocksAroundPoint(vbf.Coordinate, GameState.PlayerCharacter.LineOfSight ?? 0);
+                    
+                    //Only do the ones which can be ray traced
+                    foreach(var block in RayTracingHelper.RayTraceForExploration(blocks,GameState.PlayerCharacter.MapCharacter.Coordinate))
                     {
                         block.WasVisited = true;
                     }

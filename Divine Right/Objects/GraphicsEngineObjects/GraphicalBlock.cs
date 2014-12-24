@@ -37,6 +37,8 @@ namespace DRObjects.GraphicsEngineObjects
         /// </summary>
         public bool IsOld { get; set; }
 
+        public bool IsSeeThrough { get; set; }
+
         #region Overridden functions
 
         /// <summary>

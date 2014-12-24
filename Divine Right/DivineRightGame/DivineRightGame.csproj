@@ -98,6 +98,7 @@
     <Compile Include="LocalMapGenerator\WildernessGenerator.cs" />
     <Compile Include="Managers\HelperObjects\SiteFileData.cs" />
     <Compile Include="Managers\SiteDataManager.cs" />
+    <Compile Include="RayTracing\RayTracingHelper.cs" />
     <Compile Include="SettlementHandling\Objects\SettlementBuilding.cs" />
     <Compile Include="Pathfinding\AuthorAttribute.cs" />
     <Compile Include="Pathfinding\HighResolutionTime.cs" />
