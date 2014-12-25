@@ -121,8 +121,8 @@
     <Compile Include="LocalMap.cs" />
     <Compile Include="LocalMapGenerator\CitadelGenerator.cs" />
     <Compile Include="LocalMapGenerator\MapletDatabaseHandler.cs" />
-    <Compile Include="LocalMapGenerator\Objects\DungeonRoom.cs" />
-    <Compile Include="LocalMapGenerator\Objects\DungeonRoomType.cs" />
+    <Compile Include="LocalMapGenerator\Objects\CitadelRoom.cs" />
+    <Compile Include="LocalMapGenerator\Objects\CitadelRoomType.cs" />
     <Compile Include="Managers\HelperFunctions\Interpolation.cs" />
     <Compile Include="Managers\HelperObjects\HelperEnums\PlanningMapItemType.cs" />
     <Compile Include="Managers\HelperObjects\Region.cs" />

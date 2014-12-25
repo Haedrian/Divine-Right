@@ -9,7 +9,7 @@ namespace DivineRightGame.LocalMapGenerator.Objects
     /// <summary>
     /// A Room in A Dungeon
     /// </summary>
-    public class DungeonRoom
+    public class CitadelRoom
     {
         /// <summary>
         /// A Unique ID For the Dungeon
@@ -39,9 +39,9 @@ namespace DivineRightGame.LocalMapGenerator.Objects
         /// <summary>
         /// The type of Room it is
         /// </summary>
-        public DungeonRoomType DungeonRoomType { get; set; }
+        public CitadelRoomType DungeonRoomType { get; set; }
 
-        public DungeonRoom()
+        public CitadelRoom()
         {
             Connections = new List<int>();
         }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DivineRightGame.LocalMapGenerator.Objects
 {
-    public enum DungeonRoomType
+    public enum CitadelRoomType
     {
         EMPTY_ROOM,
         UTILITY_ROOM,
