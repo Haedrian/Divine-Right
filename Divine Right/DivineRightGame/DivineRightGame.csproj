@@ -93,6 +93,7 @@
     <Compile Include="ItemFactory\ItemFactoryManagers\InventoryItemManager.cs" />
     <Compile Include="LocalMapGenerator\CampGenerator.cs" />
     <Compile Include="LocalMapGenerator\DungeonGenerator.cs" />
+    <Compile Include="LocalMapGenerator\Objects\DungeonRoomType.cs" />
     <Compile Include="LocalMapGenerator\Objects\WildernessGenerationData.cs" />
     <Compile Include="LocalMapGenerator\SiteGenerator.cs" />
     <Compile Include="LocalMapGenerator\WildernessGenerator.cs" />
