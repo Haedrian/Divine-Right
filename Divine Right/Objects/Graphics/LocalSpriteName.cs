@@ -646,6 +646,7 @@ namespace DRObjects.Graphics
         ZOMBIE_4,
         ZOMBIE_5,
         ZOMBIE_6,
+        SUMMONING_CIRCLE_OFF,
 
     }
 }

@@ -626,6 +626,7 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.PILLAR] = new SpriteData(DUNGEON, new Rectangle(200, 300, 50, 50));
             localSprites[(int)LocalSpriteName.PILLAR_2] = new SpriteData(DUNGEON, new Rectangle(250, 300, 50, 50));
             localSprites[(int)LocalSpriteName.PILLAR_3] = new SpriteData(DUNGEON, new Rectangle(300, 300, 50, 50));
+            localSprites[(int)LocalSpriteName.SUMMONING_CIRCLE_OFF] = new SpriteData(DUNGEON, new Rectangle(350, 300, 50, 50));
 
             localSprites[(int)LocalSpriteName.ENEMY_SKELETON] = new SpriteData(ENEMIES, new Rectangle(0, 0, 50, 50));
             localSprites[(int)LocalSpriteName.ENEMY_ORC_CIV] = new SpriteData(ENEMIES, new Rectangle(50, 0, 50, 50));
