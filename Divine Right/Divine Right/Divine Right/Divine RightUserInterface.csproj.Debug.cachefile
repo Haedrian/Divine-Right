@@ -97,6 +97,7 @@ Maplets\Dungeons\SleepingRoom.xml
 Maplets\Dungeons\SmithingRoom.xml
 Maplets\Stables.xml
 Maplets\HuntingLodge.xml
+Maplets\Underground\ExitRoom.xml
 Maplets\Underground\EntranceRoom.xml
 Maplets\Woodcutter.xml
 Maplets\Farm.xml

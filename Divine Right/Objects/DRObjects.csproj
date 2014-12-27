@@ -318,6 +318,9 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Maplets\Underground\ExitRoom.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Maplets\Underground\EntranceRoom.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

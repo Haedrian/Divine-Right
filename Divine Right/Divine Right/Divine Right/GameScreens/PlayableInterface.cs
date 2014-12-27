@@ -1014,7 +1014,7 @@ namespace Divine_Right.GameScreens
                                     }
                                     else
                                     { //part of a tileset
-                                        spriteBatch.Draw(this.game.Content.Load<Texture2D>(itemGraphic.path), rec, itemGraphic.sourceRectangle, block.IsOld ? Color.DarkGray : itemGraphic.ColorFilter.HasValue ? itemGraphic.ColorFilter.Value : Color.White);
+                                        spriteBatch.Draw(this.game.Content.Load<Texture2D>(itemGraphic.path), rec, itemGraphic.sourceRectangle, block.IsOld ? Color.Black : (itemGraphic.ColorFilter.HasValue ? itemGraphic.ColorFilter.Value : Color.White));
                                     }
                                 }
                             }

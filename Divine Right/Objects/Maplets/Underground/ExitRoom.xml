@@ -1,0 +1,6 @@
+﻿<Maplet MapletName="EmptyRoom" SizeX="0" SizeY="0"  Walled="false" Tiled="false">
+  <MapletContents>
+    <MapletContentsItemSpecial Type="StairsDown" Position="Middle" MaxAmount="1" ProbabilityPercentage="100"  />
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="25" ProbabilityPercentage="68" Tag="dungeon decoration"/>
+  </MapletContents>
+</Maplet>

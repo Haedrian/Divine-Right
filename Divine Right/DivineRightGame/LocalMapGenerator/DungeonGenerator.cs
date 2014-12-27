@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DivineRightGame.LocalMapGenerator.Objects;
 using DivineRightGame.Pathfinding;
 using DRObjects;
 using DRObjects.Enums;
@@ -162,28 +163,11 @@ namespace DivineRightGame.LocalMapGenerator
             //Each rectangle is going to contain a room
 
             //First pick two to be the start and end rooms
-            var entrance =  MapletDatabaseHandler.GetMapletByTag("entrance room");
-
-            LocalMapXMLParser parser = new LocalMapXMLParser();
-            var maplet = parser.ParseMapletFromTag("entrance room");
-
-            //Change the width and height to match the rectangle we're fitting it in
-            maplet.SizeX = rectangles[0].Width;
-            maplet.SizeY = rectangles[0].Height;
-
-            LocalMapGenerator lmg = new LocalMapGenerator();
-            
-            Actor[] actors = null;
-            MapletActorWanderArea[] areas = null;
-            MapletPatrolPoint[] patrolRoutes = null;
-            MapletFootpathNode[] footpathNodes = null;
-
-            var gennedMap = lmg.GenerateMap(tileID, null, maplet, false, "", OwningFactions.UNDEAD, out actors, out areas, out patrolRoutes, out footpathNodes);
-
-            //Now fit one into the other
-            lmg.JoinMaps(map, gennedMap, rectangles[0].X, rectangles[0].Y);
+            PutRoom(map,tileID, DungeonRoomType.ENTRANCE, rectangles[0]);
 
             startPoint = new MapCoordinate(rectangles[0].Center.X, rectangles[0].Center.Y, 0, MapType.LOCAL);
+
+            PutRoom(map,tileID, DungeonRoomType.EXIT, rectangles[1]);
 
             //Then pick d6 + level as summoning rooms
 
@@ -241,6 +225,37 @@ namespace DivineRightGame.LocalMapGenerator
             }
 
             return pf;
+        }
+
+        /// <summary>
+        /// Creates and puts a particular room in a particular rectangle
+        /// </summary>
+        /// <param name="roomType"></param>
+        /// <param name="rect"></param>
+        private static void PutRoom(MapBlock[,] map,int tileID,DungeonRoomType roomType,Rectangle rect)
+        {
+            string tagName = roomType.ToString().ToLower().Replace("_"," ") + " room";
+
+            LocalMapXMLParser parser = new LocalMapXMLParser();
+            var maplet = parser.ParseMapletFromTag(tagName);
+
+            //Change the width and height to match the rectangle we're fitting it in
+            maplet.SizeX = rect.Width;
+            maplet.SizeY = rect.Height;
+
+            LocalMapGenerator lmg = new LocalMapGenerator();
+
+            Actor[] actors = null;
+            MapletActorWanderArea[] areas = null;
+            MapletPatrolPoint[] patrolRoutes = null;
+            MapletFootpathNode[] footpathNodes = null;
+
+            var gennedMap = lmg.GenerateMap(tileID, null, maplet, false, "", OwningFactions.UNDEAD, out actors, out areas, out patrolRoutes, out footpathNodes);
+
+            //Now fit one into the other
+            lmg.JoinMaps(map, gennedMap, rect.X, rect.Y);
+
+
         }
 
         public static MapBlock[] GetBlocksAroundPoint(MapBlock[,] map, MapCoordinate centre, int radius)
