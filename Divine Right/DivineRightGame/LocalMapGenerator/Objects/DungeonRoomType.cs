@@ -10,15 +10,23 @@ namespace DivineRightGame.LocalMapGenerator.Objects
     /// </summary>
     public enum DungeonRoomType
     {
-        TREASURE_ROOM,
+        EMPTY,
+        TREASURE,
         ARMOURY,
-        ALTAR_ROOM,
+        ALTAR,
         DARK_TEMPLE,
-        POOL_ROOM,
-        DESTROYED_CAMP_ROOM,
-        ENTRANCE_ROOM,
-        EXIT_ROOM,
-        SPAWNING_ROOM,
-
+        POOL,
+        DESTROYED_CAMP,
+        ENTRANCE,
+        EXIT,
+        SUMMONING,
+        WISHING_WELL,
+        POTIONS,
+        LIBRARY,
+        CRYPT,
+        ABANDONED_FARM,
+        COMBAT_PIT,
+        PRISON,
+        TORTURE_CHAMBER
     }
 }

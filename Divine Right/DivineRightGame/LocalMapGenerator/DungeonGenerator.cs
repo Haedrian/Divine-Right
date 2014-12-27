@@ -140,16 +140,16 @@ namespace DivineRightGame.LocalMapGenerator
             int borderID = -1;
             dummy = fact.CreateItem("mundaneitems", "dungeon wall", out borderID);
 
-            for (int x = 0; x < SIZE; x++ )
+            for (int x = 0; x < SIZE; x++)
             {
-                for (int y =0; y < SIZE; y++)
+                for (int y = 0; y < SIZE; y++)
                 {
                     MapBlock current = map[x, y];
 
                     if (!current.MayContainItems)
                     {
                         //Are we near one which can contain items?
-                        if (GetBlocksAroundPoint(map,current.Tile.Coordinate,1).Any(b => b.MayContainItems))
+                        if (GetBlocksAroundPoint(map, current.Tile.Coordinate, 1).Any(b => b.MayContainItems))
                         {
                             //Yep - put a wall there
                             current.ForcePutItemOnBlock(fact.CreateItem("mundaneitems", borderID));
@@ -158,7 +158,15 @@ namespace DivineRightGame.LocalMapGenerator
                 }
             }
 
-                return map;
+            //Each rectangle is going to contain a room
+
+            //First pick two to be the start and end rooms
+
+            //Then pick d6 + level as summoning rooms
+
+            //Then we can pick some of the rooms as being the other room types
+
+            return map;
         }
 
         /// <summary>
@@ -212,7 +220,7 @@ namespace DivineRightGame.LocalMapGenerator
             return pf;
         }
 
-        public static MapBlock[] GetBlocksAroundPoint(MapBlock[,] map,MapCoordinate centre, int radius)
+        public static MapBlock[] GetBlocksAroundPoint(MapBlock[,] map, MapCoordinate centre, int radius)
         {
             int minY = centre.Y - Math.Abs(radius);
             int maxY = centre.Y + Math.Abs(radius);
@@ -232,12 +240,12 @@ namespace DivineRightGame.LocalMapGenerator
 
                     if (xLoop >= 0 && xLoop < map.GetLength(0) && yLoop >= 0 && yLoop < map.GetLength(1))
                     { //make sure they're in the map
-                        returnList.Add(map[xLoop,yLoop]);
+                        returnList.Add(map[xLoop, yLoop]);
                     }
                 }
             }
 
             return returnList.ToArray();
-        }    
+        }
     }
 }

@@ -165,6 +165,7 @@
     <Compile Include="Items\Archetypes\Global\Settlement.cs" />
     <Compile Include="Items\Archetypes\Global\SettlementItem.cs" />
     <Compile Include="Items\Archetypes\Local\ConsumableItem.cs" />
+    <Compile Include="Items\Archetypes\Local\DungeonStairs.cs" />
     <Compile Include="Items\Archetypes\Local\InventoryItem.cs" />
     <Compile Include="Items\Archetypes\Local\LeaveTownItem.cs" />
     <Compile Include="Items\Archetypes\Local\LocalCharacter.cs" />
@@ -178,6 +179,7 @@
     <Compile Include="LocalMapGeneratorObjects\MapletActorWanderArea.cs" />
     <Compile Include="LocalMapGeneratorObjects\MapletContents.cs" />
     <Compile Include="LocalMapGeneratorObjects\MapletContentsItem.cs" />
+    <Compile Include="LocalMapGeneratorObjects\MapletContentsItemSpecial.cs" />
     <Compile Include="LocalMapGeneratorObjects\MapletContentsItemTag.cs" />
     <Compile Include="LocalMapGeneratorObjects\MapletContentsMaplet.cs" />
     <Compile Include="LocalMapGeneratorObjects\MapletFootpathNode.cs" />
@@ -316,6 +318,7 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Maplets\Underground\EntranceRoom.xml" />
     <Content Include="Maplets\Woodcutter.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

@@ -34,8 +34,8 @@ namespace DivineRightGame.LocalMapGenerator
         /// <param name="actors">The actors which we have generated</param>
         /// <param name="actorType">The type of actors to generate</param>
         /// <returns></returns>
-        public MapBlock[,] GenerateMap(int parentTileID, int? parentWallID, Maplet maplet, bool preferSides, string actorType, OwningFactions owner, 
-            out Actor[] actors,out MapletActorWanderArea[] wAreas,out MapletPatrolPoint[] patrolRoutes, out MapletFootpathNode[] footpathNodes)
+        public MapBlock[,] GenerateMap(int parentTileID, int? parentWallID, Maplet maplet, bool preferSides, string actorType, OwningFactions owner,
+            out Actor[] actors, out MapletActorWanderArea[] wAreas, out MapletPatrolPoint[] patrolRoutes, out MapletFootpathNode[] footpathNodes)
         {
             List<Actor> actorList = new List<Actor>();
             List<MapletActorWanderArea> wanderAreas = new List<MapletActorWanderArea>();
@@ -182,7 +182,7 @@ namespace DivineRightGame.LocalMapGenerator
                                 MapletPatrolPoint[] patrolPoints = null;
                                 MapletFootpathNode[] fpNodes = null;
 
-                                MapBlock[,] childMap = this.GenerateMap(tileID, wallID.Value, childMaplet.Maplet, childMaplet.Position == DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES, actorType,owner, out childActors,out wanderA,out patrolPoints,out fpNodes);
+                                MapBlock[,] childMap = this.GenerateMap(tileID, wallID.Value, childMaplet.Maplet, childMaplet.Position == DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES, actorType, owner, out childActors, out wanderA, out patrolPoints, out fpNodes);
 
                                 //Add the child actors
                                 actorList.AddRange(childActors);
@@ -206,7 +206,7 @@ namespace DivineRightGame.LocalMapGenerator
                                 }
 
                                 //Update any wander areas too
-                                foreach(var area in wanderA)
+                                foreach (var area in wanderA)
                                 {
                                     area.WanderRect = new Rectangle(area.WanderRect.X + childMaplet.x.Value, area.WanderRect.Y + childMaplet.y.Value, area.WanderRect.Width, area.WanderRect.Height);
                                     area.WanderPoint.X += childMaplet.x.Value;
@@ -214,13 +214,13 @@ namespace DivineRightGame.LocalMapGenerator
                                 }
 
                                 //and patrol points
-                                foreach(var point in patrolPoints)
+                                foreach (var point in patrolPoints)
                                 {
                                     point.Point.X += childMaplet.x.Value;
                                     point.Point.Y += childMaplet.y.Value;
                                 }
 
-                                foreach(var n in fpNodes)
+                                foreach (var n in fpNodes)
                                 {
                                     n.Point.X += childMaplet.x.Value;
                                     n.Point.Y += childMaplet.y.Value;
@@ -245,7 +245,7 @@ namespace DivineRightGame.LocalMapGenerator
                                 MapletPatrolPoint[] patrolPoints = null;
                                 MapletFootpathNode[] fpNodes = null;
 
-                                MapBlock[,] childMap = this.GenerateMap(tileID, wallID.Value, childMaplet.Maplet, childMaplet.Position == DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES, actorType,owner, out childActors,out wanderA,out patrolPoints,out fpNodes);
+                                MapBlock[,] childMap = this.GenerateMap(tileID, wallID.Value, childMaplet.Maplet, childMaplet.Position == DRObjects.LocalMapGeneratorObjects.Enums.PositionAffinity.SIDES, actorType, owner, out childActors, out wanderA, out patrolPoints, out fpNodes);
 
                                 //Add the child actors
                                 actorList.AddRange(childActors);
@@ -277,13 +277,13 @@ namespace DivineRightGame.LocalMapGenerator
                                 }
 
                                 //and patrol routes
-                                foreach(var point in patrolPoints)
+                                foreach (var point in patrolPoints)
                                 {
                                     point.Point.X += x;
                                     point.Point.Y += y;
                                 }
 
-                                foreach(var n in fpNodes)
+                                foreach (var n in fpNodes)
                                 {
                                     n.Point.X += x;
                                     n.Point.Y += y;
@@ -416,14 +416,29 @@ namespace DivineRightGame.LocalMapGenerator
                             MapletContentsItem mapletContent = (MapletContentsItem)contents;
                             itemPlaced = factory.CreateItem(mapletContent.ItemCategory, mapletContent.ItemID);
                         }
-                        if (contents is MapletContentsItemTag)
-                        {
-                            MapletContentsItemTag mapletContent = (MapletContentsItemTag)contents;
-                            int tempInt;
-                            itemPlaced = factory.CreateItem(mapletContent.Category, mapletContent.Tag, out tempInt);
-                            //I CHANGED THIS
-                            itemPlaced.OwnedBy = mapletContent.Factions;
-                        }
+                        else
+                            if (contents is MapletContentsItemTag)
+                            {
+                                MapletContentsItemTag mapletContent = (MapletContentsItemTag)contents;
+                                int tempInt;
+                                itemPlaced = factory.CreateItem(mapletContent.Category, mapletContent.Tag, out tempInt);
+                                //I CHANGED THIS
+                                itemPlaced.OwnedBy = mapletContent.Factions;
+                            }
+                            else
+                                if (contents is MapletContentsItemSpecial)
+                                {
+                                    //what type is it
+                                    switch ((contents as MapletContentsItemSpecial).Type)
+                                    {
+                                        case "StairsUp":
+                                            itemPlaced = new DungeonStairs(true); break;
+                                        case "StairsDown":
+                                            itemPlaced = new DungeonStairs(false); break;
+                                        default:
+                                            throw new NotImplementedException("No code for " + (contents as MapletContentsItemSpecial).Type + " can be found");
+                                    }
+                                }
 
                         if (candidateBlocks.Count != 0)
                         {
@@ -755,7 +770,7 @@ namespace DivineRightGame.LocalMapGenerator
                             //inactive character
                             newActor.MapCharacter.IsActive = false;
                         }
-                        
+
                         (mapCharacter as LocalCharacter).Actor = newActor;
 
                         //Lets position them randomly
@@ -794,7 +809,7 @@ namespace DivineRightGame.LocalMapGenerator
 
             #region Wander Areas
 
-            foreach(var mc in maplet.MapletContents.Where(mc => mc.GetType().Equals(typeof(MapletActorWanderArea))))
+            foreach (var mc in maplet.MapletContents.Where(mc => mc.GetType().Equals(typeof(MapletActorWanderArea))))
             {
                 var wander = mc as MapletActorWanderArea;
 
@@ -802,7 +817,7 @@ namespace DivineRightGame.LocalMapGenerator
                 wander.WanderRect = new Rectangle(0, 0, generatedMap.GetLength(0), generatedMap.GetLength(1));
 
                 //Pick the wander point to be the middle of the rectangle. If the point isn't valid we might have a problem
-                wander.WanderPoint = new MapCoordinate(generatedMap.GetLength(0) / 2, generatedMap.GetLength(1) / 2,0,MapType.LOCAL);
+                wander.WanderPoint = new MapCoordinate(generatedMap.GetLength(0) / 2, generatedMap.GetLength(1) / 2, 0, MapType.LOCAL);
 
                 MapletActorWanderArea clone = new MapletActorWanderArea();
                 clone.WanderPoint = new MapCoordinate(wander.WanderPoint);
@@ -819,7 +834,7 @@ namespace DivineRightGame.LocalMapGenerator
 
             #region Patrol Points & Paths
 
-            foreach(var mc in maplet.MapletContents.Where(mc => mc.GetType().Equals(typeof(MapletPatrolPoint))))
+            foreach (var mc in maplet.MapletContents.Where(mc => mc.GetType().Equals(typeof(MapletPatrolPoint))))
             {
                 var point = mc as MapletPatrolPoint;
 
@@ -837,7 +852,7 @@ namespace DivineRightGame.LocalMapGenerator
 
             patrolRoutes = patrolRouteList.ToArray();
 
-            foreach(var n in maplet.MapletContents.Where(mc => mc.GetType().Equals(typeof(MapletFootpathNode))))
+            foreach (var n in maplet.MapletContents.Where(mc => mc.GetType().Equals(typeof(MapletFootpathNode))))
             {
                 var node = n as MapletFootpathNode;
 
@@ -915,9 +930,9 @@ namespace DivineRightGame.LocalMapGenerator
             #region Ownership
 
             //Go through all map items - If they're not valid for this particular owner, make them inactive.
-            foreach(var mapBlock in generatedMap)
+            foreach (var mapBlock in generatedMap)
             {
-                foreach(var item in mapBlock.GetItems())
+                foreach (var item in mapBlock.GetItems())
                 {
                     if (!item.OwnedBy.HasFlag(owner))
                     {
@@ -955,7 +970,7 @@ namespace DivineRightGame.LocalMapGenerator
             switch (newActor.VendorDetails.VendorType)
             {
                 case VendorType.GENERAL:
-                    foreach (InventoryItem inv in iim.GetItemsWithAMaxValue(InventoryCategory.SUPPLY.ToString(), (int) (maxCategorySize * 0.75)))
+                    foreach (InventoryItem inv in iim.GetItemsWithAMaxValue(InventoryCategory.SUPPLY.ToString(), (int)(maxCategorySize * 0.75)))
                     {
                         inv.InInventory = true;
                         newActor.VendorDetails.Stock.Add(inv.Category, inv);
@@ -970,7 +985,7 @@ namespace DivineRightGame.LocalMapGenerator
                         inv.InInventory = true;
                         newActor.VendorDetails.Stock.Add(inv.Category, inv);
                     }
-                    foreach (InventoryItem inv in iim.GetItemsWithAMaxValue(InventoryCategory.WEAPON.ToString(), (int) (maxCategorySize * 0.75)))
+                    foreach (InventoryItem inv in iim.GetItemsWithAMaxValue(InventoryCategory.WEAPON.ToString(), (int)(maxCategorySize * 0.75)))
                     {
                         inv.InInventory = true;
                         newActor.VendorDetails.Stock.Add(inv.Category, inv);

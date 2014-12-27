@@ -84,7 +84,8 @@ namespace DivineRightGame.LocalMapGenerator
                     case "MapletHerd": content = new MapletHerd() { LocalBiome = biome.HasValue ? biome.Value : GlobalBiome.ARID_DESERT  }; break;
                     case "MapletActorWanderArea": content = new MapletActorWanderArea(); break;
                     case "MapletPatrolPoint": content = new MapletPatrolPoint(); break;
-                    case "MapletFootpathNode": content = new MapletFootpathNode(); break; 
+                    case "MapletFootpathNode": content = new MapletFootpathNode(); break;
+                    case "MapletContentsItemSpecial": content = new MapletContentsItemSpecial(); break;
                 }
 
                 //Get the attributes
@@ -133,6 +134,7 @@ namespace DivineRightGame.LocalMapGenerator
                         case "PointRadius": ((MapletPatrolPoint)content).PointRadius = Int32.Parse(value); break;
                         case "IsPrimary": ((MapletFootpathNode)content).IsPrimary = Boolean.Parse(value); break;
                         case "HerdTag": ((MapletHerd)content).HerdTag = value; break;
+                        case "Type": ((MapletContentsItemSpecial)content).Type = value; break;
                             
                     }
                 }

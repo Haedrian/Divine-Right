@@ -25,5 +25,7 @@ namespace DRObjects.Enums
         CONSUME,
         SHOVE,
         HUNT,
+        ASCEND_TO_SURFACE,
+        DESCEND,
     }
 }
