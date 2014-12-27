@@ -1010,7 +1010,7 @@ namespace Divine_Right.GameScreens
 
                                     if (itemGraphic.sourceRectangle == null)
                                     {
-                                        spriteBatch.Draw(this.game.Content.Load<Texture2D>(itemGraphic.path), rec, block.IsOld ? Color.DarkGray : itemGraphic.ColorFilter.HasValue ? itemGraphic.ColorFilter.Value : Color.White);
+                                        spriteBatch.Draw(this.game.Content.Load<Texture2D>(itemGraphic.path), rec, block.IsOld ? Color.Black : itemGraphic.ColorFilter.HasValue ? itemGraphic.ColorFilter.Value : Color.White);
                                     }
                                     else
                                     { //part of a tileset
