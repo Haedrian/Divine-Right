@@ -9,7 +9,7 @@ namespace DRObjects.LocalMapGeneratorObjects
     /// Represent a special typeof item
     /// </summary>
     public class MapletContentsItemSpecial
-        :MapletContentsItem
+        : MapletContents
     {
         public string Type { get; set; }
     }

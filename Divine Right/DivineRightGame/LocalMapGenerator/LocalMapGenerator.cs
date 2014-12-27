@@ -400,7 +400,7 @@ namespace DivineRightGame.LocalMapGenerator
 
             }
 
-            foreach (MapletContents contents in maplet.MapletContents.Where(mc => mc is MapletContentsItem || mc is MapletContentsItemTag).OrderByDescending(mc => mc.ProbabilityPercentage))
+            foreach (MapletContents contents in maplet.MapletContents.Where(mc => mc is MapletContentsItem || mc is MapletContentsItemTag || mc is MapletContentsItemSpecial).OrderByDescending(mc => mc.ProbabilityPercentage))
             {
                 //We'll see if we even put this at all
                 MapItem itemPlaced = null;

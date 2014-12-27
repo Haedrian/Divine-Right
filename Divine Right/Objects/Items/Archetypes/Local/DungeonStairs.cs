@@ -34,25 +34,20 @@ namespace DRObjects.Items.Archetypes.Local
         {
             get
             {
-                if (sprites != null)
-                {
-                    return sprites;
-                }
-                else
+                if (sprites == null)
                 {
                     sprites = new List<SpriteData>();
 
                     if (this.StairsUp)
                     {
-                        Graphics.Add(SpriteManager.GetSprite(LocalSpriteName.STAIRS_UP));
+                        sprites.Add(SpriteManager.GetSprite(LocalSpriteName.STAIRS_UP));
                     }
                     else
                     {
-                        Graphics.Add(SpriteManager.GetSprite(LocalSpriteName.STAIRS_DOWN));
+                        sprites.Add(SpriteManager.GetSprite(LocalSpriteName.STAIRS_DOWN));
                     }
-
-                    return sprites;
                 }
+                return sprites;
 
             }
             set

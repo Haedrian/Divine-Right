@@ -6,6 +6,7 @@ using DivineRightGame.Pathfinding;
 using DRObjects;
 using DRObjects.Enums;
 using DRObjects.Items.Tiles;
+using DRObjects.LocalMapGeneratorObjects;
 using Microsoft.Xna.Framework;
 
 namespace DivineRightGame.LocalMapGenerator
@@ -161,6 +162,28 @@ namespace DivineRightGame.LocalMapGenerator
             //Each rectangle is going to contain a room
 
             //First pick two to be the start and end rooms
+            var entrance =  MapletDatabaseHandler.GetMapletByTag("entrance room");
+
+            LocalMapXMLParser parser = new LocalMapXMLParser();
+            var maplet = parser.ParseMapletFromTag("entrance room");
+
+            //Change the width and height to match the rectangle we're fitting it in
+            maplet.SizeX = rectangles[0].Width;
+            maplet.SizeY = rectangles[0].Height;
+
+            LocalMapGenerator lmg = new LocalMapGenerator();
+            
+            Actor[] actors = null;
+            MapletActorWanderArea[] areas = null;
+            MapletPatrolPoint[] patrolRoutes = null;
+            MapletFootpathNode[] footpathNodes = null;
+
+            var gennedMap = lmg.GenerateMap(tileID, null, maplet, false, "", OwningFactions.UNDEAD, out actors, out areas, out patrolRoutes, out footpathNodes);
+
+            //Now fit one into the other
+            lmg.JoinMaps(map, gennedMap, rectangles[0].X, rectangles[0].Y);
+
+            startPoint = new MapCoordinate(rectangles[0].Center.X, rectangles[0].Center.Y, 0, MapType.LOCAL);
 
             //Then pick d6 + level as summoning rooms
 
