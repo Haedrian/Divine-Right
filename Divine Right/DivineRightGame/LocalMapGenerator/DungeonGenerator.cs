@@ -6,6 +6,7 @@ using DivineRightGame.LocalMapGenerator.Objects;
 using DivineRightGame.Pathfinding;
 using DRObjects;
 using DRObjects.Enums;
+using DRObjects.Items.Archetypes;
 using DRObjects.Items.Tiles;
 using DRObjects.LocalMapGeneratorObjects;
 using Microsoft.Xna.Framework;
@@ -24,13 +25,67 @@ namespace DivineRightGame.LocalMapGenerator
         private const int MINIMUM_EDGE = 4;
         private const int MAXIMUM_EDGE = 15;
 
-        public static MapBlock[,] GenerateDungeonLevel(int level, int percentCovered, out MapCoordinate startPoint, out List<Actor> enemies)
+        public static MapBlock[,] GenerateDungeonLevel(int level, int percentCovered, out MapCoordinate startPoint, out List<Actor> enemies, out List<SummoningCircle> summoningCircles)
         {
-            MapBlock[,] map = new MapBlock[SIZE, SIZE];
             startPoint = new MapCoordinate();
             enemies = new List<Actor>();
+            List<Rectangle> rectangles = null;
+            ItemFactory.ItemFactory fact = new ItemFactory.ItemFactory();
+            summoningCircles = new List<SummoningCircle>();
+
+            MapBlock[,] map = GenerateBaseMap(level, percentCovered, out rectangles);
+
+            //Put the tiles
+            int tileID = -1;
+            var dummy = fact.CreateItem("tiles", "cave", out tileID);
+
+            SummoningCircle dummyCircle = null;
+
+            //Each rectangle is going to contain a room
+
+            //First pick two to be the start and end rooms
+            PutRoom(map, tileID, DungeonRoomType.ENTRANCE, rectangles[0],out dummyCircle);
+
+            startPoint = new MapCoordinate(rectangles[0].Center.X, rectangles[0].Center.Y, 0, MapType.LOCAL);
+
+            PutRoom(map, tileID, DungeonRoomType.EXIT, rectangles[1],out dummyCircle);
+
+            //Then pick d6 + level as summoning rooms. Ensuring they are less than half the rooms
+            int summoningRooms = GameState.Random.Next(1, 6) + level;
+
+            summoningRooms = summoningRooms > rectangles.Count / 2 ? rectangles.Count / 2 : summoningRooms;
+
+            for (int i = 0; i < summoningRooms; i++)
+            {
+                SummoningCircle circle = null;
+
+                PutRoom(map, tileID, DungeonRoomType.SUMMONING, rectangles[2 + i],out circle); //Create them
+
+                //Grab references to the summoning circle as we'll need them later
+
+                summoningCircles.Add(circle);
+            }
+
+
+            //Then we can pick some of the rooms as being the other room types
+
+            return map;
+        }
+
+        /// <summary>
+        /// Part 1 - Generate the base map
+        /// </summary>
+        /// <param name="level"></param>
+        /// <param name="percentCovered"></param>
+        /// <returns></returns>
+        private static MapBlock[,] GenerateBaseMap(int level, int percentCovered, out List<Rectangle> rectangles)
+        {
+            MapBlock[,] map = new MapBlock[SIZE, SIZE];
 
             ItemFactory.ItemFactory fact = new ItemFactory.ItemFactory();
+
+            //Put the tiles
+            int tileID = -1;
 
             for (int x = 0; x < SIZE; x++)
             {
@@ -47,7 +102,7 @@ namespace DivineRightGame.LocalMapGenerator
             //Or until we run out of attempts
             int attempts = 0;
 
-            List<Rectangle> rectangles = new List<Rectangle>();
+            rectangles = new List<Rectangle>();
 
             while (totalCovered < AREA && attempts < 50)
             {
@@ -83,10 +138,6 @@ namespace DivineRightGame.LocalMapGenerator
                 }
             }
 
-            //Put the tiles
-
-            int tileID = -1;
-            var dummy = fact.CreateItem("tiles", "cave", out tileID);
 
             //Now we should have a number of rectangles, let's turn those into actual rooms
             foreach (var rect in rectangles)
@@ -100,13 +151,11 @@ namespace DivineRightGame.LocalMapGenerator
                         MapBlock b = map[coord.X, coord.Y];
                         b.Tile = fact.CreateItem("tiles", tileID);
                         b.Tile.Coordinate = coord;
-
-                        startPoint = coord; //todo: fix this
                     }
                 }
             }
             int pathTile = -1;
-            dummy = fact.CreateItem("tiles", "pavement", out pathTile);
+            var dummy = fact.CreateItem("tiles", "pavement", out pathTile);
 
             //Let's connect each room with each other room
             for (int i = 0; i < rectangles.Count; i++)
@@ -159,31 +208,6 @@ namespace DivineRightGame.LocalMapGenerator
                     }
                 }
             }
-
-            //Each rectangle is going to contain a room
-
-            //First pick two to be the start and end rooms
-            PutRoom(map, tileID, DungeonRoomType.ENTRANCE, rectangles[0]);
-
-            startPoint = new MapCoordinate(rectangles[0].Center.X, rectangles[0].Center.Y, 0, MapType.LOCAL);
-
-            PutRoom(map, tileID, DungeonRoomType.EXIT, rectangles[1]);
-
-            //Then pick d6 + level as summoning rooms. Ensuring they are less than half the rooms
-            int summoningRooms = GameState.Random.Next(1, 6) + level;
-
-            summoningRooms = summoningRooms > rectangles.Count / 2 ? rectangles.Count / 2 : summoningRooms;
-
-            for (int i = 0; i < summoningRooms; i++)
-            {
-                PutRoom(map, tileID, DungeonRoomType.SUMMONING, rectangles[2 + i]); //Create them
-
-                //Grab references to the summoning circles as we'll need them later
-
-            }
-
-
-            //Then we can pick some of the rooms as being the other room types
 
             return map;
         }
@@ -244,8 +268,11 @@ namespace DivineRightGame.LocalMapGenerator
         /// </summary>
         /// <param name="roomType"></param>
         /// <param name="rect"></param>
-        private static void PutRoom(MapBlock[,] map, int tileID, DungeonRoomType roomType, Rectangle rect)
+        /// <param name="circle">When the room is a Summoning Room, there's the circle</param>
+        private static void PutRoom(MapBlock[,] map, int tileID, DungeonRoomType roomType, Rectangle rect,out SummoningCircle circle)
         {
+            circle = null;
+
             string tagName = roomType.ToString().ToLower().Replace("_", " ") + " room";
 
             LocalMapXMLParser parser = new LocalMapXMLParser();
@@ -263,6 +290,23 @@ namespace DivineRightGame.LocalMapGenerator
             MapletFootpathNode[] footpathNodes = null;
 
             var gennedMap = lmg.GenerateMap(tileID, null, maplet, false, "", OwningFactions.UNDEAD, out actors, out areas, out patrolRoutes, out footpathNodes);
+
+            //Is this a summoning room?
+            if (roomType == DungeonRoomType.SUMMONING)
+            {
+                //Go through each map block and see if we find a summoning circle
+                for(int x=0; x < gennedMap.GetLength(0); x++)
+                {
+                    for (int y=0; y < gennedMap.GetLength(1); y++)
+                    {
+                        var block = gennedMap[x, y];
+                        if (block.GetTopMapItem() != null && block.GetTopMapItem().GetType().Equals(typeof(SummoningCircle)))
+                        {
+                            circle = block.GetTopMapItem() as SummoningCircle;
+                        }
+                    }
+                }
+            }
 
             //Now fit one into the other
             lmg.JoinMaps(map, gennedMap, rect.X, rect.Y);

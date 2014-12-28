@@ -54,10 +54,11 @@ namespace Divine_Right.HelperFunctions
             MapCoordinate start = null;
             List<Actor> actors = null;
             List<PointOfInterest> pointsOfInterest = null;
+            List<SummoningCircle> summoningCircles = null;
 
             string getOwner = ActorGeneration.GetEnemyType(true);
 
-            MapBlock[,] generatedMap = DungeonGenerator.GenerateDungeonLevel(1, 30, out start, out actors);
+            MapBlock[,] generatedMap = DungeonGenerator.GenerateDungeonLevel(1, 30, out start, out actors,out summoningCircles);
 
             GameState.LocalMap = new LocalMap(500, 500, 1, 0);
             GameState.LocalMap.PointsOfInterest = pointsOfInterest;
