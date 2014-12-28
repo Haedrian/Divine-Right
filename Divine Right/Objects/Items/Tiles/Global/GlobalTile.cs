@@ -483,7 +483,7 @@ namespace DRObjects.Items.Tiles.Global
 
                 }
 
-                return new ActionFeedback[] { tps, new CurrentLogFeedback(InterfaceSpriteName.HUNT, Color.Orange, "You fail to find anything") };
+                return new ActionFeedback[] { tps, new LogFeedback(InterfaceSpriteName.HUNT, Color.Orange, "You fail to find anything") };
             }
             else
             {

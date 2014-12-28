@@ -163,13 +163,25 @@ namespace DivineRightGame.LocalMapGenerator
             //Each rectangle is going to contain a room
 
             //First pick two to be the start and end rooms
-            PutRoom(map,tileID, DungeonRoomType.ENTRANCE, rectangles[0]);
+            PutRoom(map, tileID, DungeonRoomType.ENTRANCE, rectangles[0]);
 
             startPoint = new MapCoordinate(rectangles[0].Center.X, rectangles[0].Center.Y, 0, MapType.LOCAL);
 
-            PutRoom(map,tileID, DungeonRoomType.EXIT, rectangles[1]);
+            PutRoom(map, tileID, DungeonRoomType.EXIT, rectangles[1]);
 
-            //Then pick d6 + level as summoning rooms
+            //Then pick d6 + level as summoning rooms. Ensuring they are less than half the rooms
+            int summoningRooms = GameState.Random.Next(1, 6) + level;
+
+            summoningRooms = summoningRooms > rectangles.Count / 2 ? rectangles.Count / 2 : summoningRooms;
+
+            for (int i = 0; i < summoningRooms; i++)
+            {
+                PutRoom(map, tileID, DungeonRoomType.SUMMONING, rectangles[2 + i]); //Create them
+
+                //Grab references to the summoning circles as we'll need them later
+
+            }
+
 
             //Then we can pick some of the rooms as being the other room types
 
@@ -232,9 +244,9 @@ namespace DivineRightGame.LocalMapGenerator
         /// </summary>
         /// <param name="roomType"></param>
         /// <param name="rect"></param>
-        private static void PutRoom(MapBlock[,] map,int tileID,DungeonRoomType roomType,Rectangle rect)
+        private static void PutRoom(MapBlock[,] map, int tileID, DungeonRoomType roomType, Rectangle rect)
         {
-            string tagName = roomType.ToString().ToLower().Replace("_"," ") + " room";
+            string tagName = roomType.ToString().ToLower().Replace("_", " ") + " room";
 
             LocalMapXMLParser parser = new LocalMapXMLParser();
             var maplet = parser.ParseMapletFromTag(tagName);

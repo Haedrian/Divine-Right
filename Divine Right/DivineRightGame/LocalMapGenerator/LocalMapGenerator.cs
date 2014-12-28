@@ -16,6 +16,7 @@ using DRObjects.LocalMapGeneratorObjects.Enums;
 using DRObjects.Items.Archetypes.Local;
 using DivineRightGame.ItemFactory.ItemFactoryManagers;
 using DRObjects.DataStructures;
+using DRObjects.Items.Archetypes;
 
 namespace DivineRightGame.LocalMapGenerator
 {
@@ -435,6 +436,8 @@ namespace DivineRightGame.LocalMapGenerator
                                             itemPlaced = new DungeonStairs(true); break;
                                         case "StairsDown":
                                             itemPlaced = new DungeonStairs(false); break;
+                                        case "SummoningCircle":
+                                            itemPlaced = new SummoningCircle(); break;
                                         default:
                                             throw new NotImplementedException("No code for " + (contents as MapletContentsItemSpecial).Type + " can be found");
                                     }

@@ -51,7 +51,7 @@ namespace DivineRightGame.Managers
                 else
                 {
                     //Invalid - no tick
-                    return new ActionFeedback[] { new CurrentLogFeedback(null,Color.Black,"You are too far away to hit your target")};
+                    return new ActionFeedback[] { new LogFeedback(null,Color.Black,"You are too far away to hit your target")};
                 }
             }
             else if (actionType == ActionType.IDLE)

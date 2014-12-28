@@ -505,38 +505,38 @@ namespace DivineRightGame.CombatHandling
                 {
                     if (type == DamageType.CRUSH)
                     {
-                        log = new CurrentLogFeedback(InterfaceSpriteName.DEFENSE, Color.DarkGreen, "The hit bounces off your armour");
+                        log = new LogFeedback(InterfaceSpriteName.DEFENSE, Color.DarkGreen, "The hit bounces off your armour");
                     }
                     else if (type == DamageType.SLASH)
                     {
-                        log = new CurrentLogFeedback(InterfaceSpriteName.DEFENSE, Color.DarkGreen, "The hit scratches the armour, but doesn't cut through");
+                        log = new LogFeedback(InterfaceSpriteName.DEFENSE, Color.DarkGreen, "The hit scratches the armour, but doesn't cut through");
                     }
                     else if (type == DamageType.STAB)
                     {
-                        log = new CurrentLogFeedback(InterfaceSpriteName.DEFENSE, Color.DarkGreen, "The hit fails to punch through your armour");
+                        log = new LogFeedback(InterfaceSpriteName.DEFENSE, Color.DarkGreen, "The hit fails to punch through your armour");
                     }
                     else if (type == DamageType.THRUST)
                     {
-                        log = log = new CurrentLogFeedback(InterfaceSpriteName.DEFENSE, Color.DarkGreen, "The hit fails to punch through your armour");
+                        log = log = new LogFeedback(InterfaceSpriteName.DEFENSE, Color.DarkGreen, "The hit fails to punch through your armour");
                     }
                 }
                 else
                 {
                     if (type == DamageType.CRUSH)
                     {
-                        log = new CurrentLogFeedback(InterfaceSpriteName.DEFENSE, Color.DarkRed, "The hit bounces off your target's armour");
+                        log = new LogFeedback(InterfaceSpriteName.DEFENSE, Color.DarkRed, "The hit bounces off your target's armour");
                     }
                     else if (type == DamageType.SLASH)
                     {
-                        log = new CurrentLogFeedback(InterfaceSpriteName.DEFENSE, Color.DarkRed, "The hit scratches the armour, but doesn't cut through");
+                        log = new LogFeedback(InterfaceSpriteName.DEFENSE, Color.DarkRed, "The hit scratches the armour, but doesn't cut through");
                     }
                     else if (type == DamageType.STAB)
                     {
-                        log = new CurrentLogFeedback(InterfaceSpriteName.DEFENSE, Color.DarkRed, "The hit fails to punch through your target's armour");
+                        log = new LogFeedback(InterfaceSpriteName.DEFENSE, Color.DarkRed, "The hit fails to punch through your target's armour");
                     }
                     else if (type == DamageType.THRUST)
                     {
-                        log = log = new CurrentLogFeedback(InterfaceSpriteName.DEFENSE, Color.DarkRed, "The hit fails to punch through your target's armour");
+                        log = log = new LogFeedback(InterfaceSpriteName.DEFENSE, Color.DarkRed, "The hit fails to punch through your target's armour");
                     }
                 }
 
@@ -549,38 +549,38 @@ namespace DivineRightGame.CombatHandling
                 {
                     if (type == DamageType.CRUSH)
                     {
-                        log = new CurrentLogFeedback(InterfaceSpriteName.BLOOD, Color.DarkRed, "Your " + loc.ToString().ToLower().Replace("_", " ") + " smashes into pulp under the force of the blow");
+                        log = new LogFeedback(InterfaceSpriteName.BLOOD, Color.DarkRed, "Your " + loc.ToString().ToLower().Replace("_", " ") + " smashes into pulp under the force of the blow");
                     }
                     else if (type == DamageType.SLASH)
                     {
-                        log = new CurrentLogFeedback(InterfaceSpriteName.BLOOD, Color.DarkRed, "Your " + loc.ToString().ToLower().Replace("_", " ") + " flies off in an arc");
+                        log = new LogFeedback(InterfaceSpriteName.BLOOD, Color.DarkRed, "Your " + loc.ToString().ToLower().Replace("_", " ") + " flies off in an arc");
                     }
                     else if (type == DamageType.STAB)
                     {
-                        log = new CurrentLogFeedback(InterfaceSpriteName.BLOOD, Color.DarkRed, "Your " + loc.ToString().ToLower().Replace("_", " ") + " dangles off by its skin");
+                        log = new LogFeedback(InterfaceSpriteName.BLOOD, Color.DarkRed, "Your " + loc.ToString().ToLower().Replace("_", " ") + " dangles off by its skin");
                     }
                     else if (type == DamageType.THRUST)
                     {
-                        log = new CurrentLogFeedback(InterfaceSpriteName.BLOOD, Color.DarkRed, "Your " + loc.ToString().ToLower().Replace("_", " ") + " dangles off by its skin");
+                        log = new LogFeedback(InterfaceSpriteName.BLOOD, Color.DarkRed, "Your " + loc.ToString().ToLower().Replace("_", " ") + " dangles off by its skin");
                     }
                 }
                 else
                 {
                     if (type == DamageType.CRUSH)
                     {
-                        log = new CurrentLogFeedback(InterfaceSpriteName.BLOOD, Color.DarkRed, "Your opponent's " + loc.ToString().ToLower().Replace("_", " ") + " smashes into pulp under the force of the blow");
+                        log = new LogFeedback(InterfaceSpriteName.BLOOD, Color.DarkRed, "Your opponent's " + loc.ToString().ToLower().Replace("_", " ") + " smashes into pulp under the force of the blow");
                     }
                     else if (type == DamageType.SLASH)
                     {
-                        log = new CurrentLogFeedback(InterfaceSpriteName.BLOOD, Color.DarkRed, "Your opponent's " + loc.ToString().ToLower().Replace("_", " ") + " flies off in an arc");
+                        log = new LogFeedback(InterfaceSpriteName.BLOOD, Color.DarkRed, "Your opponent's " + loc.ToString().ToLower().Replace("_", " ") + " flies off in an arc");
                     }
                     else if (type == DamageType.STAB)
                     {
-                        log = new CurrentLogFeedback(InterfaceSpriteName.BLOOD, Color.DarkRed, "Your opponent's " + loc.ToString().ToLower().Replace("_", " ") + " dangles off by its skin");
+                        log = new LogFeedback(InterfaceSpriteName.BLOOD, Color.DarkRed, "Your opponent's " + loc.ToString().ToLower().Replace("_", " ") + " dangles off by its skin");
                     }
                     else if (type == DamageType.THRUST)
                     {
-                        log = new CurrentLogFeedback(InterfaceSpriteName.BLOOD, Color.DarkRed, "Your opponent's " + loc.ToString().ToLower().Replace("_", " ") + " dangles off by its skin");
+                        log = new LogFeedback(InterfaceSpriteName.BLOOD, Color.DarkRed, "Your opponent's " + loc.ToString().ToLower().Replace("_", " ") + " dangles off by its skin");
                     }
                 }
 
@@ -593,38 +593,38 @@ namespace DivineRightGame.CombatHandling
                 {
                     if (type == DamageType.CRUSH)
                     {
-                        log = new CurrentLogFeedback(InterfaceSpriteName.DEFENSE, Color.DarkRed, "Your " + loc.ToString().ToLower().Replace("_", " ") + " cracks loudly as the bones smash under the blow");
+                        log = new LogFeedback(InterfaceSpriteName.DEFENSE, Color.DarkRed, "Your " + loc.ToString().ToLower().Replace("_", " ") + " cracks loudly as the bones smash under the blow");
                     }
                     else if (type == DamageType.SLASH)
                     {
-                        log = new CurrentLogFeedback(InterfaceSpriteName.DEFENSE, Color.DarkRed, "Your " + loc.ToString().ToLower().Replace("_", " ") + " is cut open with the attack");
+                        log = new LogFeedback(InterfaceSpriteName.DEFENSE, Color.DarkRed, "Your " + loc.ToString().ToLower().Replace("_", " ") + " is cut open with the attack");
                     }
                     else if (type == DamageType.STAB)
                     {
-                        log = new CurrentLogFeedback(InterfaceSpriteName.DEFENSE, Color.DarkRed, "Your " + loc.ToString().ToLower().Replace("_", " ") + " bleeds heavily as the attack goes through");
+                        log = new LogFeedback(InterfaceSpriteName.DEFENSE, Color.DarkRed, "Your " + loc.ToString().ToLower().Replace("_", " ") + " bleeds heavily as the attack goes through");
                     }
                     else if (type == DamageType.THRUST)
                     {
-                        log = new CurrentLogFeedback(InterfaceSpriteName.DEFENSE, Color.DarkRed, "Your " + loc.ToString().ToLower().Replace("_", " ") + " bleeds heavily as the attack goes through");
+                        log = new LogFeedback(InterfaceSpriteName.DEFENSE, Color.DarkRed, "Your " + loc.ToString().ToLower().Replace("_", " ") + " bleeds heavily as the attack goes through");
                     }
                 }
                 else
                 {
                     if (type == DamageType.CRUSH)
                     {
-                        log = new CurrentLogFeedback(InterfaceSpriteName.DEFENSE, Color.DarkGreen, "Your opponent's " + loc.ToString().ToLower().Replace("_", " ") + " cracks loudly as the bones smash under the blow");
+                        log = new LogFeedback(InterfaceSpriteName.DEFENSE, Color.DarkGreen, "Your opponent's " + loc.ToString().ToLower().Replace("_", " ") + " cracks loudly as the bones smash under the blow");
                     }
                     else if (type == DamageType.SLASH)
                     {
-                        log = new CurrentLogFeedback(InterfaceSpriteName.DEFENSE, Color.DarkGreen, "Your opponent's " + loc.ToString().ToLower().Replace("_", " ") + " is cut open with the attack");
+                        log = new LogFeedback(InterfaceSpriteName.DEFENSE, Color.DarkGreen, "Your opponent's " + loc.ToString().ToLower().Replace("_", " ") + " is cut open with the attack");
                     }
                     else if (type == DamageType.STAB)
                     {
-                        log = new CurrentLogFeedback(InterfaceSpriteName.DEFENSE, Color.DarkGreen, "Your opponent's " + loc.ToString().ToLower().Replace("_", " ") + " bleeds heavily as the attack goes through");
+                        log = new LogFeedback(InterfaceSpriteName.DEFENSE, Color.DarkGreen, "Your opponent's " + loc.ToString().ToLower().Replace("_", " ") + " bleeds heavily as the attack goes through");
                     }
                     else if (type == DamageType.THRUST)
                     {
-                        log = new CurrentLogFeedback(InterfaceSpriteName.DEFENSE, Color.DarkGreen, "Your opponent's " + loc.ToString().ToLower().Replace("_", " ") + " bleeds heavily as the attack goes through");
+                        log = new LogFeedback(InterfaceSpriteName.DEFENSE, Color.DarkGreen, "Your opponent's " + loc.ToString().ToLower().Replace("_", " ") + " bleeds heavily as the attack goes through");
                     }
                 }
 
@@ -635,11 +635,11 @@ namespace DivineRightGame.CombatHandling
             {
                 if (attacker.IsPlayerCharacter)
                 {
-                    log = new CurrentLogFeedback(InterfaceSpriteName.SWORD, Color.DarkGreen, "You swing (" + diceroll + ") at " + defender.EnemyData.EnemyName + " and hit him in the " + loc.ToString().ToLower().Replace("_", " "));
+                    log = new LogFeedback(InterfaceSpriteName.SWORD, Color.DarkGreen, "You swing (" + diceroll + ") at " + defender.EnemyData.EnemyName + " and hit him in the " + loc.ToString().ToLower().Replace("_", " "));
                 }
                 else
                 {
-                    log = new CurrentLogFeedback(InterfaceSpriteName.SWORD, Color.DarkRed, attacker.EnemyData.EnemyName + " swings (" + diceroll + ") at you and hits you in the " + loc.ToString().ToLower().Replace("_", " "));
+                    log = new LogFeedback(InterfaceSpriteName.SWORD, Color.DarkRed, attacker.EnemyData.EnemyName + " swings (" + diceroll + ") at you and hits you in the " + loc.ToString().ToLower().Replace("_", " "));
                 }
 
                 return log;
@@ -649,7 +649,7 @@ namespace DivineRightGame.CombatHandling
             {
                 if (attacker.IsPlayerCharacter)
                 {
-                    log = new CurrentLogFeedback(InterfaceSpriteName.HEAD, Color.DarkGreen, "You strike your opponent down");
+                    log = new LogFeedback(InterfaceSpriteName.HEAD, Color.DarkGreen, "You strike your opponent down");
                 }
                 else
                 {
@@ -665,12 +665,12 @@ namespace DivineRightGame.CombatHandling
                 //We have a miss
                 if (attacker.IsPlayerCharacter)
                 {
-                    log = new CurrentLogFeedback(InterfaceSpriteName.SWORD, Color.DarkRed, "You swing (" + diceroll + ") at " + defender.EnemyData.EnemyName + "'s " + loc.ToString().ToLower().Replace("_", " ") + " but miss");
+                    log = new LogFeedback(InterfaceSpriteName.SWORD, Color.DarkRed, "You swing (" + diceroll + ") at " + defender.EnemyData.EnemyName + "'s " + loc.ToString().ToLower().Replace("_", " ") + " but miss");
                 }
                 else
                 {
                     //Player is the defender
-                    log = new CurrentLogFeedback(InterfaceSpriteName.SWORD, Color.DarkGreen, "The " + attacker.EnemyData.EnemyName + " swings (" + diceroll + ") at your " + loc.ToString().ToLower().Replace("_", " ") + ", but misses");
+                    log = new LogFeedback(InterfaceSpriteName.SWORD, Color.DarkGreen, "The " + attacker.EnemyData.EnemyName + " swings (" + diceroll + ") at your " + loc.ToString().ToLower().Replace("_", " ") + ", but misses");
                 }
 
                 return log;
@@ -681,11 +681,11 @@ namespace DivineRightGame.CombatHandling
                 //No damage!
                 if (attacker.IsPlayerCharacter)
                 {
-                    log = new CurrentLogFeedback(InterfaceSpriteName.BLOOD, Color.DarkRed, "You however fail to wound your opponent");
+                    log = new LogFeedback(InterfaceSpriteName.BLOOD, Color.DarkRed, "You however fail to wound your opponent");
                 }
                 else
                 {
-                    log = new CurrentLogFeedback(InterfaceSpriteName.BLOOD, Color.DarkGreen, "It fails to properly wound you, however");
+                    log = new LogFeedback(InterfaceSpriteName.BLOOD, Color.DarkGreen, "It fails to properly wound you, however");
                 }
 
                 return log;
@@ -698,12 +698,12 @@ namespace DivineRightGame.CombatHandling
                     if (defender.Anatomy.BloodLoss == 1)
                     {
                         //Wound opened
-                        log = new CurrentLogFeedback(InterfaceSpriteName.BLEEDING, Color.DarkRed, "The attack opens a wound");
+                        log = new LogFeedback(InterfaceSpriteName.BLEEDING, Color.DarkRed, "The attack opens a wound");
                     }
                     else
                     {
                         //Wound worsended
-                        log = new CurrentLogFeedback(InterfaceSpriteName.BLEEDING, Color.DarkRed, "The attack worsens your wound");
+                        log = new LogFeedback(InterfaceSpriteName.BLEEDING, Color.DarkRed, "The attack worsens your wound");
                     }
                 }
 

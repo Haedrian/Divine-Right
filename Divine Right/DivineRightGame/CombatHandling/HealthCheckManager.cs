@@ -98,11 +98,11 @@ namespace DivineRightGame.CombatHandling
 
                 if (actor.IsPlayerCharacter)
                 {
-                    return new ActionFeedback[] { new CurrentLogFeedback(InterfaceSpriteName.BLEEDING, Color.Red, "You bleed to death"), new CreateEventFeedback("DEATH") };
+                    return new ActionFeedback[] { new LogFeedback(InterfaceSpriteName.BLEEDING, Color.Red, "You bleed to death"), new CreateEventFeedback("DEATH") };
                 }
                 else
                 {
-                    return new ActionFeedback[] { new CurrentLogFeedback(InterfaceSpriteName.BLEEDING, Color.Red, actor.Name + " has bled to death") };
+                    return new ActionFeedback[] { new LogFeedback(InterfaceSpriteName.BLEEDING, Color.Red, actor.Name + " has bled to death") };
                 }
             }
 
@@ -141,7 +141,7 @@ namespace DivineRightGame.CombatHandling
 
                     if (actor.IsPlayerCharacter)
                     {
-                        return new ActionFeedback[] { new CurrentLogFeedback(InterfaceSpriteName.SPIRAL, Color.Red, "You black out") };
+                        return new ActionFeedback[] { new LogFeedback(InterfaceSpriteName.SPIRAL, Color.Red, "You black out") };
                     }
                 }
             }

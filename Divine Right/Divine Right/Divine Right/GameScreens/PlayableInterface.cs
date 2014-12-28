@@ -407,7 +407,7 @@ namespace Divine_Right.GameScreens
                 //Has the user pressed esc?
                 if (keyboardState.IsKeyDown(Keys.Escape))
                 {
-                    GameState.NewLog.Add(new CurrentLogFeedback(InterfaceSpriteName.BANNER_GREEN, Color.White, "Saving Game Please Wait..."));
+                    GameState.NewLog.Add(new LogFeedback(InterfaceSpriteName.BANNER_GREEN, Color.White, "Saving Game Please Wait..."));
 
                     saveAndQuit = true;
                 }
@@ -1067,9 +1067,9 @@ namespace Divine_Right.GameScreens
                     //Display it
                     interfaceComponents.Add(new ViewTileTextComponent(mouse.X + 15, mouse.Y, (feedback as TextFeedback).Text));
                 }
-                else if (feedback.GetType().Equals(typeof(CurrentLogFeedback)))
+                else if (feedback.GetType().Equals(typeof(LogFeedback)))
                 {
-                    GameState.NewLog.Add(feedback as CurrentLogFeedback);
+                    GameState.NewLog.Add(feedback as LogFeedback);
                 }
                 else if (feedback.GetType().Equals(typeof(InterfaceToggleFeedback)))
                 {
@@ -1253,7 +1253,7 @@ namespace Divine_Right.GameScreens
                                         }
 
                                         //Yes. Let's clear the camp
-                                        GameState.NewLog.Add(new CurrentLogFeedback(InterfaceSpriteName.SWORD, Color.Black, "You drive the bandits away from the camp"));
+                                        GameState.NewLog.Add(new LogFeedback(InterfaceSpriteName.SWORD, Color.Black, "You drive the bandits away from the camp"));
                                     }
 
                                 }

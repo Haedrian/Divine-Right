@@ -212,7 +212,7 @@ namespace DRObjects.Items.Archetypes.Local
                             this.InInventory = true;
                         }
 
-                        return new ActionFeedback[1] { new CurrentLogFeedback(InterfaceSpriteName.MAN, Color.Black, "You pick up the " + this.Name) };
+                        return new ActionFeedback[1] { new LogFeedback(InterfaceSpriteName.MAN, Color.Black, "You pick up the " + this.Name) };
 
                     }
                 }

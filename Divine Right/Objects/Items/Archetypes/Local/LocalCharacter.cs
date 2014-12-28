@@ -177,7 +177,7 @@ namespace DRObjects.Items.Archetypes.Local
             else if (actionType == ActionType.SHOVE)
             {
                 this.Actor.IsProne = true;
-                return new CurrentLogFeedback[] { new CurrentLogFeedback( InterfaceSpriteName.CHA, Color.Black, "You shove " + this.Name)};
+                return new LogFeedback[] { new LogFeedback( InterfaceSpriteName.CHA, Color.Black, "You shove " + this.Name)};
             }
             else
             {

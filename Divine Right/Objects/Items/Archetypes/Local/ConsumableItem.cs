@@ -61,7 +61,7 @@ namespace DRObjects.Items.Archetypes.Local
                     actor.Inventory.Inventory.Remove(this.Category, this);
                 }
 
-                return new ActionFeedback[] { new CurrentLogFeedback(null, Color.Blue, "You consume the " + this.Name) };
+                return new ActionFeedback[] { new LogFeedback(null, Color.Blue, "You consume the " + this.Name) };
             }
             else
             {

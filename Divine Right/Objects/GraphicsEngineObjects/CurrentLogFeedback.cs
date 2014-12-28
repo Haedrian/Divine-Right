@@ -10,7 +10,7 @@ namespace DRObjects.GraphicsEngineObjects
     /// <summary>
     /// Represents Text which is shown on the player's current log. Has an icon to differentiate the types
     /// </summary>
-    public class CurrentLogFeedback:
+    public class LogFeedback:
         Abstract.ActionFeedback
     {
         /// <summary>
@@ -31,7 +31,7 @@ namespace DRObjects.GraphicsEngineObjects
         /// Creates a new Current log Feedback and the text to be shown
         /// </summary>
         /// <param name="text"></param>
-        public CurrentLogFeedback(InterfaceSpriteName? icon,Color colour,string text)
+        public LogFeedback(InterfaceSpriteName? icon,Color colour,string text)
         {
             this.Icon = icon;
             this.DrawColour = colour;

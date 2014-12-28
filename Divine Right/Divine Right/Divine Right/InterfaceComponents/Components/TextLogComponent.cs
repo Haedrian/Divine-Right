@@ -32,18 +32,18 @@ namespace Divine_Right.InterfaceComponents.Components
         /// We will basically take a look at the global log each time. If there's anything new, we clean it up and put it in the top.
         /// Then we try to draw all of them. If we run out of bottom draw space, then we trim the feedback list to save some memory.
         /// </summary>
-        protected List<CurrentLogFeedback> feedback;
+        protected List<LogFeedback> feedback;
 
         /// <summary>
         /// A link to the log which we will be sampling from
         /// </summary>
-        protected List<CurrentLogFeedback> globalLog;
+        protected List<LogFeedback> globalLog;
 
         private bool visible;
         private bool bigMode;
         #endregion
 
-        public TextLogComponent(int x, int y, List<CurrentLogFeedback> globalLog)
+        public TextLogComponent(int x, int y, List<LogFeedback> globalLog)
         {
             //Tall and wide (that's what she said)
             this.locationX = x;
@@ -51,7 +51,7 @@ namespace Divine_Right.InterfaceComponents.Components
 
             this.rect = new Rectangle(x, y, 750, 20);
 
-            this.feedback = new List<CurrentLogFeedback>();
+            this.feedback = new List<LogFeedback>();
             this.globalLog = globalLog;
 
             bigMode = false;

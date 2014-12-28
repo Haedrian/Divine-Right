@@ -99,6 +99,7 @@ Maplets\Stables.xml
 Maplets\HuntingLodge.xml
 Maplets\Underground\ExitRoom.xml
 Maplets\Underground\EntranceRoom.xml
+Maplets\Underground\SummoningRoom.xml
 Maplets\Woodcutter.xml
 Maplets\Farm.xml
 Maplets\FishingVillage.xml

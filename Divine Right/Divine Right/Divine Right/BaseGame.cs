@@ -51,7 +51,7 @@ namespace Divine_Right
             MainMenuScreen mI = new MainMenuScreen(this, graphics, "");
             this.Components.Add(mI);
 
-            GameState.NewLog = new List<DRObjects.GraphicsEngineObjects.CurrentLogFeedback>();
+            GameState.NewLog = new List<DRObjects.GraphicsEngineObjects.LogFeedback>();
 
             if (!Directory.Exists(GameState.SAVEPATH))
             {

@@ -107,7 +107,7 @@ namespace DivineRightGame
                 }
                 else if ((int)GameState.PlayerCharacter.FeedingLevel <= 2)
                 {
-                    GameState.NewLog.Add(new CurrentLogFeedback(InterfaceSpriteName.MOON, Color.DarkRed, "You are hungry and out of food"));
+                    GameState.NewLog.Add(new LogFeedback(InterfaceSpriteName.MOON, Color.DarkRed, "You are hungry and out of food"));
                 }
 
             }
@@ -159,7 +159,7 @@ namespace DivineRightGame
         /// <summary>
         /// A log for storing feedback. Only holds one tick's worth.
         /// </summary>
-        public static List<CurrentLogFeedback> NewLog { get; set; }
+        public static List<LogFeedback> NewLog { get; set; }
         /// <summary>
         /// A random to use across
         /// </summary>

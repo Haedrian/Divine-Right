@@ -119,7 +119,7 @@ namespace DRObjects
                 switch (actionType)
                 {
                     case ActionType.EXAMINE:
-                        return new ActionFeedback[] { new CurrentLogFeedback(InterfaceSpriteName.PERC, Color.Black, "You see " + this.Description) };
+                        return new ActionFeedback[] { new LogFeedback(InterfaceSpriteName.PERC, Color.Black, "You see " + this.Description) };
                     case ActionType.LOOK:
                         return new ActionFeedback[] { new TextFeedback(this.Name) };
                     default:
