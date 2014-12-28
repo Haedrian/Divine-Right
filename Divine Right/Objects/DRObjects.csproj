@@ -170,6 +170,7 @@
     <Compile Include="Items\Archetypes\Local\LeaveTownItem.cs" />
     <Compile Include="Items\Archetypes\Local\LocalCharacter.cs" />
     <Compile Include="Items\Archetypes\Local\ToggleItem.cs" />
+    <Compile Include="Items\Archetypes\SummoningCircle.cs" />
     <Compile Include="Items\Tiles\Air.cs" />
     <Compile Include="Items\Tiles\Global\GlobalTile.cs" />
     <Compile Include="LocalMapGeneratorObjects\DatabaseHandling\MapletDatabaseDatum.cs" />
@@ -322,6 +323,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Maplets\Underground\EntranceRoom.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Maplets\Underground\SummoningRoom.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Maplets\Woodcutter.xml">

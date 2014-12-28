@@ -27,5 +27,6 @@ namespace DRObjects.Enums
         HUNT,
         ASCEND_TO_SURFACE,
         DESCEND,
+        DISABLE,
     }
 }
