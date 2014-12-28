@@ -47,6 +47,8 @@ namespace Divine_Right.GameScreens
         public int TILEWIDTH = 50;
         public int TILEHEIGHT = 50;
 
+        private Color greyedOutColour = new Color(225, 225, 225,75);
+
         int PlayableWidth
         {
             get
@@ -993,7 +995,6 @@ namespace Divine_Right.GameScreens
                 {
                     if (block.ItemGraphics.Length != 0)
                     {
-
                         foreach (SpriteData itemGraphic in block.ItemGraphics)
                         {
                             if (itemGraphic != null)
@@ -1010,11 +1011,11 @@ namespace Divine_Right.GameScreens
 
                                     if (itemGraphic.sourceRectangle == null)
                                     {
-                                        spriteBatch.Draw(this.game.Content.Load<Texture2D>(itemGraphic.path), rec, block.IsOld ? Color.Black : itemGraphic.ColorFilter.HasValue ? itemGraphic.ColorFilter.Value : Color.White);
+                                        spriteBatch.Draw(this.game.Content.Load<Texture2D>(itemGraphic.path), rec, block.IsOld ? greyedOutColour : itemGraphic.ColorFilter.HasValue ? itemGraphic.ColorFilter.Value : Color.White);
                                     }
                                     else
                                     { //part of a tileset
-                                        spriteBatch.Draw(this.game.Content.Load<Texture2D>(itemGraphic.path), rec, itemGraphic.sourceRectangle, block.IsOld ? Color.Black : (itemGraphic.ColorFilter.HasValue ? itemGraphic.ColorFilter.Value : Color.White));
+                                        spriteBatch.Draw(this.game.Content.Load<Texture2D>(itemGraphic.path), rec, itemGraphic.sourceRectangle, block.IsOld ? greyedOutColour: (itemGraphic.ColorFilter.HasValue ? itemGraphic.ColorFilter.Value : Color.White));
                                     }
                                 }
                             }
@@ -1339,9 +1340,9 @@ namespace Divine_Right.GameScreens
 
                     //Visit a region equal to the line of sight of the player character - 
                     var blocks = GameState.LocalMap.GetBlocksAroundPoint(vbf.Coordinate, GameState.PlayerCharacter.LineOfSight ?? 0);
-                    
+
                     //Only do the ones which can be ray traced
-                    foreach(var block in RayTracingHelper.RayTraceForExploration(blocks,GameState.PlayerCharacter.MapCharacter.Coordinate))
+                    foreach (var block in RayTracingHelper.RayTraceForExploration(blocks, GameState.PlayerCharacter.MapCharacter.Coordinate))
                     {
                         block.WasVisited = true;
                     }
