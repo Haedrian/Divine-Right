@@ -17,6 +17,7 @@ using DRObjects.ActorHandling.CharacterSheet;
 using DRObjects.Sites;
 using DRObjects.Enums;
 using DRObjects.CivilisationHandling;
+using DRObjects.Items.Archetypes;
 
 namespace Divine_Right.HelperFunctions
 {
