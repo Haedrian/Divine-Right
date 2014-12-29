@@ -47,7 +47,7 @@ namespace Divine_Right.GameScreens
         public int TILEWIDTH = 50;
         public int TILEHEIGHT = 50;
 
-        private Color greyedOutColour = new Color(225, 225, 225,75);
+        private Color greyedOutColour = new Color(225, 225, 225, 75);
 
         int PlayableWidth
         {
@@ -330,10 +330,10 @@ namespace Divine_Right.GameScreens
             menuButtons.Add(new AutoSizeGameButton("  Health  ", this.game.Content, InternalActionEnum.OPEN_HEALTH, new object[] { }, 50, GraphicsDevice.Viewport.Height - 35));
             menuButtons.Add(new AutoSizeGameButton(" Attributes ", this.game.Content, InternalActionEnum.OPEN_ATTRIBUTES, new object[] { }, 150, GraphicsDevice.Viewport.Height - 35));
 
-            if (GameState.LocalMap.Settlement != null)
+            if (GameState.LocalMap.Location as Settlement != null)
             {
                 menuButtons.Add(new AutoSizeGameButton(" Settlement ", this.game.Content, InternalActionEnum.TOGGLE_SETTLEMENT, new object[] { }, 270, GraphicsDevice.Viewport.Height - 35));
-                LocationDetailsComponent ldc = new LocationDetailsComponent(GameState.LocalMap.Settlement, PlayableWidth - 170, 0);
+                LocationDetailsComponent ldc = new LocationDetailsComponent(GameState.LocalMap.Location as Settlement, PlayableWidth - 170, 0);
                 ldc.Visible = true;
                 interfaceComponents.Add(ldc);
             }
@@ -1015,7 +1015,7 @@ namespace Divine_Right.GameScreens
                                     }
                                     else
                                     { //part of a tileset
-                                        spriteBatch.Draw(this.game.Content.Load<Texture2D>(itemGraphic.path), rec, itemGraphic.sourceRectangle, block.IsOld ? greyedOutColour: (itemGraphic.ColorFilter.HasValue ? itemGraphic.ColorFilter.Value : Color.White));
+                                        spriteBatch.Draw(this.game.Content.Load<Texture2D>(itemGraphic.path), rec, itemGraphic.sourceRectangle, block.IsOld ? greyedOutColour : (itemGraphic.ColorFilter.HasValue ? itemGraphic.ColorFilter.Value : Color.White));
                                     }
                                 }
                             }
@@ -1165,33 +1165,28 @@ namespace Divine_Right.GameScreens
 
                     LocationChangeFeedback lce = feedback as LocationChangeFeedback;
 
-                    if (lce.VisitSettlement != null)
+                    if (lce.Location != null)
                     {
-                        LoadSettlement(lce.VisitSettlement);
+                        LoadLocation(lce.Location);
 
-                        //Makde the components visible
-                        LocationDetailsComponent ldc = new LocationDetailsComponent(GameState.LocalMap.Settlement, PlayableWidth - 170, 0);
-                        ldc.Visible = true;
-                        interfaceComponents.Add(ldc);
-                        menuButtons.Add(new AutoSizeGameButton(" Settlement ", this.game.Content, InternalActionEnum.TOGGLE_SETTLEMENT, new object[] { }, 270, GraphicsDevice.Viewport.Height - 35));
-                        Window_ClientSizeChanged(null, null); //button is in the wrong position for some reason
+                        if (lce.Location is Settlement)
+                        {
 
-                        GameState.LocalMap.IsGlobalMap = false;
-                    }
-                    else if (lce.VisitDungeon != null)
-                    {
-                        LoadDungeon(lce.VisitDungeon);
-                        GameState.LocalMap.IsGlobalMap = false;
-                    }
-                    else if (lce.VisitCamp != null)
-                    {
-                        LoadCamp(lce.VisitCamp);
+                            //Makde the components visible
+                            LocationDetailsComponent ldc = new LocationDetailsComponent(GameState.LocalMap.Location as Settlement, PlayableWidth - 170, 0);
+                            ldc.Visible = true;
+                            interfaceComponents.Add(ldc);
+                            menuButtons.Add(new AutoSizeGameButton(" Settlement ", this.game.Content, InternalActionEnum.TOGGLE_SETTLEMENT, new object[] { }, 270, GraphicsDevice.Viewport.Height - 35));
+                            Window_ClientSizeChanged(null, null); //button is in the wrong position for some reason
+                        }
+
+
                         GameState.LocalMap.IsGlobalMap = false;
                     }
                     else if (lce.VisitMainMap)
                     {
                         //If it's a bandit camp or a site, update the values of the members
-                        if (GameState.LocalMap.Site != null || GameState.LocalMap.Camp != null)
+                        if (GameState.LocalMap.Location as MapSite != null || GameState.LocalMap.Location as BanditCamp != null)
                         {
                             ////Count the amount of actors which aren't the player character or animals and update the counts
                             //TO USE LATER ON WHEN WE WANT A SCOUTING REPORT
@@ -1221,16 +1216,18 @@ namespace Divine_Right.GameScreens
                             //    }
                             //}
 
-                            if (GameState.LocalMap.Camp != null)
+                            if (GameState.LocalMap.Location as BanditCamp != null)
                             {
-                                GameState.LocalMap.Camp.BanditTotal = GameState.LocalMap.Actors.Count(a => a.IsActive && a.IsAlive && !a.IsPlayerCharacter
+                                var banditCamp = GameState.LocalMap.Location as BanditCamp;
+
+                                banditCamp.BanditTotal = GameState.LocalMap.Actors.Count(a => a.IsActive && a.IsAlive && !a.IsPlayerCharacter
                                     && a.EnemyData != null && a.EnemyData.Profession == ActorProfession.WARRIOR);
 
                                 //Has it been cleared?
-                                if (GameState.LocalMap.Camp.BanditTotal == 0)
+                                if (banditCamp.BanditTotal == 0)
                                 {
                                     //Find the item
-                                    var campItem = GameState.GlobalMap.CampItems.FirstOrDefault(ci => ci.Camp == GameState.LocalMap.Camp);
+                                    var campItem = GameState.GlobalMap.CampItems.FirstOrDefault(ci => ci.Camp == (GameState.LocalMap.Location as BanditCamp));
 
                                     if (campItem != null)
                                     {
@@ -1259,25 +1256,27 @@ namespace Divine_Right.GameScreens
                                 }
 
                             }
-                            else if (GameState.LocalMap.Site != null)
+                            else if (GameState.LocalMap.Location as MapSite != null)
                             {
-                                GameState.LocalMap.Site.SiteData.ActorCounts.Clear();
+                                var site = GameState.LocalMap.Location as MapSite;
+
+                                site.SiteData.ActorCounts.Clear();
 
                                 foreach (var actorProfession in (ActorProfession[])Enum.GetValues(typeof(ActorProfession)))
                                 {
                                     int count = GameState.LocalMap.Actors.Count(a => a.IsActive && a.IsAlive && !a.IsPlayerCharacter
                                     && a.EnemyData != null && a.EnemyData.Profession == actorProfession);
 
-                                    GameState.LocalMap.Site.SiteData.ActorCounts.Add(actorProfession, count);
+                                    site.SiteData.ActorCounts.Add(actorProfession, count);
                                 }
 
-                                if (GameState.LocalMap.Site.SiteData.ActorCounts[ActorProfession.WARRIOR] == 0)
+                                if (site.SiteData.ActorCounts[ActorProfession.WARRIOR] == 0)
                                 {
                                     //Out of warriors, abandon it. We'll decide who really owns it later
-                                    GameState.LocalMap.Site.SiteData.OwnerChanged = true;
-                                    GameState.LocalMap.Site.SiteData.MapRegenerationRequired = true;
-                                    GameState.LocalMap.Site.SiteData.Owners = OwningFactions.ABANDONED;
-                                    GameState.LocalMap.Site.SiteData.ActorCounts = new Dictionary<ActorProfession, int>();
+                                    site.SiteData.OwnerChanged = true;
+                                    site.SiteData.MapRegenerationRequired = true;
+                                    site.SiteData.Owners = OwningFactions.ABANDONED;
+                                    site.SiteData.ActorCounts = new Dictionary<ActorProfession, int>();
                                 }
                             }
                         }
@@ -1285,20 +1284,12 @@ namespace Divine_Right.GameScreens
                         GameState.LocalMap.SerialiseLocalMap();
 
                         //Clear the stored location items
-                        GameState.LocalMap.Camp = null;
-                        GameState.LocalMap.Citadel = null;
-                        GameState.LocalMap.Settlement = null;
-                        GameState.LocalMap.Site = null;
+                        GameState.LocalMap.Location = null;
 
                         LoadGlobalMap(GameState.PlayerCharacter.GlobalCoordinates);
 
                         GameState.LocalMap.IsGlobalMap = true;
 
-                    }
-                    else if (lce.VisitSite != null)
-                    {
-                        LoadSite(lce.VisitSite);
-                        GameState.LocalMap.IsGlobalMap = false;
                     }
                     else if (lce.RandomEncounter != null)
                     {
@@ -1447,157 +1438,26 @@ namespace Divine_Right.GameScreens
             GameState.LocalMap.PointsOfInterest = pointsOfInterest;
         }
 
-
-        private void LoadCamp(BanditCamp camp)
+        /// <summary>
+        /// Load the location
+        /// </summary>
+        /// <param name="location"></param>
+        private void LoadLocation(Location location)
         {
-            if (LocalMap.MapGenerated(camp.UniqueGUID))
+            if (LocalMap.MapGenerated(location.UniqueGUID))
             {
                 //Reload the map
-                var savedMap = LocalMap.DeserialiseLocalMap(camp.UniqueGUID);
+                var savedMap = LocalMap.DeserialiseLocalMap(location.UniqueGUID);
 
                 GameState.LocalMap = new LocalMap(savedMap.localGameMap.GetLength(0), savedMap.localGameMap.GetLength(1), 1, 0);
 
-                GameState.LocalMap.Actors = new List<Actor>();
+                GameState.LocalMap.Location = location;
 
-                List<MapBlock> collapsedMap = new List<MapBlock>();
-
-                foreach (MapBlock block in savedMap.localGameMap)
+                if (GameState.LocalMap.Location is MapSite && (GameState.LocalMap.Location as MapSite).SiteData.MapRegenerationRequired)
                 {
-                    collapsedMap.Add(block);
-                }
+                    Actor[] newActors = null;
 
-                GameState.LocalMap.AddToLocalMap(collapsedMap.ToArray());
-                GameState.LocalMap.PathfindingMap = savedMap.PathfindingMap;
-                GameState.LocalMap.PointsOfInterest = savedMap.PointsOfInterest;
-
-                GameState.LocalMap.Actors = savedMap.Actors;
-
-                //Find the player character item
-                var playerActor = GameState.LocalMap.Actors.Where(a => a.IsPlayerCharacter).FirstOrDefault();
-
-                GameState.PlayerCharacter.MapCharacter.Coordinate = playerActor.MapCharacter.Coordinate;
-                GameState.PlayerCharacter.MapCharacter = playerActor.MapCharacter;
-
-                GameState.LocalMap.Camp = camp;
-            }
-            else
-            {
-                Actor[] actors = null;
-
-                MapCoordinate startPoint = null;
-                List<PointOfInterest> pointsOfInterest = null;
-
-                var gennedCamp = CampGenerator.GenerateCamp(camp.BanditTotal, out startPoint, out actors);
-
-                GameState.LocalMap = new LocalMap(gennedCamp.GetLength(0), gennedCamp.GetLength(1), 1, 0);
-                GameState.LocalMap.Actors = new List<Actor>();
-
-                List<MapBlock> collapsedMap = new List<MapBlock>();
-
-                foreach (MapBlock block in gennedCamp)
-                {
-                    collapsedMap.Add(block);
-                }
-
-                GameState.LocalMap.AddToLocalMap(collapsedMap.ToArray());
-
-                GameState.PlayerCharacter.MapCharacter.Coordinate = startPoint;
-
-                MapBlock playerBlock = GameState.LocalMap.GetBlockAtCoordinate(startPoint);
-                playerBlock.PutItemOnBlock(GameState.PlayerCharacter.MapCharacter);
-                GameState.LocalMap.Actors.AddRange(actors);
-                GameState.LocalMap.Actors.Add(GameState.PlayerCharacter);
-                GameState.LocalMap.PointsOfInterest = pointsOfInterest;
-                GameState.LocalMap.Camp = camp;
-            }
-        }
-
-        private void LoadDungeon(Citadel dungeon)
-        {
-
-            if (LocalMap.MapGenerated(dungeon.UniqueGUID))
-            {
-                //Reload the map
-                var savedMap = LocalMap.DeserialiseLocalMap(dungeon.UniqueGUID);
-
-                GameState.LocalMap = new LocalMap(savedMap.localGameMap.GetLength(0), savedMap.localGameMap.GetLength(1), 1, 0);
-
-                GameState.LocalMap.Actors = new List<Actor>();
-
-                List<MapBlock> collapsedMap = new List<MapBlock>();
-
-                foreach (MapBlock block in savedMap.localGameMap)
-                {
-                    collapsedMap.Add(block);
-                }
-
-                GameState.LocalMap.AddToLocalMap(collapsedMap.ToArray());
-                GameState.LocalMap.PathfindingMap = savedMap.PathfindingMap;
-                GameState.LocalMap.PointsOfInterest = savedMap.PointsOfInterest;
-
-                GameState.LocalMap.Actors = savedMap.Actors;
-
-                //Find the player character item
-                var playerActor = GameState.LocalMap.Actors.Where(a => a.IsPlayerCharacter).FirstOrDefault();
-
-                GameState.PlayerCharacter.MapCharacter.Coordinate = playerActor.MapCharacter.Coordinate;
-                GameState.PlayerCharacter.MapCharacter = playerActor.MapCharacter;
-
-                GameState.LocalMap.Citadel = dungeon;
-            }
-            else
-            {
-                Actor[] actors = null;
-
-                CitadelGenerator gen = new CitadelGenerator();
-                MapCoordinate startPoint = null;
-                List<PointOfInterest> pointsOfInterest = null;
-
-                var gennedDungeon = gen.GenerateDungeon(dungeon.TierCount, dungeon.TrapRooms, dungeon.GuardRooms, dungeon.TreasureRoom, dungeon.OwnerCreatureType, (decimal)dungeon.PercentageOwned, dungeon.MaxWildPopulation, dungeon.MaxOwnedPopulation, out startPoint, out actors, out pointsOfInterest);
-
-                GameState.LocalMap = new LocalMap(gennedDungeon.GetLength(0), gennedDungeon.GetLength(1), 1, 0);
-                GameState.LocalMap.Actors = new List<Actor>();
-
-                List<MapBlock> collapsedMap = new List<MapBlock>();
-
-                foreach (MapBlock block in gennedDungeon)
-                {
-                    collapsedMap.Add(block);
-                }
-
-                GameState.LocalMap.AddToLocalMap(collapsedMap.ToArray());
-
-                GameState.PlayerCharacter.MapCharacter.Coordinate = startPoint;
-
-                MapBlock playerBlock = GameState.LocalMap.GetBlockAtCoordinate(startPoint);
-                playerBlock.PutItemOnBlock(GameState.PlayerCharacter.MapCharacter);
-                GameState.LocalMap.Actors.AddRange(actors);
-                GameState.LocalMap.Actors.Add(GameState.PlayerCharacter);
-                GameState.LocalMap.PointsOfInterest = pointsOfInterest;
-                GameState.LocalMap.Citadel = dungeon;
-            }
-        }
-
-        private void LoadSite(MapSite site)
-        {
-            //Do we already have the map generated ?
-
-            if (LocalMap.MapGenerated(site.UniqueGUID))
-            {
-                //Reload the map
-                var savedMap = LocalMap.DeserialiseLocalMap(site.UniqueGUID);
-
-                GameState.LocalMap = new LocalMap(savedMap.localGameMap.GetLength(0), savedMap.localGameMap.GetLength(1), 1, 0);
-
-                GameState.LocalMap.Site = site;
-
-                GameState.LocalMap.Actors = new List<Actor>();
-
-                Actor[] newActors = null;
-
-                //Before we do anything, check that we don't need to regenerate it
-                if (GameState.LocalMap.Site.SiteData.MapRegenerationRequired)
-                {
+                    //Before we do anything, check that we don't need to regenerate it
                     MapBlock[,] savedMap2D = new MapBlock[savedMap.localGameMap.GetLength(0), savedMap.localGameMap.GetLength(1)];
 
                     for (int x = 0; x < savedMap.localGameMap.GetLength(0); x++)
@@ -1608,97 +1468,20 @@ namespace Divine_Right.GameScreens
                         }
                     }
 
-                    var blocks = SiteGenerator.RegenerateSite(GameState.LocalMap.Site.SiteData, savedMap2D, savedMap.Actors.ToArray(), out newActors);
+                    var blocks = SiteGenerator.RegenerateSite((GameState.LocalMap.Location as MapSite).SiteData, savedMap2D, savedMap.Actors.ToArray(), out newActors);
 
-                    List<MapBlock> collapsedMap = new List<MapBlock>();
+                    List<MapBlock> cM = new List<MapBlock>();
 
                     foreach (MapBlock block in blocks)
                     {
-                        collapsedMap.Add(block);
+                        cM.Add(block);
                     }
 
-                    GameState.LocalMap.AddToLocalMap(collapsedMap.ToArray());
+                    GameState.LocalMap.AddToLocalMap(cM.ToArray());
                     GameState.LocalMap.Actors = newActors.ToList();
 
                     GameState.LocalMap.Tick(); //Tick to remove the dead actors
                 }
-                else
-                {
-                    List<MapBlock> collapsedMap = new List<MapBlock>();
-
-                    foreach (MapBlock block in savedMap.localGameMap)
-                    {
-                        collapsedMap.Add(block);
-                    }
-
-                    GameState.LocalMap.AddToLocalMap(collapsedMap.ToArray());
-
-                    GameState.LocalMap.Actors = savedMap.Actors;
-                }
-
-                LocalMapGenerator lmg = new LocalMapGenerator();
-
-                //Go through the actors
-                foreach (var actor in GameState.LocalMap.Actors)
-                {
-                    //Do we have any vendors ?
-                    if (actor.VendorDetails != null)
-                    {
-                        if (Math.Abs((actor.VendorDetails.GenerationTime - GameState.UniverseTime).GetTimeComponent(DRTimeComponent.MONTH)) > 1)
-                        {
-                            //More than a month old
-                            //Regenerate it
-                            lmg.UpdateVendorStock(actor);
-                        }
-                    }
-                }
-
-                //Find the player character item
-                var playerActor = GameState.LocalMap.Actors.Where(a => a.IsPlayerCharacter).FirstOrDefault();
-
-                GameState.PlayerCharacter.MapCharacter.Coordinate = playerActor.MapCharacter.Coordinate;
-                GameState.PlayerCharacter.MapCharacter = playerActor.MapCharacter;
-            }
-            else
-            {
-                Actor[] actors = null;
-
-                var gennedMap = SiteGenerator.GenerateSite(site.SiteData, out actors);
-
-                //Wipe the old map
-                GameState.LocalMap = new LocalMap(gennedMap.GetLength(0), gennedMap.GetLength(1), 1, 0);
-                GameState.LocalMap.Actors = new List<Actor>();
-
-                List<MapBlock> collapsedMap = new List<MapBlock>();
-
-                foreach (MapBlock block in gennedMap)
-                {
-                    collapsedMap.Add(block);
-                }
-
-                GameState.LocalMap.AddToLocalMap(collapsedMap.ToArray());
-
-                GameState.PlayerCharacter.MapCharacter.Coordinate = new MapCoordinate(5, 0, 0, MapType.LOCAL);
-
-                MapBlock playerBlock = GameState.LocalMap.GetBlockAtCoordinate(new MapCoordinate(5, 0, 0, MapType.LOCAL));
-                playerBlock.PutItemOnBlock(GameState.PlayerCharacter.MapCharacter);
-                GameState.LocalMap.Actors.AddRange(actors);
-                GameState.LocalMap.Actors.Add(GameState.PlayerCharacter);
-
-                GameState.LocalMap.Site = site;
-            }
-        }
-
-        private void LoadSettlement(Settlement settlement)
-        {
-            //Do we already have the map generated ?
-
-            if (LocalMap.MapGenerated(settlement.UniqueGUID))
-            {
-                //Reload the map
-                var savedMap = LocalMap.DeserialiseLocalMap(settlement.UniqueGUID);
-
-                GameState.LocalMap = new LocalMap(savedMap.localGameMap.GetLength(0), savedMap.localGameMap.GetLength(1), 1, 0);
 
                 GameState.LocalMap.Actors = new List<Actor>();
 
@@ -1710,6 +1493,9 @@ namespace Divine_Right.GameScreens
                 }
 
                 GameState.LocalMap.AddToLocalMap(collapsedMap.ToArray());
+                GameState.LocalMap.PathfindingMap = savedMap.PathfindingMap;
+                GameState.LocalMap.PointsOfInterest = savedMap.PointsOfInterest;
+                GameState.LocalMap.IsUnderground = savedMap.IsUnderground;
 
                 GameState.LocalMap.Actors = savedMap.Actors;
 
@@ -1736,16 +1522,45 @@ namespace Divine_Right.GameScreens
                 GameState.PlayerCharacter.MapCharacter.Coordinate = playerActor.MapCharacter.Coordinate;
                 GameState.PlayerCharacter.MapCharacter = playerActor.MapCharacter;
 
-                GameState.LocalMap.Settlement = settlement;
+                GameState.LocalMap.Location = location;
             }
             else
             {
-                List<Actor> actors = null;
-                PointOfInterest startPoint = null;
+                Actor[] actors = null;
 
-                var gennedMap = SettlementGenerator.GenerateMap(settlement, out actors, out startPoint);
+                MapCoordinate startPoint = null;
+                List<PointOfInterest> pointsOfInterest = null;
 
-                //Wipe the old map
+                MapBlock[,] gennedMap = null;
+
+                if (location is BanditCamp)
+                {
+                    gennedMap = CampGenerator.GenerateCamp((location as BanditCamp).BanditTotal, out startPoint, out actors);
+                }
+                else if (location is Citadel)
+                {
+                    var citadel = location as Citadel;
+
+                    CitadelGenerator gen = new CitadelGenerator();
+                    gennedMap = gen.GenerateDungeon(citadel.TierCount, citadel.TrapRooms, citadel.GuardRooms, citadel.TreasureRoom, citadel.OwnerCreatureType, (decimal)citadel.PercentageOwned, citadel.MaxWildPopulation, citadel.MaxOwnedPopulation, out startPoint, out actors, out pointsOfInterest);
+                }
+                else if (location is MapSite)
+                {
+                    var mapSite = location as MapSite;
+
+                    gennedMap = SiteGenerator.GenerateSite(mapSite.SiteData, out actors);
+                }
+                else if (location is Settlement)
+                {
+                    List<Actor> settlementActors = null;
+                    PointOfInterest sp = null;
+
+                    gennedMap = SettlementGenerator.GenerateMap( (location as Settlement), out settlementActors, out sp);
+
+                    actors = settlementActors.ToArray();
+                    startPoint = sp.Coordinate;
+                }
+
                 GameState.LocalMap = new LocalMap(gennedMap.GetLength(0), gennedMap.GetLength(1), 1, 0);
                 GameState.LocalMap.Actors = new List<Actor>();
 
@@ -1758,14 +1573,14 @@ namespace Divine_Right.GameScreens
 
                 GameState.LocalMap.AddToLocalMap(collapsedMap.ToArray());
 
-                GameState.PlayerCharacter.MapCharacter.Coordinate = startPoint.Coordinate;
+                GameState.PlayerCharacter.MapCharacter.Coordinate = startPoint;
 
-                MapBlock playerBlock = GameState.LocalMap.GetBlockAtCoordinate(startPoint.Coordinate);
+                MapBlock playerBlock = GameState.LocalMap.GetBlockAtCoordinate(startPoint);
                 playerBlock.PutItemOnBlock(GameState.PlayerCharacter.MapCharacter);
                 GameState.LocalMap.Actors.AddRange(actors);
                 GameState.LocalMap.Actors.Add(GameState.PlayerCharacter);
-
-                GameState.LocalMap.Settlement = settlement;
+                GameState.LocalMap.PointsOfInterest = pointsOfInterest;
+                GameState.LocalMap.Location = location;
             }
         }
         #endregion

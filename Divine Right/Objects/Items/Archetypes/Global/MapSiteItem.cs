@@ -100,7 +100,7 @@ namespace DRObjects.Items.Archetypes.Global
                 new LocationChangeFeedback()
                 {
                     VisitMainMap = false,
-                    VisitSite = this.Site
+                    Location = this.Site
                 }
             };
         }

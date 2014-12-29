@@ -1228,7 +1228,7 @@ namespace DivineRightGame.Managers
                     item.Coordinate = new MapCoordinate(cornerBlock.Tile.Coordinate);
                     item.Name = "Orc Citadel";
                     item.Description = "a dark dungeon owned by Orcs";
-                    item.Dungeon = dungeon;
+                    item.Citadel = dungeon;
 
                     cornerBlock.ForcePutItemOnBlock(item);
 

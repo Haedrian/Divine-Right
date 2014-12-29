@@ -106,7 +106,7 @@ namespace Divine_Right.HelperFunctions
             var settlement = SettlementGenerator.GenerateSettlement(new MapCoordinate(50, 50, 0, DRObjects.Enums.MapType.GLOBAL), GameState.Random.Next(10) + 2, new List<DRObjects.Enums.GlobalResourceType>(), new Civilisation() { Name = "Llama Empire", ID = 0 });
 
             GameState.LocalMap = new LocalMap(250, 250, 1, 0);
-            GameState.LocalMap.Settlement = settlement;
+            GameState.LocalMap.Location = settlement;
 
             List<Actor> actors = null;
 

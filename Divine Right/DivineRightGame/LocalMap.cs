@@ -57,26 +57,9 @@ namespace DivineRightGame
         public bool IsUnderground { get; set; }
 
         /// <summary>
-        /// The Location 
+        /// The Location the player is at
         /// </summary>
         public Location Location { get; set; }
-
-        /// <summary>
-        /// Represents the settlement the player is currently at
-        /// </summary>
-        public Settlement Settlement { get; set; }
-
-        /// <summary>
-        /// Represents the citadel the player is currently at
-        /// </summary>
-        public Citadel Citadel { get; set; }
-
-        /// <summary>
-        /// Represents the bandit camp the player is currently at
-        /// </summary>
-        public BanditCamp Camp { get; set; }
-
-        public MapSite Site { get; set; }
 
         /// <summary>
         /// Whether the character is currently on the global map or not
@@ -278,21 +261,9 @@ namespace DivineRightGame
 
             Guid uniqueGuid = Guid.Empty;
 
-            if (this.Settlement != null)
+            if (this.Location != null)
             {
-                uniqueGuid = this.Settlement.UniqueGUID;
-            }
-            else if (this.Citadel != null)
-            {
-                uniqueGuid = this.Citadel.UniqueGUID;
-            }
-            else if (this.Camp != null)
-            {
-                uniqueGuid = this.Camp.UniqueGUID;
-            }
-            else if (this.Site != null)
-            {
-                uniqueGuid = this.Site.UniqueGUID;
+                uniqueGuid = this.Location.UniqueGUID;
             }
 
             if (uniqueGuid == Guid.Empty)

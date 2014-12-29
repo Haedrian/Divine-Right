@@ -59,7 +59,7 @@ namespace DRObjects.Items.Archetypes.Global
                 new LocationChangeFeedback()
                 {
                     VisitMainMap = false,
-                    VisitCamp = this.Camp
+                    Location = this.Camp
                 }
             };
         }

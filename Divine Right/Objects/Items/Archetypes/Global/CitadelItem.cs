@@ -29,7 +29,7 @@ namespace DRObjects.Items.Archetypes.Global
         /// </summary>
         public int DungeonCorner { get; set; }
 
-        public Citadel Dungeon { get; set; }
+        public Citadel Citadel { get; set; }
 
         /// <summary>
         /// Creates a citadel item. For now we only support mazes, not ruins
@@ -69,7 +69,7 @@ namespace DRObjects.Items.Archetypes.Global
                 new LocationChangeFeedback()
                 {
                     VisitMainMap = false,
-                    VisitDungeon = Dungeon
+                    Location = Citadel
                 }
             };
         }

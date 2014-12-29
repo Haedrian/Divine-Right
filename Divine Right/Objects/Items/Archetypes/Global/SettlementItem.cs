@@ -78,7 +78,7 @@ namespace DRObjects.Items.Archetypes.Global
 
             if (actor.IsPlayerCharacter && Math.Abs(actor.MapCharacter.Coordinate - this.Coordinate) < 2)
             {
-                return new DRObjects.GraphicsEngineObjects.Abstract.ActionFeedback[1] { new LocationChangeFeedback() { VisitSettlement = Settlement } };
+                return new DRObjects.GraphicsEngineObjects.Abstract.ActionFeedback[1] { new LocationChangeFeedback() { Location = Settlement } };
             }
             else
             {

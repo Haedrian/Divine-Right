@@ -14,21 +14,15 @@ namespace DRObjects.GraphicsEngineObjects
     public class LocationChangeFeedback:
         ActionFeedback
     {
-        public Settlement VisitSettlement { get; set; }
         public bool VisitMainMap { get; set; }
-        public Citadel VisitDungeon { get; set; }
-        public BanditCamp VisitCamp { get; set; }
-        public MapSite VisitSite { get; set; }
+        public Location Location { get; set; }
 
         public GlobalBiome? RandomEncounter { get; set; }
 
         public LocationChangeFeedback()
         {
-            VisitSettlement = null;
+            Location = null;
             VisitMainMap = false;
-            VisitDungeon = null;
-            VisitCamp = null;
-            VisitSite = null;
             RandomEncounter = null;
         }
     }
