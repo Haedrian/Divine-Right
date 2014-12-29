@@ -22,6 +22,20 @@ namespace DRObjects.DataStructures
         private readonly long[] MULTIPLIERS = new long[6] { 1, 100, 10000, 100000, 1000000, 10000000 };
 
         /// <summary>
+        /// The month has changed.
+        /// </summary>
+        public event EventHandler MonthChanged;
+
+        /// <summary>
+        /// The Day has Changed
+        /// </summary>
+        public event EventHandler DayChanged;
+        /// <summary>
+        /// The Minute has changed
+        /// </summary>
+        public event EventHandler MinuteChanged;
+
+        /// <summary>
         /// Hooray for decimal time. We only need to store the total seconds in here and then just read different multiples of 100 to read the different times
         /// </summary>
         private long time;
@@ -174,7 +188,35 @@ namespace DRObjects.DataStructures
                 value--;
             }
 
+            //Store Minute, Month and Year
+            int minute = this.GetTimeComponent(DRTimeComponent.MINUTE);
+            int month = this.GetTimeComponent(DRTimeComponent.MONTH);
+            int day = this.GetTimeComponent(DRTimeComponent.DAY);
+
             time += MULTIPLIERS[(int)component] * value;
+
+            if (minute != this.GetTimeComponent(DRTimeComponent.MINUTE))
+            {
+                if (MinuteChanged != null)
+                {
+                    //Fire the event
+                    MinuteChanged(this, null);
+                }
+            }
+            
+            if (month != this.GetTimeComponent(DRTimeComponent.MONTH))
+            {
+                MonthChanged(this, null);
+            }
+            
+            if (day != this.GetTimeComponent(DRTimeComponent.DAY))
+            {
+                if (DayChanged != null)
+                {
+                    //Fire the event
+                    DayChanged(this, null);
+                }
+            }
         }
 
         public void Subtract(DRTimeComponent component, int value)

@@ -86,6 +86,7 @@ namespace DivineRightGame.LocalMapGenerator
 
             //Put the tiles
             int tileID = -1;
+            var dummy = fact.CreateItem("tiles", "cave", out tileID);
 
             for (int x = 0; x < SIZE; x++)
             {
@@ -155,7 +156,7 @@ namespace DivineRightGame.LocalMapGenerator
                 }
             }
             int pathTile = -1;
-            var dummy = fact.CreateItem("tiles", "pavement", out pathTile);
+            dummy = fact.CreateItem("tiles", "pavement", out pathTile);
 
             //Let's connect each room with each other room
             for (int i = 0; i < rectangles.Count; i++)

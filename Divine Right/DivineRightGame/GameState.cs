@@ -62,98 +62,12 @@ namespace DivineRightGame
         }
 
         /// <summary>
-        /// Incremements the Game Time by an amount of minutes, and does any processing that needs to be done
+        /// Incremements the Game Time by an amount of minutes
         /// </summary>
         /// <param name="minutes"></param>
         public static void IncrementGameTime(DRTimeComponent timeComponent, int value)
         {
-            int lastDay = _universeTime.GetTimeComponent(DRTimeComponent.DAY);
-            int lastMonth = _universeTime.GetTimeComponent(DRTimeComponent.MONTH);
-
-            _universeTime.Add(timeComponent, value);            
-
-            if (lastDay != _universeTime.GetTimeComponent(DRTimeComponent.DAY))
-            {
-                //A day has passed. Healing if needs be
-                HealthCheckManager.HealCharacter(GameState.PlayerCharacter, 1);
-
-                //Get somewhat hungrier too
-                GameState.PlayerCharacter.FeedingLevel--;
-
-                //We hungry?
-                while ((int)GameState.PlayerCharacter.FeedingLevel < 4)
-                {
-                    //Do we have any food?
-                    //It's a flag, but if we later have stuff which feeds and does something else, we don't want it. So just take those which only feed
-                    var food = GameState.PlayerCharacter.Inventory.Inventory.GetObjectsByGroup(InventoryCategory.SUPPLY).Where(f => (f as ConsumableItem).Effects == ConsumableEffect.FEED).FirstOrDefault();
-
-                    if (food != null)
-                    {
-                        //Nom it
-                        food.PerformAction(ActionType.CONSUME, GameState.PlayerCharacter, null);
-                    }
-                    else
-                    {
-                        //We're out of food
-                        break;
-                    }
-                }
-
-                //So, is he dead ?
-                if (GameState.PlayerCharacter.FeedingLevel <= 0 )
-                {
-                    //Died of hunger. Silly Billy
-                    CombatManager.KillCharacter(GameState.PlayerCharacter);
-                }
-                else if ((int)GameState.PlayerCharacter.FeedingLevel <= 2)
-                {
-                    GameState.NewLog.Add(new LogFeedback(InterfaceSpriteName.MOON, Color.DarkRed, "You are hungry and out of food"));
-                }
-
-            }
-
-            if (lastMonth != _universeTime.GetTimeComponent(DRTimeComponent.MONTH))
-            {
-                //A month has passed. Go through each site and either reclaim them, or reinforce them
-
-                (new Thread(() =>
-                {
-                    GameState.IsRunningHeavyProcessing = true;
-
-                    //Go through each site
-                    foreach(MapSiteItem item in GameState.GlobalMap.MapSiteItems)
-                    {
-                        //Is the site abandoned?
-                        if (item.Site.SiteData.Owners == OwningFactions.ABANDONED)
-                        {
-                            //Is it reasonable for someone to reclaim it?
-                            if ((GameState.GlobalMap.GetBlockAtCoordinate(item.Coordinate).Tile as GlobalTile).Owner.HasValue)
-                            {
-                                int tileOwner = (GameState.GlobalMap.GetBlockAtCoordinate(item.Coordinate).Tile as GlobalTile).Owner.Value;
-
-                                //Reclaim it!
-                                item.Site.SiteData.Owners = tileOwner < 10 ? OwningFactions.HUMANS : tileOwner == 100 ? OwningFactions.ORCS : OwningFactions.BANDITS;
-
-                                item.Site.SiteData.Civilisation = GameState.GlobalMap.Civilisations.First(c => c.ID.Equals(tileOwner));
-                                item.Site.SiteData.LoadAppropriateActorCounts();
-
-                                item.Site.SiteData.MapRegenerationRequired = true;
-                                item.Site.SiteData.OwnerChanged = true;
-                            }
-                        }
-                        else
-                        //Is the tile owned by the same person ?
-                        if (item.Site.SiteData.Civilisation.ID == (GlobalMap.GetBlockAtCoordinate(item.Coordinate).Tile as GlobalTile).Owner)
-                        {
-                            item.Site.SiteData.IncrementActorCounts();
-                        }
-                    }
-
-                    GameState.IsRunningHeavyProcessing = false;
-
-                })).Start();
-
-            }
+            _universeTime.Add(timeComponent, value);                        
         }
 
         /// <summary>
@@ -178,6 +92,10 @@ namespace DivineRightGame
         {
             //Start off at the 1/1/210
             _universeTime = new DivineRightDateTime(210, 1, 1);
+
+            //Attach the handlers
+            _universeTime.DayChanged += new System.EventHandler(DayChanged);
+            _universeTime.MonthChanged += new System.EventHandler(MonthChanged);
         }
 
         /// <summary>
@@ -229,6 +147,10 @@ namespace DivineRightGame
             GameState.GlobalMap = obj.GlobalMap;
             GameState.PlayerCharacter = obj.PlayerCharacter;
             GameState._universeTime = obj.UniverseTime;
+
+            //Reattach handlers
+            _universeTime.DayChanged += new System.EventHandler(DayChanged);
+            _universeTime.MonthChanged += new System.EventHandler(MonthChanged);
         }
 
         /// <summary>
@@ -239,6 +161,105 @@ namespace DivineRightGame
         {
             return File.Exists(GameState.SAVEPATH + "GameState.dvg");
         }
+
+        #region Time Handlers
+
+
+        /// <summary>
+        /// When the day changes we need to do some things
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public static void DayChanged(object sender, EventArgs e)
+        {
+            //A day has passed. Healing if needs be
+            HealthCheckManager.HealCharacter(GameState.PlayerCharacter, 1);
+
+            //Get somewhat hungrier too
+            GameState.PlayerCharacter.FeedingLevel--;
+
+            //We hungry?
+            while ((int)GameState.PlayerCharacter.FeedingLevel < 4)
+            {
+                //Do we have any food?
+                //It's a flag, but if we later have stuff which feeds and does something else, we don't want it. So just take those which only feed
+                var food = GameState.PlayerCharacter.Inventory.Inventory.GetObjectsByGroup(InventoryCategory.SUPPLY).Where(f => (f as ConsumableItem).Effects == ConsumableEffect.FEED).FirstOrDefault();
+
+                if (food != null)
+                {
+                    //Nom it
+                    food.PerformAction(ActionType.CONSUME, GameState.PlayerCharacter, null);
+                }
+                else
+                {
+                    //We're out of food
+                    break;
+                }
+            }
+
+            //So, is he dead ?
+            if (GameState.PlayerCharacter.FeedingLevel <= 0)
+            {
+                //Died of hunger. Silly Billy
+                CombatManager.KillCharacter(GameState.PlayerCharacter);
+            }
+            else if ((int)GameState.PlayerCharacter.FeedingLevel <= 2)
+            {
+                GameState.NewLog.Add(new LogFeedback(InterfaceSpriteName.MOON, Color.DarkRed, "You are hungry and out of food"));
+            }
+        }
+
+        public static void MonthChanged(object sender, EventArgs e)
+        {
+            //A month has passed. Go through each site and either reclaim them, or reinforce them
+
+            (new Thread(() =>
+            {
+                GameState.IsRunningHeavyProcessing = true;
+
+                //Go through each site
+                foreach (MapSiteItem item in GameState.GlobalMap.MapSiteItems)
+                {
+                    //Is the site abandoned?
+                    if (item.Site.SiteData.Owners == OwningFactions.ABANDONED)
+                    {
+                        //Is it reasonable for someone to reclaim it?
+                        if ((GameState.GlobalMap.GetBlockAtCoordinate(item.Coordinate).Tile as GlobalTile).Owner.HasValue)
+                        {
+                            int tileOwner = (GameState.GlobalMap.GetBlockAtCoordinate(item.Coordinate).Tile as GlobalTile).Owner.Value;
+
+                            //Reclaim it!
+                            item.Site.SiteData.Owners = tileOwner < 10 ? OwningFactions.HUMANS : tileOwner == 100 ? OwningFactions.ORCS : OwningFactions.BANDITS;
+
+                            item.Site.SiteData.Civilisation = GameState.GlobalMap.Civilisations.First(c => c.ID.Equals(tileOwner));
+                            item.Site.SiteData.LoadAppropriateActorCounts();
+
+                            item.Site.SiteData.MapRegenerationRequired = true;
+                            item.Site.SiteData.OwnerChanged = true;
+                        }
+                    }
+                    else
+                        //Is the tile owned by the same person ?
+                        if (item.Site.SiteData.Civilisation.ID == (GlobalMap.GetBlockAtCoordinate(item.Coordinate).Tile as GlobalTile).Owner)
+                        {
+                            item.Site.SiteData.IncrementActorCounts();
+                        }
+                }
+
+                GameState.IsRunningHeavyProcessing = false;
+
+            })).Start();
+
+        }
+
+        public static void MinuteChanged(object sender, EventArgs e)
+        {
+            //Dummy
+            int i = 0;
+        }
+
+
+        #endregion
 
     }
 }
