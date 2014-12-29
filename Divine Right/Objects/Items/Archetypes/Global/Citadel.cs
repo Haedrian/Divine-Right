@@ -7,9 +7,9 @@ namespace DRObjects.Items.Archetypes.Global
 {
     [Serializable]
     /// <summary>
-    /// A Dungeon on the map. A maze full of mean creatures
+    /// A Citadel on the map. An orcish stronghold
     /// </summary>
-    public class Dungeon
+    public class Citadel
         :MapItem
     {
         private Guid _uniqueGUID;
@@ -25,7 +25,7 @@ namespace DRObjects.Items.Archetypes.Global
         public int MaxWildPopulation { get; set; }
         public int MaxOwnedPopulation { get; set; }
 
-        public Dungeon()
+        public Citadel()
         {
             this._uniqueGUID = Guid.NewGuid();
         }

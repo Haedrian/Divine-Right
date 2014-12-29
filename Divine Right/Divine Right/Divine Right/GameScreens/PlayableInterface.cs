@@ -1286,7 +1286,7 @@ namespace Divine_Right.GameScreens
 
                         //Clear the stored location items
                         GameState.LocalMap.Camp = null;
-                        GameState.LocalMap.Dungeon = null;
+                        GameState.LocalMap.Citadel = null;
                         GameState.LocalMap.Settlement = null;
                         GameState.LocalMap.Site = null;
 
@@ -1512,7 +1512,7 @@ namespace Divine_Right.GameScreens
             }
         }
 
-        private void LoadDungeon(Dungeon dungeon)
+        private void LoadDungeon(Citadel dungeon)
         {
 
             if (LocalMap.MapGenerated(dungeon.UniqueGUID))
@@ -1543,7 +1543,7 @@ namespace Divine_Right.GameScreens
                 GameState.PlayerCharacter.MapCharacter.Coordinate = playerActor.MapCharacter.Coordinate;
                 GameState.PlayerCharacter.MapCharacter = playerActor.MapCharacter;
 
-                GameState.LocalMap.Dungeon = dungeon;
+                GameState.LocalMap.Citadel = dungeon;
             }
             else
             {
@@ -1574,7 +1574,7 @@ namespace Divine_Right.GameScreens
                 GameState.LocalMap.Actors.AddRange(actors);
                 GameState.LocalMap.Actors.Add(GameState.PlayerCharacter);
                 GameState.LocalMap.PointsOfInterest = pointsOfInterest;
-                GameState.LocalMap.Dungeon = dungeon;
+                GameState.LocalMap.Citadel = dungeon;
             }
         }
 

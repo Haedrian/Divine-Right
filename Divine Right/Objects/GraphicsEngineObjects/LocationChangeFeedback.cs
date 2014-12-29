@@ -16,7 +16,7 @@ namespace DRObjects.GraphicsEngineObjects
     {
         public Settlement VisitSettlement { get; set; }
         public bool VisitMainMap { get; set; }
-        public Dungeon VisitDungeon { get; set; }
+        public Citadel VisitDungeon { get; set; }
         public BanditCamp VisitCamp { get; set; }
         public MapSite VisitSite { get; set; }
 

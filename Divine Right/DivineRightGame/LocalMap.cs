@@ -62,9 +62,9 @@ namespace DivineRightGame
         public Settlement Settlement { get; set; }
 
         /// <summary>
-        /// Represents the dungeon the player is currently at
+        /// Represents the citadel the player is currently at
         /// </summary>
-        public Dungeon Dungeon { get; set; }
+        public Citadel Citadel { get; set; }
 
         /// <summary>
         /// Represents the bandit camp the player is currently at
@@ -277,9 +277,9 @@ namespace DivineRightGame
             {
                 uniqueGuid = this.Settlement.UniqueGUID;
             }
-            else if (this.Dungeon != null)
+            else if (this.Citadel != null)
             {
-                uniqueGuid = this.Dungeon.UniqueGUID;
+                uniqueGuid = this.Citadel.UniqueGUID;
             }
             else if (this.Camp != null)
             {

@@ -1164,7 +1164,7 @@ namespace DivineRightGame.Managers
                     continue;
                 }
 
-                Dungeon dungeon = new Dungeon();
+                Citadel dungeon = new Citadel();
                 dungeon.Coordinate = new MapCoordinate(block.Tile.Coordinate);
                 dungeon.GuardRooms = GameState.Random.Next(2) + 1;
                 dungeon.MaxOwnedPopulation = GameState.Random.Next(10) + 2;
@@ -1224,7 +1224,7 @@ namespace DivineRightGame.Managers
 
 
                     //Create a new dungeon
-                    DungeonItem item = new DungeonItem(corner);
+                    CitadelItem item = new CitadelItem(corner);
                     item.Coordinate = new MapCoordinate(cornerBlock.Tile.Coordinate);
                     item.Name = "Orc Citadel";
                     item.Description = "a dark dungeon owned by Orcs";

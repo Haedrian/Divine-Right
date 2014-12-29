@@ -27,6 +27,7 @@ namespace DivineRightGame.LocalMapGenerator.Objects
         ABANDONED_FARM,
         COMBAT_PIT,
         PRISON,
-        TORTURE_CHAMBER
+        TORTURE_CHAMBER,
+        MAP
     }
 }

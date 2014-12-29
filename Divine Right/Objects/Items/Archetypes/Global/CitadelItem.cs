@@ -10,9 +10,9 @@ namespace DRObjects.Items.Archetypes.Global
 {
     [Serializable]
     /// <summary>
-    /// A map item representing a dungeon on the map.
+    /// A map item representing a Citadel on the map.
     /// </summary>
-    public class DungeonItem
+    public class CitadelItem
         :MapItem
     {
         /// <summary>
@@ -20,7 +20,7 @@ namespace DRObjects.Items.Archetypes.Global
         /// </summary>
         private List<SpriteData> sprites = null;
         /// <summary>
-        /// The owning race of the dungeon
+        /// The owning race of the Citadel
         /// </summary>
         public int? OwnerID { get; set; }
 
@@ -29,12 +29,12 @@ namespace DRObjects.Items.Archetypes.Global
         /// </summary>
         public int DungeonCorner { get; set; }
 
-        public Dungeon Dungeon { get; set; }
+        public Citadel Dungeon { get; set; }
 
         /// <summary>
-        /// Creates a dungeon item. For now we only support mazes, not ruins
+        /// Creates a citadel item. For now we only support mazes, not ruins
         /// </summary>
-        public DungeonItem(int corner)
+        public CitadelItem(int corner)
         {
             DungeonCorner = corner;
             this.MayContainItems = true;
@@ -63,7 +63,7 @@ namespace DRObjects.Items.Archetypes.Global
                 return base.PerformAction(actionType, actor, args);
             }
 
-            //Otherwise, visit the dungeon
+            //Otherwise, visit the citadel
 
             return new GraphicsEngineObjects.Abstract.ActionFeedback[1] {
                 new LocationChangeFeedback()

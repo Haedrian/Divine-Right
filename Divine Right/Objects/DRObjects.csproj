@@ -157,8 +157,8 @@
     <Compile Include="Graphics\TextSpriteData.cs" />
     <Compile Include="Items\Archetypes\Global\BanditCamp.cs" />
     <Compile Include="Items\Archetypes\Global\BanditCampItem.cs" />
-    <Compile Include="Items\Archetypes\Global\Dungeon.cs" />
-    <Compile Include="Items\Archetypes\Global\DungeonItem.cs" />
+    <Compile Include="Items\Archetypes\Global\Citadel.cs" />
+    <Compile Include="Items\Archetypes\Global\CitadelItem.cs" />
     <Compile Include="Items\Archetypes\Global\MapResource.cs" />
     <Compile Include="Items\Archetypes\Global\MapSite.cs" />
     <Compile Include="Items\Archetypes\Global\MapSiteItem.cs" />
