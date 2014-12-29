@@ -10,20 +10,12 @@ namespace DRObjects.Items.Archetypes.Global
 {
     [Serializable]
     public class MapSite
+        :Location
     {
-        private Guid _uniqueGUID;
-
-        public Guid UniqueGUID { get { return _uniqueGUID; } }
-
         public SiteData SiteData { get; set; }
 
         public MapSite()
         {
-            this._uniqueGUID = Guid.NewGuid();
-        }
-
-        public MapCoordinate Coordinate { get; set; }
-
-  
+        }  
     }
 }

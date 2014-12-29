@@ -10,12 +10,8 @@ namespace DRObjects.Items.Archetypes.Global
     /// A Citadel on the map. An orcish stronghold
     /// </summary>
     public class Citadel
-        :MapItem
+        :Location
     {
-        private Guid _uniqueGUID;
-
-        public Guid UniqueGUID { get { return _uniqueGUID; } }
-
         public int TierCount { get; set; }
         public int TrapRooms { get; set; }
         public int GuardRooms { get; set; }
@@ -27,7 +23,6 @@ namespace DRObjects.Items.Archetypes.Global
 
         public Citadel()
         {
-            this._uniqueGUID = Guid.NewGuid();
         }
     }
 }

@@ -57,6 +57,11 @@ namespace DivineRightGame
         public bool IsUnderground { get; set; }
 
         /// <summary>
+        /// The Location 
+        /// </summary>
+        public Location Location { get; set; }
+
+        /// <summary>
         /// Represents the settlement the player is currently at
         /// </summary>
         public Settlement Settlement { get; set; }

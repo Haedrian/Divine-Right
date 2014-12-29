@@ -58,7 +58,7 @@ namespace Divine_Right.HelperFunctions
             List<SummoningCircle> summoningCircles = null;
 
             string getOwner = ActorGeneration.GetEnemyType(true);
-
+ 
             MapBlock[,] generatedMap = DungeonGenerator.GenerateDungeonLevel(1, 30, out start, out actors,out summoningCircles);
 
             GameState.LocalMap = new LocalMap(500, 500, 1, 0);

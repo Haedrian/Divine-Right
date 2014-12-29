@@ -1436,8 +1436,7 @@ namespace DivineRightGame.Managers
                     MayContainItems = true,
                     SettlementCorner = corner,
                     SettlementSize = settlement.SettlementSize,
-                    Description = settlement.Description,
-                    InternalName = settlement.InternalName,
+                    Description = (capital ? "the capital of " + settlement.Name : "the settlement of " + settlement.Name) + " owned by " + settlement.Civilisation.Name,
                     Name = settlement.Name,
                     Settlement = settlement,
                     OwnerID = owner

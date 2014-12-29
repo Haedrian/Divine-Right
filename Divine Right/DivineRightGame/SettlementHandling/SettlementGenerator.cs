@@ -47,8 +47,6 @@ namespace DivineRightGame.SettlementHandling
 
             settlement.Coordinate = globalCoordinates.Clone();
             settlement.Name = SettlementNameGenerator.GenerateName();
-            settlement.Description = (capital ? "the capital of " + settlement.Name : "the settlement of " + settlement.Name) + " owned by " + civilisation.Name;
-            settlement.MayContainItems = false;
             settlement.SettlementSize = size;
 
             //Generate the districts
