@@ -96,6 +96,7 @@ namespace DivineRightGame
             //Attach the handlers
             _universeTime.DayChanged += new System.EventHandler(DayChanged);
             _universeTime.MonthChanged += new System.EventHandler(MonthChanged);
+            _universeTime.MinuteChanged += new EventHandler(MinuteChanged);
         }
 
         /// <summary>
@@ -151,6 +152,7 @@ namespace DivineRightGame
             //Reattach handlers
             _universeTime.DayChanged += new System.EventHandler(DayChanged);
             _universeTime.MonthChanged += new System.EventHandler(MonthChanged);
+            _universeTime.MinuteChanged += new EventHandler(MinuteChanged);
         }
 
         /// <summary>
