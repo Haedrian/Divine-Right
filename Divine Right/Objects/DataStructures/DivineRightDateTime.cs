@@ -206,7 +206,10 @@ namespace DRObjects.DataStructures
             
             if (month != this.GetTimeComponent(DRTimeComponent.MONTH))
             {
-                MonthChanged(this, null);
+                if (MonthChanged != null)
+                {
+                    MonthChanged(this, null);
+                }
             }
             
             if (day != this.GetTimeComponent(DRTimeComponent.DAY))
