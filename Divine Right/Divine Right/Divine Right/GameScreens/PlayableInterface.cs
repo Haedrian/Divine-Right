@@ -1549,6 +1549,7 @@ namespace Divine_Right.GameScreens
                     var mapSite = location as MapSite;
 
                     gennedMap = SiteGenerator.GenerateSite(mapSite.SiteData, out actors);
+                    startPoint = new MapCoordinate(gennedMap.GetLength(0) / 2, 0, 0, MapType.LOCAL);
                 }
                 else if (location is Settlement)
                 {
