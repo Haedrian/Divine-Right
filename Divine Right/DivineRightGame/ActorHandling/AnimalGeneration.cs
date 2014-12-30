@@ -45,8 +45,6 @@ namespace DivineRightGame.ActorHandling
             actor.Gender = Gender.U;
             actor.Inventory = new ActorInventory();
 
-            //TODO: GENERATE THE FOOD AND HIDE DROPS
-
             //Meat.
             if (data.MeatAmount > 0)
             {

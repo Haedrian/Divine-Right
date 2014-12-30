@@ -18,5 +18,8 @@ namespace DRObjects.ActorHandling
         public int PercModifier { get; set; }
         public int IntelModifier { get; set; }
         public bool IsIntelligent { get; set; }
+
+        public bool IsHumanoid { get; set; }
+        public bool IsUndead { get; set; }
     }
 }

@@ -85,7 +85,7 @@
     <Compile Include="ActorHandling\ActorNameGenerator.cs" />
     <Compile Include="ActorHandling\ActorStance.cs" />
     <Compile Include="ActorHandling\CharacterSheet\ActorAttributes.cs" />
-    <Compile Include="ActorHandling\CharacterSheet\ActorHealth.cs" />
+    <Compile Include="ActorHandling\CharacterSheet\HumanoidAnatomy.cs" />
     <Compile Include="ActorHandling\ActorMission.cs" />
     <Compile Include="ActorHandling\ActorMissions\AttackMission.cs" />
     <Compile Include="ActorHandling\ActorMissions\HuntDownMission.cs" />
@@ -98,6 +98,8 @@
     <Compile Include="ActorHandling\CharacterSheet\Enums\AnatomyEnum.cs" />
     <Compile Include="ActorHandling\CharacterSheet\ActorSkill.cs" />
     <Compile Include="ActorHandling\CharacterSheet\Enums\SkillType.cs" />
+    <Compile Include="ActorHandling\CharacterSheet\IAnatomy.cs" />
+    <Compile Include="ActorHandling\CharacterSheet\UndeadAnatomy.cs" />
     <Compile Include="ActorHandling\EnemyData.cs" />
     <Compile Include="ActorHandling\Enums\Gender.cs" />
     <Compile Include="ActorHandling\EquippedItem.cs" />

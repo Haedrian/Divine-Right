@@ -12,6 +12,7 @@ using DRObjects.ActorHandling.Enums;
 using DRObjects;
 using DRObjects.Graphics;
 using DRObjects.ActorHandling.ActorMissions;
+using DRObjects.ActorHandling.CharacterSheet;
 
 namespace DivineRightGame.ActorHandling
 {
@@ -355,25 +356,25 @@ namespace DivineRightGame.ActorHandling
                 {
                     candidates = animalData.Where(a => a.Domesticated.Equals(domesticated.Value));
                 }
-                else 
+                else
                 {
-                   candidates = animalData.Where(a => (biome == null || a.BiomeList.Contains(biome.ToString())));
+                    candidates = animalData.Where(a => (biome == null || a.BiomeList.Contains(biome.ToString())));
                 }
 
-;
+                ;
             }
-            else 
+            else
             {
                 candidates = animalData.Where(a => a.Tags.ToUpper().Split(',').Contains(tag.ToUpper()));
             }
 
-            
+
 
             var candidatesList = candidates.ToArray();
 
             List<List<Actor>> retHerds = new List<List<Actor>>();
 
-            for(int i=0; i < herds; i++)
+            for (int i = 0; i < herds; i++)
             {
                 //Let's generate a bunch of herds
                 var chosen = candidatesList[GameState.Random.Next(candidatesList.Length)];
@@ -381,9 +382,9 @@ namespace DivineRightGame.ActorHandling
                 //Let's generate a herd of those
                 List<Actor> herd = new List<Actor>();
 
-                int herdContents = GameState.Random.Next(chosen.PackSizeMin,chosen.PackSizeMax);
+                int herdContents = GameState.Random.Next(chosen.PackSizeMin, chosen.PackSizeMax);
 
-                for (int j=0; j < herdContents; j++)
+                for (int j = 0; j < herdContents; j++)
                 {
                     herd.Add(AnimalGeneration.GenerateAnimal(chosen));
                 }
@@ -613,27 +614,53 @@ namespace DivineRightGame.ActorHandling
 
         }
 
-        public static HumanoidAnatomy GenerateAnatomy(string race)
+        public static IAnatomy GenerateAnatomy(string race)
         {
-            //This is a dummmy for now. Just generate the standard humanoid anatomy
-            HumanoidAnatomy anatomy = new HumanoidAnatomy()
-            {
-                Head = 4,
-                HeadMax = 4,
-                LeftArm = 6,
-                LeftArmMax = 6,
-                RightArm = 6,
-                RightArmMax = 6,
-                Chest = 12,
-                ChestMax = 12,
-                Legs = 8,
-                LegsMax = 8,
+            RaceData r = ReadRaceData(race);
+            IAnatomy anatomy = null;
 
-                BloodLoss = 0,
-                BloodTotal = HumanoidAnatomy.BLOODTOTAL,
-                BodyTimer = 0,
-                StunAmount = 0
-            };
+            if (r.IsHumanoid)
+            {
+                anatomy = new HumanoidAnatomy()
+                {
+                    Head = 4,
+                    HeadMax = 4,
+                    LeftArm = 6,
+                    LeftArmMax = 6,
+                    RightArm = 6,
+                    RightArmMax = 6,
+                    Chest = 12,
+                    ChestMax = 12,
+                    Legs = 8,
+                    LegsMax = 8,
+
+                    BloodLoss = 0,
+                    BloodTotal = HumanoidAnatomy.BLOODTOTAL,
+                    BodyTimer = 0,
+                    StunAmount = 0
+                };
+            }
+            else if (r.IsUndead)
+            {
+                anatomy = new UndeadAnatomy()
+                {
+                    Head = 4,
+                    HeadMax = 4,
+                    LeftArm = 6,
+                    LeftArmMax = 6,
+                    RightArm = 6,
+                    RightArmMax = 6,
+                    Chest = 12,
+                    ChestMax = 12,
+                    Legs = 8,
+                    LegsMax = 8,
+
+                    BloodLoss = 0,
+                    BloodTotal = HumanoidAnatomy.BLOODTOTAL,
+                    BodyTimer = 0,
+                    StunAmount = 0
+                };
+            }
 
             return anatomy;
 
@@ -665,7 +692,9 @@ namespace DivineRightGame.ActorHandling
                         AgilModifier = Int32.Parse(dbRace[4]),
                         DexModifier = Int32.Parse(dbRace[5]),
                         PercModifier = Int32.Parse(dbRace[6]),
-                        IntelModifier = Int32.Parse(dbRace[7])
+                        IntelModifier = Int32.Parse(dbRace[7]),
+                        IsHumanoid = Boolean.Parse(dbRace[8]),
+                        IsUndead = Boolean.Parse(dbRace[9])
                     };
 
                     database.Add(datum);

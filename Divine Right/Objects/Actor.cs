@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using DRObjects.Items.Archetypes.Local;
 using DRObjects.DataStructures;
 using DRObjects.ActorHandling.Enums;
+using DRObjects.ActorHandling.CharacterSheet;
 
 namespace DRObjects
 {
@@ -91,7 +92,7 @@ namespace DRObjects
         /// <summary>
         /// The anatomy of the actor. For now we'll stick with humanoid. Later we'll expand.
         /// </summary>
-        public HumanoidAnatomy Anatomy { get; set; }
+        public IAnatomy Anatomy { get; set; }
 
         /// <summary>
         /// Whether this actor is aggressive or not. Later we'll change this to some other measure - like a list of who they're aggressive towards.

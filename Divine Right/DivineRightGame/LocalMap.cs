@@ -59,7 +59,26 @@ namespace DivineRightGame
         /// <summary>
         /// The Location the player is at
         /// </summary>
-        public Location Location { get; set; }
+        public Location Location
+        {
+            get
+            {
+                return _location;
+            }
+            set
+            {
+                _location = value;
+                
+                //Is the location a dungeon?
+                if (_location is Dungeon)
+                {
+                    //Then subscribe to the event
+                    GameState.MinuteValueChanged += Summon;
+                }
+            }
+        }
+
+        private Location _location;
 
         /// <summary>
         /// Whether the character is currently on the global map or not
@@ -185,6 +204,27 @@ namespace DivineRightGame
             }
 
             return returnList.ToArray();
+        }
+
+        /// <summary>
+        /// Performs the summoning of creatures for Dungeons
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void Summon(object sender,EventArgs e)
+        {
+            Dungeon dungeon = this.Location as Dungeon;
+
+            int maximumActors = dungeon.DifficultyLevel * dungeon.Rooms.Count;
+
+            //How many actors do we have?
+            int activeActors = this.Actors.Count(a => a.IsActive && a.IsAlive);
+
+            if (maximumActors < activeActors)
+            {
+                //Generate new ones
+
+            }
         }
 
 

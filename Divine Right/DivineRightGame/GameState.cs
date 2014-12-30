@@ -43,6 +43,10 @@ namespace DivineRightGame
         public static Actor PlayerCharacter { get; set; }
 
         private static DivineRightDateTime _universeTime = null;
+        /// <summary>
+        /// Event fires whenever the minute changes.
+        /// </summary>
+        public static EventHandler MinuteValueChanged;
 
         /// <summary>
         /// If the game is running heavy processing we store it here, so we can ignore user updates and show him something
@@ -256,8 +260,11 @@ namespace DivineRightGame
 
         public static void MinuteChanged(object sender, EventArgs e)
         {
-            //Dummy
-            int i = 0;
+            if (MinuteValueChanged != null)
+            {
+                //Bubble it up
+                MinuteChanged(sender, e);
+            }
         }
 
 

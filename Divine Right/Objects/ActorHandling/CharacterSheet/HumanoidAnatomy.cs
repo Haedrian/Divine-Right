@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DRObjects.ActorHandling.CharacterSheet;
 
 namespace DRObjects.ActorHandling
 {
@@ -9,7 +10,7 @@ namespace DRObjects.ActorHandling
     /// <summary>
     /// Represents an Actor's Health and anything that can go wrong with them
     /// </summary>
-    public class HumanoidAnatomy
+    public class HumanoidAnatomy : IAnatomy
     {
         public const int BLOOD_STUN_AMOUNT = 15;
 

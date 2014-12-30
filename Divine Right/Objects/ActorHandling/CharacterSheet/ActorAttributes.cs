@@ -32,7 +32,7 @@ namespace DRObjects.ActorHandling
         private int enemyEvasion;
 
         #region Links
-        public HumanoidAnatomy Health { get; set; }
+        public IAnatomy Health { get; set; }
 
         public Actor Actor { get; set; }
 

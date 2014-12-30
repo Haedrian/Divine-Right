@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace DRObjects.Items.Archetypes.Global
 {
@@ -14,6 +15,7 @@ namespace DRObjects.Items.Archetypes.Global
         public int DifficultyLevel { get; set; }
         public List<SummoningCircle> SummoningCircles { get; set; }
 
+        public List<Rectangle> Rooms { get; set; }
 
     }
 }
