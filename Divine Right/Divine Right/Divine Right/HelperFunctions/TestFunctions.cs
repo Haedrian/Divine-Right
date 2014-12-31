@@ -108,6 +108,13 @@ namespace Divine_Right.HelperFunctions
             GameState.LocalMap = new LocalMap(250, 250, 1, 0);
             GameState.LocalMap.Location = settlement;
 
+            settlement.Civilisation = new Civilisation()
+            {
+                Faction = OwningFactions.HUMANS,
+                ID = 1,
+                Name = "Holy Llama Kingdom"
+            };
+
             List<Actor> actors = null;
 
             PointOfInterest startPoint = null;
