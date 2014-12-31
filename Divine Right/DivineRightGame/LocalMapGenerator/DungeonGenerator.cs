@@ -7,6 +7,7 @@ using DivineRightGame.Pathfinding;
 using DRObjects;
 using DRObjects.Enums;
 using DRObjects.Items.Archetypes;
+using DRObjects.Items.Archetypes.Global;
 using DRObjects.Items.Tiles;
 using DRObjects.LocalMapGeneratorObjects;
 using Microsoft.Xna.Framework;
@@ -25,13 +26,13 @@ namespace DivineRightGame.LocalMapGenerator
         private const int MINIMUM_EDGE = 4;
         private const int MAXIMUM_EDGE = 15;
 
-        public static MapBlock[,] GenerateDungeonLevel(int level, int percentCovered, out MapCoordinate startPoint, out List<Actor> enemies, out List<SummoningCircle> summoningCircles)
+        public static MapBlock[,] GenerateDungeonLevel(int level, int percentCovered, out MapCoordinate startPoint, out List<Actor> enemies,out Dungeon dungeon)
         {
             startPoint = new MapCoordinate();
             enemies = new List<Actor>();
             List<Rectangle> rectangles = null;
             ItemFactory.ItemFactory fact = new ItemFactory.ItemFactory();
-            summoningCircles = new List<SummoningCircle>();
+            List<SummoningCircle> summoningCircles = new List<SummoningCircle>();
 
             MapBlock[,] map = GenerateBaseMap(level, percentCovered, out rectangles);
 
@@ -68,6 +69,12 @@ namespace DivineRightGame.LocalMapGenerator
 
 
             //Then we can pick some of the rooms as being the other room types
+
+            //Package it all into a Dungeon object
+            dungeon = new Dungeon();
+            dungeon.DifficultyLevel = level;
+            dungeon.Rooms = rectangles;
+            dungeon.SummoningCircles = summoningCircles;
 
             return map;
         }

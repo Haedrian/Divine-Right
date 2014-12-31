@@ -20,6 +20,8 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using DRObjects.DataStructures.Enum;
 using DRObjects.DataStructures;
+using DRObjects.Extensions;
+using DRObjects.ActorHandling;
 
 namespace DivineRightGame
 {
@@ -220,10 +222,35 @@ namespace DivineRightGame
             //How many actors do we have?
             int activeActors = this.Actors.Count(a => a.IsActive && a.IsAlive);
 
-            if (maximumActors < activeActors)
+            if (maximumActors > activeActors)
             {
-                //Generate new ones
+                //Plop him on the map, and make him wander into a particular room
+                var summoningCircle = dungeon.SummoningCircles.Where(sc => sc.IsSummoning && sc.IsActive).ToList().GetRandom();
 
+                if (summoningCircle == null)
+                {
+                    return; //They're all disabled
+                }
+
+                //Generate new actor
+                var gennedActor = ActorGeneration.CreateActor(OwningFactions.UNDEAD, 3 * dungeon.DifficultyLevel);
+
+                //Pick a room at random
+                Rectangle room = dungeon.Rooms.GetRandom();
+
+                gennedActor.MissionStack = new Stack<ActorMission>();
+
+                gennedActor.MissionStack.Push(new WanderMission()
+                {
+                    LoiterPercentage = 5,
+                    WanderPoint = new MapCoordinate(room.Center, MapType.LOCAL),
+                    WanderRectangle = room
+                });
+
+                this.Actors.Add(gennedActor);
+
+                //Put it on the block
+                this.GetBlockAtCoordinate(summoningCircle.Coordinate).PutItemOnBlock(gennedActor.MapCharacter);
             }
         }
 

@@ -263,7 +263,7 @@ namespace DivineRightGame
             if (MinuteValueChanged != null)
             {
                 //Bubble it up
-                MinuteChanged(sender, e);
+                MinuteValueChanged(sender, e);
             }
         }
 

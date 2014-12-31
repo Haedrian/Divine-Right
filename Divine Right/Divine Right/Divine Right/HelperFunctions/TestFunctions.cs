@@ -18,6 +18,7 @@ using DRObjects.Sites;
 using DRObjects.Enums;
 using DRObjects.CivilisationHandling;
 using DRObjects.Items.Archetypes;
+using DRObjects.Items.Archetypes.Global;
 
 namespace Divine_Right.HelperFunctions
 {
@@ -55,15 +56,22 @@ namespace Divine_Right.HelperFunctions
             MapCoordinate start = null;
             List<Actor> actors = null;
             List<PointOfInterest> pointsOfInterest = null;
-            List<SummoningCircle> summoningCircles = null;
 
             string getOwner = ActorGeneration.GetEnemyType(true);
- 
-            MapBlock[,] generatedMap = DungeonGenerator.GenerateDungeonLevel(1, 30, out start, out actors,out summoningCircles);
+
+            Dungeon dungeon = null;
+
+            MapBlock[,] generatedMap = DungeonGenerator.GenerateDungeonLevel(1, 30, out start, out actors,out dungeon);
 
             GameState.LocalMap = new LocalMap(500, 500, 1, 0);
             GameState.LocalMap.PointsOfInterest = pointsOfInterest;
             GameState.LocalMap.IsUnderground = true;
+            GameState.LocalMap.Location = dungeon;
+
+            for(int i=0; i < 21; i++)
+            {
+                GameState.LocalMap.Summon(null,null); //Summon!
+            }
 
             List<MapBlock> collapsedMap = new List<MapBlock>();
 
@@ -99,6 +107,8 @@ namespace Divine_Right.HelperFunctions
 
             GameState.LocalMap.Actors.Add(GameState.PlayerCharacter);
 
+            //Generate the pathfinding map
+            GameState.LocalMap.GeneratePathfindingMap();
         }
 
         public static void GenerateSettlement()

@@ -70,6 +70,147 @@ namespace DivineRightGame.ActorHandling
         }
 
         /// <summary>
+        /// Creates an actor owned by a particular faction having a level +- 25% of the level passed.
+        /// The actual actor will be chosen according to the actual level
+        /// The worth of the equipment the actor is as described in the database for the chosen actor
+        /// Actors chosen will be of the warrior profession
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <param name="level"></param>
+        /// <returns></returns>
+        public static Actor CreateActor(OwningFactions owner, int skillLevel)
+        {
+            int levelToCreate = GameState.Random.Next((int)(skillLevel * 0.75) > 0 ?(int)(skillLevel * 0.75) : 0 , (int)(skillLevel * 1.25));
+
+            //Get all the data from the database and we'll make our own filtering
+            var dictionary = DatabaseHandling.GetDatabase(Archetype.ACTORS);
+
+            var possibleMatches = dictionary.Values.AsQueryable();
+
+            //Correct owner
+            possibleMatches = possibleMatches.Where(v => v[4].ToUpper().Equals(owner.ToString()));
+
+            //The closest one w.r.t skill level
+            possibleMatches = possibleMatches.Where(v => Int32.Parse(v[11]) < levelToCreate).OrderBy(v => Int32.Parse(v[11]));
+
+            //Have we got at least one?
+            if (possibleMatches.Count() == 0)
+            {
+                //Nope sorry
+                return null;
+            }
+            else
+            {
+                //Copy pasted from CreateActors - rule of 3s
+                var chosen = possibleMatches.First();
+
+                //Now we can generate the actor itself
+                Actor actor = new Actor();
+                actor.Anatomy = GenerateAnatomy(chosen[5]);
+                actor.Attributes = GenerateAttributes(chosen[5], ActorProfession.WARRIOR, levelToCreate, actor);
+
+                actor.Attributes.Actor = actor;
+                actor.EnemyData = new EnemyData()
+                {
+                    EnemyID = Int32.Parse(chosen[0]),
+                    EnemyLineOfSight = Int32.Parse(chosen[9]),
+                    EnemyName = chosen[1],
+                    EnemyType = chosen[5],
+                    Intelligent = true,
+                    Profession = ActorProfession.WARRIOR
+                };
+
+                actor.FeedingLevel = FeedingLevel.FULL;
+                actor.Gender = (Gender)Enum.Parse(typeof(Gender), chosen[13]);
+
+                actor.Inventory = new ActorInventory();
+
+                actor.Inventory.EquippedItems = GenerateEquippedItems(Int32.Parse(chosen[12]));
+
+                //Add all of those into the inventory
+                foreach (var item in actor.Inventory.EquippedItems.Values)
+                {
+                    actor.Inventory.Inventory.Add(item.Category, item);
+                }
+
+                actor.IsActive = true;
+                actor.IsAggressive = chosen[8] == "1";
+                actor.IsAlive = true;
+                actor.IsAnimal = false;
+                actor.IsDomesticatedAnimal = false;
+                actor.IsPlayerCharacter = false;
+                actor.IsStunned = false;
+                actor.LineOfSight = Int32.Parse(chosen[9]);
+
+                actor.Name = ActorNameGenerator.CanGenerateName(chosen[5]) ? ActorNameGenerator.GenerateName(chosen[5], actor.Gender) : chosen[1];
+
+                actor.Owners = owner;
+                actor.UniqueId = Guid.NewGuid();
+
+                actor.MapCharacter = new LocalCharacter();
+
+                LocalCharacter mc = actor.MapCharacter as LocalCharacter;
+
+                mc.Actor = actor;
+                mc.Coordinate = new MapCoordinate();
+                mc.Description = chosen[10];
+                mc.EnemyThought = EnemyThought.WAIT;
+
+                string chosenGraphic = string.Empty;
+
+                if (!String.IsNullOrWhiteSpace(chosen[3]))
+                {
+                    string setChoice = String.Empty;
+                    //Does graphicset contain multiple choices?
+                    if (chosen[3].Contains(","))
+                    {
+                        //Yes, lets split it
+                        var possibleSets = chosen[3].Split(',');
+
+                        setChoice = possibleSets[GameState.Random.Next(possibleSets.Length)];
+                    }
+                    else
+                    {
+                        setChoice = chosen[3];
+                    }
+
+                    //Instead of a single graphic, use a graphical set
+                    mc.Graphics = GraphicSetManager.GetSprites((GraphicSetName)Enum.Parse(typeof(GraphicSetName), setChoice.ToUpper()));
+
+                }
+                else
+                {
+                    //Does graphic contain multiple choices?
+                    if (chosen[2].Contains(","))
+                    {
+                        //yes, lets split it
+                        var graphics = chosen[2].Split(',');
+
+                        //use random to determine which one we want
+                        chosenGraphic = graphics[GameState.Random.Next(graphics.Length)];
+
+                        mc.Graphic = SpriteManager.GetSprite((LocalSpriteName)Enum.Parse(typeof(LocalSpriteName), chosenGraphic));
+                    }
+                    else
+                    {
+                        //nope
+                        mc.Graphic = SpriteManager.GetSprite((LocalSpriteName)Enum.Parse(typeof(LocalSpriteName), chosen[2]));
+                    }
+                }
+
+                mc.InternalName = chosen[2];
+                mc.IsActive = true;
+                mc.IsStunned = false;
+                mc.LineOfSightRange = actor.LineOfSight.Value;
+                mc.MayContainItems = false;
+                mc.Name = actor.Name;
+                mc.OwnedBy = owner;
+
+                return actor;
+            }
+        }
+
+        /// <summary>
         /// Creates a number of actors for a particular owner and profession. It will also balance the level and difficulty of acctors, and will create a hierarchy of warriors.
         /// Do not use this for animals
         /// If there are no actors of that particular type for that profession, will not create anything

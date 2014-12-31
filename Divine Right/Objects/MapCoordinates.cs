@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DRObjects.Enums;
+using Microsoft.Xna.Framework;
 
 namespace DRObjects
 {
@@ -122,6 +123,12 @@ namespace DRObjects
 
         public MapCoordinate(MapCoordinate coordinate)
             : this(coordinate.X, coordinate.Y, coordinate.Z, coordinate.MapType)
+        {
+
+        }
+
+        public MapCoordinate(Point point,MapType type)
+            : this (point.X,point.Y,0,type)
         {
 
         }
