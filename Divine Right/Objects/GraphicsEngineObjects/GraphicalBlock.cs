@@ -28,6 +28,11 @@ namespace DRObjects.GraphicsEngineObjects
         public SpriteData[] ItemGraphics {get;set; }
 
         /// <summary>
+        /// The Graphics of Actors to show
+        /// </summary>
+        public SpriteData[] ActorGraphics { get; set; }
+
+        /// <summary>
         /// Whether this block was visited or not. For underground tiles
         /// </summary>
         public bool WasVisited { get; set; }
@@ -54,6 +59,7 @@ namespace DRObjects.GraphicsEngineObjects
         public GraphicalBlock()
         {
             this.IsOld = false;
+            this.ActorGraphics = new SpriteData[]{};
         }
 
         #endregion

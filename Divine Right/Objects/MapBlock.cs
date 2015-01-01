@@ -8,6 +8,7 @@ using DRObjects.Enums;
 using DRObjects.Items.Tiles.Global;
 using DRObjects.Graphics;
 using DRObjects.ActorHandling.CharacterSheet.Enums;
+using DRObjects.Items.Archetypes.Local;
 
 namespace DRObjects
 {
@@ -42,7 +43,7 @@ namespace DRObjects
         {
             get
             {
-                
+
                 return GetTopItem() == null ? false : GetTopItem().MayContainItems;
             }
 
@@ -196,8 +197,8 @@ namespace DRObjects
                 else
                 {
                     //This is to do moving items lazily
-                    item = this.mapItems[mapItems.Count-counter];
-                    
+                    item = this.mapItems[mapItems.Count - counter];
+
                     //Do the coordinates match?
                     if (!item.Coordinate.Equals(Tile.Coordinate))
                     {
@@ -243,7 +244,7 @@ namespace DRObjects
         {
             return this.mapItems.ToArray();
         }
- 
+
         /// <summary>
         /// Gets the actions which can be performed on this Block
         /// </summary>
@@ -274,7 +275,7 @@ namespace DRObjects
                 //the block must handle this
                 //TODO: Future - the block can transmit 'moved on' action on the top item or the tile for things like traps
 
-               if (this.MayContainItems)
+                if (this.MayContainItems)
                 {
                     //it is possible to move there
 
@@ -305,7 +306,7 @@ namespace DRObjects
                         if (randomValue > 99)
                         {
                             //Are we next to a bandit camp ?
-                            feedback.Add(new LocationChangeFeedback() { RandomEncounter = (this.Tile as GlobalTile).Biome  });
+                            feedback.Add(new LocationChangeFeedback() { RandomEncounter = (this.Tile as GlobalTile).Biome });
                         }
 
                         //Change the location of the character
@@ -318,11 +319,11 @@ namespace DRObjects
                         return feedback.ToArray();
                     }
 
-                   if (actor.IsPlayerCharacter)
-                   {
-                       //Mark all tiles around him as having been visited
-                       return new ActionFeedback[1] { new VisitedBlockFeedback { Coordinate = this.Tile.Coordinate } };
-                   }
+                    if (actor.IsPlayerCharacter)
+                    {
+                        //Mark all tiles around him as having been visited
+                        return new ActionFeedback[1] { new VisitedBlockFeedback { Coordinate = this.Tile.Coordinate } };
+                    }
 
                     return new ActionFeedback[0];
                 }
@@ -350,18 +351,28 @@ namespace DRObjects
         public GraphicalBlock ConvertToGraphicalBlock()
         {
             GraphicalBlock block = new GraphicalBlock();
-            block.TileGraphics =  this.Tile.Graphics.ToArray();
+            block.TileGraphics = this.Tile.Graphics.ToArray();
             List<SpriteData> itemGraphics = new List<SpriteData>();
+            List<SpriteData> actorGraphics = new List<SpriteData>();
 
             if (this.GetTopMapItem() != null)
             {
                 //go through all the items and add them to the list in order
                 foreach (MapItem item in this.mapItems.Where(mi => mi.IsActive))
                 {
-                    itemGraphics.AddRange(item.Graphics);
+                    if (item.GetType() == typeof(LocalCharacter))
+                    {
+                        actorGraphics.AddRange(item.Graphics);
+                    }
+                    else
+                    {
+                        itemGraphics.AddRange(item.Graphics);
+                    }
                 }
+
             }
 
+            block.ActorGraphics = actorGraphics.ToArray();
             block.ItemGraphics = itemGraphics.ToArray();
             block.MapCoordinate = this.Tile.Coordinate;
             block.WasVisited = this.WasVisited;

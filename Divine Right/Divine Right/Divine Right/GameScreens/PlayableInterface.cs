@@ -834,10 +834,12 @@ namespace Divine_Right.GameScreens
                     {
                         blankBlocks[i].TileGraphics = new SpriteData[] { };
                         blankBlocks[i].ItemGraphics = new SpriteData[] { };
+                        blankBlocks[i].ActorGraphics = new SpriteData[] { };
                     }
                     else
                     {
                         blankBlocks[i].IsOld = true;
+                        blankBlocks[i].ActorGraphics = new SpriteData[] { };
                     }
                 }
             }
@@ -993,9 +995,13 @@ namespace Divine_Right.GameScreens
 
                 try
                 {
-                    if (block.ItemGraphics.Length != 0)
+                    SpriteData[] graphics =  new SpriteData[block.ItemGraphics.Length + block.ActorGraphics.Length];
+                    block.ItemGraphics.CopyTo(graphics, 0);
+                    block.ActorGraphics.CopyTo(graphics, block.ItemGraphics.Length);
+
+                    if (graphics.Length != 0)
                     {
-                        foreach (SpriteData itemGraphic in block.ItemGraphics)
+                        foreach (SpriteData itemGraphic in graphics)
                         {
                             if (itemGraphic != null)
                             {
@@ -1556,7 +1562,7 @@ namespace Divine_Right.GameScreens
                     List<Actor> settlementActors = null;
                     PointOfInterest sp = null;
 
-                    gennedMap = SettlementGenerator.GenerateMap( (location as Settlement), out settlementActors, out sp);
+                    gennedMap = SettlementGenerator.GenerateMap((location as Settlement), out settlementActors, out sp);
 
                     actors = settlementActors.ToArray();
                     startPoint = sp.Coordinate;
