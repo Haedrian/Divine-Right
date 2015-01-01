@@ -248,11 +248,11 @@ namespace DivineRightGame.ActorHandling
                     //GameState.LocalMap.GeneratePathfindingMap();
                     mission.TargetCoordinate = mission.Target.MapCharacter.Coordinate;
                     mission.Coordinates = PathfinderInterface.GetPath(actor.MapCharacter.Coordinate, mission.TargetCoordinate);
-                    return feedback;
+                   // return feedback;
                 }
 
                 //Okay, now...advance
-                if (mission.Coordinates.Count == 0)
+                if (mission.Coordinates == null || mission.Coordinates.Count == 0)
                 {
                     //Where did he go? Take a turn to figure it out
                     mission.Coordinates = null;
