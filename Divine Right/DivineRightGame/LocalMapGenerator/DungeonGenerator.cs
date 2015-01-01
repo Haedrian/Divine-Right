@@ -34,11 +34,11 @@ namespace DivineRightGame.LocalMapGenerator
             ItemFactory.ItemFactory fact = new ItemFactory.ItemFactory();
             List<SummoningCircle> summoningCircles = new List<SummoningCircle>();
 
-            MapBlock[,] map = GenerateBaseMap(level, percentCovered, out rectangles);
+            int tileID = -1;
+
+            MapBlock[,] map = GenerateBaseMap(level, percentCovered, out rectangles, out tileID);
 
             //Put the tiles
-            int tileID = -1;
-            var dummy = fact.CreateItem("tiles", "cave", out tileID);
 
             SummoningCircle dummyCircle = null;
 
@@ -85,14 +85,14 @@ namespace DivineRightGame.LocalMapGenerator
         /// <param name="level"></param>
         /// <param name="percentCovered"></param>
         /// <returns></returns>
-        private static MapBlock[,] GenerateBaseMap(int level, int percentCovered, out List<Rectangle> rectangles)
+        private static MapBlock[,] GenerateBaseMap(int level, int percentCovered, out List<Rectangle> rectangles, out int tileID)
         {
             MapBlock[,] map = new MapBlock[SIZE, SIZE];
 
             ItemFactory.ItemFactory fact = new ItemFactory.ItemFactory();
 
             //Put the tiles
-            int tileID = -1;
+            tileID = -1;
             var dummy = fact.CreateItem("tiles", "cave", out tileID);
 
             for (int x = 0; x < SIZE; x++)
