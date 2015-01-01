@@ -710,11 +710,11 @@ namespace DRObjects.Graphics
             AddLocalSprite(LocalSpriteName.MUMMY_2, ENEMIES, 6, 7);
 
             AddLocalSprite(LocalSpriteName.ZOMBIE_1, ENEMIES, 0, 8);
-            AddLocalSprite(LocalSpriteName.ZOMBIE_2, ENEMIES, 0, 8);
-            AddLocalSprite(LocalSpriteName.ZOMBIE_3, ENEMIES, 0, 8);
-            AddLocalSprite(LocalSpriteName.ZOMBIE_4, ENEMIES, 0, 8);
-            AddLocalSprite(LocalSpriteName.ZOMBIE_5, ENEMIES, 0, 8);
-            AddLocalSprite(LocalSpriteName.ZOMBIE_6, ENEMIES, 0, 8);
+            AddLocalSprite(LocalSpriteName.ZOMBIE_2, ENEMIES, 1, 8);
+            AddLocalSprite(LocalSpriteName.ZOMBIE_3, ENEMIES, 2, 8);
+            AddLocalSprite(LocalSpriteName.ZOMBIE_4, ENEMIES, 3, 8);
+            AddLocalSprite(LocalSpriteName.ZOMBIE_5, ENEMIES, 4, 8);
+            AddLocalSprite(LocalSpriteName.ZOMBIE_6, ENEMIES, 5, 8);
 
             AddLocalSprite(LocalSpriteName.MOOSE, ANIMALS, 0, 0);
             AddLocalSprite(LocalSpriteName.RAT, ANIMALS, 1, 0);
