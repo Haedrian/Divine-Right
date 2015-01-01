@@ -32,6 +32,15 @@ namespace DRObjects.ActorHandling.ActorMissions
         public Rectangle WanderRectangle { get; set; }
 
         /// <summary>
+        /// The radius in which we're considered to have reached the destination
+        /// </summary>
+        public int Radius { get
+            {
+                return 1;
+            }
+        }
+
+        /// <summary>
         /// The percentage chance that the character loiters instead of taking a step
         /// </summary>
         public int LoiterPercentage { get; set; }

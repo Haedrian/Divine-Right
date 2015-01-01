@@ -11,6 +11,7 @@ using DivineRightGame.Pathfinding;
 using DRObjects.LocalMapGeneratorObjects;
 using DRObjects.ActorHandling;
 using DRObjects.Enums;
+using Microsoft.Xna.Framework;
 
 namespace DivineRightGame.ActorHandling
 {
@@ -297,11 +298,20 @@ namespace DivineRightGame.ActorHandling
                 {
                     mission.Coordinates = PathfinderInterface.GetPath(actor.MapCharacter.Coordinate, mission.TargetCoordinate);
 
+                    //string debug = String.Join(",", mission.Coordinates.Select(c => GameState.LocalMap.GetBlockAtCoordinate(c).GetTopItem().Name));
+
                     //Is the new first coordinate valid?
                     if (mission.Coordinates == null)
                     {
                         //No path
                         actor.CurrentMission = null; //lose the mission
+
+                        //Wander around where you are now
+                        actor.CurrentMission = new WanderMission()
+                        {
+                            WanderPoint = new MapCoordinate(actor.MapCharacter.Coordinate),
+                            WanderRectangle = new Rectangle(actor.MapCharacter.Coordinate.X - 5,actor.MapCharacter.Coordinate.Y-5,10,10)
+                        };
                     }
                     else if (!GameState.LocalMap.GetBlockAtCoordinate(mission.Coordinates.Peek()).MayContainItems)
                     {

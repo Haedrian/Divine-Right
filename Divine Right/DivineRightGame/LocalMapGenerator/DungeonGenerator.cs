@@ -19,11 +19,11 @@ namespace DivineRightGame.LocalMapGenerator
     /// </summary>
     public static class DungeonGenerator
     {
-        private const int SIZE = 75;
+        private const int SIZE = 64;
         private const int AREA = SIZE * SIZE;
         private const int MINIMUM_AREA = 25;
 
-        private const int MINIMUM_EDGE = 4;
+        private const int MINIMUM_EDGE = 6;
         private const int MAXIMUM_EDGE = 15;
 
         public static MapBlock[,] GenerateDungeonLevel(int level, int percentCovered, out MapCoordinate startPoint, out List<Actor> enemies,out Dungeon dungeon)
@@ -287,8 +287,9 @@ namespace DivineRightGame.LocalMapGenerator
             var maplet = parser.ParseMapletFromTag(tagName);
 
             //Change the width and height to match the rectangle we're fitting it in
-            maplet.SizeX = rect.Width;
-            maplet.SizeY = rect.Height;
+            //Leave a rim of 1
+            maplet.SizeX = rect.Width-2;
+            maplet.SizeY = rect.Height-2;
 
             LocalMapGenerator lmg = new LocalMapGenerator();
 
@@ -317,7 +318,7 @@ namespace DivineRightGame.LocalMapGenerator
             }
 
             //Now fit one into the other
-            lmg.JoinMaps(map, gennedMap, rect.X, rect.Y);
+            lmg.JoinMaps(map, gennedMap, rect.X+1, rect.Y+1);
 
 
         }

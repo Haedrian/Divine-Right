@@ -15,6 +15,7 @@ namespace Divine_Right
             using (BaseGame game = new BaseGame())
             {
                 game.Run();
+                game.IsFixedTimeStep = false;
             }
 
         }

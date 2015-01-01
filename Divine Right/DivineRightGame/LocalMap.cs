@@ -269,6 +269,7 @@ namespace DivineRightGame
             {
                 for (int j = 0; j < localGameMap.GetLength(1); j++)
                 {
+                    
                     if (i < localGameMap.GetLength(0) - 1 && j < localGameMap.GetLength(1) - 1)
                     {
                         //Copyable - if it may contain items, put a weight of 1, otherwise an essagerated one
@@ -282,7 +283,7 @@ namespace DivineRightGame
                 }
             }
 
-            PathfinderInterface.Nodes = PathfindingMap;
+                PathfinderInterface.Nodes = PathfindingMap;
         }
 
         /// <summary>
