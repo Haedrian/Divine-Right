@@ -83,11 +83,9 @@ namespace DivineRightGame
         /// </summary>
         public static Random Random
         {
-            get
+            get 
             {
-
                 return _random;
-
             }
         }
         private static Random _random = new Random();
