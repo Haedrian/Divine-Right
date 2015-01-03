@@ -647,6 +647,8 @@ namespace DRObjects.Graphics
         ZOMBIE_5,
         ZOMBIE_6,
         SUMMONING_CIRCLE_OFF,
+        TREASURE_CLOSED,
+        TREASURE_EMPTY,
 
     }
 }
