@@ -7,6 +7,7 @@ using DRObjects.Graphics;
 using DRObjects;
 using DRObjects.Database;
 using DRObjects.Enums;
+using DRObjects.Extensions;
 
 namespace DivineRightGame.ItemFactory.ItemFactoryManagers
 {
@@ -80,6 +81,39 @@ namespace DivineRightGame.ItemFactory.ItemFactoryManagers
             }
 
             return CreateItem(chosenValue) as InventoryItem;
+        }
+
+        /// <summary>
+        /// Fills a treasure chest as follows:
+        /// 1. Pick a random category. Produce an item of that category costing between 1/3 and 3/3 of the remaining value
+        /// 2. Pick a random category. Do the same
+        /// 3. Pick a random category. Do the same
+        /// 4. Done
+        /// </summary>
+        /// <param name="categories"></param>
+        /// <param name="spendValue"></param>
+        /// <returns></returns>
+        public List<InventoryItem> FillTreasureChest(InventoryCategory[] categories,int spendValue)
+        {
+            List<InventoryItem> items = new List<InventoryItem>();
+
+            for (int i = 0; i < 3; i++)
+            {
+                InventoryCategory cat = categories.GetRandom();
+
+                var item = GetItemWithinPriceRange(cat.ToString(), spendValue / 3, spendValue);
+
+                if (item != null)
+                {
+                    spendValue -= item.BaseValue;
+
+                    items.Add(item);
+                }
+
+            }
+
+            return items;
+
         }
 
         /// <summary>

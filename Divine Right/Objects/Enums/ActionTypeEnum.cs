@@ -28,5 +28,6 @@ namespace DRObjects.Enums
         ASCEND_TO_SURFACE,
         DESCEND,
         DISABLE,
+        LOOT,
     }
 }

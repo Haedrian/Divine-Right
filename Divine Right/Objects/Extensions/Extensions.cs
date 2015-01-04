@@ -11,20 +11,20 @@ namespace DRObjects.Extensions
         private static Random random = new Random();
 
         /// <summary>
-        /// Returns a random 
+        /// Returns a random, or a default if the IList is empty
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="list"></param>
+        /// <param name="source"></param>
         /// <returns></returns>
-        public static T GetRandom<T>(this List<T> list)
+        public static T GetRandom<T>(this IList<T> source)
         {
-            if (list.Count == 0)
+            if (source.Count() == 0)
             {
                 return default(T);
             }
             else
             {
-                return list[random.Next(list.Count)];
+                return source[random.Next(source.Count())];
             }
         }
     }
