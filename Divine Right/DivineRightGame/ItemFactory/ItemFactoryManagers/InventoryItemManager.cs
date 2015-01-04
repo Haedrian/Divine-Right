@@ -85,7 +85,7 @@ namespace DivineRightGame.ItemFactory.ItemFactoryManagers
 
         /// <summary>
         /// Fills a treasure chest as follows:
-        /// 1. Pick a random category. Produce an item of that category costing between 1/3 and 3/3 of the remaining value
+        /// 1. Pick a random category. Produce an item of that category costing between 1/5 and 3/3 of the remaining value
         /// 2. Pick a random category. Do the same
         /// 3. Pick a random category. Do the same
         /// 4. Done
@@ -101,11 +101,12 @@ namespace DivineRightGame.ItemFactory.ItemFactoryManagers
             {
                 InventoryCategory cat = categories.GetRandom();
 
-                var item = GetItemWithinPriceRange(cat.ToString(), spendValue / 3, spendValue);
+                var item = GetItemWithinPriceRange(cat.ToString(), spendValue / 5, spendValue);
 
                 if (item != null)
                 {
                     spendValue -= item.BaseValue;
+                    item.InInventory = true; //to get the proper description
 
                     items.Add(item);
                 }

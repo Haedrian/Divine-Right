@@ -28,6 +28,8 @@ namespace Divine_Right.InterfaceComponents.Components
         private Rectangle descriptionRect;
         private Rectangle takeAllRect;
 
+        private string descriptionShown = String.Empty;
+
         private SpriteFont font;
 
         public LootComponent(int locationX, int locationY,TreasureChest treasureChest)
@@ -70,7 +72,7 @@ namespace Divine_Right.InterfaceComponents.Components
             }
 
 
-            batch.DrawString(font, "Description Bla", descriptionRect, Alignment.Center, Color.Black);
+            batch.DrawString(font, descriptionShown, descriptionRect, Alignment.Left, Color.Black);
             batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.WOOD_TEXTURE), takeAllRect, Color.White);
             batch.DrawString(font, "TAKE ALL", takeAllRect, Alignment.Center, Color.Black);
         }
@@ -91,7 +93,21 @@ namespace Divine_Right.InterfaceComponents.Components
 
         public void HandleMouseOver(int x, int y)
         {
-            //TODO
+            descriptionShown = String.Empty;
+
+            for(int i=0; i < this.itemRectangles.Count; i++)
+            {
+                if (this.itemRectangles[i].Contains(x,y))
+                {
+                    //Overlap! Put in the description
+
+                    if (this.treasureChest.Contents.Count > i)
+                    {
+                        descriptionShown = (this.treasureChest.Contents[i] as InventoryItem).Description;
+                    }
+                    continue;
+                }
+            }
         }
 
         public bool HandleKeyboard(KeyboardState keyboard, out DRObjects.Enums.ActionType? actionType, out object[] args, out DRObjects.MapCoordinate coord, out bool destroy)
@@ -114,20 +130,19 @@ namespace Divine_Right.InterfaceComponents.Components
             locationX += deltaX;
             locationY += deltaY;
 
-            rect = new Rectangle(locationX, locationY, 170, 170);
+            rect = new Rectangle(locationX, locationY, 250, 170);
             borderRect = new Rectangle(locationX - 2, locationY - 2, rect.Width + 4, rect.Height + 4);
 
-            objectNameRect = new Rectangle(locationX, locationY, 170, 20);
-            crossRect = new Rectangle(locationX + 150, locationY, 20, 20);
+            objectNameRect = new Rectangle(locationX, locationY, rect.Width, 20);
+            crossRect = new Rectangle(locationX + rect.Width - 20, locationY, 20, 20);
 
             itemRectangles = new List<Rectangle>();
 
             for(int i=0; i < 15; i++)
             {
-                int dummy;
                 Rectangle ir = new Rectangle(
-                    locationX + 10 + (i % 5)*(30),
-                    locationY + 30 + (((int)i/5)*30),
+                    locationX + 10 + (i % 7)*(30),
+                    locationY + 30 + (((int)i/7)*30),
                     30,
                     30);
 
