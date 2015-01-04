@@ -9,6 +9,7 @@ using Divine_Right.HelperFunctions;
 using Microsoft.Xna.Framework.Graphics;
 using DRObjects.Graphics;
 using DRObjects;
+using DivineRightGame;
 
 namespace Divine_Right.InterfaceComponents.Components
 {
@@ -85,7 +86,55 @@ namespace Divine_Right.InterfaceComponents.Components
             destroy = false;
             internalActionType = null;
             item = null;
-            //TODO
+            
+
+            if (this.crossRect.Contains(x,y))
+            {
+                //close it
+                destroy = true;
+                return true;
+            }
+
+            if (this.takeAllRect.Contains(x,y))
+            {
+                //Take it, take it all!
+                foreach(var i in this.treasureChest.Contents)
+                {
+                    GameState.PlayerCharacter.Inventory.Inventory.Add(i.Category, i);
+                }
+                //Remove them
+                this.treasureChest.Contents = new List<InventoryItem>();
+
+                destroy = true; //and close it
+                return true;
+            }
+
+            for (int i = 0; i < this.itemRectangles.Count; i++)
+            {
+                if (this.itemRectangles[i].Contains(x, y))
+                {
+                    //Overlap! Put in the description
+
+                    if (this.treasureChest.Contents.Count > i)
+                    {
+                        InventoryItem inv = this.treasureChest.Contents[i] as InventoryItem;
+
+                        //take it!
+                        GameState.PlayerCharacter.Inventory.Inventory.Add(inv.Category, inv);
+
+                        //Remove it
+                        this.treasureChest.Contents.RemoveAt(i);
+
+                        if (this.treasureChest.Contents.Count == 0)
+                        {
+                            //Cleared it out. Close it
+                            destroy = true;
+                        }
+                    }
+                    return true;
+                }
+            }
+
   
             return true;
        
@@ -105,7 +154,7 @@ namespace Divine_Right.InterfaceComponents.Components
                     {
                         descriptionShown = (this.treasureChest.Contents[i] as InventoryItem).Description;
                     }
-                    continue;
+                    return;
                 }
             }
         }
@@ -116,6 +165,11 @@ namespace Divine_Right.InterfaceComponents.Components
             args = null;
             coord = null;
             destroy = false; //If the user moves, destroy it
+
+            if (keyboard.GetPressedKeys().Contains(Keys.Left) || keyboard.GetPressedKeys().Contains(Keys.Right) || keyboard.GetPressedKeys().Contains(Keys.Down) || keyboard.GetPressedKeys().Contains(Keys.Up))
+            {
+                destroy = true;
+            }
 
             return false;
         }
