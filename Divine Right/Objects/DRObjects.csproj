@@ -176,7 +176,7 @@
     <Compile Include="Items\Archetypes\Local\LocalCharacter.cs" />
     <Compile Include="Items\Archetypes\Local\ToggleItem.cs" />
     <Compile Include="Items\Archetypes\Local\TreasureChest.cs" />
-    <Compile Include="Items\Archetypes\SummoningCircle.cs" />
+    <Compile Include="Items\Archetypes\Local\SummoningCircle.cs" />
     <Compile Include="Items\Tiles\Air.cs" />
     <Compile Include="Items\Tiles\Global\GlobalTile.cs" />
     <Compile Include="LocalMapGeneratorObjects\DatabaseHandling\MapletDatabaseDatum.cs" />

@@ -106,7 +106,7 @@ namespace DRObjects.Items.Archetypes
                 //Increase skill in ritualism
                 actor.Attributes.IncreaseSkill(SkillName.RITUALIST);
 
-                return new ActionFeedback[]{new LogFeedback(InterfaceSpriteName.CHA,Color.Black,"You invoke a blessing upon the summoning circle and disable it")};
+                return new ActionFeedback[]{new LogFeedback(InterfaceSpriteName.SUN,Color.Black,"You invoke a blessing upon the summoning circle and disable it")};
             }
             return base.PerformAction(actionType, actor, args);
         }

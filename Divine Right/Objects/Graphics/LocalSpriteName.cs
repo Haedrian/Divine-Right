@@ -650,6 +650,7 @@ namespace DRObjects.Graphics
         TREASURE_CLOSED,
         TREASURE_EMPTY,
         ALTAR_CURSED,
+        ALTAR_USED,
 
     }
 }

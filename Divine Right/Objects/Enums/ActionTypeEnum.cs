@@ -29,5 +29,7 @@ namespace DRObjects.Enums
         DESCEND,
         DISABLE,
         LOOT,
+        BLESS,
+        PRAY,
     }
 }
