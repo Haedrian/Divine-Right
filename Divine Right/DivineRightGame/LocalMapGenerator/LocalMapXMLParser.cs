@@ -135,7 +135,7 @@ namespace DivineRightGame.LocalMapGenerator
                         case "IsPrimary": ((MapletFootpathNode)content).IsPrimary = Boolean.Parse(value); break;
                         case "HerdTag": ((MapletHerd)content).HerdTag = value; break;
                         case "Type": ((MapletContentsItemSpecial)content).Type = value; break;
-                            
+                        case "Arguments": ((MapletContentsItemSpecial)content).Type = value; break;
                     }
                 }
 

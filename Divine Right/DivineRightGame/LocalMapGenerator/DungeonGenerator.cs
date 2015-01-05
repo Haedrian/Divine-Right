@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DivineRightGame.ItemFactory.ItemFactoryManagers;
 using DivineRightGame.LocalMapGenerator.Objects;
 using DivineRightGame.Pathfinding;
 using DRObjects;
 using DRObjects.Enums;
 using DRObjects.Items.Archetypes;
 using DRObjects.Items.Archetypes.Global;
+using DRObjects.Items.Archetypes.Local;
 using DRObjects.Items.Tiles;
 using DRObjects.LocalMapGeneratorObjects;
 using Microsoft.Xna.Framework;
@@ -26,11 +28,12 @@ namespace DivineRightGame.LocalMapGenerator
         private const int MINIMUM_EDGE = 6;
         private const int MAXIMUM_EDGE = 15;
 
-        public static MapBlock[,] GenerateDungeonLevel(int level, int percentCovered, out MapCoordinate startPoint, out List<Actor> enemies,out Dungeon dungeon)
+        public static MapBlock[,] GenerateDungeonLevel(int level, int percentCovered, out MapCoordinate startPoint, out List<Actor> enemies, out Dungeon dungeon)
         {
             startPoint = new MapCoordinate();
             enemies = new List<Actor>();
             List<Rectangle> rectangles = null;
+            Stack<Rectangle> unusedRectangles = null;
             ItemFactory.ItemFactory fact = new ItemFactory.ItemFactory();
             List<SummoningCircle> summoningCircles = new List<SummoningCircle>();
 
@@ -38,6 +41,14 @@ namespace DivineRightGame.LocalMapGenerator
 
             MapBlock[,] map = GenerateBaseMap(level, percentCovered, out rectangles, out tileID);
 
+            //Copy the rectangles
+            unusedRectangles = new Stack<Rectangle>();
+
+            foreach(var rectangle in rectangles)
+            {
+                unusedRectangles.Push(rectangle); 
+            }
+            
             //Put the tiles
 
             SummoningCircle dummyCircle = null;
@@ -45,11 +56,11 @@ namespace DivineRightGame.LocalMapGenerator
             //Each rectangle is going to contain a room
 
             //First pick two to be the start and end rooms
-            PutRoom(map, tileID, DungeonRoomType.ENTRANCE, rectangles[0],out dummyCircle);
+            PutRoom(map, tileID, level, DungeonRoomType.ENTRANCE, unusedRectangles.Pop(), out dummyCircle);
 
-            startPoint = new MapCoordinate(rectangles[0].Center.X, rectangles[0].Center.Y, 0, MapType.LOCAL);
+            startPoint = new MapCoordinate(rectangles[rectangles.Count -1].Center.X, rectangles[rectangles.Count -1].Center.Y, 0, MapType.LOCAL);
 
-            PutRoom(map, tileID, DungeonRoomType.EXIT, rectangles[1],out dummyCircle);
+            PutRoom(map, tileID, level, DungeonRoomType.EXIT, unusedRectangles.Pop(), out dummyCircle);
 
             //Then pick d6 + level as summoning rooms. Ensuring they are less than half the rooms
             int summoningRooms = GameState.Random.Next(1, 6) + level;
@@ -60,11 +71,28 @@ namespace DivineRightGame.LocalMapGenerator
             {
                 SummoningCircle circle = null;
 
-                PutRoom(map, tileID, DungeonRoomType.SUMMONING, rectangles[2 + i],out circle); //Create them
+                PutRoom(map, tileID, level, DungeonRoomType.SUMMONING, unusedRectangles.Pop(), out circle); //Create them
 
                 //Grab references to the summoning circle as we'll need them later
 
                 summoningCircles.Add(circle);
+            }
+
+            int treasureRooms = GameState.Random.Next((int) Math.Ceiling((double) (level / 2 > 5 ? 5 : level/2)));
+
+            if (treasureRooms > unusedRectangles.Count)
+            {
+                treasureRooms = unusedRectangles.Count -1;
+            }
+            else if (treasureRooms < 1)
+            {
+                treasureRooms = 1; //At least one
+            }
+
+            //Create some treasure rooms
+            for (int i = 0; i < treasureRooms; i++)
+            {
+                PutRoom(map, tileID, level, DungeonRoomType.TREASURE, unusedRectangles.Pop(), out dummyCircle);
             }
 
 
@@ -277,7 +305,7 @@ namespace DivineRightGame.LocalMapGenerator
         /// <param name="roomType"></param>
         /// <param name="rect"></param>
         /// <param name="circle">When the room is a Summoning Room, there's the circle</param>
-        private static void PutRoom(MapBlock[,] map, int tileID, DungeonRoomType roomType, Rectangle rect,out SummoningCircle circle)
+        private static void PutRoom(MapBlock[,] map, int tileID, int level, DungeonRoomType roomType, Rectangle rect, out SummoningCircle circle)
         {
             circle = null;
 
@@ -288,8 +316,8 @@ namespace DivineRightGame.LocalMapGenerator
 
             //Change the width and height to match the rectangle we're fitting it in
             //Leave a rim of 1
-            maplet.SizeX = rect.Width-2;
-            maplet.SizeY = rect.Height-2;
+            maplet.SizeX = rect.Width - 2;
+            maplet.SizeY = rect.Height - 2;
 
             LocalMapGenerator lmg = new LocalMapGenerator();
 
@@ -304,9 +332,9 @@ namespace DivineRightGame.LocalMapGenerator
             if (roomType == DungeonRoomType.SUMMONING)
             {
                 //Go through each map block and see if we find a summoning circle
-                for(int x=0; x < gennedMap.GetLength(0); x++)
+                for (int x = 0; x < gennedMap.GetLength(0); x++)
                 {
-                    for (int y=0; y < gennedMap.GetLength(1); y++)
+                    for (int y = 0; y < gennedMap.GetLength(1); y++)
                     {
                         var block = gennedMap[x, y];
                         if (block.GetTopMapItem() != null && block.GetTopMapItem().GetType().Equals(typeof(SummoningCircle)))
@@ -317,8 +345,26 @@ namespace DivineRightGame.LocalMapGenerator
                 }
             }
 
+            //Do we have any treasure chests?
+            for (int x = 0; x < gennedMap.GetLength(0); x++)
+            {
+                for (int y = 0; y < gennedMap.GetLength(1); y++)
+                {
+                    var block = gennedMap[x, y];
+                    if (block.GetTopMapItem() != null && block.GetTopMapItem().GetType().Equals(typeof(TreasureChest)))
+                    {
+                        TreasureChest chest = block.GetTopMapItem() as TreasureChest;
+
+                        InventoryItemManager iim = new InventoryItemManager();
+
+                        //Fill em up
+                        chest.Contents = iim.FillTreasureChest((InventoryCategory[])Enum.GetValues(typeof(InventoryCategory)), 1000 + (200 * level));
+                    }
+                }
+            }
+
             //Now fit one into the other
-            lmg.JoinMaps(map, gennedMap, rect.X+1, rect.Y+1);
+            lmg.JoinMaps(map, gennedMap, rect.X + 1, rect.Y + 1);
 
 
         }

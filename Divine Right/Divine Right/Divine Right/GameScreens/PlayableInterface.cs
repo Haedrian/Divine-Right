@@ -300,15 +300,6 @@ namespace Divine_Right.GameScreens
             else
             {
                 TestFunctions.GenerateDungeon();
-
-                InventoryItemManager iim = new InventoryItemManager();
-
-                TreasureChest chest = new TreasureChest();
-                chest.Contents = iim.FillTreasureChest(new InventoryCategory[2]{InventoryCategory.WEAPON,InventoryCategory.SUPPLY},1000);
-
-                LootComponent lc = new LootComponent(100, 100, chest);
-
-                interfaceComponents.Add(lc);
             }
 
             //Add the health control
