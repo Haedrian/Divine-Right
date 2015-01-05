@@ -1,0 +1,8 @@
+﻿<Maplet MapletName="TreasureRoom" SizeX="0" SizeY="0" Walled="false" Tiled="false">
+  <MapletContents>
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="5" ProbabilityPercentage="74" Tag="dungeon decoration"/>
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="74" Tag="container"/>
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="10" ProbabilityPercentage="74" Tag="weapon decoration"/>
+    <MapletContentsItemSpecial Type="TreasureChest" MaxAmount="1" ProbabilityPercentage="74" Position="Middle" />
+  </MapletContents>
+</Maplet>

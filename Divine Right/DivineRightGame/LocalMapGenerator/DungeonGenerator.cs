@@ -13,6 +13,7 @@ using DRObjects.Items.Archetypes.Local;
 using DRObjects.Items.Tiles;
 using DRObjects.LocalMapGeneratorObjects;
 using Microsoft.Xna.Framework;
+using DRObjects.Extensions;
 
 namespace DivineRightGame.LocalMapGenerator
 {
@@ -44,11 +45,11 @@ namespace DivineRightGame.LocalMapGenerator
             //Copy the rectangles
             unusedRectangles = new Stack<Rectangle>();
 
-            foreach(var rectangle in rectangles)
+            foreach (var rectangle in rectangles)
             {
-                unusedRectangles.Push(rectangle); 
+                unusedRectangles.Push(rectangle);
             }
-            
+
             //Put the tiles
 
             SummoningCircle dummyCircle = null;
@@ -58,7 +59,7 @@ namespace DivineRightGame.LocalMapGenerator
             //First pick two to be the start and end rooms
             PutRoom(map, tileID, level, DungeonRoomType.ENTRANCE, unusedRectangles.Pop(), out dummyCircle);
 
-            startPoint = new MapCoordinate(rectangles[rectangles.Count -1].Center.X, rectangles[rectangles.Count -1].Center.Y, 0, MapType.LOCAL);
+            startPoint = new MapCoordinate(rectangles[rectangles.Count - 1].Center.X, rectangles[rectangles.Count - 1].Center.Y, 0, MapType.LOCAL);
 
             PutRoom(map, tileID, level, DungeonRoomType.EXIT, unusedRectangles.Pop(), out dummyCircle);
 
@@ -78,11 +79,11 @@ namespace DivineRightGame.LocalMapGenerator
                 summoningCircles.Add(circle);
             }
 
-            int treasureRooms = GameState.Random.Next((int) Math.Ceiling((double) (level / 2 > 5 ? 5 : level/2)));
+            int treasureRooms = GameState.Random.Next((int)Math.Ceiling((double)(level / 2 > 5 ? 5 : level / 2)));
 
             if (treasureRooms > unusedRectangles.Count)
             {
-                treasureRooms = unusedRectangles.Count -1;
+                treasureRooms = unusedRectangles.Count - 1;
             }
             else if (treasureRooms < 1)
             {
@@ -95,8 +96,21 @@ namespace DivineRightGame.LocalMapGenerator
                 PutRoom(map, tileID, level, DungeonRoomType.TREASURE, unusedRectangles.Pop(), out dummyCircle);
             }
 
-
             //Then we can pick some of the rooms as being the other room types
+            List<DungeonRoomType> roomTypes = ((DungeonRoomType[])Enum.GetValues(typeof(DungeonRoomType))).ToList();
+
+            roomTypes.Remove(DungeonRoomType.ENTRANCE);
+            roomTypes.Remove(DungeonRoomType.EXIT);
+            //TODO: LATER MAKE 'EMPTY' ROOM MORE PROBABLE
+
+            //Make 2/3rds of the rectangles into rooms
+            int roomsToFill = (unusedRectangles.Count / 3) * 2;
+
+            for (int i = 0; i < roomsToFill; i++)
+            {
+                //Pick a room type at random
+                PutRoom(map, tileID, level, roomTypes.GetRandom(), unusedRectangles.Pop(), out dummyCircle);
+            }
 
             //Package it all into a Dungeon object
             dungeon = new Dungeon();

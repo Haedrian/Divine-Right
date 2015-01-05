@@ -10,16 +10,16 @@ namespace DivineRightGame.LocalMapGenerator.Objects
     /// </summary>
     public enum DungeonRoomType
     {
-        EMPTY,
-        TREASURE,
-        ARMOURY,
+        ENTRANCE,
+        EXIT,
+        SUMMONING,
+        TREASURE, //DONE
+        ARMOURY, 
+        /*EMPTY, 
         ALTAR,
         DARK_TEMPLE,
         POOL,
         DESTROYED_CAMP,
-        ENTRANCE,
-        EXIT,
-        SUMMONING,
         WISHING_WELL,
         POTIONS,
         LIBRARY,
@@ -28,6 +28,6 @@ namespace DivineRightGame.LocalMapGenerator.Objects
         COMBAT_PIT,
         PRISON,
         TORTURE_CHAMBER,
-        MAP
+        MAP*/
     }
 }

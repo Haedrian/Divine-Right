@@ -100,6 +100,7 @@ Maplets\HuntingLodge.xml
 Maplets\Underground\ExitRoom.xml
 Maplets\Underground\EntranceRoom.xml
 Maplets\Underground\SummoningRoom.xml
+Maplets\Underground\ArmouryRoom.xml
 Maplets\Underground\TreasureRoom.xml
 Maplets\Woodcutter.xml
 Maplets\Farm.xml
