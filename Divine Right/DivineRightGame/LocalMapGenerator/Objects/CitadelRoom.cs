@@ -39,7 +39,7 @@ namespace DivineRightGame.LocalMapGenerator.Objects
         /// <summary>
         /// The type of Room it is
         /// </summary>
-        public CitadelRoomType DungeonRoomType { get; set; }
+        public CitadelRoomType CitadelRoomType { get; set; }
 
         public CitadelRoom()
         {

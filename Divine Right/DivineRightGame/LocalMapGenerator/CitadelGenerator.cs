@@ -82,7 +82,7 @@ namespace DivineRightGame.LocalMapGenerator
                 newNode.SquareNumber = square;
                 newNode.TierNumber = currentTier;
                 newNode.UniqueID = uniqueID++;
-                newNode.DungeonRoomType = CitadelRoomType.EMPTY_ROOM;
+                newNode.CitadelRoomType = CitadelRoomType.EMPTY_ROOM;
                 //connect the focus node to this node
                 focusNode.Connections.Add(newNode.UniqueID);
                 newNode.Connections.Add(focusNode.UniqueID);
@@ -165,7 +165,7 @@ namespace DivineRightGame.LocalMapGenerator
                 if (random.Next(100) > percentageOwned)
                 {
                     //Wild room
-                    room.DungeonRoomType = CitadelRoomType.WILD_ROOM;
+                    room.CitadelRoomType = CitadelRoomType.WILD_ROOM;
                 }
             }
 
@@ -182,35 +182,35 @@ namespace DivineRightGame.LocalMapGenerator
             int upperBoundary = 2 * rooms.Count / 3;
 
             var orderedUtilities = rooms.Where
-                (o => o.DungeonRoomType == CitadelRoomType.EMPTY_ROOM).OrderByDescending(o => random.Next(100) *
-                (o.UniqueID > upperBoundary ? 1 : o.UniqueID > lowerBoundary ? 2 : 3)).Where(r => r.DungeonRoomType == CitadelRoomType.EMPTY_ROOM
+                (o => o.CitadelRoomType == CitadelRoomType.EMPTY_ROOM).OrderByDescending(o => random.Next(100) *
+                (o.UniqueID > upperBoundary ? 1 : o.UniqueID > lowerBoundary ? 2 : 3)).Where(r => r.CitadelRoomType == CitadelRoomType.EMPTY_ROOM
                     ).ToArray().Take(utilityRooms);
 
             foreach (var room in orderedUtilities)
             {
-                room.DungeonRoomType = CitadelRoomType.UTILITY_ROOM;
+                room.CitadelRoomType = CitadelRoomType.UTILITY_ROOM;
             }
 
             //Same thing for treasure rooms
             var orderedTreasure = rooms.Where
-                (o => o.DungeonRoomType == CitadelRoomType.EMPTY_ROOM).OrderByDescending(o => random.Next(100) *
-                (o.UniqueID > upperBoundary ? 3 : o.UniqueID > lowerBoundary ? 2 : 1)).Where(r => r.DungeonRoomType == CitadelRoomType.EMPTY_ROOM
+                (o => o.CitadelRoomType == CitadelRoomType.EMPTY_ROOM).OrderByDescending(o => random.Next(100) *
+                (o.UniqueID > upperBoundary ? 3 : o.UniqueID > lowerBoundary ? 2 : 1)).Where(r => r.CitadelRoomType == CitadelRoomType.EMPTY_ROOM
                     ).Take(treasureRooms);
 
             foreach (var room in orderedTreasure)
             {
-                room.DungeonRoomType = CitadelRoomType.TREASURE_ROOM;
+                room.CitadelRoomType = CitadelRoomType.TREASURE_ROOM;
             }
 
             //And guard rooms
             var orderedGuard = rooms.Where
-                (o => o.DungeonRoomType == CitadelRoomType.EMPTY_ROOM).OrderByDescending(o => random.Next(100) *
-                (o.UniqueID > upperBoundary ? 1 : o.UniqueID > lowerBoundary ? 3 : 2)).Where(r => r.DungeonRoomType == CitadelRoomType.EMPTY_ROOM
+                (o => o.CitadelRoomType == CitadelRoomType.EMPTY_ROOM).OrderByDescending(o => random.Next(100) *
+                (o.UniqueID > upperBoundary ? 1 : o.UniqueID > lowerBoundary ? 3 : 2)).Where(r => r.CitadelRoomType == CitadelRoomType.EMPTY_ROOM
                     ).Take(guardRooms);
 
             foreach (var room in orderedGuard)
             {
-                room.DungeonRoomType = CitadelRoomType.GUARD_ROOM;
+                room.CitadelRoomType = CitadelRoomType.GUARD_ROOM;
             }
 
             //Now that that part is done, we put them on the actual grid.
@@ -249,7 +249,7 @@ namespace DivineRightGame.LocalMapGenerator
                 MapBlock[,] gennedMap = null;
                 string tag = String.Empty;
 
-                switch (room.DungeonRoomType)
+                switch (room.CitadelRoomType)
                 {
                     case CitadelRoomType.EMPTY_ROOM: tag = "Empty Dungeon"; break;
                     case CitadelRoomType.GUARD_ROOM: tag = "Guard Dungeon"; break;
@@ -257,7 +257,7 @@ namespace DivineRightGame.LocalMapGenerator
                     case CitadelRoomType.TREASURE_ROOM: tag = "Treasure Dungeon"; break;
                     case CitadelRoomType.WILD_ROOM: tag = "Empty Dungeon"; break;
                     default:
-                        throw new NotImplementedException("Dungeon Room " + room.DungeonRoomType + " not planned for yet.");
+                        throw new NotImplementedException("Dungeon Room " + room.CitadelRoomType + " not planned for yet.");
                 }
 
                 //Generate it :)
@@ -273,7 +273,7 @@ namespace DivineRightGame.LocalMapGenerator
                 enemies.AddRange(acts);
 
                 //Is it a treasure room?
-                if (room.DungeonRoomType == CitadelRoomType.TREASURE_ROOM)
+                if (room.CitadelRoomType == CitadelRoomType.TREASURE_ROOM)
                 {
                     //Generate some loot
                     GenerateLoot(gennedMap, room.TierNumber);
@@ -281,7 +281,7 @@ namespace DivineRightGame.LocalMapGenerator
 
                 PointOfInterest mapletInterest = null;
 
-                if (room.DungeonRoomType == CitadelRoomType.GUARD_ROOM || room.DungeonRoomType == CitadelRoomType.TREASURE_ROOM)
+                if (room.CitadelRoomType == CitadelRoomType.GUARD_ROOM || room.CitadelRoomType == CitadelRoomType.TREASURE_ROOM)
                 {
                     //This will be a point of interest. Select a random walkable point in the room and mark the place as such
                     for (int tryAmount = 0; tryAmount < 50; tryAmount++)
@@ -296,11 +296,11 @@ namespace DivineRightGame.LocalMapGenerator
                             PointOfInterest interest = new PointOfInterest();
                             interest.Coordinate = new MapCoordinate(x, y, 0, MapType.LOCAL);
 
-                            if (room.DungeonRoomType == CitadelRoomType.GUARD_ROOM)
+                            if (room.CitadelRoomType == CitadelRoomType.GUARD_ROOM)
                             {
                                 interest.Type = PointOfInterestType.GUARD_ROOM;
                             }
-                            else if (room.DungeonRoomType == CitadelRoomType.TREASURE_ROOM)
+                            else if (room.CitadelRoomType == CitadelRoomType.TREASURE_ROOM)
                             {
                                 interest.Type = PointOfInterestType.TREASURE;
                             }
@@ -314,7 +314,7 @@ namespace DivineRightGame.LocalMapGenerator
 
                 DRObjects.Actor[] roomEnemies = new DRObjects.Actor[] { };
 
-                if (room.DungeonRoomType == CitadelRoomType.GUARD_ROOM || room.DungeonRoomType == CitadelRoomType.TREASURE_ROOM)
+                if (room.CitadelRoomType == CitadelRoomType.GUARD_ROOM || room.CitadelRoomType == CitadelRoomType.TREASURE_ROOM)
                 {
                     //Create an amount of enemies - level doesn't matter, we'll regen later
                     gennedMap = gen.GenerateEnemies(gennedMap, random.Next(maxOwnedPopulation), ownerType, out roomEnemies, 10);
@@ -322,7 +322,7 @@ namespace DivineRightGame.LocalMapGenerator
                     enemies.AddRange(roomEnemies);
                 }
 
-                if (room.DungeonRoomType == CitadelRoomType.WILD_ROOM)
+                if (room.CitadelRoomType == CitadelRoomType.WILD_ROOM)
                 {
                     //Create an amount of wild enemies - let's get a random type for this room. This will be of level 5. Later we'll have proper wildlife
                     string type = ActorGeneration.GetEnemyType(false);
