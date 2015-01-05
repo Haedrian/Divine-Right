@@ -649,6 +649,7 @@ namespace DRObjects.Graphics
         SUMMONING_CIRCLE_OFF,
         TREASURE_CLOSED,
         TREASURE_EMPTY,
+        ALTAR_CURSED,
 
     }
 }

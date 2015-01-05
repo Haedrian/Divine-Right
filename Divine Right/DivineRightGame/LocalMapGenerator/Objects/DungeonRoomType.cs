@@ -14,11 +14,9 @@ namespace DivineRightGame.LocalMapGenerator.Objects
         EXIT,
         SUMMONING,
         TREASURE, //DONE
-        ARMOURY, 
-        /*EMPTY, 
-        ALTAR,
+        ARMOURY,
         DARK_TEMPLE,
-        POOL,
+        /*POOL,
         DESTROYED_CAMP,
         WISHING_WELL,
         POTIONS,
@@ -28,6 +26,9 @@ namespace DivineRightGame.LocalMapGenerator.Objects
         COMBAT_PIT,
         PRISON,
         TORTURE_CHAMBER,
-        MAP*/
+        MAP,
+        EMPTY,
+        ALTAR,
+         */
     }
 }

@@ -168,6 +168,7 @@
     <Compile Include="Items\Archetypes\Global\MapSiteItem.cs" />
     <Compile Include="Items\Archetypes\Global\Settlement.cs" />
     <Compile Include="Items\Archetypes\Global\SettlementItem.cs" />
+    <Compile Include="Items\Archetypes\Local\Altar.cs" />
     <Compile Include="Items\Archetypes\Local\ConsumableItem.cs" />
     <Compile Include="Items\Archetypes\Local\DungeonStairs.cs" />
     <Compile Include="Items\Archetypes\Local\InventoryItem.cs" />
