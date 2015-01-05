@@ -1150,6 +1150,15 @@ namespace Divine_Right.GameScreens
 
                         interfaceComponents.Add(tdc);
                     }
+                    else if (iop.InterfaceComponent == InternalActionEnum.OPEN_LOOT)
+                    {
+                        //Open Loot
+                        TreasureChest lootContainer = (iop.Argument as object[])[0] as TreasureChest;
+
+                        LootComponent lc = new LootComponent(100, 100, lootContainer);
+
+                        interfaceComponents.Add(lc);
+                    }
                 }
                 else if (feedback.GetType().Equals(typeof(CreateEventFeedback)))
                 {

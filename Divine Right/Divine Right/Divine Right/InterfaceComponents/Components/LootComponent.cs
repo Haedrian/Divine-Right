@@ -184,7 +184,7 @@ namespace Divine_Right.InterfaceComponents.Components
             locationX += deltaX;
             locationY += deltaY;
 
-            rect = new Rectangle(locationX, locationY, 250, 170);
+            rect = new Rectangle(locationX, locationY, 250, 140);
             borderRect = new Rectangle(locationX - 2, locationY - 2, rect.Width + 4, rect.Height + 4);
 
             objectNameRect = new Rectangle(locationX, locationY, rect.Width, 20);
@@ -192,7 +192,7 @@ namespace Divine_Right.InterfaceComponents.Components
 
             itemRectangles = new List<Rectangle>();
 
-            for(int i=0; i < 15; i++)
+            for(int i=0; i < 14; i++)
             {
                 Rectangle ir = new Rectangle(
                     locationX + 10 + (i % 7)*(30),
@@ -203,8 +203,8 @@ namespace Divine_Right.InterfaceComponents.Components
                 itemRectangles.Add(ir);
             }
 
-            descriptionRect = new Rectangle(locationX, locationY + 130, rect.Width, 20);
-            takeAllRect = new Rectangle(locationX, locationY + 150, rect.Width, 20);
+            descriptionRect = new Rectangle(locationX, locationY + 90, rect.Width, 20);
+            takeAllRect = new Rectangle(locationX, locationY + 120, rect.Width, 20);
         }
 
         public bool IsModal()

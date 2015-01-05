@@ -86,7 +86,7 @@ namespace DivineRightGame.ItemFactory.ItemFactoryManagers
         /// <summary>
         /// Fills a treasure chest as follows:
         /// 1. Pick a random category. Produce an item of that category costing between 1/5 and 3/3 of the remaining value
-        /// 2. Repeat 1 for 4 more times
+        /// 2. Repeat 1 for 6 more times
         /// 3. Done
         /// </summary>
         /// <param name="categories"></param>
@@ -96,7 +96,7 @@ namespace DivineRightGame.ItemFactory.ItemFactoryManagers
         {
             List<InventoryItem> items = new List<InventoryItem>();
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 7; i++)
             {
                 InventoryCategory cat = categories.GetRandom();
 
