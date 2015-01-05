@@ -358,7 +358,7 @@ namespace DivineRightGame.LocalMapGenerator
                         InventoryItemManager iim = new InventoryItemManager();
 
                         //Fill em up
-                        chest.Contents = iim.FillTreasureChest((InventoryCategory[])Enum.GetValues(typeof(InventoryCategory)), 1000 + (200 * level));
+                        chest.Contents = iim.FillTreasureChest((InventoryCategory[])Enum.GetValues(typeof(InventoryCategory)), 300 + (200 * level));
                     }
                 }
             }

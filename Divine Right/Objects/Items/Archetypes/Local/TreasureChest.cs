@@ -62,7 +62,7 @@ namespace DRObjects.Items.Archetypes.Local
 
         public override ActionType[] GetPossibleActions(Actor actor)
         {
-            if (actor.MapCharacter.Coordinate - this.Coordinate > 2)
+            if (actor.MapCharacter.Coordinate - this.Coordinate > 1 || this.Contents.Count == 0)
             {
                 return base.GetPossibleActions(actor);
             }
