@@ -100,7 +100,9 @@
     <Compile Include="ActorHandling\CharacterSheet\Enums\SkillType.cs" />
     <Compile Include="ActorHandling\CharacterSheet\IAnatomy.cs" />
     <Compile Include="ActorHandling\CharacterSheet\UndeadAnatomy.cs" />
+    <Compile Include="ActorHandling\Effect.cs" />
     <Compile Include="ActorHandling\EnemyData.cs" />
+    <Compile Include="ActorHandling\Enums\EffectName.cs" />
     <Compile Include="ActorHandling\Enums\Gender.cs" />
     <Compile Include="ActorHandling\EquippedItem.cs" />
     <Compile Include="ActorHandling\RaceData.cs" />
@@ -114,6 +116,7 @@
     <Compile Include="DataStructures\GroupedList.cs" />
     <Compile Include="DataStructures\PointSerializationSurrogate.cs" />
     <Compile Include="DataStructures\RectSerializationSurrogate.cs" />
+    <Compile Include="Deity\Enums\BlessingType.cs" />
     <Compile Include="Enums\Archetype.cs" />
     <Compile Include="Enums\ConsumableEffect.cs" />
     <Compile Include="Enums\EnemyThought.cs" />
