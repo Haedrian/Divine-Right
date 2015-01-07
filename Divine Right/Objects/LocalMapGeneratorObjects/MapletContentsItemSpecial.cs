@@ -12,10 +12,5 @@ namespace DRObjects.LocalMapGeneratorObjects
         : MapletContents
     {
         public string Type { get; set; }
-
-        /// <summary>
-        /// Any type-specific arguments
-        /// </summary>
-        public string Arguments { get; set; }
     }
 }

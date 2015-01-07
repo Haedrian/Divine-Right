@@ -7,6 +7,7 @@ using DRObjects.GraphicsEngineObjects;
 
 namespace DRObjects.ActorHandling
 {
+    [Serializable]
     /// <summary>
     /// Represents a temporary effect on a character.
     /// Will run out when "Minutes Left" runs out
@@ -16,6 +17,11 @@ namespace DRObjects.ActorHandling
         public EffectName Name { get; set; }
         public int EffectAmount { get; set; }
         public int MinutesLeft { get; set; }
+
+        /// <summary>
+        /// The actor which this effect pertains to
+        /// </summary>
+        public Actor Actor { get; set; }
 
         /// <summary>
         /// The Log Feedback to display when the effect disappears

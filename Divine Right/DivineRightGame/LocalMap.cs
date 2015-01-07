@@ -37,6 +37,11 @@ namespace DivineRightGame
         private Random random = new Random();
 
         /// <summary>
+        /// A list of active effects. This is here to make going through them easier.
+        /// </summary>
+        public List<Effect> ActiveEffects { get; set; }
+
+        /// <summary>
         /// Only used for serialisation and deserialisation
         /// </summary>
         private List<MapBlock> collapsedMap = new List<MapBlock>();
@@ -70,13 +75,9 @@ namespace DivineRightGame
             set
             {
                 _location = value;
-                
-                //Is the location a dungeon?
-                if (_location is Dungeon)
-                {
-                    //Then subscribe to the event
-                    GameState.MinuteValueChanged += Summon;
-                }
+
+                //Then subscribe to the event
+                GameState.MinuteValueChanged += MinuteChanged;
             }
         }
 
@@ -104,6 +105,7 @@ namespace DivineRightGame
             this.groundLevel = groundLevel;
             this.actors = new List<Actor>();
             this.IsUnderground = false;
+            this.ActiveEffects = new List<Effect>();
         }
 
         #endregion
@@ -209,48 +211,71 @@ namespace DivineRightGame
         }
 
         /// <summary>
-        /// Performs the summoning of creatures for Dungeons
+        /// Performs the summoning of creatures for Dungeons, as well as handles events
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void Summon(object sender,EventArgs e)
+        public void MinuteChanged(object sender, EventArgs e)
         {
-            Dungeon dungeon = this.Location as Dungeon;
-
-            int maximumActors = dungeon.DifficultyLevel * dungeon.Rooms.Count;
-
-            //How many actors do we have?
-            int activeActors = this.Actors.Count(a => a.IsActive && a.IsAlive);
-
-            if (maximumActors > activeActors)
+            //Have we got any effects to handle ?
+            for (int i = 0; i < this.ActiveEffects.Count; i++)
             {
-                //Plop him on the map, and make him wander into a particular room
-                var summoningCircle = dungeon.SummoningCircles.Where(sc => sc.IsSummoning && sc.IsActive).ToList().GetRandom();
+                var effect = this.ActiveEffects[i];
 
-                if (summoningCircle == null)
+                effect.MinutesLeft -= 1;
+
+                if (effect.MinutesLeft <= 0)
                 {
-                    return; //They're all disabled
+                    //Remove it!
+                    EffectsManager.RemoveEffect(effect);
+
+                    i--;
+
+                    //Display the message!
+                    GameState.NewLog.Add(effect.EffectDisappeared);
                 }
+            }
 
-                //Generate new actor
-                var gennedActor = ActorGeneration.CreateActor(OwningFactions.UNDEAD, 3 * dungeon.DifficultyLevel);
 
-                //Pick a room at random
-                Rectangle room = dungeon.Rooms.GetRandom();
+            if (this.Location is Dungeon)
+            {
+                Dungeon dungeon = this.Location as Dungeon;
 
-                gennedActor.MissionStack = new Stack<ActorMission>();
+                int maximumActors = dungeon.DifficultyLevel * dungeon.Rooms.Count;
 
-                gennedActor.MissionStack.Push(new WanderMission()
+                //How many actors do we have?
+                int activeActors = this.Actors.Count(a => a.IsActive && a.IsAlive);
+
+                if (maximumActors > activeActors)
                 {
-                    LoiterPercentage = 5,
-                    WanderPoint = new MapCoordinate(room.Center, MapType.LOCAL),
-                    WanderRectangle = room
-                });
+                    //Plop him on the map, and make him wander into a particular room
+                    var summoningCircle = dungeon.SummoningCircles.Where(sc => sc.IsSummoning && sc.IsActive).ToList().GetRandom();
 
-                this.Actors.Add(gennedActor);
+                    if (summoningCircle == null)
+                    {
+                        return; //They're all disabled
+                    }
 
-                //Put it on the block
-                this.GetBlockAtCoordinate(summoningCircle.Coordinate).PutItemOnBlock(gennedActor.MapCharacter);
+                    //Generate new actor
+                    var gennedActor = ActorGeneration.CreateActor(OwningFactions.UNDEAD, 3 * dungeon.DifficultyLevel);
+
+                    //Pick a room at random
+                    Rectangle room = dungeon.Rooms.GetRandom();
+
+                    gennedActor.MissionStack = new Stack<ActorMission>();
+
+                    gennedActor.MissionStack.Push(new WanderMission()
+                    {
+                        LoiterPercentage = 5,
+                        WanderPoint = new MapCoordinate(room.Center, MapType.LOCAL),
+                        WanderRectangle = room
+                    });
+
+                    this.Actors.Add(gennedActor);
+
+                    //Put it on the block
+                    this.GetBlockAtCoordinate(summoningCircle.Coordinate).PutItemOnBlock(gennedActor.MapCharacter);
+                }
             }
         }
 
@@ -269,7 +294,7 @@ namespace DivineRightGame
             {
                 for (int j = 0; j < localGameMap.GetLength(1); j++)
                 {
-                    
+
                     if (i < localGameMap.GetLength(0) - 1 && j < localGameMap.GetLength(1) - 1)
                     {
                         //Copyable - if it may contain items, put a weight of 1, otherwise an essagerated one
@@ -283,7 +308,7 @@ namespace DivineRightGame
                 }
             }
 
-                PathfinderInterface.Nodes = PathfindingMap;
+            PathfinderInterface.Nodes = PathfindingMap;
         }
 
         /// <summary>
@@ -372,6 +397,9 @@ namespace DivineRightGame
             Stream stream = new FileStream(GameState.SAVEPATH + uniqueGuid + ".dvd", FileMode.Open, FileAccess.Read, FileShare.Read);
             LocalMap obj = (LocalMap)formatter.Deserialize(stream);
             stream.Close();
+
+            //Clear the effects
+            obj.ActiveEffects = new List<Effect>();
 
             return obj;
         }

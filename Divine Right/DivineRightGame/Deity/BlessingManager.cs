@@ -26,10 +26,12 @@ namespace DivineRightGame.Deity
         /// Get a blessing for this particular actor, and apply it.
         /// </summary>
         /// <param name="actor"></param>
-        public Effect GetAndApplyBlessing(Actor actor, out LogFeedback logFeedback)
+        public static void GetAndApplyBlessing(Actor actor, out LogFeedback logFeedback)
         {
             //Determine how much skill they have
-            int effectiveSkill = ((int)actor.Attributes.Skills[SkillName.RITUALIST].SkillLevel) + actor.Attributes.Char - 5;
+            int effectiveSkill = actor.Attributes.GetSkill(SkillName.RITUALIST) + actor.Attributes.Char - 5;
+
+            effectiveSkill = effectiveSkill > 1 ? effectiveSkill : 1; //at least 1
 
             //Get a random number from 0 to effectiveskill * 2
             int randomNumber = GameState.Random.Next(0, effectiveSkill * 2);
@@ -46,28 +48,28 @@ namespace DivineRightGame.Deity
             //And your blessing is....
 
             BlessingType blessing = blessings[randomNumber];
-
+            
             //Now let's see what type of blessing it is
 
             InventoryItemManager iim = new InventoryItemManager();
 
-            Effect returnEffect = new Effect();
-
+            Effect effect = new Effect();
+            logFeedback = null;
             switch (blessing)
             {
                 case BlessingType.AGIL_1:
                     //Apply +1 agility for 4 times the effective skill
-                    returnEffect.EffectAmount = 1;
-                    returnEffect.Name = EffectName.AGIL;
-                    returnEffect.MinutesLeft = 4 * effectiveSkill;
-                    returnEffect.EffectDisappeared = new LogFeedback(InterfaceSpriteName.MOON, Color.DarkBlue, "The effect of the blessing disappears");
+                    effect.EffectAmount = 1;
+                    effect.Name = EffectName.AGIL;
+                    effect.MinutesLeft = 4 * effectiveSkill;
+                    effect.EffectDisappeared = new LogFeedback(InterfaceSpriteName.MOON, Color.DarkBlue, "The effect of the blessing disappears");
                     logFeedback = new LogFeedback(InterfaceSpriteName.SUN, Color.ForestGreen, "You feel different. Good different");
                     break;
                 case BlessingType.AGIL_2:
-                    returnEffect.EffectAmount = 2;
-                    returnEffect.Name = EffectName.AGIL;
-                    returnEffect.MinutesLeft = 4 * effectiveSkill;
-                    returnEffect.EffectDisappeared = new LogFeedback(InterfaceSpriteName.MOON, Color.DarkBlue, "The effect of the blessing disappears");
+                    effect.EffectAmount = 2;
+                    effect.Name = EffectName.AGIL;
+                    effect.MinutesLeft = 4 * effectiveSkill;
+                    effect.EffectDisappeared = new LogFeedback(InterfaceSpriteName.MOON, Color.DarkBlue, "The effect of the blessing disappears");
                     logFeedback = new LogFeedback(InterfaceSpriteName.SUN, Color.ForestGreen, "You feel different. Good different");
                     break;
                 case BlessingType.ARMOUR:
@@ -87,31 +89,31 @@ namespace DivineRightGame.Deity
                     }
                     break;
                 case BlessingType.BRAWN_1:
-                    returnEffect.EffectAmount = 1;
-                    returnEffect.Name = EffectName.BRAWN;
-                    returnEffect.MinutesLeft = 4 * effectiveSkill;
-                    returnEffect.EffectDisappeared = new LogFeedback(InterfaceSpriteName.MOON, Color.DarkBlue, "The effect of the blessing disappears");
+                    effect.EffectAmount = 1;
+                    effect.Name = EffectName.BRAWN;
+                    effect.MinutesLeft = 4 * effectiveSkill;
+                    effect.EffectDisappeared = new LogFeedback(InterfaceSpriteName.MOON, Color.DarkBlue, "The effect of the blessing disappears");
                     logFeedback = new LogFeedback(InterfaceSpriteName.SUN, Color.ForestGreen, "You feel different. Good different");
                     break;
                 case BlessingType.BRAWN_2:
-                    returnEffect.EffectAmount = 2;
-                    returnEffect.Name = EffectName.BRAWN;
-                    returnEffect.MinutesLeft = 4 * effectiveSkill;
-                    returnEffect.EffectDisappeared = new LogFeedback(InterfaceSpriteName.MOON, Color.DarkBlue, "The effect of the blessing disappears");
+                    effect.EffectAmount = 2;
+                    effect.Name = EffectName.BRAWN;
+                    effect.MinutesLeft = 4 * effectiveSkill;
+                    effect.EffectDisappeared = new LogFeedback(InterfaceSpriteName.MOON, Color.DarkBlue, "The effect of the blessing disappears");
                     logFeedback = new LogFeedback(InterfaceSpriteName.SUN, Color.ForestGreen, "You feel different. Good different");
                     break;
                 case BlessingType.CHAR_1:
-                    returnEffect.EffectAmount = 1;
-                    returnEffect.Name = EffectName.CHAR;
-                    returnEffect.MinutesLeft = 4 * effectiveSkill;
-                    returnEffect.EffectDisappeared = new LogFeedback(InterfaceSpriteName.MOON, Color.DarkBlue, "The effect of the blessing disappears");
+                    effect.EffectAmount = 1;
+                    effect.Name = EffectName.CHAR;
+                    effect.MinutesLeft = 4 * effectiveSkill;
+                    effect.EffectDisappeared = new LogFeedback(InterfaceSpriteName.MOON, Color.DarkBlue, "The effect of the blessing disappears");
                     logFeedback = new LogFeedback(InterfaceSpriteName.SUN, Color.ForestGreen, "You feel different. Good different");
                     break;
                 case BlessingType.CHAR_2:
-                    returnEffect.EffectAmount = 2;
-                    returnEffect.Name = EffectName.CHAR;
-                    returnEffect.MinutesLeft = 4 * effectiveSkill;
-                    returnEffect.EffectDisappeared = new LogFeedback(InterfaceSpriteName.MOON, Color.DarkBlue, "The effect of the blessing disappears");
+                    effect.EffectAmount = 2;
+                    effect.Name = EffectName.CHAR;
+                    effect.MinutesLeft = 4 * effectiveSkill;
+                    effect.EffectDisappeared = new LogFeedback(InterfaceSpriteName.MOON, Color.DarkBlue, "The effect of the blessing disappears");
                     logFeedback = new LogFeedback(InterfaceSpriteName.SUN, Color.ForestGreen, "You feel different. Good different");
                     break;
                 case BlessingType.DEFENCE:
@@ -147,17 +149,17 @@ namespace DivineRightGame.Deity
                     logFeedback = new LogFeedback(InterfaceSpriteName.SUN, Color.ForestGreen, "You feel your wounds knit together");
                     break;
                 case BlessingType.INTEL_1:
-                    returnEffect.EffectAmount = 1;
-                    returnEffect.Name = EffectName.INTEL;
-                    returnEffect.MinutesLeft = 4 * effectiveSkill;
-                    returnEffect.EffectDisappeared = new LogFeedback(InterfaceSpriteName.MOON, Color.DarkBlue, "The effect of the blessing disappears");
+                    effect.EffectAmount = 1;
+                    effect.Name = EffectName.INTEL;
+                    effect.MinutesLeft = 4 * effectiveSkill;
+                    effect.EffectDisappeared = new LogFeedback(InterfaceSpriteName.MOON, Color.DarkBlue, "The effect of the blessing disappears");
                     logFeedback = new LogFeedback(InterfaceSpriteName.SUN, Color.ForestGreen, "You feel different. Good different");
                     break;
                 case BlessingType.INTEL_2:
-                    returnEffect.EffectAmount = 2;
-                    returnEffect.Name = EffectName.INTEL;
-                    returnEffect.MinutesLeft = 4 * effectiveSkill;
-                    returnEffect.EffectDisappeared = new LogFeedback(InterfaceSpriteName.MOON, Color.DarkBlue, "The effect of the blessing disappears");
+                    effect.EffectAmount = 2;
+                    effect.Name = EffectName.INTEL;
+                    effect.MinutesLeft = 4 * effectiveSkill;
+                    effect.EffectDisappeared = new LogFeedback(InterfaceSpriteName.MOON, Color.DarkBlue, "The effect of the blessing disappears");
                     logFeedback = new LogFeedback(InterfaceSpriteName.SUN, Color.ForestGreen, "You feel different. Good different");
                     break;
                 case BlessingType.KILL:
@@ -190,17 +192,17 @@ namespace DivineRightGame.Deity
                     }
                     break;
                 case BlessingType.PERC_1:
-                    returnEffect.EffectAmount = 1;
-                    returnEffect.Name = EffectName.PERC;
-                    returnEffect.MinutesLeft = 4 * effectiveSkill;
-                    returnEffect.EffectDisappeared = new LogFeedback(InterfaceSpriteName.MOON, Color.DarkBlue, "The effect of the blessing disappears");
+                    effect.EffectAmount = 1;
+                    effect.Name = EffectName.PERC;
+                    effect.MinutesLeft = 4 * effectiveSkill;
+                    effect.EffectDisappeared = new LogFeedback(InterfaceSpriteName.MOON, Color.DarkBlue, "The effect of the blessing disappears");
                     logFeedback = new LogFeedback(InterfaceSpriteName.SUN, Color.ForestGreen, "You feel different. Good different");
                     break;
                 case BlessingType.PERC_2:
-                    returnEffect.EffectAmount = 2;
-                    returnEffect.Name = EffectName.PERC;
-                    returnEffect.MinutesLeft = 4 * effectiveSkill;
-                    returnEffect.EffectDisappeared = new LogFeedback(InterfaceSpriteName.MOON, Color.DarkBlue, "The effect of the blessing disappears");
+                    effect.EffectAmount = 2;
+                    effect.Name = EffectName.PERC;
+                    effect.MinutesLeft = 4 * effectiveSkill;
+                    effect.EffectDisappeared = new LogFeedback(InterfaceSpriteName.MOON, Color.DarkBlue, "The effect of the blessing disappears");
                     logFeedback = new LogFeedback(InterfaceSpriteName.SUN, Color.ForestGreen, "You feel different. Good different");
                     break;
                 case BlessingType.WEAPON:
@@ -220,8 +222,12 @@ namespace DivineRightGame.Deity
                     }
                     break;
             }
-            logFeedback = null;
-            return returnEffect;
+
+            if (effect != null)
+            {
+                //Apply it
+                EffectsManager.PerformEffect(actor, effect);
+            }
         }
 
     }

@@ -81,6 +81,7 @@
     <Compile Include="ActorHandling\ActorAIManager.cs" />
     <Compile Include="ActorHandling\ActorGeneration.cs" />
     <Compile Include="ActorHandling\AnimalGeneration.cs" />
+    <Compile Include="ActorHandling\EffectsManager.cs" />
     <Compile Include="CharacterCreation\CharacterCreation.cs" />
     <Compile Include="CivilisationHandling\CivilisationNameGenerator.cs" />
     <Compile Include="CombatHandling\AttackLocation.cs" />

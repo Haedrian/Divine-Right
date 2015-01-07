@@ -70,7 +70,7 @@ namespace Divine_Right.HelperFunctions
 
             for(int i=0; i < 21; i++)
             {
-                GameState.LocalMap.Summon(null,null); //Summon!
+                GameState.LocalMap.MinuteChanged(null,null); //Summon!
             }
 
             List<MapBlock> collapsedMap = new List<MapBlock>();

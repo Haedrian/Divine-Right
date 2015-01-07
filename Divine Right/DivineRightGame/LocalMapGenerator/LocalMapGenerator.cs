@@ -440,6 +440,8 @@ namespace DivineRightGame.LocalMapGenerator
                                             itemPlaced = new SummoningCircle(); break;
                                         case "TreasureChest":
                                             itemPlaced = new TreasureChest(); break;
+                                        case "Altar":
+                                            itemPlaced = new Altar(); break;
                                         default:
                                             throw new NotImplementedException("No code for " + (contents as MapletContentsItemSpecial).Type + " can be found");
                                     }

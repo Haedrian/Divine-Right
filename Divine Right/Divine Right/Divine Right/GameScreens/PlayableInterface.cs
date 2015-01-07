@@ -34,6 +34,8 @@ using DivineRightGame.CharacterCreation;
 using DRObjects.ActorHandling.CharacterSheet.Enums;
 using DRObjects.Items.Tiles.Global;
 using DivineRightGame.RayTracing;
+using DRObjects.Feedback;
+using DivineRightGame.Deity;
 
 namespace Divine_Right.GameScreens
 {
@@ -995,7 +997,7 @@ namespace Divine_Right.GameScreens
 
                 try
                 {
-                    SpriteData[] graphics =  new SpriteData[block.ItemGraphics.Length + block.ActorGraphics.Length];
+                    SpriteData[] graphics = new SpriteData[block.ItemGraphics.Length + block.ActorGraphics.Length];
                     block.ItemGraphics.CopyTo(graphics, 0);
                     block.ActorGraphics.CopyTo(graphics, block.ItemGraphics.Length);
 
@@ -1161,6 +1163,22 @@ namespace Divine_Right.GameScreens
                     interfaceComponents.Add(new DecisionPopupComponent(PlayableWidth / 2 - 150, PlayableHeight / 2 - 150, gameEvent));
 
                 }
+                else if (feedback.GetType().Equals(typeof(ReceiveBlessingFeedback)))
+                {
+                    ReceiveBlessingFeedback blessFeedback = feedback as ReceiveBlessingFeedback;
+
+                    LogFeedback lg = null;
+
+                    //Bless him!
+                    //Later we're going to want to do this properly so other characters can get blessed too
+                    BlessingManager.GetAndApplyBlessing(GameState.PlayerCharacter, out lg);
+
+                    if (lg != null)
+                    {
+                        //Log it
+                        GameState.NewLog.Add(lg);
+                    }
+                }
                 else if (feedback.GetType().Equals(typeof(LocationChangeFeedback)))
                 {
                     //Remove settlement button and interface
@@ -1203,34 +1221,6 @@ namespace Divine_Right.GameScreens
                         //If it's a bandit camp or a site, update the values of the members
                         if (GameState.LocalMap.Location as MapSite != null || GameState.LocalMap.Location as BanditCamp != null)
                         {
-                            ////Count the amount of actors which aren't the player character or animals and update the counts
-                            //TO USE LATER ON WHEN WE WANT A SCOUTING REPORT
-
-                            //int warriors = 0;
-                            //int civilians = 0;
-                            //int priests = 0;
-
-                            //foreach (var actor in GameState.LocalMap.Actors)
-                            //{
-                            //    if (actor.EnemyData != null)
-                            //    {
-                            //        var prof = actor.EnemyData.Profession;
-
-                            //        if (prof == ActorProfession.MERCHANT || prof == ActorProfession.RICH || prof == ActorProfession.WORKER)
-                            //        {
-                            //            civilians++;
-                            //        }
-                            //        else if (prof == ActorProfession.WARRIOR)
-                            //        {
-                            //            warriors++;
-                            //        }
-                            //        else if (prof == ActorProfession.PRIEST)
-                            //        {
-                            //            priests++;
-                            //        }
-                            //    }
-                            //}
-
                             if (GameState.LocalMap.Location as BanditCamp != null)
                             {
                                 var banditCamp = GameState.LocalMap.Location as BanditCamp;

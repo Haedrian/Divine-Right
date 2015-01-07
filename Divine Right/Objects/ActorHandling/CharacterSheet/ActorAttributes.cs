@@ -228,6 +228,16 @@ namespace DRObjects.ActorHandling
             }
         }
 
+        /// <summary>
+        /// Gets the total integer amount of skill points
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public int GetSkill(SkillName name)
+        {
+            return this.Skills.ContainsKey(name) ? (int) this.Skills[name].SkillLevel : 0;
+        }
+
         #endregion
     }
 }

@@ -154,5 +154,11 @@ namespace DRObjects.Items.Archetypes.Local
             }
         }
 
+        public Altar()
+        {
+            IsCursed = true;
+            IsUsed = false;
+        }
+
     }
 }

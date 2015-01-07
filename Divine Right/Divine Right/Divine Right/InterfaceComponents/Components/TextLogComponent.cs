@@ -123,6 +123,11 @@ namespace Divine_Right.InterfaceComponents.Components
             {
                 var item = feedback[i];
 
+                if (item == null)
+                {
+                    continue;
+                }
+
                 //Put the text in, and see how much space its going to take
 
                 Vector2 v2 = font.MeasureString(item.Text);

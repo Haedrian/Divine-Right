@@ -15,7 +15,7 @@ namespace DivineRightGame.LocalMapGenerator.Objects
         SUMMONING,
         TREASURE, //DONE
         ARMOURY,
-        DARK_TEMPLE,
+       // DARK_TEMPLE,
         /*POOL,
         DESTROYED_CAMP,
         WISHING_WELL,

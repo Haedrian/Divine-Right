@@ -18,6 +18,7 @@ using DRObjects.Items.Archetypes.Local;
 using DRObjects.Graphics;
 using System.Threading;
 using DRObjects.Items.Tiles.Global;
+using DRObjects.ActorHandling;
 
 namespace DivineRightGame
 {
