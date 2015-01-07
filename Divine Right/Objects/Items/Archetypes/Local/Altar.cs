@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DRObjects.Feedback;
 
 namespace DRObjects.Items.Archetypes.Local
 {
@@ -143,8 +144,9 @@ namespace DRObjects.Items.Archetypes.Local
             }
             else if (actionType == ActionType.PRAY)
             {
-                throw new NotImplementedException();
-                //TODO: PICK ONE OF A NUMBER OF NICE BONUSES!
+                this.IsUsed = true;
+                //Since it's out of the scope, we'll handle it somewhere else
+                return new ActionFeedback[] { new ReceiveBlessingFeedback() };
             }
             else
             {
