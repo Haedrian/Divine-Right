@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Divine RightUserInterface", "Divine Right\Divine Right\Divine RightUserInterface.csproj", "{4E7E3298-060C-49EE-8B96-817B1E3320F4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Divine RightContent", "Divine Right\Divine RightContent\Divine RightContent.contentproj", "{50AD8372-5211-46FA-8CA1-A09F4CB9446D}"
