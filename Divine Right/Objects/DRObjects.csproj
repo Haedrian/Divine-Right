@@ -328,6 +328,9 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Maplets\Underground\PoolRoom.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Maplets\Underground\ExitRoom.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -343,6 +346,7 @@
     </Content>
     <Content Include="Maplets\Underground\TempleRoom.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Maplets\Underground\TreasureRoom.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

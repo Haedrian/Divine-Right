@@ -1,0 +1,11 @@
+﻿<Maplet MapletName="Room with Pool" SizeX="12" SizeY="12" Walled="false">
+  <MapletContents>
+    <MapletContentsMaplet Position="Middle" MaxAmount="1" ProbabilityPercentage="100">
+      <MapletTag Tag="pool" />
+    </MapletContentsMaplet>
+    <MapletContentsMaplet Position="Middle" MaxAmount="3" ProbabilityPercentage="75">
+      <MapletTag Tag="pool" />
+    </MapletContentsMaplet>
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="5" ProbabilityPercentage="74" Tag="dungeon decoration"/>
+  </MapletContents>
+</Maplet>

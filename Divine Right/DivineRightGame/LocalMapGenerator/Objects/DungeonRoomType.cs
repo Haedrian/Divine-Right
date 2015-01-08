@@ -16,8 +16,8 @@ namespace DivineRightGame.LocalMapGenerator.Objects
         TREASURE, //DONE
         ARMOURY,
         TEMPLE,
-        /*POOL,
-        DESTROYED_CAMP,
+        POOL,
+        /*DESTROYED_CAMP,
         WISHING_WELL,
         POTIONS,
         LIBRARY,
