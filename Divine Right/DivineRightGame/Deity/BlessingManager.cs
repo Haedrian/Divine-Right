@@ -133,7 +133,10 @@ namespace DivineRightGame.Deity
                     {
                         for (int y = 0; y < GameState.LocalMap.localGameMap.GetLength(1); y++)
                         {
-                            GameState.LocalMap.localGameMap[x, y, 0].WasVisited = true;
+                            if (GameState.LocalMap.localGameMap[x, y, 0] != null)
+                            {
+                                GameState.LocalMap.localGameMap[x, y, 0].WasVisited = true;
+                            }
                         }
                     }
                     logFeedback = new LogFeedback(InterfaceSpriteName.SUN, Color.ForestGreen, "You have been granted knowledge on the structure of this level");
