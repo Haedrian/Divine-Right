@@ -632,6 +632,10 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.ALTAR_CURSED] = new SpriteData(DUNGEON, new Rectangle(0, 350, 50, 50));
             localSprites[(int)LocalSpriteName.ALTAR_USED] = new SpriteData(DUNGEON, new Rectangle(50, 350, 50, 50));
 
+            localSprites[(int)LocalSpriteName.BLOOD_1] = new SpriteData(DUNGEON, new Rectangle(100, 350, 50, 50));
+            localSprites[(int)LocalSpriteName.BLOOD_2] = new SpriteData(DUNGEON, new Rectangle(150, 350, 50, 50));
+            localSprites[(int)LocalSpriteName.BLOOD_3] = new SpriteData(DUNGEON, new Rectangle(200, 350, 50, 50));
+
             localSprites[(int)LocalSpriteName.ENEMY_SKELETON] = new SpriteData(ENEMIES, new Rectangle(0, 0, 50, 50));
             localSprites[(int)LocalSpriteName.ENEMY_ORC_CIV] = new SpriteData(ENEMIES, new Rectangle(50, 0, 50, 50));
 

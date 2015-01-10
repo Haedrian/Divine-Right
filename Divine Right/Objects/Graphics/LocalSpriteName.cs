@@ -651,6 +651,9 @@ namespace DRObjects.Graphics
         TREASURE_EMPTY,
         ALTAR_CURSED,
         ALTAR_USED,
+        BLOOD_1,
+        BLOOD_2,
+        BLOOD_3,
 
     }
 }

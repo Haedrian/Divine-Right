@@ -2,6 +2,7 @@
   <MapletContents>
     <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="74" Tag="dungeon decoration"/>
     <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="3" ProbabilityPercentage="74" Tag="bones"/>
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="4" ProbabilityPercentage="74" Tag="blood"/>
     <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="74" Tag="container"/>
     <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="74" Tag="food"/>
     <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="3" ProbabilityPercentage="73" Tag="bedroll"/>
