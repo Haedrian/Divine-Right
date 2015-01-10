@@ -1179,6 +1179,29 @@ namespace Divine_Right.GameScreens
                         GameState.NewLog.Add(lg);
                     }
                 }
+                else if (feedback.GetType().Equals(typeof(ReceiveItemFeedback)))
+                {
+                    ReceiveItemFeedback receiveFeedback = feedback as ReceiveItemFeedback;
+
+                    //Determine which item we're going to generate
+                    InventoryItemManager iim = new InventoryItemManager();
+
+                    InventoryItem itm = iim.GetBestCanAfford(receiveFeedback.Category.ToString(), receiveFeedback.MaxValue);
+
+                    if (itm != null)
+                    {
+                        itm.InInventory = true;
+
+                        GameState.PlayerCharacter.Inventory.Inventory.Add(itm.Category, itm);
+
+                        GameState.NewLog.Add(new LogFeedback(InterfaceSpriteName.SUN, Color.DarkGreen, "You throw in your offering. You then see something glimmer and take it out"));
+                    }
+                    else
+                    {
+                        GameState.NewLog.Add(new LogFeedback(InterfaceSpriteName.MOON, Color.DarkBlue, "You throw in your offering. Nothing appears to be there. Hmm..."));
+                    }
+
+                }
                 else if (feedback.GetType().Equals(typeof(LocationChangeFeedback)))
                 {
                     //Remove settlement button and interface

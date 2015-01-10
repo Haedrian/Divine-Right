@@ -101,5 +101,6 @@ Resources\SiteData\SiteData.json
 App.config
 Maplets.sdf
 Maplets\Dungeons\TempleRoom.xml
+Maplets\Underground\WishingWellRoom.xml
 Maplets\Underground\TempleRoom.xml
 Maplets\GeneralStore.xml
