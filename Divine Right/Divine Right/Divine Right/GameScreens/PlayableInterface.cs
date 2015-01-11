@@ -446,7 +446,6 @@ namespace Divine_Right.GameScreens
                         if (destroy)
                         {
                             interfaceComponents.RemoveAt(i);
-                            i++; //increment by 1
                         }
 
                         if (keyHandled)
