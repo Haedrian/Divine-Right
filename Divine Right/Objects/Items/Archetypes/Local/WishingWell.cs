@@ -104,16 +104,19 @@ namespace DRObjects.Items.Archetypes.Local
                 if (actor.Inventory.TotalMoney > 10)
                 {
                     actions.Add(ActionType.TOSS_IN_10_COINS);
+                    actor.Inventory.TotalMoney -= 10;
                 }
 
                 if (actor.Inventory.TotalMoney > 50)
                 {
                     actions.Add(ActionType.TOSS_IN_50_COINS);
+                    actor.Inventory.TotalMoney -= 50;
                 }
 
                 if (actor.Inventory.TotalMoney > 100)
                 {
                     actions.Add(ActionType.TOSS_IN_100_COINS);
+                    actor.Inventory.TotalMoney -= 100;
                 }
 
                 return actions.ToArray();
