@@ -820,6 +820,26 @@ namespace DRObjects.Graphics
 
             AddLocalSprite(LocalSpriteName.COINS, INVENTORYITEMS, 0, 4);
 
+            AddLocalSprite(LocalSpriteName.POTION_BRAWN,INVENTORYITEMS,0,9);
+            AddLocalSprite(LocalSpriteName.POTION_CHARISMA, INVENTORYITEMS, 1, 9);
+            AddLocalSprite(LocalSpriteName.POTION_AGIL, INVENTORYITEMS, 2, 9);
+            AddLocalSprite(LocalSpriteName.POTION_PERC, INVENTORYITEMS, 3, 9);
+            AddLocalSprite(LocalSpriteName.POTION_INTEL, INVENTORYITEMS, 4, 9);
+            AddLocalSprite(LocalSpriteName.POTION_UNKNOWN, INVENTORYITEMS, 5, 9);
+
+            AddLocalSprite(LocalSpriteName.POTION_HEAL, INVENTORYITEMS, 0, 10);
+            AddLocalSprite(LocalSpriteName.POTION_ARMOUR, INVENTORYITEMS, 1, 10);
+            AddLocalSprite(LocalSpriteName.POTION_ATTACK, INVENTORYITEMS, 2, 10);
+            AddLocalSprite(LocalSpriteName.POTION_DEFEND, INVENTORYITEMS, 3, 10);
+            AddLocalSprite(LocalSpriteName.POTION_FEED, INVENTORYITEMS, 4, 10);
+
+            AddLocalSprite(LocalSpriteName.POTION_FIRE, INVENTORYITEMS, 0, 11);
+            AddLocalSprite(LocalSpriteName.POTION_ICE, INVENTORYITEMS, 1, 11);
+            AddLocalSprite(LocalSpriteName.POTION_POISON, INVENTORYITEMS, 2, 11);
+            AddLocalSprite(LocalSpriteName.POTION_BLEED, INVENTORYITEMS, 3, 11);
+            AddLocalSprite(LocalSpriteName.POTION_PARALYSE, INVENTORYITEMS, 4, 11);
+            AddLocalSprite(LocalSpriteName.POTION_BLIND, INVENTORYITEMS, 5, 11);
+
             interfaceSprites[(int)InterfaceSpriteName.SCROLL] = new SpriteData(@"Graphics/Interface/scrollsandblocks", new Rectangle(224, 190, 96, 34));
             interfaceSprites[(int)InterfaceSpriteName.PAPER_TEXTURE] = new SpriteData(@"Graphics/Interface/paperTexture");
             interfaceSprites[(int)InterfaceSpriteName.WOOD_TEXTURE] = new SpriteData(@"Graphics/Interface/woodTexture");

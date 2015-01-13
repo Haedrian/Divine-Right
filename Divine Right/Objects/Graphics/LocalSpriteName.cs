@@ -654,6 +654,23 @@ namespace DRObjects.Graphics
         BLOOD_1,
         BLOOD_2,
         BLOOD_3,
+        POTION_BRAWN,
+        POTION_CHARISMA,
+        POTION_AGIL,
+        POTION_PERC,
+        POTION_INTEL,
+        POTION_UNKNOWN,
+        POTION_FEED,
+        POTION_DEFEND,
+        POTION_ATTACK,
+        POTION_HEAL,
+        POTION_ARMOUR,
+        POTION_BLIND,
+        POTION_BLEED,
+        POTION_PARALYSE,
+        POTION_FIRE,
+        POTION_ICE,
+        POTION_POISON,
 
     }
 }
