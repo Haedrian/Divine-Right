@@ -33,7 +33,7 @@ namespace Divine_Right.InterfaceComponents.Components
 
         private SpriteFont font;
 
-        public LootComponent(int locationX, int locationY,TreasureChest treasureChest)
+        public LootComponent(int locationX, int locationY, TreasureChest treasureChest)
         {
             this.treasureChest = treasureChest;
             this.locationX = locationX;
@@ -58,7 +58,7 @@ namespace Divine_Right.InterfaceComponents.Components
 
             batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.CLOSE), crossRect, Color.White);
 
-            for (int i = 0; i < itemRectangles.Count; i++ )
+            for (int i = 0; i < itemRectangles.Count; i++)
             {
                 Rectangle r = itemRectangles[i];
 
@@ -86,21 +86,33 @@ namespace Divine_Right.InterfaceComponents.Components
             destroy = false;
             internalActionType = null;
             item = null;
-            
 
-            if (this.crossRect.Contains(x,y))
+
+            if (this.crossRect.Contains(x, y))
             {
                 //close it
                 destroy = true;
                 return true;
             }
 
-            if (this.takeAllRect.Contains(x,y))
+            if (this.takeAllRect.Contains(x, y))
             {
                 //Take it, take it all!
-                foreach(var i in this.treasureChest.Contents)
+                foreach (var i in this.treasureChest.Contents)
                 {
-                    GameState.PlayerCharacter.Inventory.Inventory.Add(i.Category, i);
+                    //Do we have an item with the same name in the inventory?
+                    var oldItem = GameState.PlayerCharacter.Inventory.Inventory.GetObjectsByGroup(i.Category).Where(g => g.Name.Equals(i.Name)).FirstOrDefault();
+
+                    if (oldItem != null)
+                    {
+                        //Instead we increment the total in that item in the inventory
+                        oldItem.TotalAmount++;
+                    }
+                    else
+                    {
+                        GameState.PlayerCharacter.Inventory.Inventory.Add(i.Category, i);
+                    }
+
                 }
                 //Remove them
                 this.treasureChest.Contents = new List<InventoryItem>();
@@ -135,18 +147,18 @@ namespace Divine_Right.InterfaceComponents.Components
                 }
             }
 
-  
+
             return true;
-       
+
         }
 
         public void HandleMouseOver(int x, int y)
         {
             descriptionShown = String.Empty;
 
-            for(int i=0; i < this.itemRectangles.Count; i++)
+            for (int i = 0; i < this.itemRectangles.Count; i++)
             {
-                if (this.itemRectangles[i].Contains(x,y))
+                if (this.itemRectangles[i].Contains(x, y))
                 {
                     //Overlap! Put in the description
 
@@ -192,11 +204,11 @@ namespace Divine_Right.InterfaceComponents.Components
 
             itemRectangles = new List<Rectangle>();
 
-            for(int i=0; i < 14; i++)
+            for (int i = 0; i < 14; i++)
             {
                 Rectangle ir = new Rectangle(
-                    locationX + 10 + (i % 7)*(30),
-                    locationY + 30 + (((int)i/7)*30),
+                    locationX + 10 + (i % 7) * (30),
+                    locationY + 30 + (((int)i / 7) * 30),
                     30,
                     30);
 
