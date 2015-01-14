@@ -98,7 +98,6 @@ namespace Divine_Right.HelperFunctions
             GameState.PlayerCharacter = new Actor();
             GameState.PlayerCharacter.MapCharacter = player;
             GameState.PlayerCharacter.IsPlayerCharacter = true;
-            GameState.PlayerCharacter.LineOfSight = 8;
 
             GameState.PlayerCharacter.Attributes = ActorGeneration.GenerateAttributes("human", DRObjects.ActorHandling.CharacterSheet.Enums.ActorProfession.WARRIOR, 10, GameState.PlayerCharacter);
             GameState.PlayerCharacter.Anatomy = ActorGeneration.GenerateAnatomy("human");

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DivineRightGame.CombatHandling;
 
 namespace DivineRightGame.ActorHandling
 {
@@ -27,6 +28,8 @@ namespace DivineRightGame.ActorHandling
                 case EffectName.CHAR: actor.Attributes.TempChar = actor.Attributes.TempChar ?? 0 + effect.EffectAmount; break;
                 case EffectName.INTEL: actor.Attributes.TempIntel = actor.Attributes.TempIntel ?? 0 + effect.EffectAmount; break;
                 case EffectName.PERC: actor.Attributes.TempPerc = actor.Attributes.TempPerc ?? 0 + effect.EffectAmount; break;
+                case EffectName.BLIND: actor.Attributes.TempPerc = (actor.Attributes.TempPerc ?? 0) - effect.EffectAmount; break;
+                case EffectName.HEAL: HealthCheckManager.HealCharacter(actor, 5); break;
             }
 
             effect.Actor = actor;
@@ -48,6 +51,8 @@ namespace DivineRightGame.ActorHandling
                 case EffectName.CHAR: effect.Actor.Attributes.TempChar -= effect.EffectAmount; break;
                 case EffectName.INTEL: effect.Actor.Attributes.TempIntel -= effect.EffectAmount; break;
                 case EffectName.PERC: effect.Actor.Attributes.TempPerc -= effect.EffectAmount; break;
+                case EffectName.BLIND: effect.Actor.Attributes.TempPerc += effect.EffectAmount; break;
+                case EffectName.HEAL: break;
             }
 
             GameState.LocalMap.ActiveEffects.Remove(effect);

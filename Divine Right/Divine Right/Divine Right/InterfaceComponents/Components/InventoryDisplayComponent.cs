@@ -101,6 +101,9 @@ namespace Divine_Right.InterfaceComponents.Components
                     case InventoryCategory.SUPPLY:
                         sprite = SpriteManager.GetSprite(LocalSpriteName.MEAT);
                         break;
+                    case InventoryCategory.POTION:
+                        sprite = SpriteManager.GetSprite(InterfaceSpriteName.POTION_ICON);
+                        break;
                     default:
                         throw new NotImplementedException("No code for that particular inventory category");
                 }

@@ -833,6 +833,8 @@ namespace DRObjects.Graphics
             AddLocalSprite(LocalSpriteName.POTION_DEFEND, INVENTORYITEMS, 3, 10);
             AddLocalSprite(LocalSpriteName.POTION_FEED, INVENTORYITEMS, 4, 10);
 
+            interfaceSprites[(int)InterfaceSpriteName.POTION_ICON] = new SpriteData(INVENTORYITEMS, new Rectangle(5 * 50, 10 * 50, 50, 50));
+
             AddLocalSprite(LocalSpriteName.POTION_FIRE, INVENTORYITEMS, 0, 11);
             AddLocalSprite(LocalSpriteName.POTION_ICE, INVENTORYITEMS, 1, 11);
             AddLocalSprite(LocalSpriteName.POTION_POISON, INVENTORYITEMS, 2, 11);

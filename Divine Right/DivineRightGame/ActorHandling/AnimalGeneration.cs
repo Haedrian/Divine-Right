@@ -97,7 +97,6 @@ namespace DivineRightGame.ActorHandling
             actor.IsDomesticatedAnimal = data.Domesticated;
             actor.IsPlayerCharacter = false;
             actor.IsStunned = false;
-            actor.LineOfSight = data.LineOfSight;
             actor.Name = data.Name;
             actor.UnarmedDamageDice = data.DamageDice;
             actor.UniqueId = Guid.NewGuid();

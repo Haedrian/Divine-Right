@@ -140,7 +140,9 @@ namespace DivineRightGame.ActorHandling
                 actor.IsDomesticatedAnimal = false;
                 actor.IsPlayerCharacter = false;
                 actor.IsStunned = false;
-                actor.LineOfSight = Int32.Parse(chosen[9]);
+
+                //For fixing LoS
+                actor.Attributes.Perc= Int32.Parse(chosen[9])-2;
 
                 actor.Name = ActorNameGenerator.CanGenerateName(chosen[5]) ? ActorNameGenerator.GenerateName(chosen[5], actor.Gender) : chosen[1];
 
@@ -201,7 +203,6 @@ namespace DivineRightGame.ActorHandling
                 mc.InternalName = chosen[2];
                 mc.IsActive = true;
                 mc.IsStunned = false;
-                mc.LineOfSightRange = actor.LineOfSight.Value;
                 mc.MayContainItems = false;
                 mc.Name = actor.Name;
                 mc.OwnedBy = owner;
@@ -315,7 +316,7 @@ namespace DivineRightGame.ActorHandling
                 actor.IsDomesticatedAnimal = false;
                 actor.IsPlayerCharacter = false;
                 actor.IsStunned = false;
-                actor.LineOfSight = Int32.Parse(chosen[9]);
+                actor.Attributes.Perc = Int32.Parse(chosen[9]) - 2;
 
                 actor.Name = ActorNameGenerator.CanGenerateName(chosen[5]) ? ActorNameGenerator.GenerateName(chosen[5], actor.Gender) : chosen[1];
 
@@ -376,7 +377,7 @@ namespace DivineRightGame.ActorHandling
                 mc.InternalName = chosen[2];
                 mc.IsActive = true;
                 mc.IsStunned = false;
-                mc.LineOfSightRange = actor.LineOfSight.Value;
+                //mc.LineOfSightRange = actor.LineOfSight.Value;
                 mc.MayContainItems = false;
                 mc.Name = actor.Name;
                 mc.OwnedBy = owner;
@@ -445,7 +446,7 @@ namespace DivineRightGame.ActorHandling
             DRObjects.Actor actor = new DRObjects.Actor();
             actor.EnemyData = data;
             actor.IsPlayerCharacter = false;
-            actor.LineOfSight = data.EnemyLineOfSight;
+           // actor.LineOfSight = data.EnemyLineOfSight;
             actor.UniqueId = Guid.NewGuid();
             actor.IsAggressive = aggressivity > 0;
             actor.Gender = (Gender)Enum.Parse(typeof(Gender), selected[12]);

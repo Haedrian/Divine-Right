@@ -29,6 +29,11 @@ namespace DRObjects
         /// </summary>
         public Gender Gender { get; set; }
 
+        /// <summary>
+        /// The Knowledge that this actor possesses
+        /// </summary>
+        public ActorKnowledge Knowledge { get; set; }
+
         public ActorInventory Inventory { get; set; }
         /// <summary>
         /// If its an enemy, holds some auxillary data
@@ -82,7 +87,13 @@ namespace DRObjects
         /// <summary>
         /// How many tiles the actor can see. Null means they're blind
         /// </summary>
-        public int? LineOfSight { get; set; }
+        public int LineOfSight
+        {
+            get
+            {
+                return TotalPerc + 2;
+            }
+        }
 
         /// <summary>
         /// A unique ID for determining which Actors are which
@@ -174,6 +185,7 @@ namespace DRObjects
             this.FeedingLevel = Enums.FeedingLevel.STUFFED;
             this.IsProne = false;
             this.SiteMember = false;
+            this.Knowledge = new ActorKnowledge(this);
         }
 
     }

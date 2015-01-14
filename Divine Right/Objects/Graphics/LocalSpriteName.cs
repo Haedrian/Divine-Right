@@ -671,6 +671,5 @@ namespace DRObjects.Graphics
         POTION_FIRE,
         POTION_ICE,
         POTION_POISON,
-
     }
 }

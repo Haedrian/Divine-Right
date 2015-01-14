@@ -17,6 +17,7 @@ using DRObjects.Items.Archetypes.Local;
 using DivineRightGame.ItemFactory.ItemFactoryManagers;
 using DRObjects.DataStructures;
 using DRObjects.Items.Archetypes;
+using DRObjects.Extensions;
 
 namespace DivineRightGame.LocalMapGenerator
 {
@@ -444,6 +445,11 @@ namespace DivineRightGame.LocalMapGenerator
                                             itemPlaced = new Altar(); break;
                                         case "WishingWell":
                                             itemPlaced = new WishingWell(); break;
+                                        case "Potion":
+                                            var potionType = (PotionType[]) Enum.GetValues(typeof(PotionType));
+                                            var potion = potionType.GetRandom();
+                                            itemPlaced = new Potion(potion);
+                                            break;
                                         default:
                                             throw new NotImplementedException("No code for " + (contents as MapletContentsItemSpecial).Type + " can be found");
                                     }

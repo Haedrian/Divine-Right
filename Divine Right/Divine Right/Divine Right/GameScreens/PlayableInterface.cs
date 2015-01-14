@@ -1357,7 +1357,7 @@ namespace Divine_Right.GameScreens
                     VisitedBlockFeedback vbf = feedback as VisitedBlockFeedback;
 
                     //Visit a region equal to the line of sight of the player character - 
-                    var blocks = GameState.LocalMap.GetBlocksAroundPoint(vbf.Coordinate, GameState.PlayerCharacter.LineOfSight ?? 0);
+                    var blocks = GameState.LocalMap.GetBlocksAroundPoint(vbf.Coordinate, GameState.PlayerCharacter.LineOfSight);
 
                     //Only do the ones which can be ray traced
                     foreach (var block in RayTracingHelper.RayTraceForExploration(blocks, GameState.PlayerCharacter.MapCharacter.Coordinate))

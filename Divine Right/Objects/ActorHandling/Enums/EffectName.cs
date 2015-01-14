@@ -11,6 +11,8 @@ namespace DRObjects.ActorHandling.Enums
         AGIL,
         CHAR,
         PERC,
-        INTEL
+        INTEL,
+        BLIND,
+        HEAL
     }
 }

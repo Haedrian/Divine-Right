@@ -99,6 +99,8 @@
     <Compile Include="ActorHandling\CharacterSheet\ActorSkill.cs" />
     <Compile Include="ActorHandling\CharacterSheet\Enums\SkillType.cs" />
     <Compile Include="ActorHandling\CharacterSheet\IAnatomy.cs" />
+    <Compile Include="ActorHandling\CharacterSheet\ActorKnowledge.cs" />
+    <Compile Include="ActorHandling\CharacterSheet\Knowledge\PotionIdentification.cs" />
     <Compile Include="ActorHandling\CharacterSheet\UndeadAnatomy.cs" />
     <Compile Include="ActorHandling\Effect.cs" />
     <Compile Include="ActorHandling\EnemyData.cs" />
@@ -130,6 +132,7 @@
     <Compile Include="Enums\MapType.cs" />
     <Compile Include="Enums\OwningFactions.cs" />
     <Compile Include="Enums\PointOfInterestType.cs" />
+    <Compile Include="Enums\PotionType.cs" />
     <Compile Include="Enums\SettlementType.cs" />
     <Compile Include="Enums\SiteType.cs" />
     <Compile Include="Enums\TravelMethod.cs" />
@@ -147,6 +150,7 @@
     <Compile Include="Feedback\InterfaceToggleFeedback.cs" />
     <Compile Include="Feedback\LocationChangeFeedback.cs" />
     <Compile Include="Feedback\ReceiveBlessingFeedback.cs" />
+    <Compile Include="Feedback\ReceiveEffectFeedback.cs" />
     <Compile Include="Feedback\ReceiveItemFeedback.cs" />
     <Compile Include="Feedback\TextFeedback.cs" />
     <Compile Include="Feedback\TimePassFeedback.cs" />
@@ -179,6 +183,7 @@
     <Compile Include="Items\Archetypes\Local\InventoryItem.cs" />
     <Compile Include="Items\Archetypes\Local\LeaveTownItem.cs" />
     <Compile Include="Items\Archetypes\Local\LocalCharacter.cs" />
+    <Compile Include="Items\Archetypes\Local\Potion.cs" />
     <Compile Include="Items\Archetypes\Local\ToggleItem.cs" />
     <Compile Include="Items\Archetypes\Local\TreasureChest.cs" />
     <Compile Include="Items\Archetypes\Local\SummoningCircle.cs" />
