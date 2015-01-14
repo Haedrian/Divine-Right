@@ -91,7 +91,7 @@ namespace DRObjects
         {
             get
             {
-                return TotalPerc + 2;
+                return this.Attributes.Perc;
             }
         }
 

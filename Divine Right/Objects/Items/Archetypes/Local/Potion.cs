@@ -232,7 +232,7 @@ namespace DRObjects.Items.Archetypes.Local
                         {
                             Effect effect = new Effect();
                             effect.Actor = actor;
-                            effect.EffectAmount = 5;
+                            effect.EffectAmount = 10;
                             effect.MinutesLeft = 3;
                             effect.Name = EffectName.BLIND;
                             effect.EffectDisappeared = new LogFeedback(InterfaceSpriteName.POTION_ICON, Color.Blue, "You can see again");

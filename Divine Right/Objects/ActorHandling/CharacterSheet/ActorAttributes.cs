@@ -64,7 +64,7 @@ namespace DRObjects.ActorHandling
         public int Brawn { get { int total = (TempBrawn ?? 0) + (int)((double)brawn * Health.RightArm / Health.RightArmMax); return total > 1 ? total : 1; } set { brawn = value; } }
         public int Char { get { int total = (TempChar ?? 0) + (int)((double)charisma * Health.RightArm / Health.RightArmMax); return total > 1 ? total : 1; } set { charisma = value; } }
         public int Agil { get { int total = (TempAgil ?? 0) + (int)((double)agil * Health.Legs / Health.LegsMax); return total > 1 ? total : 1; } set { agil = value; } }
-        public int Perc { get { int total = perc + (TempPerc ?? 0); return total > 1 ? total : 1; } set { perc = value; } }
+        public int Perc { get { int total = perc + (TempPerc ?? 0); return total > 0 ? total : 0; } set { perc = value; } }
         public int Intel { get { int total = intel + (TempIntel ?? 0); return total > 1 ? total : 1; } set { intel = value; } }
 
         public int? TempBrawn { get; set; }

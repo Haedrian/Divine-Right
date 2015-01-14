@@ -1162,6 +1162,12 @@ namespace Divine_Right.GameScreens
                     interfaceComponents.Add(new DecisionPopupComponent(PlayableWidth / 2 - 150, PlayableHeight / 2 - 150, gameEvent));
 
                 }
+                else if (feedback.GetType().Equals(typeof(ReceiveEffectFeedback)))
+                {
+                    ReceiveEffectFeedback recFeed = feedback as ReceiveEffectFeedback;
+
+                    EffectsManager.PerformEffect(recFeed.Effect.Actor, recFeed.Effect);
+                }
                 else if (feedback.GetType().Equals(typeof(ReceiveBlessingFeedback)))
                 {
                     ReceiveBlessingFeedback blessFeedback = feedback as ReceiveBlessingFeedback;
