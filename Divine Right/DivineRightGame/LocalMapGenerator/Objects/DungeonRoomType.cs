@@ -29,6 +29,7 @@ namespace DivineRightGame.LocalMapGenerator.Objects
         MAP,
         EMPTY,
         ALTAR,
+        THRONE
          */
     }
 }
