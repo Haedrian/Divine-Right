@@ -1,0 +1,16 @@
+﻿<Maplet MapletName="TreasureRoom" SizeX="0" SizeY="0" Walled="false" Tiled="false">
+  <MapletContents>
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="5" ProbabilityPercentage="74" Tag="dungeon decoration"/>
+    <MapletContentsItemTag Position="Middle" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="74" Tag="alchemy table"/>
+    <MapletContentsItemTag Position="Sides" Category="mundaneitems" MaxAmount="3" ProbabilityPercentage="74" Tag="alchemy cabinet"/>
+    <MapletContentsItemSpecial Type="Potion" Position="Middle" MaxAmount="3" ProbabilityPercentage="75"  />
+    
+    <MapletContentsMaplet Position="Middle" MaxAmount="1" ProbabilityPercentage="100" >
+      <Maplet name="" Tiled="true" TileTag="soil" SizeX ="2" SizeY="2" Walled="false" WindowProbability="0">
+        <MapletContents>
+          <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="4" ProbabilityPercentage="74" Tag="alchemy plants"/>
+        </MapletContents>
+      </Maplet>
+    </MapletContentsMaplet>
+  </MapletContents>
+</Maplet>

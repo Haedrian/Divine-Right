@@ -636,6 +636,25 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.BLOOD_2] = new SpriteData(DUNGEON, new Rectangle(150, 350, 50, 50));
             localSprites[(int)LocalSpriteName.BLOOD_3] = new SpriteData(DUNGEON, new Rectangle(200, 350, 50, 50));
 
+            localSprites[(int)LocalSpriteName.ALCHEMY_TABLE1] = new SpriteData(DUNGEON, new Rectangle(250, 350, 50, 50));
+            localSprites[(int)LocalSpriteName.ALCHEMY_TABLE2] = new SpriteData(DUNGEON, new Rectangle(300, 350, 50, 50));
+            localSprites[(int)LocalSpriteName.ALCHEMY_TABLE3] = new SpriteData(DUNGEON, new Rectangle(350, 350, 50, 50));
+            localSprites[(int)LocalSpriteName.ALCHEMY_TABLE4] = new SpriteData(DUNGEON, new Rectangle(0, 400, 50, 50));
+
+            localSprites[(int)LocalSpriteName.ALCHEMY_CABINET1] = new SpriteData(DUNGEON, new Rectangle(400, 350, 50, 50));
+            localSprites[(int)LocalSpriteName.ALCHEMY_CABINET2] = new SpriteData(DUNGEON, new Rectangle(450, 350, 50, 50));
+
+            localSprites[(int)LocalSpriteName.JAR_STORE1] = new SpriteData(DUNGEON, new Rectangle(50, 400, 50, 50));
+            localSprites[(int)LocalSpriteName.JAR_STORE2] = new SpriteData(DUNGEON, new Rectangle(100, 400, 50, 50));
+
+            localSprites[(int)LocalSpriteName.UNDERGROUND_PLANT1] = new SpriteData(DUNGEON, new Rectangle(150, 400, 50, 50));
+            localSprites[(int)LocalSpriteName.UNDERGROUND_PLANT2] = new SpriteData(DUNGEON, new Rectangle(200, 400, 50, 50));
+            localSprites[(int)LocalSpriteName.UNDERGROUND_PLANT3] = new SpriteData(DUNGEON, new Rectangle(250, 400, 50, 50));
+            localSprites[(int)LocalSpriteName.UNDERGROUND_PLANT4] = new SpriteData(DUNGEON, new Rectangle(300, 400, 50, 50));
+            localSprites[(int)LocalSpriteName.UNDERGROUND_PLANT5] = new SpriteData(DUNGEON, new Rectangle(350, 400, 50, 50));
+            localSprites[(int)LocalSpriteName.UNDERGROUND_PLANT6] = new SpriteData(DUNGEON, new Rectangle(400, 400, 50, 50));
+            localSprites[(int)LocalSpriteName.UNDERGROUND_PLANT7] = new SpriteData(DUNGEON, new Rectangle(450, 400, 50, 50));
+
             localSprites[(int)LocalSpriteName.ENEMY_SKELETON] = new SpriteData(ENEMIES, new Rectangle(0, 0, 50, 50));
             localSprites[(int)LocalSpriteName.ENEMY_ORC_CIV] = new SpriteData(ENEMIES, new Rectangle(50, 0, 50, 50));
 

@@ -335,6 +335,9 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Maplets\Underground\AlchemyRoom.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Maplets\Underground\PoolRoom.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

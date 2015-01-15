@@ -2,6 +2,5 @@
   <MapletContents>
     <MapletContentsItemSpecial Type="StairsUp" Position="Middle" MaxAmount="1" ProbabilityPercentage="100"  />
     <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="10" ProbabilityPercentage="68" Tag="dungeon decoration"/>
-    <MapletContentsItemSpecial Type="Potion" Position="Middle" MaxAmount="10" ProbabilityPercentage="75"  />
   </MapletContents>
 </Maplet>
