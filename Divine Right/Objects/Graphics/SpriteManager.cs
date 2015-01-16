@@ -658,6 +658,13 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.CAGE] = new SpriteData(DUNGEON, new Rectangle(100, 450, 50, 50));
             localSprites[(int)LocalSpriteName.PRISON_WALL] = new SpriteData(DUNGEON, new Rectangle(150, 450, 50, 50));
 
+            localSprites[(int)LocalSpriteName.HEADSTONE_1] = new SpriteData(DUNGEON, new Rectangle(200, 450, 50, 50));
+            localSprites[(int)LocalSpriteName.HEADSTONE_2] = new SpriteData(DUNGEON, new Rectangle(250, 450, 50, 50));
+            localSprites[(int)LocalSpriteName.HEADSTONE_3] = new SpriteData(DUNGEON, new Rectangle(300, 450, 50, 50));
+            localSprites[(int)LocalSpriteName.HEADSTONE_4] = new SpriteData(DUNGEON, new Rectangle(350, 450, 50, 50));
+            localSprites[(int)LocalSpriteName.HEADSTONE_5] = new SpriteData(DUNGEON, new Rectangle(400, 450, 50, 50));
+            localSprites[(int)LocalSpriteName.HEADSTONE_6] = new SpriteData(DUNGEON, new Rectangle(450, 450, 50, 50));
+
             localSprites[(int)LocalSpriteName.ENEMY_SKELETON] = new SpriteData(ENEMIES, new Rectangle(0, 0, 50, 50));
             localSprites[(int)LocalSpriteName.ENEMY_ORC_CIV] = new SpriteData(ENEMIES, new Rectangle(50, 0, 50, 50));
 

@@ -688,5 +688,11 @@ namespace DRObjects.Graphics
         UNDERGROUND_PLANT1,
         CAGE,
         PRISON_WALL,
+        HEADSTONE_6,
+        HEADSTONE_5,
+        HEADSTONE_4,
+        HEADSTONE_3,
+        HEADSTONE_2,
+        HEADSTONE_1,
     }
 }
