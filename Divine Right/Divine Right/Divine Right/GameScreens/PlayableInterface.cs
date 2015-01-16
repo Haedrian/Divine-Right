@@ -302,6 +302,9 @@ namespace Divine_Right.GameScreens
             else
             {
                 TestFunctions.GenerateDungeon();
+
+                //Give him random stats so he won't completly suck
+                CharacterCreation.ProcessParameters(CharacterCreation.GenerateRandom());
             }
 
             //Add the health control
