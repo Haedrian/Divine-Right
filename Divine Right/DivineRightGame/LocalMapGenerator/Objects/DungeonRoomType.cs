@@ -21,14 +21,12 @@ namespace DivineRightGame.LocalMapGenerator.Objects
         WISHING_WELL,   
         ALCHEMY,
         LIBRARY,
-        /*CRYPT,
-        ABANDONED_FARM,
         COMBAT_PIT,
-        PRISON,
-        TORTURE_CHAMBER,
-        EMPTY,
-        ALTAR,
-        THRONE
-         */
+        //CRYPT,
+        //ABANDONED_FARM,
+        //PRISON,
+        //TORTURE_CHAMBER,
+        //EMPTY,
+        //THRONE
     }
 }
