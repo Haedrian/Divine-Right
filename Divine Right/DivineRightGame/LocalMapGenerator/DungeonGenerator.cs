@@ -26,8 +26,8 @@ namespace DivineRightGame.LocalMapGenerator
         private const int AREA = SIZE * SIZE;
         private const int MINIMUM_AREA = 25;
 
-        private const int MINIMUM_EDGE = 6;
-        private const int MAXIMUM_EDGE = 15;
+        private const int MINIMUM_EDGE = 8;
+        private const int MAXIMUM_EDGE = 12;
 
         public static MapBlock[,] GenerateDungeonLevel(int level, int percentCovered, out MapCoordinate startPoint, out List<Actor> enemies, out Dungeon dungeon)
         {
