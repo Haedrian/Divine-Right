@@ -98,6 +98,7 @@ Maplets\Dungeons\SleepingRoom.xml
 Maplets\Dungeons\SmithingRoom.xml
 Maplets\Stables.xml
 Maplets\HuntingLodge.xml
+Maplets\Underground\Crypt.xml
 Maplets\Underground\PrisonRoom.xml
 Maplets\Underground\AbandonedFarmRoom.xml
 Maplets\Underground\CombatPit.xml

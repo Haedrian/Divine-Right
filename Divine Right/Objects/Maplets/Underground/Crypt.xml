@@ -1,0 +1,15 @@
+﻿<Maplet MapletName="TreasureRoom" SizeX="0" SizeY="0" Walled="false" Tiled="true" TileTag="soil">
+  <MapletContents>
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="5" ProbabilityPercentage="74" Tag="dungeon decoration"/>
+    
+    <MapletContentsMaplet Position="Anywhere" MaxAmount="3"  ProbabilityPercentage="70">
+      <Maplet Tiled="false" SizeX="5" SizeY="3" Walled="false" >
+        <MapletContents>
+          <MapletContentsItemTag Position="Middle" Category="mundaneitems" MaxAmount="5" ProbabilityPercentage="70" Tag="headstone"/>
+        </MapletContents>
+      </Maplet>
+    </MapletContentsMaplet>
+    
+
+  </MapletContents>
+</Maplet>

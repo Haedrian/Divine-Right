@@ -22,7 +22,7 @@ namespace DivineRightGame.LocalMapGenerator.Objects
         ALCHEMY,
         LIBRARY,
         COMBAT_PIT,
-        //CRYPT,
+        CRYPT,
         ABANDONED_FARM,
         PRISON,
         //TORTURE_CHAMBER,
