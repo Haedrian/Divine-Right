@@ -655,6 +655,9 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.UNDERGROUND_PLANT6] = new SpriteData(DUNGEON, new Rectangle(400, 400, 50, 50));
             localSprites[(int)LocalSpriteName.UNDERGROUND_PLANT7] = new SpriteData(DUNGEON, new Rectangle(450, 400, 50, 50));
 
+            localSprites[(int)LocalSpriteName.CAGE] = new SpriteData(DUNGEON, new Rectangle(100, 450, 50, 50));
+            localSprites[(int)LocalSpriteName.PRISON_WALL] = new SpriteData(DUNGEON, new Rectangle(150, 450, 50, 50));
+
             localSprites[(int)LocalSpriteName.ENEMY_SKELETON] = new SpriteData(ENEMIES, new Rectangle(0, 0, 50, 50));
             localSprites[(int)LocalSpriteName.ENEMY_ORC_CIV] = new SpriteData(ENEMIES, new Rectangle(50, 0, 50, 50));
 
