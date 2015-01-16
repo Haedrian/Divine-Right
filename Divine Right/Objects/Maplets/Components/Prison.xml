@@ -1,0 +1,38 @@
+﻿<Maplet MapletName="Prison" SizeX="5" SizeY="5" Tiled="true" TileTag="Pavement" Walled="false">
+  <MapletContents>
+
+    <MapletContentsItemTag Position="Middle" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="99" Tag="hay"/>
+    <MapletContentsItemTag Position="Middle" Category="mundaneitems" MaxAmount="3" ProbabilityPercentage="75" Tag="blood"/>
+    <MapletContentsItemTag Position="Middle" Category="mundaneitems" MaxAmount="3" ProbabilityPercentage="75" Tag="bones"/>
+
+    <!-- Top -->
+    <MapletContentsItemTag Position="Fixed" x="0" y="4" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="prison bars"/>
+    <MapletContentsItemTag Position="Fixed" x="1" y="4" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="prison bars"/>
+    <!--<MapletContentsItemTag Position="Fixed" x="2" y="4" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="prison bars"/>-->
+    <MapletContentsItemTag Position="Fixed" x="3" y="4" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="prison bars"/>
+    <MapletContentsItemTag Position="Fixed" x="4" y="4" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="prison bars"/>
+
+    <!-- Bottom -->
+
+    <MapletContentsItemTag Position="Fixed" x="0" y="0" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="prison bars"/>
+    <MapletContentsItemTag Position="Fixed" x="1" y="0" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="prison bars"/>
+    <MapletContentsItemTag Position="Fixed" x="2" y="0" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="prison bars"/>
+    <MapletContentsItemTag Position="Fixed" x="3" y="0" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="prison bars"/>
+    <MapletContentsItemTag Position="Fixed" x="4" y="0" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="prison bars"/>
+
+    <!-- Left -->
+    <MapletContentsItemTag Position="Fixed" x="0" y="1" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="prison bars"/>
+    <MapletContentsItemTag Position="Fixed" x="0" y="2" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="prison bars"/>
+    <MapletContentsItemTag Position="Fixed" x="0" y="3" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="prison bars"/>
+    <MapletContentsItemTag Position="Fixed" x="0" y="4" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="prison bars"/>
+    <MapletContentsItemTag Position="Fixed" x="0" y="5" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="prison bars"/>
+
+    <!-- Right -->
+    <MapletContentsItemTag Position="Fixed" x="4" y="0" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="prison bars"/>
+    <MapletContentsItemTag Position="Fixed" x="4" y="1" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="prison bars"/>
+    <MapletContentsItemTag Position="Fixed" x="4" y="2" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="prison bars"/>
+    <MapletContentsItemTag Position="Fixed" x="4" y="3" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="prison bars"/>
+    <MapletContentsItemTag Position="Fixed" x="4" y="4" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="101" Tag="prison bars"/>
+
+  </MapletContents>
+</Maplet>

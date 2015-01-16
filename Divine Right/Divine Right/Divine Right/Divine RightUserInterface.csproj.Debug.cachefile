@@ -72,6 +72,7 @@ Maplets\Camp\LootArea.xml
 Maplets\Camp\SleepingArea.xml
 Maplets\Camp\WeaponsArea.xml
 Maplets\Components\AnimalPaddock.xml
+Maplets\Components\Prison.xml
 Maplets\Components\HorsePaddock.xml
 Maplets\Components\FishingBoat.xml
 Maplets\Components\LargeBedroom.xml
@@ -97,6 +98,7 @@ Maplets\Dungeons\SleepingRoom.xml
 Maplets\Dungeons\SmithingRoom.xml
 Maplets\Stables.xml
 Maplets\HuntingLodge.xml
+Maplets\Underground\PrisonRoom.xml
 Maplets\Underground\AbandonedFarmRoom.xml
 Maplets\Underground\CombatPit.xml
 Maplets\Underground\LibraryRoom.xml

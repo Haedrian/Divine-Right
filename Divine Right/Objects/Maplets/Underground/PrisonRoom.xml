@@ -1,0 +1,11 @@
+﻿<Maplet MapletName="Prison Room" SizeX="0" SizeY="0" Walled="false" Tiled="false">
+  <MapletContents>
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="5" ProbabilityPercentage="74" Tag="dungeon decoration"/>
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="74" Tag="container"/>
+
+    <MapletContentsMaplet Position="Middle" FirstFit="false" MaxAmount="1" ProbabilityPercentage="101">
+      <MapletTag Tag="prison area" />
+    </MapletContentsMaplet>
+    
+  </MapletContents>
+</Maplet>

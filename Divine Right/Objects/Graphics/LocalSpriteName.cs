@@ -686,5 +686,7 @@ namespace DRObjects.Graphics
         UNDERGROUND_PLANT3,
         UNDERGROUND_PLANT2,
         UNDERGROUND_PLANT1,
+        CAGE,
+        PRISON_WALL,
     }
 }
