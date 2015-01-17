@@ -694,5 +694,11 @@ namespace DRObjects.Graphics
         HEADSTONE_3,
         HEADSTONE_2,
         HEADSTONE_1,
+        RACK_LR_R,
+        RACK_LR_L,
+        RACK_TB_T,
+        RACK_TB_B,
+        GUILLOTINE_T,
+        GUILLOTINE_B,
     }
 }

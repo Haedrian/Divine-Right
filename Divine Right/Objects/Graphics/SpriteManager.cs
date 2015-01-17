@@ -665,6 +665,15 @@ namespace DRObjects.Graphics
             localSprites[(int)LocalSpriteName.HEADSTONE_5] = new SpriteData(DUNGEON, new Rectangle(400, 450, 50, 50));
             localSprites[(int)LocalSpriteName.HEADSTONE_6] = new SpriteData(DUNGEON, new Rectangle(450, 450, 50, 50));
 
+            localSprites[(int)LocalSpriteName.RACK_LR_L] = new SpriteData(DUNGEON, new Rectangle(0, 500, 50, 50));
+            localSprites[(int)LocalSpriteName.RACK_LR_R] = new SpriteData(DUNGEON, new Rectangle(50, 500, 50, 50));
+
+            localSprites[(int)LocalSpriteName.RACK_TB_T] = new SpriteData(DUNGEON, new Rectangle(100, 500, 50, 50));
+            localSprites[(int)LocalSpriteName.RACK_TB_B] = new SpriteData(DUNGEON, new Rectangle(100, 550, 50, 50));
+
+            localSprites[(int)LocalSpriteName.GUILLOTINE_T] = new SpriteData(DUNGEON, new Rectangle(150, 500, 50, 50));
+            localSprites[(int)LocalSpriteName.GUILLOTINE_B] = new SpriteData(DUNGEON, new Rectangle(150, 550, 50, 50));
+
             localSprites[(int)LocalSpriteName.ENEMY_SKELETON] = new SpriteData(ENEMIES, new Rectangle(0, 0, 50, 50));
             localSprites[(int)LocalSpriteName.ENEMY_ORC_CIV] = new SpriteData(ENEMIES, new Rectangle(50, 0, 50, 50));
 
