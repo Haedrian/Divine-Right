@@ -1,0 +1,6 @@
+﻿<Maplet MapletName="Guillotine" SizeX="1" SizeY="2" Tiled="false" Walled="false">
+  <MapletContents>
+    <MapletContentsItemTag Position="Fixed" x="0" y="1" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="guillotinet"/>
+    <MapletContentsItemTag Position="Fixed" x="0" y="0" Category="mundaneitems" MaxAmount="1" ProbabilityPercentage="100" Tag="guillotineb"/>
+  </MapletContents>
+</Maplet>
