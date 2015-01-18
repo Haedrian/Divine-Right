@@ -101,12 +101,15 @@ namespace DivineRightGame.LocalMapGenerator
 
             roomTypes.Remove(DungeonRoomType.ENTRANCE);
             roomTypes.Remove(DungeonRoomType.EXIT);
-            //TODO: LATER MAKE 'EMPTY' ROOM MORE PROBABLE
+            
+            for(int i=0; i < 7; i++)
+            {
+                roomTypes.Add(DungeonRoomType.EMPTY);
+            }
 
-            //Make 4/5ths of the rectangles into rooms
-            int roomsToFill = (unusedRectangles.Count / 5) * 4;
+            //Make the remaining rectangles into rooms
 
-            for (int i = 0; i < roomsToFill; i++)
+            while (unusedRectangles.Count > 0)
             {
                 //Pick a room type at random
                 PutRoom(map, tileID, level, roomTypes.GetRandom(), unusedRectangles.Pop(), out dummyCircle);
