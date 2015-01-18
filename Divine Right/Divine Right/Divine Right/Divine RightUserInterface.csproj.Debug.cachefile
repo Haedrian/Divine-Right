@@ -71,6 +71,7 @@ Maplets\Camp\CampMaplet.xml
 Maplets\Camp\LootArea.xml
 Maplets\Camp\SleepingArea.xml
 Maplets\Camp\WeaponsArea.xml
+Maplets\Components\Guillotine.xml
 Maplets\Components\AnimalPaddock.xml
 Maplets\Components\Prison.xml
 Maplets\Components\HorsePaddock.xml
