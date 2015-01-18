@@ -25,7 +25,7 @@ namespace DivineRightGame.LocalMapGenerator.Objects
         CRYPT,
         ABANDONED_FARM,
         PRISON,
-        //TORTURE_CHAMBER,
+        TORTURE_CHAMBER,
         //EMPTY,
         //THRONE
     }

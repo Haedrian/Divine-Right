@@ -1,0 +1,13 @@
+﻿<Maplet MapletName="TreasureRoom" SizeX="0" SizeY="0" Walled="false" Tiled="false">
+  <MapletContents>
+    <MapletContentsMaplet Position="Middle" MaxAmount="4" ProbabilityPercentage="75">
+      <MapletTag Tag="torture"/>
+    </MapletContentsMaplet>
+
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="68" Tag="bones"/>
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="68" Tag="blood"/>
+
+    <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="6" ProbabilityPercentage="68" Tag="restraints"/>
+    
+  </MapletContents>
+</Maplet>

@@ -71,6 +71,8 @@ Maplets\Camp\CampMaplet.xml
 Maplets\Camp\LootArea.xml
 Maplets\Camp\SleepingArea.xml
 Maplets\Camp\WeaponsArea.xml
+Maplets\Components\RackLR.xml
+Maplets\Components\RackTB.xml
 Maplets\Components\Guillotine.xml
 Maplets\Components\AnimalPaddock.xml
 Maplets\Components\Prison.xml
@@ -99,6 +101,7 @@ Maplets\Dungeons\SleepingRoom.xml
 Maplets\Dungeons\SmithingRoom.xml
 Maplets\Stables.xml
 Maplets\HuntingLodge.xml
+Maplets\Underground\TortureRoom.xml
 Maplets\Underground\Crypt.xml
 Maplets\Underground\PrisonRoom.xml
 Maplets\Underground\AbandonedFarmRoom.xml
