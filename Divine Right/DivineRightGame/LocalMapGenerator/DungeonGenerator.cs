@@ -29,10 +29,10 @@ namespace DivineRightGame.LocalMapGenerator
         private const int MINIMUM_EDGE = 8;
         private const int MAXIMUM_EDGE = 12;
 
-        public static MapBlock[,] GenerateDungeonLevel(int level, int percentCovered, out MapCoordinate startPoint, out List<Actor> enemies, out Dungeon dungeon)
+        public static MapBlock[,] GenerateDungeonLevel(int level, int percentCovered, out MapCoordinate startPoint, out Actor[] enemies, out Dungeon dungeon)
         {
             startPoint = new MapCoordinate();
-            enemies = new List<Actor>();
+            List<Actor> ens = new List<Actor>();
             List<Rectangle> rectangles = null;
             Stack<Rectangle> unusedRectangles = null;
             ItemFactory.ItemFactory fact = new ItemFactory.ItemFactory();
@@ -120,6 +120,7 @@ namespace DivineRightGame.LocalMapGenerator
             dungeon.DifficultyLevel = level;
             dungeon.Rooms = rectangles;
             dungeon.SummoningCircles = summoningCircles;
+            enemies = ens.ToArray();
 
             return map;
         }

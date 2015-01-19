@@ -54,7 +54,7 @@ namespace Divine_Right.HelperFunctions
         public static void GenerateDungeon()
         {
             MapCoordinate start = null;
-            List<Actor> actors = null;
+            Actor[] actors = null;
             List<PointOfInterest> pointsOfInterest = null;
 
             string getOwner = ActorGeneration.GetEnemyType(true);

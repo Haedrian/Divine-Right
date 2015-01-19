@@ -145,6 +145,7 @@
     <Compile Include="Feedback\Abstract\ActionFeedback.cs" />
     <Compile Include="Feedback\CreateEventFeedback.cs" />
     <Compile Include="Feedback\CurrentLogFeedback.cs" />
+    <Compile Include="Feedback\DescendDungeonFeedback.cs" />
     <Compile Include="Feedback\DropItemFeedback.cs" />
     <Compile Include="Feedback\GraphicalBlock.cs" />
     <Compile Include="Feedback\InterfaceToggleFeedback.cs" />

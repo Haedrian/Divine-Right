@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DRObjects.Enums;
+using DRObjects.Feedback;
 using DRObjects.Graphics;
+using DRObjects.GraphicsEngineObjects;
+using DRObjects.GraphicsEngineObjects.Abstract;
 
 namespace DRObjects.Items.Archetypes.Local
 {
@@ -75,6 +78,20 @@ namespace DRObjects.Items.Archetypes.Local
             }
 
             return actions.ToArray();
+        }
+
+        public override GraphicsEngineObjects.Abstract.ActionFeedback[] PerformAction(ActionType actionType, Actor actor, object[] args)
+        {
+            if (actionType == ActionType.ASCEND_TO_SURFACE)
+            {
+                return new ActionFeedback[] { new LocationChangeFeedback() { VisitMainMap = true } };
+            }
+            else if (actionType == ActionType.DESCEND)
+            {
+                return new ActionFeedback[] { new DescendDungeonFeedback() };
+            }
+
+            return base.PerformAction(actionType, actor, args);
         }
 
         public override string Description

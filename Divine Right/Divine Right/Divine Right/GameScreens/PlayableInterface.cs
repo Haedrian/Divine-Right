@@ -1374,6 +1374,14 @@ namespace Divine_Right.GameScreens
                         block.WasVisited = true;
                     }
                 }
+                else if (feedback.GetType().Equals(typeof(DescendDungeonFeedback)))
+                {
+                    DescendDungeonFeedback ddf = feedback as DescendDungeonFeedback;
+
+                    (GameState.LocalMap.Location as Dungeon).DifficultyLevel ++;
+
+                    this.LoadLocation(GameState.LocalMap.Location, true);
+                }
 
             }
 
@@ -1478,9 +1486,10 @@ namespace Divine_Right.GameScreens
         /// Load the location
         /// </summary>
         /// <param name="location"></param>
-        private void LoadLocation(Location location)
+        /// <param name="forceRegenerate">If set to true, will regenerate the item anyway</param>
+        private void LoadLocation(Location location,bool forceRegenerate = false)
         {
-            if (LocalMap.MapGenerated(location.UniqueGUID))
+            if (LocalMap.MapGenerated(location.UniqueGUID) && !forceRegenerate)
             {
                 //Reload the map
                 var savedMap = LocalMap.DeserialiseLocalMap(location.UniqueGUID);
@@ -1597,6 +1606,14 @@ namespace Divine_Right.GameScreens
                     actors = settlementActors.ToArray();
                     startPoint = sp.Coordinate;
                 }
+                else if (location is Dungeon)
+                {
+                    Dungeon dungeon = null;
+
+                    gennedMap = DungeonGenerator.GenerateDungeonLevel((location as Dungeon).DifficultyLevel, 80, out startPoint, out actors, out dungeon);
+
+                    GameState.LocalMap.Location = dungeon;
+                }
 
                 GameState.LocalMap = new LocalMap(gennedMap.GetLength(0), gennedMap.GetLength(1), 1, 0);
                 GameState.LocalMap.Actors = new List<Actor>();
@@ -1618,6 +1635,8 @@ namespace Divine_Right.GameScreens
                 GameState.LocalMap.Actors.Add(GameState.PlayerCharacter);
                 GameState.LocalMap.PointsOfInterest = pointsOfInterest;
                 GameState.LocalMap.Location = location;
+
+                GameState.LocalMap.IsUnderground = (location is Dungeon);
             }
         }
         #endregion
