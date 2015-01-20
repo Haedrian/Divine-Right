@@ -7,6 +7,7 @@ using DRObjects.Items.Archetypes.Local;
 
 namespace DRObjects.GraphicsEngineObjects
 {
+    [Serializable]
     public class DropItemFeedback:
         ActionFeedback
     {

@@ -8,6 +8,7 @@ namespace DRObjects.GraphicsEngineObjects.Abstract
     /// <summary>
     /// Represents some sort of feedback sent to a player
     /// </summary>
+    [Serializable]
     public abstract class ActionFeedback
     {
     }

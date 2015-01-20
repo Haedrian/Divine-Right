@@ -1496,7 +1496,9 @@ namespace Divine_Right.GameScreens
 
                 GameState.LocalMap = new LocalMap(savedMap.localGameMap.GetLength(0), savedMap.localGameMap.GetLength(1), 1, 0);
 
-                GameState.LocalMap.Location = location;
+                GameState.LocalMap.Location = savedMap.Location;
+
+                //GameState.LocalMap.Location = location;
 
                 if (GameState.LocalMap.Location is MapSite && (GameState.LocalMap.Location as MapSite).SiteData.MapRegenerationRequired)
                 {
@@ -1567,7 +1569,7 @@ namespace Divine_Right.GameScreens
                 GameState.PlayerCharacter.MapCharacter.Coordinate = playerActor.MapCharacter.Coordinate;
                 GameState.PlayerCharacter.MapCharacter = playerActor.MapCharacter;
 
-                GameState.LocalMap.Location = location;
+                //GameState.LocalMap.Location = location;
             }
             else
             {

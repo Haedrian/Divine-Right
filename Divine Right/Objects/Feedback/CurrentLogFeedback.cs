@@ -10,6 +10,7 @@ namespace DRObjects.GraphicsEngineObjects
     /// <summary>
     /// Represents Text which is shown on the player's current log. Has an icon to differentiate the types
     /// </summary>
+    [Serializable]
     public class LogFeedback:
         Abstract.ActionFeedback
     {
