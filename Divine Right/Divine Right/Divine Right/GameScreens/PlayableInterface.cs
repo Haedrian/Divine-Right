@@ -1612,7 +1612,7 @@ namespace Divine_Right.GameScreens
 
                     gennedMap = DungeonGenerator.GenerateDungeonLevel((location as Dungeon).DifficultyLevel, 80, out startPoint, out actors, out dungeon);
 
-                    GameState.LocalMap.Location = dungeon;
+                    location = dungeon;
                 }
 
                 GameState.LocalMap = new LocalMap(gennedMap.GetLength(0), gennedMap.GetLength(1), 1, 0);
@@ -1637,6 +1637,15 @@ namespace Divine_Right.GameScreens
                 GameState.LocalMap.Location = location;
 
                 GameState.LocalMap.IsUnderground = (location is Dungeon);
+
+                if (location is Dungeon) //Spawn at least 10 enemies
+                {
+                    for (int i = 0; i < 10; i++)
+                    {
+                        GameState.LocalMap.MinuteChanged(null, null); //Summon!
+                    }
+                }
+
             }
         }
         #endregion

@@ -12,6 +12,7 @@ using DRObjects.Feedback;
 
 namespace DRObjects.Items.Archetypes.Local
 {
+    [Serializable]
     public class Altar
         : MapItem
     {

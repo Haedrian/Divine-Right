@@ -7,6 +7,7 @@ using DRObjects.Items.Archetypes.Local;
 
 namespace DRObjects.ActorHandling.CharacterSheet
 {
+    [Serializable]
     /// <summary>
     /// Represents the set of what the character knows
     /// </summary>

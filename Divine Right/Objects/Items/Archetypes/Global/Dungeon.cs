@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace DRObjects.Items.Archetypes.Global
 {
+    [Serializable]
     /// <summary>
     /// Contains some details about the Dungeon Level
     /// </summary>

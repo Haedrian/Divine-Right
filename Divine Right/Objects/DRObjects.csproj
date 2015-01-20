@@ -172,6 +172,7 @@
     <Compile Include="Items\Archetypes\Global\Citadel.cs" />
     <Compile Include="Items\Archetypes\Global\CitadelItem.cs" />
     <Compile Include="Items\Archetypes\Global\Dungeon.cs" />
+    <Compile Include="Items\Archetypes\Global\DungeonItem.cs" />
     <Compile Include="Items\Archetypes\Global\Location.cs" />
     <Compile Include="Items\Archetypes\Global\MapResource.cs" />
     <Compile Include="Items\Archetypes\Global\MapSite.cs" />

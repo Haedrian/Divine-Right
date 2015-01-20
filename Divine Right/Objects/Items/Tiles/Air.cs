@@ -7,6 +7,7 @@ using DRObjects.GraphicsEngineObjects.Abstract;
 
 namespace DRObjects.Items.Tiles
 {
+    [Serializable]
     /// <summary>
     /// Represents an empty tile. The default tile used when there is nothing at the location
     /// </summary>

@@ -8,6 +8,7 @@ using DRObjects.GraphicsEngineObjects;
 
 namespace DRObjects.Items.Archetypes.Local
 {
+    [Serializable]
     /// <summary>
     /// This is a particular item which has two states. State A and State B.
     /// Each state can have a different graphic, different walkability.

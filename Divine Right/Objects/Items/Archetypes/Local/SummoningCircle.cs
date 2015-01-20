@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework;
 
 namespace DRObjects.Items.Archetypes
 {
+    [Serializable]
     public class SummoningCircle
         :MapItem
     {

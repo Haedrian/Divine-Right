@@ -36,8 +36,10 @@ namespace DivineRightGame.Managers
         public const int HUMAN_COLONY_BLOCKING_RADIUS = 5;
 
         public const int HUMAN_COLONY_CLAIMING_RADIUS = 10;
-        public const int DUNGEON_CLAIMING_RADIUS = 10;
+        public const int CITADEL_CLAIMING_RADIUS = 10;
         public const int BANDIT_CLAIMING_RADIUS = 4;
+
+        public const int CITADEL_TOTAL = 20;
 
         public const int DUNGEON_TOTAL = 20;
 
@@ -113,8 +115,11 @@ namespace DivineRightGame.Managers
             CurrentStep = "And the humans came and they colonised the land";
             ColoniseWorld();
 
-            CurrentStep = "And the humans awoke the beasts and monsters of the land";
+            CurrentStep = "And the orcs rose from the ground and built massive citadels";
             CreateOrcCitadels();
+
+            CurrentStep = "And the sentient races discovered traces of ancient cursed civilisations";
+            CreateDungeons();
 
             CurrentStep = "And some humans took to thievery";
             CreateBandits();
@@ -1124,7 +1129,6 @@ namespace DivineRightGame.Managers
         /// <summary>
         /// Creates Citadels on the map
         /// Will colonise areas not claimed by humans.
-        /// Later on we'll create ruins which will appear in areas claimed by humans
         /// </summary>
         public static void CreateOrcCitadels()
         {
@@ -1149,7 +1153,7 @@ namespace DivineRightGame.Managers
                 }
             }
 
-            for (int i = 0; i < DUNGEON_TOTAL; i++)
+            for (int i = 0; i < CITADEL_TOTAL; i++)
             {
                 //Create the actual item - Completly Randomly for now
                 var enemyRace = ActorGeneration.GetEnemyType(true);
@@ -1197,7 +1201,7 @@ namespace DivineRightGame.Managers
                 }
 
                 //Also claim the surrounding areas for orcs. Let's give them an owner of 100
-                MapBlock[] claimedBlocks = GetBlocksAroundPoint(block.Tile.Coordinate, DUNGEON_CLAIMING_RADIUS);
+                MapBlock[] claimedBlocks = GetBlocksAroundPoint(block.Tile.Coordinate, CITADEL_CLAIMING_RADIUS);
 
                 foreach (MapBlock rblock in claimedBlocks)
                 {
@@ -1236,6 +1240,54 @@ namespace DivineRightGame.Managers
                 }
             }
         }
+
+
+        public static void CreateDungeons()
+        {
+            List<MapBlock> blocks = new List<MapBlock>();
+
+            //Collect all the points
+            for (int x = 0; x < WORLDSIZE; x++)
+            {
+                for (int y = 0; y < WORLDSIZE; y++)
+                {
+                    MapBlock block = GameState.GlobalMap.GetBlockAtCoordinate(new MapCoordinate(x, y, 0, MapType.GLOBAL));
+
+                    var tile = block.Tile as GlobalTile;
+
+                    if (!tile.HasRiver && !tile.IsBlockedForColonisation && !tile.HasResource && tile.Elevation > 0 && tile.Elevation < 250)
+                    {
+                        blocks.Add(block);
+                    }
+                }
+            }
+
+            //Toss them anywhere
+            for (int i = 0; i < DUNGEON_TOTAL; i++)
+            {
+                int randomNumber = GameState.Random.Next(blocks.Count);
+
+                MapBlock block = blocks[randomNumber];
+
+                //And remove it
+                blocks.RemoveAt(randomNumber);
+
+                Dungeon dungeon = new Dungeon();
+                dungeon.DifficultyLevel = 1;
+                dungeon.Coordinate = new MapCoordinate(block.Tile.Coordinate);
+
+                DungeonItem di = new DungeonItem();
+                di.Coordinate = new MapCoordinate(block.Tile.Coordinate);
+                di.Dungeon = dungeon;
+
+                block.ForcePutItemOnBlock(di);
+
+                (block.Tile as GlobalTile).IsBlockedForColonisation = true;
+            }
+
+
+        }
+
 
         /// <summary>
         /// Create bandit camps

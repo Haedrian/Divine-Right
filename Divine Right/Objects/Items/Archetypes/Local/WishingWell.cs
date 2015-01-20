@@ -11,6 +11,7 @@ using System.Text;
 
 namespace DRObjects.Items.Archetypes.Local
 {
+    [Serializable]
     /// <summary>
     /// This is a special kind of well where you can (once) toss coins into it and see if somethign comes out :)
     /// </summary>

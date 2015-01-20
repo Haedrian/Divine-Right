@@ -14,6 +14,7 @@ using Microsoft.Xna.Framework;
 
 namespace DRObjects.Items.Archetypes.Local
 {
+    [Serializable]
     /// <summary>
     /// Represents a Potion of some sort
     /// </summary>

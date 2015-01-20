@@ -10,6 +10,7 @@ using DRObjects.GraphicsEngineObjects.Abstract;
 
 namespace DRObjects.Items.Archetypes.Local
 {
+    [Serializable]
     /// <summary>
     /// Represents stairs in a dungeon. Either for going in deeper, or for returning to the surface
     /// </summary>

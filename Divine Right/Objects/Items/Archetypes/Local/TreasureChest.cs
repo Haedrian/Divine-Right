@@ -9,6 +9,7 @@ using System.Text;
 
 namespace DRObjects.Items.Archetypes.Local
 {
+    [Serializable]
     public class TreasureChest:
         MapItem
     {

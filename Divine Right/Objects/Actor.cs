@@ -91,7 +91,7 @@ namespace DRObjects
         {
             get
             {
-                return this.Attributes.Perc;
+                return this.Attributes.Perc + (this.IsPlayerCharacter ? 0 : 1); //Give monisters at least a LoS of 1
             }
         }
 

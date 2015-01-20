@@ -5,6 +5,7 @@ using System.Text;
 
 namespace DRObjects.ActorHandling.ActorMissions
 {
+    [Serializable]
     /// <summary>
     /// Represents some details about an animal
     /// </summary>
