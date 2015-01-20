@@ -148,6 +148,8 @@ namespace DivineRightGame
 
             //Load it
             GameState.LocalMap = obj.LocalMap;
+            GameState.LocalMap.Location = obj.LocalMap.Location; //This is to invoke the attachment of the minute check code
+
             GameState.GlobalMap = obj.GlobalMap;
             GameState.PlayerCharacter = obj.PlayerCharacter;
             GameState._universeTime = obj.UniverseTime;
