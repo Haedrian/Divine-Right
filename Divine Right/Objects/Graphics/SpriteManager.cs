@@ -138,6 +138,7 @@ namespace DRObjects.Graphics
             globalSprites[(int)GlobalSpriteName.FLAG_ORC] = new SpriteData(WORLDITEMS, new Rectangle(350, 200, 50, 50));
             globalSprites[(int)GlobalSpriteName.FLAG_BLACK] = new SpriteData(WORLDITEMS, new Rectangle(400, 200, 50, 50));
 
+            globalSprites[(int)GlobalSpriteName.RUINS] = new SpriteData(WORLDITEMS, new Rectangle(350, 150, 50, 50));
 
             colourSprites[(int)ColourSpriteName.BROWN] = new SpriteData(@"Graphics/World/Overlay/Regions/Brown");
             colourSprites[(int)ColourSpriteName.GREEN] = new SpriteData(@"Graphics/World/Overlay/Regions/Green");

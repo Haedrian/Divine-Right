@@ -88,5 +88,6 @@ namespace DRObjects.Graphics
         FLAG_GREEN,
         FLAG_BROWN,
         FLAG_ORANGE,
+        RUINS,
     }
 }
