@@ -1612,7 +1612,10 @@ namespace Divine_Right.GameScreens
 
                     gennedMap = DungeonGenerator.GenerateDungeonLevel((location as Dungeon).DifficultyLevel, 80, out startPoint, out actors, out dungeon);
 
-                    location = dungeon;
+                    //Copy the changes, that way we retain the object reference and the guid for serialization
+                    (location as Dungeon).Rooms = dungeon.Rooms;
+                    (location as Dungeon).SummoningCircles= dungeon.SummoningCircles;
+                    
                 }
 
                 GameState.LocalMap = new LocalMap(gennedMap.GetLength(0), gennedMap.GetLength(1), 1, 0);
