@@ -1686,7 +1686,7 @@ namespace DivineRightGame.LocalMapGenerator
                         {
                             item.Coordinate = new MapCoordinate(x + startX, y + startY, 0, DRObjects.Enums.MapType.LOCAL);
                         }
-                    }
+                    } 
 
                 }
             }
