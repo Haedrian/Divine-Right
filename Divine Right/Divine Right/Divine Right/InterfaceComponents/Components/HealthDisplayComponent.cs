@@ -34,6 +34,9 @@ namespace Divine_Right.InterfaceComponents.Components
         private Rectangle bleedingRect;
         private Rectangle stunnedRect;
 
+        private Rectangle defenceRect;
+        private List<Rectangle> defencesRect;
+
         private bool visible;
         #endregion
 
@@ -92,6 +95,13 @@ namespace Divine_Right.InterfaceComponents.Components
 
             batch.Draw(content, spiral, stunnedRect, this.GetBadEffectColours(health.StunAmount, 10));
             batch.Draw(content, bleeding, bleedingRect, this.GetBadEffectColours(health.BloodLoss, 10));
+
+            batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.WOOD_TEXTURE), defenceRect, Color.White);
+
+            for (int i = 0; i < actor.CurrentDefences; i++)
+            {
+                batch.Draw(content, SpriteManager.GetSprite(LocalSpriteName.SHIELD_7), defencesRect[i], Color.DarkGray);
+            }
         }
 
         /// <summary>
@@ -220,12 +230,12 @@ namespace Divine_Right.InterfaceComponents.Components
             this.locationY += y;
 
             //Move everything
-            rect = new Rectangle(locationX, locationY, 145, 229);
+            rect = new Rectangle(locationX, locationY, 145, 259);
 
             borderRect = new Rectangle(locationX - 2, locationY - 2, rect.Width + 4, rect.Height + 4);
 
             //Divide everything by 2.5
-            headRect = new Rectangle(locationX + 20 +20, locationY +20, 43, 38);
+            headRect = new Rectangle(locationX + 20 + 20, locationY + 20, 43, 38);
             leftArmRect = new Rectangle(locationX + 20, locationY + 35 + 20, 33, 85);
             chestRect = new Rectangle(locationX + 27 + 20, locationY + 37 + 20, 55, 72);
             rightArmRect = new Rectangle(locationX + 60 + 20, locationY + 36 + 20, 33, 85);
@@ -233,6 +243,15 @@ namespace Divine_Right.InterfaceComponents.Components
 
             stunnedRect = new Rectangle(locationX + 90 + 20, locationY + 5 + 20, 30, 30);
             bleedingRect = new Rectangle(locationX + 90 + 20, locationY + 45 + 20, 30, 30);
+
+            defencesRect = new List<Rectangle>();
+
+            defenceRect = new Rectangle(locationX, locationY + 225, 145, 34);
+
+            for (int i = 0; i < 7; i++)
+            {
+                defencesRect.Add(new Rectangle(locationX + (i * 20) + 3, locationY + 232, 20, 20));
+            }
         }
 
 

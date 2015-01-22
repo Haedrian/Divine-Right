@@ -47,6 +47,33 @@ namespace DRObjects
 
         public bool IsActive { get; set; }
 
+        public int MaximumDefences
+        {
+            get
+            {
+                int max = 1;
+
+                if (Inventory != null)
+                {
+                    if (Inventory.EquippedItems.ContainsKey(EquipmentLocation.SHIELD))
+                    {
+                        var shield = Inventory.EquippedItems[EquipmentLocation.SHIELD];
+
+                        max += shield.ArmourRating;
+                    }
+
+                    if (max > 7)
+                    {
+                        max = 7;
+                    }
+                }
+
+                return max;
+            }
+        }
+
+        public int CurrentDefences { get; set; }
+
         /// <summary>
         /// Whether the actor is prone or not
         /// </summary>

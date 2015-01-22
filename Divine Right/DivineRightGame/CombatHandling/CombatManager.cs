@@ -246,6 +246,20 @@ namespace DivineRightGame.CombatHandling
 
                 int damage = weaponDamage;
 
+                if (damage > 1)
+                {
+                    //Do we have any defences?
+                    if (defender.IsPlayerCharacter && defender.CurrentDefences > 0)
+                    {
+                        //Break one instead
+                        defender.CurrentDefences--;
+
+                        feedback.Add(LogAction(attacker,defender,location,damageType,LogMessageStatus.DEFENDED,diceRoll));
+
+                        return feedback.ToArray();
+                    }
+                }
+
                 //Apply the damage
                 //Is the user wearing any armour?
                 if (location == AttackLocation.CHEST || location == AttackLocation.LEFT_ARM || location == AttackLocation.RIGHT_ARM)
@@ -706,6 +720,13 @@ namespace DivineRightGame.CombatHandling
                         log = new LogFeedback(InterfaceSpriteName.BLEEDING, Color.DarkRed, "The attack worsens your wound");
                     }
                 }
+
+                return log;
+            }
+
+            if (status == LogMessageStatus.DEFENDED)
+            {
+                log = new LogFeedback(InterfaceSpriteName.DEFENSE, Color.DarkBlue, "You dodge the blow at the last moment");
 
                 return log;
             }

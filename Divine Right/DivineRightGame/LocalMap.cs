@@ -236,6 +236,18 @@ namespace DivineRightGame
                 }
             }
 
+            if (GameState.PlayerCharacter != null)
+            {
+                //If the player character (AND VIP CHARACTERS IN THE FUTURE) have defences which aren't full, then increase it
+                if (GameState.PlayerCharacter.CurrentDefences < GameState.PlayerCharacter.MaximumDefences)
+                {
+                    GameState.PlayerCharacter.CurrentDefences++;
+                }
+                else if (GameState.PlayerCharacter.CurrentDefences > GameState.PlayerCharacter.MaximumDefences)
+                {
+                    GameState.PlayerCharacter.CurrentDefences = GameState.PlayerCharacter.MaximumDefences;
+                }
+            }
 
             if (this.Location is Dungeon)
             {

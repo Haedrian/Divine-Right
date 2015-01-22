@@ -14,6 +14,7 @@ namespace DivineRightGame.CombatHandling
         DISABLE,
         DESTROY,
         KILL,
-        BLEED
+        BLEED,
+        DEFENDED
     }
 }
