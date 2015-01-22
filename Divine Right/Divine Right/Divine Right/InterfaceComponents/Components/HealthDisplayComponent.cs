@@ -23,6 +23,8 @@ namespace Divine_Right.InterfaceComponents.Components
         private Actor actor;
 
         private Rectangle rect;
+        private Rectangle borderRect;
+
         private Rectangle headRect;
         private Rectangle leftArmRect;
         private Rectangle chestRect;
@@ -68,6 +70,7 @@ namespace Divine_Right.InterfaceComponents.Components
             //Draw the background
             var scrollBackground = SpriteManager.GetSprite(InterfaceSpriteName.PAPER_TEXTURE);
 
+            batch.Draw(content, SpriteManager.GetSprite(ColourSpriteName.WHITE), borderRect, Color.DarkGray);
             batch.Draw(content.Load<Texture2D>(scrollBackground.path), rect, scrollBackground.sourceRectangle, Color.White);
 
             //Let's determine how injured each part is.
@@ -217,17 +220,19 @@ namespace Divine_Right.InterfaceComponents.Components
             this.locationY += y;
 
             //Move everything
-            rect = new Rectangle(locationX, locationY, 125, 209); //100 x 200 ?
+            rect = new Rectangle(locationX, locationY, 145, 229);
+
+            borderRect = new Rectangle(locationX - 2, locationY - 2, rect.Width + 4, rect.Height + 4);
 
             //Divide everything by 2.5
-            headRect = new Rectangle(locationX + 20, locationY, 43, 38);
-            leftArmRect = new Rectangle(locationX, locationY + 35, 33, 85);
-            chestRect = new Rectangle(locationX + 27, locationY + 37, 55, 72);
-            rightArmRect = new Rectangle(locationX + 60, locationY + 36, 33, 85);
-            legRect = new Rectangle(locationX + 23, locationY + 108, 50, 87);
+            headRect = new Rectangle(locationX + 20 +20, locationY +20, 43, 38);
+            leftArmRect = new Rectangle(locationX + 20, locationY + 35 + 20, 33, 85);
+            chestRect = new Rectangle(locationX + 27 + 20, locationY + 37 + 20, 55, 72);
+            rightArmRect = new Rectangle(locationX + 60 + 20, locationY + 36 + 20, 33, 85);
+            legRect = new Rectangle(locationX + 23 + 20, locationY + 108 + 20, 50, 87);
 
-            stunnedRect = new Rectangle(locationX + 90, locationY + 5, 30, 30);
-            bleedingRect = new Rectangle(locationX + 90, locationY + 45, 30, 30);
+            stunnedRect = new Rectangle(locationX + 90 + 20, locationY + 5 + 20, 30, 30);
+            bleedingRect = new Rectangle(locationX + 90 + 20, locationY + 45 + 20, 30, 30);
         }
 
 
