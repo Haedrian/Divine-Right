@@ -143,6 +143,7 @@
     <Compile Include="EventHandling\MultiEvents\MultiEventChoice.cs" />
     <Compile Include="Extensions\Extensions.cs" />
     <Compile Include="Feedback\Abstract\ActionFeedback.cs" />
+    <Compile Include="Feedback\AttackFeedback.cs" />
     <Compile Include="Feedback\CreateEventFeedback.cs" />
     <Compile Include="Feedback\CurrentLogFeedback.cs" />
     <Compile Include="Feedback\DescendDungeonFeedback.cs" />

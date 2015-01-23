@@ -9,6 +9,7 @@ using DRObjects.Items.Tiles.Global;
 using DRObjects.Graphics;
 using DRObjects.ActorHandling.CharacterSheet.Enums;
 using DRObjects.Items.Archetypes.Local;
+using DRObjects.Feedback;
 
 namespace DRObjects
 {
@@ -329,6 +330,18 @@ namespace DRObjects
                 }
                 else
                 {
+                    //Check whether it's the player character trying to move on a tile upon which there is an enemy
+                    if (actor.IsPlayerCharacter)
+                    {
+                        if (this.GetTopItem().GetType() == typeof(LocalCharacter))
+                        {
+                            //Attack him instead - randomly
+                            LocalCharacter lc = (LocalCharacter)this.GetTopItem();
+
+                            return new ActionFeedback[] { new AttackFeedback() { Attacker = actor, Defender = lc.Actor } };
+                        }
+                    }
+
                     //not possible
                     return new ActionFeedback[] { new TextFeedback("Not possible to move there") };
                 }

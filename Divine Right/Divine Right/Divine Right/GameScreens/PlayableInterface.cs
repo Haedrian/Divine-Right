@@ -36,6 +36,7 @@ using DRObjects.Items.Tiles.Global;
 using DivineRightGame.RayTracing;
 using DRObjects.Feedback;
 using DivineRightGame.Deity;
+using DivineRightGame.CombatHandling;
 
 namespace Divine_Right.GameScreens
 {
@@ -1063,13 +1064,28 @@ namespace Divine_Right.GameScreens
 
             //go through all the feedback
 
-            foreach (ActionFeedback feedback in fb)
+            for (int i = 0; i < fb.Length; i++)
             {
+                ActionFeedback feedback = fb[i];
+
                 if (feedback == null)
                 {
                     continue;
                 }
 
+                if (feedback.GetType().Equals(typeof(AttackFeedback)))
+                {
+                    AttackFeedback af = feedback as AttackFeedback;
+
+                    var combatAf = CombatManager.Attack(af.Attacker, af.Defender, AttackLocation.CHEST); //always attack the chest
+
+                    var tempFBList = fb.ToList();
+                    tempFBList.AddRange(combatAf);
+
+                    fb = tempFBList.ToArray();
+
+                }
+                else 
                 if (feedback.GetType().Equals(typeof(TextFeedback)))
                 {
                     MouseState mouse = Mouse.GetState();
@@ -1378,7 +1394,7 @@ namespace Divine_Right.GameScreens
                 {
                     DescendDungeonFeedback ddf = feedback as DescendDungeonFeedback;
 
-                    (GameState.LocalMap.Location as Dungeon).DifficultyLevel ++;
+                    (GameState.LocalMap.Location as Dungeon).DifficultyLevel++;
 
                     this.LoadLocation(GameState.LocalMap.Location, true);
                 }
@@ -1487,7 +1503,7 @@ namespace Divine_Right.GameScreens
         /// </summary>
         /// <param name="location"></param>
         /// <param name="forceRegenerate">If set to true, will regenerate the item anyway</param>
-        private void LoadLocation(Location location,bool forceRegenerate = false)
+        private void LoadLocation(Location location, bool forceRegenerate = false)
         {
             if (LocalMap.MapGenerated(location.UniqueGUID) && !forceRegenerate)
             {
@@ -1616,8 +1632,8 @@ namespace Divine_Right.GameScreens
 
                     //Copy the changes, that way we retain the object reference and the guid for serialization
                     (location as Dungeon).Rooms = dungeon.Rooms;
-                    (location as Dungeon).SummoningCircles= dungeon.SummoningCircles;
-                    
+                    (location as Dungeon).SummoningCircles = dungeon.SummoningCircles;
+
                 }
 
                 GameState.LocalMap = new LocalMap(gennedMap.GetLength(0), gennedMap.GetLength(1), 1, 0);
