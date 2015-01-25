@@ -174,6 +174,14 @@ namespace DivineRightGame.CombatHandling
         {
             List<ActionFeedback> feedback = new List<ActionFeedback>();
 
+            //Add a temporary item to show someone's an attacker
+            GameState.LocalMap.TemporaryGraphics.Add(new TemporaryGraphic()
+                {
+                    Coord = new MapCoordinate(attacker.MapCharacter.Coordinate),
+                    Graphic = SpriteManager.GetSprite(InterfaceSpriteName.ATTACKER),
+                    LifeTime = 1
+                });
+
             //Do we succeed in the attack?
             int atk = 0;
             int def = 0;
