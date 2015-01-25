@@ -821,6 +821,20 @@ namespace Divine_Right.GameScreens
 
             GraphicalBlock[] blocks = UserInterfaceManager.GetBlocksAroundPlayer((TotalTilesWidth / 2), (TotalTilesHeight / 2), 0);
 
+            //Go through each block ( :( ) and if their coordinates match any temporary graphic, add to it
+            foreach (var block in blocks)
+            {
+                var temps = (GameState.LocalMap.TemporaryGraphics.Where(tg => tg.Coord.Equals(block.MapCoordinate))).ToArray();
+
+                if (temps.Count() > 0)
+                {
+                    var tempList = block.ItemGraphics.ToList();
+                    tempList.AddRange(temps.Select(t => t.Graphic));
+
+                    block.ItemGraphics = tempList.ToArray();
+                }
+            }
+
             //get the current state of the game
             //11,4,0
             if (GameState.LocalMap.IsUnderground)

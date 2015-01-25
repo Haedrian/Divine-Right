@@ -218,6 +218,7 @@
     <Compile Include="Sites\SiteActorCount.cs" />
     <Compile Include="Sites\SiteData.cs" />
     <Compile Include="Sites\SiteTypeData.cs" />
+    <Compile Include="TemporaryGraphic.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Items\Tiles\Local\" />

@@ -22,6 +22,7 @@ using DRObjects.DataStructures.Enum;
 using DRObjects.DataStructures;
 using DRObjects.Extensions;
 using DRObjects.ActorHandling;
+using DRObjects.Graphics;
 
 namespace DivineRightGame
 {
@@ -35,6 +36,11 @@ namespace DivineRightGame
         public MapBlock[, ,] localGameMap;
         private List<Actor> actors;
         private Random random = new Random();
+
+        /// <summary>
+        /// A list of temporary graphics.
+        /// </summary>
+        public List<TemporaryGraphic> TemporaryGraphics { get; set; }
 
         /// <summary>
         /// A list of active effects. This is here to make going through them easier.
@@ -106,6 +112,7 @@ namespace DivineRightGame
             this.actors = new List<Actor>();
             this.IsUnderground = false;
             this.ActiveEffects = new List<Effect>();
+            this.TemporaryGraphics = new List<TemporaryGraphic>();
         }
 
         #endregion
@@ -353,6 +360,14 @@ namespace DivineRightGame
 
             //Make time pass - 10 seconds for a tick
             GameState.IncrementGameTime(DRTimeComponent.SECOND, 10);
+
+            //Age the temporary graphics by 1. If they are too old, delete them now
+            foreach(var graphic in TemporaryGraphics)
+            {
+                graphic.LifeTime--;
+            }
+            //Bye bye
+            TemporaryGraphics = TemporaryGraphics.Where(tg => tg.LifeTime > 0).ToList();
 
             return feedback.ToArray();
         }
