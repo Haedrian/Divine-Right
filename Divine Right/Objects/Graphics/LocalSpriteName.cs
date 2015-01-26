@@ -700,5 +700,12 @@ namespace DRObjects.Graphics
         RACK_TB_B,
         GUILLOTINE_T,
         GUILLOTINE_B,
+        BOW_1,
+        BOW_2,
+        BOW_3,
+        CROSSBOW_1,
+        CROSSBOW_2,
+        ARROWS,
+        BOLTS,
     }
 }

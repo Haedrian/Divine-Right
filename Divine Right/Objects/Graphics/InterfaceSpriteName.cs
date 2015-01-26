@@ -67,6 +67,9 @@ namespace DRObjects.Graphics
         WALK,
         SNEAK,
         HUNGRY,
-        POTION_ICON
+        POTION_ICON,
+        ATTACKER,
+        DEFENDER,
+        HIT
     }
 }

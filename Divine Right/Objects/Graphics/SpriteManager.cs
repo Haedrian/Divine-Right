@@ -857,6 +857,14 @@ namespace DRObjects.Graphics
             AddLocalSprite(LocalSpriteName.AXE_7, INVENTORYITEMS, 6, 8);
             AddLocalSprite(LocalSpriteName.AXE_8, INVENTORYITEMS, 7, 8);
 
+            AddLocalSprite(LocalSpriteName.BOW_1, INVENTORYITEMS, 0, 10);
+            AddLocalSprite(LocalSpriteName.BOW_2, INVENTORYITEMS, 1, 10);
+            AddLocalSprite(LocalSpriteName.BOW_3, INVENTORYITEMS, 2, 10);
+            AddLocalSprite(LocalSpriteName.CROSSBOW_1, INVENTORYITEMS, 3, 10);
+            AddLocalSprite(LocalSpriteName.CROSSBOW_2, INVENTORYITEMS, 4, 10);
+            AddLocalSprite(LocalSpriteName.ARROWS, INVENTORYITEMS, 5, 10);
+            AddLocalSprite(LocalSpriteName.BOLTS, INVENTORYITEMS, 6, 10);
+
             AddLocalSprite(LocalSpriteName.COINS, INVENTORYITEMS, 0, 4);
 
             AddLocalSprite(LocalSpriteName.POTION_BRAWN,INVENTORYITEMS,0,9);
@@ -910,7 +918,10 @@ namespace DRObjects.Graphics
             interfaceSprites[(int)InterfaceSpriteName.WALK] = new SpriteData(CHARACTER_SHEET, new Rectangle(300, 50, 50, 50));
             interfaceSprites[(int)InterfaceSpriteName.HUNT] = new SpriteData(CHARACTER_SHEET, new Rectangle(350, 50, 50, 50));
             interfaceSprites[(int)InterfaceSpriteName.HUNGRY] = new SpriteData(CHARACTER_SHEET, new Rectangle(400, 50, 50, 50));
-
+            
+            interfaceSprites[(int)InterfaceSpriteName.ATTACKER] = new SpriteData(CHARACTER_SHEET, new Rectangle(0, 100, 50, 50));
+            interfaceSprites[(int)InterfaceSpriteName.DEFENDER] = new SpriteData(CHARACTER_SHEET, new Rectangle(50, 100, 50, 50));
+            interfaceSprites[(int)InterfaceSpriteName.HIT] = new SpriteData(CHARACTER_SHEET, new Rectangle(100, 100, 50, 50));
 
             interfaceSprites[(int)InterfaceSpriteName.BANNER_GREEN] = new SpriteData(BANNERS, new Rectangle(1, 0, 60, 100));
             interfaceSprites[(int)InterfaceSpriteName.BANNER_YELLOW] = new SpriteData(BANNERS, new Rectangle(71, 0, 60, 100));

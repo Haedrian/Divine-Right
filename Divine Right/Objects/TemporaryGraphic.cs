@@ -6,6 +6,7 @@ using DRObjects.Graphics;
 
 namespace DRObjects
 {
+    [Serializable]
     /// <summary>
     /// Represents a graphic which is to be displayed in a temporary manner
     /// </summary>
