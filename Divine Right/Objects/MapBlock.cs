@@ -334,6 +334,7 @@ namespace DRObjects
                     if (actor.IsPlayerCharacter)
                     {
                         if (this.GetTopItem().GetType() == typeof(LocalCharacter))
+
                         {
                             //Attack him instead - randomly
                             LocalCharacter lc = (LocalCharacter)this.GetTopItem();

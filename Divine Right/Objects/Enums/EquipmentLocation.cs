@@ -18,6 +18,7 @@ namespace DRObjects.Enums
         LEGS,
         RING1,
         RING2,
-        MONEY
+        MONEY,
+        BOW
     }
 }
