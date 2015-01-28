@@ -1,4 +1,4 @@
-﻿<Maplet MapletName="EmptyRoom" SizeX="12" SizeY="12" SizeRange="4" Walled="false">
+﻿<Maplet MapletName="EmptyRoom" SizeX="12" SizeY="12" Walled="false">
   <MapletContents>
     <MapletContentsMaplet Position="Middle" MaxAmount="1" ProbabilityPercentage="100">
       <MapletTag Tag="unholy statue"/>

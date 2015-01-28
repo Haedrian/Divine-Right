@@ -1,4 +1,4 @@
-﻿<Maplet MapletName="EmptyRoom" SizeX="12" SizeY="12" SizeRange="4" Walled="false">
+﻿<Maplet MapletName="EmptyRoom" SizeX="12" SizeY="12" Walled="false">
   <MapletContents>
     <MapletContentsItemSpecial Type="WishingWell" Position="Middle" MaxAmount="1" ProbabilityPercentage="100"  />
     <MapletContentsItemTag Position="Anywhere" Category="mundaneitems" MaxAmount="2" ProbabilityPercentage="74" Tag="treasure"/>
