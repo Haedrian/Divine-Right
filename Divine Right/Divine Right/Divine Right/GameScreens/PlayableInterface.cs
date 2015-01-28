@@ -125,7 +125,14 @@ namespace Divine_Right.GameScreens
 
         private object[] parameters;
 
+        /// <summary>
+        /// This is used to determine when to blink
+        /// </summary>
         private int BlinkDrawCounter = 0;
+        /// <summary>
+        /// This is used to determine what to blink
+        /// </summary>
+        private int BlinkLargeCounter = 0;
 
         /// <summary>
         /// Stores how the left and right button were last update
@@ -824,7 +831,18 @@ namespace Divine_Right.GameScreens
 
             BlinkDrawCounter++;
 
-            BlinkDrawCounter = BlinkDrawCounter > 40 ? 0 : BlinkDrawCounter;
+            if (BlinkDrawCounter > 40)
+            {
+                //Restart
+                BlinkDrawCounter = 0;
+                BlinkLargeCounter++;
+
+                if (BlinkLargeCounter > 100)
+                {
+                    //restart
+                    BlinkLargeCounter = 0;
+                }
+            }
 
             //Go through each block ( :( ) and if their coordinates match any temporary graphic, add to it
             foreach (var block in blocks)
@@ -837,7 +855,9 @@ namespace Divine_Right.GameScreens
                     {
                         //Put them in actor graphics 
                         var tempList = block.ActorGraphics.ToList();
-                        tempList.AddRange(temps.Select(t => t.Graphic));
+
+                        //To go through them one at a time in order, we'll use % and the blink large counter
+                        tempList.Add(temps[BlinkLargeCounter % temps.Length].Graphic);
 
                         block.ActorGraphics = tempList.ToArray();
                     }
