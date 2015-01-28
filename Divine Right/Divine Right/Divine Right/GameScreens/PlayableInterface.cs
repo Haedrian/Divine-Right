@@ -46,7 +46,6 @@ namespace Divine_Right.GameScreens
     class PlayableInterface :
         DrawableGameComponent
     {
-
         public int TILEWIDTH = 50;
         public int TILEHEIGHT = 50;
 
@@ -125,6 +124,8 @@ namespace Divine_Right.GameScreens
         List<ISystemInterfaceComponent> menuButtons = new List<ISystemInterfaceComponent>();
 
         private object[] parameters;
+
+        private int BlinkDrawCounter = 0;
 
         /// <summary>
         /// Stores how the left and right button were last update
@@ -821,17 +822,25 @@ namespace Divine_Right.GameScreens
 
             GraphicalBlock[] blocks = UserInterfaceManager.GetBlocksAroundPlayer((TotalTilesWidth / 2), (TotalTilesHeight / 2), 0);
 
+            BlinkDrawCounter++;
+
+            BlinkDrawCounter = BlinkDrawCounter > 40 ? 0 : BlinkDrawCounter;
+
             //Go through each block ( :( ) and if their coordinates match any temporary graphic, add to it
             foreach (var block in blocks)
             {
-                var temps = (GameState.LocalMap.TemporaryGraphics.Where(tg => tg.Coord.Equals(block.MapCoordinate))).ToArray();
-
-                if (temps.Count() > 0)
+                if (BlinkDrawCounter <= 20)
                 {
-                    var tempList = block.ItemGraphics.ToList();
-                    tempList.AddRange(temps.Select(t => t.Graphic));
+                    var temps = (GameState.LocalMap.TemporaryGraphics.Where(tg => tg.Coord.Equals(block.MapCoordinate))).ToArray();
 
-                    block.ItemGraphics = tempList.ToArray();
+                    if (temps.Count() > 0)
+                    {
+                        //Put them in actor graphics 
+                        var tempList = block.ActorGraphics.ToList();
+                        tempList.AddRange(temps.Select(t => t.Graphic));
+
+                        block.ActorGraphics = tempList.ToArray();
+                    }
                 }
             }
 

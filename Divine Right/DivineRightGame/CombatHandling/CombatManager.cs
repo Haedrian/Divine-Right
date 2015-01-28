@@ -176,11 +176,11 @@ namespace DivineRightGame.CombatHandling
 
             //Add a temporary item to show someone's an attacker
             GameState.LocalMap.TemporaryGraphics.Add(new TemporaryGraphic()
-                {
-                    Coord = new MapCoordinate(attacker.MapCharacter.Coordinate),
-                    Graphic = SpriteManager.GetSprite(InterfaceSpriteName.ATTACKER),
-                    LifeTime = 1
-                });
+            {
+                Coord = new MapCoordinate(attacker.MapCharacter.Coordinate),
+                Graphic = SpriteManager.GetSprite(InterfaceSpriteName.SWORD),
+                LifeTime = attacker.IsPlayerCharacter ? 1 : 2
+            });
 
             //Do we succeed in the attack?
             int atk = 0;
@@ -469,6 +469,7 @@ namespace DivineRightGame.CombatHandling
                     {
                         case "SWORD": attacker.Attributes.IncreaseSkill(SkillName.SWORDFIGHTER); break;
                         case "AXE": attacker.Attributes.IncreaseSkill(SkillName.AXEFIGHTER); break;
+                        case "BOW": attacker.Attributes.IncreaseSkill(SkillName.ARCHER); break;
                         default: throw new NotImplementedException("No skill pertains to the weapon type " + attacker.Inventory.EquippedItems[EquipmentLocation.WEAPON].WeaponType);
                     }
                 }

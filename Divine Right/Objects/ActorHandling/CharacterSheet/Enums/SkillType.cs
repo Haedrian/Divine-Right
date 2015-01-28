@@ -29,5 +29,6 @@ namespace DRObjects.ActorHandling.CharacterSheet.Enums
         RITUALIST,
         THIEF,
         EXPLORER,
+        ARCHER,
     }
 }
