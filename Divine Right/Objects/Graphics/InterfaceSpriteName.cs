@@ -70,6 +70,7 @@ namespace DRObjects.Graphics
         POTION_ICON,
         ATTACKER,
         DEFENDER,
-        HIT
+        HIT,
+        BLOCKED
     }
 }

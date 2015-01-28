@@ -920,8 +920,8 @@ namespace DRObjects.Graphics
             interfaceSprites[(int)InterfaceSpriteName.HUNGRY] = new SpriteData(CHARACTER_SHEET, new Rectangle(400, 50, 50, 50));
             
             interfaceSprites[(int)InterfaceSpriteName.ATTACKER] = new SpriteData(CHARACTER_SHEET, new Rectangle(0, 100, 50, 50));
-            interfaceSprites[(int)InterfaceSpriteName.DEFENDER] = new SpriteData(CHARACTER_SHEET, new Rectangle(50, 100, 50, 50));
-            interfaceSprites[(int)InterfaceSpriteName.HIT] = new SpriteData(CHARACTER_SHEET, new Rectangle(100, 100, 50, 50));
+            interfaceSprites[(int)InterfaceSpriteName.BLOCKED] = new SpriteData(CHARACTER_SHEET, new Rectangle(200, 100, 50, 50));
+            interfaceSprites[(int)InterfaceSpriteName.HIT] = new SpriteData(CHARACTER_SHEET, new Rectangle(250, 100, 50, 50));
 
             interfaceSprites[(int)InterfaceSpriteName.BANNER_GREEN] = new SpriteData(BANNERS, new Rectangle(1, 0, 60, 100));
             interfaceSprites[(int)InterfaceSpriteName.BANNER_YELLOW] = new SpriteData(BANNERS, new Rectangle(71, 0, 60, 100));

@@ -175,12 +175,12 @@ namespace DivineRightGame.CombatHandling
             List<ActionFeedback> feedback = new List<ActionFeedback>();
 
             //Add a temporary item to show someone's an attacker
-            GameState.LocalMap.TemporaryGraphics.Add(new TemporaryGraphic()
-            {
-                Coord = new MapCoordinate(attacker.MapCharacter.Coordinate),
-                Graphic = SpriteManager.GetSprite(InterfaceSpriteName.SWORD),
-                LifeTime = attacker.IsPlayerCharacter ? 1 : 2
-            });
+            //GameState.LocalMap.TemporaryGraphics.Add(new TemporaryGraphic()
+            //{
+            //    Coord = new MapCoordinate(attacker.MapCharacter.Coordinate),
+            //    Graphic = SpriteManager.GetSprite(InterfaceSpriteName.SWORD),
+            //    LifeTime = attacker.IsPlayerCharacter ? 1 : 2
+            //});
 
             //Do we succeed in the attack?
             int atk = 0;
@@ -264,7 +264,16 @@ namespace DivineRightGame.CombatHandling
 
                         feedback.Add(LogAction(attacker,defender,location,damageType,LogMessageStatus.DEFENDED,diceRoll));
 
+                        //And mark it
+                        GameState.LocalMap.TemporaryGraphics.Add(new TemporaryGraphic()
+                        {
+                            Coord = new MapCoordinate(defender.MapCharacter.Coordinate),
+                            Graphic = SpriteManager.GetSprite(InterfaceSpriteName.BLOCKED),
+                            LifeTime = attacker.IsPlayerCharacter ? 1 : 2
+                        });
+
                         return feedback.ToArray();
+
                     }
                 }
 
@@ -302,6 +311,14 @@ namespace DivineRightGame.CombatHandling
                 {
                     //Bounced off the armour
                     feedback.Add(LogAction(attacker, defender, location, damageType, LogMessageStatus.BOUNCE, diceRoll));
+
+                    GameState.LocalMap.TemporaryGraphics.Add(new TemporaryGraphic()
+                    {
+                        Coord = new MapCoordinate(defender.MapCharacter.Coordinate),
+                        Graphic = SpriteManager.GetSprite(InterfaceSpriteName.BLOCKED),
+                        LifeTime = attacker.IsPlayerCharacter ? 1 : 2
+                    });
+
                     return feedback.ToArray();
                 }
 
@@ -354,6 +371,14 @@ namespace DivineRightGame.CombatHandling
                     default:
                         throw new NotImplementedException(location + " has no code prepared for damage");
                 }
+
+                GameState.LocalMap.TemporaryGraphics.Add(new TemporaryGraphic()
+                {
+                    Coord = new MapCoordinate(defender.MapCharacter.Coordinate),
+                    Graphic = SpriteManager.GetSprite(InterfaceSpriteName.HIT),
+                    LifeTime = attacker.IsPlayerCharacter ? 1 : 2
+                });
+
 
                 //Damage assessment - Do this properly later
                 switch (location)
@@ -480,6 +505,13 @@ namespace DivineRightGame.CombatHandling
                 }
 
                 feedback.Add(LogAction(attacker, defender, location, damageType, LogMessageStatus.MISS, diceRoll));
+
+                GameState.LocalMap.TemporaryGraphics.Add(new TemporaryGraphic()
+                {
+                    Coord = new MapCoordinate(defender.MapCharacter.Coordinate),
+                    Graphic = SpriteManager.GetSprite(InterfaceSpriteName.BLOCKED),
+                    LifeTime = attacker.IsPlayerCharacter ? 1 : 2
+                });
             }
 
             //We're done
