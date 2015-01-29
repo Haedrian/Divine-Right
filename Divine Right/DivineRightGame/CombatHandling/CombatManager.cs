@@ -174,13 +174,7 @@ namespace DivineRightGame.CombatHandling
         {
             List<ActionFeedback> feedback = new List<ActionFeedback>();
 
-            //Add a temporary item to show someone's an attacker
-            //GameState.LocalMap.TemporaryGraphics.Add(new TemporaryGraphic()
-            //{
-            //    Coord = new MapCoordinate(attacker.MapCharacter.Coordinate),
-            //    Graphic = SpriteManager.GetSprite(InterfaceSpriteName.SWORD),
-            //    LifeTime = attacker.IsPlayerCharacter ? 1 : 2
-            //});
+            int distance = attacker.MapCharacter.Coordinate - defender.MapCharacter.Coordinate; //This will later be used for ranged attacks
 
             //Do we succeed in the attack?
             int atk = 0;
@@ -268,7 +262,7 @@ namespace DivineRightGame.CombatHandling
                         GameState.LocalMap.TemporaryGraphics.Add(new TemporaryGraphic()
                         {
                             Coord = new MapCoordinate(defender.MapCharacter.Coordinate),
-                            Graphic = SpriteManager.GetSprite(InterfaceSpriteName.BLOCKED),
+                            Graphic = SpriteManager.GetSprite(distance < 2 ? InterfaceSpriteName.SWORD_BLOCKED : InterfaceSpriteName.BOW_BLOCKED),
                             LifeTime = attacker.IsPlayerCharacter ? 1 : 2
                         });
 
@@ -315,7 +309,7 @@ namespace DivineRightGame.CombatHandling
                     GameState.LocalMap.TemporaryGraphics.Add(new TemporaryGraphic()
                     {
                         Coord = new MapCoordinate(defender.MapCharacter.Coordinate),
-                        Graphic = SpriteManager.GetSprite(InterfaceSpriteName.BLOCKED),
+                        Graphic = SpriteManager.GetSprite(distance < 2 ? InterfaceSpriteName.SWORD_ARMOUR : InterfaceSpriteName.BOW_ARMOUR),
                         LifeTime = attacker.IsPlayerCharacter ? 1 : 2
                     });
 
@@ -375,7 +369,7 @@ namespace DivineRightGame.CombatHandling
                 GameState.LocalMap.TemporaryGraphics.Add(new TemporaryGraphic()
                 {
                     Coord = new MapCoordinate(defender.MapCharacter.Coordinate),
-                    Graphic = SpriteManager.GetSprite(InterfaceSpriteName.HIT),
+                    Graphic = SpriteManager.GetSprite(distance < 2 ? InterfaceSpriteName.SWORD_HIT : InterfaceSpriteName.BOW_HIT),
                     LifeTime = attacker.IsPlayerCharacter ? 1 : 2
                 });
 
@@ -509,7 +503,7 @@ namespace DivineRightGame.CombatHandling
                 GameState.LocalMap.TemporaryGraphics.Add(new TemporaryGraphic()
                 {
                     Coord = new MapCoordinate(defender.MapCharacter.Coordinate),
-                    Graphic = SpriteManager.GetSprite(InterfaceSpriteName.BLOCKED),
+                    Graphic = SpriteManager.GetSprite(distance < 2 ? InterfaceSpriteName.SWORD_BLOCKED : InterfaceSpriteName.BOW_BLOCKED),
                     LifeTime = attacker.IsPlayerCharacter ? 1 : 2
                 });
             }

@@ -919,9 +919,13 @@ namespace DRObjects.Graphics
             interfaceSprites[(int)InterfaceSpriteName.HUNT] = new SpriteData(CHARACTER_SHEET, new Rectangle(350, 50, 50, 50));
             interfaceSprites[(int)InterfaceSpriteName.HUNGRY] = new SpriteData(CHARACTER_SHEET, new Rectangle(400, 50, 50, 50));
             
-            interfaceSprites[(int)InterfaceSpriteName.ATTACKER] = new SpriteData(CHARACTER_SHEET, new Rectangle(0, 100, 50, 50));
-            interfaceSprites[(int)InterfaceSpriteName.BLOCKED] = new SpriteData(CHARACTER_SHEET, new Rectangle(200, 100, 50, 50));
-            interfaceSprites[(int)InterfaceSpriteName.HIT] = new SpriteData(CHARACTER_SHEET, new Rectangle(250, 100, 50, 50));
+            interfaceSprites[(int)InterfaceSpriteName.SWORD_BLOCKED] = new SpriteData(CHARACTER_SHEET, new Rectangle(200, 100, 50, 50));
+            interfaceSprites[(int)InterfaceSpriteName.SWORD_HIT] = new SpriteData(CHARACTER_SHEET, new Rectangle(250, 100, 50, 50));
+            interfaceSprites[(int)InterfaceSpriteName.SWORD_ARMOUR] = new SpriteData(CHARACTER_SHEET, new Rectangle(300, 100, 50, 50));
+
+            interfaceSprites[(int)InterfaceSpriteName.BOW_BLOCKED] = new SpriteData(CHARACTER_SHEET, new Rectangle(350, 100, 50, 50));
+            interfaceSprites[(int)InterfaceSpriteName.BOW_HIT] = new SpriteData(CHARACTER_SHEET, new Rectangle(400, 100, 50, 50));
+            interfaceSprites[(int)InterfaceSpriteName.BOW_ARMOUR] = new SpriteData(CHARACTER_SHEET, new Rectangle(450, 100, 50, 50));
 
             interfaceSprites[(int)InterfaceSpriteName.BANNER_GREEN] = new SpriteData(BANNERS, new Rectangle(1, 0, 60, 100));
             interfaceSprites[(int)InterfaceSpriteName.BANNER_YELLOW] = new SpriteData(BANNERS, new Rectangle(71, 0, 60, 100));
