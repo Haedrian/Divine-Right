@@ -339,7 +339,6 @@ namespace DRObjects.Items.Archetypes.Local
                         throw new NotImplementedException("No code for " + this.PotionType);
                 }
 
-                return null;
             }
             else
             {

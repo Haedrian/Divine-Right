@@ -857,13 +857,13 @@ namespace DRObjects.Graphics
             AddLocalSprite(LocalSpriteName.AXE_7, INVENTORYITEMS, 6, 8);
             AddLocalSprite(LocalSpriteName.AXE_8, INVENTORYITEMS, 7, 8);
 
-            AddLocalSprite(LocalSpriteName.BOW_1, INVENTORYITEMS, 0, 10);
-            AddLocalSprite(LocalSpriteName.BOW_2, INVENTORYITEMS, 1, 10);
-            AddLocalSprite(LocalSpriteName.BOW_3, INVENTORYITEMS, 2, 10);
-            AddLocalSprite(LocalSpriteName.CROSSBOW_1, INVENTORYITEMS, 3, 10);
-            AddLocalSprite(LocalSpriteName.CROSSBOW_2, INVENTORYITEMS, 4, 10);
-            AddLocalSprite(LocalSpriteName.ARROWS, INVENTORYITEMS, 5, 10);
-            AddLocalSprite(LocalSpriteName.BOLTS, INVENTORYITEMS, 6, 10);
+            AddLocalSprite(LocalSpriteName.BOW_1, INVENTORYITEMS, 0, 12);
+            AddLocalSprite(LocalSpriteName.BOW_2, INVENTORYITEMS, 1, 12);
+            AddLocalSprite(LocalSpriteName.BOW_3, INVENTORYITEMS, 2, 12);
+            AddLocalSprite(LocalSpriteName.CROSSBOW_1, INVENTORYITEMS, 3, 12);
+            AddLocalSprite(LocalSpriteName.CROSSBOW_2, INVENTORYITEMS, 4, 12);
+            AddLocalSprite(LocalSpriteName.ARROWS, INVENTORYITEMS, 5, 12);
+            AddLocalSprite(LocalSpriteName.BOLTS, INVENTORYITEMS, 6, 12);
 
             AddLocalSprite(LocalSpriteName.COINS, INVENTORYITEMS, 0, 4);
 

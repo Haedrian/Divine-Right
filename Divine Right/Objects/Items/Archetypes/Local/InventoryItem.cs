@@ -80,6 +80,8 @@ namespace DRObjects.Items.Archetypes.Local
         /// </summary>
         public int WoundPotential { get; set; }
 
+        public bool IsRanged { get; set; }
+
         public string WeaponType { get; set; }
 
         /// <summary>

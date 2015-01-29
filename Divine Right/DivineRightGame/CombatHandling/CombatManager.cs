@@ -174,6 +174,11 @@ namespace DivineRightGame.CombatHandling
         {
             List<ActionFeedback> feedback = new List<ActionFeedback>();
 
+            if (defender.MapCharacter == null)
+            {
+                return new ActionFeedback[]{}; //What on earth are you doing?
+            }
+
             int distance = attacker.MapCharacter.Coordinate - defender.MapCharacter.Coordinate; //This will later be used for ranged attacks
 
             //Do we succeed in the attack?
