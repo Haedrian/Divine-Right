@@ -918,7 +918,9 @@ namespace DRObjects.Graphics
             interfaceSprites[(int)InterfaceSpriteName.WALK] = new SpriteData(CHARACTER_SHEET, new Rectangle(300, 50, 50, 50));
             interfaceSprites[(int)InterfaceSpriteName.HUNT] = new SpriteData(CHARACTER_SHEET, new Rectangle(350, 50, 50, 50));
             interfaceSprites[(int)InterfaceSpriteName.HUNGRY] = new SpriteData(CHARACTER_SHEET, new Rectangle(400, 50, 50, 50));
-            
+
+
+            interfaceSprites[(int)InterfaceSpriteName.BOW] = new SpriteData(CHARACTER_SHEET, new Rectangle(150, 100, 50, 50));
             interfaceSprites[(int)InterfaceSpriteName.SWORD_BLOCKED] = new SpriteData(CHARACTER_SHEET, new Rectangle(200, 100, 50, 50));
             interfaceSprites[(int)InterfaceSpriteName.SWORD_HIT] = new SpriteData(CHARACTER_SHEET, new Rectangle(250, 100, 50, 50));
             interfaceSprites[(int)InterfaceSpriteName.SWORD_ARMOUR] = new SpriteData(CHARACTER_SHEET, new Rectangle(300, 100, 50, 50));

@@ -75,6 +75,7 @@ namespace DRObjects.Graphics
         SWORD_ARMOUR,
         BOW_BLOCKED,
         BOW_HIT,
-        BOW_ARMOUR
+        BOW_ARMOUR,
+        BOW
     }
 }

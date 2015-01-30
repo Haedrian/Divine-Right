@@ -13,6 +13,7 @@ namespace DivineRightGame.CombatHandling
         SLASH,
         STAB,
         CRUSH,
-        THRUST
+        THRUST,
+        PIERCE
     }
 }

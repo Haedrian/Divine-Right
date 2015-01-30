@@ -60,7 +60,7 @@ namespace DivineRightGame.CombatHandling
                 case AttackLocation.LEFT_ARM:
                     if (defender.Anatomy.LeftArm <= -5)
                     {
-                        return - 1;
+                        return -1;
                     }
                     break;
                 case AttackLocation.LEGS:
@@ -102,7 +102,7 @@ namespace DivineRightGame.CombatHandling
             //See what the difference is
             int difference = 20 + (hitChance - defendChance);
 
-            return difference > 20 ? 100 : difference < 0 ? 0 : difference/2 * 10;
+            return difference > 20 ? 100 : difference < 0 ? 0 : difference / 2 * 10;
         }
 
         /// <summary>
@@ -176,7 +176,7 @@ namespace DivineRightGame.CombatHandling
 
             if (defender.MapCharacter == null)
             {
-                return new ActionFeedback[]{}; //What on earth are you doing?
+                return new ActionFeedback[] { }; //What on earth are you doing?
             }
 
             int distance = attacker.MapCharacter.Coordinate - defender.MapCharacter.Coordinate; //This will later be used for ranged attacks
@@ -199,6 +199,11 @@ namespace DivineRightGame.CombatHandling
             }
 
             DamageType damageType = DamageType.SLASH;
+            if (distance >= 2)
+            {
+                //Ranged
+                damageType = DamageType.PIERCE;
+            }
 
             GetStanceEffect(out atk, out def, attacker.CombatStance);
 
@@ -212,7 +217,7 @@ namespace DivineRightGame.CombatHandling
 
             int hitChance = 0;
 
-            
+
             if (distance < 2)
             {
                 //Chance to hit  for hand to hand-
@@ -223,9 +228,9 @@ namespace DivineRightGame.CombatHandling
             {
                 //Chance to hit  for ranged-
                 // Attacker Skill + perc - 5 + location penalty + stance effect - distance*2  VS Defender Skill + Agil + stance effect + shield bonus
-                hitChance = attacker.Attributes.Ranged + attacker.TotalPerc - 5 - distance*2 + penaltyDict[location] + atk;
+                hitChance = attacker.Attributes.Ranged + attacker.TotalPerc - 5 - distance * 2 + penaltyDict[location] + atk;
             }
-            
+
 
             GetStanceEffect(out atk, out def, defender.CombatStance);
 
@@ -260,7 +265,7 @@ namespace DivineRightGame.CombatHandling
 
                 //Calculate the amount of damage we're going to do. Roll 3 dice of a particular kind
 
-                int weaponDamage = random.Next(weaponDiceRolls+1) + random.Next(weaponDiceRolls+1) + random.Next(weaponDiceRolls+1);
+                int weaponDamage = random.Next(weaponDiceRolls + 1) + random.Next(weaponDiceRolls + 1) + random.Next(weaponDiceRolls + 1);
 
                 Console.WriteLine("Damage Roll : " + weaponDamage);
 
@@ -274,7 +279,7 @@ namespace DivineRightGame.CombatHandling
                         //Break one instead
                         defender.CurrentDefences--;
 
-                        feedback.Add(LogAction(attacker,defender,location,damageType,LogMessageStatus.DEFENDED,diceRoll));
+                        feedback.Add(LogAction(attacker, defender, location, damageType, LogMessageStatus.DEFENDED, diceRoll));
 
                         //And mark it
                         GameState.LocalMap.TemporaryGraphics.Add(new TemporaryGraphic()
@@ -299,7 +304,7 @@ namespace DivineRightGame.CombatHandling
                         damage -= defender.Inventory.EquippedItems[EquipmentLocation.BODY].ArmourRating;
                     }
                 }
-                
+
                 //Other location ?
                 if (location == AttackLocation.HEAD)
                 {
@@ -412,7 +417,7 @@ namespace DivineRightGame.CombatHandling
                             //Dead
                             feedback.Add(LogAction(attacker, defender, location, damageType, LogMessageStatus.KILL, diceRoll));
                             //Close the interface
-                            feedback.Add(new InterfaceToggleFeedback(InternalActionEnum.OPEN_ATTACK,false,defender));
+                            feedback.Add(new InterfaceToggleFeedback(InternalActionEnum.OPEN_ATTACK, false, defender));
                             KillCharacter(defender);
                         }
                         break;
@@ -522,7 +527,7 @@ namespace DivineRightGame.CombatHandling
                 {
                     Coord = new MapCoordinate(defender.MapCharacter.Coordinate),
                     Graphic = SpriteManager.GetSprite(distance < 2 ? InterfaceSpriteName.SWORD_BLOCKED : InterfaceSpriteName.BOW_BLOCKED),
-                    LifeTime = attacker.IsPlayerCharacter ? 1 : 2
+                    LifeTime = (attacker.IsPlayerCharacter ? 1 : 2 )
                 });
             }
 
@@ -552,7 +557,7 @@ namespace DivineRightGame.CombatHandling
                 }
             }
 
-            
+
         }
 
         /// <summary>
@@ -586,6 +591,10 @@ namespace DivineRightGame.CombatHandling
                     {
                         log = log = new LogFeedback(InterfaceSpriteName.DEFENSE, Color.DarkGreen, "The hit fails to punch through your armour");
                     }
+                    else if (type == DamageType.PIERCE)
+                    {
+                        log = new LogFeedback(InterfaceSpriteName.DEFENSE, Color.DarkGreen, "The missile fails to punch through your armour");
+                    }
                 }
                 else
                 {
@@ -604,6 +613,10 @@ namespace DivineRightGame.CombatHandling
                     else if (type == DamageType.THRUST)
                     {
                         log = log = new LogFeedback(InterfaceSpriteName.DEFENSE, Color.DarkRed, "The hit fails to punch through your target's armour");
+                    }
+                    else if (type == DamageType.PIERCE)
+                    {
+                        log = new LogFeedback(InterfaceSpriteName.DEFENSE, Color.DarkRed, "The missile fails to punch through your target's armour");
                     }
                 }
 
@@ -630,6 +643,10 @@ namespace DivineRightGame.CombatHandling
                     {
                         log = new LogFeedback(InterfaceSpriteName.BLOOD, Color.DarkRed, "Your " + loc.ToString().ToLower().Replace("_", " ") + " dangles off by its skin");
                     }
+                    else if (type == DamageType.PIERCE)
+                    {
+                        log = new LogFeedback(InterfaceSpriteName.BLOOD, Color.DarkRed, "Your perforated " + loc.ToString().ToLower().Replace("_", " ") + " hangs limply off your side");
+                    }
                 }
                 else
                 {
@@ -648,6 +665,10 @@ namespace DivineRightGame.CombatHandling
                     else if (type == DamageType.THRUST)
                     {
                         log = new LogFeedback(InterfaceSpriteName.BLOOD, Color.DarkRed, "Your opponent's " + loc.ToString().ToLower().Replace("_", " ") + " dangles off by its skin");
+                    }
+                    else if (type == DamageType.PIERCE)
+                    {
+                        log = new LogFeedback(InterfaceSpriteName.BLOOD, Color.DarkRed, "Your opponent's perforated " + loc.ToString().ToLower().Replace("_", " ") + " hangs limply off their side");
                     }
                 }
 
@@ -674,6 +695,10 @@ namespace DivineRightGame.CombatHandling
                     {
                         log = new LogFeedback(InterfaceSpriteName.DEFENSE, Color.DarkRed, "Your " + loc.ToString().ToLower().Replace("_", " ") + " bleeds heavily as the attack goes through");
                     }
+                    else if (type == DamageType.PIERCE)
+                    {
+                        log = new LogFeedback(InterfaceSpriteName.DEFENSE, Color.DarkRed, "Your " + loc.ToString().ToLower().Replace("_", " ") + " bleeds heavily as the missile pierces through");
+                    }
                 }
                 else
                 {
@@ -693,6 +718,10 @@ namespace DivineRightGame.CombatHandling
                     {
                         log = new LogFeedback(InterfaceSpriteName.DEFENSE, Color.DarkGreen, "Your opponent's " + loc.ToString().ToLower().Replace("_", " ") + " bleeds heavily as the attack goes through");
                     }
+                    else if (type == DamageType.PIERCE)
+                    {
+                        log = new LogFeedback(InterfaceSpriteName.DEFENSE, Color.DarkGreen, "Your opponent's " + loc.ToString().ToLower().Replace("_", " ") + " bleeds heavily as the missile pierces through");
+                    }
                 }
 
                 return log;
@@ -702,11 +731,25 @@ namespace DivineRightGame.CombatHandling
             {
                 if (attacker.IsPlayerCharacter)
                 {
-                    log = new LogFeedback(InterfaceSpriteName.SWORD, Color.DarkGreen, "You swing (" + diceroll + ") at " + defender.EnemyData.EnemyName + " and hit him in the " + loc.ToString().ToLower().Replace("_", " "));
+                    if (type == DamageType.PIERCE)
+                    {
+                        log = new LogFeedback(InterfaceSpriteName.BOW, Color.DarkGreen, "You loose (" + diceroll + ") at " + defender.EnemyData.EnemyName + " and hit him in the " + loc.ToString().ToLower().Replace("_", " "));
+                    }
+                    else
+                    {
+                        log = new LogFeedback(InterfaceSpriteName.SWORD, Color.DarkGreen, "You swing (" + diceroll + ") at " + defender.EnemyData.EnemyName + " and hit him in the " + loc.ToString().ToLower().Replace("_", " "));
+                    }
                 }
                 else
                 {
-                    log = new LogFeedback(InterfaceSpriteName.SWORD, Color.DarkRed, attacker.EnemyData.EnemyName + " swings (" + diceroll + ") at you and hits you in the " + loc.ToString().ToLower().Replace("_", " "));
+                    if (type == DamageType.PIERCE)
+                    {
+                        log = new LogFeedback(InterfaceSpriteName.SWORD, Color.DarkRed, attacker.EnemyData.EnemyName + " looses (" + diceroll + ") a projectile at you and hits you in the " + loc.ToString().ToLower().Replace("_", " "));
+                    }
+                    else
+                    {
+                        log = new LogFeedback(InterfaceSpriteName.SWORD, Color.DarkRed, attacker.EnemyData.EnemyName + " swings (" + diceroll + ") at you and hits you in the " + loc.ToString().ToLower().Replace("_", " "));
+                    }
                 }
 
                 return log;
@@ -732,12 +775,27 @@ namespace DivineRightGame.CombatHandling
                 //We have a miss
                 if (attacker.IsPlayerCharacter)
                 {
-                    log = new LogFeedback(InterfaceSpriteName.SWORD, Color.DarkRed, "You swing (" + diceroll + ") at " + defender.EnemyData.EnemyName + "'s " + loc.ToString().ToLower().Replace("_", " ") + " but miss");
+                    if (type == DamageType.PIERCE)
+                    {
+                        log = new LogFeedback(InterfaceSpriteName.SWORD, Color.DarkRed, "You loose  (" + diceroll + ") your projectile at " + defender.EnemyData.EnemyName + "'s " + loc.ToString().ToLower().Replace("_", " ") + " but miss");
+                    }
+                    else
+                    {
+                        log = new LogFeedback(InterfaceSpriteName.SWORD, Color.DarkRed, "You swing (" + diceroll + ") at " + defender.EnemyData.EnemyName + "'s " + loc.ToString().ToLower().Replace("_", " ") + " but miss");
+                    }
                 }
                 else
                 {
                     //Player is the defender
-                    log = new LogFeedback(InterfaceSpriteName.SWORD, Color.DarkGreen, "The " + attacker.EnemyData.EnemyName + " swings (" + diceroll + ") at your " + loc.ToString().ToLower().Replace("_", " ") + ", but misses");
+
+                    if (type == DamageType.PIERCE)
+                    {
+                        log = new LogFeedback(InterfaceSpriteName.SWORD, Color.DarkGreen, "The " + attacker.EnemyData.EnemyName + " looses (" + diceroll + ") their projectile at your " + loc.ToString().ToLower().Replace("_", " ") + ", but misses");
+                    }
+                    else
+                    {
+                        log = new LogFeedback(InterfaceSpriteName.SWORD, Color.DarkGreen, "The " + attacker.EnemyData.EnemyName + " swings (" + diceroll + ") at your " + loc.ToString().ToLower().Replace("_", " ") + ", but misses");
+                    }
                 }
 
                 return log;
