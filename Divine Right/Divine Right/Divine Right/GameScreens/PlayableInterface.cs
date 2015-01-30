@@ -314,6 +314,16 @@ namespace Divine_Right.GameScreens
 
                 //Give him random stats so he won't completly suck
                 CharacterCreation.ProcessParameters(CharacterCreation.GenerateRandom());
+
+                //Also give him a bow of some sort
+                InventoryItemManager iim = new InventoryItemManager();
+
+                
+                InventoryItem item = iim.GetBestCanAfford("WEAPON", 500);
+
+                item.InInventory = true;
+
+                GameState.PlayerCharacter.Inventory.Inventory.Add(item.Category, item);
             }
 
             //Add the health control

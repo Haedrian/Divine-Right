@@ -204,9 +204,22 @@ namespace Divine_Right.InterfaceComponents.Components
                     targetRect = rightArmPercentageRect; break;
             }
 
-            //Draw a sword
-            batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.SWORD), targetRect, Color.Red);
-            batch.Draw(content.Load<Texture2D>(sword.path), targetRect, sword.sourceRectangle, Color.Red, 0, new Vector2(0, 0), SpriteEffects.FlipHorizontally, 0);
+            //Draw a sword if it's a hand to hand
+            int distance = this.attacker.MapCharacter.Coordinate - this.TargetActor.MapCharacter.Coordinate;
+
+            SpriteData targetSprite = null;
+
+            if (distance < 2)
+            {
+                targetSprite = SpriteManager.GetSprite(InterfaceSpriteName.SWORD);
+            }
+            else
+            {
+                targetSprite = SpriteManager.GetSprite(LocalSpriteName.BOW_1);
+            }
+
+            batch.Draw(content, targetSprite, targetRect, Color.Black);
+            batch.Draw(content.Load<Texture2D>(targetSprite.path), targetRect, targetSprite.sourceRectangle, Color.Black, 0, new Vector2(0, 0), SpriteEffects.FlipHorizontally, 0);
 
             if (CombatManager.CalculateHitPercentage(attacker, TargetActor, AttackLocation.HEAD) != -1) //not present
             {
