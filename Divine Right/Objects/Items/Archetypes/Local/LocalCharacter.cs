@@ -143,7 +143,7 @@ namespace DRObjects.Items.Archetypes.Local
             actions.AddRange(base.GetPossibleActions(actor));
 
             //Are we next to the target? Is the actor aggressive, or an animal?
-            if (this.Coordinate - actor.MapCharacter.Coordinate < 2 && (this.Actor.IsAggressive || (this.Actor.IsAnimal && !this.Actor.IsDomesticatedAnimal)))
+            if ( (this.Coordinate - actor.MapCharacter.Coordinate < 2 || actor.Inventory.EquippedItems.ContainsKey(EquipmentLocation.BOW)) && (this.Actor.IsAggressive || (this.Actor.IsAnimal && !this.Actor.IsDomesticatedAnimal)))
             {
                 //Add the attack one too
                 actions.Add(ActionType.PREPARE_ATTACK);

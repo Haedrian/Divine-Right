@@ -9,6 +9,7 @@ using DRObjects.GraphicsEngineObjects.Abstract;
 using System.Diagnostics;
 using DivineRightGame.CombatHandling;
 using Microsoft.Xna.Framework;
+using DRObjects.Graphics;
 
 namespace DivineRightGame.Managers
 {
@@ -42,9 +43,18 @@ namespace DivineRightGame.Managers
                 Actor defender = args[1] as Actor;
                 AttackLocation location = (AttackLocation) args[2];
 
-                if (defender.MapCharacter != null && attacker.MapCharacter.Coordinate - defender.MapCharacter.Coordinate < 2)
+                int distance = attacker.MapCharacter.Coordinate - defender.MapCharacter.Coordinate;
+
+                if (defender.MapCharacter == null)
                 {
-                    //Valid
+                    //Something went wrong
+                    validAttack = false;
+
+                }
+
+                if ( distance < 2)
+                {
+                    //Hand to hand
                     feedback.AddRange(CombatManager.Attack(attacker,defender,location));
                     validAttack = true; //perform the tick
                 }
@@ -53,9 +63,29 @@ namespace DivineRightGame.Managers
                     //Is the attacker armed properly?
                     if (attacker.Inventory.EquippedItems.ContainsKey(EquipmentLocation.BOW))
                     {
-                        //Yes!
-                        feedback.AddRange(CombatManager.Attack(attacker, defender, location));
-                        validAttack = true;
+                        //Do they have line of sight?
+                        if (GameState.LocalMap.HasDirectPath(attacker.MapCharacter.Coordinate, defender.MapCharacter.Coordinate))
+                        {
+                            //Are they within a reasonable distance?
+                            if (distance <= attacker.LineOfSight)
+                            {
+                                //Yes!
+                                feedback.AddRange(CombatManager.Attack(attacker, defender, location));
+                                validAttack = true;
+                            }
+                            else
+                            {
+                                validAttack = false;
+                                return new ActionFeedback[] { new LogFeedback(InterfaceSpriteName.PERC,Color.Black, "This target is outside of your range") };
+                            }
+                        }
+                        else
+                        {
+                            validAttack = false;
+                            return new ActionFeedback[] { new LogFeedback(null, Color.Black, "You don't have a clear line of sight to the target") };
+                        }
+                        
+
                     }
                     else
                     {
