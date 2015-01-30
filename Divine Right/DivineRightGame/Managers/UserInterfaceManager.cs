@@ -50,8 +50,19 @@ namespace DivineRightGame.Managers
                 }
                 else
                 {
-                    //Invalid - no tick
-                    return new ActionFeedback[] { new LogFeedback(null,Color.Black,"You are too far away to hit your target")};
+                    //Is the attacker armed properly?
+                    if (attacker.Inventory.EquippedItems.ContainsKey(EquipmentLocation.BOW))
+                    {
+                        //Yes!
+                        feedback.AddRange(CombatManager.Attack(attacker, defender, location));
+                        validAttack = true;
+                    }
+                    else
+                    {
+                        validAttack = false;
+                        //Invalid - no tick
+                        return new ActionFeedback[] { new LogFeedback(null, Color.Black, "You are too far away to hit your target") };
+                    }
                 }
             }
             else if (actionType == ActionType.IDLE)
