@@ -23,6 +23,7 @@ using DRObjects.DataStructures;
 using DRObjects.Extensions;
 using DRObjects.ActorHandling;
 using DRObjects.Graphics;
+using DivineRightGame.RayTracing;
 
 namespace DivineRightGame
 {
@@ -362,7 +363,7 @@ namespace DivineRightGame
             GameState.IncrementGameTime(DRTimeComponent.SECOND, 10);
 
             //Age the temporary graphics by 1. If they are too old, delete them now
-            foreach(var graphic in TemporaryGraphics)
+            foreach (var graphic in TemporaryGraphics)
             {
                 graphic.LifeTime--;
             }
@@ -440,5 +441,40 @@ namespace DivineRightGame
         {
             return File.Exists(GameState.SAVEPATH + uniqueGuid + ".dvd");
         }
+
+
+        /// <summary>
+        /// Returns true if there is a direct path between the source and the target
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public bool HasDirectPath(MapCoordinate source, MapCoordinate target)
+        {
+
+            var points = RayTracingHelper.BresenhamLine(source.X, source.Y, target.X, target.Y).ToList();
+
+            //Remove first and last point from the trace
+            if (points.Count > 0)
+            {
+                points.RemoveAt(points.Count - 1);
+            }
+            if (points.Count > 0)
+            {
+                points.RemoveAt(0);
+            }
+
+            foreach(var point in points)
+            {
+                if ( !this.localGameMap[point.X,point.Y,0].IsSeeThrough)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+
+        }
+
     }
 }

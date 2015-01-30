@@ -210,9 +210,22 @@ namespace DivineRightGame.CombatHandling
                 shieldBonus = defender.Inventory.EquippedItems[EquipmentLocation.SHIELD].ArmourRating;
             }
 
-            //Chance to hit -
-            // Attacker Skill + Brawn - 5 + location penalty + stance effect  VS Defender Skill + Agil + stance effect + shield bonus
-            int hitChance = attacker.Attributes.HandToHand + attacker.TotalBrawn - 5 + penaltyDict[location] + atk;
+            int hitChance = 0;
+
+            
+            if (distance < 2)
+            {
+                //Chance to hit  for hand to hand-
+                // Attacker Skill + Brawn - 5 + location penalty + stance effect  VS Defender Skill + Agil + stance effect + shield bonus
+                hitChance = attacker.Attributes.HandToHand + attacker.TotalBrawn - 5 + penaltyDict[location] + atk;
+            }
+            else
+            {
+                //Chance to hit  for ranged-
+                // Attacker Skill + perc - 5 + location penalty + stance effect - distance*2  VS Defender Skill + Agil + stance effect + shield bonus
+                hitChance = attacker.Attributes.Ranged + attacker.TotalPerc - 5 - distance*2 + penaltyDict[location] + atk;
+            }
+            
 
             GetStanceEffect(out atk, out def, defender.CombatStance);
 

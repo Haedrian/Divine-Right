@@ -25,7 +25,7 @@ namespace DRObjects.ActorHandling
         /// <summary>
         /// For enemies, use this as hand to hand damage
         /// </summary>
-        private int enemyHandToHand;
+        private int enemyAttack;
         /// <summary>
         /// For enemies, use this as evasion
         /// </summary>
@@ -129,7 +129,7 @@ namespace DRObjects.ActorHandling
                 }
                 else
                 {
-                    totalH2H = enemyHandToHand;
+                    totalH2H = enemyAttack;
                 }
 
                 return totalH2H;
@@ -138,11 +138,62 @@ namespace DRObjects.ActorHandling
             {
                 if (this.Actor == null || !this.Actor.IsPlayerCharacter)
                 {
-                    this.enemyHandToHand = value;
+                    this.enemyAttack = value;
                 }
                 //otherwise do nothing
             }
         }
+
+        public int Ranged
+        {
+            get
+            {
+                int totalRanged = 0;
+
+                if (Actor.IsPlayerCharacter)
+                {
+                    if (this.Skills.ContainsKey(SkillName.FIGHTER))
+                    {
+                        totalRanged += (int)(this.Skills[SkillName.FIGHTER].SkillLevel);
+                    }
+
+                    //What weapon are we using?
+
+                    if (Actor.Inventory.EquippedItems.ContainsKey(EquipmentLocation.BOW))
+                    {
+                        var weapon = Actor.Inventory.EquippedItems[EquipmentLocation.BOW];
+
+                        //Use ranged damage
+                        if (this.Skills.ContainsKey(SkillName.ARCHER))
+                        {
+                            totalRanged += (int)this.Skills[SkillName.ARCHER].SkillLevel;
+                        }
+                    }
+                    else
+                    {
+                        //really shouldn't be attacking
+                        return 0;
+                    }
+
+                    //Take the average
+                    totalRanged /= 2;
+                }
+                else
+                {
+                    totalRanged = enemyAttack;
+                }
+
+                return totalRanged;
+            }
+            set
+            {
+                if (this.Actor == null || !this.Actor.IsPlayerCharacter)
+                {
+                    this.enemyAttack = value;
+                }
+            }
+        }
+
         public int Evasion
         {
             get
@@ -178,7 +229,7 @@ namespace DRObjects.ActorHandling
                 }
                 else
                 {
-                    return enemyHandToHand;
+                    return enemyAttack;
                 }
             }
             set
@@ -235,7 +286,7 @@ namespace DRObjects.ActorHandling
         /// <returns></returns>
         public int GetSkill(SkillName name)
         {
-            return this.Skills.ContainsKey(name) ? (int) this.Skills[name].SkillLevel : 0;
+            return this.Skills.ContainsKey(name) ? (int)this.Skills[name].SkillLevel : 0;
         }
 
         #endregion
