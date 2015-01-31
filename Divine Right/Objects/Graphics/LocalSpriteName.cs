@@ -707,5 +707,9 @@ namespace DRObjects.Graphics
         CROSSBOW_2,
         ARROWS,
         BOLTS,
+        ROGUE_CLASS,
+        WARRIOR_CLASS,
+        BRUTE_CLASS,
+        RANGED_CLASS,
     }
 }
