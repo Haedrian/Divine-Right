@@ -190,12 +190,30 @@ namespace DivineRightGame.CombatHandling
             int weaponWoundPotential = 0;
             int weaponStunAmount = 0;
 
-            if (attacker.Inventory.EquippedItems.ContainsKey(EquipmentLocation.WEAPON) && attacker.Anatomy.RightArm != 0)
+            if (distance < 2)
             {
-                //Do we have a weapon and an arm to use it?
-                weaponDiceRolls = attacker.Inventory.EquippedItems[EquipmentLocation.WEAPON].DamageDice;
-                weaponWoundPotential = attacker.Inventory.EquippedItems[EquipmentLocation.WEAPON].WoundPotential;
-                weaponStunAmount = attacker.Inventory.EquippedItems[EquipmentLocation.WEAPON].StunAmount;
+                if (attacker.Inventory.EquippedItems.ContainsKey(EquipmentLocation.WEAPON) && attacker.Anatomy.RightArm > 0)
+                {
+                    //Do we have a weapon and an arm to use it?
+                    weaponDiceRolls = attacker.Inventory.EquippedItems[EquipmentLocation.WEAPON].DamageDice;
+                    weaponWoundPotential = attacker.Inventory.EquippedItems[EquipmentLocation.WEAPON].WoundPotential;
+                    weaponStunAmount = attacker.Inventory.EquippedItems[EquipmentLocation.WEAPON].StunAmount;
+                }
+            }
+            else
+            {
+                //Grab the weapon from the BOW slot
+                if (attacker.Inventory.EquippedItems.ContainsKey(EquipmentLocation.BOW) && attacker.Anatomy.RightArm > 0 && attacker.Anatomy.LeftArm > 0)
+                {
+                    weaponDiceRolls = attacker.Inventory.EquippedItems[EquipmentLocation.BOW].DamageDice;
+                    weaponWoundPotential = attacker.Inventory.EquippedItems[EquipmentLocation.BOW].WoundPotential;
+                    weaponStunAmount = attacker.Inventory.EquippedItems[EquipmentLocation.BOW].StunAmount;
+                }
+                else
+                {
+                    //Firing with a destroyed upper body? For shame
+                    feedback.Add(new LogFeedback(null,Color.Red,"You are unable to use a ranged weapon under these conditions"));
+                }
             }
 
             DamageType damageType = DamageType.SLASH;
@@ -504,6 +522,11 @@ namespace DivineRightGame.CombatHandling
                 //The attacker learned something
                 attacker.Attributes.IncreaseSkill(SkillName.FIGHTER);
 
+                if (distance > 2)
+                {
+                    attacker.Attributes.IncreaseSkill(SkillName.ARCHER);
+                }
+                else
                 //Are they armed?
                 if (attacker.Inventory.EquippedItems.ContainsKey(EquipmentLocation.WEAPON))
                 {
