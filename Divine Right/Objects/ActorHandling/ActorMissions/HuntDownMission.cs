@@ -19,6 +19,13 @@ namespace DRObjects.ActorHandling.ActorMissions
             get { return EnemyThought.WALK; }
         }
 
+        public bool isRetainable = true;
+
+        public override bool IsRetainable
+        {
+            get { return isRetainable; }
+        }
+
         public Stack<MapCoordinate> Coordinates { get; set; }
         public MapCoordinate TargetCoordinate { get; set; }
         public Actor Target { get; set; }

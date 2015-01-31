@@ -11,6 +11,7 @@ using DRObjects.GraphicsEngineObjects.Abstract;
 using DRObjects.Enums;
 using DRObjects.Items.Archetypes.Local;
 using DRObjects.ActorHandling.CharacterSheet.Enums;
+using DRObjects.ActorHandling.ActorMissions;
 
 namespace DivineRightGame.CombatHandling
 {
@@ -180,6 +181,17 @@ namespace DivineRightGame.CombatHandling
             }
 
             int distance = attacker.MapCharacter.Coordinate - defender.MapCharacter.Coordinate; //This will later be used for ranged attacks
+
+            if (distance >= 2)
+            {
+                //If the defender is not the character, get thhe defender to walk to the attacked location
+                if (!defender.IsPlayerCharacter)
+                {
+                    defender.MissionStack.Push(defender.CurrentMission);
+                    //It's not retainable, so if it's preempted by another mission he won't walk back to the attacked location for nothing
+                    defender.CurrentMission = new WalkToMission() { isRetainable = false, TargetCoordinate = attacker.MapCharacter.Coordinate };
+                }
+            }
 
             //Do we succeed in the attack?
             int atk = 0;

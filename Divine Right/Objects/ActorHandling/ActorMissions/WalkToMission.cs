@@ -22,6 +22,13 @@ namespace DRObjects.ActorHandling.ActorMissions
         public Stack<MapCoordinate> Coordinates { get; set; }
         public MapCoordinate TargetCoordinate { get; set; }
 
+        public bool isRetainable = true;
+
+        public override bool IsRetainable
+        {
+            get { return isRetainable; }
+        }
+
         /// <summary>
         /// How close it is acceptable to be to count as having reached the point
         /// </summary>

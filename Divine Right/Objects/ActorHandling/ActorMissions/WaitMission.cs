@@ -33,5 +33,10 @@ namespace DRObjects.ActorHandling.ActorMissions
         {
             get { return EnemyThought.WAIT; }
         }
+
+        public override bool IsRetainable
+        {
+            get { return true; }
+        }
     }
 }

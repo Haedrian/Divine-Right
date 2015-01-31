@@ -22,5 +22,10 @@ namespace DRObjects.ActorHandling.ActorMissions
         {
             get { return EnemyThought.WALK; }
         }
+
+        public override bool IsRetainable
+        {
+            get { return true; }
+        }
     }
 }

@@ -40,6 +40,11 @@ namespace DRObjects.ActorHandling.ActorMissions
             }
         }
 
+        public override bool IsRetainable
+        {
+            get { return true; }
+        }
+
         /// <summary>
         /// The percentage chance that the character loiters instead of taking a step
         /// </summary>
