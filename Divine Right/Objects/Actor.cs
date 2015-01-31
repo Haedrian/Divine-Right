@@ -133,6 +133,11 @@ namespace DRObjects
         public IAnatomy Anatomy { get; set; }
 
         /// <summary>
+        /// Whether this actor uses ranged attacks or not
+        /// </summary>
+        public bool UsesRanged { get; set; }
+
+        /// <summary>
         /// Whether this actor is aggressive or not. Later we'll change this to some other measure - like a list of who they're aggressive towards.
         /// </summary>
         public bool IsAggressive { get; set; }

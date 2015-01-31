@@ -7,6 +7,7 @@ using DRObjects.Graphics;
 using DRObjects.GraphicsEngineObjects;
 using DRObjects.GraphicsEngineObjects.Abstract;
 using Microsoft.Xna.Framework;
+using DRObjects.ActorHandling.CharacterSheet.Enums;
 
 namespace DRObjects.Items.Archetypes.Local
 {
@@ -49,6 +50,38 @@ namespace DRObjects.Items.Archetypes.Local
             get
             {
                 return SpriteManager.GetSprite(LocalSpriteName.ENEMY_THOUGHT_PRONE);
+            }
+        }
+
+        private static SpriteData RogueSprite
+        {
+            get
+            {
+                return SpriteManager.GetSprite(LocalSpriteName.ROGUE_CLASS);
+            }
+        }
+
+        private static SpriteData WarriorSprite
+        {
+            get
+            {
+                return SpriteManager.GetSprite(LocalSpriteName.WARRIOR_CLASS);
+            }
+        }
+
+        private static SpriteData BruteSprite
+        {
+            get
+            {
+                return SpriteManager.GetSprite(LocalSpriteName.BRUTE_CLASS);
+            }
+        }
+
+        private static SpriteData RangedSprite
+        {
+            get
+            {
+                return SpriteManager.GetSprite(LocalSpriteName.RANGED_CLASS);
             }
         }
 
@@ -103,6 +136,26 @@ namespace DRObjects.Items.Archetypes.Local
                             break;
                         default:
                             throw new NotImplementedException("There is no graphic for the thought " + EnemyThought);
+                    }
+                }
+
+                if (this.Actor.EnemyData != null)
+                {
+                    //Add the class
+                    switch (this.Actor.EnemyData.Profession)
+                    {
+                        case ActorProfession.BRUTE:
+                            sprites.Add(BruteSprite);
+                            break;
+                        case ActorProfession.RANGED:
+                            sprites.Add(RangedSprite);
+                            break;
+                        case ActorProfession.ROGUE:
+                            sprites.Add(RogueSprite);
+                            break;
+                        case ActorProfession.WARRIOR:
+                            sprites.Add(WarriorSprite);
+                            break;
                     }
                 }
 

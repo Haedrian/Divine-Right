@@ -120,6 +120,22 @@ namespace DivineRightGame.ActorHandling
                     Profession = ActorProfession.WARRIOR
                 };
 
+                //Pick a profession from warrior, rogue, brute or ranged
+                int professionRandom = GameState.Random.Next(4);
+
+                switch(professionRandom)
+                {
+                    case 0:
+                        actor.EnemyData.Profession = ActorProfession.BRUTE; break;
+                    case 1:
+                        actor.EnemyData.Profession = ActorProfession.RANGED; break;
+                    case 2:
+                        actor.EnemyData.Profession = ActorProfession.WARRIOR; break;
+                    case 3:
+                        actor.EnemyData.Profession = ActorProfession.RANGED; break;
+                }
+
+
                 actor.FeedingLevel = FeedingLevel.FULL;
                 actor.Gender = (Gender)Enum.Parse(typeof(Gender), chosen[13]);
 
@@ -557,7 +573,7 @@ namespace DivineRightGame.ActorHandling
 
             if (profession == ActorProfession.WARRIOR)
             {
-                //Prefer Brawn, Agil, Perc, Intel then Dex
+                //Prefer Brawn, Agil, Perc, Intel then char
                 att.Brawn = results[0];
                 att.Agil = results[1];
                 att.Perc = results[2];
@@ -568,6 +584,48 @@ namespace DivineRightGame.ActorHandling
                 att.Evasion = level;
                 att.HandToHand = level;
 
+            }
+            else if (profession == ActorProfession.BRUTE)
+            {
+                //Prefer Brawn, Agil, perc, Intel then char.
+                att.Brawn = results[0];
+                att.Agil = results[1];
+                att.Perc = results[2];
+                att.Intel = results[3];
+                att.Char = results[4];
+
+                //Combat skills - give him evasion and attack in an amount equal to level. More hand to hand, less evasion
+                att.Evasion = level - 2; 
+                att.HandToHand = level + 2;
+            }
+            else if (profession == ActorProfession.RANGED)
+            {
+                //Prefer Perc, Agil, Brawn, Intel then char
+                att.Perc = results[0];
+                att.Agil = results[1];
+                att.Brawn = results[2];
+                att.Intel = results[3];
+                att.Char = results[4];
+
+                //Combat skills - give him evasion and attack in an amount equal to level.
+                att.Evasion = level;
+                att.HandToHand = level;
+
+                actor.UsesRanged = true;
+                
+            }
+            else if (profession == ActorProfession.ROGUE)
+            {
+                //Prefer agil, brawn, perc, intel than char
+                att.Agil = results[0];
+                att.Brawn = results[1];
+                att.Perc = results[2];
+                att.Intel = results[3];
+                att.Char = results[4];
+
+                //Combat skills - give him evasion and attack in an amount equal to level. +2 to evasion -2 to H2H
+                att.Evasion = level +2;
+                att.HandToHand = level -2;
             }
             else if (profession == ActorProfession.WORKER || profession == ActorProfession.MERCHANT || profession == ActorProfession.RICH)
             {

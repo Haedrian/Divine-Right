@@ -12,6 +12,10 @@ namespace DRObjects.ActorHandling.CharacterSheet.Enums
     public enum ActorProfession
     {
         WARRIOR,
+        ROGUE,
+        RANGED,
+        BRUTE,
+
         RICH,
         WORKER,
         MERCHANT,
