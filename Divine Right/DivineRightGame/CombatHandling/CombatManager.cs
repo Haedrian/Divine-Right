@@ -286,7 +286,7 @@ namespace DivineRightGame.CombatHandling
                         {
                             Coord = new MapCoordinate(defender.MapCharacter.Coordinate),
                             Graphic = SpriteManager.GetSprite(distance < 2 ? InterfaceSpriteName.SWORD_BLOCKED : InterfaceSpriteName.BOW_BLOCKED),
-                            LifeTime = attacker.IsPlayerCharacter ? 1 : 2
+                            LifeTime = attacker.IsPlayerCharacter ? 2 : 2
                         });
 
                         return feedback.ToArray();
@@ -333,7 +333,7 @@ namespace DivineRightGame.CombatHandling
                     {
                         Coord = new MapCoordinate(defender.MapCharacter.Coordinate),
                         Graphic = SpriteManager.GetSprite(distance < 2 ? InterfaceSpriteName.SWORD_ARMOUR : InterfaceSpriteName.BOW_ARMOUR),
-                        LifeTime = attacker.IsPlayerCharacter ? 1 : 2
+                        LifeTime = attacker.IsPlayerCharacter ? 2 : 2
                     });
 
                     return feedback.ToArray();
@@ -393,7 +393,7 @@ namespace DivineRightGame.CombatHandling
                 {
                     Coord = new MapCoordinate(defender.MapCharacter.Coordinate),
                     Graphic = SpriteManager.GetSprite(distance < 2 ? InterfaceSpriteName.SWORD_HIT : InterfaceSpriteName.BOW_HIT),
-                    LifeTime = attacker.IsPlayerCharacter ? 1 : 2
+                    LifeTime = attacker.IsPlayerCharacter ? 2 : 2
                 });
 
 
@@ -527,7 +527,7 @@ namespace DivineRightGame.CombatHandling
                 {
                     Coord = new MapCoordinate(defender.MapCharacter.Coordinate),
                     Graphic = SpriteManager.GetSprite(distance < 2 ? InterfaceSpriteName.SWORD_BLOCKED : InterfaceSpriteName.BOW_BLOCKED),
-                    LifeTime = (attacker.IsPlayerCharacter ? 1 : 2 )
+                    LifeTime = (attacker.IsPlayerCharacter ? 2 : 2 )
                 });
             }
 
