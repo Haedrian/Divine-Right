@@ -150,7 +150,7 @@ namespace DRObjects.Items.Archetypes.Local
                         case ActorProfession.RANGED:
                             sprites.Add(RangedSprite);
                             break;
-                        case ActorProfession.ROGUE:
+                        case ActorProfession.DEFENDER:
                             sprites.Add(RogueSprite);
                             break;
                         case ActorProfession.WARRIOR:

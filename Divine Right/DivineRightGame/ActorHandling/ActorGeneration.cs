@@ -80,7 +80,7 @@ namespace DivineRightGame.ActorHandling
         /// <returns></returns>
         public static Actor CreateActor(OwningFactions owner, int skillLevel)
         {
-            int levelToCreate = GameState.Random.Next((int)(skillLevel * 0.75) > 0 ?(int)(skillLevel * 0.75) : 0 , (int)(skillLevel * 1.25));
+            int levelToCreate = GameState.Random.Next((int)(skillLevel * 0.75) > 0 ? (int)(skillLevel * 0.75) : 0, (int)(skillLevel * 1.25));
 
             //Get all the data from the database and we'll make our own filtering
             var dictionary = DatabaseHandling.GetDatabase(Archetype.ACTORS);
@@ -123,7 +123,7 @@ namespace DivineRightGame.ActorHandling
                 //Pick a profession from warrior, rogue, brute or ranged
                 int professionRandom = GameState.Random.Next(4);
 
-                switch(professionRandom)
+                switch (professionRandom)
                 {
                     case 0:
                         actor.EnemyData.Profession = ActorProfession.BRUTE; break;
@@ -141,7 +141,7 @@ namespace DivineRightGame.ActorHandling
 
                 actor.Inventory = new ActorInventory();
 
-                actor.Inventory.EquippedItems = GenerateEquippedItems(Int32.Parse(chosen[12]));
+                actor.Inventory.EquippedItems = GenerateEquippedItems(Int32.Parse(chosen[12]),actor.EnemyData.Profession);
 
                 //Add all of those into the inventory
                 foreach (var item in actor.Inventory.EquippedItems.Values)
@@ -158,7 +158,7 @@ namespace DivineRightGame.ActorHandling
                 actor.IsStunned = false;
 
                 //For fixing LoS
-                actor.Attributes.Perc= Int32.Parse(chosen[9])-2;
+                actor.Attributes.Perc = Int32.Parse(chosen[9]) - 2;
 
                 actor.Name = ActorNameGenerator.CanGenerateName(chosen[5]) ? ActorNameGenerator.GenerateName(chosen[5], actor.Gender) : chosen[1];
 
@@ -462,7 +462,7 @@ namespace DivineRightGame.ActorHandling
             DRObjects.Actor actor = new DRObjects.Actor();
             actor.EnemyData = data;
             actor.IsPlayerCharacter = false;
-           // actor.LineOfSight = data.EnemyLineOfSight;
+            // actor.LineOfSight = data.EnemyLineOfSight;
             actor.UniqueId = Guid.NewGuid();
             actor.IsAggressive = aggressivity > 0;
             actor.Gender = (Gender)Enum.Parse(typeof(Gender), selected[12]);
@@ -595,7 +595,7 @@ namespace DivineRightGame.ActorHandling
                 att.Char = results[4];
 
                 //Combat skills - give him evasion and attack in an amount equal to level. More hand to hand, less evasion
-                att.Evasion = level - 2; 
+                att.Evasion = level - 2;
                 att.HandToHand = level + 2;
             }
             else if (profession == ActorProfession.RANGED)
@@ -612,9 +612,9 @@ namespace DivineRightGame.ActorHandling
                 att.HandToHand = level;
 
                 actor.UsesRanged = true;
-                
+
             }
-            else if (profession == ActorProfession.ROGUE)
+            else if (profession == ActorProfession.DEFENDER)
             {
                 //Prefer agil, brawn, perc, intel than char
                 att.Agil = results[0];
@@ -624,8 +624,8 @@ namespace DivineRightGame.ActorHandling
                 att.Char = results[4];
 
                 //Combat skills - give him evasion and attack in an amount equal to level. +2 to evasion -2 to H2H
-                att.Evasion = level +2;
-                att.HandToHand = level -2;
+                att.Evasion = level + 2;
+                att.HandToHand = level - 2;
             }
             else if (profession == ActorProfession.WORKER || profession == ActorProfession.MERCHANT || profession == ActorProfession.RICH)
             {
@@ -669,15 +669,26 @@ namespace DivineRightGame.ActorHandling
         }
 
         /// <summary>
-        /// Generates a set of equipped items, not exceeding the total cost. For now will only work on warriors
+        /// Generates a set of equipped items, not exceeding the total cost. If actor profession is not passed, will assume a balanced warrior, otherwise will emphasise on the profession
         /// </summary>
         /// <returns></returns>
-        public static Dictionary<EquipmentLocation, InventoryItem> GenerateEquippedItems(int totalCost)
+        public static Dictionary<EquipmentLocation, InventoryItem> GenerateEquippedItems(int totalCost, ActorProfession? profession = null)
         {
             Dictionary<EquipmentLocation, InventoryItem> equipped = new Dictionary<EquipmentLocation, InventoryItem>();
 
             //Decide what percentage to spend on the weapon, the rest will be armour
             int weaponPercentage = 3 + GameState.Random.Next(8);
+
+            if (profession.HasValue && profession.Value == ActorProfession.BRUTE)
+            {
+                //Spend more on weapons, and less on armour
+                weaponPercentage += 2;
+            }
+            else if (profession.HasValue && profession.Value == ActorProfession.DEFENDER)
+            {
+                //Spend less on weapon, and more on armour
+                weaponPercentage -= 2;
+            }
 
             InventoryItemManager mgr = new InventoryItemManager();
 
@@ -685,15 +696,40 @@ namespace DivineRightGame.ActorHandling
 
             int moneyForWeapon = moneyLeft * weaponPercentage / 10;
 
-            //Buy the weapon
-            var weapon = mgr.GetBestCanAfford("WEAPON", moneyForWeapon);
+            //If it's a ranged user, give him a ranged one instead of a WEAPON
 
-            if (weapon != null)
+            InventoryItem weapon = null;
+
+            if (profession.HasValue && profession.Value == ActorProfession.RANGED)
             {
-                //Equip it
-                equipped.Add(EquipmentLocation.WEAPON, weapon);
-                //And reduce the value
-                moneyLeft -= weapon.BaseValue;
+                weapon = mgr.GetBestCanAfford("BOW", moneyForWeapon);
+
+                if (weapon != null)
+                {
+                    //Equip it
+                    equipped.Add(EquipmentLocation.BOW, weapon);
+                    //And reduce the value
+                    moneyLeft -= weapon.BaseValue;
+                }
+
+                //We'll also need a hand to hand weapon
+                moneyForWeapon /= 3; //Buy one a third of the price
+
+            }
+
+            if (moneyLeft > moneyForWeapon)
+            {
+
+                //Buy the weapon
+                weapon = mgr.GetBestCanAfford("WEAPON", moneyForWeapon);
+
+                if (weapon != null)
+                {
+                    //Equip it
+                    equipped.Add(EquipmentLocation.WEAPON, weapon);
+                    //And reduce the value
+                    moneyLeft -= weapon.BaseValue;
+                }
             }
 
             //Now let's buy the rest of the items. For now let's divide everything equally and try to get everyything at least

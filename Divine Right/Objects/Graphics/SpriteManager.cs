@@ -764,9 +764,9 @@ namespace DRObjects.Graphics
             AddLocalSprite(LocalSpriteName.ZOMBIE_6, ENEMIES, 5, 8);
 
             AddLocalSprite(LocalSpriteName.ROGUE_CLASS, ENEMIES, 0, 9);
-            AddLocalSprite(LocalSpriteName.WARRIOR_CLASS, ENEMIES, 0, 9);
-            AddLocalSprite(LocalSpriteName.BRUTE_CLASS, ENEMIES, 0, 9);
-            AddLocalSprite(LocalSpriteName.RANGED_CLASS, ENEMIES, 0, 9);
+            AddLocalSprite(LocalSpriteName.WARRIOR_CLASS, ENEMIES, 1, 9);
+            AddLocalSprite(LocalSpriteName.BRUTE_CLASS, ENEMIES, 2, 9);
+            AddLocalSprite(LocalSpriteName.RANGED_CLASS, ENEMIES, 3, 9);
 
             AddLocalSprite(LocalSpriteName.MOOSE, ANIMALS, 0, 0);
             AddLocalSprite(LocalSpriteName.RAT, ANIMALS, 1, 0);
