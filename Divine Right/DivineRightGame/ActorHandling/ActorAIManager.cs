@@ -148,30 +148,45 @@ namespace DivineRightGame.ActorHandling
         {
             MapCoordinate playerLocation = GameState.PlayerCharacter.MapCharacter.Coordinate;
 
-            //Is he seeing the player character? TODO: LATER WE NEED TO UPDATE THIS FOR RANGED ATTACKS
-            if (actor.IsAggressive && Math.Abs(actor.MapCharacter.Coordinate - playerLocation) <= 1)
+            if (actor.UsesRanged)
             {
-                //He's there. Push the current mission into the stack and go on the attack
-                actor.MissionStack.Push(actor.CurrentMission);
-                actor.CurrentMission = new AttackMission(GameState.PlayerCharacter);
-                return new ActionFeedback[] { };
-            }
-            else if (actor.IsAggressive && Math.Abs(actor.MapCharacter.Coordinate - playerLocation) < actor.LineOfSight) //TODO: LATER WE NEED TO UPDATE THIS FOR RANGED ATTACKS
-            {
-                //He's there. Push the current mission into the stack and follow him
-                actor.MissionStack.Push(actor.CurrentMission);
-                actor.CurrentMission = new HuntDownMission()
+                //Is he a ranged user and seeing the player character
+                if (actor.IsAggressive && actor.MapCharacter.Coordinate - playerLocation <= actor.LineOfSight)
                 {
-                    Target = GameState.PlayerCharacter,
-                    TargetCoordinate = GameState.PlayerCharacter.MapCharacter.Coordinate
-                };
+                    //Attack!
+                    actor.MissionStack.Push(actor.CurrentMission);
 
-                return new ActionFeedback[] { };
+                    actor.CurrentMission = new AttackMission(GameState.PlayerCharacter);
+                }
+
+            }
+            else
+            {
+                //Is he seeing the player character? 
+                if (actor.IsAggressive && Math.Abs(actor.MapCharacter.Coordinate - playerLocation) <= 1)
+                {
+                    //He's there. Push the current mission into the stack and go on the attack
+                    actor.MissionStack.Push(actor.CurrentMission);
+                    actor.CurrentMission = new AttackMission(GameState.PlayerCharacter);
+                    return new ActionFeedback[] { };
+                }
+                else if (actor.IsAggressive && Math.Abs(actor.MapCharacter.Coordinate - playerLocation) < actor.LineOfSight)
+                {
+                    //He's there. Push the current mission into the stack and follow him
+                    actor.MissionStack.Push(actor.CurrentMission);
+                    actor.CurrentMission = new HuntDownMission()
+                    {
+                        Target = GameState.PlayerCharacter,
+                        TargetCoordinate = GameState.PlayerCharacter.MapCharacter.Coordinate
+                    };
+
+                    return new ActionFeedback[] { };
+                }
             }
 
             //Perform an action accordingly
             //Is he outside of the patrol area?
-            else if (!mission.WanderRectangle.Contains(actor.MapCharacter.Coordinate.X, actor.MapCharacter.Coordinate.Y))
+            if (!mission.WanderRectangle.Contains(actor.MapCharacter.Coordinate.X, actor.MapCharacter.Coordinate.Y))
             {
                 //Send him back.
                 WalkToMission walkMission = new WalkToMission();
@@ -234,33 +249,44 @@ namespace DivineRightGame.ActorHandling
         {
             List<ActionFeedback> feedback = new List<ActionFeedback>();
 
-            if (Math.Abs(mission.AttackTarget.MapCharacter.Coordinate - actor.MapCharacter.Coordinate) > actor.LineOfSight) //LATER WE HANDLE THIS FOR RANGED ATTACKS
+            if (Math.Abs(mission.AttackTarget.MapCharacter.Coordinate - actor.MapCharacter.Coordinate) > actor.LineOfSight)
             {
                 //Ran away - cancel the mission
                 actor.CurrentMission = null;
             }
-            else if (Math.Abs(mission.AttackTarget.MapCharacter.Coordinate - actor.MapCharacter.Coordinate) > 1)
+            else 
             {
-                //Hunt him down!
-                actor.CurrentMission = new HuntDownMission()
-                {
-                    Target = mission.AttackTarget,
-                    TargetCoordinate = mission.AttackTarget.MapCharacter.Coordinate
-                };
-            }
-            else
-            {
-                if (actor.IsAggressive && CombatManager.GetRandomAttackLocation(actor, mission.AttackTarget).HasValue) //we can hit them
+                if (actor.UsesRanged)
                 {
                     //Attack!
                     return CombatManager.Attack(actor, mission.AttackTarget, CombatManager.GetRandomAttackLocation(actor, mission.AttackTarget).Value);
-
                 }
-                else
+                else 
                 {
-                    //TODO: Run away!
-                }
+                    if (Math.Abs(mission.AttackTarget.MapCharacter.Coordinate - actor.MapCharacter.Coordinate) > 1)
+                    {
+                        //Hunt him down!
+                        actor.CurrentMission = new HuntDownMission()
+                        {
+                            Target = mission.AttackTarget,
+                            TargetCoordinate = mission.AttackTarget.MapCharacter.Coordinate
+                        };
+                    }
+                    else
+                    {
+                        if (actor.IsAggressive && CombatManager.GetRandomAttackLocation(actor, mission.AttackTarget).HasValue) //we can hit them
+                        {
+                            //Attack!
+                            return CombatManager.Attack(actor, mission.AttackTarget, CombatManager.GetRandomAttackLocation(actor, mission.AttackTarget).Value);
 
+                        }
+                        else
+                        {
+                            //TODO: Run away!
+                        }
+
+                    }
+                }
             }
 
             return new ActionFeedback[] { };
@@ -268,11 +294,24 @@ namespace DivineRightGame.ActorHandling
 
         public static ActionFeedback[] HuntDownMission(HuntDownMission mission, Actor actor)
         {
-            //Are we near the mission point?
-            if (Math.Abs(actor.MapCharacter.Coordinate - mission.Target.MapCharacter.Coordinate) <= 1)
+            if (actor.UsesRanged)
             {
-                //MIssion is done. Attack!
-                actor.CurrentMission = new AttackMission(mission.Target);
+                //Are we within range?
+                if (actor.MapCharacter.Coordinate - mission.Target.MapCharacter.Coordinate <= actor.LineOfSight)
+                {
+                    //Attack!
+                    actor.CurrentMission = new AttackMission(mission.Target);
+                    return new ActionFeedback[] { };
+                }
+            }
+            else
+            {
+                //Are we near the mission point?
+                if (Math.Abs(actor.MapCharacter.Coordinate - mission.Target.MapCharacter.Coordinate) <= 1)
+                {
+                    //MIssion is done. Attack!
+                    actor.CurrentMission = new AttackMission(mission.Target);
+                }
             }
 
             if (Math.Abs(mission.Target.MapCharacter.Coordinate - actor.MapCharacter.Coordinate) > actor.LineOfSight)
@@ -314,15 +353,22 @@ namespace DivineRightGame.ActorHandling
         {
             if (actor.IsAggressive && Math.Abs(actor.MapCharacter.Coordinate - GameState.PlayerCharacter.MapCharacter.Coordinate) < actor.LineOfSight)
             {
-                //Can we see the character?
-                //He's there. Push the current mission into the stack and follow him
-                actor.MissionStack.Push(actor.CurrentMission);
-                actor.CurrentMission = new HuntDownMission()
+                if (actor.UsesRanged)
                 {
-                    Target = GameState.PlayerCharacter,
-                    TargetCoordinate = GameState.PlayerCharacter.MapCharacter.Coordinate
-                };
-
+                    //We can see him! Attack!
+                    actor.CurrentMission = new AttackMission(GameState.PlayerCharacter);
+                }
+                else
+                {
+                    //Can we see the character?
+                    //He's there. Push the current mission into the stack and follow him
+                    actor.MissionStack.Push(actor.CurrentMission);
+                    actor.CurrentMission = new HuntDownMission()
+                    {
+                        Target = GameState.PlayerCharacter,
+                        TargetCoordinate = GameState.PlayerCharacter.MapCharacter.Coordinate
+                    };
+                }
                 return new ActionFeedback[] { };
             }
 
@@ -413,7 +459,7 @@ namespace DivineRightGame.ActorHandling
             return new ActionFeedback[] { };
         }
 
-        public static ActionFeedback[] PatrolMission(PatrolMission mission,Actor actor)
+        public static ActionFeedback[] PatrolMission(PatrolMission mission, Actor actor)
         {
             //Create a move to mission which moves the actor to the point of interest
             PointOfInterest poi = GameState.LocalMap.PointsOfInterest[GameState.Random.Next(GameState.LocalMap.PointsOfInterest.Count)];
@@ -432,7 +478,7 @@ namespace DivineRightGame.ActorHandling
             return new ActionFeedback[] { };
         }
 
-        public static ActionFeedback[] PatrolRouteMission(PatrolRouteMission mission,Actor actor)
+        public static ActionFeedback[] PatrolRouteMission(PatrolRouteMission mission, Actor actor)
         {
             //Push it back on the stack
             actor.MissionStack.Push(mission);
@@ -451,7 +497,7 @@ namespace DivineRightGame.ActorHandling
             //Log it
             Console.WriteLine("Actor " + actor.ToString() + " is going to" + wTM.TargetCoordinate.ToString() + " as part of his patrol route");
 
-            return new ActionFeedback[]{};
+            return new ActionFeedback[] { };
         }
     }
 }

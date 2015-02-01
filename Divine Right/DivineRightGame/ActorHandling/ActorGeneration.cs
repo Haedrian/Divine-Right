@@ -107,9 +107,7 @@ namespace DivineRightGame.ActorHandling
                 //Now we can generate the actor itself
                 Actor actor = new Actor();
                 actor.Anatomy = GenerateAnatomy(chosen[5]);
-                actor.Attributes = GenerateAttributes(chosen[5], ActorProfession.WARRIOR, levelToCreate, actor);
 
-                actor.Attributes.Actor = actor;
                 actor.EnemyData = new EnemyData()
                 {
                     EnemyID = Int32.Parse(chosen[0]),
@@ -135,8 +133,11 @@ namespace DivineRightGame.ActorHandling
                         actor.EnemyData.Profession = ActorProfession.RANGED; break;
                 }
 
+                actor.Attributes = GenerateAttributes(chosen[5], actor.EnemyData.Profession, levelToCreate, actor);
+                actor.Attributes.Actor = actor;
 
                 actor.FeedingLevel = FeedingLevel.FULL;
+
                 actor.Gender = (Gender)Enum.Parse(typeof(Gender), chosen[13]);
 
                 actor.Inventory = new ActorInventory();
