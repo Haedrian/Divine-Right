@@ -173,7 +173,7 @@ namespace DivineRightGame.CombatHandling
         /// <returns></returns>
         public static ActionFeedback[] Attack(Actor attacker, Actor defender, AttackLocation location)
         {
-            List<ActionFeedback> feedback = new List<ActionFeedback>();
+            List<ActionFeedback> feedback = new List<ActionFeedback>(); 
 
             if (defender.MapCharacter == null)
             {
