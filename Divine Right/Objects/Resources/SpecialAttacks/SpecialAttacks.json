@@ -1,0 +1,54 @@
+﻿[
+    {
+        "AttackName": "Bleeding Strike",
+        "Description": "If this attack hits, the target will bleed at a higher rate",
+        "SpecialAttackType": "BLEEDING_SHOT",
+        "SpriteName": "BLEEDING_STRIKE",
+        "RequiredSkillLevel": 2,
+        "TimeOut": 10,
+        "TimeOutLeft": 0,
+        "Effectivness": [
+            {
+                "WeaponType": "AXE",
+                "EffectivnessLevel": 3,
+                "EffectValue": 3
+            },
+            {
+                "WeaponType": "SWORD",
+                "EffectivnessLevel": 2,
+                "EffectValue": 5
+            },
+            {
+                "WeaponType": "BOW",
+                "EffectivnessLevel": 1,
+                "EffectValue": 7
+            }
+        ]
+    },
+    {
+        "AttackName": "Accurate Strike",
+        "Description": "This attack has a higher chance to hit than usual",
+        "SpecialAttackType": "ACCURATE_SHOT",
+        "SpriteName": "ACCURATE_STRIKE",
+        "RequiredSkillLevel": 4,
+        "TimeOut": 10,
+        "TimeOutLeft": 0,
+        "Effectivness": [
+            {
+                "WeaponType": "SWORD",
+                "EffectivnessLevel": 1,
+                "EffectValue": 4
+            },
+            {
+                "WeaponType": "AXE",
+                "EffectivnessLevel": 2,
+                "EffectValue": 3
+            },
+            {
+                "WeaponType": "BOW",
+                "EffectivnessLevel": 3,
+                "EffectValue":2
+            }
+        ]
+    }
+]

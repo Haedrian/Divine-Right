@@ -76,6 +76,16 @@ namespace DRObjects.Graphics
         BOW_BLOCKED,
         BOW_HIT,
         BOW_ARMOUR,
-        BOW
+        BOW,
+        BLEEDING_STRIKE,
+        ACCURATE_STRIKE,
+        STUNNING_STRIKE,
+        POWER_STRIKE,
+        RAPID_STRIKES,
+        ARMOUR_PIERCING_STRIKE,
+        SUNDER,
+        DISARM,
+        WHIRLWIND,
+        PUSHBACK
     }
 }

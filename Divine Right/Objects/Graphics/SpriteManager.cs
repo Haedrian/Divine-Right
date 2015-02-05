@@ -934,6 +934,17 @@ namespace DRObjects.Graphics
             interfaceSprites[(int)InterfaceSpriteName.BOW_HIT] = new SpriteData(CHARACTER_SHEET, new Rectangle(400, 100, 50, 50));
             interfaceSprites[(int)InterfaceSpriteName.BOW_ARMOUR] = new SpriteData(CHARACTER_SHEET, new Rectangle(450, 100, 50, 50));
 
+            interfaceSprites[(int)InterfaceSpriteName.BLEEDING_STRIKE] = new SpriteData(CHARACTER_SHEET, new Rectangle(0, 150, 50, 50));
+            interfaceSprites[(int)InterfaceSpriteName.ACCURATE_STRIKE] = new SpriteData(CHARACTER_SHEET, new Rectangle(50, 150, 50, 50));
+            interfaceSprites[(int)InterfaceSpriteName.STUNNING_STRIKE] = new SpriteData(CHARACTER_SHEET, new Rectangle(100, 150, 50, 50));
+            interfaceSprites[(int)InterfaceSpriteName.POWER_STRIKE] = new SpriteData(CHARACTER_SHEET, new Rectangle(150, 150, 50, 50));
+            interfaceSprites[(int)InterfaceSpriteName.RAPID_STRIKES] = new SpriteData(CHARACTER_SHEET, new Rectangle(200, 150, 50, 50));
+            interfaceSprites[(int)InterfaceSpriteName.ARMOUR_PIERCING_STRIKE] = new SpriteData(CHARACTER_SHEET, new Rectangle(250, 150, 50, 50));
+            interfaceSprites[(int)InterfaceSpriteName.SUNDER] = new SpriteData(CHARACTER_SHEET, new Rectangle(300, 150, 50, 50));
+            interfaceSprites[(int)InterfaceSpriteName.DISARM] = new SpriteData(CHARACTER_SHEET, new Rectangle(350, 150, 50, 50));
+            interfaceSprites[(int)InterfaceSpriteName.WHIRLWIND] = new SpriteData(CHARACTER_SHEET, new Rectangle(400, 150, 50, 50));
+            interfaceSprites[(int)InterfaceSpriteName.PUSHBACK] = new SpriteData(CHARACTER_SHEET, new Rectangle(450, 150, 50, 50));
+
             interfaceSprites[(int)InterfaceSpriteName.BANNER_GREEN] = new SpriteData(BANNERS, new Rectangle(1, 0, 60, 100));
             interfaceSprites[(int)InterfaceSpriteName.BANNER_YELLOW] = new SpriteData(BANNERS, new Rectangle(71, 0, 60, 100));
             interfaceSprites[(int)InterfaceSpriteName.BANNER_RED] = new SpriteData(BANNERS, new Rectangle(141, 0, 60, 100));

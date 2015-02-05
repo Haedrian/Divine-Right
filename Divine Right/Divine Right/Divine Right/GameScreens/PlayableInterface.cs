@@ -37,6 +37,7 @@ using DivineRightGame.RayTracing;
 using DRObjects.Feedback;
 using DivineRightGame.Deity;
 using DivineRightGame.CombatHandling;
+using DRObjects.ActorHandling.SpecialAttacks;
 
 namespace Divine_Right.GameScreens
 {
@@ -320,6 +321,8 @@ namespace Divine_Right.GameScreens
 
                 
                 InventoryItem item = iim.GetBestCanAfford("WEAPON", 500);
+
+                var attacks = SpecialAttack.GetStandardSpecialAttacks();
 
                 item.InInventory = true;
 

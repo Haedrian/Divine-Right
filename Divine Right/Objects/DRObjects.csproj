@@ -108,6 +108,9 @@
     <Compile Include="ActorHandling\Enums\Gender.cs" />
     <Compile Include="ActorHandling\EquippedItem.cs" />
     <Compile Include="ActorHandling\RaceData.cs" />
+    <Compile Include="ActorHandling\SpecialAttacks\Effectivness.cs" />
+    <Compile Include="ActorHandling\SpecialAttacks\SpecialAttack.cs" />
+    <Compile Include="ActorHandling\SpecialAttacks\SpecialAttackType.cs" />
     <Compile Include="ActorHandling\VendorDetails.cs" />
     <Compile Include="CivilisationHandling\CivilisationDetails.cs" />
     <Compile Include="Compare\MapCoordinateCompare.cs" />
@@ -617,6 +620,9 @@
     </Content>
     <None Include="Resources\SiteData\SiteData.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\SpecialAttacks\SpecialAttacks.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
