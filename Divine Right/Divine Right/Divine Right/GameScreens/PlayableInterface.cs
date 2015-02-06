@@ -322,8 +322,6 @@ namespace Divine_Right.GameScreens
                 
                 InventoryItem item = iim.GetBestCanAfford("WEAPON", 500);
 
-                var attacks = SpecialAttack.GetStandardSpecialAttacks();
-
                 item.InInventory = true;
 
                 GameState.PlayerCharacter.Inventory.Inventory.Add(item.Category, item);
