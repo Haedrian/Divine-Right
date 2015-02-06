@@ -8,7 +8,7 @@ namespace DRObjects.ActorHandling.SpecialAttacks
     /// <summary>
     /// Define the settings for special effects
     /// </summary>
-    public class SpecialEffectSettings
+    public class SpecialAttackSettings
     {
         /// <summary>
         /// Defines the Point Cost Progression

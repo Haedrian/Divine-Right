@@ -12,8 +12,6 @@ namespace DRObjects.ActorHandling.SpecialAttacks
     [Serializable]
     public class SpecialAttack
     {
-        private static readonly string FILEPATH = "Resources/SpecialAttacks/SpecialAttacks.json";
-
         public string AttackName { get; set; }
 
         /// <summary>
