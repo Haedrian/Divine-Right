@@ -49,7 +49,7 @@
         },
         {
             "Type": "TIMEOUT",
-            "Progressions": [ 15, 13, 12, 10, 8 ],
+            "Progressions": [ 13, 11, 9, 7 ],
             "PointCost": 1
         }
     ]
