@@ -16,16 +16,15 @@ namespace DRObjects.ActorHandling.SpecialAttacks
 
         public string AttackName { get; set; }
 
-        public string Description { get; set; }
-
-        public SpecialAttackType SpecialAttackType { get; set; }
-
-        public InterfaceSpriteName SpriteName { get; set; }
+        /// <summary>
+        /// The required Level [1..10]
+        /// </summary>
+        public int Level { get; set; }
 
         /// <summary>
-        /// The required Fighter Skill Level
+        /// The total point cost which created this
         /// </summary>
-        public int RequiredSkillLevel { get; set; }
+        public int PointCost { get; set; }
 
         /// <summary>
         /// How long it takes to refresh for the next use
@@ -37,44 +36,9 @@ namespace DRObjects.ActorHandling.SpecialAttacks
         /// </summary>
         public int TimeOutLeft { get; set; }
 
-        public List<Effectivness> Effectivness { get; set; }
-    
         /// <summary>
-        /// Get;s the standard list of special attacks
+        /// What this special effect actually does
         /// </summary>
-        /// <returns></returns>
-        public static List<SpecialAttack> GetStandardSpecialAttacks()
-        {
-           //Get it from the JSON
-            string fileContents = String.Empty;
-
-            using (TextReader reader = new StreamReader(FILEPATH))
-            {
-                fileContents = reader.ReadToEnd();
-            }
-
-            var parsed = JsonConvert.DeserializeObject<SpecialAttack[]>(fileContents);
-
-            return parsed.ToList();
-        }
-
-        public SpecialAttack() { }
-    
-        /// <summary>
-        /// Produces a deep clone of the passed special attack
-        /// </summary>
-        /// <param name="attack"></param>
-        public SpecialAttack Clone()
-        {
-            using (var ms = new MemoryStream())
-            {
-                var formatter = new BinaryFormatter();
-                formatter.Serialize(ms, this);
-                ms.Position = 0;
-
-                return (SpecialAttack)formatter.Deserialize(ms);
-            }
-        }
-
+        public List<Effect> Effects { get; set; }
     }
 }

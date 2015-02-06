@@ -8,16 +8,16 @@ namespace DRObjects.ActorHandling.SpecialAttacks
     [Serializable]
     public enum SpecialAttackType
     {
-        BLEEDING_SHOT,
-        ACCURATE_SHOT,
-        STUNNING_SHOT,
-        POWER_SHOT,
-        FLURRY_OF_ATTACKS,
-        PIERCING_SHOT,
+        BLEED,
+        ACCURACY,
+        STUN,
+        DAMAGE,
+        ATTACKS,
+        PIERCING,
         SUNDER,
-        DISARM,
-        WHIRLWIND,
-        PUSH
-
+        PUSH,
+        TARGETS,
+        TIMEOUT
     }
 }
+ 

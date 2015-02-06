@@ -1,54 +1,56 @@
-﻿[
-    {
-        "AttackName": "Bleeding Strike",
-        "Description": "If this attack hits, the target will bleed at a higher rate",
-        "SpecialAttackType": "BLEEDING_SHOT",
-        "SpriteName": "BLEEDING_STRIKE",
-        "RequiredSkillLevel": 2,
-        "TimeOut": 10,
-        "TimeOutLeft": 0,
-        "Effectivness": [
-            {
-                "WeaponType": "AXE",
-                "EffectivnessLevel": 3,
-                "EffectValue": 3
-            },
-            {
-                "WeaponType": "SWORD",
-                "EffectivnessLevel": 2,
-                "EffectValue": 5
-            },
-            {
-                "WeaponType": "BOW",
-                "EffectivnessLevel": 1,
-                "EffectValue": 7
-            }
-        ]
-    },
-    {
-        "AttackName": "Accurate Strike",
-        "Description": "This attack has a higher chance to hit than usual",
-        "SpecialAttackType": "ACCURATE_SHOT",
-        "SpriteName": "ACCURATE_STRIKE",
-        "RequiredSkillLevel": 4,
-        "TimeOut": 10,
-        "TimeOutLeft": 0,
-        "Effectivness": [
-            {
-                "WeaponType": "SWORD",
-                "EffectivnessLevel": 1,
-                "EffectValue": 4
-            },
-            {
-                "WeaponType": "AXE",
-                "EffectivnessLevel": 2,
-                "EffectValue": 3
-            },
-            {
-                "WeaponType": "BOW",
-                "EffectivnessLevel": 3,
-                "EffectValue":2
-            }
-        ]
-    }
-]
+﻿{
+    "PointProgression": [ 5, 7, 8, 9, 10, 11, 12, 13, 14, 15 ],
+
+    "EffectCosts": [
+        {
+            "Type": "BLEED",
+            "Progressions": [ 1, 2, 3, 4, 5 ],
+            "PointCost": 1
+        },
+        {
+            "Type": "ACCURACY",
+            "Progressions": [ 1, 2, 3, 4, 5 ],
+            "PointCost": 1
+        },
+        {
+            "Type": "STUN",
+            "Progressions": [ 1, 2, 3 ],
+            "PointCost": 2
+        },
+        {
+            "Type": "DAMAGE",
+            "Progressions": [ 1, 2, 3, 4 ],
+            "PointCost": 2
+        },
+        {
+            "Type": "ATTACKS",
+            "Progressions": [ 1, 2, 3, 4, 5 ],
+            "PointCost": 3
+        },
+        {
+            "Type": "PIERCING",
+            "Progressions": [ 1, 2, 3, 4, 5 ],
+            "PointCost": 1
+        },
+        {
+            "Type": "SUNDER",
+            "Progressions": [ 1, 2, 3 ],
+            "PointCost": 2
+        },
+        {
+            "Type": "PUSH",
+            "Progressions": [ 1, 2, 3 ],
+            "PointCost": 3
+        },
+        {
+            "Type": "TARGETS",
+            "Progressions": [ 1, 2, 3 ],
+            "PointCost": 4
+        },
+          {
+            "Type": "TIMEOUT",
+            "Progressions": [ 15,13,12,10,8 ],
+            "PointCost": 1
+        },
+    ]
+}

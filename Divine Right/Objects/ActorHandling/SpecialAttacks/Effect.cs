@@ -9,14 +9,9 @@ namespace DRObjects.ActorHandling.SpecialAttacks
     /// <summary>
     /// Defines how effective a special attack is for a particular type of weapon, and the colour to mark it
     /// </summary>
-    public class Effectivness
+    public class Effect
     {
-        public string WeaponType { get; set; }
+        public SpecialAttackType EffectType { get; set; }
         public int EffectValue { get; set; }
-
-        /// <summary>
-        /// [1..3] - 1 being very effective, 2 being less so, 3 being even less
-        /// </summary>
-        public int EffectivnessLevel { get; set; }
     }
 }
