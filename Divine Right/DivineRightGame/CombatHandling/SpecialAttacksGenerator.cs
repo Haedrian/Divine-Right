@@ -24,7 +24,7 @@ namespace DivineRightGame.CombatHandling
         /// </summary>
         /// <param name="level"></param>
         /// <returns></returns>
-        public SpecialAttack GenerateSpecialAttack(int level)
+        public static SpecialAttack GenerateSpecialAttack(int level)
         {
             //Let's see how many points this counts as
             int pointTotal = Settings.PointProgression[level - 1];

@@ -89,7 +89,7 @@ namespace DRObjects.Items.Archetypes.Local
         /// </summary>
         public EquipmentLocation? EquippableLocation { get; set; }
 
-        public InventoryCategory Category { get; set; }
+        public virtual InventoryCategory Category { get; set; }
 
         public override string Description
         {

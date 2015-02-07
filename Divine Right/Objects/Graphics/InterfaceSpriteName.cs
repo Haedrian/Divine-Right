@@ -86,6 +86,11 @@ namespace DRObjects.Graphics
         SUNDER,
         DISARM,
         WHIRLWIND,
-        PUSHBACK
+        PUSHBACK,
+        SA1,
+        SA2,
+        SA3,
+        SA4,
+        SA5
     }
 }

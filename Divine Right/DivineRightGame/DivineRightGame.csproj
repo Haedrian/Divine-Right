@@ -89,6 +89,7 @@
     <Compile Include="CombatHandling\DamageType.cs" />
     <Compile Include="CombatHandling\HealthCheckManager.cs" />
     <Compile Include="CombatHandling\LogMessageStatus.cs" />
+    <Compile Include="CombatHandling\SpecialAttacksGenerator.cs" />
     <Compile Include="Deity\BlessingManager.cs" />
     <Compile Include="EventHandling\EventHandlingManager.cs" />
     <Compile Include="GameStateSaveFile.cs" />

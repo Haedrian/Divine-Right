@@ -104,6 +104,9 @@ namespace Divine_Right.InterfaceComponents.Components
                     case InventoryCategory.POTION:
                         sprite = SpriteManager.GetSprite(InterfaceSpriteName.POTION_ICON);
                         break;
+                    case InventoryCategory.DOCUMENTS:
+                        sprite = SpriteManager.GetSprite(LocalSpriteName.SCROLL);
+                        break;
                     default:
                         throw new NotImplementedException("No code for that particular inventory category");
                 }

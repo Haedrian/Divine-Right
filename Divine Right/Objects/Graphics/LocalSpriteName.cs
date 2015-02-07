@@ -711,5 +711,11 @@ namespace DRObjects.Graphics
         WARRIOR_CLASS,
         BRUTE_CLASS,
         RANGED_CLASS,
+        SCROLL,
+        SA_GREEN,
+        SA_ORANGE,
+        SA_DARKRED,
+        SA_YELLOW,
+        SA_RED,
     }
 }

@@ -870,6 +870,13 @@ namespace DRObjects.Graphics
             AddLocalSprite(LocalSpriteName.ARROWS, INVENTORYITEMS, 5, 12);
             AddLocalSprite(LocalSpriteName.BOLTS, INVENTORYITEMS, 6, 12);
 
+            AddLocalSprite(LocalSpriteName.SCROLL, INVENTORYITEMS, 0, 13);
+            AddLocalSprite(LocalSpriteName.SA_GREEN, INVENTORYITEMS, 1, 13);
+            AddLocalSprite(LocalSpriteName.SA_YELLOW, INVENTORYITEMS, 2, 13);
+            AddLocalSprite(LocalSpriteName.SA_ORANGE, INVENTORYITEMS, 3, 13);
+            AddLocalSprite(LocalSpriteName.SA_DARKRED, INVENTORYITEMS, 4, 13);
+            AddLocalSprite(LocalSpriteName.SA_RED, INVENTORYITEMS, 5, 13);
+
             AddLocalSprite(LocalSpriteName.COINS, INVENTORYITEMS, 0, 4);
 
             AddLocalSprite(LocalSpriteName.POTION_BRAWN,INVENTORYITEMS,0,9);
@@ -944,6 +951,12 @@ namespace DRObjects.Graphics
             interfaceSprites[(int)InterfaceSpriteName.DISARM] = new SpriteData(CHARACTER_SHEET, new Rectangle(350, 150, 50, 50));
             interfaceSprites[(int)InterfaceSpriteName.WHIRLWIND] = new SpriteData(CHARACTER_SHEET, new Rectangle(400, 150, 50, 50));
             interfaceSprites[(int)InterfaceSpriteName.PUSHBACK] = new SpriteData(CHARACTER_SHEET, new Rectangle(450, 150, 50, 50));
+
+            interfaceSprites[(int)InterfaceSpriteName.SA1] = new SpriteData(CHARACTER_SHEET, new Rectangle(0,200,50,50));
+            interfaceSprites[(int)InterfaceSpriteName.SA2] = new SpriteData(CHARACTER_SHEET, new Rectangle(50,200,50,50));
+            interfaceSprites[(int)InterfaceSpriteName.SA3] = new SpriteData(CHARACTER_SHEET, new Rectangle(100,200,50,50));
+            interfaceSprites[(int)InterfaceSpriteName.SA4] = new SpriteData(CHARACTER_SHEET, new Rectangle(150,200,50,50));
+            interfaceSprites[(int)InterfaceSpriteName.SA5] = new SpriteData(CHARACTER_SHEET, new Rectangle(200,200,50,50));
 
             interfaceSprites[(int)InterfaceSpriteName.BANNER_GREEN] = new SpriteData(BANNERS, new Rectangle(1, 0, 60, 100));
             interfaceSprites[(int)InterfaceSpriteName.BANNER_YELLOW] = new SpriteData(BANNERS, new Rectangle(71, 0, 60, 100));

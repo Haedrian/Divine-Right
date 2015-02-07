@@ -112,7 +112,7 @@
     <Compile Include="ActorHandling\SpecialAttacks\SpecialAttack.cs" />
     <Compile Include="ActorHandling\SpecialAttacks\SpecialAttackComponentProgression.cs" />
     <Compile Include="ActorHandling\SpecialAttacks\SpecialAttackType.cs" />
-    <Compile Include="ActorHandling\SpecialAttacks\SpecialEffectSettings.cs" />
+    <Compile Include="ActorHandling\SpecialAttacks\SpecialAttackSettings.cs" />
     <Compile Include="ActorHandling\VendorDetails.cs" />
     <Compile Include="CivilisationHandling\CivilisationDetails.cs" />
     <Compile Include="Compare\MapCoordinateCompare.cs" />
@@ -192,6 +192,7 @@
     <Compile Include="Items\Archetypes\Local\LeaveTownItem.cs" />
     <Compile Include="Items\Archetypes\Local\LocalCharacter.cs" />
     <Compile Include="Items\Archetypes\Local\Potion.cs" />
+    <Compile Include="Items\Archetypes\Local\SpecialAttackScroll.cs" />
     <Compile Include="Items\Archetypes\Local\ToggleItem.cs" />
     <Compile Include="Items\Archetypes\Local\TreasureChest.cs" />
     <Compile Include="Items\Archetypes\Local\SummoningCircle.cs" />

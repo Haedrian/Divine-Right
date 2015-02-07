@@ -15,5 +15,6 @@ namespace DRObjects.Enums
         // RESOURCES
         SUPPLY,
         POTION,
+        DOCUMENTS,
     }
 }
