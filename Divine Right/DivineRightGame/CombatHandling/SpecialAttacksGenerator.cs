@@ -37,7 +37,7 @@ namespace DivineRightGame.CombatHandling
 
             Random random = GameState.Random;
 
-            int attempts = 100;
+            int attempts = 0;
 
             while(pointTotal > 0 && attempts++ < 100)
             {

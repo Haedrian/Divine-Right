@@ -8,6 +8,7 @@ using System.Text;
 
 namespace DRObjects.Items.Archetypes.Local
 {
+    [Serializable]
     /// <summary>
     /// A scroll holding information about a particular special attack
     /// </summary>
@@ -37,7 +38,7 @@ namespace DRObjects.Items.Archetypes.Local
         {
             get
             {
-                return "A scroll containing knowledge about a level " + SpecialAttack.Level + " special attack";
+                return "A level " + SpecialAttack.Level + " special attack scroll. Required Level :" + SpecialAttack.Level;
             }
             set
             {
@@ -95,6 +96,11 @@ namespace DRObjects.Items.Archetypes.Local
             {
                 base.Graphics = value;
             }
+        }
+
+        public SpecialAttackScroll(SpecialAttack attack)
+        {
+            this.SpecialAttack = attack;
         }
 
         public override bool MayContainItems

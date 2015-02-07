@@ -322,6 +322,15 @@ namespace Divine_Right.GameScreens
                 
                 InventoryItem item = iim.GetBestCanAfford("WEAPON", 500);
 
+                GameState.PlayerCharacter.SpecialAttacks[0] = SpecialAttacksGenerator.GenerateSpecialAttack(1);
+                GameState.PlayerCharacter.SpecialAttacks[1] = SpecialAttacksGenerator.GenerateSpecialAttack(2);
+                GameState.PlayerCharacter.SpecialAttacks[2] = SpecialAttacksGenerator.GenerateSpecialAttack(3);
+
+                GameState.PlayerCharacter.SpecialAttacks[1].TimeOutLeft = 5;
+
+              //  GameState.PlayerCharacter.SpecialAttacks[3] = SpecialAttacksGenerator.GenerateSpecialAttack(4);
+               // GameState.PlayerCharacter.SpecialAttacks[4] = SpecialAttacksGenerator.GenerateSpecialAttack(5);
+
                 item.InInventory = true;
 
                 GameState.PlayerCharacter.Inventory.Inventory.Add(item.Category, item);

@@ -9,6 +9,7 @@ using DRObjects.Items.Archetypes.Local;
 using DRObjects.DataStructures;
 using DRObjects.ActorHandling.Enums;
 using DRObjects.ActorHandling.CharacterSheet;
+using DRObjects.ActorHandling.SpecialAttacks;
 
 namespace DRObjects
 {
@@ -180,6 +181,8 @@ namespace DRObjects
         /// </summary>
         public ActorStance CombatStance { get; set; }
 
+        public SpecialAttack[] SpecialAttacks { get; set; }
+
         /// <summary>
         /// Marks the actor as being a member of a site - that is to say, may be removed and regenerated when there is the need to
         /// </summary>
@@ -218,6 +221,7 @@ namespace DRObjects
             this.IsProne = false;
             this.SiteMember = false;
             this.Knowledge = new ActorKnowledge(this);
+            this.SpecialAttacks = new SpecialAttack[] { null, null, null, null, null };
         }
 
     }

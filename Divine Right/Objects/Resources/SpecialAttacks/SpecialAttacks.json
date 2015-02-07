@@ -24,7 +24,7 @@
         },
         {
             "Type": "ATTACKS",
-            "Progressions": [ 1, 2, 3, 4, 5 ],
+            "Progressions": [ 2, 3, 4, 5 ],
             "PointCost": 3
         },
         {
@@ -44,7 +44,7 @@
         },
         {
             "Type": "TARGETS",
-            "Progressions": [ 1, 2, 3 ],
+            "Progressions": [ 2, 3,4 ],
             "PointCost": 4
         },
         {
