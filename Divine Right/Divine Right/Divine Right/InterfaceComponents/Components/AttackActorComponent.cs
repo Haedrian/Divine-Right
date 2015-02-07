@@ -9,6 +9,7 @@ using DRObjects.Graphics;
 using Divine_Right.HelperFunctions;
 using DivineRightGame.CombatHandling;
 using DRObjects.Enums;
+using DRObjects.ActorHandling.SpecialAttacks;
 
 namespace Divine_Right.InterfaceComponents.Components
 {
@@ -58,6 +59,47 @@ namespace Divine_Right.InterfaceComponents.Components
         private Rectangle seperatorRect;
 
         private Rectangle attackButtonRectangle;
+
+        private Rectangle[] saRects;
+
+        //private Rectangle sa1Rect;
+        //private Rectangle sa2Rect;
+        //private Rectangle sa3Rect;
+        //private Rectangle sa4Rect;
+        //private Rectangle sa5Rect;
+
+        //Rectangles of the special attack details
+        private SpecialAttack selectedAttack = null;
+
+        private Rectangle saDetailsRect;
+
+        private Rectangle sadBleedIcon;
+        private Rectangle sadBleedValue;
+
+        private Rectangle sadAccuracyIcon;
+        private Rectangle sadAccuracyValue;
+
+        private Rectangle sadStunIcon;
+        private Rectangle sadStunValue;
+
+        private Rectangle sadDamageIcon;
+        private Rectangle sadDamageValue;
+
+        private Rectangle sadAttacksIcon;
+        private Rectangle sadAttacksValue;
+
+        private Rectangle sadPiercingIcon;
+        private Rectangle sadPiercingValue;
+
+        private Rectangle sadSunderIcon;
+        private Rectangle sadSunderValue;
+
+        private Rectangle sadPushIcon;
+        private Rectangle sadPushValue;
+
+        private Rectangle sadTargetsIcon;
+        private Rectangle sadTargetsValue;
+        //----
 
         private Rectangle closeRect;
 
@@ -245,6 +287,84 @@ namespace Divine_Right.InterfaceComponents.Components
             {
                 batch.DrawString(font, CombatManager.CalculateHitPercentage(attacker, TargetActor, AttackLocation.LEGS) + "%", legsPercentageRect, Alignment.Center, Color.Red);
             }
+
+            int saCount = 0;
+
+            //Let's do the special attacks
+            foreach (SpecialAttack sa in attacker.SpecialAttacks)
+            {
+                saCount++;
+
+                InterfaceSpriteName gfx = (InterfaceSpriteName)Enum.Parse(typeof(InterfaceSpriteName), "SA" + saCount);
+
+                batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.PAPER_TEXTURE), saRects[saCount - 1], Color.White);
+
+                if (sa == null)
+                {
+                    //Blacken it
+                    batch.Draw(content, SpriteManager.GetSprite(gfx), saRects[saCount - 1], Color.Black);
+                }
+                else
+                {
+                    //Is it awaiting timeout?
+                    if (sa.TimeOutLeft != 0)
+                    {
+                        batch.Draw(content, SpriteManager.GetSprite(gfx), saRects[saCount - 1], Color.Orange);
+                        //and draw how much timeout is left)
+                        batch.DrawString(font, sa.TimeOutLeft.ToString(), saRects[saCount - 1], Alignment.Center, Color.Black);
+                    }
+                    else
+                    {
+                        //green!
+                        batch.Draw(content, SpriteManager.GetSprite(gfx), saRects[saCount - 1], Color.Green);
+                    }
+                }
+            }
+
+            //Have we got a special attack selected?
+
+            if (selectedAttack != null)
+            {
+                //Draw the details
+                Rectangle border = new Rectangle(saDetailsRect.X - 2, saDetailsRect.Y - 2, saDetailsRect.Width + 4, saDetailsRect.Height + 4);
+
+                batch.Draw(content, white, border, Color.DarkGray);
+
+                batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.PAPER_TEXTURE), saDetailsRect, Color.White);
+
+                batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.BLEEDING_STRIKE), sadBleedIcon, Color.White);
+                batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.ACCURATE_STRIKE), sadAccuracyIcon, Color.White);
+                batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.STUNNING_STRIKE), sadStunIcon, Color.White);
+                batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.POWER_STRIKE), sadDamageIcon, Color.White);
+                batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.RAPID_STRIKES), sadAttacksIcon, Color.White);
+
+
+                batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.ARMOUR_PIERCING_STRIKE), sadPiercingIcon, Color.White);
+                batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.SUNDER), sadSunderIcon, Color.White);
+                batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.PUSHBACK), sadPushIcon, Color.White);
+                batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.WHIRLWIND), sadTargetsIcon, Color.White);
+
+                string bleedAmount = selectedAttack.Effects.FirstOrDefault(e => e.EffectType == SpecialAttackType.BLEED) != null ? selectedAttack.Effects.FirstOrDefault(e => e.EffectType == SpecialAttackType.BLEED).EffectValue.ToString() : "-";
+                string accuracyAmount = selectedAttack.Effects.FirstOrDefault(e => e.EffectType == SpecialAttackType.ACCURACY) != null ? selectedAttack.Effects.FirstOrDefault(e => e.EffectType == SpecialAttackType.ACCURACY).EffectValue.ToString() : "-";
+                string stunAmount = selectedAttack.Effects.FirstOrDefault(e => e.EffectType == SpecialAttackType.STUN) != null ? selectedAttack.Effects.FirstOrDefault(e => e.EffectType == SpecialAttackType.STUN).EffectValue.ToString() : "-";
+                string damageAmount = selectedAttack.Effects.FirstOrDefault(e => e.EffectType == SpecialAttackType.DAMAGE) != null ? selectedAttack.Effects.FirstOrDefault(e => e.EffectType == SpecialAttackType.DAMAGE).EffectValue.ToString() : "-";
+                string attacksAmount = selectedAttack.Effects.FirstOrDefault(e => e.EffectType == SpecialAttackType.ATTACKS) != null ? selectedAttack.Effects.FirstOrDefault(e => e.EffectType == SpecialAttackType.ATTACKS).EffectValue.ToString() : "-"; ;
+                string piercingAmount = selectedAttack.Effects.FirstOrDefault(e => e.EffectType == SpecialAttackType.PIERCING) != null ? selectedAttack.Effects.FirstOrDefault(e => e.EffectType == SpecialAttackType.PIERCING).EffectValue.ToString() : "-";
+                string sunderAmount = selectedAttack.Effects.FirstOrDefault(e => e.EffectType == SpecialAttackType.SUNDER) != null ? selectedAttack.Effects.FirstOrDefault(e => e.EffectType == SpecialAttackType.SUNDER).EffectValue.ToString() : "-";
+                string pushAmount = selectedAttack.Effects.FirstOrDefault(e => e.EffectType == SpecialAttackType.PUSH) != null ? selectedAttack.Effects.FirstOrDefault(e => e.EffectType == SpecialAttackType.PUSH).EffectValue.ToString() : "-";
+                string targetsAmount = selectedAttack.Effects.FirstOrDefault(e => e.EffectType == SpecialAttackType.TARGETS) != null ? selectedAttack.Effects.FirstOrDefault(e => e.EffectType == SpecialAttackType.TARGETS).EffectValue.ToString() : "-";
+
+                batch.DrawString(font, bleedAmount, sadBleedValue, Alignment.Center, Color.Black);
+                batch.DrawString(font, accuracyAmount, sadAccuracyValue, Alignment.Center, Color.Black);
+                batch.DrawString(font, stunAmount, sadStunValue, Alignment.Center, Color.Black);
+                batch.DrawString(font, damageAmount, sadDamageValue, Alignment.Center, Color.Black);
+                batch.DrawString(font, attacksAmount, sadAttacksValue, Alignment.Center, Color.Black);
+                batch.DrawString(font, piercingAmount, sadPiercingValue, Alignment.Center, Color.Black);
+                batch.DrawString(font, sunderAmount, sadSunderValue, Alignment.Center, Color.Black);
+                batch.DrawString(font, pushAmount, sadPushValue, Alignment.Center, Color.Black);
+                batch.DrawString(font, targetsAmount, sadTargetsValue, Alignment.Center, Color.Black);
+            }
+
         }
 
         public bool HandleClick(int x, int y, Objects.Enums.MouseActionEnum mouseAction, out DRObjects.Enums.ActionType? actionType, out InternalActionEnum? internalActionType, out object[] args, out MapItem item, out DRObjects.MapCoordinate coord, out bool destroy)
@@ -363,7 +483,7 @@ namespace Divine_Right.InterfaceComponents.Components
             locationY += deltaY;
 
             //Create the rectangle
-            this.rect = new Rectangle(locationX, locationY, 300, 200);
+            this.rect = new Rectangle(locationX, locationY, 300, 250);
             this.borderRect = new Rectangle(rect.X - 2, rect.Y - 2, rect.Width + 4, rect.Height + 4);
 
             //Divide everything by 2.5
@@ -402,6 +522,16 @@ namespace Divine_Right.InterfaceComponents.Components
             legsPercentageRect = new Rectangle(locationX + 223, locationY + 108, 50, 87);
 
             closeRect = new Rectangle(locationX + 270, locationY + 0, 30, 30);
+
+            saRects = new Rectangle[5];
+
+            int shift = 40;
+
+            saRects[0] = new Rectangle(locationX + shift, locationY + 210, 30, 30);
+            saRects[1] = new Rectangle(locationX + shift + 40, locationY + 210, 30, 30);
+            saRects[2] = new Rectangle(locationX + shift + 80, locationY + 210, 30, 30);
+            saRects[3] = new Rectangle(locationX + shift + 120, locationY + 210, 30, 30);
+            saRects[4] = new Rectangle(locationX + shift + 160, locationY + 210, 30, 30);
         }
 
         public bool IsModal()
@@ -470,7 +600,60 @@ namespace Divine_Right.InterfaceComponents.Components
 
         public void HandleMouseOver(int x, int y)
         {
-            //Do nothing
+            //Are we mousing over a particular special attack?
+
+            selectedAttack = null;
+
+            for (int i = 0; i < saRects.Length; i++)
+            {
+                Rectangle rect = saRects[i];
+
+                if (rect.Contains(x, y))
+                {
+                    //Yep!
+                    selectedAttack = attacker.SpecialAttacks[i];
+                }
+            }
+
+            if (selectedAttack != null)
+            {
+                //Display the details
+                int locationX = x + 5;
+                int locationY = y;
+
+                int buffer = 10;
+
+                saDetailsRect = new Rectangle(locationX, locationY, 140, 170);
+
+                sadBleedIcon     = new Rectangle(locationX + buffer, locationY + buffer, 30, 30);
+                sadBleedValue    = new Rectangle(locationX + buffer + 30, locationY + buffer, 30, 30);
+
+                sadAccuracyIcon  = new Rectangle(locationX + buffer + 60, locationY + buffer, 30, 30);
+                sadAccuracyValue = new Rectangle(locationX + buffer + 90, locationY + buffer, 30, 30);
+
+                sadStunIcon   = new Rectangle(locationX + buffer, locationY + 30 + buffer, 30, 30);
+                sadStunValue = new Rectangle(locationX + buffer + 30, locationY + 30 +buffer, 30, 30);
+
+                sadDamageIcon = new Rectangle(locationX + buffer + 60, locationY + 30 + buffer, 30, 30);
+                sadDamageValue = new Rectangle(locationX + buffer + 90, locationY + 30 + buffer, 30, 30); ;
+
+                sadAttacksIcon = new Rectangle(locationX + buffer, locationY + 60 + buffer, 30, 30);
+                sadAttacksValue = new Rectangle(locationX + buffer + 30, locationY + 60 + buffer, 30, 30);
+
+                sadPiercingIcon = new Rectangle(locationX + buffer + 60, locationY + 60 + buffer, 30, 30);
+                sadPiercingValue = new Rectangle(locationX + buffer + 90, locationY + 60 + buffer, 30, 30);
+
+                sadSunderIcon = new Rectangle(locationX + buffer, locationY + 90 + buffer, 30, 30);
+                sadSunderValue = new Rectangle(locationX + buffer + 30, locationY + 90 + buffer, 30, 30);
+
+                sadPushIcon = new Rectangle(locationX + buffer + 60, locationY + 90 + buffer, 30, 30);
+                sadPushValue = new Rectangle(locationX + buffer + 90, locationY + 90 + buffer, 30, 30);
+
+                sadTargetsIcon = new Rectangle(locationX + buffer, locationY + 120 + buffer, 30, 30);
+                sadTargetsValue = new Rectangle(locationX + buffer + 30, locationY + 120 + buffer, 30, 30);
+
+            }                 
+
         }
     }
 }
