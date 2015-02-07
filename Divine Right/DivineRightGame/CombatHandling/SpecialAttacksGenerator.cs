@@ -16,6 +16,14 @@ namespace DivineRightGame.CombatHandling
     {
         private static readonly string FILEPATH = "Resources/SpecialAttacks/SpecialAttacks.json";
 
+        private static readonly string ANIMALNAME = "Resources/SpecialAttacks/AnimalName.txt";
+        private static readonly string DESCRIPTION = "Resources/SpecialAttacks/Description.txt";
+        private static readonly string ACTS = "Resources/SpecialAttacks/Acts.txt";
+
+        private static List<string> AnimalNames;
+        private static List<string> Descriptions;
+        private static List<string> Acts;
+
         private static SpecialAttackSettings Settings { get; set; }
 
 
@@ -30,7 +38,7 @@ namespace DivineRightGame.CombatHandling
             int pointTotal = Settings.PointProgression[level - 1];
 
             SpecialAttack attack = new SpecialAttack();
-            attack.AttackName = "?"; //Need to think on how to do this properly later
+            attack.AttackName = GenerateName();
             attack.Level = level;
             attack.PointCost = pointTotal;
             attack.Effects = new List<Effect>();
@@ -105,6 +113,14 @@ namespace DivineRightGame.CombatHandling
 
         }
 
+        /// <summary>
+        /// Generates a name at random
+        /// </summary>
+        /// <returns></returns>
+        private static string GenerateName()
+        {
+            return AnimalNames.GetRandom() + " " + Acts.GetRandom(); 
+        }
 
         static SpecialAttacksGenerator()
         {
@@ -119,6 +135,38 @@ namespace DivineRightGame.CombatHandling
             var parsed = JsonConvert.DeserializeObject<SpecialAttackSettings>(fileContents);
 
             Settings = parsed;
+
+            //Load the animal names and other such things
+
+            using (TextReader reader = new StreamReader(ANIMALNAME))
+            {
+                string contents = reader.ReadToEnd();
+
+                //clean it up!
+                contents = contents.Replace("\r", "");
+
+                AnimalNames = contents.Split('\n').Where(a => !(String.IsNullOrWhiteSpace(a))).ToList();
+            }
+
+            using (TextReader reader = new StreamReader(DESCRIPTION))
+            {
+                string contents = reader.ReadToEnd();
+
+                //clean it up!
+                contents = contents.Replace("\r", "");
+
+                Descriptions = contents.Split('\n').Where(a => !(String.IsNullOrWhiteSpace(a))).ToList();
+            }
+
+            using (TextReader reader = new StreamReader(ACTS))
+            {
+                string contents = reader.ReadToEnd();
+
+                //clean it up!
+                contents = contents.Replace("\r", "");
+
+                Acts = contents.Split('\n').Where(a => !(String.IsNullOrWhiteSpace(a))).ToList();
+            }
         }
     }
 }

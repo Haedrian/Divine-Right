@@ -73,6 +73,8 @@ namespace Divine_Right.InterfaceComponents.Components
 
         private Rectangle saDetailsRect;
 
+        private Rectangle saNameRect;
+
         private Rectangle sadBleedIcon;
         private Rectangle sadBleedValue;
 
@@ -332,17 +334,20 @@ namespace Divine_Right.InterfaceComponents.Components
 
                 batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.PAPER_TEXTURE), saDetailsRect, Color.White);
 
-                batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.BLEEDING_STRIKE), sadBleedIcon, Color.White);
-                batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.ACCURATE_STRIKE), sadAccuracyIcon, Color.White);
-                batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.STUNNING_STRIKE), sadStunIcon, Color.White);
-                batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.POWER_STRIKE), sadDamageIcon, Color.White);
-                batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.RAPID_STRIKES), sadAttacksIcon, Color.White);
+
+                batch.DrawString(font, selectedAttack.AttackName, saNameRect, Alignment.Center, Color.Black);
+
+                batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.BLEEDING_STRIKE), sadBleedIcon, Color.Black);
+                batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.ACCURATE_STRIKE), sadAccuracyIcon, Color.Black);
+                batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.STUNNING_STRIKE), sadStunIcon, Color.Black);
+                batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.POWER_STRIKE), sadDamageIcon, Color.Black);
+                batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.RAPID_STRIKES), sadAttacksIcon, Color.Black);
 
 
-                batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.ARMOUR_PIERCING_STRIKE), sadPiercingIcon, Color.White);
-                batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.SUNDER), sadSunderIcon, Color.White);
-                batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.PUSHBACK), sadPushIcon, Color.White);
-                batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.WHIRLWIND), sadTargetsIcon, Color.White);
+                batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.ARMOUR_PIERCING_STRIKE), sadPiercingIcon, Color.Black);
+                batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.SUNDER), sadSunderIcon, Color.Black);
+                batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.PUSHBACK), sadPushIcon, Color.Black);
+                batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.WHIRLWIND), sadTargetsIcon, Color.Black);
 
                 string bleedAmount = selectedAttack.Effects.FirstOrDefault(e => e.EffectType == SpecialAttackType.BLEED) != null ? selectedAttack.Effects.FirstOrDefault(e => e.EffectType == SpecialAttackType.BLEED).EffectValue.ToString() : "-";
                 string accuracyAmount = selectedAttack.Effects.FirstOrDefault(e => e.EffectType == SpecialAttackType.ACCURACY) != null ? selectedAttack.Effects.FirstOrDefault(e => e.EffectType == SpecialAttackType.ACCURACY).EffectValue.ToString() : "-";
@@ -621,38 +626,42 @@ namespace Divine_Right.InterfaceComponents.Components
                 int locationX = x + 5;
                 int locationY = y;
 
-                int buffer = 10;
+                int bufferX = 10;
+                int bufferY = 40;
 
-                saDetailsRect = new Rectangle(locationX, locationY, 140, 170);
+                saDetailsRect = new Rectangle(locationX, locationY, 200, 140);
 
-                sadBleedIcon     = new Rectangle(locationX + buffer, locationY + buffer, 30, 30);
-                sadBleedValue    = new Rectangle(locationX + buffer + 30, locationY + buffer, 30, 30);
+                saNameRect = new Rectangle(locationX, locationY+10, 200, 30);
 
-                sadAccuracyIcon  = new Rectangle(locationX + buffer + 60, locationY + buffer, 30, 30);
-                sadAccuracyValue = new Rectangle(locationX + buffer + 90, locationY + buffer, 30, 30);
+                sadBleedIcon = new Rectangle(locationX + bufferX, locationY + bufferY, 30, 30);
+                sadBleedValue = new Rectangle(locationX + bufferX + 30, locationY + bufferY, 30, 30);
 
-                sadStunIcon   = new Rectangle(locationX + buffer, locationY + 30 + buffer, 30, 30);
-                sadStunValue = new Rectangle(locationX + buffer + 30, locationY + 30 +buffer, 30, 30);
+                sadAccuracyIcon = new Rectangle(locationX + bufferX + 60, locationY + bufferY, 30, 30);
+                sadAccuracyValue = new Rectangle(locationX + bufferX + 90, locationY + bufferY, 30, 30);
 
-                sadDamageIcon = new Rectangle(locationX + buffer + 60, locationY + 30 + buffer, 30, 30);
-                sadDamageValue = new Rectangle(locationX + buffer + 90, locationY + 30 + buffer, 30, 30); ;
+                sadStunIcon = new Rectangle(locationX + bufferX + 120, locationY + bufferY, 30, 30);
+                sadStunValue = new Rectangle(locationX + bufferX + 150, locationY + bufferY, 30, 30);
 
-                sadAttacksIcon = new Rectangle(locationX + buffer, locationY + 60 + buffer, 30, 30);
-                sadAttacksValue = new Rectangle(locationX + buffer + 30, locationY + 60 + buffer, 30, 30);
+                //--
+                sadDamageIcon = new Rectangle(locationX + bufferX + 0, locationY + 30 + bufferY, 30, 30);
+                sadDamageValue = new Rectangle(locationX + bufferX + 30, locationY + 30 + bufferY, 30, 30); ;
 
-                sadPiercingIcon = new Rectangle(locationX + buffer + 60, locationY + 60 + buffer, 30, 30);
-                sadPiercingValue = new Rectangle(locationX + buffer + 90, locationY + 60 + buffer, 30, 30);
+                sadAttacksIcon = new Rectangle(locationX + bufferX + 60, locationY + 30 + bufferY, 30, 30);
+                sadAttacksValue = new Rectangle(locationX + bufferX + 90, locationY + 30 + bufferY, 30, 30);
 
-                sadSunderIcon = new Rectangle(locationX + buffer, locationY + 90 + buffer, 30, 30);
-                sadSunderValue = new Rectangle(locationX + buffer + 30, locationY + 90 + buffer, 30, 30);
+                sadPiercingIcon = new Rectangle(locationX + bufferX + 120, locationY + 30 + bufferY, 30, 30);
+                sadPiercingValue = new Rectangle(locationX + bufferX + 150, locationY + 30 + bufferY, 30, 30);
+                //---
+                sadSunderIcon = new Rectangle(locationX + bufferX, locationY + 60 + bufferY , 30, 30);
+                sadSunderValue = new Rectangle(locationX + bufferX + 30, locationY + 60 + bufferY, 30, 30);
 
-                sadPushIcon = new Rectangle(locationX + buffer + 60, locationY + 90 + buffer, 30, 30);
-                sadPushValue = new Rectangle(locationX + buffer + 90, locationY + 90 + buffer, 30, 30);
+                sadPushIcon = new Rectangle(locationX + bufferX + 60, locationY + 60 + bufferY, 30, 30);
+                sadPushValue = new Rectangle(locationX + bufferX + 90, locationY + 60 + bufferY, 30, 30);
 
-                sadTargetsIcon = new Rectangle(locationX + buffer, locationY + 120 + buffer, 30, 30);
-                sadTargetsValue = new Rectangle(locationX + buffer + 30, locationY + 120 + buffer, 30, 30);
+                sadTargetsIcon = new Rectangle(locationX + bufferX + 120, locationY + 60 + bufferY, 30, 30);
+                sadTargetsValue = new Rectangle(locationX + bufferX + 150, locationY + 60 + bufferY, 30, 30);
 
-            }                 
+            }
 
         }
     }

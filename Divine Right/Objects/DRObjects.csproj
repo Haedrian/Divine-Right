@@ -621,6 +621,15 @@
     <Content Include="Resources\SettlementNames\Suffix.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\SpecialAttacks\Acts.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\SpecialAttacks\AnimalName.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\SpecialAttacks\Description.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Resources\SiteData\SiteData.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
