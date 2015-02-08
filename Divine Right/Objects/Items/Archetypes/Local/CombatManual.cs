@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DRObjects.ActorHandling.CharacterSheet;
 
 namespace DRObjects.Items.Archetypes.Local
 {
@@ -12,7 +13,7 @@ namespace DRObjects.Items.Archetypes.Local
     /// <summary>
     /// A scroll holding information about a particular special attack
     /// </summary>
-    public class SpecialAttackScroll:
+    public class CombatManual:
         InventoryItem
     {
         /// <summary>
@@ -38,7 +39,7 @@ namespace DRObjects.Items.Archetypes.Local
         {
             get
             {
-                return "A level " + SpecialAttack.Level + " special attack scroll. Required Level :" + SpecialAttack.Level;
+                return "A combat manual. Required Level : " + ActorSkill.DisplayLevels[SpecialAttack.SkillLevelRequired];
             }
             set
             {
@@ -70,6 +71,7 @@ namespace DRObjects.Items.Archetypes.Local
             {
                 if (graphics == null)
                 {
+                    graphics = new List<SpriteData>();
                     //Generate it
                     graphics.Add(SpriteManager.GetSprite(LocalSpriteName.SCROLL));
 
@@ -98,7 +100,7 @@ namespace DRObjects.Items.Archetypes.Local
             }
         }
 
-        public SpecialAttackScroll(SpecialAttack attack)
+        public CombatManual(SpecialAttack attack)
         {
             this.SpecialAttack = attack;
         }

@@ -14,6 +14,7 @@ using DRObjects.Items.Tiles;
 using DRObjects.LocalMapGeneratorObjects;
 using Microsoft.Xna.Framework;
 using DRObjects.Extensions;
+using DivineRightGame.CombatHandling;
 
 namespace DivineRightGame.LocalMapGenerator
 {
@@ -363,6 +364,27 @@ namespace DivineRightGame.LocalMapGenerator
                 }
             }
 
+            if (roomType == DungeonRoomType.COMBAT_PIT)
+            {
+                int docLevel = (int) level/4;
+                docLevel = docLevel < 1 ? 1 : docLevel;
+                docLevel = docLevel > 5 ? 5 : docLevel;
+                //Generate a combat manual - Level [1..5] will be determined by floor of Dungeon Level /4
+                CombatManual cm = new CombatManual(SpecialAttacksGenerator.GenerateSpecialAttack(docLevel));
+
+                //Now place it, somewhere (or at least try 50 times)
+                for(int i=0; i < 50; i++)
+                {
+                    MapBlock randomBlock = gennedMap[GameState.Random.Next(gennedMap.GetLength(0)), GameState.Random.Next(gennedMap.GetLength(1))];
+
+                    if (randomBlock.MayContainItems)
+                    {
+                        randomBlock.ForcePutItemOnBlock(cm);
+                        break;
+                    }
+                }
+            }
+
             //Do we have any treasure chests?
             for (int x = 0; x < gennedMap.GetLength(0); x++)
             {
@@ -376,7 +398,7 @@ namespace DivineRightGame.LocalMapGenerator
                         InventoryItemManager iim = new InventoryItemManager();
 
                         //Fill em up
-                        chest.Contents = iim.FillTreasureChest((InventoryCategory[])Enum.GetValues(typeof(InventoryCategory)), 300 + (200 * level));
+                        chest.Contents = iim.FillTreasureChest((InventoryCategory[])Enum.GetValues(typeof(InventoryCategory)), 300 + (50 * level));
                     }
                 }
             }

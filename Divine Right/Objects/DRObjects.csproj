@@ -192,7 +192,7 @@
     <Compile Include="Items\Archetypes\Local\LeaveTownItem.cs" />
     <Compile Include="Items\Archetypes\Local\LocalCharacter.cs" />
     <Compile Include="Items\Archetypes\Local\Potion.cs" />
-    <Compile Include="Items\Archetypes\Local\SpecialAttackScroll.cs" />
+    <Compile Include="Items\Archetypes\Local\CombatManual.cs" />
     <Compile Include="Items\Archetypes\Local\ToggleItem.cs" />
     <Compile Include="Items\Archetypes\Local\TreasureChest.cs" />
     <Compile Include="Items\Archetypes\Local\SummoningCircle.cs" />

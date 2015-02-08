@@ -15,9 +15,17 @@ namespace DRObjects.ActorHandling.SpecialAttacks
         public string AttackName { get; set; }
 
         /// <summary>
-        /// The required Level [1..10]
+        /// The Level [1..5]
         /// </summary>
         public int Level { get; set; }
+
+        public int SkillLevelRequired
+        {
+            get
+            {
+                return Level * 4;
+            }
+        }
 
         /// <summary>
         /// The total point cost which created this
