@@ -364,7 +364,8 @@ namespace DivineRightGame.LocalMapGenerator
                 }
             }
 
-            if (roomType == DungeonRoomType.COMBAT_PIT)
+            //TODO: UNCOMMENT AFTER TESTING!
+          //  if (roomType == DungeonRoomType.COMBAT_PIT)
             {
                 int docLevel = (int) level/4;
                 docLevel = docLevel < 1 ? 1 : docLevel;
