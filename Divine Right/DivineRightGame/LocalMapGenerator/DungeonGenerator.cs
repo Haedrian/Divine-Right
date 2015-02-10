@@ -345,6 +345,7 @@ namespace DivineRightGame.LocalMapGenerator
             MapletPatrolPoint[] patrolRoutes = null;
             MapletFootpathNode[] footpathNodes = null;
 
+
             var gennedMap = lmg.GenerateMap(tileID, null, maplet, false, "", OwningFactions.UNDEAD, out actors, out areas, out patrolRoutes, out footpathNodes);
 
             //Is this a summoning room?
@@ -360,7 +361,7 @@ namespace DivineRightGame.LocalMapGenerator
                         {
                             circle = block.GetTopMapItem() as SummoningCircle;
                         }
-                    }
+                    } 
                 }
             }
 
