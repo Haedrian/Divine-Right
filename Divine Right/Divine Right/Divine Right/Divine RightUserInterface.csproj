@@ -118,6 +118,7 @@
     <Compile Include="InterfaceComponents\Components\AttackActorComponent.cs" />
     <Compile Include="InterfaceComponents\Components\AutoSizeGameButton.cs" />
     <Compile Include="InterfaceComponents\Components\CharacterSheetComponent.cs" />
+    <Compile Include="InterfaceComponents\Components\CombatManualComponent.cs" />
     <Compile Include="InterfaceComponents\Components\ContextMenuComponent.cs" />
     <Compile Include="InterfaceComponents\Components\LootComponent.cs" />
     <Compile Include="InterfaceComponents\Components\MultiDecisionComponent.cs" />
