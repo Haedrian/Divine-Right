@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using DRObjects.ActorHandling.SpecialAttacks;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Divine_Right.HelperFunctions;
+using DRObjects.Graphics;
+using DivineRightGame;
 
 namespace Divine_Right.InterfaceComponents.Components
 {
@@ -13,14 +17,19 @@ namespace Divine_Right.InterfaceComponents.Components
         private Rectangle rect;
         private Rectangle borderRect;
 
+        private Rectangle slotBackground;
         private Rectangle[] slotRectangles;
+
+        private Rectangle newBackground;
+        private Rectangle oldBackground;
+
         private Rectangle newText;
         private Rectangle oldText;
 
         private Rectangle newName;
         private Rectangle oldName;
 
-        private List<Tuple<SpecialAttackType,Rectangle>> newIcons;
+        private List<Tuple<SpecialAttackType, Rectangle>> newIcons;
         private List<Tuple<SpecialAttackType, Rectangle>> newDetails;
 
         private List<Tuple<SpecialAttackType, Rectangle>> oldIcons;
@@ -36,6 +45,8 @@ namespace Divine_Right.InterfaceComponents.Components
         private SpecialAttack newAttack;
         private SpecialAttack oldAttack;
 
+        private SpriteFont font = null;
+
         public CombatManualComponent(SpecialAttack newAttack)
         {
             this.newAttack = newAttack;
@@ -48,7 +59,84 @@ namespace Divine_Right.InterfaceComponents.Components
 
         public void Draw(Microsoft.Xna.Framework.Content.ContentManager content, Microsoft.Xna.Framework.Graphics.SpriteBatch batch)
         {
-            throw new NotImplementedException();
+            if (font == null)
+            {
+                font = content.Load<SpriteFont>(@"Fonts/TextFeedbackFont");
+            }
+
+            var white = SpriteManager.GetSprite(ColourSpriteName.WHITE);
+
+            batch.Draw(content, white, borderRect, Color.DarkGray);
+
+
+            //Draw the background
+            var scrollBackground = SpriteManager.GetSprite(InterfaceSpriteName.PAPER_TEXTURE);
+
+            batch.Draw(content.Load<Texture2D>(scrollBackground.path), rect, scrollBackground.sourceRectangle, Color.White);
+
+            batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.PAPER_TEXTURE), newBackground, Color.White);
+            batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.PAPER_TEXTURE), slotBackground, Color.White);
+
+            //The text
+            batch.DrawString(font, newAttack.AttackName, newName, Alignment.Center, Color.Black);
+            batch.DrawString(font, "New Attack", newText, Alignment.Center, Color.White);
+
+            foreach (var icons in newIcons)
+            {
+                switch (icons.Item1)
+                {
+                    case SpecialAttackType.ACCURACY:
+                        batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.ACCURATE_STRIKE), icons.Item2, Color.Black);
+                        break;
+                    case SpecialAttackType.ATTACKS:
+                        batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.RAPID_STRIKES), icons.Item2, Color.Black);
+                        break;
+                    case SpecialAttackType.BLEED:
+                        batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.BLEEDING_STRIKE), icons.Item2, Color.Black);
+                        break;
+                    case SpecialAttackType.DAMAGE:
+                        batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.POWER_STRIKE), icons.Item2, Color.Black);
+                        break;
+                    case SpecialAttackType.PIERCING:
+                        batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.ARMOUR_PIERCING_STRIKE), icons.Item2, Color.Black);
+                        break;
+                    case SpecialAttackType.PUSH:
+                        batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.PUSHBACK), icons.Item2, Color.Black);
+                        break;
+                    case SpecialAttackType.STUN:
+                        batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.STUNNING_STRIKE), icons.Item2, Color.Black);
+                        break;
+                    case SpecialAttackType.SUNDER:
+                        batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.SUNDER), icons.Item2, Color.Black);
+                        break;
+                    case SpecialAttackType.TARGETS:
+                        batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.WHIRLWIND), icons.Item2, Color.Black);
+                        break;
+                }
+            }
+
+            foreach (var details in newDetails)
+            {
+                DRObjects.ActorHandling.SpecialAttacks.Effect effect = newAttack.Effects.FirstOrDefault(e => e.EffectType == details.Item1);
+
+                string display = "--";
+
+                if (effect != null)
+                {
+                    display = effect.EffectValue.ToString();
+                }
+
+                batch.DrawString(font, display, details.Item2, Alignment.Center, Color.Black);
+            }
+
+            for (int i = 0; i < slotRectangles.Length; i++)
+            {
+                Rectangle slot = slotRectangles[i];
+
+                SpriteData sprite = SpriteManager.GetSprite( (InterfaceSpriteName) Enum.Parse(typeof(InterfaceSpriteName),"SA" + (i+1) ));
+
+                batch.Draw(content,sprite,slotRectangles[i],GameState.PlayerCharacter.SpecialAttacks[i] == null ? Color.Black : Color.White);
+            }
         }
 
         public bool HandleClick(int x, int y, Objects.Enums.MouseActionEnum mouseAction, out DRObjects.Enums.ActionType? actionType, out DRObjects.Enums.InternalActionEnum? internalActionType, out object[] args, out DRObjects.MapItem item, out DRObjects.MapCoordinate coord, out bool destroy)
@@ -58,17 +146,21 @@ namespace Divine_Right.InterfaceComponents.Components
 
         public void HandleMouseOver(int x, int y)
         {
-            throw new NotImplementedException();
+            return;
         }
 
         public bool HandleKeyboard(Microsoft.Xna.Framework.Input.KeyboardState keyboard, out DRObjects.Enums.ActionType? actionType, out object[] args, out DRObjects.MapCoordinate coord, out bool destroy)
         {
-            throw new NotImplementedException();
+            actionType = null;
+            args = null;
+            coord = null;
+            destroy = false;
+            return false; //never handle this
         }
 
         public Microsoft.Xna.Framework.Rectangle ReturnLocation()
         {
-            throw new NotImplementedException();
+            return rect;
         }
 
         public void PerformDrag(int deltaX, int deltaY)
@@ -78,62 +170,67 @@ namespace Divine_Right.InterfaceComponents.Components
 
             this.rect = new Rectangle(this.locationX, this.locationY, 400, 300);
 
-            this.borderRect = new Rectangle(this.rect.X - 2, this.rect.Y - 2, this.rect.Width + 4, this.rect.Width + 4);
+            this.borderRect = new Rectangle(this.rect.X - 2, this.rect.Y - 2, this.rect.Width + 4, this.rect.Height + 4);
+
+            this.slotBackground = new Rectangle(this.locationX, this.locationY, 400, 80);
 
             this.slotRectangles = new Rectangle[5];
 
-            for (int i=0; i < slotRectangles.Length; i++)
+            for (int i = 0; i < slotRectangles.Length; i++)
             {
-                slotRectangles[i] = new Rectangle(locationX + (80 * i), locationY, 80,30);
+                slotRectangles[i] = new Rectangle(locationX + (80 * i), locationY, 80, 80);
             }
 
-            this.newText = new Rectangle(locationX, 30, 200, 30);
-            this.newName = new Rectangle(locationX, 60, 200, 30);
+            this.newText = new Rectangle(locationX, locationY + 30 + 50, 200, 30);
+            this.newName = new Rectangle(locationX, locationY + 60 + 50, 200, 30);
 
             this.newIcons = new List<Tuple<SpecialAttackType, Rectangle>>();
+            this.newDetails = new List<Tuple<SpecialAttackType, Rectangle>>();
+
+            this.newBackground = new Rectangle(locationX, locationY + 85, 200, 230 - 70);
 
             //Icons
 
-            this.newIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.BLEED, new Rectangle(locationX + 10, locationY + 90, 30, 30)));
-            this.newIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.ACCURACY, new Rectangle(locationX + 70, locationY + 90, 30, 30)));
-            this.newIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.STUN, new Rectangle(locationX + 130, locationY + 90, 30, 30)));
+            this.newIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.BLEED, new Rectangle(locationX + 10, locationY + 90 +50, 30, 30)));
+            this.newIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.ACCURACY, new Rectangle(locationX + 70, locationY + 90 + 50, 30, 30)));
+            this.newIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.STUN, new Rectangle(locationX + 130, locationY + 90 + 50, 30, 30)));
 
-            this.newIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.DAMAGE, new Rectangle(locationX + 10, locationY + 120, 30, 30)));
-            this.newIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.ATTACKS, new Rectangle(locationX + 70, locationY + 120, 30, 30)));
-            this.newIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.PIERCING, new Rectangle(locationX + 130, locationY + 120, 30, 30)));
+            this.newIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.DAMAGE, new Rectangle(locationX + 10, locationY + 120 + 50, 30, 30)));
+            this.newIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.ATTACKS, new Rectangle(locationX + 70, locationY + 120 + 50, 30, 30)));
+            this.newIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.PIERCING, new Rectangle(locationX + 130, locationY + 120 + 50, 30, 30)));
 
-            this.newIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.SUNDER, new Rectangle(locationX + 10, locationY + 150, 30, 30)));
-            this.newIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.PUSH, new Rectangle(locationX + 70, locationY + 150, 30, 30)));
-            this.newIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.TARGETS, new Rectangle(locationX + 130, locationY + 150, 30, 30)));
+            this.newIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.SUNDER, new Rectangle(locationX + 10, locationY + 150 + 50, 30, 30)));
+            this.newIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.PUSH, new Rectangle(locationX + 70, locationY + 150 + 50, 30, 30)));
+            this.newIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.TARGETS, new Rectangle(locationX + 130, locationY + 150 + 50, 30, 30)));
 
             //Details
 
-            this.newDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.BLEED, new Rectangle(locationX + 40, locationY + 90, 30, 30)));
-            this.newDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.ACCURACY, new Rectangle(locationX + 100, locationY + 90, 30, 30)));
-            this.newDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.STUN, new Rectangle(locationX + 160, locationY + 90, 30, 30)));
-       
-            this.newDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.DAMAGE, new Rectangle(locationX + 40, locationY + 120, 30, 30)));
-            this.newDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.ATTACKS, new Rectangle(locationX + 100, locationY + 120, 30, 30)));
-            this.newDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.PIERCING, new Rectangle(locationX + 160, locationY + 120, 30, 30)));
+            this.newDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.BLEED, new Rectangle(locationX + 40, locationY + 90 + 50, 30, 30)));
+            this.newDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.ACCURACY, new Rectangle(locationX + 100, locationY + 90 + 50, 30, 30)));
+            this.newDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.STUN, new Rectangle(locationX + 160, locationY + 90 + 50, 30, 30)));
 
-            this.newDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.SUNDER, new Rectangle(locationX + 40, locationY + 150, 30, 30)));
-            this.newDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.PUSH, new Rectangle(locationX + 100, locationY + 150, 30, 30)));
-            this.newDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.TARGETS, new Rectangle(locationX + 160, locationY + 150, 30, 30)));
+            this.newDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.DAMAGE, new Rectangle(locationX + 40, locationY + 120 + 50, 30, 30)));
+            this.newDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.ATTACKS, new Rectangle(locationX + 100, locationY + 120 + 50, 30, 30)));
+            this.newDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.PIERCING, new Rectangle(locationX + 160, locationY + 120 + 50, 30, 30)));
 
-            this.oldText = new Rectangle(locationX + 200, 30, 200, 30);
+            this.newDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.SUNDER, new Rectangle(locationX + 40, locationY + 150 + 50, 30, 30)));
+            this.newDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.PUSH, new Rectangle(locationX + 100, locationY + 150 + 50, 30, 30)));
+            this.newDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.TARGETS, new Rectangle(locationX + 160, locationY + 150 + 50, 30, 30)));
+
+            this.oldText = new Rectangle(locationX + 200, 30 + 20, 200, 30);
 
         }
 
         public bool IsModal()
         {
-            throw new NotImplementedException();
+            return true;
         }
 
         public bool Visible
         {
             get
             {
-                throw new NotImplementedException();
+                return true;
             }
             set
             {
