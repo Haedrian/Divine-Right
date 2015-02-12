@@ -41,7 +41,7 @@ namespace Divine_Right.InterfaceComponents.Components
         private int locationX;
         private int locationY;
 
-        private int clickedNumber;
+        private int? clickedNumber = null;
         private SpecialAttack newAttack;
         private SpecialAttack oldAttack;
 
@@ -55,6 +55,8 @@ namespace Divine_Right.InterfaceComponents.Components
             this.locationY = 100;
 
             this.PerformDrag(0, 0);
+
+            this.clickedNumber = 2; //TODO: REMOVE AFTER TESTING
         }
 
         public void Draw(Microsoft.Xna.Framework.Content.ContentManager content, Microsoft.Xna.Framework.Graphics.SpriteBatch batch)
@@ -68,12 +70,12 @@ namespace Divine_Right.InterfaceComponents.Components
 
             batch.Draw(content, white, borderRect, Color.DarkGray);
 
-
             //Draw the background
             var scrollBackground = SpriteManager.GetSprite(InterfaceSpriteName.PAPER_TEXTURE);
 
             batch.Draw(content.Load<Texture2D>(scrollBackground.path), rect, scrollBackground.sourceRectangle, Color.White);
 
+            batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.PAPER_TEXTURE), oldBackground, Color.White);
             batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.PAPER_TEXTURE), newBackground, Color.White);
             batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.PAPER_TEXTURE), slotBackground, Color.White);
 
@@ -137,6 +139,77 @@ namespace Divine_Right.InterfaceComponents.Components
 
                 batch.Draw(content,sprite,slotRectangles[i],GameState.PlayerCharacter.SpecialAttacks[i] == null ? Color.Black : Color.White);
             }
+
+            if (this.clickedNumber != null)
+            {
+                oldAttack = GameState.PlayerCharacter.SpecialAttacks[this.clickedNumber.Value];
+            }
+            else
+            {
+                oldAttack = null;
+            }
+
+            if (oldAttack != null)
+            {
+                //Draw the old attack stuff
+                batch.DrawString(font, oldAttack.AttackName, oldName, Alignment.Center, Color.Black);
+                batch.DrawString(font, "Old Attack", oldText, Alignment.Center, Color.White);
+
+                foreach (var icons in oldIcons)
+                {
+                    switch (icons.Item1)
+                    {
+                        case SpecialAttackType.ACCURACY:
+                            batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.ACCURATE_STRIKE), icons.Item2, Color.Black);
+                            break;
+                        case SpecialAttackType.ATTACKS:
+                            batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.RAPID_STRIKES), icons.Item2, Color.Black);
+                            break;
+                        case SpecialAttackType.BLEED:
+                            batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.BLEEDING_STRIKE), icons.Item2, Color.Black);
+                            break;
+                        case SpecialAttackType.DAMAGE:
+                            batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.POWER_STRIKE), icons.Item2, Color.Black);
+                            break;
+                        case SpecialAttackType.PIERCING:
+                            batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.ARMOUR_PIERCING_STRIKE), icons.Item2, Color.Black);
+                            break;
+                        case SpecialAttackType.PUSH:
+                            batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.PUSHBACK), icons.Item2, Color.Black);
+                            break;
+                        case SpecialAttackType.STUN:
+                            batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.STUNNING_STRIKE), icons.Item2, Color.Black);
+                            break;
+                        case SpecialAttackType.SUNDER:
+                            batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.SUNDER), icons.Item2, Color.Black);
+                            break;
+                        case SpecialAttackType.TARGETS:
+                            batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.WHIRLWIND), icons.Item2, Color.Black);
+                            break;
+                    }
+                }
+
+                foreach (var details in oldDetails)
+                {
+                    DRObjects.ActorHandling.SpecialAttacks.Effect effect = oldAttack.Effects.FirstOrDefault(e => e.EffectType == details.Item1);
+
+                    string display = "--";
+
+                    if (effect != null)
+                    {
+                        display = effect.EffectValue.ToString();
+                    }
+
+                    batch.DrawString(font, display, details.Item2, Alignment.Center, Color.Black);
+                }
+
+            }
+            else if (this.clickedNumber != null)
+            {
+                //This means a non-selected one is selected
+                batch.DrawString(font, "Empty Slot", oldName, Alignment.Center, Color.Black);
+                batch.DrawString(font, "Old Attack", oldText, Alignment.Center, Color.White);
+            }
         }
 
         public bool HandleClick(int x, int y, Objects.Enums.MouseActionEnum mouseAction, out DRObjects.Enums.ActionType? actionType, out DRObjects.Enums.InternalActionEnum? internalActionType, out object[] args, out DRObjects.MapItem item, out DRObjects.MapCoordinate coord, out bool destroy)
@@ -187,7 +260,7 @@ namespace Divine_Right.InterfaceComponents.Components
             this.newIcons = new List<Tuple<SpecialAttackType, Rectangle>>();
             this.newDetails = new List<Tuple<SpecialAttackType, Rectangle>>();
 
-            this.newBackground = new Rectangle(locationX, locationY + 85, 200, 230 - 70);
+            this.newBackground = new Rectangle(locationX +10, locationY + 85, 180, 230 - 70);
 
             //Icons
 
@@ -217,7 +290,42 @@ namespace Divine_Right.InterfaceComponents.Components
             this.newDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.PUSH, new Rectangle(locationX + 100, locationY + 150 + 50, 30, 30)));
             this.newDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.TARGETS, new Rectangle(locationX + 160, locationY + 150 + 50, 30, 30)));
 
-            this.oldText = new Rectangle(locationX + 200, 30 + 20, 200, 30);
+            this.oldText = new Rectangle(locationX + 200, locationY + 30 + 50, 200, 30);
+            this.oldName = new Rectangle(locationX + 200, locationY + 50 + 60, 200, 30);
+
+            this.oldIcons = new List<Tuple<SpecialAttackType, Rectangle>>();
+            this.oldDetails = new List<Tuple<SpecialAttackType, Rectangle>>();
+
+            this.oldBackground = new Rectangle(locationX + 210, locationY + 85, 180, 230 - 70);
+
+            //Icons
+
+            this.oldIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.BLEED, new Rectangle(locationX + 10 + 200, locationY + 90 + 50, 30, 30)));
+            this.oldIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.ACCURACY, new Rectangle(locationX + 70 + 200, locationY + 90 + 50, 30, 30)));
+            this.oldIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.STUN, new Rectangle(locationX + 130 + 200, locationY + 90 + 50, 30, 30)));
+
+            this.oldIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.DAMAGE, new Rectangle(locationX + 10 + 200, locationY + 120 + 50, 30, 30)));
+            this.oldIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.ATTACKS, new Rectangle(locationX + 70 + 200, locationY + 120 + 50, 30, 30)));
+            this.oldIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.PIERCING, new Rectangle(locationX + 130 + 200, locationY + 120 + 50, 30, 30)));
+
+            this.oldIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.SUNDER, new Rectangle(locationX + 10 + 200, locationY + 150 + 50, 30, 30)));
+            this.oldIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.PUSH, new Rectangle(locationX + 70 + 200, locationY + 150 + 50, 30, 30)));
+            this.oldIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.TARGETS, new Rectangle(locationX + 130 + 200, locationY + 150 + 50, 30, 30)));
+
+            //Details
+
+            this.oldDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.BLEED, new Rectangle(locationX + 40 + 200, locationY + 90 + 50, 30, 30)));
+            this.oldDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.ACCURACY, new Rectangle(locationX + 100 + 200, locationY + 90 + 50, 30, 30)));
+            this.oldDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.STUN, new Rectangle(locationX + 160 + 200, locationY + 90 + 50, 30, 30)));
+         
+            this.oldDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.DAMAGE, new Rectangle(locationX + 40 + 200, locationY + 120 + 50, 30, 30)));
+            this.oldDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.ATTACKS, new Rectangle(locationX + 100 + 200, locationY + 120 + 50, 30, 30)));
+            this.oldDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.PIERCING, new Rectangle(locationX + 160 + 200, locationY + 120 + 50, 30, 30)));
+         
+            this.oldDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.SUNDER, new Rectangle(locationX + 40 + 200, locationY + 150 + 50, 30, 30)));
+            this.oldDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.PUSH, new Rectangle(locationX + 100 + 200, locationY + 150 + 50, 30, 30)));
+            this.oldDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.TARGETS, new Rectangle(locationX + 160 + 200, locationY + 150 + 50, 30, 30)));
+
 
         }
 

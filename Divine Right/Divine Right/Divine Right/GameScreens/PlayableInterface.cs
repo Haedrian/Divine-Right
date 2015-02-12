@@ -308,6 +308,7 @@ namespace Divine_Right.GameScreens
 
                 //GameState.LocalMap.IsGlobalMap = false;
 
+
             }
             else
             {
@@ -333,7 +334,12 @@ namespace Divine_Right.GameScreens
 
                 item.InInventory = true;
 
+
+                CombatManualComponent cmc = new CombatManualComponent(GameState.PlayerCharacter.SpecialAttacks[1]);
+
                 GameState.PlayerCharacter.Inventory.Inventory.Add(item.Category, item);
+
+                interfaceComponents.Add(cmc);
             }
 
             //Add the health control
