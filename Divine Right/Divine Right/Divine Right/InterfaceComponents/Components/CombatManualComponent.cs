@@ -158,6 +158,12 @@ namespace Divine_Right.InterfaceComponents.Components
                 SpriteData sprite = SpriteManager.GetSprite( (InterfaceSpriteName) Enum.Parse(typeof(InterfaceSpriteName),"SA" + (i+1) ));
 
                 batch.Draw(content,sprite,slotRectangles[i],GameState.PlayerCharacter.SpecialAttacks[i] == null ? Color.Black : Color.White);
+
+                if (clickedNumber == i+1)
+                {
+                    //Circle!
+                    batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.CIRCLE), new Rectangle(slotRectangles[i].X - 10, slotRectangles[i].Y - 10, slotRectangles[i].Width + 20, slotRectangles[i].Height + 20), Color.White);
+                }
             }
 
             if (this.clickedNumber != null)
@@ -230,6 +236,12 @@ namespace Divine_Right.InterfaceComponents.Components
                 batch.DrawString(font, "Empty Slot", oldName, Alignment.Center, Color.Black);
                 batch.DrawString(font, "Old Attack", oldText, Alignment.Center, Color.White);
             }
+
+            batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.WOOD_TEXTURE), learnRect, Color.White);
+            batch.DrawString(font, "LEARN", learnRect, Alignment.Center, Color.DarkGreen);
+
+            batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.WOOD_TEXTURE), cancelRect, Color.White);
+            batch.DrawString(font, "CANCEL", cancelRect, Alignment.Center, Color.DarkRed);
         }
 
         public bool HandleClick(int x, int y, Objects.Enums.MouseActionEnum mouseAction, out DRObjects.Enums.ActionType? actionType, out DRObjects.Enums.InternalActionEnum? internalActionType, out object[] args, out DRObjects.MapItem item, out DRObjects.MapCoordinate coord, out bool destroy)
@@ -346,7 +358,8 @@ namespace Divine_Right.InterfaceComponents.Components
             this.oldDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.PUSH, new Rectangle(locationX + 100 + 200, locationY + 150 + 30, 30, 30)));
             this.oldDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.TARGETS, new Rectangle(locationX + 160 + 200, locationY + 150 + 30, 30, 30)));
 
-
+            this.learnRect = new Rectangle(locationX + 30, locationY + 240, 140, 40);
+            this.cancelRect = new Rectangle(locationX + 200 +30, locationY + 240, 140, 40);
         }
 
         public bool IsModal()

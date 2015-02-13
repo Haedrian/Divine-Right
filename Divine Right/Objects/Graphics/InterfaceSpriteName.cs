@@ -91,6 +91,7 @@ namespace DRObjects.Graphics
         SA2,
         SA3,
         SA4,
-        SA5
+        SA5,
+        CIRCLE
     }
 }

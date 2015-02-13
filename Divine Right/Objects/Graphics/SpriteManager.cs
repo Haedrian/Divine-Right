@@ -957,6 +957,8 @@ namespace DRObjects.Graphics
             interfaceSprites[(int)InterfaceSpriteName.SA3] = new SpriteData(CHARACTER_SHEET, new Rectangle(100,200,50,50));
             interfaceSprites[(int)InterfaceSpriteName.SA4] = new SpriteData(CHARACTER_SHEET, new Rectangle(150,200,50,50));
             interfaceSprites[(int)InterfaceSpriteName.SA5] = new SpriteData(CHARACTER_SHEET, new Rectangle(200,200,50,50));
+            
+            interfaceSprites[(int)InterfaceSpriteName.CIRCLE] = new SpriteData(CHARACTER_SHEET, new Rectangle(250, 200, 50, 50));
 
             interfaceSprites[(int)InterfaceSpriteName.BANNER_GREEN] = new SpriteData(BANNERS, new Rectangle(1, 0, 60, 100));
             interfaceSprites[(int)InterfaceSpriteName.BANNER_YELLOW] = new SpriteData(BANNERS, new Rectangle(71, 0, 60, 100));
