@@ -121,19 +121,39 @@ namespace Divine_Right.InterfaceComponents.Components
             {
                 DRObjects.ActorHandling.SpecialAttacks.Effect effect = newAttack.Effects.FirstOrDefault(e => e.EffectType == details.Item1);
 
-                string display = "--";
+                string display = "0";
 
                 if (effect != null)
                 {
                     display = effect.EffectValue.ToString();
                 }
 
-                batch.DrawString(font, display, details.Item2, Alignment.Center, Color.Black);
+                Color colour = Color.Black;
+
+                if (oldAttack != null)
+                {
+                    int newCompare = newAttack.Effects.Where(e => e.EffectType == details.Item1).Select(e => e.EffectValue).FirstOrDefault();
+                    int oldCompare = oldAttack.Effects.Where(e => e.EffectType == details.Item1).Select(e => e.EffectValue).FirstOrDefault();
+
+
+                    if (newCompare > oldCompare)
+                    {
+                        colour = Color.Green;
+                    }
+                    else if (newCompare < oldCompare)
+                    {
+                        colour = Color.Red;
+                    }
+                }
+
+                batch.DrawString(font, display, details.Item2, Alignment.Center, colour);
             }
 
             for (int i = 0; i < slotRectangles.Length; i++)
             {
                 Rectangle slot = slotRectangles[i];
+
+               // batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.PAPER_TEXTURE), slotRectangles[i], Color.White);
 
                 SpriteData sprite = SpriteManager.GetSprite( (InterfaceSpriteName) Enum.Parse(typeof(InterfaceSpriteName),"SA" + (i+1) ));
 
@@ -193,7 +213,7 @@ namespace Divine_Right.InterfaceComponents.Components
                 {
                     DRObjects.ActorHandling.SpecialAttacks.Effect effect = oldAttack.Effects.FirstOrDefault(e => e.EffectType == details.Item1);
 
-                    string display = "--";
+                    string display = "0";
 
                     if (effect != null)
                     {
@@ -245,86 +265,86 @@ namespace Divine_Right.InterfaceComponents.Components
 
             this.borderRect = new Rectangle(this.rect.X - 2, this.rect.Y - 2, this.rect.Width + 4, this.rect.Height + 4);
 
-            this.slotBackground = new Rectangle(this.locationX, this.locationY, 400, 80);
+            this.slotBackground = new Rectangle(this.locationX, this.locationY +55, 400, 5);
 
             this.slotRectangles = new Rectangle[5];
 
             for (int i = 0; i < slotRectangles.Length; i++)
             {
-                slotRectangles[i] = new Rectangle(locationX + (80 * i), locationY, 80, 80);
+                slotRectangles[i] = new Rectangle(locationX + 20 + (80 * i), locationY +10, 40, 40);
             }
 
-            this.newText = new Rectangle(locationX, locationY + 30 + 50, 200, 30);
-            this.newName = new Rectangle(locationX, locationY + 60 + 50, 200, 30);
+            this.newText = new Rectangle(locationX, locationY + 30 + 30, 200, 30);
+            this.newName = new Rectangle(locationX, locationY + 60 + 30, 200, 30);
 
             this.newIcons = new List<Tuple<SpecialAttackType, Rectangle>>();
             this.newDetails = new List<Tuple<SpecialAttackType, Rectangle>>();
 
-            this.newBackground = new Rectangle(locationX +10, locationY + 85, 180, 230 - 70);
+            this.newBackground = new Rectangle(locationX +10, locationY + 65, 180, 230 - 70);
 
             //Icons
 
-            this.newIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.BLEED, new Rectangle(locationX + 10, locationY + 90 +50, 30, 30)));
-            this.newIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.ACCURACY, new Rectangle(locationX + 70, locationY + 90 + 50, 30, 30)));
-            this.newIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.STUN, new Rectangle(locationX + 130, locationY + 90 + 50, 30, 30)));
+            this.newIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.BLEED, new Rectangle(locationX + 10, locationY + 90 +30, 30, 30)));
+            this.newIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.ACCURACY, new Rectangle(locationX + 70, locationY + 90 + 30, 30, 30)));
+            this.newIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.STUN, new Rectangle(locationX + 130, locationY + 90 + 30, 30, 30)));
 
-            this.newIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.DAMAGE, new Rectangle(locationX + 10, locationY + 120 + 50, 30, 30)));
-            this.newIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.ATTACKS, new Rectangle(locationX + 70, locationY + 120 + 50, 30, 30)));
-            this.newIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.PIERCING, new Rectangle(locationX + 130, locationY + 120 + 50, 30, 30)));
+            this.newIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.DAMAGE, new Rectangle(locationX + 10, locationY + 120 + 30, 30, 30)));
+            this.newIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.ATTACKS, new Rectangle(locationX + 70, locationY + 120 + 30, 30, 30)));
+            this.newIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.PIERCING, new Rectangle(locationX + 130, locationY + 120 + 30, 30, 30)));
 
-            this.newIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.SUNDER, new Rectangle(locationX + 10, locationY + 150 + 50, 30, 30)));
-            this.newIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.PUSH, new Rectangle(locationX + 70, locationY + 150 + 50, 30, 30)));
-            this.newIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.TARGETS, new Rectangle(locationX + 130, locationY + 150 + 50, 30, 30)));
+            this.newIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.SUNDER, new Rectangle(locationX + 10, locationY + 150 + 30, 30, 30)));
+            this.newIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.PUSH, new Rectangle(locationX + 70, locationY + 150 + 30, 30, 30)));
+            this.newIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.TARGETS, new Rectangle(locationX + 130, locationY + 150 + 30, 30, 30)));
 
             //Details
 
-            this.newDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.BLEED, new Rectangle(locationX + 40, locationY + 90 + 50, 30, 30)));
-            this.newDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.ACCURACY, new Rectangle(locationX + 100, locationY + 90 + 50, 30, 30)));
-            this.newDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.STUN, new Rectangle(locationX + 160, locationY + 90 + 50, 30, 30)));
+            this.newDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.BLEED, new Rectangle(locationX + 40, locationY + 90 + 30, 30, 30)));
+            this.newDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.ACCURACY, new Rectangle(locationX + 100, locationY + 90 + 30, 30, 30)));
+            this.newDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.STUN, new Rectangle(locationX + 160, locationY + 90 + 30, 30, 30)));
 
-            this.newDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.DAMAGE, new Rectangle(locationX + 40, locationY + 120 + 50, 30, 30)));
-            this.newDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.ATTACKS, new Rectangle(locationX + 100, locationY + 120 + 50, 30, 30)));
-            this.newDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.PIERCING, new Rectangle(locationX + 160, locationY + 120 + 50, 30, 30)));
+            this.newDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.DAMAGE, new Rectangle(locationX + 40, locationY + 120 + 30, 30, 30)));
+            this.newDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.ATTACKS, new Rectangle(locationX + 100, locationY + 120 + 30, 30, 30)));
+            this.newDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.PIERCING, new Rectangle(locationX + 160, locationY + 120 + 30, 30, 30)));
 
-            this.newDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.SUNDER, new Rectangle(locationX + 40, locationY + 150 + 50, 30, 30)));
-            this.newDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.PUSH, new Rectangle(locationX + 100, locationY + 150 + 50, 30, 30)));
-            this.newDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.TARGETS, new Rectangle(locationX + 160, locationY + 150 + 50, 30, 30)));
+            this.newDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.SUNDER, new Rectangle(locationX + 40, locationY + 150 + 30, 30, 30)));
+            this.newDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.PUSH, new Rectangle(locationX + 100, locationY + 150 + 30, 30, 30)));
+            this.newDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.TARGETS, new Rectangle(locationX + 160, locationY + 150 + 30, 30, 30)));
 
-            this.oldText = new Rectangle(locationX + 200, locationY + 30 + 50, 200, 30);
-            this.oldName = new Rectangle(locationX + 200, locationY + 50 + 60, 200, 30);
+            this.oldText = new Rectangle(locationX + 200, locationY + 30 + 30, 200, 30);
+            this.oldName = new Rectangle(locationX + 200, locationY + 30 + 60, 200, 30);
 
             this.oldIcons = new List<Tuple<SpecialAttackType, Rectangle>>();
             this.oldDetails = new List<Tuple<SpecialAttackType, Rectangle>>();
 
-            this.oldBackground = new Rectangle(locationX + 210, locationY + 85, 180, 230 - 70);
+            this.oldBackground = new Rectangle(locationX + 210, locationY + 65, 180, 230 - 70);
 
             //Icons
 
-            this.oldIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.BLEED, new Rectangle(locationX + 10 + 200, locationY + 90 + 50, 30, 30)));
-            this.oldIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.ACCURACY, new Rectangle(locationX + 70 + 200, locationY + 90 + 50, 30, 30)));
-            this.oldIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.STUN, new Rectangle(locationX + 130 + 200, locationY + 90 + 50, 30, 30)));
+            this.oldIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.BLEED, new Rectangle(locationX + 10 + 200, locationY + 90 + 30, 30, 30)));
+            this.oldIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.ACCURACY, new Rectangle(locationX + 70 + 200, locationY + 90 + 30, 30, 30)));
+            this.oldIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.STUN, new Rectangle(locationX + 130 + 200, locationY + 90 + 30, 30, 30)));
 
-            this.oldIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.DAMAGE, new Rectangle(locationX + 10 + 200, locationY + 120 + 50, 30, 30)));
-            this.oldIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.ATTACKS, new Rectangle(locationX + 70 + 200, locationY + 120 + 50, 30, 30)));
-            this.oldIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.PIERCING, new Rectangle(locationX + 130 + 200, locationY + 120 + 50, 30, 30)));
+            this.oldIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.DAMAGE, new Rectangle(locationX + 10 + 200, locationY + 120 + 30, 30, 30)));
+            this.oldIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.ATTACKS, new Rectangle(locationX + 70 + 200, locationY + 120 + 30, 30, 30)));
+            this.oldIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.PIERCING, new Rectangle(locationX + 130 + 200, locationY + 120 + 30, 30, 30)));
 
-            this.oldIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.SUNDER, new Rectangle(locationX + 10 + 200, locationY + 150 + 50, 30, 30)));
-            this.oldIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.PUSH, new Rectangle(locationX + 70 + 200, locationY + 150 + 50, 30, 30)));
-            this.oldIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.TARGETS, new Rectangle(locationX + 130 + 200, locationY + 150 + 50, 30, 30)));
+            this.oldIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.SUNDER, new Rectangle(locationX + 10 + 200, locationY + 150 + 30, 30, 30)));
+            this.oldIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.PUSH, new Rectangle(locationX + 70 + 200, locationY + 150 + 30, 30, 30)));
+            this.oldIcons.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.TARGETS, new Rectangle(locationX + 130 + 200, locationY + 150 + 30, 30, 30)));
 
             //Details
 
-            this.oldDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.BLEED, new Rectangle(locationX + 40 + 200, locationY + 90 + 50, 30, 30)));
-            this.oldDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.ACCURACY, new Rectangle(locationX + 100 + 200, locationY + 90 + 50, 30, 30)));
-            this.oldDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.STUN, new Rectangle(locationX + 160 + 200, locationY + 90 + 50, 30, 30)));
-         
-            this.oldDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.DAMAGE, new Rectangle(locationX + 40 + 200, locationY + 120 + 50, 30, 30)));
-            this.oldDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.ATTACKS, new Rectangle(locationX + 100 + 200, locationY + 120 + 50, 30, 30)));
-            this.oldDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.PIERCING, new Rectangle(locationX + 160 + 200, locationY + 120 + 50, 30, 30)));
-         
-            this.oldDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.SUNDER, new Rectangle(locationX + 40 + 200, locationY + 150 + 50, 30, 30)));
-            this.oldDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.PUSH, new Rectangle(locationX + 100 + 200, locationY + 150 + 50, 30, 30)));
-            this.oldDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.TARGETS, new Rectangle(locationX + 160 + 200, locationY + 150 + 50, 30, 30)));
+            this.oldDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.BLEED, new Rectangle(locationX + 40 + 200, locationY + 90 + 30, 30, 30)));
+            this.oldDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.ACCURACY, new Rectangle(locationX + 100 + 200, locationY + 90 + 30, 30, 30)));
+            this.oldDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.STUN, new Rectangle(locationX + 160 + 200, locationY + 90 + 30, 30, 30)));
+
+            this.oldDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.DAMAGE, new Rectangle(locationX + 40 + 200, locationY + 120 + 30, 30, 30)));
+            this.oldDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.ATTACKS, new Rectangle(locationX + 100 + 200, locationY + 120 + 30, 30, 30)));
+            this.oldDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.PIERCING, new Rectangle(locationX + 160 + 200, locationY + 120 + 30, 30, 30)));
+
+            this.oldDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.SUNDER, new Rectangle(locationX + 40 + 200, locationY + 150 + 30, 30, 30)));
+            this.oldDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.PUSH, new Rectangle(locationX + 100 + 200, locationY + 150 + 30, 30, 30)));
+            this.oldDetails.Add(new Tuple<SpecialAttackType, Rectangle>(SpecialAttackType.TARGETS, new Rectangle(locationX + 160 + 200, locationY + 150 + 30, 30, 30)));
 
 
         }
