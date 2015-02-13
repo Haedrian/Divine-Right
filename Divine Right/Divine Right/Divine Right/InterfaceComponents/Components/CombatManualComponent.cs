@@ -159,7 +159,7 @@ namespace Divine_Right.InterfaceComponents.Components
 
                 batch.Draw(content,sprite,slotRectangles[i],GameState.PlayerCharacter.SpecialAttacks[i] == null ? Color.Black : Color.White);
 
-                if (clickedNumber == i+1)
+                if (clickedNumber == i)
                 {
                     //Circle!
                     batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.CIRCLE), new Rectangle(slotRectangles[i].X - 10, slotRectangles[i].Y - 10, slotRectangles[i].Width + 20, slotRectangles[i].Height + 20), Color.White);
@@ -237,16 +237,35 @@ namespace Divine_Right.InterfaceComponents.Components
                 batch.DrawString(font, "Old Attack", oldText, Alignment.Center, Color.White);
             }
 
-            batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.WOOD_TEXTURE), learnRect, Color.White);
+            batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.PAPER_TEXTURE), learnRect, Color.LightGray);
             batch.DrawString(font, "LEARN", learnRect, Alignment.Center, Color.DarkGreen);
 
-            batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.WOOD_TEXTURE), cancelRect, Color.White);
+            batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.PAPER_TEXTURE), cancelRect, Color.LightGray);
             batch.DrawString(font, "CANCEL", cancelRect, Alignment.Center, Color.DarkRed);
         }
 
         public bool HandleClick(int x, int y, Objects.Enums.MouseActionEnum mouseAction, out DRObjects.Enums.ActionType? actionType, out DRObjects.Enums.InternalActionEnum? internalActionType, out object[] args, out DRObjects.MapItem item, out DRObjects.MapCoordinate coord, out bool destroy)
         {
-            throw new NotImplementedException();
+            actionType = null;
+            internalActionType = null;
+            args = null;
+            item = null;
+            coord = null;
+            destroy = false;
+
+            //Did they click on one of the Special Attacks ?
+            for(int i=0; i < slotRectangles.Length; i++)
+            {
+                Rectangle sRect = slotRectangles[i];
+
+                if (sRect.Contains(x,y))
+                {
+                    this.clickedNumber = i;
+                    break;
+                }
+            }
+
+            return true;
         }
 
         public void HandleMouseOver(int x, int y)
