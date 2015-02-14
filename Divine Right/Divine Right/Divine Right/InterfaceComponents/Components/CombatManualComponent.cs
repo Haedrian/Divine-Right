@@ -270,7 +270,8 @@ namespace Divine_Right.InterfaceComponents.Components
 
         public void HandleMouseOver(int x, int y)
         {
-            return;
+            return;  
+
         }
 
         public bool HandleKeyboard(Microsoft.Xna.Framework.Input.KeyboardState keyboard, out DRObjects.Enums.ActionType? actionType, out object[] args, out DRObjects.MapCoordinate coord, out bool destroy)
