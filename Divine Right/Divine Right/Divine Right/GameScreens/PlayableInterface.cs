@@ -335,7 +335,7 @@ namespace Divine_Right.GameScreens
                 item.InInventory = true;
 
 
-                CombatManualComponent cmc = new CombatManualComponent(GameState.PlayerCharacter.SpecialAttacks[1]);
+                CombatManualComponent cmc = new CombatManualComponent(GraphicsDevice.Viewport.Width/2 - 200, GraphicsDevice.Viewport.Height / 2 - 150,GameState.PlayerCharacter.SpecialAttacks[1]);
 
                 GameState.PlayerCharacter.Inventory.Inventory.Add(item.Category, item);
 

@@ -8,6 +8,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Divine_Right.HelperFunctions;
 using DRObjects.Graphics;
 using DivineRightGame;
+using DRObjects.ActorHandling.CharacterSheet.Enums;
+using DRObjects.Items.Archetypes.Local;
 
 namespace Divine_Right.InterfaceComponents.Components
 {
@@ -45,22 +47,26 @@ namespace Divine_Right.InterfaceComponents.Components
         private SpecialAttack newAttack;
         private SpecialAttack oldAttack;
 
+        //The Combat manual item
+        private CombatManual cm;
+
         private SpriteFont font = null;
 
-        public CombatManualComponent(SpecialAttack newAttack)
+        public CombatManualComponent(int x, int y,SpecialAttack newAttack)
         {
             this.newAttack = newAttack;
 
-            this.locationX = 100;
-            this.locationY = 100;
+            this.locationX = x;
+            this.locationY = y;
 
             this.PerformDrag(0, 0);
 
-            this.clickedNumber = 2; //TODO: REMOVE AFTER TESTING
+            this.clickedNumber = 0;
         }
 
         public void Draw(Microsoft.Xna.Framework.Content.ContentManager content, Microsoft.Xna.Framework.Graphics.SpriteBatch batch)
         {
+
             if (font == null)
             {
                 font = content.Load<SpriteFont>(@"Fonts/TextFeedbackFont");
@@ -237,8 +243,11 @@ namespace Divine_Right.InterfaceComponents.Components
                 batch.DrawString(font, "Old Attack", oldText, Alignment.Center, Color.White);
             }
 
-            batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.PAPER_TEXTURE), learnRect, Color.LightGray);
-            batch.DrawString(font, "LEARN", learnRect, Alignment.Center, Color.DarkGreen);
+            if (this.newAttack.SkillLevelRequired <= GameState.PlayerCharacter.Attributes.GetSkill(SkillName.FIGHTER))
+            {
+                batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.PAPER_TEXTURE), learnRect, Color.LightGray);
+                batch.DrawString(font, "LEARN", learnRect, Alignment.Center, Color.DarkGreen);
+            }
 
             batch.Draw(content, SpriteManager.GetSprite(InterfaceSpriteName.PAPER_TEXTURE), cancelRect, Color.LightGray);
             batch.DrawString(font, "CANCEL", cancelRect, Alignment.Center, Color.DarkRed);
@@ -264,6 +273,38 @@ namespace Divine_Right.InterfaceComponents.Components
                     break;
                 }
             }
+
+            //Did they click on cancel?
+            if (this.cancelRect.Contains(x,y))
+            {
+                destroy = true;
+                return true;
+            }
+
+            //Did they click on learn?
+            if (this.learnRect.Contains(x,y))
+            {
+                if (this.newAttack.SkillLevelRequired <= GameState.PlayerCharacter.Attributes.GetSkill(SkillName.FIGHTER))
+                {
+                    //Learn it! Woo!
+                    GameState.PlayerCharacter.SpecialAttacks[this.clickedNumber.Value] = this.newAttack;
+
+                    //Destroy the inventory item
+                    this.cm.IsActive = false;
+                    this.cm.InInventory = false;
+
+                    GameState.PlayerCharacter.Inventory.Inventory.Remove(this.cm.Category, this.cm);
+
+                    destroy = true;
+                    return true;
+                }
+                else
+                {
+                    //Can't learn it
+                }
+            }
+
+
 
             return true;
         }
