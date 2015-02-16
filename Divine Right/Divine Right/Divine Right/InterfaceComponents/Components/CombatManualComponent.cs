@@ -52,9 +52,11 @@ namespace Divine_Right.InterfaceComponents.Components
 
         private SpriteFont font = null;
 
-        public CombatManualComponent(int x, int y,SpecialAttack newAttack)
+        public CombatManualComponent(int x, int y,CombatManual manual)
         {
-            this.newAttack = newAttack;
+            this.cm = manual;
+
+            this.newAttack = cm.SpecialAttack;
 
             this.locationX = x;
             this.locationY = y;
@@ -321,7 +323,7 @@ namespace Divine_Right.InterfaceComponents.Components
             args = null;
             coord = null;
             destroy = false;
-            return false; //never handle this
+            return true; //never handle this
         }
 
         public Microsoft.Xna.Framework.Rectangle ReturnLocation()

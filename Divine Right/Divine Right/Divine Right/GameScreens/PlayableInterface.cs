@@ -38,6 +38,7 @@ using DRObjects.Feedback;
 using DivineRightGame.Deity;
 using DivineRightGame.CombatHandling;
 using DRObjects.ActorHandling.SpecialAttacks;
+using DRObjects.Feedback.OpenInterfaceObjects;
 
 namespace Divine_Right.GameScreens
 {
@@ -335,11 +336,8 @@ namespace Divine_Right.GameScreens
                 item.InInventory = true;
 
 
-                CombatManualComponent cmc = new CombatManualComponent(GraphicsDevice.Viewport.Width/2 - 200, GraphicsDevice.Viewport.Height / 2 - 150,GameState.PlayerCharacter.SpecialAttacks[1]);
-
                 GameState.PlayerCharacter.Inventory.Inventory.Add(item.Category, item);
 
-                interfaceComponents.Add(cmc);
             }
 
             //Add the health control
@@ -1153,6 +1151,20 @@ namespace Divine_Right.GameScreens
 
                     fb = tempFBList.ToArray();
 
+                }
+                else if (feedback.GetType().Equals(typeof(OpenInterfaceFeedback)))
+                {
+                    OpenInterfaceFeedback oif= feedback as OpenInterfaceFeedback;
+
+                    //Generate one
+                    if (oif.Interface.GetType() == typeof(CombatManualInterface))
+                    {
+                        var cmi = oif.Interface as CombatManualInterface;
+
+                        CombatManualComponent cmc = new CombatManualComponent(GraphicsDevice.Viewport.Width / 2 - 200, GraphicsDevice.Viewport.Height / 2 - 150, cmi.Manual); 
+
+                        interfaceComponents.Add(cmc);
+                    }
                 }
                 else 
                 if (feedback.GetType().Equals(typeof(TextFeedback)))

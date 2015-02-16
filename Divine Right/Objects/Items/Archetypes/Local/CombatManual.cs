@@ -6,6 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DRObjects.ActorHandling.CharacterSheet;
+using DRObjects.GraphicsEngineObjects.Abstract;
+using DRObjects.Feedback;
+using DRObjects.Feedback.OpenInterfaceObjects;
 
 namespace DRObjects.Items.Archetypes.Local
 {
@@ -129,10 +132,18 @@ namespace DRObjects.Items.Archetypes.Local
             }
         }
 
-        public override GraphicsEngineObjects.Abstract.ActionFeedback[] PerformAction(ActionType actionType, Actor actor, object[] args)
+        public override ActionFeedback[] PerformAction(ActionType actionType, Actor actor, object[] args)
         {
-            //TODO: LATER
-            return base.PerformAction(actionType, actor, args);
+
+            if (actionType == ActionType.READ)
+            {
+                //Open the CombatManualComponent
+                return new ActionFeedback[] { new OpenInterfaceFeedback(new CombatManualInterface(this)) };
+            }
+            else
+            {
+                return base.PerformAction(actionType, actor, args);
+            }
         }
     }
 }

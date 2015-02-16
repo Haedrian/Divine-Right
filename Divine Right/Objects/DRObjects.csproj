@@ -147,6 +147,7 @@
     <Compile Include="EventHandling\MultiEvents\GameMultiEvent.cs" />
     <Compile Include="EventHandling\MultiEvents\MultiEventChoice.cs" />
     <Compile Include="Extensions\Extensions.cs" />
+    <Compile Include="Feedback\OpenInterfaceFeedback.cs" />
     <Compile Include="Feedback\Abstract\ActionFeedback.cs" />
     <Compile Include="Feedback\AttackFeedback.cs" />
     <Compile Include="Feedback\CreateEventFeedback.cs" />
@@ -156,6 +157,8 @@
     <Compile Include="Feedback\GraphicalBlock.cs" />
     <Compile Include="Feedback\InterfaceToggleFeedback.cs" />
     <Compile Include="Feedback\LocationChangeFeedback.cs" />
+    <Compile Include="Feedback\OpenInterfaceObjects\CombatManualInterface.cs" />
+    <Compile Include="Feedback\OpenInterfaceObjects\OpenInterfaceObject.cs" />
     <Compile Include="Feedback\ReceiveBlessingFeedback.cs" />
     <Compile Include="Feedback\ReceiveEffectFeedback.cs" />
     <Compile Include="Feedback\ReceiveItemFeedback.cs" />
