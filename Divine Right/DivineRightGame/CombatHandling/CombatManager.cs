@@ -12,6 +12,7 @@ using DRObjects.Enums;
 using DRObjects.Items.Archetypes.Local;
 using DRObjects.ActorHandling.CharacterSheet.Enums;
 using DRObjects.ActorHandling.ActorMissions;
+using DRObjects.ActorHandling.SpecialAttacks;
 
 namespace DivineRightGame.CombatHandling
 {
@@ -170,10 +171,11 @@ namespace DivineRightGame.CombatHandling
         /// <param name="attacker"></param>
         /// <param name="defender"></param>
         /// <param name="location"></param>
+        /// <param name="special">Special attack modifications to make. THIS DOES NOT CONSIDER TARGETS, ATTACKS OR PUSH</param>
         /// <returns></returns>
-        public static ActionFeedback[] Attack(Actor attacker, Actor defender, AttackLocation location)
+        public static ActionFeedback[] Attack(Actor attacker, Actor defender, AttackLocation location, SpecialAttack special = null)
         {
-            List<ActionFeedback> feedback = new List<ActionFeedback>(); 
+            List<ActionFeedback> feedback = new List<ActionFeedback>();
 
             if (defender.MapCharacter == null)
             {
@@ -224,7 +226,7 @@ namespace DivineRightGame.CombatHandling
                 else
                 {
                     //Firing with a destroyed upper body? For shame
-                    feedback.Add(new LogFeedback(null,Color.Red,"You are unable to use a ranged weapon under these conditions"));
+                    feedback.Add(new LogFeedback(null, Color.Red, "You are unable to use a ranged weapon under these conditions"));
                 }
             }
 
@@ -261,6 +263,10 @@ namespace DivineRightGame.CombatHandling
                 hitChance = attacker.Attributes.Ranged + attacker.TotalPerc - 5 - distance * 2 + penaltyDict[location] + atk;
             }
 
+            if (special != null)
+            {
+                hitChance += special.Effects.FirstOrDefault(e => e.EffectType == SpecialAttackType.ACCURACY) == null ? 0 : special.Effects.FirstOrDefault(e => e.EffectType == SpecialAttackType.ACCURACY).EffectValue;
+            }
 
             GetStanceEffect(out atk, out def, defender.CombatStance);
 
@@ -301,6 +307,11 @@ namespace DivineRightGame.CombatHandling
 
                 int damage = weaponDamage;
 
+                if (special != null)
+                {
+                    damage += special.Effects.FirstOrDefault(e => e.EffectType == SpecialAttackType.DAMAGE) == null ? 0 : special.Effects.FirstOrDefault(e => e.EffectType == SpecialAttackType.DAMAGE).EffectValue;
+                }
+
                 if (damage > 1)
                 {
                     //Do we have any defences?
@@ -328,10 +339,40 @@ namespace DivineRightGame.CombatHandling
                 //Is the user wearing any armour?
                 if (location == AttackLocation.CHEST || location == AttackLocation.LEFT_ARM || location == AttackLocation.RIGHT_ARM)
                 {
+                    //Determine how much damage we can get through due to pierce
+                    int piercing = 0;
+
+                    if (special != null)
+                    {
+                        piercing = special.Effects.FirstOrDefault(e => e.EffectType == SpecialAttackType.PIERCING) == null ? 0 : special.Effects.FirstOrDefault(e => e.EffectType == SpecialAttackType.PIERCING).EffectValue;
+                    }
+
                     //Use the chest armour
                     if (defender.Inventory.EquippedItems.ContainsKey(EquipmentLocation.BODY))
                     {
-                        damage -= defender.Inventory.EquippedItems[EquipmentLocation.BODY].ArmourRating;
+                        int block = defender.Inventory.EquippedItems[EquipmentLocation.BODY].ArmourRating - piercing;
+
+                        damage -= (block > 0 ? block : 0);
+
+                        //Do we damage the armour?
+                        int sunder = 0;
+
+                        if (special != null)
+                        {
+                            sunder = special.Effects.FirstOrDefault(e => e.EffectType == SpecialAttackType.SUNDER) == null ? 0 : special.Effects.FirstOrDefault(e => e.EffectType == SpecialAttackType.SUNDER).EffectValue;
+                        }
+
+                        if (sunder > 0 && defender.Inventory.EquippedItems[EquipmentLocation.BODY].ArmourRating > 0)
+                        {
+                            defender.Inventory.EquippedItems[EquipmentLocation.BODY].ArmourRating -= sunder;
+
+                            if (defender.Inventory.EquippedItems[EquipmentLocation.BODY].ArmourRating < 0) //no negative block
+                            {
+                                defender.Inventory.EquippedItems[EquipmentLocation.BODY].ArmourRating = 0;
+                            }
+                             
+                        }
+
                     }
                 }
 
@@ -374,10 +415,20 @@ namespace DivineRightGame.CombatHandling
 
                 int woundRoll = diceRoll + (defender.Attributes.WoundResist - weaponWoundPotential) - 5;
 
+                int woundBonus = 0;
+
+                if (special != null)
+                {
+                    woundBonus = special.Effects.FirstOrDefault(e => e.EffectType == SpecialAttackType.BLEED) == null ? 0 : special.Effects.FirstOrDefault(e => e.EffectType == SpecialAttackType.BLEED).EffectValue;
+
+                }
+                woundRoll += woundBonus;
+
                 if (woundRoll <= 0)
                 {
                     //Yes - open a wound
                     defender.Anatomy.BloodLoss++;
+                    defender.Anatomy.BloodLoss += woundBonus; //Yeah, bleed makes you bleed more AND increases chance of bleed. Not entirely sure this won't be overpowered
 
                     Console.WriteLine("Wounded " + woundRoll);
 
@@ -389,12 +440,29 @@ namespace DivineRightGame.CombatHandling
                 diceRoll = random.Next(10) + 1;
                 int stunRoll = diceRoll + (defender.Attributes.WoundResist - weaponStunAmount) - 5;
 
+                int stunBonus = 0;
+
+                if (special != null)
+                {
+                    stunBonus = special.Effects.FirstOrDefault(e => e.EffectType == SpecialAttackType.STUN) == null ? 0 : special.Effects.FirstOrDefault(e => e.EffectType == SpecialAttackType.STUN).EffectValue;
+                }
+
+                stunRoll += stunBonus;
+
+
                 if (stunRoll <= 0)
                 {
                     //Stun him
                     defender.Anatomy.StunAmount++;
+                    defender.Anatomy.StunAmount += stunRoll; //Yeah stun makes you more likely to get stunned and makes you stun longer. Not entirely sure this won't be as overpowered as ell
 
                     Console.WriteLine("Stunned " + stunRoll);
+                }
+
+                //Any damage bonus ?
+                if (special != null)
+                {
+                    damage += special.Effects.FirstOrDefault(e => e.EffectType == SpecialAttackType.DAMAGE) == null ? 0 : special.Effects.FirstOrDefault(e => e.EffectType == SpecialAttackType.DAMAGE).EffectValue;
                 }
 
                 //Apply the damage
@@ -539,22 +607,22 @@ namespace DivineRightGame.CombatHandling
                     attacker.Attributes.IncreaseSkill(SkillName.ARCHER);
                 }
                 else
-                //Are they armed?
-                if (attacker.Inventory.EquippedItems.ContainsKey(EquipmentLocation.WEAPON))
-                {
-                    switch (attacker.Inventory.EquippedItems[EquipmentLocation.WEAPON].WeaponType.ToUpper())
+                    //Are they armed?
+                    if (attacker.Inventory.EquippedItems.ContainsKey(EquipmentLocation.WEAPON))
                     {
-                        case "SWORD": attacker.Attributes.IncreaseSkill(SkillName.SWORDFIGHTER); break;
-                        case "AXE": attacker.Attributes.IncreaseSkill(SkillName.AXEFIGHTER); break;
-                        case "BOW": attacker.Attributes.IncreaseSkill(SkillName.ARCHER); break;
-                        default: throw new NotImplementedException("No skill pertains to the weapon type " + attacker.Inventory.EquippedItems[EquipmentLocation.WEAPON].WeaponType);
+                        switch (attacker.Inventory.EquippedItems[EquipmentLocation.WEAPON].WeaponType.ToUpper())
+                        {
+                            case "SWORD": attacker.Attributes.IncreaseSkill(SkillName.SWORDFIGHTER); break;
+                            case "AXE": attacker.Attributes.IncreaseSkill(SkillName.AXEFIGHTER); break;
+                            case "BOW": attacker.Attributes.IncreaseSkill(SkillName.ARCHER); break;
+                            default: throw new NotImplementedException("No skill pertains to the weapon type " + attacker.Inventory.EquippedItems[EquipmentLocation.WEAPON].WeaponType);
+                        }
                     }
-                }
-                else
-                {
-                    //Unarmed then
-                    attacker.Attributes.IncreaseSkill(SkillName.BRAWLER);
-                }
+                    else
+                    {
+                        //Unarmed then
+                        attacker.Attributes.IncreaseSkill(SkillName.BRAWLER);
+                    }
 
                 feedback.Add(LogAction(attacker, defender, location, damageType, LogMessageStatus.MISS, diceRoll));
 
@@ -562,13 +630,84 @@ namespace DivineRightGame.CombatHandling
                 {
                     Coord = new MapCoordinate(defender.MapCharacter.Coordinate),
                     Graphic = SpriteManager.GetSprite(distance < 2 ? InterfaceSpriteName.SWORD_BLOCKED : InterfaceSpriteName.BOW_BLOCKED),
-                    LifeTime = (attacker.IsPlayerCharacter ? 2 : 2 )
+                    LifeTime = (attacker.IsPlayerCharacter ? 2 : 2)
                 });
             }
 
             //We're done
 
             return feedback.ToArray();
+        }
+
+        /// <summary>
+        /// Attack a particular target using this special attack
+        /// </summary>
+        /// <param name="attacker"></param>
+        /// <param name="target"></param>
+        /// <param name="attack"></param>
+        /// <returns></returns>
+        public static ActionFeedback[] PerformSpecialAttack(Actor attacker, Actor target, SpecialAttack attack)
+        {
+            List<ActionFeedback> feedback = new List<ActionFeedback>();
+
+            feedback.Add(new LogFeedback(InterfaceSpriteName.SA1, Color.Blue, "You strike using " + attack.AttackName));
+
+            if (target.MapCharacter == null)
+            {
+                return new ActionFeedback[] { }; //Huh ?
+            }
+
+            //So, first we need to determine how many targets we're going to attack, and how many times
+            List<Actor> targets = new List<Actor>();
+
+            targets.Add(target);
+
+            for (int i = 1; i < attack.Effects.Where(e => e.EffectType == SpecialAttackType.TARGETS).Select(e => e.EffectValue).FirstOrDefault(); i++)
+            {
+                //Go around the attacker and add another target - later we'll need to check if they're hostile
+                foreach (var block in GameState.LocalMap.GetBlocksAroundPoint(attacker.MapCharacter.Coordinate, 1))
+                {
+                    foreach (var character in block.GetItems().Where(gi => gi.IsActive && gi.GetType() == typeof(LocalCharacter)))
+                    {
+                        Actor newTarget = (character as LocalCharacter).Actor;
+
+                        if (!targets.Contains(newTarget))
+                        {
+                            //Add it!
+                            targets.Add(newTarget);
+                            continue;
+                        }
+                    }
+                }
+
+                break; //No more actors
+            }
+
+            int attacksToMake = attack.Effects.FirstOrDefault(e => e.EffectType == SpecialAttackType.ATTACKS) == null ? 1 : attack.Effects.FirstOrDefault(e => e.EffectType == SpecialAttackType.ATTACKS).EffectValue;
+
+            for (int i = 0; i < attacksToMake; i++)
+            {
+                foreach (var defender in targets)
+                {
+                    //Are we alive?
+                    if (!defender.IsAlive)
+                    {
+                        continue; //yeah he's dead jim
+                    }
+                    else
+                    {
+                        //Attack!
+                        feedback.AddRange(Attack(attacker, defender, AttackLocation.CHEST, attack));
+                    }
+                }
+            }
+
+            //So, let's handle the pushback now
+            //TODO: Pushbac
+
+            //Done
+            return feedback.ToArray();
+
         }
 
         /// <summary>
