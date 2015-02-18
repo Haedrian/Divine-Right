@@ -370,6 +370,20 @@ namespace DivineRightGame
             //Bye bye
             TemporaryGraphics = TemporaryGraphics.Where(tg => tg.LifeTime > 0).ToList();
 
+            //Any special attacks get timeout reduced
+            foreach(var attack in GameState.PlayerCharacter.SpecialAttacks)
+            {
+                if (attack == null)
+                {
+                    continue;
+                }
+
+                if (attack.TimeOutLeft > 0)
+                {
+                    attack.TimeOutLeft--;
+                }
+            }
+
             return feedback.ToArray();
         }
 

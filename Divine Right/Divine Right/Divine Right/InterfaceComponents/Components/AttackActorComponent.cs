@@ -463,6 +463,32 @@ namespace Divine_Right.InterfaceComponents.Components
                 return true;
             }
 
+            //Did we click on a special attack?
+            for(int i=0; i < saRects.Length; i++)
+            {
+                var rectangle = saRects[i];
+                if (rectangle.Contains(x,y))
+                {
+                    //Valid special attack?
+                    if (attacker.SpecialAttacks[i] != null && attacker.SpecialAttacks[i].TimeOutLeft == 0)
+                    {
+                        //Then attack
+                        actionType = ActionType.ATTACK;
+                        List<object> argumentList = new List<object>();
+                        argumentList.Add(this.attacker);
+                        argumentList.Add(this.TargetActor);
+                        argumentList.Add(AttackLocation.CHEST);
+                        argumentList.Add(attacker.SpecialAttacks[i]);
+
+                        args = argumentList.ToArray();
+
+                        return true;
+
+                        //Attack!
+                    }
+                }
+            }
+
             return visible; //If it's visible - block it. Otherwise do nothing
         }
 

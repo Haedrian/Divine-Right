@@ -171,7 +171,7 @@ namespace DivineRightGame.CombatHandling
         /// <param name="attacker"></param>
         /// <param name="defender"></param>
         /// <param name="location"></param>
-        /// <param name="special">Special attack modifications to make. THIS DOES NOT CONSIDER TARGETS, ATTACKS OR PUSH</param>
+        /// <param name="special">Special attack modifications to make. THIS DOES NOT CONSIDER TARGETS OR ATTACKS </param>
         /// <returns></returns>
         public static ActionFeedback[] Attack(Actor attacker, Actor defender, AttackLocation location, SpecialAttack special = null)
         {
@@ -465,6 +465,62 @@ namespace DivineRightGame.CombatHandling
                     damage += special.Effects.FirstOrDefault(e => e.EffectType == SpecialAttackType.DAMAGE) == null ? 0 : special.Effects.FirstOrDefault(e => e.EffectType == SpecialAttackType.DAMAGE).EffectValue;
                 }
 
+                #region Push
+                if (special != null)
+                {
+                    //Do we have a push?
+                    int pushAmount = special.Effects.FirstOrDefault(e => e.EffectType == SpecialAttackType.PUSH) == null ? 0 : special.Effects.First(e => e.EffectType == SpecialAttackType.PUSH).EffectValue;
+
+                    if (distance >= 2)
+                    {
+                        pushAmount = 0; //No push!
+                    }
+
+                    if (pushAmount > 0)
+                    {
+                        //Shove the target back by the total amount of push. Or try to at least
+
+
+                        //Let's determine the direction
+                        int pushX = 0;
+                        int pushY = 0;
+
+                        pushX = attacker.MapCharacter.Coordinate.X - defender.MapCharacter.Coordinate.X ;
+                        pushY = attacker.MapCharacter.Coordinate.Y - defender.MapCharacter.Coordinate.Y;
+
+                        for (int i = 0; i < pushAmount; i++)
+                        {
+                            //PUSH!
+                            //Is the tile free?
+                            if (GameState.LocalMap.GetBlockAtCoordinate(new MapCoordinate(defender.MapCharacter.Coordinate.X, defender.MapCharacter.Coordinate.Y, 0, MapType.LOCAL)).MayContainItems)
+                            {
+                                //Yeah push em
+                                GameState.LocalMap.GetBlockAtCoordinate(new MapCoordinate(defender.MapCharacter.Coordinate.X + pushX, defender.MapCharacter.Coordinate.Y + pushY, 0, MapType.LOCAL)).ForcePutItemOnBlock(defender.MapCharacter);
+                            }
+                            else
+                            {
+                                //Is there an obstacle in the way?
+                                if (GameState.LocalMap.GetBlockAtCoordinate(new MapCoordinate(defender.MapCharacter.Coordinate.X, defender.MapCharacter.Coordinate.Y, 0, MapType.LOCAL)).IsSeeThrough)
+                                {
+                                    //No, stop there
+                                    break;
+                                }
+                                else
+                                {
+                                    //Ouch! Stop there anyway
+
+                                    //Do damage equal to push left
+                                    damage += pushAmount - i;
+
+                                    feedback.Add(new LogFeedback(null, Color.Red, defender.Name + " hits an obstacle"));
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+                #endregion
+
                 //Apply the damage
                 switch (location)
                 {
@@ -702,8 +758,9 @@ namespace DivineRightGame.CombatHandling
                 }
             }
 
-            //So, let's handle the pushback now
-            //TODO: Pushbac
+
+            //Phew, now let's set the timeout
+            attack.TimeOutLeft = attack.TimeOut;
 
             //Done
             return feedback.ToArray();

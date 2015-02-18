@@ -10,6 +10,7 @@ using System.Diagnostics;
 using DivineRightGame.CombatHandling;
 using Microsoft.Xna.Framework;
 using DRObjects.Graphics;
+using DRObjects.ActorHandling.SpecialAttacks;
 
 namespace DivineRightGame.Managers
 {
@@ -37,6 +38,7 @@ namespace DivineRightGame.Managers
                 //Argument 0 - attacker
                 //Argument 1 - target
                 //Argument 2 - Body part to attack
+                //Argument 3 - Special attack if there
 
                 //Are we in the right place?
                 Actor attacker = args[0] as Actor;
@@ -55,7 +57,16 @@ namespace DivineRightGame.Managers
                 if ( distance < 2)
                 {
                     //Hand to hand
-                    feedback.AddRange(CombatManager.Attack(attacker,defender,location));
+
+                    if (args.Length > 3)
+                    {
+                        //Special attack!
+                        feedback.AddRange(CombatManager.PerformSpecialAttack(attacker, defender, args[3] as SpecialAttack));
+                    }
+                    else
+                    {
+                        feedback.AddRange(CombatManager.Attack(attacker, defender, location));
+                    }
                     validAttack = true; //perform the tick
                 }
                 else
@@ -70,7 +81,15 @@ namespace DivineRightGame.Managers
                             if (distance <= attacker.LineOfSight)
                             {
                                 //Yes!
-                                feedback.AddRange(CombatManager.Attack(attacker, defender, location));
+                                if (args.Length > 3)
+                                {
+                                    //Special attack!
+                                    feedback.AddRange(CombatManager.PerformSpecialAttack(attacker, defender, args[3] as SpecialAttack));
+                                }
+                                else
+                                {
+                                    feedback.AddRange(CombatManager.Attack(attacker, defender, location));
+                                }
                                 validAttack = true;
                             }
                             else
