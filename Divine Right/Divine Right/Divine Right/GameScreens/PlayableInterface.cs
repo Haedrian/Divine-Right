@@ -336,6 +336,9 @@ namespace Divine_Right.GameScreens
                 item.InInventory = true;
 
 
+                ThrowItemComponent tic = new ThrowItemComponent( (GraphicsDevice.Viewport.Width / 2) - 500, (GraphicsDevice.Viewport.Height / 2) - 500, null);
+                interfaceComponents.Add(tic);
+
                 GameState.PlayerCharacter.Inventory.Inventory.Add(item.Category, item);
 
             }

@@ -122,6 +122,7 @@
     <Compile Include="InterfaceComponents\Components\ContextMenuComponent.cs" />
     <Compile Include="InterfaceComponents\Components\LootComponent.cs" />
     <Compile Include="InterfaceComponents\Components\MultiDecisionComponent.cs" />
+    <Compile Include="InterfaceComponents\Components\ThrowItemComponent.cs" />
     <Compile Include="InterfaceComponents\Components\TradeDisplayComponent.cs" />
     <Compile Include="InterfaceComponents\Components\HealthDisplayComponent.cs" />
     <Compile Include="InterfaceComponents\Components\DecisionPopupComponent.cs" />

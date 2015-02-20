@@ -13,6 +13,7 @@ using DRObjects.Items.Archetypes.Local;
 
 namespace Divine_Right.InterfaceComponents.Components
 {
+    [Serializable]
     public class CombatManualComponent
         : IGameInterfaceComponent
     {

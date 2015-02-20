@@ -480,9 +480,17 @@ namespace DivineRightGame
 
             foreach(var point in points)
             {
-                if ( !this.localGameMap[point.X,point.Y,0].IsSeeThrough)
+
+                try
                 {
-                    return false;
+                    if (!this.localGameMap[point.X, point.Y, 0].IsSeeThrough)
+                    {
+                        return false;
+                    }
+                }
+                catch
+                {
+                    return false; //underflow or overflow
                 }
             }
 
