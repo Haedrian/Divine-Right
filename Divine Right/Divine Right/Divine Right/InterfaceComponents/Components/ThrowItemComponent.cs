@@ -39,7 +39,7 @@ namespace Divine_Right.InterfaceComponents.Components
             this.item = item;
 
             centerX = locationX + 500;
-            centerY = locationY + 500 -25;
+            centerY = locationY + 500;
 
             //Since this can't be dragged, tis safe to put the designing code in 'ere
 
