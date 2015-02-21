@@ -150,6 +150,7 @@ namespace DRObjects.Graphics
             colourSprites[(int)ColourSpriteName.RED] = new SpriteData(@"Graphics/World/Overlay/Regions/Red");
             colourSprites[(int)ColourSpriteName.WHITE] = new SpriteData(@"Graphics/World/Overlay/Regions/White");
             colourSprites[(int)ColourSpriteName.YELLOW] = new SpriteData(@"Graphics/World/Overlay/Regions/Yellow");
+            colourSprites[(int)ColourSpriteName.GREEN_BOXED] = new SpriteData(@"Graphics/World/Overlay/Regions/GreenBoxed");
 
             localSprites[(int)LocalSpriteName.SOIL_TILE] = new SpriteData(TILES, new Rectangle(0, 0, 50, 50));
             localSprites[(int)LocalSpriteName.WET_SOIL_TILE] = new SpriteData(TILES, new Rectangle(50, 0, 50, 50));

@@ -30,9 +30,9 @@ namespace Divine_Right.InterfaceComponents.Components
         private InventoryItem item;
 
         private Rectangle rect;
-        private List<Tuple<Rectangle,MapCoordinate>> rectangles;
+        private List<Tuple<Rectangle, MapCoordinate, bool>> rectangles;
 
-        public ThrowItemComponent (int X, int Y, InventoryItem item)
+        public ThrowItemComponent(int X, int Y, InventoryItem item)
         {
             locationX = X;
             locationY = Y;
@@ -51,13 +51,13 @@ namespace Divine_Right.InterfaceComponents.Components
             //b) You have a direct line of site to them
             //c) Yeah I'm putting a limit at 10 squares. Sue me.
 
-            rectangles = new List<Tuple<Rectangle,MapCoordinate>>();
+            rectangles = new List<Tuple<Rectangle, MapCoordinate, bool>>();
 
             MapCoordinate center = GameState.PlayerCharacter.MapCharacter.Coordinate;
 
-            for(int x=-10; x < 11; x++)
+            for (int x = -10; x < 11; x++)
             {
-                for(int y=-10; y < 11; y++)
+                for (int y = -10; y < 11; y++)
                 {
                     MapCoordinate mc = new MapCoordinate(center.X + x, center.Y - y, 0, MapType.LOCAL);
 
@@ -71,18 +71,24 @@ namespace Divine_Right.InterfaceComponents.Components
 
                     //Is it within our sight range?
 
-                    if ((mc - center) > GameState.PlayerCharacter.LineOfSight )
+                    if ((mc - center) > GameState.PlayerCharacter.LineOfSight)
                     {
                         //Nope
                         continue;
                     }
 
+                    if (mc.Equals(center))
+                    {
+                        continue;
+                        //don't throw it on yourself
+                    }
+
                     //Do we have LoS to it?
-                    if (GameState.LocalMap.HasDirectPath(center,mc))
+                    if (GameState.LocalMap.HasDirectPath(center, mc))
                     {
                         //Yes!
-                        Rectangle rectangle = new Rectangle(centerX + ( x * 50), centerY + ( y * 50), 50, 50);
-                        rectangles.Add(new Tuple<Rectangle, MapCoordinate>(rectangle, mc));
+                        Rectangle rectangle = new Rectangle(centerX + (x * 50), centerY + (y * 50), 50, 50);
+                        rectangles.Add(new Tuple<Rectangle, MapCoordinate, Boolean>(rectangle, mc, false));
                     }
 
                 }
@@ -91,13 +97,19 @@ namespace Divine_Right.InterfaceComponents.Components
 
         public void Draw(Microsoft.Xna.Framework.Content.ContentManager content, Microsoft.Xna.Framework.Graphics.SpriteBatch batch)
         {
-            SpriteData box = SpriteManager.GetSprite(ColourSpriteName.GREEN);
-            box.ColorFilter = new Color(Color.White, 25); //Slighty Faded Green
+            SpriteData box = SpriteManager.GetSprite(ColourSpriteName.GREEN_BOXED);
 
             //Go through each rectangle and draw it
-            foreach(var rC in rectangles)
+            foreach (var rC in rectangles)
             {
-                batch.Draw(content, box, rC.Item1, box.ColorFilter.Value);
+                if (rC.Item3)
+                {
+                    batch.Draw(content, box, rC.Item1, Color.White * 0.5f);
+                }
+                else
+                {
+                    batch.Draw(content, box, rC.Item1, Color.Blue * 0.15f);
+                }
             }
         }
 
@@ -115,7 +127,18 @@ namespace Divine_Right.InterfaceComponents.Components
 
         public void HandleMouseOver(int x, int y)
         {
-            return;
+            for (int i = 0; i < rectangles.Count; i++)
+            {
+                //Apparently they're read only. I don't know
+
+                rectangles[i] = new Tuple<Rectangle, MapCoordinate, bool>(rectangles[i].Item1, rectangles[i].Item2, false);
+
+                if (rectangles[i].Item1.Contains(x, y))
+                {
+                    rectangles[i] = new Tuple<Rectangle, MapCoordinate, bool>(rectangles[i].Item1, rectangles[i].Item2, true); //moused over
+                }
+
+            }
         }
 
         public bool HandleKeyboard(Microsoft.Xna.Framework.Input.KeyboardState keyboard, out DRObjects.Enums.ActionType? actionType, out object[] args, out DRObjects.MapCoordinate coord, out bool destroy)
@@ -141,7 +164,7 @@ namespace Divine_Right.InterfaceComponents.Components
 
         public bool IsModal()
         {
-            return true; 
+            return true;
         }
 
         public bool Visible

@@ -16,7 +16,8 @@ namespace DRObjects.Graphics
         YELLOW,
         INDIGO,
         MARBLEBLUE,
-        WHITE
+        WHITE,
+        GREEN_BOXED
 
     }
 }
