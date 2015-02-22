@@ -337,7 +337,7 @@ namespace Divine_Right.GameScreens
 
                 //Determine the real center
                 int x = (int)(Math.Floor((double)(GraphicsDevice.Viewport.Width / 2) - 500) / TILEWIDTH) * TILEWIDTH;
-                int y = (int) (Math.Floor( (double) (GraphicsDevice.Viewport.Height/2) - 500 ) /TILEHEIGHT) * TILEHEIGHT;
+                int y = ((int)(Math.Floor((double)(GraphicsDevice.Viewport.Height / 2) - 500) / TILEHEIGHT) * TILEHEIGHT) - 50;
 
 
                 ThrowItemComponent tic = new ThrowItemComponent( x, y, null);
