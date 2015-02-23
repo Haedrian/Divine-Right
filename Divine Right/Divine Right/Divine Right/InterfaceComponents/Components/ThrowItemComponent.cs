@@ -38,26 +38,26 @@ namespace Divine_Right.InterfaceComponents.Components
             locationY = Y;
             this.item = item;
 
-            centerX = locationX + 500;
-            centerY = locationY + 500;
+            centerX = locationX + 250;
+            centerY = locationY + 250;
 
             //Since this can't be dragged, tis safe to put the designing code in 'ere
 
-            rect = new Rectangle(locationX, locationY, 1000, 1000);
+            rect = new Rectangle(locationX, locationY, 500, 500);
 
             //This component will draw a number of rectangles over areas where you're allowed to throw something
-            //So go through each tile in a 20x20 square and see if 
+            //So go through each tile in a 10x10 square and see if 
             //a) They're within the site range you have
             //b) You have a direct line of site to them
-            //c) Yeah I'm putting a limit at 10 squares. Sue me.
+            //c) Yeah I'm putting a limit at 5 squares. Sue me.
 
             rectangles = new List<Tuple<Rectangle, MapCoordinate, bool>>();
 
             MapCoordinate center = GameState.PlayerCharacter.MapCharacter.Coordinate;
 
-            for (int x = -10; x < 11; x++)
+            for (int x = -5; x < 6; x++)
             {
-                for (int y = -10; y < 11; y++)
+                for (int y = -5; y < 6; y++)
                 {
                     MapCoordinate mc = new MapCoordinate(center.X + x, center.Y - y, 0, MapType.LOCAL);
 

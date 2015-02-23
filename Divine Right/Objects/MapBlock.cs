@@ -254,19 +254,17 @@ namespace DRObjects
         public ActionType[] GetActions(Actor actor)
         {
             MapItem item = GetTopItem();
-            ActionType[] actions = item.GetPossibleActions(actor);
+            List<ActionType> actions = item.GetPossibleActions(actor).ToList();
+
+            //We can also throw something - if we have line of sight - we'll worry about this later
+            actions.Add(ActionType.THROW);
 
             if (this.MayContainItems)
             {
-                List<ActionType> actionList = actions.ToList();
-                actionList.Add(ActionType.MOVE);
+                actions.Add(ActionType.MOVE);
+            }
 
-                return actionList.ToArray();
-            }
-            else
-            {
-                return actions;
-            }
+            return actions.ToArray();
         }
 
         public ActionFeedback[] PerformAction(ActionType actionType, Actor actor, object[] args)
