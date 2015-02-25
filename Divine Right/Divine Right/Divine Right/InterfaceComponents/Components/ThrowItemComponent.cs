@@ -92,7 +92,17 @@ namespace Divine_Right.InterfaceComponents.Components
 
         public void HandleMouseOver(int x, int y)
         {
-            throw new NotImplementedException();
+            this.description = null;
+
+           foreach(var item in ItemRects)
+           {
+               if (item.Rect.Contains(x,y))
+               {
+                   item.Selected = true;
+                   this.description = item.Item.Description;
+                   break;
+               }
+           }
         }
 
         public bool HandleKeyboard(Microsoft.Xna.Framework.Input.KeyboardState keyboard, out DRObjects.Enums.ActionType? actionType, out object[] args, out DRObjects.MapCoordinate coord, out bool destroy)
@@ -122,8 +132,8 @@ namespace Divine_Right.InterfaceComponents.Components
             this.locationY += deltaY;
 
             this.rect = new Rectangle(locationX, locationY, 360, 120);
-            this.borderRect = new Rectangle(locationX - 2, locationY - 2, rect.Width - 4, rect.Height - 4);
-            this.descriptionRect = new Rectangle(locationX, 90, rect.Width, 30);
+            this.borderRect = new Rectangle(locationX - 2, locationY - 2, rect.Width + 4, rect.Height + 4);
+            this.descriptionRect = new Rectangle(locationX, locationY  + 90, rect.Width, 30);
 
             this.ItemRects = new List<InventoryItemRectangle>();
 
@@ -149,12 +159,11 @@ namespace Divine_Right.InterfaceComponents.Components
 
                 iir.Item = item;
                 iir.Selected = false;
-                iir.Rect = new Rectangle(nextX, nextY, 30, 30);
+                iir.Rect = new Rectangle(locationX +nextX, locationY + nextY, 30, 30);
 
                 ItemRects.Add(iir);
 
                 nextX += 30;
-                nextY += 30;
             }
         }
 

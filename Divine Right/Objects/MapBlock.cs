@@ -10,6 +10,7 @@ using DRObjects.Graphics;
 using DRObjects.ActorHandling.CharacterSheet.Enums;
 using DRObjects.Items.Archetypes.Local;
 using DRObjects.Feedback;
+using DRObjects.Feedback.OpenInterfaceObjects;
 
 namespace DRObjects
 {
@@ -344,6 +345,11 @@ namespace DRObjects
                     //not possible
                     return new ActionFeedback[] { new TextFeedback("Not possible to move there") };
                 }
+            }
+            else if (actionType == ActionType.THROW)
+            {
+                //Create and open the 'throw item' feedback
+                return new ActionFeedback[] { new OpenInterfaceFeedback(new ThrowItemInterface() { Coordinate = this.Tile.Coordinate }) };
             }
 
             MapItem item = GetTopItem();

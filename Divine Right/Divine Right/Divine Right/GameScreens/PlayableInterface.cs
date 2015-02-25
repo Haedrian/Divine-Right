@@ -39,6 +39,7 @@ using DivineRightGame.Deity;
 using DivineRightGame.CombatHandling;
 using DRObjects.ActorHandling.SpecialAttacks;
 using DRObjects.Feedback.OpenInterfaceObjects;
+using DRObjects.Extensions;
 
 namespace Divine_Right.GameScreens
 {
@@ -262,54 +263,6 @@ namespace Divine_Right.GameScreens
             {
 
                 TestFunctions.ParseXML();
-
-                //MapCoordinate coo = new MapCoordinate();
-                //Actor[] arr = null;
-                ////var gennedMap = CampGenerator.GenerateCamp(15,out coo, out arr);
-
-
-                //var gennedMap = WildernessGenerator.GenerateMap(GlobalBiome.ARID_DESERT,3, 0, out arr, out coo);
-
-                //GameState.LocalMap = new LocalMap(100, 100, 1, 0);
-
-                //List<MapBlock> collapsedMap = new List<MapBlock>();
-
-                //foreach (MapBlock block in gennedMap)
-                //{
-                //    collapsedMap.Add(block);
-                //}
-
-                //GameState.LocalMap.AddToLocalMap(collapsedMap.ToArray());
-
-                //GameState.LocalMap.Actors.AddRange(arr);
-
-                //MapItem player = new MapItem();
-                //player.Coordinate = coo;
-                //player.Description = "The player character";
-                //player.Graphic = SpriteManager.GetSprite(LocalSpriteName.PLAYERCHAR_MALE);
-                //player.InternalName = "Player Char";
-                //player.MayContainItems = false;
-                //player.Name = "Player";
-
-                //MapBlock playerBlock = GameState.LocalMap.GetBlockAtCoordinate(player.Coordinate);
-                //playerBlock.PutItemOnBlock(player);
-
-                //GameState.PlayerCharacter = new Actor();
-                //GameState.PlayerCharacter.MapCharacter = player;
-                //GameState.PlayerCharacter.IsPlayerCharacter = true;
-
-                //GameState.PlayerCharacter.Attributes = ActorGeneration.GenerateAttributes("human", DRObjects.ActorHandling.CharacterSheet.Enums.ActorProfession.WARRIOR, 10, GameState.PlayerCharacter);
-
-                //GameState.PlayerCharacter.Anatomy = ActorGeneration.GenerateAnatomy("human");
-
-                //GameState.PlayerCharacter.Attributes.Health = GameState.PlayerCharacter.Anatomy;
-
-                //GameState.LocalMap.Actors.Add(GameState.PlayerCharacter);
-                //// GameState.LocalMap.Actors.AddRange(actors
-
-                //GameState.LocalMap.IsGlobalMap = false;
-
-
             }
             else
             {
@@ -334,6 +287,18 @@ namespace Divine_Right.GameScreens
                // GameState.PlayerCharacter.SpecialAttacks[4] = SpecialAttacksGenerator.GenerateSpecialAttack(5);
 
                 item.InInventory = true;
+
+                //Give them a bunch of potions at random
+                for (int i = 0; i < 5; i++ )
+                {
+                    var potionType = (PotionType[])Enum.GetValues(typeof(PotionType));
+                    var potion = potionType.GetRandom();
+                    var p = new Potion(potion);
+
+                    p.InInventory = true;
+
+                    GameState.PlayerCharacter.Inventory.Inventory.Add(p.Category, p);
+                }
 
                 GameState.PlayerCharacter.Inventory.Inventory.Add(item.Category, item);
 
@@ -1163,6 +1128,24 @@ namespace Divine_Right.GameScreens
                         CombatManualComponent cmc = new CombatManualComponent(GraphicsDevice.Viewport.Width / 2 - 200, GraphicsDevice.Viewport.Height / 2 - 150, cmi.Manual); 
 
                         interfaceComponents.Add(cmc);
+                    }
+                    else if (oif.Interface.GetType() == typeof(ThrowItemInterface))
+                    {
+                        var tii = oif.Interface as ThrowItemInterface;
+
+                        //Do we have LoS to that point?
+                        if (GameState.LocalMap.HasDirectPath(GameState.PlayerCharacter.MapCharacter.Coordinate,tii.Coordinate))
+                        {
+                            ThrowItemComponent tic = new ThrowItemComponent(Mouse.GetState().X, Mouse.GetState().Y, tii.Coordinate, GameState.PlayerCharacter);
+                            interfaceComponents.Add(tic);
+                        }
+                        else
+                        {
+                            var tempFBList = fb.ToList();
+                            tempFBList.Add(new TextFeedback("You can't see there"));
+
+                            fb = tempFBList.ToArray();
+                        }
                     }
                 }
                 else 

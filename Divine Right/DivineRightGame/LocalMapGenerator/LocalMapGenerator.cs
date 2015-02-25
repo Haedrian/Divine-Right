@@ -18,6 +18,7 @@ using DivineRightGame.ItemFactory.ItemFactoryManagers;
 using DRObjects.DataStructures;
 using DRObjects.Items.Archetypes;
 using DRObjects.Extensions;
+using DRObjects.Extensions;
 
 namespace DivineRightGame.LocalMapGenerator
 {

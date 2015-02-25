@@ -159,6 +159,7 @@
     <Compile Include="Feedback\LocationChangeFeedback.cs" />
     <Compile Include="Feedback\OpenInterfaceObjects\CombatManualInterface.cs" />
     <Compile Include="Feedback\OpenInterfaceObjects\OpenInterfaceObject.cs" />
+    <Compile Include="Feedback\OpenInterfaceObjects\ThrowItemInterface.cs" />
     <Compile Include="Feedback\ReceiveBlessingFeedback.cs" />
     <Compile Include="Feedback\ReceiveEffectFeedback.cs" />
     <Compile Include="Feedback\ReceiveItemFeedback.cs" />
