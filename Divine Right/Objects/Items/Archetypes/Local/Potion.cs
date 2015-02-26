@@ -190,10 +190,166 @@ namespace DRObjects.Items.Archetypes.Local
             {
                 //Add drink
                 actions.Add(ActionType.CONSUME);
-                //TODO: LATER ADD THROW
             }
 
             return actions.ToArray();
+        }
+
+        /// <summary>
+        /// The effect to apply when the potion is thrown upon the actors.
+        /// Also handles learnign (for those which give an effect) and feedback
+        /// </summary>
+        /// <param name="actors"></param>
+        /// <returns></returns>
+        public ActionFeedback[] ThrowUpon(Actor attacker, List<Actor> actors)
+        {
+            List<ActionFeedback> feedback = new List<ActionFeedback>();
+
+            switch (this.PotionType)
+            {
+                case Enums.PotionType.AGILITY:
+                    foreach (var actor in actors)
+                    {
+                        Effect effect = new Effect();
+                        effect.Actor = actor;
+                        effect.EffectAmount = 1;
+                        effect.MinutesLeft = 2;
+                        effect.Name = EffectName.AGIL;
+
+                        if (actor.IsPlayerCharacter)
+                        {
+                            effect.EffectDisappeared = new LogFeedback(InterfaceSpriteName.POTION_ICON, Color.Blue, "The effect wears off");
+                        }
+
+                        feedback.Add(new ReceiveEffectFeedback() { Effect = effect });
+                    }
+
+                    feedback.Add(new LogFeedback(InterfaceSpriteName.POTION_ICON, Color.Blue, "The victims of the splash look faster somehow"));
+                    this.IsIdentified = true;
+                    attacker.Knowledge.LearnToIdentify(this.PotionType);
+
+                    return feedback.ToArray();
+                case Enums.PotionType.BLEEDING:
+                    foreach (var actor in actors)
+                    {
+                        actor.Anatomy.BloodLoss = 2;
+                    }
+                    feedback.Add(new LogFeedback(InterfaceSpriteName.POTION_ICON, Color.Blue, "Metal shards spray over the area"));
+                    this.IsIdentified = true;
+                    attacker.Knowledge.LearnToIdentify(this.PotionType);
+                    return feedback.ToArray();
+                case Enums.PotionType.BLINDING:
+                    foreach (var actor in actors)
+                    {
+                        Effect effect = new Effect();
+                        effect.Actor = actor;
+                        effect.EffectAmount = 5;
+                        effect.MinutesLeft = 3;
+                        effect.Name = EffectName.BLIND;
+
+                        if (actor.IsPlayerCharacter)
+                        {
+                            effect.EffectDisappeared = new LogFeedback(InterfaceSpriteName.POTION_ICON, Color.Blue, "You can see again");
+                        }
+
+                        feedback.Add(new ReceiveEffectFeedback(effect));
+
+                    }
+                    this.IsIdentified = true;
+                    attacker.Knowledge.LearnToIdentify(this.PotionType);
+                    feedback.Add(new LogFeedback(InterfaceSpriteName.POTION_ICON, Color.Blue, "There is a blinding flash of light"));
+                    return feedback.ToArray();
+                case Enums.PotionType.BRAWN:
+                    foreach (var actor in actors)
+                    {
+                        Effect effect = new Effect();
+                        effect.Actor = actor;
+                        effect.EffectAmount = 1;
+                        effect.MinutesLeft = 2;
+                        effect.Name = EffectName.BRAWN;
+
+                        if (actor.IsPlayerCharacter)
+                        {
+                            effect.EffectDisappeared = new LogFeedback(InterfaceSpriteName.POTION_ICON, Color.Blue, "The effect wears off");
+                        }
+
+                        feedback.Add(new ReceiveEffectFeedback() { Effect = effect });
+                    }
+
+                    feedback.Add(new LogFeedback(InterfaceSpriteName.POTION_ICON, Color.Blue, "The victims of the splash look stronger somehow"));
+                    this.IsIdentified = true;
+                    attacker.Knowledge.LearnToIdentify(this.PotionType);
+
+                    return feedback.ToArray();
+                case Enums.PotionType.CHARISMA:
+                    return new ActionFeedback[] { new LogFeedback(InterfaceSpriteName.POTION_ICON, Color.Blue, "Nothing happens") };
+                case Enums.PotionType.DEFENCE:
+                    return new ActionFeedback[] { new LogFeedback(InterfaceSpriteName.POTION_ICON, Color.Blue, "Nothing happens") };
+                case Enums.PotionType.DEFENSIVE_KNOWLEDGE:
+                    return new ActionFeedback[] { new LogFeedback(InterfaceSpriteName.POTION_ICON, Color.Blue, "Nothing happens") };
+                case Enums.PotionType.FEEDING:
+                    return new ActionFeedback[] { new LogFeedback(InterfaceSpriteName.POTION_ICON, Color.Blue, "There is a delicious smell") };
+                case Enums.PotionType.FIRE:
+                    foreach (var actor in actors)
+                    {
+                        actor.Anatomy.Chest -= 2;
+                        actor.Anatomy.Head -= 1;
+                    }
+                    this.IsIdentified = true;
+                    attacker.Knowledge.LearnToIdentify(this.PotionType);
+                    return new ActionFeedback[] { new LogFeedback(InterfaceSpriteName.POTION_ICON, Color.Blue, "The potion explodes in flames") };
+                case Enums.PotionType.HEALING:
+                    foreach (var actor in actors)
+                    {
+                        Effect effect = new Effect();
+                        effect.Actor = actor;
+                        effect.EffectAmount = 2;
+                        effect.MinutesLeft = 0;
+                        effect.Name = EffectName.HEAL;
+
+                        feedback.Add(new ReceiveEffectFeedback() { Effect = effect });
+                    }
+
+                    feedback.Add(new LogFeedback(InterfaceSpriteName.POTION_ICON, Color.Blue, "The victims of the splash look healthier"));
+                    this.IsIdentified = true;
+                    attacker.Knowledge.LearnToIdentify(this.PotionType);
+
+                    return feedback.ToArray();
+                case Enums.PotionType.ICE:
+                    foreach (var actor in actors)
+                    {
+                        actor.Anatomy.Chest -= 1;
+                        actor.Anatomy.Head -= 1;
+                        actor.Anatomy.Legs -= 1;
+                    }
+                    this.IsIdentified = true;
+                    attacker.Knowledge.LearnToIdentify(this.PotionType);
+                    return new ActionFeedback[] { new LogFeedback(InterfaceSpriteName.POTION_ICON, Color.Blue, "The potion explodes in shards of ice") };
+                case Enums.PotionType.INTELLIGENCE:
+                    return new ActionFeedback[] { new LogFeedback(InterfaceSpriteName.POTION_ICON, Color.Blue, "Nothing happens") };
+                case Enums.PotionType.OFFENSIVE_KNOWLEDGE:
+                    return new ActionFeedback[] { new LogFeedback(InterfaceSpriteName.POTION_ICON, Color.Blue, "Nothing happens") };
+                case Enums.PotionType.PARALYSIS:
+                    foreach (var actor in actors)
+                    {
+                        actor.Anatomy.StunAmount += 2;
+                    }
+                    this.IsIdentified = true;
+                    attacker.Knowledge.LearnToIdentify(this.PotionType);
+                    return new ActionFeedback[] { new LogFeedback(InterfaceSpriteName.POTION_ICON, Color.Blue, "The victims seem to have trouble moving") };
+                case Enums.PotionType.PERCEPTION:
+                    return new ActionFeedback[] { new LogFeedback(InterfaceSpriteName.POTION_ICON, Color.Blue, "Nothing happens") };
+                case Enums.PotionType.POISON:
+                    foreach (var actor in actors)
+                    {
+                        actor.Anatomy.Chest -= 3;
+                    }
+                    this.IsIdentified = true;
+                    attacker.Knowledge.LearnToIdentify(this.PotionType);
+                    return new ActionFeedback[] { new LogFeedback(InterfaceSpriteName.POTION_ICON, Color.Blue, "The potion vaporises into a thick green cloud") };
+                default:
+                    throw new NotImplementedException("Code for " + this.PotionType + " not implemented");
+            }
         }
 
         public override ActionFeedback[] PerformAction(ActionType actionType, Actor actor, object[] args)
@@ -260,8 +416,8 @@ namespace DRObjects.Items.Archetypes.Local
                             return new ActionFeedback[2] { new ReceiveEffectFeedback() { Effect = effect }, new LogFeedback(InterfaceSpriteName.POTION_ICON, Color.ForestGreen, "You feel more confident") };
                         }
                     case Enums.PotionType.DEFENCE:
-                        return new ActionFeedback[0] { };
-                        //TODO later
+                        actor.CurrentDefences = actor.MaximumDefences;
+                        return new ActionFeedback[1] { new LogFeedback(InterfaceSpriteName.POTION_ICON, Color.ForestGreen, "Your defences are ready once more") };
                     case Enums.PotionType.DEFENSIVE_KNOWLEDGE:
                         {
                             for (int i = 0; i < 20; i++)
@@ -290,7 +446,7 @@ namespace DRObjects.Items.Archetypes.Local
                             effect.MinutesLeft = 0;
                             effect.Name = EffectName.HEAL;
                             effect.EffectDisappeared = new LogFeedback(InterfaceSpriteName.POTION_ICON, Color.ForestGreen, "Your wounds heal...");
-                            return new ActionFeedback[2] { new ReceiveEffectFeedback() { Effect = effect } , new LogFeedback(InterfaceSpriteName.POTION_ICON,Color.ForestGreen,"Your wounds close") };
+                            return new ActionFeedback[2] { new ReceiveEffectFeedback() { Effect = effect }, new LogFeedback(InterfaceSpriteName.POTION_ICON, Color.ForestGreen, "Your wounds close") };
                         }
                     case Enums.PotionType.ICE:
                         {

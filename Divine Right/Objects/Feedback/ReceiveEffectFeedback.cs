@@ -15,5 +15,15 @@ namespace DRObjects.Feedback
         :ActionFeedback
     {
         public Effect Effect { get; set; }
+
+        public ReceiveEffectFeedback()
+        {
+
+        }
+
+        public ReceiveEffectFeedback(Effect effect)
+        {
+            this.Effect = effect;
+        }
     }
 }
