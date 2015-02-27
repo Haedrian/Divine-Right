@@ -11,6 +11,7 @@ using DivineRightGame.CombatHandling;
 using Microsoft.Xna.Framework;
 using DRObjects.Graphics;
 using DRObjects.ActorHandling.SpecialAttacks;
+using DRObjects.Items.Archetypes.Local;
 
 namespace DivineRightGame.Managers
 {
@@ -114,6 +115,28 @@ namespace DivineRightGame.Managers
                     }
                 }
             }
+            else if (actionType == ActionType.THROW_ITEM)
+            {
+                //Throw it
+                Potion potion = args[2] as Potion;
+                Actor attacker = args[0] as Actor;
+                List<Actor> victims = args[1] as List<Actor>;
+
+                //Also create a temporary icon to show what was done
+                foreach(var victim in victims)
+                {
+                    TemporaryGraphic tg = new TemporaryGraphic()
+                    {
+                        Coord = victim.MapCharacter.Coordinate,
+                        Graphic = SpriteManager.GetSprite(InterfaceSpriteName.POTION_BREAK),
+                        LifeTime = 2
+                    };
+
+                    GameState.LocalMap.TemporaryGraphics.Add(tg);
+                }
+
+                feedback.AddRange(potion.ThrowUpon(attacker, victims));
+            }
             else if (actionType == ActionType.IDLE)
             {
                 //Do nothing
@@ -141,7 +164,7 @@ namespace DivineRightGame.Managers
                 }
             }
 
-            if (actionType == ActionType.EXAMINE || actionType == ActionType.MOVE || (actionType == ActionType.ATTACK && validAttack) || actionType == ActionType.IDLE)
+            if (actionType == ActionType.EXAMINE || actionType == ActionType.THROW_ITEM || actionType == ActionType.MOVE || (actionType == ActionType.ATTACK && validAttack) || actionType == ActionType.IDLE)
             {
                 //Perform a tick
                 //Clear the Log

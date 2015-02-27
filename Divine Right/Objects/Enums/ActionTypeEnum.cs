@@ -36,5 +36,6 @@ namespace DRObjects.Enums
         TOSS_IN_50_COINS,
         READ,
         THROW,
+        THROW_ITEM,
     }
 }

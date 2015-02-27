@@ -9,6 +9,8 @@ using System.Text;
 using Divine_Right.HelperFunctions;
 using DRObjects.Graphics;
 using Microsoft.Xna.Framework.Graphics;
+using DivineRightGame;
+using DRObjects.Items.Archetypes.Local;
 
 namespace Divine_Right.InterfaceComponents.Components
 {
@@ -86,6 +88,50 @@ namespace Divine_Right.InterfaceComponents.Components
                 destroy = true;
             }
 
+            Potion selectedPotion = null;
+
+            //Determine the potion that was selected
+            foreach(var r in this.ItemRects)
+            {
+                if (r.Rect.Contains(x,y))
+                {
+                    selectedPotion = r.Item as Potion;
+                }
+            }
+
+            if (selectedPotion == null)
+            {
+                //Never mind
+                return true;
+            }
+
+            //Otherwise, throw the stuff!
+            //Determine who's in the splashzone
+            var blocks = GameState.LocalMap.GetBlocksAroundPoint(targetCoordinate, 1);
+
+            List<Actor> victims = new List<Actor>();
+
+            foreach(var block in blocks)
+            {
+                victims.AddRange(block.GetItems().Where(i => i.IsActive && i.GetType() == typeof(LocalCharacter)).Select(i => (i as LocalCharacter).Actor));
+            }
+
+            //Remove dead ones - just in case
+            victims = victims.Where(v => v.IsAlive).ToList();
+
+            actionType = ActionType.THROW_ITEM;
+            args = new object[3]
+            {
+                Actor,
+                victims,
+                selectedPotion
+            };
+
+            destroy = true;
+
+            //Oh, don't forget to discard the potion
+            selectedPotion.InInventory = false;
+            Actor.Inventory.Inventory.Remove(selectedPotion.Category, selectedPotion);
 
             return true; //modal
         }

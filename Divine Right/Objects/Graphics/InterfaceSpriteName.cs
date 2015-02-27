@@ -92,6 +92,7 @@ namespace DRObjects.Graphics
         SA3,
         SA4,
         SA5,
-        CIRCLE
+        CIRCLE,
+        POTION_BREAK
     }
 }
