@@ -29,6 +29,8 @@ namespace DRObjects.ActorHandling.ActorMissions
             get { return isRetainable; }
         }
 
+        public int PathfindingFailureCount { get; set; }
+
         /// <summary>
         /// How close it is acceptable to be to count as having reached the point
         /// </summary>
@@ -37,6 +39,7 @@ namespace DRObjects.ActorHandling.ActorMissions
         public WalkToMission()
         {
             AcceptableRadius = 1;
+            PathfindingFailureCount = 0;
         }
     }
 }

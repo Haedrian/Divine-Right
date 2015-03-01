@@ -68,12 +68,23 @@ namespace DivineRightGame.Pathfinding
 
             Stack<MapCoordinate> coordStack = new Stack<MapCoordinate>();
 
-            if (path == null || nodes[path[0].X, path[0].Y] == 255)
+            if (path == null)
             {
-                Console.WriteLine("No path found :( ");
+                Console.WriteLine("No path found :(");
                 return null;
-
             }
+
+            //Check that all points are valid
+            foreach (var point in path)
+            {
+                if (nodes[point.X, point.Y] > 100)
+                {
+                    Console.WriteLine("No path found :( ");
+                    return null;
+
+                }
+            }
+
 
             foreach (PathFinderNode node in path)
             {

@@ -421,10 +421,23 @@ namespace DivineRightGame.ActorHandling
                 {
                     //Invalid path
                     Console.WriteLine("Invalid Path");
+
+                    ////Increase the failure count
+                    //mission.PathfindingFailureCount++;
+
+                    ////Are we up to 5?
+                    //if (mission.PathfindingFailureCount > 5)
+                    //{
+                    //    //Then just stop.
+                        
+                    //}
+
                     //lose the mission
                     actor.CurrentMission = new WaitMission(2); //wait for 2 turns
                     //Regenerate the path 
                     GameState.LocalMap.GeneratePathfindingMap();
+
+                    return new ActionFeedback[0] { };
                 }
             }
 
