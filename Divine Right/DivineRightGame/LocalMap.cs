@@ -314,10 +314,28 @@ namespace DivineRightGame
             {
                 for (int j = 0; j < localGameMap.GetLength(1); j++)
                 {
-
                     if (i < localGameMap.GetLength(0) - 1 && j < localGameMap.GetLength(1) - 1)
                     {
                         //Copyable - if it may contain items, put a weight of 1, otherwise an essagerated one
+                        if (localGameMap[i,j,0] == null)
+                        {
+                            PathfindingMap[i, j] = Byte.MaxValue;
+                        }
+                        else if (localGameMap[i,j,0].MayContainItems)
+                        {
+                            //Then 1
+                            PathfindingMap[i,j] = (byte)1;
+                        }
+                        else  if (localGameMap[i,j,0].GetTopItem() != null && localGameMap[i,j,0].GetTopItem().GetType().Equals(typeof(LocalCharacter)))
+                        {
+                            //It's another actor. Avoid going through, but it's an option
+                            PathfindingMap[i, j] = (byte)5;
+                        }
+                        else
+                        {
+                            PathfindingMap[i, j] = Byte.MaxValue; //You shall not PASS
+                        }
+
                         PathfindingMap[i, j] = localGameMap[i, j, 0] != null ? localGameMap[i, j, 0].MayContainItems ? (byte)1 : Byte.MaxValue : Byte.MaxValue;
                     }
                     else
