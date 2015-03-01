@@ -257,9 +257,11 @@ namespace DRObjects
             MapItem item = GetTopItem();
             List<ActionType> actions = item.GetPossibleActions(actor).ToList();
 
-            //We can also throw something - if we have line of sight - we'll worry about this later
-            actions.Add(ActionType.THROW);
-
+            if (this.Tile.GetType().Equals(typeof(GlobalTile)))
+            {
+                //We can also throw something - if we have line of sight - we'll worry about this later
+                actions.Add(ActionType.THROW);
+            }
             if (this.MayContainItems)
             {
                 actions.Add(ActionType.MOVE);
@@ -333,7 +335,6 @@ namespace DRObjects
                     if (actor.IsPlayerCharacter)
                     {
                         if (this.GetTopItem().GetType() == typeof(LocalCharacter))
-
                         {
                             //Attack him instead - randomly
                             LocalCharacter lc = (LocalCharacter)this.GetTopItem();
