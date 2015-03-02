@@ -317,7 +317,7 @@ namespace DivineRightGame.LocalMapGenerator
 
             return pf;
         }
-
+          
         /// <summary>
         /// Creates and puts a particular room in a particular rectangle
         /// </summary>
@@ -326,6 +326,7 @@ namespace DivineRightGame.LocalMapGenerator
         /// <param name="circle">When the room is a Summoning Room, there's the circle</param>
         private static void PutRoom(MapBlock[,] map, int tileID, int level, DungeonRoomType roomType, Rectangle rect, out SummoningCircle circle)
         {
+
             circle = null;
 
             string tagName = roomType.ToString().ToLower().Replace("_", " ") + " room";
