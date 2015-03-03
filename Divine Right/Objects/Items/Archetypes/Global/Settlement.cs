@@ -7,6 +7,7 @@ using DRObjects.Graphics;
 using DRObjects.Settlements.Districts;
 using System.IO;
 using DRObjects.CivilisationHandling;
+using DRObjects.Economics;
 
 namespace DRObjects.Items.Archetypes.Global
 {
@@ -46,6 +47,16 @@ namespace DRObjects.Items.Archetypes.Global
         public int PoorPercentage { get; set; }
         public bool IsCapital { get; set; }
         public Civilisation Civilisation { get; set; }
+
+        #region Economics Stuff
+
+        public List<Stockpile> Stockpiles { get; set; }
+
+        public List<MapSiteItem> MapSites { get; set; }
+
+        public List<MapBlock> HarvestingBlocks { get; set; }
+        #endregion
+
         #endregion
 
         public Settlement()

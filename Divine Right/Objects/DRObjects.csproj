@@ -124,6 +124,9 @@
     <Compile Include="DataStructures\PointSerializationSurrogate.cs" />
     <Compile Include="DataStructures\RectSerializationSurrogate.cs" />
     <Compile Include="Deity\Enums\BlessingType.cs" />
+    <Compile Include="Economics\Enums\ResourceCategory.cs" />
+    <Compile Include="Economics\Enums\ResourceType.cs" />
+    <Compile Include="Economics\Stockpile.cs" />
     <Compile Include="Enums\Archetype.cs" />
     <Compile Include="Enums\ConsumableEffect.cs" />
     <Compile Include="Enums\EnemyThought.cs" />
