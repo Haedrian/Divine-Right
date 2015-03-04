@@ -49,7 +49,7 @@ namespace DRObjects.Items.Archetypes.Global
         public Civilisation Civilisation { get; set; }
 
         #region Economics Stuff
-
+         
         public List<Stockpile> Stockpiles { get; set; }
 
         public List<MapSiteItem> MapSites { get; set; }
